@@ -30,6 +30,21 @@
 
 #define TODOIST_URL "https://todoist.com/API/v7/sync"
 
+typedef enum
+{
+  LIST_CREATE,
+  TASK_CREATE
+} RequestType;
+
+typedef struct
+{
+  GtdProviderTodoist *self;
+  GtdObject          *object;
+  JsonObject         *params;
+  gchar              *command_uid;
+  RequestType         request_type;
+} PostCallbackData;
+
 struct _GtdProviderTodoist
 {
   GtdObject           parent;
@@ -41,11 +56,20 @@ struct _GtdProviderTodoist
   gchar              *description;
   GIcon              *icon;
 
+  /* Map between id to list and task instance */
   GHashTable         *lists;
   GHashTable         *tasks;
+
+  /* Queue to hold Request Data */
+  GQueue             *queue;
+
+  /* timeout ids */
+  guint               dispatch_id;
 };
 
 static void          gtd_provider_iface_init                     (GtdProviderInterface *iface);
+
+static gboolean      dispatch_requests                           (GtdProviderTodoist *self);
 
 G_DEFINE_TYPE_WITH_CODE (GtdProviderTodoist, gtd_provider_todoist, GTD_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GTD_TYPE_PROVIDER,
@@ -89,20 +113,6 @@ static const gchar *colormap[] =
   "#777777"
 };
 
-typedef enum
-{
-  DEFAULT_TYPE,
-  LIST_CREATE,
-  TASK_CREATE
-} RequestType;
-
-typedef struct
-{
-  GtdProviderTodoist *self;
-  GtdObject *object;
-  RequestType request_type;
-} PostCallbackData;
-
 /*
  * GtdProviderInterface implementation
  */
@@ -143,12 +153,6 @@ gtd_provider_todoist_get_icon (GtdProvider *provider)
   self = GTD_PROVIDER_TODOIST (provider);
 
   return self->icon;
-}
-
-GoaObject*
-gtd_provider_todoist_get_goa_object (GtdProviderTodoist  *self)
-{
-  return self->account_object;
 }
 
 static gint
@@ -266,10 +270,10 @@ parse_array_to_list (GtdProviderTodoist *self,
 
   for (l = lists; l != NULL; l = l->next)
     {
+      g_autofree gchar *uid;
       JsonObject *object;
       GtdTaskList *list;
       const gchar *name;
-      gchar *uid;
       guint32 id;
       guint color_index;
 
@@ -279,7 +283,6 @@ parse_array_to_list (GtdProviderTodoist *self,
       name = json_object_get_string_member (object, "name");
       color_index = json_object_get_int_member (object, "color");
       id = json_object_get_int_member (object, "id");
-
       uid = g_strdup_printf ("%u", id);
 
       gtd_task_list_set_name (list, name);
@@ -288,8 +291,6 @@ parse_array_to_list (GtdProviderTodoist *self,
       gtd_object_set_uid (GTD_OBJECT (list), uid);
       g_hash_table_insert (self->lists, GUINT_TO_POINTER (id), list);
       g_signal_emit_by_name (self, "list-added", list);
-
-      g_free (uid);
     }
 }
 
@@ -323,12 +324,12 @@ parse_array_to_task (GtdProviderTodoist *self,
 
   for (l = lists; l != NULL; l = l->next)
     {
+      g_autofree gchar *uid = NULL;
       JsonObject *object;
       GtdTaskList *list;
       GtdTask *task;
       const gchar *title;
       const gchar *due_date;
-      gchar *uid;
       guint32 id;
       guint32 project_id;
       gint priority;
@@ -372,8 +373,6 @@ parse_array_to_task (GtdProviderTodoist *self,
 
       g_hash_table_insert (self->tasks, GUINT_TO_POINTER (id), task);
       gtd_task_list_save_task (list, task);
-
-      g_free (uid);
     }
 }
 
@@ -392,10 +391,12 @@ load_tasks (GtdProviderTodoist *self,
 }
 
 static gboolean
-check_post_response_for_errors (RestProxyCall *call,
-                                JsonParser    *parser,
-                                const GError  *error)
+check_post_response_for_errors (RestProxyCall    *call,
+                                JsonParser       *parser,
+                                PostCallbackData *data,
+                                const GError     *error)
 {
+  JsonObject *object;
   GError *parse_error;
   const gchar *payload;
   guint status_code;
@@ -432,6 +433,23 @@ check_post_response_for_errors (RestProxyCall *call,
       emit_generic_error (parse_error);
       g_clear_error (&parse_error);
       return TRUE;
+    }
+
+  object = json_node_get_object (json_parser_get_root (parser));
+
+  if (json_object_has_member (object, "sync_status"))
+    {
+      JsonObject *response;
+      JsonNode *command_status;
+
+      response = json_object_get_object_member (object, "sync_status");
+      command_status = json_object_get_member (response, data->command_uid);
+
+      if (JSON_NODE_TYPE (command_status) == JSON_NODE_OBJECT)
+        return TRUE;
+
+      if (g_strcmp0 (json_node_get_string (command_status), "ok") != 0)
+        return TRUE;
     }
 
   return FALSE;
@@ -526,13 +544,13 @@ synchronize_call_cb (RestProxyCall      *call,
                      GObject            *weak_object,
                      GtdProviderTodoist *self)
 {
+  g_autoptr (JsonParser) parser = NULL;
   JsonObject *object;
-  JsonParser *parser;
 
   parser = json_parser_new ();
 
-  if (check_post_response_for_errors (call, parser, error))
-    goto out;
+  if (check_post_response_for_errors (call, parser, NULL, error))
+    return;
 
   object = json_node_get_object (json_parser_get_root (parser));
 
@@ -543,9 +561,16 @@ synchronize_call_cb (RestProxyCall      *call,
     }
 
   load_tasks (self, object);
+}
 
-out:
-  g_object_unref (parser);
+static void
+push_post_request (GtdProviderTodoist *self,
+                   PostCallbackData   *data)
+{
+  g_queue_push_head (self->queue, data);
+
+  if (!self->dispatch_id)
+    self->dispatch_id = g_timeout_add_seconds (5, (GSourceFunc) dispatch_requests, self);
 }
 
 static void
@@ -554,20 +579,36 @@ post_generic_cb (RestProxyCall       *call,
                  GObject             *weak_object,
                  PostCallbackData    *data)
 {
+  g_autoptr (JsonParser) parser = NULL;
+  GtdProviderTodoist *self;
   JsonObject *object;
-  JsonParser *parser;
 
+  self = data->self;
   parser = json_parser_new ();
 
-  if (check_post_response_for_errors (call, parser, error))
-    goto out;
+  /*
+   * Remove the current dispatch timeout and add a new timeout with
+   * interval as 60 seconds (50 request per minute, since we assume
+   * the error was caused because of exceeding request limit).
+   */
+  if (check_post_response_for_errors (call, parser, data, error))
+    {
+      if (self->dispatch_id)
+        g_source_remove (self->dispatch_id);
+
+      self->dispatch_id = g_timeout_add_seconds (60, (GSourceFunc) dispatch_requests, data->self);
+
+      /* Push the RequestData back into queue since the request was not successful */
+      push_post_request (self, data);
+
+      return;
+    }
 
   object = json_node_get_object (json_parser_get_root (parser));
-
   if (json_object_has_member (object, "sync_token"))
     {
-      g_clear_pointer (&data->self->sync_token, g_free);
-      data->self->sync_token = g_strdup (json_object_get_string_member (object, "sync_token"));
+      g_clear_pointer (&self->sync_token, g_free);
+      self->sync_token = g_strdup (json_object_get_string_member (object, "sync_token"));
     }
 
   /* Update temp-id if response contains temp-id mapping */
@@ -577,12 +618,33 @@ post_generic_cb (RestProxyCall       *call,
 
       temp_id_map = json_object_get_object_member (object, "temp_id_mapping");
 
-      update_transient_id (data->self, temp_id_map, data->object, data->request_type);
+      update_transient_id (self, temp_id_map, data->object, data->request_type);
     }
 
-out:
-  g_object_unref (parser);
-  g_free (data);
+  g_clear_pointer (&data->params, json_object_unref);
+  g_clear_pointer (&data->command_uid, g_free);
+  g_clear_pointer (&data, g_free);
+
+  /* Dispatch next queued request */
+  if (!g_queue_is_empty (self->queue))
+    {
+      data = g_queue_pop_tail (self->queue);
+      post (data->params, (RestProxyCallAsyncCallback) post_generic_cb, data);
+    }
+}
+
+static gboolean
+dispatch_requests (GtdProviderTodoist *self)
+{
+  PostCallbackData *data;
+
+  data = g_queue_pop_tail (self->queue);
+  post (data->params, (RestProxyCallAsyncCallback) post_generic_cb, data);
+
+  /* Remove further timeout since rest of requests are handled in callback */
+  self->dispatch_id = 0;
+
+  return G_SOURCE_REMOVE;
 }
 
 static void
@@ -613,18 +675,20 @@ gtd_provider_todoist_create_task (GtdProvider *provider,
 {
   GtdProviderTodoist *self;
   PostCallbackData *data;
-  GtdTaskList *project;
-  JsonObject *params;
-  GtdTask *parent;
-  GDateTime *due_date;
   g_autofree gchar *command;
   g_autofree gchar *command_uuid;
   g_autofree gchar *temp_id;
   g_autofree gchar *due_dt;
+  g_autofree gchar *escaped_title;
+  GtdTaskList *project;
+  JsonObject *params;
+  GtdTask *parent;
+  GDateTime *due_date;
   const gchar *project_id;
 
   self = GTD_PROVIDER_TODOIST (provider);
   due_dt = command = command_uuid = temp_id = NULL;
+  escaped_title = NULL;
   data = g_new0 (PostCallbackData, 1);
   data->self = self;
   data->object = GTD_OBJECT (task);
@@ -641,6 +705,7 @@ gtd_provider_todoist_create_task (GtdProvider *provider,
   due_date = gtd_task_get_due_date (task);
   project = gtd_task_get_list (task);
   project_id = gtd_object_get_uid (GTD_OBJECT (project));
+  escaped_title = g_strescape (gtd_task_get_title (task), NULL);
 
   if (due_date)
     {
@@ -656,9 +721,10 @@ gtd_provider_todoist_create_task (GtdProvider *provider,
 
   command_uuid = g_uuid_string_random ();
   temp_id = g_uuid_string_random ();
+  data->command_uid = g_strdup (command_uuid);
 
   /* Set the temporary id */
-  gtd_object_set_uid (GTD_OBJECT (task), temp_id);
+  gtd_object_set_uid (GTD_OBJECT (task), g_strdup_printf ("\"%s\"", temp_id));
 
   command = g_strdup_printf ("[{\"type\": \"item_add\", \"temp_id\": \"%s\", "
                              "\"uuid\": \"%s\", "
@@ -669,7 +735,7 @@ gtd_provider_todoist_create_task (GtdProvider *provider,
                              "\"due_date_utc\": %s}}]",
                              temp_id,
                              command_uuid,
-                             gtd_task_get_title (task),
+                             escaped_title,
                              gtd_task_get_priority (task),
                              parent ? gtd_object_get_uid (GTD_OBJECT (parent)) : "null",
                              project_id,
@@ -680,7 +746,11 @@ gtd_provider_todoist_create_task (GtdProvider *provider,
   json_object_set_string_member (params, "token", self->access_token);
   json_object_set_string_member (params, "commands", command);
 
-  post (params, (RestProxyCallAsyncCallback) post_generic_cb, data);
+  /* Set params for post request */
+  data->params = json_object_ref (params);
+
+  /* Push post request data to queue */
+  push_post_request (self, data);
 
   g_clear_pointer (&due_date, g_date_time_unref);
 }
@@ -691,15 +761,17 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
 {
   GtdProviderTodoist *self;
   PostCallbackData *data;
-  JsonObject *params;
-  GtdTask *parent;
-  GDateTime *due_date;
   g_autofree gchar *command;
   g_autofree gchar *command_uuid;
   g_autofree gchar *due_dt;
+  g_autofree gchar *escaped_title;
+  JsonObject *params;
+  GtdTask *parent;
+  GDateTime *due_date;
 
   self = GTD_PROVIDER_TODOIST (provider);
   due_dt = command = command_uuid = NULL;
+  escaped_title = NULL;
 
   data = g_new0 (PostCallbackData, 1);
   data->self = self;
@@ -714,6 +786,7 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
   params = json_object_new ();
   parent = gtd_task_get_parent (task);
   due_date = gtd_task_get_due_date (task);
+  escaped_title = g_strescape (gtd_task_get_title (task), NULL);
 
   if (due_date)
     {
@@ -728,6 +801,8 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
     }
 
   command_uuid = g_uuid_string_random ();
+  data->command_uid = g_strdup (command_uuid);
+
   command = g_strdup_printf ("[{\"type\": \"item_update\", \"uuid\": \"%s\", "
                              "\"args\": {\"id\": %s, \"content\": \"%s\", "
                              "\"priority\": %d, \"parent_id\": %s, "
@@ -735,7 +810,7 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
                              "\"due_date_utc\": %s}}]",
                              command_uuid,
                              gtd_object_get_uid (GTD_OBJECT (task)),
-                             gtd_task_get_title (task),
+                             escaped_title,
                              gtd_task_get_priority (task),
                              parent ? gtd_object_get_uid (GTD_OBJECT (parent)) : "null",
                              gtd_task_get_depth (task) + 1,
@@ -745,7 +820,11 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
   json_object_set_string_member (params, "token", self->access_token);
   json_object_set_string_member (params, "commands", command);
 
-  post (params, (RestProxyCallAsyncCallback) post_generic_cb, data);
+  /* Set params for post request */
+  data->params = json_object_ref (params);
+
+  /* Push post request data to queue */
+  push_post_request (self, data);
 
   g_clear_pointer (&due_date, g_date_time_unref);
 }
@@ -775,7 +854,10 @@ gtd_provider_todoist_remove_task (GtdProvider *provider,
   params = json_object_new ();
 
   command_uuid = g_uuid_string_random ();
-  command = g_strdup_printf ("[{\"type\": \"item_delete\", \"uuid\": \"%s\", "
+  data->command_uid = g_strdup (command_uuid);
+
+  command = g_strdup_printf ("[{\"type\": \"item_delete\", "
+                             "\"uuid\": \"%s\", "
                              "\"args\": {\"ids\": [%s]}}]",
                              command_uuid,
                              gtd_object_get_uid (GTD_OBJECT (task)));
@@ -783,7 +865,11 @@ gtd_provider_todoist_remove_task (GtdProvider *provider,
   json_object_set_string_member (params, "token", self->access_token);
   json_object_set_string_member (params, "commands", command);
 
-  post (params, (RestProxyCallAsyncCallback) post_generic_cb, data);
+  /* Set params for post request */
+  data->params = json_object_ref (params);
+
+  /* Push post request data to queue */
+  push_post_request (self, data);
 }
 
 static void
@@ -792,14 +878,16 @@ gtd_provider_todoist_create_task_list (GtdProvider *provider,
 {
   GtdProviderTodoist *self;
   PostCallbackData *data;
-  JsonObject *params;
-  GdkRGBA *list_color;
   g_autofree gchar *command;
   g_autofree gchar *command_uuid;
+  g_autofree gchar *escaped_name;
   g_autofree gchar *temp_id;
+  JsonObject *params;
+  GdkRGBA *list_color;
 
   self = GTD_PROVIDER_TODOIST (provider);
   command = command_uuid = temp_id = NULL;
+  escaped_name = NULL;
   data = g_new0 (PostCallbackData, 1);
   data->self = self;
   data->object = GTD_OBJECT (list);
@@ -814,24 +902,31 @@ gtd_provider_todoist_create_task_list (GtdProvider *provider,
   params = json_object_new ();
   list_color = gtd_task_list_get_color (list);
 
+  escaped_name = g_strescape (gtd_task_list_get_name (list), NULL);
   command_uuid = g_uuid_string_random ();
   temp_id = g_uuid_string_random ();
+  data->command_uid = g_strdup (command_uuid);
 
   /* Set the temporary id */
-  gtd_object_set_uid (GTD_OBJECT (list), temp_id);
+  gtd_object_set_uid (GTD_OBJECT (list), g_strdup_printf ("\"%s\"", temp_id));
 
-  command = g_strdup_printf ("[{\"type\": \"project_add\", \"temp_id\": \"%s\", "
+  command = g_strdup_printf ("[{\"type\": \"project_add\", "
+                             "\"temp_id\": \"%s\", "
                              "\"uuid\": \"%s\", "
                              "\"args\": {\"name\": \"%s\", \"color\": %d}}]",
                              temp_id,
                              command_uuid,
-                             gtd_task_list_get_name (list),
+                             escaped_name,
                              get_color_code_index (list_color));
 
   json_object_set_string_member (params, "token", self->access_token);
   json_object_set_string_member (params, "commands", command);
 
-  post (params, (RestProxyCallAsyncCallback) post_generic_cb, data);
+  /* Set params for post request */
+  data->params = json_object_ref (params);
+
+  /* Push post request data to queue */
+  push_post_request (self, data);
 
   g_signal_emit_by_name (provider, "list-added", list);
 
@@ -866,6 +961,8 @@ gtd_provider_todoist_update_task_list (GtdProvider *provider,
   list_color = gtd_task_list_get_color (list);
 
   command_uuid = g_uuid_string_random ();
+  data->command_uid = g_strdup (command_uuid);
+
   command = g_strdup_printf ("[{\"type\": \"project_update\", \"uuid\": \"%s\", "
                              "\"args\": {\"id\": %s, \"name\": \"%s\", \"color\": %d}}]",
                              command_uuid,
@@ -876,7 +973,11 @@ gtd_provider_todoist_update_task_list (GtdProvider *provider,
   json_object_set_string_member (params, "token", self->access_token);
   json_object_set_string_member (params, "commands", command);
 
-  post (params, (RestProxyCallAsyncCallback) post_generic_cb, data);
+  /* Set params for post request */
+  data->params = json_object_ref (params);
+
+  /* Push post request data to queue */
+  push_post_request (self, data);
 
   gdk_rgba_free (list_color);
 }
@@ -906,6 +1007,8 @@ gtd_provider_todoist_remove_task_list (GtdProvider *provider,
   params = json_object_new ();
 
   command_uuid = g_uuid_string_random ();
+  data->command_uid = g_strdup (command_uuid);
+
   command = g_strdup_printf ("[{\"type\": \"project_delete\", \"uuid\": \"%s\", "
                              "\"args\": {\"ids\": [%s]}}]",
                              command_uuid,
@@ -914,7 +1017,11 @@ gtd_provider_todoist_remove_task_list (GtdProvider *provider,
   json_object_set_string_member (params, "token", self->access_token);
   json_object_set_string_member (params, "commands", command);
 
-  post (params, (RestProxyCallAsyncCallback) post_generic_cb, data);
+  /* Set params for post request */
+  data->params = json_object_ref (params);
+
+  /* Push post request data to queue */
+  push_post_request (self, data);
 }
 
 static GList*
@@ -991,6 +1098,7 @@ gtd_provider_todoist_finalize (GObject *object)
   g_clear_object (&self->icon);
   g_clear_pointer (&self->sync_token, g_free);
   g_clear_pointer (&self->description, g_free);
+  g_queue_free (self->queue);
 
   G_OBJECT_CLASS (gtd_provider_todoist_parent_class)->finalize (object);
 }
@@ -1102,6 +1210,15 @@ gtd_provider_todoist_init (GtdProviderTodoist *self)
   /* Session token from GOA */
   self->sync_token = g_strdup ("*");
 
+  /* Queue for post requests */
+  self->queue = g_queue_new ();
+
   /* icon */
-  self->icon = G_ICON (g_themed_icon_new_with_default_fallbacks ("computer-symbolic"));
+  self->icon = G_ICON (g_themed_icon_new_with_default_fallbacks ("goa-account-todoist"));
+}
+
+GoaObject*
+gtd_provider_todoist_get_goa_object (GtdProviderTodoist  *self)
+{
+  return self->account_object;
 }
