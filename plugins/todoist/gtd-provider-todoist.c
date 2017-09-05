@@ -569,6 +569,13 @@ push_post_request (GtdProviderTodoist *self,
 {
   g_queue_push_head (self->queue, data);
 
+  /*
+   * When the queue holds post request, the application should
+   * not quit till the time queue gets empty. This hold is released
+   * in post_generic_cb where requests are dispatched.
+   */
+  g_application_hold (g_application_get_default ());
+
   if (!self->dispatch_id)
     self->dispatch_id = g_timeout_add_seconds (5, (GSourceFunc) dispatch_requests, self);
 }
@@ -631,6 +638,9 @@ post_generic_cb (RestProxyCall       *call,
       data = g_queue_pop_tail (self->queue);
       post (data->params, (RestProxyCallAsyncCallback) post_generic_cb, data);
     }
+
+  /* Release the hold since queue is empty */
+	g_application_release (g_application_get_default ());
 }
 
 static gboolean
