@@ -3,6 +3,14 @@ Version 3.26.0
 ==============
 
 Project:
+	* Fix type race initialization that prevents To Do startup
+	* Fix translations
+
+==============
+Version 3.26.0
+==============
+
+Project:
 	* Translation updates
 
 ===============
