@@ -53,7 +53,7 @@ doc_path = join_paths(gnome_todo_datadir, 'gtk-doc', 'html', meson.project_name(
 gnome.gtkdoc(
   meson.project_name(),
           main_sgml: meson.project_name() + '-docs.sgml',
-            src_dir: src_inc,
+            src_dir: join_paths(meson.source_root(), 'src'),
        dependencies: libgtd_dep,
           mkdb_args: [ '--sgml-mode', '--output-format=xml' ],
         html_assets: html_images,
