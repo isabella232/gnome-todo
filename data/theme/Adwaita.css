@@ -62,8 +62,8 @@ taskrow {
     box-shadow: 0 0 2px alpha(black, 0.33);
 }
 
-taskrow:dir(ltr) { padding-left: 6px;  }
-taskrow:dir(rtl) { padding-right: 6px; }
+taskrow:dir(ltr):not(.new-task-row) { padding-left: 6px;  }
+taskrow:dir(rtl):not(.new-task-row) { padding-right: 6px; }
 
 taskrow entry {
     padding: 6px;
