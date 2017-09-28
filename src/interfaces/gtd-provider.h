@@ -47,8 +47,6 @@ struct _GtdProviderInterface
   /* Customs */
   GIcon*             (*get_icon)                                 (GtdProvider        *provider);
 
-  const GtkWidget*   (*get_edit_panel)                           (GtdProvider        *provider);
-
   /* Tasks */
   void               (*create_task)                              (GtdProvider        *provider,
                                                                   GtdTask            *task);
@@ -88,8 +86,6 @@ const gchar*         gtd_provider_get_description                (GtdProvider   
 gboolean             gtd_provider_get_enabled                    (GtdProvider        *provider);
 
 GIcon*               gtd_provider_get_icon                       (GtdProvider        *provider);
-
-const GtkWidget*     gtd_provider_get_edit_panel                 (GtdProvider        *provider);
 
 void                 gtd_provider_create_task                    (GtdProvider        *provider,
                                                                   GtdTask            *task);

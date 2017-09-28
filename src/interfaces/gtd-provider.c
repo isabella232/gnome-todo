@@ -289,15 +289,6 @@ gtd_provider_get_icon (GtdProvider *provider)
   return GTD_PROVIDER_GET_IFACE (provider)->get_icon (provider);
 }
 
-const GtkWidget*
-gtd_provider_get_edit_panel (GtdProvider *provider)
-{
-  g_return_val_if_fail (GTD_IS_PROVIDER (provider), NULL);
-  g_return_val_if_fail (GTD_PROVIDER_GET_IFACE (provider)->get_edit_panel, NULL);
-
-  return GTD_PROVIDER_GET_IFACE (provider)->get_edit_panel (provider);
-}
-
 /**
  * gtd_provider_create_task:
  * @provider: a #GtdProvider

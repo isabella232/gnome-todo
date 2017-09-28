@@ -103,12 +103,6 @@ gtd_provider_goa_get_icon (GtdProvider *provider)
   return self->icon;
 }
 
-static const GtkWidget*
-gtd_provider_goa_get_edit_panel (GtdProvider *provider)
-{
-  return NULL;
-}
-
 static void
 gtd_provider_goa_create_task (GtdProvider *provider,
                               GtdTask     *task)
@@ -190,7 +184,6 @@ gtd_provider_iface_init (GtdProviderInterface *iface)
   iface->get_description = gtd_provider_goa_get_description;
   iface->get_enabled = gtd_provider_goa_get_enabled;
   iface->get_icon = gtd_provider_goa_get_icon;
-  iface->get_edit_panel = gtd_provider_goa_get_edit_panel;
   iface->create_task = gtd_provider_goa_create_task;
   iface->update_task = gtd_provider_goa_update_task;
   iface->remove_task = gtd_provider_goa_remove_task;
