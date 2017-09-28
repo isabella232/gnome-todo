@@ -26,8 +26,7 @@ gint
 main (gint  argc,
       char *argv[])
 {
-  GtdApplication *app;
-  int status;
+  g_autoptr (GtdApplication) app;
 
   bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -36,10 +35,6 @@ main (gint  argc,
   app = gtd_application_new ();
   g_application_set_default (G_APPLICATION (app));
 
-  status = g_application_run (G_APPLICATION (app), argc, argv);
-
-  g_object_unref (app);
-
-  return status;
+  return g_application_run (G_APPLICATION (app), argc, argv);
 }
 
