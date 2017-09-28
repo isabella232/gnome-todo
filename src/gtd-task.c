@@ -122,15 +122,15 @@ compare_by_subtasks (GtdTask **t1,
 {
   GtdTask *task1, *task2;
 
-  if (!t1 && !t2)
-    return  0;
-  if (!t1)
-    return  1;
-  if (!t2)
-    return -1;
-
   task1 = *t1;
   task2 = *t2;
+
+  if (!task1 && !task2)
+    return  0;
+  if (!task1)
+    return  1;
+  if (!task2)
+    return -1;
 
   if (share_same_ancestor (task1, task2))
     {
