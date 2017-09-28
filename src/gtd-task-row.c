@@ -351,8 +351,8 @@ gtd_task_row__date_changed_binding (GBinding     *binding,
                                     GValue       *to_value,
                                     gpointer      user_data)
 {
+  g_autofree gchar *new_label = NULL;
   GDateTime *dt;
-  gchar *new_label = NULL;
 
   g_return_val_if_fail (GTD_IS_TASK_ROW (user_data), FALSE);
 
@@ -360,7 +360,7 @@ gtd_task_row__date_changed_binding (GBinding     *binding,
 
   if (dt)
     {
-      GDateTime *today = g_date_time_new_now_local ();
+      g_autoptr (GDateTime) today = g_date_time_new_now_local ();
 
       if (g_date_time_get_year (dt) == g_date_time_get_year (today) &&
           g_date_time_get_month (dt) == g_date_time_get_month (today))
@@ -391,18 +391,13 @@ gtd_task_row__date_changed_binding (GBinding     *binding,
         {
           new_label = g_date_time_format (dt, "%x");
         }
-
-      g_date_time_unref (today);
-
     }
   else
     {
-      new_label = g_strdup (_("No date set"));
+      new_label = g_strdup ("");
     }
 
   g_value_set_string (to_value, new_label);
-
-  g_free (new_label);
 
   return TRUE;
 }
