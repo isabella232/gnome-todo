@@ -29,35 +29,35 @@
 
 struct _GtdTaskRow
 {
-  GtkListBoxRow      parent;
+  GtkListBoxRow       parent;
 
   /*<private>*/
-  GtkRevealer               *revealer;
+  GtkRevealer        *revealer;
 
-  GtkWidget                 *done_check;
-  GtkWidget                 *edit_panel;
-  GtkWidget                 *stack;
+  GtkWidget          *done_check;
+  GtkWidget          *edit_panel;
+  GtkWidget          *edit_panel_revealer;
+  GtkWidget          *stack;
 
   /* task widgets */
-  GtkEntry                  *title_label;
-  GtkLabel                  *task_date_label;
-  GtkLabel                  *task_list_label;
+  GtkEntry           *title_label;
+  GtkLabel           *task_date_label;
+  GtkLabel           *task_list_label;
 
   /* dnd widgets */
-  GtkWidget                 *dnd_box;
-  GtkWidget                 *dnd_event_box;
-  GtkWidget                 *dnd_icon;
-  gdouble                    clicked_x;
-  gdouble                    clicked_y;
+  GtkWidget          *dnd_box;
+  GtkWidget          *dnd_event_box;
+  GtkWidget          *dnd_icon;
+  gdouble             clicked_x;
+  gdouble             clicked_y;
 
-  gboolean                   handle_subtasks : 1;
+  gboolean            handle_subtasks : 1;
 
   /* data */
-  GtdTask                   *task;
+  GtdTask            *task;
 
-  gint                       destroy_row_timeout_id;
-
-  gboolean                   active;
+  gint                destroy_row_timeout_id;
+  gboolean            active;
 };
 
 #define PRIORITY_ICON_SIZE         8
@@ -65,7 +65,8 @@ struct _GtdTaskRow
 
 G_DEFINE_TYPE (GtdTaskRow, gtd_task_row, GTK_TYPE_LIST_BOX_ROW)
 
-enum {
+enum
+{
   ENTER,
   EXIT,
   REMOVE_TASK,
@@ -615,6 +616,7 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, dnd_icon);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, done_check);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, edit_panel);
+  gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, edit_panel_revealer);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, revealer);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, stack);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, task_date_label);
@@ -871,6 +873,8 @@ gtd_task_row_set_active (GtdTaskRow *self,
 
   gtk_list_box_row_set_activatable (GTK_LIST_BOX_ROW (self), !active);
   gtk_widget_set_can_focus (GTK_WIDGET (self), !active);
+
+  gtk_revealer_set_reveal_child (GTK_REVEALER (self->edit_panel_revealer), active);
 
   if (active)
     {
