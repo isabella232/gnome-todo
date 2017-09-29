@@ -31,12 +31,10 @@ struct _GtdEditPane
   GtkLabel          *date_label;
   GtkTextView       *notes_textview;
   GtkComboBoxText   *priority_combo;
-  GtkWidget         *title_entry;
 
   /* task bindings */
   GBinding          *notes_binding;
   GBinding          *priority_binding;
-  GBinding          *title_binding;
 
   GtdTask           *task;
 };
@@ -51,7 +49,6 @@ enum {
 
 enum
 {
-  EDIT_FINISHED,
   REMOVE_TASK,
   NUM_SIGNALS
 };
@@ -83,15 +80,6 @@ gtd_edit_pane__delete_button_clicked (GtkButton   *button,
                                       GtdEditPane *self)
 {
   g_signal_emit (self, signals[REMOVE_TASK], 0, self->task);
-}
-
-static void
-close_button_clicked_cb (GtkButton   *button,
-                         GtdEditPane *self)
-{
-  save_task (self);
-
-  g_signal_emit (self, signals[EDIT_FINISHED], 0, self->task);
 }
 
 static void
@@ -304,22 +292,6 @@ gtd_edit_pane_class_init (GtdEditPaneClass *klass)
                              G_PARAM_READWRITE));
 
   /**
-   * GtdEditPane::edit-finished:
-   *
-   * Emitted when the the user finishes editing the task, i.e. the pane is closed.
-   */
-  signals[EDIT_FINISHED] = g_signal_new ("edit-finished",
-                                         GTD_TYPE_EDIT_PANE,
-                                         G_SIGNAL_RUN_LAST,
-                                         0,
-                                         NULL,
-                                         NULL,
-                                         NULL,
-                                         G_TYPE_NONE,
-                                         1,
-                                         GTD_TYPE_TASK);
-
-  /**
    * GtdEditPane::task-removed:
    *
    * Emitted when the the user finishes wants to remove the task.
@@ -342,9 +314,7 @@ gtd_edit_pane_class_init (GtdEditPaneClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdEditPane, date_label);
   gtk_widget_class_bind_template_child (widget_class, GtdEditPane, notes_textview);
   gtk_widget_class_bind_template_child (widget_class, GtdEditPane, priority_combo);
-  gtk_widget_class_bind_template_child (widget_class, GtdEditPane, title_entry);
 
-  gtk_widget_class_bind_template_callback (widget_class, close_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, date_selected_cb);
   gtk_widget_class_bind_template_callback (widget_class, gtd_edit_pane__delete_button_clicked);
   gtk_widget_class_bind_template_callback (widget_class, gtd_edit_pane__no_date_button_clicked);
@@ -427,13 +397,6 @@ gtd_edit_pane_set_task (GtdEditPane *self,
                                                        self->priority_combo,
                                                        "active",
                                                        G_BINDING_BIDIRECTIONAL);
-
-      /* title */
-      self->priority_binding = g_object_bind_property (task,
-                                                       "title",
-                                                       self->title_entry,
-                                                       "text",
-                                                       G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
     }
 

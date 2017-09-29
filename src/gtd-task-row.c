@@ -37,6 +37,7 @@ struct _GtdTaskRow
   GtkWidget          *done_check;
   GtkWidget          *edit_panel;
   GtkWidget          *edit_panel_revealer;
+  GtkWidget          *title_entry;
   GtkWidget          *stack;
 
   /* task widgets */
@@ -149,10 +150,10 @@ get_dnd_icon (GtdTaskRow *self)
  */
 
 static void
-edit_finished_cb (GtdEditPane *edit_panel,
-                  GtdTask     *task,
-                  GtdTaskRow  *self)
+edit_finished_cb (GtkWidget  *button,
+                  GtdTaskRow *self)
 {
+  gtd_manager_update_task (gtd_manager_get_default (), self->task);
   gtd_task_row_set_active (self, FALSE);
 }
 
@@ -622,6 +623,7 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, task_date_label);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, task_list_label);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, title_label);
+  gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, title_entry);
 
   gtk_widget_class_bind_template_callback (widget_class, button_press_event);
   gtk_widget_class_bind_template_callback (widget_class, complete_check_toggled_cb);
@@ -704,6 +706,12 @@ gtd_task_row_set_task (GtdTaskRow *row,
                               "title",
                               row->title_label,
                               "label",
+                              G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+
+      g_object_bind_property (task,
+                              "title",
+                              row->title_entry,
+                              "text",
                               G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
       g_object_bind_property (task,

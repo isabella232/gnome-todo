@@ -81,6 +81,11 @@ taskrow.priority-hight:dir(rtl)  { border-right: solid 6px #cc0000; padding-righ
 
 taskrow.complete label { text-decoration-line: line-through; }
 
+taskrow entry.title {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
 /* dnd row */
 dndrow {
     background-color: rgba(0, 0, 0, 0.1);
@@ -100,15 +105,6 @@ list.extension-list row {
 /* circle button */
 button.circle {
     border-radius: 20px;
-}
-
-/*
- * Edit Pane
- */
-
-editpane entry.title {
-    font-size: 1.1rem;
-    font-weight: bold;
 }
 
 /*
