@@ -20,125 +20,123 @@
             <property name="orientation">vertical</property>
 
             <child>
-              <object class="GtkStack" id="stack">
+              <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="interpolate-size">True</property>
-                <property name="homogeneous">False</property>
-                <property name="transition-type">crossfade</property>
-                <property name="transition-duration">500</property>
+                <property name="margin-end">12</property>
+                <property name="margin-start">8</property>
+                <property name="margin-top">3</property>
+                <property name="margin-bottom">3</property>
+                <property name="height-request">32</property>
+                <property name="spacing">4</property>
 
-                <!-- Main page, visible when the task row is unfocused -->
+                <!-- Box with DnD margin -->
                 <child>
-                  <object class="GtkEventBox">
+                  <object class="GtkBox" id="dnd_box">
                     <property name="visible">True</property>
-                    <signal name="enter-notify-event" handler="mouse_over_event_cb" object="GtdTaskRow" swapped="no" />
-                    <signal name="leave-notify-event" handler="mouse_out_event_cb" object="GtdTaskRow" swapped="no" />
+                    <property name="can_focus">False</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="GtkEventBox" id="dnd_event_box">
+                    <property name="visible">True</property>
+                    <signal name="button-press-event" handler="button_press_event" object="GtdTaskRow" swapped="no" />
+                    <signal name="drag-begin" handler="drag_begin_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="drag-failed" handler="drag_failed_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="enter-notify-event" handler="mouse_over_dnd_event_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="leave-notify-event" handler="mouse_out_dnd_event_cb" object="GtdTaskRow" swapped="no" />
                     <child>
-                      <object class="GtkBox">
+                      <object class="GtkImage" id="dnd_icon">
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="margin-end">18</property>
-                        <property name="margin-start">8</property>
-                        <property name="margin-top">3</property>
-                        <property name="margin-bottom">3</property>
-                        <property name="height-request">32</property>
-                        <property name="spacing">4</property>
-
-                        <!-- Box with DnD margin -->
-                        <child>
-                          <object class="GtkBox" id="dnd_box">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                          </object>
-                        </child>
-
-                        <child>
-                          <object class="GtkEventBox" id="dnd_event_box">
-                            <property name="visible">True</property>
-                            <signal name="button-press-event" handler="button_press_event" object="GtdTaskRow" swapped="no" />
-                            <signal name="drag-begin" handler="drag_begin_cb" object="GtdTaskRow" swapped="no" />
-                            <signal name="drag-failed" handler="drag_failed_cb" object="GtdTaskRow" swapped="no" />
-                            <signal name="enter-notify-event" handler="mouse_over_dnd_event_cb" object="GtdTaskRow" swapped="no" />
-                            <signal name="leave-notify-event" handler="mouse_out_dnd_event_cb" object="GtdTaskRow" swapped="no" />
-                            <child>
-                              <object class="GtkImage" id="dnd_icon">
-                                <property name="visible">True</property>
-                                <property name="icon-name">open-menu-symbolic</property>
-                                <property name="pixel-size">12</property>
-                                <style>
-                                  <class name="dim-label" />
-                                </style>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-
-                        <child>
-                          <object class="GtkCheckButton" id="done_check">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">False</property>
-                            <property name="halign">center</property>
-                            <property name="valign">center</property>
-                            <property name="vexpand">True</property>
-                            <property name="draw_indicator">True</property>
-                            <property name="margin-start">6</property>
-                            <signal name="toggled" handler="complete_check_toggled_cb" object="GtdTaskRow" swapped="no" />
-                          </object>
-                        </child>
-
-                        <child>
-                          <object class="GtkLabel" id="title_label">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="hexpand">True</property>
-                            <property name="ellipsize">end</property>
-                            <property name="xalign">0.0</property>
-                          </object>
-                        </child>
-
-                        <child>
-                          <object class="GtkLabel" id="task_date_label">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="xalign">1.0</property>
-                            <style>
-                              <class name="dim-label"/>
-                            </style>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="task_list_label">
-                            <property name="visible">False</property>
-                            <property name="can_focus">False</property>
-                            <property name="xalign">0</property>
-                            <property name="max_width_chars">18</property>
-                            <property name="ellipsize">middle</property>
-                            <style>
-                              <class name="dim-label"/>
-                            </style>
-                          </object>
-                        </child>
-
+                        <property name="icon-name">open-menu-symbolic</property>
+                        <property name="pixel-size">12</property>
+                        <style>
+                          <class name="dim-label" />
+                        </style>
                       </object>
                     </child>
                   </object>
-                  <packing>
-                    <property name="name">unfocused</property>
-                  </packing>
                 </child>
 
-                <!-- Edit header page -->
+                <!-- Done checkbutton -->
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkCheckButton" id="done_check">
                     <property name="visible">True</property>
-                    <property name="margin-end">12</property>
-                    <property name="margin-start">12</property>
-                    <property name="margin-top">6</property>
-                    <property name="spacing">6</property>
-                    <property name="can_focus">False</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="vexpand">True</property>
+                    <property name="draw_indicator">True</property>
+                    <property name="margin-start">6</property>
+                    <property name="margin-end">6</property>
+                    <signal name="toggled" handler="complete_check_toggled_cb" object="GtdTaskRow" swapped="no" />
+                  </object>
+                </child>
 
+                <child>
+                  <object class="GtkStack" id="stack">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="interpolate-size">True</property>
+                    <property name="homogeneous">False</property>
+                    <property name="transition-type">crossfade</property>
+                    <property name="transition-duration">500</property>
+
+                    <!-- Main page, visible when the task row is unfocused -->
+                    <child>
+                      <object class="GtkEventBox">
+                        <property name="visible">True</property>
+                        <signal name="enter-notify-event" handler="mouse_over_event_cb" object="GtdTaskRow" swapped="no" />
+                        <signal name="leave-notify-event" handler="mouse_out_event_cb" object="GtdTaskRow" swapped="no" />
+                        <child>
+                          <object class="GtkBox">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+
+                            <child>
+                              <object class="GtkLabel" id="title_label">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="hexpand">True</property>
+                                <property name="ellipsize">end</property>
+                                <property name="xalign">0.0</property>
+                              </object>
+                            </child>
+
+                            <child>
+                              <object class="GtkLabel" id="task_date_label">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="xalign">1.0</property>
+                                <style>
+                                  <class name="dim-label"/>
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="task_list_label">
+                                <property name="visible">False</property>
+                                <property name="can_focus">False</property>
+                                <property name="xalign">0</property>
+                                <property name="max_width_chars">18</property>
+                                <property name="ellipsize">middle</property>
+                                <style>
+                                  <class name="dim-label"/>
+                                </style>
+                              </object>
+                            </child>
+
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="name">unfocused</property>
+                      </packing>
+                    </child>
+
+                    <!-- Edit header page -->
                     <child>
                       <object class="GtkEntry" id="title_entry">
                         <property name="visible">True</property>
@@ -149,13 +147,27 @@
                           <class name="title" />
                         </style>
                       </object>
+                      <packing>
+                        <property name="name">edit</property>
+                      </packing>
                     </child>
 
+                  </object>
+                </child>
+
+                <!-- Close button -->
+                <child>
+                  <object class="GtkRevealer" id="close_button_revealer">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="transition_type">slide-left</property>
+                    <property name="transition_duration" bind-source="edit_panel_revealer" bind-property="transition_duration" bind-flags="default|sync-create" />
+                    <property name="reveal-child" bind-source="edit_panel_revealer" bind-property="reveal-child" bind-flags="default" />
                     <child>
                       <object class="GtkButton" id="close_button">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
                         <signal name="clicked" handler="edit_finished_cb" object="GtdTaskRow" swapped="no"/>
                         <style>
                           <class name="flat" />
@@ -169,11 +181,7 @@
                         </child>
                       </object>
                     </child>
-
                   </object>
-                  <packing>
-                    <property name="name">edit</property>
-                  </packing>
                 </child>
 
               </object>
