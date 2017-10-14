@@ -360,7 +360,7 @@ gtd_list_selector_grid_item__button_press_event_cb (GtkWidget *widget,
         }
       else
         {
-          gtd_list_selector_item_set_selected (GTD_LIST_SELECTOR_ITEM (user_data), !item->selected);
+          gtk_widget_activate (user_data);
         }
 
       return GDK_EVENT_STOP;
