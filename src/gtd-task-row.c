@@ -38,6 +38,7 @@ struct _GtdTaskRow
   GtkWidget          *edit_panel;
   GtkWidget          *edit_panel_revealer;
   GtkWidget          *title_entry;
+  GtkWidget          *toggle_button;
   GtkWidget          *stack;
 
   /* task widgets */
@@ -150,11 +151,13 @@ get_dnd_icon (GtdTaskRow *self)
  */
 
 static void
-edit_finished_cb (GtkWidget  *button,
+toggle_active_cb (GtkWidget  *button,
                   GtdTaskRow *self)
 {
-  gtd_manager_update_task (gtd_manager_get_default (), self->task);
-  gtd_task_row_set_active (self, FALSE);
+  if (self->active)
+    gtd_manager_update_task (gtd_manager_get_default (), self->task);
+
+  gtd_task_row_set_active (self, !self->active);
 }
 
 static void
@@ -624,17 +627,18 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, task_list_label);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, title_label);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, title_entry);
+  gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, toggle_button);
 
   gtk_widget_class_bind_template_callback (widget_class, button_press_event);
   gtk_widget_class_bind_template_callback (widget_class, complete_check_toggled_cb);
   gtk_widget_class_bind_template_callback (widget_class, drag_begin_cb);
   gtk_widget_class_bind_template_callback (widget_class, drag_failed_cb);
-  gtk_widget_class_bind_template_callback (widget_class, edit_finished_cb);
   gtk_widget_class_bind_template_callback (widget_class, mouse_out_event_cb);
   gtk_widget_class_bind_template_callback (widget_class, mouse_out_dnd_event_cb);
   gtk_widget_class_bind_template_callback (widget_class, mouse_over_event_cb);
   gtk_widget_class_bind_template_callback (widget_class, mouse_over_dnd_event_cb);
   gtk_widget_class_bind_template_callback (widget_class, remove_task_cb);
+  gtk_widget_class_bind_template_callback (widget_class, toggle_active_cb);
 
   gtk_widget_class_set_css_name (widget_class, "taskrow");
 }
@@ -872,6 +876,8 @@ void
 gtd_task_row_set_active (GtdTaskRow *self,
                          gboolean    active)
 {
+  GtkStyleContext *context;
+
   g_return_if_fail (GTD_IS_TASK_ROW (self));
 
   if (self->active == active)
@@ -879,6 +885,15 @@ gtd_task_row_set_active (GtdTaskRow *self,
 
   self->active = active;
 
+  /* Update the arrow icon */
+  context = gtk_widget_get_style_context (self->toggle_button);
+
+  if (active)
+    gtk_style_context_add_class (context, "active");
+  else
+    gtk_style_context_remove_class (context, "active");
+
+  /* And the listbox */
   gtk_list_box_row_set_activatable (GTK_LIST_BOX_ROW (self), !active);
   gtk_widget_set_can_focus (GTK_WIDGET (self), !active);
 
