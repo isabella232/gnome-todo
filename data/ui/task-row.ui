@@ -70,7 +70,6 @@
                     <property name="vexpand">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="margin-start">6</property>
-                    <property name="margin-end">6</property>
                     <signal name="toggled" handler="complete_check_toggled_cb" object="GtdTaskRow" swapped="no" />
                   </object>
                 </child>
@@ -101,6 +100,7 @@
                                 <property name="can_focus">True</property>
                                 <property name="hexpand">True</property>
                                 <property name="ellipsize">end</property>
+                                <property name="margin-start">6</property>
                                 <property name="xalign">0.0</property>
                               </object>
                             </child>
