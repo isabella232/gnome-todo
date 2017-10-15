@@ -176,7 +176,7 @@
                           <object class="GtkImage">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="icon-name">window-close-symbolic</property>
+                            <property name="icon-name">pan-up-symbolic</property>
                           </object>
                         </child>
                       </object>
