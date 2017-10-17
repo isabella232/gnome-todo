@@ -3,7 +3,9 @@ stages:
   - build
 
 before_script:
-  - dnf install -y gcc meson ninja-build gettext gtk-doc glib2-devel gtk3-devel gnome-online-accounts-devel libpeas-devel evolution-data-server-devel
+  - dnf install -y gcc meson ninja-build gettext gtk-doc glib2-devel gtk3-devel
+    gnome-online-accounts-devel libpeas-devel evolution-data-server-devel
+    rest-devel json-glib-devel
 
 build-todo:
   stage: build
