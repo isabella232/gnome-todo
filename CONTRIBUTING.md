@@ -60,6 +60,7 @@ This is how it would look with a maximum width of 650px:
 1. Ensure your code compiles. Run `make` before creating the pull request.
 2. If you're adding new external API, it must be properly documented.
 3. The commit message is formatted as follows:
+
 ```
    component: <summary>
 
@@ -69,6 +70,7 @@ This is how it would look with a maximum width of 650px:
 
    <link to the bug ticket>
 ```
+
 4. You may merge the pull request in once you have the sign-off of the maintainers, or if you
    do not have permission to do that, you may request the second reviewer to merge it for you.
 
