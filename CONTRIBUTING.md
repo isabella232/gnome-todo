@@ -1,11 +1,20 @@
 # Contributing to GNOME To Do
 
-When contributing to the development of GNOME To Do, please first discuss the change you wish to
-make via issue, email, or any other method with the maintainers before making a change.
+When contributing to the development of GNOME To Do, please first discuss the change
+you wish to make via issue, email, or any other method with the maintainers before
+making a change.
 
-Please note we have a code of conduct, please follow it in all your interactions with the project.
+Please note we have a [Code of Conduct](#code-of-conduct), please follow it in all
+your interactions with the project.
 
-## Issues, issues and more issues!
+# Table of contents
+1. [Creating an issue](#issues-issues-and-more-issues)
+  1. [Template](#issue-template)
+  2. [Example of a good issue](#example-task-rows-should-have-a-maximum-width)
+2. [Pull requests](#pull-request-process)
+3. [Code of Conduct](#code-of-conduct)
+
+# Issues, issues and more issues!
 
 There are many ways you can contribute to GNOME To Do, and all of them involve creating issues
 in [GNOME To Do issue tracker](https://gitlab.gnome.org/GNOME/gnome-todo/issues). This is the
@@ -21,37 +30,62 @@ ticket:
  3. A checklist of Design tasks
  4. A checklist of QA tasks
 
+## Issue template
+```
+[Title of the issue or feature request]
+
+Detailed description of the issue. Put as much information as you can, potentially
+with images showing the issue or mockups of the proposed feature.
+
+If it's an issue, add the steps to reproduce like this:
+
+Steps to reproduce:
+
+1. Open GNOME To Do
+2. Create a task
+3. ...
+
+## Design Tasks
+
+* [ ]  design tasks
+
+## Development Tasks
+
+* [ ]  development tasks
+
+## QA Tasks
+
+* [ ]  qa (quality assurance) tasks
+```
+
+
 This is an example of a good and informative issue:
 
 ---
-
-### Task rows should have a maximum width
+<pre>
+<h1>Example: Task rows should have a maximum width</h1>
 
 When using a very wide window, task rows grow super wide currently, because they
 always take up the entire width of the window. This is not great for window sizes
 larger than about 600px.
 
-![Wide rows][wide-rows]
+<img src="https://gitlab.gnome.org/GNOME/gnome-todo/uploads/a414239a44c5b2714634df5cb85a7a78/too-wide.png" width="400px" />
 
 This is how it would look with a maximum width of 650px:
 
-![Cool rows][cool-rows]
+<img src="https://gitlab.gnome.org/GNOME/gnome-todo/uploads/7dfc77b1c3cc942cf1977770ea15b198/too-wide-fixed.png" width="400px" />
 
-[wide-rows]: https://gitlab.gnome.org/GNOME/gnome-todo/uploads/a414239a44c5b2714634df5cb85a7a78/too-wide.png
-[cool-rows]: https://gitlab.gnome.org/GNOME/gnome-todo/uploads/7dfc77b1c3cc942cf1977770ea15b198/too-wide-fixed.png
+<h3>Design Tasks</h3>
+* [x] Define how much rows should expand horizontally
 
-#### Design Tasks
+<h3>Development Tasks</h3>
+* [ ] Implement maximum-width rows
 
- - [x] Define how much rows should expand horizontally
+<h3>QA Tasks</h3>
+* [ ] Rows don't grow horizontally above 650px
+* [ ] No regressions were introduced
 
-#### Development Tasks
-
- - [ ] Implement maximum-width rows
-
-#### QA Tasks
-
- - [ ] Rows don't grow horizontally above 650px
- - [ ] No regressions were introduced
+</pre>
 
 ---
 
