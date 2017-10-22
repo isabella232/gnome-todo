@@ -64,4 +64,5 @@ po/remove-potcdate.sed
 po/remove-potcdate.sin
 po/stamp-po
 _build
+.gitlab
 **/tags.*
