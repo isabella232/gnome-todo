@@ -55,30 +55,17 @@ enum {
 static void
 get_date_offset (GDateTime *dt,
                  gint      *days_diff,
-                 gint      *next_year_diff)
+                 gint      *years_diff)
 {
-  g_autoptr (GDateTime) now, next_year;
+  g_autoptr (GDateTime) now;
 
   now = g_date_time_new_now_local ();
 
-  next_year = g_date_time_new_utc (g_date_time_get_year (now) + 1,
-                                   G_DATE_JANUARY,
-                                   1,
-                                   0, 0, 0);
+  if (days_diff)
+    *days_diff = g_date_time_difference (dt, now) / G_TIME_SPAN_DAY;
 
-  if (g_date_time_get_year (dt) == g_date_time_get_year (now))
-    {
-      if (days_diff)
-        *days_diff = g_date_time_get_day_of_year (dt) - g_date_time_get_day_of_year (now);
-    }
-  else
-    {
-      if (next_year_diff)
-        *next_year_diff = g_date_time_difference (dt, now) / G_TIME_SPAN_DAY;
-    }
-
-  if (next_year_diff)
-    *next_year_diff = g_date_time_difference (next_year, now) / G_TIME_SPAN_DAY;
+  if (years_diff)
+    *years_diff = g_date_time_get_year (dt) - g_date_time_get_year (now);
 }
 
 static gchar*
@@ -87,15 +74,15 @@ get_string_for_date (GDateTime *dt,
 {
   gchar *str;
   gint days_diff;
-  gint next_year_diff;
+  gint years_diff;
 
   /* This case should never happen */
   if (!dt)
     return g_strdup (_("No date set"));
 
-  days_diff = next_year_diff = 0;
+  days_diff = years_diff = 0;
 
-  get_date_offset (dt, &days_diff, &next_year_diff);
+  get_date_offset (dt, &days_diff, &years_diff);
 
   if (days_diff < 0)
     {
@@ -113,7 +100,7 @@ get_string_for_date (GDateTime *dt,
     {
       str = g_date_time_format (dt, "%A"); // Weekday name
     }
-  else if (days_diff >= 7 && days_diff < next_year_diff)
+  else if (days_diff >= 7 && years_diff == 0)
     {
       str = g_date_time_format (dt, "%B"); // Full month name
     }
