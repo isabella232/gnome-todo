@@ -36,6 +36,9 @@ struct _GtdPluginTodoist
 
   GtkWidget          *preferences;
 
+  GNetworkMonitor    *network_monitor;
+
+  GoaClient          *client;
   /* Providers */
   GList              *providers;
 };
@@ -173,12 +176,11 @@ goa_client_ready (GObject           *source,
                   GAsyncResult      *res,
                   GtdPluginTodoist  *self)
 {
-  GoaClient *client;
   GList *accounts;
   GList *l;
 
-  client = goa_client_new_finish (res, NULL);
-  accounts = goa_client_get_accounts (client);
+  self->client = goa_client_new_finish (res, NULL);
+  accounts = goa_client_get_accounts (self->client);
 
   for (l = accounts; l != NULL; l = l->next)
     {
@@ -199,13 +201,68 @@ goa_client_ready (GObject           *source,
     }
 
   /* Connect signals */
-  g_signal_connect (client, "account-added", G_CALLBACK (gtd_plugin_todoist_account_added), self);
-  g_signal_connect (client, "account-removed", G_CALLBACK (gtd_plugin_todoist_account_removed), self);
-  g_signal_connect (client, "account-changed", G_CALLBACK (gtd_plugin_todoist_account_changed), self);
+  g_signal_connect (self->client, "account-added", G_CALLBACK (gtd_plugin_todoist_account_added), self);
+  g_signal_connect (self->client, "account-removed", G_CALLBACK (gtd_plugin_todoist_account_removed), self);
+  g_signal_connect (self->client, "account-changed", G_CALLBACK (gtd_plugin_todoist_account_changed), self);
 
-  gtd_todoist_preferences_panel_set_client (GTD_TODOIST_PREFERENCES_PANEL (self->preferences), client);
+  gtd_todoist_preferences_panel_set_client (GTD_TODOIST_PREFERENCES_PANEL (self->preferences), self->client);
 
   g_list_free_full (accounts,  g_object_unref);
+}
+
+static void
+connectivity_lost (GNetworkMonitor   *monitor,
+                   gboolean           available,
+                   GtdPluginTodoist  *self)
+{
+  GSocketConnectable *addr;
+  gboolean status;
+  GList *l;
+  GError *error;
+
+  error = NULL;
+  addr = g_network_address_new ("www.todoist/com", 80);
+
+  status = g_network_monitor_can_reach (self->network_monitor,
+                                        addr,
+                                        NULL,
+                                        &error);
+
+  g_message ("toodist reachable %d", status);
+
+  if (!status)
+    {
+      for (l = self->providers; l != NULL;)
+      {
+        GList *curr;
+        GList *next;
+        GtdProviderTodoist *provider;
+
+        curr = l;
+        next = curr->next;
+
+        provider = GTD_PROVIDER_TODOIST (l->data);
+
+        self->providers = g_list_remove (self->providers, l->data);
+
+        g_signal_emit_by_name (self, "provider-removed", provider);
+
+        l = next;
+      }
+
+      /* Disconnect handlers */
+      g_signal_handlers_disconnect_by_func (self->client,
+                                            gtd_plugin_todoist_account_added,
+                                            self);
+
+      g_signal_handlers_disconnect_by_func (self->client,
+                                            gtd_plugin_todoist_account_removed,
+                                            self);
+
+      g_signal_handlers_disconnect_by_func (self->client,
+                                            gtd_plugin_todoist_account_changed,
+                                            self);
+    }
 }
 
 static void
@@ -269,8 +326,11 @@ static void
 gtd_plugin_todoist_init (GtdPluginTodoist *self)
 {
   self->preferences = GTK_WIDGET (gtd_todoist_preferences_panel_new ());
-
+  self->network_monitor = g_network_monitor_get_default ();
   goa_client_new (NULL, (GAsyncReadyCallback) goa_client_ready, self);
+
+  /* Connect network-changed signal */
+  g_signal_connect (self->network_monitor, "network-changed", G_CALLBACK (connectivity_lost), self);
 }
 
 /* Empty class_finalize method */
