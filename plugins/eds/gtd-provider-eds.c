@@ -75,6 +75,21 @@ task_data_new (GtdProviderEds *provider,
 }
 
 static void
+ensure_offline_sync (GtdProviderEds *self,
+                     ESource        *source)
+{
+  GtdProviderEdsPrivate *priv;
+  ESourceOffline *extension;
+
+  priv = gtd_provider_eds_get_instance_private (self);
+
+  extension = e_source_get_extension (source, E_SOURCE_EXTENSION_OFFLINE);
+  e_source_offline_set_stay_synchronized (extension, TRUE);
+
+  e_source_registry_commit_source (priv->source_registry, source, NULL, NULL, NULL);
+}
+
+static void
 gtd_provider_eds_set_default (GtdProviderEds *self,
                               GtdTaskList    *list)
 {
@@ -191,6 +206,9 @@ gtd_provider_eds_on_client_connected (GObject      *source_object,
 
   /* creates a new task list */
   list = gtd_task_list_eds_new (GTD_PROVIDER (self), source);
+
+  /* ensure tasklist is cached offline */
+  ensure_offline_sync (self, source);
 
   /* it's not ready until we fetch the list of tasks from client */
   gtd_object_set_ready (GTD_OBJECT (list), FALSE);
