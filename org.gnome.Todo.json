@@ -109,7 +109,7 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "git://git.gnome.org/gnome-todo"
+                    "url": "https://gitlab.gnome.org/GNOME/gnome-todo.git"
                 }
             ]
         }
