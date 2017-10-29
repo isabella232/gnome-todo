@@ -417,7 +417,7 @@ gtd_list_selector_grid_init (GtdListSelectorGrid *self)
   gtk_container_set_border_width (GTK_CONTAINER (self), 12);
   gtk_widget_set_hexpand (widget, TRUE);
   gtk_widget_set_vexpand (widget, TRUE);
-  gtk_widget_set_halign (widget, GTK_ALIGN_FILL);
+  gtk_widget_set_halign (widget, GTK_ALIGN_CENTER);
   gtk_widget_set_valign (widget, GTK_ALIGN_START);
   gtk_widget_show_all (widget);
 }
