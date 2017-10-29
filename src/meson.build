@@ -42,6 +42,7 @@ sources = files(
   'views/gtd-list-selector-list.c',
   'views/gtd-list-selector-list-item.c',
   'views/gtd-list-selector-panel.c',
+  'widgets/gtd-expandable-entry.c',
   'gtd-application.c',
   'gtd-arrow-frame.c',
   'gtd-dnd-row.c',
@@ -87,7 +88,8 @@ incs = [
     'provider',
     'notification',
     'interfaces',
-    'views'
+    'views',
+    'widgets',
   )
 ]
 
