@@ -54,7 +54,9 @@ label.main-title {
 }
 
 
-/* GtdTaskRow */
+/*
+ * GtdTaskRow, GtdNewTaskRow & GtdDndRow
+ */
 
 taskrow {
     border-radius: 2px;
