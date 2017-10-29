@@ -17,6 +17,7 @@
  */
 
 #include "gtd-edit-pane.h"
+#include "gtd-expandable-entry.h"
 #include "gtd-manager.h"
 #include "gtd-provider.h"
 #include "gtd-rows-common-private.h"
@@ -40,10 +41,8 @@ struct _GtdTaskRow
   GtkWidget          *edit_panel_revealer;
   GtkWidget          *title_entry;
   GtkWidget          *toggle_button;
-  GtkWidget          *stack;
 
   /* task widgets */
-  GtkEntry           *title_label;
   GtkLabel           *task_date_label;
   GtkLabel           *task_list_label;
 
@@ -532,6 +531,8 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   widget_class->key_press_event = gtd_task_row__key_press_event;
   widget_class->get_preferred_width = gtd_row_get_preferred_width_with_max;
 
+  g_type_ensure (GTD_TYPE_EXPANDABLE_ENTRY);
+
   /**
    * GtdTaskRow::handle-subtasks:
    *
@@ -614,10 +615,8 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, edit_panel);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, edit_panel_revealer);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, revealer);
-  gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, stack);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, task_date_label);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, task_list_label);
-  gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, title_label);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, title_entry);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, toggle_button);
 
@@ -698,12 +697,6 @@ gtd_task_row_set_task (GtdTaskRow *row,
       gtk_label_set_label (row->task_list_label, gtd_task_list_get_name (gtd_task_get_list (task)));
 
       g_signal_handlers_block_by_func (row->done_check, complete_check_toggled_cb, row);
-
-      g_object_bind_property (task,
-                              "title",
-                              row->title_label,
-                              "label",
-                              G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
       g_object_bind_property (task,
                               "title",
@@ -889,16 +882,7 @@ gtd_task_row_set_active (GtdTaskRow *self,
   /* And the listbox */
   gtk_revealer_set_reveal_child (GTK_REVEALER (self->edit_panel_revealer), active);
 
-  if (active)
-    {
-      gtk_stack_set_visible_child_name (GTK_STACK (self->stack), "edit");
-      g_signal_emit (self, signals[ENTER], 0);
-    }
-  else
-    {
-      gtk_stack_set_visible_child_name (GTK_STACK (self->stack), "unfocused");
-      g_signal_emit (self, signals[EXIT], 0);
-    }
+  g_signal_emit (self, active ? signals[ENTER] : signals[EXIT], 0);
 }
 
 void
