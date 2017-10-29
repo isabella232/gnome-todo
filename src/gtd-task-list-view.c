@@ -829,7 +829,11 @@ listbox_row_activated (GtkListBox      *listbox,
   if (!GTD_IS_TASK_ROW (row))
     return;
 
-  set_active_row (self, GTK_WIDGET (row));
+  /* Toggle the row */
+  if (gtd_task_row_get_active (GTD_TASK_ROW (row)))
+    set_active_row (self, NULL);
+  else
+    set_active_row (self, GTK_WIDGET (row));
 }
 
 static void

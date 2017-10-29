@@ -437,15 +437,6 @@ gtd_task_row__key_press_event (GtkWidget   *row,
   return FALSE;
 }
 
-static gboolean
-gtd_task_row_focus_in_event (GtkWidget     *widget,
-                             GdkEventFocus *event)
-{
-  gtd_task_row_set_active (GTD_TASK_ROW (widget), TRUE);
-
-  return GDK_EVENT_PROPAGATE;
-}
-
 
 /*
  * GObject overrides
@@ -538,7 +529,6 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   object_class->get_property = gtd_task_row_get_property;
   object_class->set_property = gtd_task_row_set_property;
 
-  widget_class->focus_in_event = gtd_task_row_focus_in_event;
   widget_class->key_press_event = gtd_task_row__key_press_event;
   widget_class->get_preferred_width = gtd_row_get_preferred_width_with_max;
 
@@ -649,6 +639,7 @@ static void
 gtd_task_row_init (GtdTaskRow *self)
 {
   self->handle_subtasks = TRUE;
+  self->active = FALSE;
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
@@ -896,9 +887,6 @@ gtd_task_row_set_active (GtdTaskRow *self,
     gtk_style_context_remove_class (context, "active");
 
   /* And the listbox */
-  gtk_list_box_row_set_activatable (GTK_LIST_BOX_ROW (self), !active);
-  gtk_widget_set_can_focus (GTK_WIDGET (self), !active);
-
   gtk_revealer_set_reveal_child (GTK_REVEALER (self->edit_panel_revealer), active);
 
   if (active)
