@@ -1,5 +1,17 @@
 ==============
-Version 3.26.0
+Version 3.26.2
+==============
+
+Project:
+	* Fix developer documentation generation (Iñigo Martínez)
+	* Fix day logic in Scheduled panel (Mohammed Sadiq)
+	* Add offline synchronization support
+	* Correctly compare tasks
+	* Fix Flatpak URL
+	* Translation updates
+
+==============
+Version 3.26.1
 ==============
 
 Project:

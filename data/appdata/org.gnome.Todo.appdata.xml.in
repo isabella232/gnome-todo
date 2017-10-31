@@ -51,6 +51,24 @@
   </kudos>
 
   <releases>
+
+    <release date="2017-10-31" version="3.26.2">
+      <description>
+        <p>
+          We're proud to annouce GNOME To Do 3.26.2, the third release in the 3.26 stable
+          series! The highlight of this release if the offline synchronization support.
+        </p>
+        <p>This release also updates translations, and adds new translations.</p>
+        <p>Thanks to everyone that contributed to GNOME To Do this cycle!</p>
+      </description>
+    </release>
+
+    <release date="2017-09-21" version="3.26.1">
+      <description>
+        <p> This is a hotfix release to fix critical issues. </p>
+        </description>
+    </release>
+
     <release date="2017-09-11" version="3.26.0">
       <description>
         <p>
