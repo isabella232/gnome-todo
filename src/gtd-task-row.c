@@ -51,8 +51,8 @@ struct _GtdTaskRow
   GtkWidget          *dnd_box;
   GtkWidget          *dnd_event_box;
   GtkWidget          *dnd_icon;
-  gdouble             clicked_x;
-  gdouble             clicked_y;
+  gint                clicked_x;
+  gint                clicked_y;
 
   gboolean            handle_subtasks : 1;
 
@@ -193,8 +193,18 @@ button_press_event (GtkWidget      *widget,
                     GdkEventButton *event,
                     GtdTaskRow     *self)
 {
-  self->clicked_x = event->x;
-  self->clicked_y = event->y;
+  gint real_x;
+  gint real_y;
+
+  gtk_widget_translate_coordinates (widget,
+                                    GTK_WIDGET (self),
+                                    event->x,
+                                    event->y,
+                                    &real_x,
+                                    &real_y);
+
+  self->clicked_x = real_x;
+  self->clicked_y = real_y;
 
   return GDK_EVENT_PROPAGATE;
 }
@@ -205,17 +215,8 @@ drag_begin_cb (GtkWidget      *event_box,
                GtdTaskRow     *self)
 {
   GtkWidget *widget, *new_row;
-  gint real_x;
-  gint real_y;
 
   widget = GTK_WIDGET (self);
-
-  gtk_widget_translate_coordinates (event_box,
-                                    widget,
-                                    self->clicked_x,
-                                    self->clicked_y,
-                                    &real_x,
-                                    &real_y);
 
   set_cursor (widget, "grabbing");
 
@@ -229,7 +230,7 @@ drag_begin_cb (GtkWidget      *event_box,
                                gtk_widget_get_allocated_width (widget),
                                gtk_widget_get_allocated_height (widget));
 
-  gtk_drag_set_icon_widget (context, new_row, real_x, real_y);
+  gtk_drag_set_icon_widget (context, new_row, self->clicked_x, self->clicked_y);
 
   gtk_widget_hide (widget);
 }
@@ -907,4 +908,12 @@ gtd_task_row_set_sizegroups (GtdTaskRow   *self,
 {
   gtk_size_group_add_widget (name_group, GTK_WIDGET (self->task_list_label));
   gtk_size_group_add_widget (name_group, GTK_WIDGET (self->task_date_label));
+}
+
+gint
+gtd_task_row_get_x_offset (GtdTaskRow *self)
+{
+  g_return_val_if_fail (GTD_IS_TASK_ROW (self), -1);
+
+  return self->clicked_x;
 }

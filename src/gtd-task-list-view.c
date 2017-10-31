@@ -1333,12 +1333,18 @@ listbox_drag_motion (GtkListBox      *listbox,
 {
   GtdTaskListViewPrivate *priv;
   GtkListBoxRow *hovered_row;
+  GtkListBoxRow *source_row;
   GtkListBoxRow *task_row;
   GtkListBoxRow *row_above_dnd;
+  GtkWidget *source_widget;
   gint row_x, row_y, row_height;
 
   priv = gtd_task_list_view_get_instance_private (self);
+  source_widget = gtk_drag_get_source_widget (context);
+  source_row = GTK_LIST_BOX_ROW (gtk_widget_get_ancestor (source_widget, GTK_TYPE_LIST_BOX_ROW));
   hovered_row = gtk_list_box_get_row_at_y (listbox, y);
+
+  x -= gtd_task_row_get_x_offset (GTD_TASK_ROW (source_row));
 
   /*
    * When not hovering any row, we still have to make sure that the listbox is a valid

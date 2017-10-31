@@ -199,7 +199,7 @@ gtd_dnd_row_drag_motion (GtkWidget      *widget,
       gint offset;
 
       task = gtd_task_row_get_task (GTD_TASK_ROW (self->row_above));
-      offset = gtk_widget_get_margin_start (self->box) + gtk_widget_get_allocated_width (self->icon) + 12;
+      offset = gtk_widget_get_margin_start (self->box) + gtk_widget_get_allocated_width (self->icon);
       self->depth = CLAMP (floor ((x - alloc.x - offset) / 32),
                            0,
                            gtd_task_get_depth (task) + 1);

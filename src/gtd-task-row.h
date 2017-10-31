@@ -61,6 +61,8 @@ void                      gtd_task_row_set_sizegroups           (GtdTaskRow     
                                                                  GtkSizeGroup        *name_group,
                                                                  GtkSizeGroup        *date_group);
 
+gint                      gtd_task_row_get_x_offset             (GtdTaskRow          *self);
+
 G_END_DECLS
 
 #endif /* GTD_TASK_ROW_H */
