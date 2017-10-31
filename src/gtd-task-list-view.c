@@ -1452,6 +1452,8 @@ success:
   return TRUE;
 
 fail:
+  gdk_drag_status (context, GDK_ACTION_MOVE, time);
+
   return FALSE;
 }
 
