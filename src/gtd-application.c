@@ -138,12 +138,12 @@ gtd_application_show_about (GSimpleAction *simple,
 
   if (g_date_time_get_year (date) <= created_year)
     {
-      copyright = g_strdup_printf (_("Copyright \xC2\xA9 %d "
+      copyright = g_strdup_printf (_("Copyright \xC2\xA9 %1$d "
                                      "The To Do authors"), created_year);
     }
   else
     {
-      copyright = g_strdup_printf (_("Copyright \xC2\xA9 %d\xE2\x80\x93%d "
+      copyright = g_strdup_printf (_("Copyright \xC2\xA9 %1$d\xE2\x80\x93%2$d "
                                      "The To Do authors"), created_year, g_date_time_get_year (date));
     }
 
