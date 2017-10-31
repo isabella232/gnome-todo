@@ -73,7 +73,7 @@ static void           gtd_application_quit                        (GSimpleAction
 G_DEFINE_TYPE_WITH_PRIVATE (GtdApplication, gtd_application, GTK_TYPE_APPLICATION)
 
 static GOptionEntry cmd_options[] = {
-  { "quit", 'q', 0, G_OPTION_ARG_NONE, NULL, N_("Quit GNOME ToDo"), NULL }
+  { "quit", 'q', 0, G_OPTION_ARG_NONE, NULL, N_("Quit GNOME To Do"), NULL }
 };
 
 static const GActionEntry gtd_application_entries[] = {
