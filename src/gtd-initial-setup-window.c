@@ -240,6 +240,6 @@ gtd_initial_setup_window_new (GtdApplication *application)
 
   return g_object_new (GTD_TYPE_INITIAL_SETUP_WINDOW,
                        "application", application,
-                       "manager", gtd_application_get_manager (application),
+                       "manager", gtd_manager_get_default (),
                        NULL);
 }

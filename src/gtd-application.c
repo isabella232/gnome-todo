@@ -33,21 +33,14 @@
 #include <girepository.h>
 #include <glib/gi18n.h>
 
-typedef struct
-{
-  GtdManager     *manager;
-
-  GtkWidget      *window;
-  GtkWidget      *plugin_dialog;
-  GtkWidget      *initial_setup;
-} GtdApplicationPrivate;
 
 struct _GtdApplication
 {
   GtkApplication         application;
 
-  /*< private >*/
-  GtdApplicationPrivate *priv;
+  GtkWidget             *window;
+  GtkWidget             *plugin_dialog;
+  GtkWidget             *initial_setup;
 };
 
 static void           gtd_application_activate_action             (GSimpleAction        *simple,
@@ -70,7 +63,7 @@ static void           gtd_application_quit                        (GSimpleAction
                                                                    GVariant             *parameter,
                                                                    gpointer              user_data);
 
-G_DEFINE_TYPE_WITH_PRIVATE (GtdApplication, gtd_application, GTK_TYPE_APPLICATION)
+G_DEFINE_TYPE (GtdApplication, gtd_application, GTK_TYPE_APPLICATION)
 
 static GOptionEntry cmd_options[] = {
   { "quit", 'q', 0, G_OPTION_ARG_NONE, NULL, N_("Quit GNOME To Do"), NULL }
@@ -89,10 +82,10 @@ gtd_application_activate_action (GSimpleAction *simple,
                                  GVariant      *parameter,
                                  gpointer       user_data)
 {
-  GtdApplicationPrivate *priv = GTD_APPLICATION (user_data)->priv;
+  GtdApplication *self = GTD_APPLICATION (user_data);
 
-  gtk_widget_show (priv->window);
-  gtk_window_present (GTK_WINDOW (priv->window));
+  gtk_widget_show (self->window);
+  gtk_window_present (GTK_WINDOW (self->window));
 }
 
 static void
@@ -109,9 +102,9 @@ gtd_application_show_extensions (GSimpleAction *simple,
                                  GVariant      *parameter,
                                  gpointer       user_data)
 {
-  GtdApplicationPrivate *priv = GTD_APPLICATION (user_data)->priv;
+  GtdApplication *self = GTD_APPLICATION (user_data);
 
-  gtk_widget_show (priv->plugin_dialog);
+  gtk_widget_show (self->plugin_dialog);
 }
 
 static void
@@ -119,10 +112,10 @@ gtd_application_show_about (GSimpleAction *simple,
                             GVariant      *parameter,
                             gpointer       user_data)
 {
-  GtdApplicationPrivate *priv = GTD_APPLICATION (user_data)->priv;
-  char *copyright;
-  GDateTime *date;
-  int created_year = 2015;
+  g_autofree gchar *copyright = NULL;
+  g_autoptr (GDateTime) date = NULL;
+  GtdApplication *self;
+  gint created_year = 2015;
 
   static const gchar *authors[] = {
     "Emmanuele Bassi <ebassi@gnome.org>",
@@ -140,6 +133,7 @@ gtd_application_show_about (GSimpleAction *simple,
     NULL
   };
 
+  self = GTD_APPLICATION (user_data);
   date = g_date_time_new_now_local ();
 
   if (g_date_time_get_year (date) <= created_year)
@@ -153,7 +147,7 @@ gtd_application_show_about (GSimpleAction *simple,
                                      "The To Do authors"), created_year, g_date_time_get_year (date));
     }
 
-  gtk_show_about_dialog (GTK_WINDOW (priv->window),
+  gtk_show_about_dialog (GTK_WINDOW (self->window),
                          "program-name", _("To Do"),
                          "version", VERSION,
                          "copyright", copyright,
@@ -163,8 +157,6 @@ gtd_application_show_about (GSimpleAction *simple,
                          "logo-icon-name", "org.gnome.Todo",
                          "translator-credits", _("translator-credits"),
                          NULL);
-  g_free (copyright);
-  g_date_time_unref (date);
 }
 
 static void
@@ -172,9 +164,9 @@ gtd_application_quit (GSimpleAction *simple,
                       GVariant      *parameter,
                       gpointer       user_data)
 {
-  GtdApplicationPrivate *priv = GTD_APPLICATION (user_data)->priv;
+  GtdApplication *self = GTD_APPLICATION (user_data);
 
-  gtk_widget_destroy (priv->window);
+  gtk_widget_destroy (self->window);
 }
 
 GtdApplication *
@@ -190,16 +182,10 @@ gtd_application_new (void)
 }
 
 static void
-run_window (GtdApplication *application)
+run_window (GtdApplication *self)
 {
-  GtdApplicationPrivate *priv;
-
-  g_return_if_fail (GTD_IS_APPLICATION (application));
-
-  priv = application->priv;
-
-  gtk_widget_show (priv->window);
-  gtk_window_present (GTK_WINDOW (priv->window));
+  gtk_widget_show (self->window);
+  gtk_window_present (GTK_WINDOW (self->window));
 }
 
 /*
@@ -261,27 +247,24 @@ gtd_application_finalize (GObject *object)
 static void
 gtd_application_startup (GApplication *application)
 {
-  GtdApplicationPrivate *priv;
+  GtdApplication *self;
   g_autoptr (GtkCssProvider) css_provider;
   g_autoptr (GFile) css_file;
   g_autofree gchar *theme_name, *theme_uri;
 
-  priv = GTD_APPLICATION (application)->priv;
+  self = GTD_APPLICATION (application);
 
   /* add actions */
-  g_action_map_add_action_entries (G_ACTION_MAP (application),
+  g_action_map_add_action_entries (G_ACTION_MAP (self),
                                    gtd_application_entries,
                                    G_N_ELEMENTS (gtd_application_entries),
-                                   application);
+                                   self);
 
   G_APPLICATION_CLASS (gtd_application_parent_class)->startup (application);
 
-  /* manager */
-  priv->manager = gtd_manager_get_default ();
-
   /* window */
   gtk_window_set_default_icon_name ("org.gnome.Todo");
-  priv->window = gtd_window_new (GTD_APPLICATION (application));
+  self->window = gtd_window_new (self);
 
   /* CSS provider */
   css_provider = gtk_css_provider_new ();
@@ -299,12 +282,12 @@ gtd_application_startup (GApplication *application)
     gtk_css_provider_load_from_resource (css_provider, "/org/gnome/todo/theme/Adwaita.css");
 
   /* plugin dialog */
-  priv->plugin_dialog = gtd_plugin_dialog_new ();
+  self->plugin_dialog = gtd_plugin_dialog_new ();
 
-  gtk_window_set_transient_for (GTK_WINDOW (priv->plugin_dialog), GTK_WINDOW (priv->window));
+  gtk_window_set_transient_for (GTK_WINDOW (self->plugin_dialog), GTK_WINDOW (self->window));
 
   /* Load the plugins */
-  gtd_manager_load_plugins (priv->manager);
+  gtd_manager_load_plugins (gtd_manager_get_default ());
 }
 
 static gint
@@ -355,17 +338,5 @@ gtd_application_class_init (GtdApplicationClass *klass)
 static void
 gtd_application_init (GtdApplication *self)
 {
-  GtdApplicationPrivate *priv = gtd_application_get_instance_private (self);
-
-  self->priv = priv;
-
   g_application_add_main_option_entries (G_APPLICATION (self), cmd_options);
-}
-
-GtdManager*
-gtd_application_get_manager (GtdApplication *app)
-{
-  g_return_val_if_fail (GTD_IS_APPLICATION (app), NULL);
-
-  return app->priv->manager;
 }

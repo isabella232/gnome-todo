@@ -631,7 +631,7 @@ gtd_window_new (GtdApplication *application)
 {
   return g_object_new (GTD_TYPE_WINDOW,
                        "application", application,
-                       "manager",     gtd_application_get_manager (application),
+                       "manager", gtd_manager_get_default (),
                        NULL);
 }
 
