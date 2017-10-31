@@ -70,6 +70,7 @@ taskrow:dir(rtl):not(.new-task-row) { padding-right: 6px; }
 taskrow entry {
     padding: 6px;
     border: none;
+    border-radius: 2px;
 }
 
 taskrow.priority-low:dir(ltr)    { border-left:  solid 6px #3465a4; padding-left:  0; }
