@@ -219,6 +219,7 @@ drag_begin_cb (GtkWidget      *event_box,
                GtdTaskRow     *self)
 {
   GtkWidget *widget, *new_row;
+  gint x_offset;
 
   widget = GTK_WIDGET (self);
 
@@ -230,8 +231,15 @@ drag_begin_cb (GtkWidget      *event_box,
    */
   new_row = create_transient_row (self);
 
+  if (gtk_widget_get_direction (GTK_WIDGET (self)) == GTK_TEXT_DIR_RTL)
+    x_offset = gtk_widget_get_margin_end (GTK_WIDGET (self));
+  else
+    x_offset = gtk_widget_get_margin_start (GTK_WIDGET (self));
 
-  gtk_drag_set_icon_widget (context, new_row, self->clicked_x, self->clicked_y);
+  gtk_drag_set_icon_widget (context,
+                            new_row,
+                            self->clicked_x + x_offset,
+                            self->clicked_y);
 
   gtk_widget_hide (widget);
 }
