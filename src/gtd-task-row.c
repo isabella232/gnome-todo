@@ -99,6 +99,10 @@ create_transient_row (GtdTaskRow *self)
   gtk_revealer_set_transition_duration (new_row->revealer, 0);
   gtk_revealer_set_reveal_child (new_row->revealer, TRUE);
 
+  gtk_widget_set_size_request (GTK_WIDGET (new_row),
+                               gtk_widget_get_allocated_width (GTK_WIDGET (self)),
+                               -1);
+
   return GTK_WIDGET (new_row);
 }
 
@@ -226,9 +230,6 @@ drag_begin_cb (GtkWidget      *event_box,
    */
   new_row = create_transient_row (self);
 
-  gtk_widget_set_size_request (new_row,
-                               gtk_widget_get_allocated_width (widget),
-                               gtk_widget_get_allocated_height (widget));
 
   gtk_drag_set_icon_widget (context, new_row, self->clicked_x, self->clicked_y);
 
