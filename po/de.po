@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2017-10-26 14:21+0000\n"
-"PO-Revision-Date: 2017-10-27 11:38+0200\n"
+"POT-Creation-Date: 2017-10-31 21:36+0000\n"
+"PO-Revision-Date: 2017-11-01 10:14+0100\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -23,8 +23,8 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:157
-#: src/gtd-application.c:183 src/gtd-window.c:952 src/gtd-window.c:987
+#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:152
+#: src/gtd-application.c:176 src/gtd-window.c:952 src/gtd-window.c:987
 msgid "To Do"
 msgstr "Aufgaben"
 
@@ -159,44 +159,44 @@ msgstr ""
 msgid "_Notes"
 msgstr "_Notizen"
 
-#: data/ui/edit-pane.ui:90
+#: data/ui/edit-pane.ui:92
 msgid "D_ue Date"
 msgstr "_Fälligkeitsdatum"
 
-#: data/ui/edit-pane.ui:108
+#: data/ui/edit-pane.ui:110
 msgid "_Today"
 msgstr "_Heute"
 
-#: data/ui/edit-pane.ui:118
+#: data/ui/edit-pane.ui:120
 msgid "To_morrow"
 msgstr "_Morgen"
 
-#: data/ui/edit-pane.ui:166
+#: data/ui/edit-pane.ui:168
 msgid "_Priority"
 msgstr "_Priorität"
 
-#: data/ui/edit-pane.ui:183 plugins/eds/edit-pane.ui:195
+#: data/ui/edit-pane.ui:185 plugins/eds/edit-pane.ui:195
 msgctxt "taskpriority"
 msgid "None"
 msgstr "Keine"
 
-#: data/ui/edit-pane.ui:184 plugins/eds/edit-pane.ui:196
+#: data/ui/edit-pane.ui:186 plugins/eds/edit-pane.ui:196
 msgid "Low"
 msgstr "Niedrig"
 
-#: data/ui/edit-pane.ui:185 plugins/eds/edit-pane.ui:197
+#: data/ui/edit-pane.ui:187 plugins/eds/edit-pane.ui:197
 msgid "Medium"
 msgstr "Mittel"
 
-#: data/ui/edit-pane.ui:186 plugins/eds/edit-pane.ui:198
+#: data/ui/edit-pane.ui:188 plugins/eds/edit-pane.ui:198
 msgid "High"
 msgstr "Hoch"
 
-#: data/ui/edit-pane.ui:194 data/ui/list-selector-panel.ui:93
+#: data/ui/edit-pane.ui:196 data/ui/list-selector-panel.ui:93
 msgid "_Delete"
 msgstr "_Löschen"
 
-#: data/ui/edit-pane.ui:240 plugins/eds/edit-pane.ui:259
+#: data/ui/edit-pane.ui:242 plugins/eds/edit-pane.ui:259
 msgctxt "taskdate"
 msgid "None"
 msgstr "Keine"
@@ -246,8 +246,8 @@ msgstr "_Neue Liste"
 msgid "Show or hide completed tasks"
 msgstr "Abgeschlossene Aufgaben zeigen oder verbergen"
 
-#: data/ui/list-view.ui:139 src/gtd-task-list-view.c:754
-#: src/gtd-task-list-view.c:759
+#: data/ui/list-view.ui:139 src/gtd-task-list-view.c:753
+#: src/gtd-task-list-view.c:758
 msgid "Done"
 msgstr "Fertig"
 
@@ -449,7 +449,7 @@ msgstr "Fehler beim Anlegen der neuen Aufgabenliste"
 msgid "No date set"
 msgstr "Kein Datum festgelegt"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-task-row.c:384
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-task-row.c:390
 #, c-format
 msgid "Yesterday"
 msgid_plural "%d days ago"
@@ -460,11 +460,11 @@ msgstr[1] "Vor %d Tagen"
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:93
 #: plugins/score/score/__init__.py:95 plugins/today-panel/gtd-panel-today.c:132
 #: plugins/today-panel/gtd-panel-today.c:137
-#: plugins/today-panel/gtd-panel-today.c:271 src/gtd-task-row.c:376
+#: plugins/today-panel/gtd-panel-today.c:271 src/gtd-task-row.c:382
 msgid "Today"
 msgstr "Heute"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-task-row.c:380
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-task-row.c:386
 msgid "Tomorrow"
 msgstr "Morgen"
 
@@ -615,21 +615,21 @@ msgstr "Nicht geplant"
 msgid "Unscheduled (%d)"
 msgstr "Nicht geplant (%d)"
 
-#: src/gtd-application.c:76
-msgid "Quit GNOME ToDo"
+#: src/gtd-application.c:70
+msgid "Quit GNOME To Do"
 msgstr "GNOME Aufgaben beenden"
+
+#: src/gtd-application.c:142
+#, c-format
+msgid "Copyright © %1$d The To Do authors"
+msgstr "Copyright © %1$d Die Aufgaben-Autoren"
 
 #: src/gtd-application.c:147
 #, c-format
-msgid "Copyright © %d The To Do authors"
-msgstr "Copyright © %d Die Aufgaben-Autoren"
+msgid "Copyright © %1$d–%2$d The To Do authors"
+msgstr "Copyright © %1$d–%2$d Die Aufgaben-Autoren"
 
-#: src/gtd-application.c:152
-#, c-format
-msgid "Copyright © %d–%d The To Do authors"
-msgstr "Copyright © %d-%d Die Aufgaben-Autoren"
-
-#: src/gtd-application.c:164
+#: src/gtd-application.c:159
 msgid "translator-credits"
 msgstr ""
 "Friedrich Herbst <friedrich-herbst@gmx.de>, 2015\n"
@@ -658,7 +658,7 @@ msgstr "Gönnen Sie sich nun etwas Ruhe"
 
 #: src/gtd-empty-list-widget.c:58
 msgid "Enjoy the rest of your day"
-msgstr "Genießen Sie den Rest deines Tages"
+msgstr "Genießen Sie den Rest Ihres Tages"
 
 #: src/gtd-empty-list-widget.c:59
 msgid "Good job!"
@@ -688,30 +688,30 @@ msgstr "Fehler beim Laden der Erweiterung"
 msgid "Error unloading plugin"
 msgstr "Fehler beim Entladen der Erweiterung"
 
-#: src/gtd-task-list-view.c:614
+#: src/gtd-task-list-view.c:613
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Entfernen dieser Aufgabe wird auch alle ihrer Unteraufgaben entfernen. "
 "Trotzdem fortfahren?"
 
-#: src/gtd-task-list-view.c:617
+#: src/gtd-task-list-view.c:616
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Gelöschte Aufgaben können nicht wiederhergestellt werden."
 
-#: src/gtd-task-list-view.c:620 src/views/gtd-list-selector-panel.c:392
+#: src/gtd-task-list-view.c:619 src/views/gtd-list-selector-panel.c:392
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: src/gtd-task-list-view.c:622
+#: src/gtd-task-list-view.c:621
 msgid "Remove"
 msgstr "Entfernen"
 
-#: src/gtd-task-list-view.c:670
+#: src/gtd-task-list-view.c:669
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Aufgabe <b>%s</b> entfernt"
 
-#: src/gtd-task-list-view.c:694
+#: src/gtd-task-list-view.c:693
 msgid "Undo"
 msgstr "Rückgängig"
 
