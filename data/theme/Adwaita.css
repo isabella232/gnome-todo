@@ -100,7 +100,6 @@ dndrow {
 
 dndrow frame {
     background: rgba(0, 0, 0, 0.2);
-    min-height: 32px;
 }
 
 /* extension list */

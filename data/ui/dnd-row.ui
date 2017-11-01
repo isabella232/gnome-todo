@@ -7,11 +7,11 @@
     <property name="selectable">False</property>
     <property name="halign">center</property>
     <child>
-      <object class="GtkBox" id="box">
+      <object class="GtkGrid" id="box">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="margin_start">20</property>
-        <property name="spacing">12</property>
+        <property name="column_spacing">12</property>
         <child>
           <object class="GtkImage" id="icon">
             <property name="visible">True</property>
@@ -39,6 +39,28 @@
               </object>
             </child>
           </object>
+          <packing>
+            <property name="left_attach">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkFrame">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="hexpand">True</property>
+            <property name="label_xalign">0</property>
+            <property name="shadow_type">none</property>
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="vexpand">True</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="top_attach">1</property>
+            <property name="left_attach">1</property>
+          </packing>
         </child>
       </object>
     </child>

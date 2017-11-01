@@ -103,6 +103,8 @@ create_transient_row (GtdTaskRow *self)
                                gtk_widget_get_allocated_width (GTK_WIDGET (self)),
                                -1);
 
+  gtk_revealer_set_reveal_child (GTK_REVEALER (new_row->edit_panel_revealer), self->active);
+
   return GTK_WIDGET (new_row);
 }
 

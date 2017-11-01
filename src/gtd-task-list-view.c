@@ -1346,6 +1346,11 @@ listbox_drag_motion (GtkListBox      *listbox,
 
   x -= gtd_task_row_get_x_offset (GTD_TASK_ROW (source_row));
 
+  /* Make sure the DnD row always have the same height of the dragged row */
+  gtk_widget_set_size_request (priv->dnd_row,
+                               -1,
+                               gtk_widget_get_allocated_height (GTK_WIDGET (source_row)));
+
   /*
    * When not hovering any row, we still have to make sure that the listbox is a valid
    * drop target. Otherwise, the user can drop at the space after the rows, and the row
