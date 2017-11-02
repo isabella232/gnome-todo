@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2017-10-27 00:17+0000\n"
-"PO-Revision-Date: 2017-10-29 21:07+0100\n"
+"POT-Creation-Date: 2017-10-31 21:36+0000\n"
+"PO-Revision-Date: 2017-11-02 09:34+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>>\n"
 "Language: cs\n"
@@ -22,8 +22,8 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:157
-#: src/gtd-application.c:183 src/gtd-window.c:952 src/gtd-window.c:987
+#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:152
+#: src/gtd-application.c:176 src/gtd-window.c:952 src/gtd-window.c:987
 msgid "To Do"
 msgstr "Úkoly"
 
@@ -158,44 +158,44 @@ msgstr ""
 msgid "_Notes"
 msgstr "Poz_námky"
 
-#: data/ui/edit-pane.ui:90
+#: data/ui/edit-pane.ui:92
 msgid "D_ue Date"
 msgstr "Dat_um splnění"
 
-#: data/ui/edit-pane.ui:108
+#: data/ui/edit-pane.ui:110
 msgid "_Today"
 msgstr "Dne_s"
 
-#: data/ui/edit-pane.ui:118
+#: data/ui/edit-pane.ui:120
 msgid "To_morrow"
 msgstr "_Zítra"
 
-#: data/ui/edit-pane.ui:166
+#: data/ui/edit-pane.ui:168
 msgid "_Priority"
 msgstr "_Priorita"
 
-#: data/ui/edit-pane.ui:183 plugins/eds/edit-pane.ui:195
+#: data/ui/edit-pane.ui:185 plugins/eds/edit-pane.ui:195
 msgctxt "taskpriority"
 msgid "None"
 msgstr "žádná"
 
-#: data/ui/edit-pane.ui:184 plugins/eds/edit-pane.ui:196
+#: data/ui/edit-pane.ui:186 plugins/eds/edit-pane.ui:196
 msgid "Low"
 msgstr "nízká"
 
-#: data/ui/edit-pane.ui:185 plugins/eds/edit-pane.ui:197
+#: data/ui/edit-pane.ui:187 plugins/eds/edit-pane.ui:197
 msgid "Medium"
 msgstr "střední"
 
-#: data/ui/edit-pane.ui:186 plugins/eds/edit-pane.ui:198
+#: data/ui/edit-pane.ui:188 plugins/eds/edit-pane.ui:198
 msgid "High"
 msgstr "vysoká"
 
-#: data/ui/edit-pane.ui:194 data/ui/list-selector-panel.ui:93
+#: data/ui/edit-pane.ui:196 data/ui/list-selector-panel.ui:93
 msgid "_Delete"
 msgstr "O_dstranit"
 
-#: data/ui/edit-pane.ui:240 plugins/eds/edit-pane.ui:259
+#: data/ui/edit-pane.ui:242 plugins/eds/edit-pane.ui:259
 msgctxt "taskdate"
 msgid "None"
 msgstr "Žádné"
@@ -245,8 +245,8 @@ msgstr "_Nový seznam"
 msgid "Show or hide completed tasks"
 msgstr "Zobrazit nebo skrýt splněné úkoly"
 
-#: data/ui/list-view.ui:139 src/gtd-task-list-view.c:754
-#: src/gtd-task-list-view.c:759
+#: data/ui/list-view.ui:139 src/gtd-task-list-view.c:753
+#: src/gtd-task-list-view.c:758
 msgid "Done"
 msgstr "Hotovo"
 
@@ -447,7 +447,7 @@ msgstr "Chyba při vytváření nového seznamu úkolů"
 msgid "No date set"
 msgstr "Nebylo nastaveno datum"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-task-row.c:384
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-task-row.c:390
 #, c-format
 msgid "Yesterday"
 msgid_plural "%d days ago"
@@ -459,11 +459,11 @@ msgstr[2] "Před %d dny"
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:93
 #: plugins/score/score/__init__.py:95 plugins/today-panel/gtd-panel-today.c:132
 #: plugins/today-panel/gtd-panel-today.c:137
-#: plugins/today-panel/gtd-panel-today.c:271 src/gtd-task-row.c:376
+#: plugins/today-panel/gtd-panel-today.c:271 src/gtd-task-row.c:382
 msgid "Today"
 msgstr "Dnes"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-task-row.c:380
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-task-row.c:386
 msgid "Tomorrow"
 msgstr "Zítra"
 
@@ -608,21 +608,21 @@ msgstr "Neplánováno"
 msgid "Unscheduled (%d)"
 msgstr "Neplánováno (%d)"
 
-#: src/gtd-application.c:76
-msgid "Quit GNOME ToDo"
+#: src/gtd-application.c:70
+msgid "Quit GNOME To Do"
 msgstr "Ukončit Úkoly GNOME"
+
+#: src/gtd-application.c:142
+#, c-format
+msgid "Copyright © %1$d The To Do authors"
+msgstr "Copyright © %1$d autoři programu Úkoly"
 
 #: src/gtd-application.c:147
 #, c-format
-msgid "Copyright © %d The To Do authors"
-msgstr "Copyright © %d autoři programu Úkoly"
+msgid "Copyright © %1$d–%2$d The To Do authors"
+msgstr "Copyright © %1$d – %2$d autoři programu Úkoly"
 
-#: src/gtd-application.c:152
-#, c-format
-msgid "Copyright © %d–%d The To Do authors"
-msgstr "Copyright © %d – %d autoři programu Úkoly"
-
-#: src/gtd-application.c:164
+#: src/gtd-application.c:159
 msgid "translator-credits"
 msgstr ""
 "Zdeněk Hataš <zdenek.hatas@gmail.com>\n"
@@ -680,30 +680,30 @@ msgstr "Chyba při načítaní zásuvného modulu"
 msgid "Error unloading plugin"
 msgstr "Chyba při ukončování zásuvného modulu"
 
-#: src/gtd-task-list-view.c:614
+#: src/gtd-task-list-view.c:613
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Odstraněním tohoto úkolu se odstraní i jeho dílčí části. Má se i tak "
 "odstranit?"
 
-#: src/gtd-task-list-view.c:617
+#: src/gtd-task-list-view.c:616
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Jakmile jej odstraníte, již jej nelze obnovit."
 
-#: src/gtd-task-list-view.c:620 src/views/gtd-list-selector-panel.c:392
+#: src/gtd-task-list-view.c:619 src/views/gtd-list-selector-panel.c:392
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: src/gtd-task-list-view.c:622
+#: src/gtd-task-list-view.c:621
 msgid "Remove"
 msgstr "Odstranit"
 
-#: src/gtd-task-list-view.c:670
+#: src/gtd-task-list-view.c:669
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Úkol <b>%s</b> byl odstraněn"
 
-#: src/gtd-task-list-view.c:694
+#: src/gtd-task-list-view.c:693
 msgid "Undo"
 msgstr "Zpět"
 
@@ -735,8 +735,3 @@ msgstr "Jakmile seznamy úkolů odstraníte, již je nelze obnovit."
 msgid "Remove task lists"
 msgstr "Odstranit seznamy úkolů"
 
-#~ msgid "Next _Week"
-#~ msgstr "Následující _týden"
-
-#~ msgid "Todoist Plugin for GNOME To Do"
-#~ msgstr "Zásuvný modul Todoist pro Úkoly GNOME"
