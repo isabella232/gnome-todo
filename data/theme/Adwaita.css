@@ -67,12 +67,6 @@ taskrow {
 taskrow:dir(ltr):not(.new-task-row) { padding-left: 6px;  }
 taskrow:dir(rtl):not(.new-task-row) { padding-right: 6px; }
 
-taskrow entry {
-    padding: 6px;
-    border: none;
-    border-radius: 2px;
-}
-
 taskrow.priority-low:dir(ltr)    { border-left:  solid 6px #3465a4; padding-left:  0; }
 taskrow.priority-low:dir(rtl)    { border-right: solid 6px #3465a4; padding-right: 0; }
 
@@ -83,6 +77,7 @@ taskrow.priority-hight:dir(ltr)  { border-left:  solid 6px #cc0000; padding-left
 taskrow.priority-hight:dir(rtl)  { border-right: solid 6px #cc0000; padding-right: 0; }
 
 /* task title entry */
+taskrow entry                                      { border: none; background: none; }
 taskrow:not(.new-task-row) entry                   { border: solid 1px transparent; }
 taskrow:not(.new-task-row) entry:hover:not(:focus) { border: solid 1px @borders; }
 

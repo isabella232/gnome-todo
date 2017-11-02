@@ -98,9 +98,7 @@
                             <property name="halign">start</property>
                             <property name="width-chars">5</property>
                             <property name="propagate-natural-width">True</property>
-                            <property name="has-frame">False</property>
                             <style>
-                              <class name="flat" />
                               <class name="title" />
                             </style>
                           </object>
