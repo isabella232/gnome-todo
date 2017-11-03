@@ -1344,12 +1344,18 @@ listbox_drag_motion (GtkListBox      *listbox,
   source_row = GTK_LIST_BOX_ROW (gtk_widget_get_ancestor (source_widget, GTK_TYPE_LIST_BOX_ROW));
   hovered_row = gtk_list_box_get_row_at_y (listbox, y);
 
-  x -= gtd_task_row_get_x_offset (GTD_TASK_ROW (source_row));
+  /* Update the x value according to the current offset */
+  if (gtk_widget_get_direction (GTK_WIDGET (self)) == GTK_TEXT_DIR_RTL)
+    x += gtd_task_row_get_x_offset (GTD_TASK_ROW (source_row));
+  else
+    x -= gtd_task_row_get_x_offset (GTD_TASK_ROW (source_row));
 
   /* Make sure the DnD row always have the same height of the dragged row */
   gtk_widget_set_size_request (priv->dnd_row,
                                -1,
                                gtk_widget_get_allocated_height (GTK_WIDGET (source_row)));
+
+  gtk_widget_queue_resize (priv->dnd_row);
 
   /*
    * When not hovering any row, we still have to make sure that the listbox is a valid

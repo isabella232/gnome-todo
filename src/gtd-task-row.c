@@ -926,5 +926,8 @@ gtd_task_row_get_x_offset (GtdTaskRow *self)
 {
   g_return_val_if_fail (GTD_IS_TASK_ROW (self), -1);
 
-  return self->clicked_x;
+  if (gtk_widget_get_direction (GTK_WIDGET (self)) == GTK_TEXT_DIR_RTL)
+    return gtk_widget_get_allocated_width (GTK_WIDGET (self)) - self->clicked_x;
+  else
+    return self->clicked_x;
 }
