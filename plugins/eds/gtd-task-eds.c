@@ -216,8 +216,7 @@ gtd_task_eds_set_complete (GtdTask  *task,
       dt->hour = g_date_time_get_hour (now);
       dt->minute = g_date_time_get_minute (now);
       dt->second = g_date_time_get_seconds (now);
-      dt->is_date = 0;
-      dt->is_utc = 1;
+      dt->zone = icaltimezone_get_utc_timezone ();
 
       /* convert timezone
        *
