@@ -183,7 +183,7 @@ pkg.generate(
 # GObject-Introspection #
 #########################
 
-if get_option('enable-introspection')
+if get_option('introspection')
   gir_sources = files(
     'engine/gtd-manager.c',
     'engine/gtd-manager.h',
