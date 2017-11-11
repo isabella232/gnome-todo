@@ -162,7 +162,7 @@ gtd_panel_scheduled_header_func (GtkListBoxRow     *row,
                                  GtdTask           *before_task,
                                  GtdPanelScheduled *panel)
 {
-  GDateTime *dt;
+  g_autoptr (GDateTime) dt = NULL;
   gchar *text;
   gint span;
 
@@ -180,7 +180,7 @@ gtd_panel_scheduled_header_func (GtkListBoxRow     *row,
     }
   else
     {
-      GDateTime *before_dt;
+      g_autoptr (GDateTime) before_dt = NULL;
       gint diff;
 
       before_dt = gtd_task_get_due_date (before_task);
@@ -198,11 +198,7 @@ gtd_panel_scheduled_header_func (GtkListBoxRow     *row,
         {
           gtk_list_box_row_set_header (row, NULL);
         }
-
-      g_clear_pointer (&before_dt, g_date_time_unref);
     }
-
-  g_clear_pointer (&dt, g_date_time_unref);
 }
 
 static gint
