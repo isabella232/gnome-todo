@@ -214,8 +214,6 @@ gtd_dnd_row_drag_motion (GtkWidget      *widget,
 
   update_row_padding (self);
 
-  gdk_drag_status (context, GDK_ACTION_COPY, time);
-
   return TRUE;
 }
 
@@ -242,10 +240,7 @@ gtd_dnd_row_drag_drop (GtkWidget      *widget,
   source_widget = gtk_drag_get_source_widget (context);
 
   if (!source_widget)
-    {
-      gdk_drag_status (context, 0, time);
-      return FALSE;
-    }
+    return FALSE;
 
   /*
    * When the drag operation began, the source row was hidden. Now is the time
@@ -256,10 +251,7 @@ gtd_dnd_row_drag_drop (GtkWidget      *widget,
 
   /* Do not allow dropping on itself, nor on the new task row */
   if (!row || row == widget || GTD_IS_NEW_TASK_ROW (row))
-    {
-      gdk_drag_status (context, 0, time);
-      return FALSE;
-    }
+    return FALSE;
 
   row_task = gtd_task_row_get_task (GTD_TASK_ROW (row));
   target_task = get_real_task_for_depth (self);
@@ -268,10 +260,7 @@ gtd_dnd_row_drag_drop (GtkWidget      *widget,
     {
       /* Forbid adding the parent task as a subtask */
       if (gtd_task_is_subtask (row_task, target_task))
-        {
-          gdk_drag_status (context, 0, time);
-          return FALSE;
-        }
+        return FALSE;
 
       gtd_task_add_subtask (target_task, row_task);
     }

@@ -85,7 +85,6 @@ enum
 
 static guint signals[NUM_SIGNALS] = { 0, };
 
-
 /*
  * Auxiliary methods
  */
@@ -538,8 +537,8 @@ gtd_task_row_set_property (GObject      *object,
 static void
 gtd_task_row_class_init (GtdTaskRowClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->dispose = gtd_task_row_dispose;
   object_class->finalize = gtd_task_row_finalize;
@@ -873,6 +872,19 @@ gtd_task_row_set_handle_subtasks (GtdTaskRow *self,
   gtk_widget_set_visible (self->dnd_box, handle_subtasks);
   gtk_widget_set_visible (self->dnd_event_box, handle_subtasks);
   depth_changed_cb (self, NULL, self->task);
+
+  if (handle_subtasks)
+    {
+      gtk_drag_source_set (self->header_event_box,
+                           GDK_BUTTON1_MASK,
+                           NULL,
+                           0,
+                           GDK_ACTION_MOVE);
+    }
+  else
+    {
+      gtk_drag_source_unset (self->header_event_box);
+    }
 
   g_object_notify (G_OBJECT (self), "handle-subtasks");
 }

@@ -1337,6 +1337,7 @@ listbox_drag_motion (GtkListBox      *listbox,
   GtkListBoxRow *task_row;
   GtkListBoxRow *row_above_dnd;
   GtkWidget *source_widget;
+  gboolean success;
   gint row_x, row_y, row_height;
 
   priv = gtd_task_list_view_get_instance_private (self);
@@ -1356,6 +1357,8 @@ listbox_drag_motion (GtkListBox      *listbox,
                                gtk_widget_get_allocated_height (GTK_WIDGET (source_row)));
 
   gtk_widget_queue_resize (priv->dnd_row);
+
+  gdk_drag_status (context, GDK_ACTION_MOVE, time);
 
   /*
    * When not hovering any row, we still have to make sure that the listbox is a valid
@@ -1424,12 +1427,9 @@ listbox_drag_motion (GtkListBox      *listbox,
   /* Check if we're not trying to add a subtask */
   if (row_above_dnd)
     {
-      GtkWidget *dnd_widget, *dnd_row;
       GtdTask *row_above_task, *dnd_task;
 
-      dnd_widget = gtk_drag_get_source_widget (context);
-      dnd_row = gtk_widget_get_ancestor (dnd_widget, GTK_TYPE_LIST_BOX_ROW);
-      dnd_task = gtd_task_row_get_task (GTD_TASK_ROW (dnd_row));
+      dnd_task = gtd_task_row_get_task (GTD_TASK_ROW (source_row));
       row_above_task = gtd_task_row_get_task (GTD_TASK_ROW (row_above_dnd));
 
       /* Forbid DnD'ing a row into a subtask */
@@ -1450,21 +1450,13 @@ success:
    * Also pass the current motion to the DnD row, so it correctly
    * adjusts itself - even when the DnD is hovering another row.
    */
-  gtd_dnd_row_drag_motion (GTK_WIDGET (priv->dnd_row),
-                           context,
-                           x,
-                           y,
-                           time);
+  success = gtd_dnd_row_drag_motion (GTK_WIDGET (priv->dnd_row), context, x, y, time);
 
   check_dnd_scroll (self, FALSE, y);
 
-  gdk_drag_status (context, GDK_ACTION_MOVE, time);
-
-  return TRUE;
+  return success;
 
 fail:
-  gdk_drag_status (context, GDK_ACTION_MOVE, time);
-
   return FALSE;
 }
 
@@ -1477,20 +1469,16 @@ listbox_drag_drop (GtkWidget       *widget,
                    GtdTaskListView *self)
 {
   GtdTaskListViewPrivate *priv;
+  gboolean success;
 
   priv = gtd_task_list_view_get_instance_private (self);
-
-  gtd_dnd_row_drag_drop (GTK_WIDGET (priv->dnd_row),
-                         context,
-                         x,
-                         y,
-                         time);
+  success = gtd_dnd_row_drag_drop (GTK_WIDGET (priv->dnd_row), context, x, y, time);
 
   check_dnd_scroll (self, TRUE, -1);
 
-  gtk_drag_finish (context, TRUE, TRUE, time);
+  gtk_drag_finish (context, success, TRUE, time);
 
-  return TRUE;
+  return success;
 }
 
 static void
