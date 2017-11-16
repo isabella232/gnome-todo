@@ -1,4 +1,16 @@
 ==============
+Version 3.27.2
+==============
+
+Project:
+	* The task list view was redesigned, and now is much more cohesive
+	* GNOME To Do was moved to Gitlab!
+	* Many contribution resources were documented. The contribution workflow
+	  is now much easier and better documented.
+	* Build with libical 3.0 (Milan Chra)
+	* Many translation updates.
+
+==============
 Version 3.26.0
 ==============
 

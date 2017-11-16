@@ -1,7 +1,7 @@
 project(
      'gnome-todo',
               'c',
-          version: '3.27.0',
+          version: '3.27.2',
           license: 'GPL3+',
   default_options: [ 'buildtype=debugoptimized', 'warning_level=1' ],
     meson_version: '>= 0.41.0'

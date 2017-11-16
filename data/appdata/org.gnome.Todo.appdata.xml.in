@@ -51,6 +51,21 @@
   </kudos>
 
   <releases>
+    <release date="2017-11-16" version="3.27.2">
+      <description>
+        <p>
+          We're proud to annouce GNOME To Do 3.27.2, the first development snapshot
+          of the 3.28 release.
+        </p>
+        <p>
+          This release features a big (but still ongoing) redesign of the task rows.
+          They are now much simpler and easier to work with, while having more features!
+        </p>
+        <p>This release also updates translations, and adds new translations.</p>
+        <p>Thanks to everyone that contributed to GNOME To Do this cycle!</p>
+      </description>
+    </release>
+
     <release date="2017-09-11" version="3.26.0">
       <description>
         <p>
