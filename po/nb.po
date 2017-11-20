@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo 3.27.x\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2017-11-05 23:17+0000\n"
-"PO-Revision-Date: 2017-11-09 19:59+0100\n"
+"POT-Creation-Date: 2017-11-16 15:14+0000\n"
+"PO-Revision-Date: 2017-11-20 12:24+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: Norsk bokmål\n"
@@ -302,19 +302,19 @@ msgstr "Eller du kan bare lagre dine oppgaver på denne datamaskinen"
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1$s og en oppgave til"
+msgstr[1] "%1$s og %2$d andre oppgaver"
 
 #: plugins/background/gtd-plugin-background.c:247
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Du har %d oppgave i dag"
+msgstr[1] "Du har %d oppgaver i dag"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:6
 msgid "Run To Do on startup"
-msgstr ""
+msgstr "Kjør Oppgaver ved oppstart"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:7
 msgid "Whether GNOME To Do should run on startup"
@@ -330,11 +330,11 @@ msgstr ""
 
 #: plugins/background/ui/preferences.ui:53
 msgid "Run on Startup"
-msgstr ""
+msgstr "Kjør ved oppstart"
 
 #: plugins/background/ui/preferences.ui:66
 msgid "Run To Do automatically when you log in"
-msgstr ""
+msgstr "Kjør Oppgaver automatisk når du logger inn"
 
 #: plugins/background/ui/preferences.ui:122
 msgid "Show Notifications"
@@ -342,7 +342,7 @@ msgstr "Vis varslinger"
 
 #: plugins/background/ui/preferences.ui:135
 msgid "When To Do runs, show a startup notification"
-msgstr ""
+msgstr "Vis en oppstartsvarsling når Oppgaver kjører"
 
 #: plugins/eds/edit-pane.ui:43 src/gtd-window.c:546
 msgid "Details"
@@ -437,11 +437,11 @@ msgstr "På denne datamaskinen"
 msgid "Error creating new task list"
 msgstr "Feil ved opretting av ny oppgaveliste"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:81 src/gtd-edit-pane.c:159
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:87 src/gtd-edit-pane.c:159
 msgid "No date set"
 msgstr "Ingen dato satt"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-task-row.c:401
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:95 src/gtd-task-row.c:400
 #, c-format
 msgid "Yesterday"
 msgid_plural "%d days ago"
@@ -449,25 +449,25 @@ msgstr[0] "I går"
 msgstr[1] "%d dager siden"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:93
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:99
 #: plugins/score/score/__init__.py:95 plugins/today-panel/gtd-panel-today.c:132
 #: plugins/today-panel/gtd-panel-today.c:137
-#: plugins/today-panel/gtd-panel-today.c:271 src/gtd-task-row.c:393
+#: plugins/today-panel/gtd-panel-today.c:271 src/gtd-task-row.c:392
 msgid "Today"
 msgstr "I dag"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-task-row.c:397
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:103 src/gtd-task-row.c:396
 msgid "Tomorrow"
 msgstr "I morgen"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:352
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:357
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:494
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:354
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:359
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:496
 msgid "Scheduled"
 msgstr "Planlagt"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:499
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:501
 #: plugins/today-panel/gtd-panel-today.c:276
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:52
 #: src/views/gtd-list-selector-panel.c:712
@@ -493,12 +493,12 @@ msgstr "Feil ved henting av kontonøkkel for Todoist"
 
 #: plugins/todoist/gtd-provider-todoist.c:212
 msgid "Please ensure that Todoist account is correctly configured."
-msgstr ""
+msgstr "Sjekk at Todoist-kontoen er korrekt konfigurert."
 
 #: plugins/todoist/gtd-provider-todoist.c:417
 #, c-format
 msgid "Bad status code (%d) received. Please check your connection."
-msgstr ""
+msgstr "Feil statuskode (%d) ble mottatt. Sjekk tilkoblingen."
 
 #: plugins/todoist/gtd-provider-todoist.c:1068
 #, c-format
@@ -511,16 +511,16 @@ msgstr "Fant ingen Todoist-kontoer"
 
 #: plugins/todoist/ui/preferences.ui:89
 msgid "Add a Todoist account"
-msgstr ""
+msgstr "Legg til en Todoist-konto"
 
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:142
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:183
 msgid "Cannot create Todo.txt file"
-msgstr ""
+msgstr "Kan ikke lage Todo.txt-fil"
 
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:307
 msgid "Select a Todo.txt-formatted file:"
-msgstr ""
+msgstr "Velg en Todo.txt-formatert fil:"
 
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:308
 msgid "Select a file"
@@ -532,21 +532,21 @@ msgstr "Todo.txt"
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:81
 msgid "On the Todo.txt file"
-msgstr ""
+msgstr "I Todo.txt-filen"
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:106
 #: plugins/todo-txt/gtd-provider-todo-txt.c:110
 msgid "Error while opening Todo.txt"
-msgstr ""
+msgstr "Feil under åpning av Todo.txt"
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:241
 #: plugins/todo-txt/gtd-provider-todo-txt.c:245
 msgid "Error while reading a line from Todo.txt"
-msgstr ""
+msgstr "Feil ved lesing av en linje fra Todo.txt"
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:365
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
-msgstr ""
+msgstr "Feil ved åpning av filovervåking. Todo.txt vil ikke bli overvåket"
 
 #: plugins/todo-txt/gtd-todo-txt-parser.c:304
 msgid "Incorrect date"
@@ -554,7 +554,7 @@ msgstr "Feil dato"
 
 #: plugins/todo-txt/gtd-todo-txt-parser.c:305
 msgid "Please make sure the date in Todo.txt is valid."
-msgstr ""
+msgstr "Sjekk at datoen i Todo.txt er gyldig."
 
 #: plugins/todo-txt/gtd-todo-txt-parser.c:336
 msgid "Unrecognized token in a Todo.txt line"
@@ -568,7 +568,7 @@ msgstr ""
 
 #: plugins/todo-txt/gtd-todo-txt-parser.c:348
 msgid "No task list found for some tasks"
-msgstr ""
+msgstr "Ingen oppgaveliste funnet for noen oppgaver"
 
 #: plugins/todo-txt/gtd-todo-txt-parser.c:349
 msgid ""
@@ -578,7 +578,7 @@ msgstr ""
 
 #: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:6
 msgid "Todo.txt File"
-msgstr ""
+msgstr "Todo.txt-fil"
 
 #: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:7
 msgid "Source of the Todo.txt file"
