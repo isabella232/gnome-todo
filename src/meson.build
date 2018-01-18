@@ -44,6 +44,7 @@ sources = files(
   'interfaces/gtd-activatable.c',
   'interfaces/gtd-panel.c',
   'interfaces/gtd-provider.c',
+  'logging/gtd-log.c',
   'notification/gtd-notification.c',
   'notification/gtd-notification-widget.c',
   'provider/gtd-provider-popover.c',
@@ -99,6 +100,7 @@ incs = [
   include_directories(
     'engine',
     'provider',
+    'logging',
     'notification',
     'interfaces',
     'views',
@@ -123,6 +125,24 @@ if host_machine.system().contains('linux')
     endif
   endforeach
 endif
+
+
+#########
+# Debug #
+#########
+
+debug_conf = configuration_data()
+debug_conf.set('BUGREPORT_URL', 'https://gitlab.gnome.org/GNOME/gnome-todo/issues/new')
+debug_conf.set10('ENABLE_TRACING', gnome_todo_tracing)
+
+
+debug = 'gtd-debug.h'
+
+sources += configure_file(
+          input: debug + '.in',
+         output: debug,
+  configuration: debug_conf,
+)
 
 
 ##############

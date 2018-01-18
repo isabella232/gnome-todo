@@ -37,6 +37,7 @@ revision = 0
 libversion = '@0@.@1@.@2@'.format(soversion, current, revision)
 
 gnome_todo_debug = get_option('buildtype').contains('debug')
+gnome_todo_tracing = get_option('tracing')
 
 cc = meson.get_compiler('c')
 
@@ -46,6 +47,7 @@ config_h.set_quoted('GETTEXT_PACKAGE', meson.project_name())
 
 # debug options
 config_h.set('GNOME_TODO_ENABLE_DEBUG', gnome_todo_debug)
+config_h.set('ENABLE_TRACING', gnome_todo_tracing)
 config_h.set('NDEBUG', not gnome_todo_debug)
 
 # package
