@@ -190,8 +190,8 @@ libgtd_dep = declare_dependency(
 pkg.generate(
     libraries: libgtd,
       version: gnome_todo_version,
-         name: 'Gnome To Do',
-  description: 'Header and path for Gnome Todo Plugins',
+         name: 'GNOME To Do',
+  description: 'Header and path for GNOME Todo Plugins',
      filebase: meson.project_name(),
       subdirs: meson.project_name(),
     variables: 'exec_prefix=' + gnome_todo_libexecdir,
