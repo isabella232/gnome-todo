@@ -278,10 +278,12 @@ add_provider (GtdProviderSelector *selector,
   row = gtd_provider_row_new (provider);
   provider_id = gtd_provider_get_id (provider);
 
+  g_debug ("Adding provider %s", provider_id);
+
   gtk_container_add (GTK_CONTAINER (selector->listbox), row);
 
   /* track the local provider row */
-  if (g_strcmp0 (provider_id, "local") == 0)
+  if (g_str_has_prefix (provider_id, "local") == 0)
     {
       gtk_widget_set_visible (row, selector->show_local_provider);
       selector->local_row = row;
@@ -289,18 +291,17 @@ add_provider (GtdProviderSelector *selector,
 
   /* Auto selects the default provider row when needed */
   if (selector->select_default &&
-      //gtd_provider_get_is_default (provider) &&
       !gtd_provider_selector_get_selected_provider (selector))
     {
       gtd_provider_selector_set_selected_provider (selector, provider);
     }
 
   /* hide the related stub row */
-  if (g_strcmp0 (provider_id, "exchange") == 0)
+  if (g_str_has_prefix (provider_id, "exchange") == 0)
     gtk_widget_hide (selector->exchange_stub_row);
-  else if (g_strcmp0 (provider_id, "google") == 0)
+  else if (g_str_has_prefix (provider_id, "google") == 0)
     gtk_widget_hide (selector->google_stub_row);
-  else if (g_strcmp0 (provider_id, "owncloud") == 0)
+  else if (g_str_has_prefix (provider_id, "owncloud") == 0)
     gtk_widget_hide (selector->owncloud_stub_row);
 }
 
