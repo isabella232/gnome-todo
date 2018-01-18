@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#define G_LOG_DOMAIN "GtdProviderGoa"
+
 #include "gtd-provider-eds.h"
 #include "gtd-provider-goa.h"
 

@@ -16,9 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifdef HAVE_CONFIG_H
+#define G_LOG_DOMAIN "GtdApplication"
+
 #include "config.h"
-#endif
 
 #include "gtd-application.h"
 #include "gtd-initial-setup-window.h"
