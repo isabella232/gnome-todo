@@ -91,7 +91,7 @@ display_header_func (GtkListBoxRow *row,
 }
 
 static void
-gtd_provider_selector__default_provider_changed (GtdProviderSelector *selector)
+default_provider_changed_cb (GtdProviderSelector *selector)
 {
   GtdProvider *current;
   GtdManager *manager;
@@ -217,8 +217,8 @@ gtd_provider_selector__check_toggled (GtdProviderSelector *selector,
 }
 
 static void
-gtd_provider_selector__remove_provider (GtdProviderSelector *selector,
-                                        GtdProvider         *provider)
+remove_provider (GtdProviderSelector *selector,
+                 GtdProvider         *provider)
 {
   GList *children;
   GList *l;
@@ -266,8 +266,8 @@ gtd_provider_selector__remove_provider (GtdProviderSelector *selector,
 }
 
 static void
-gtd_provider_selector__add_provider (GtdProviderSelector *selector,
-                                     GtdProvider         *provider)
+add_provider (GtdProviderSelector *selector,
+              GtdProvider         *provider)
 {
   GtkWidget *row;
   const gchar *provider_id;
@@ -319,7 +319,7 @@ gtd_provider_selector__fill_accounts (GtdProviderSelector *selector)
   providers = gtd_manager_get_providers (manager);
 
   for (l = providers; l != NULL; l = l->next)
-    gtd_provider_selector__add_provider (selector, l->data);
+    add_provider (selector, l->data);
 
   g_list_free (providers);
 }
@@ -518,17 +518,17 @@ gtd_provider_selector_init (GtdProviderSelector *self)
 
   g_signal_connect_swapped (manager,
                             "notify::default-provider",
-                            G_CALLBACK (gtd_provider_selector__default_provider_changed),
+                            G_CALLBACK (default_provider_changed_cb),
                             self);
 
   g_signal_connect_swapped (manager,
                             "provider-added",
-                            G_CALLBACK (gtd_provider_selector__add_provider),
+                            G_CALLBACK (add_provider),
                             self);
 
   g_signal_connect_swapped (manager,
                             "provider-removed",
-                            G_CALLBACK (gtd_provider_selector__remove_provider),
+                            G_CALLBACK (remove_provider),
                             self);
 
 }
@@ -688,11 +688,11 @@ gtd_provider_selector_set_selected_provider (GtdProviderSelector *selector,
 
   for (l = children; l != NULL; l = l->next)
     {
-      if (GTD_IS_PROVIDER_ROW (l->data))
-        {
-          gtd_provider_row_set_selected (l->data, gtd_provider_row_get_provider (l->data) == provider);
-          g_signal_emit (selector, signals[PROVIDER_SELECTED], 0, provider);
-        }
+      if (!GTD_IS_PROVIDER_ROW (l->data))
+        continue;
+
+      gtd_provider_row_set_selected (l->data, gtd_provider_row_get_provider (l->data) == provider);
+      g_signal_emit (selector, signals[PROVIDER_SELECTED], 0, provider);
     }
 
   g_list_free (children);
@@ -725,7 +725,7 @@ gtd_provider_selector_get_show_stub_rows (GtdProviderSelector *selector)
  */
 void
 gtd_provider_selector_set_show_stub_rows (GtdProviderSelector *selector,
-                                         gboolean            show_stub_rows)
+                                          gboolean            show_stub_rows)
 {
   g_return_if_fail (GTD_IS_PROVIDER_SELECTOR (selector));
 
