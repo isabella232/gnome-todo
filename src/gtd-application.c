@@ -70,6 +70,7 @@ G_DEFINE_TYPE (GtdApplication, gtd_application, GTK_TYPE_APPLICATION)
 static GOptionEntry cmd_options[] = {
   { "quit", 'q', 0, G_OPTION_ARG_NONE, NULL, N_("Quit GNOME To Do"), NULL },
   { "debug", 'd', 0, G_OPTION_ARG_NONE, NULL, N_("Enable debug messages"), NULL },
+  { NULL }
 };
 
 static const GActionEntry gtd_application_entries[] = {
