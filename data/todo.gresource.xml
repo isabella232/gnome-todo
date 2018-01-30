@@ -35,7 +35,6 @@
 
   <!--EDS Plugin-->
   <gresource prefix="/org/gnome/todo">
-    <file compressed="true" alias="ui/eds/edit-pane.ui">../plugins/eds/edit-pane.ui</file>
     <file alias="plugins/eds/eds.plugin">../plugins/eds/eds.plugin</file>
   </gresource>
 
