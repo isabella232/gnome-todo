@@ -177,18 +177,16 @@ gtd_task_eds_set_uid (GtdObject   *object,
 static gboolean
 gtd_task_eds_get_complete (GtdTask *task)
 {
+  icalproperty_status status;
   GtdTaskEds *self;
-  icaltimetype *dt;
   gboolean completed;
 
   g_return_val_if_fail (GTD_IS_TASK_EDS (task), FALSE);
 
   self = GTD_TASK_EDS (task);
 
-  e_cal_component_get_completed (self->component, &dt);
-  completed = (dt != NULL);
-
-  g_clear_pointer (&dt, e_cal_component_free_icaltimetype);
+  e_cal_component_get_status (self->component, &status);
+  completed = status == ICAL_STATUS_COMPLETED;
 
   return completed;
 }
