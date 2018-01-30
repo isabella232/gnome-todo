@@ -93,7 +93,7 @@ create_task_list (GtdProviderPopover *popover)
   task_list = gtd_task_list_new (provider);
   gtd_task_list_set_name (task_list, name);
 
-  gtd_provider_create_task_list (provider, task_list);
+  gtd_manager_create_task_list (gtd_manager_get_default (), task_list);
 }
 
 static void

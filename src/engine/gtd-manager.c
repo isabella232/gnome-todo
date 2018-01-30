@@ -54,6 +54,8 @@ typedef struct
   GList                 *panels;
   GtdProvider           *default_provider;
   GtdTimer              *timer;
+
+  GCancellable          *cancellable;
 } GtdManagerPrivate;
 
 struct _GtdManager
@@ -95,6 +97,18 @@ enum
 static guint signals[NUM_SIGNALS] = { 0, };
 
 static void
+reset_cancellable_if_cancelled (GtdManager *self)
+{
+  GtdManagerPrivate *priv = gtd_manager_get_instance_private (self);
+
+  if (!g_cancellable_is_cancelled (priv->cancellable))
+    return;
+
+  g_clear_object (&priv->cancellable);
+  priv->cancellable = g_cancellable_new ();
+}
+
+static void
 check_provider_is_default (GtdManager  *manager,
                            GtdProvider *provider)
 {
@@ -131,6 +145,7 @@ gtd_manager_finalize (GObject *object)
 {
   GtdManager *self = (GtdManager *)object;
 
+  g_clear_object (&self->priv->cancellable);
   g_clear_object (&self->priv->plugin_manager);
   g_clear_object (&self->priv->settings);
   g_clear_object (&self->priv->timer);
@@ -598,6 +613,7 @@ gtd_manager_init (GtdManager *self)
   self->priv->settings = g_settings_new ("org.gnome.todo");
   self->priv->plugin_manager = gtd_plugin_manager_new ();
   self->priv->timer = gtd_timer_new ();
+  self->priv->cancellable = g_cancellable_new ();
 }
 
 /**
@@ -634,16 +650,25 @@ void
 gtd_manager_create_task (GtdManager *manager,
                          GtdTask    *task)
 {
+  g_autoptr (GError) error = NULL;
+  GtdManagerPrivate *priv;
   GtdTaskList *list;
   GtdProvider *provider;
 
   g_return_if_fail (GTD_IS_MANAGER (manager));
   g_return_if_fail (GTD_IS_TASK (task));
 
+  priv = gtd_manager_get_instance_private (manager);
   list = gtd_task_get_list (task);
   provider = gtd_task_list_get_provider (list);
 
-  gtd_provider_create_task (provider, task);
+  gtd_provider_create_task (provider, task, priv->cancellable, &error);
+
+  if (error)
+    {
+      g_warning ("Error creating task: %s", error->message);
+      reset_cancellable_if_cancelled (manager);
+    }
 }
 
 /**
@@ -657,16 +682,25 @@ void
 gtd_manager_remove_task (GtdManager *manager,
                          GtdTask    *task)
 {
+  g_autoptr (GError) error = NULL;
+  GtdManagerPrivate *priv;
   GtdTaskList *list;
   GtdProvider *provider;
 
   g_return_if_fail (GTD_IS_MANAGER (manager));
   g_return_if_fail (GTD_IS_TASK (task));
 
+  priv = gtd_manager_get_instance_private (manager);
   list = gtd_task_get_list (task);
   provider = gtd_task_list_get_provider (list);
 
-  gtd_provider_remove_task (provider, task);
+  gtd_provider_remove_task (provider, task, priv->cancellable, &error);
+
+  if (error)
+    {
+      g_warning ("Error removing task: %s", error->message);
+      reset_cancellable_if_cancelled (manager);
+    }
 }
 
 /**
@@ -680,6 +714,8 @@ void
 gtd_manager_update_task (GtdManager *manager,
                          GtdTask    *task)
 {
+  g_autoptr (GError) error = NULL;
+  GtdManagerPrivate *priv;
   GtdTaskList *list;
   GtdProvider *provider;
 
@@ -692,9 +728,16 @@ gtd_manager_update_task (GtdManager *manager,
   if (!list)
       return;
 
+  priv = gtd_manager_get_instance_private (manager);
   provider = gtd_task_list_get_provider (list);
 
-  gtd_provider_update_task (provider, task);
+  gtd_provider_update_task (provider, task, priv->cancellable, &error);
+
+  if (error)
+    {
+      g_warning ("Error updating task: %s", error->message);
+      reset_cancellable_if_cancelled (manager);
+    }
 }
 
 /**
@@ -708,14 +751,23 @@ void
 gtd_manager_create_task_list (GtdManager  *manager,
                               GtdTaskList *list)
 {
+  g_autoptr (GError) error = NULL;
+  GtdManagerPrivate *priv;
   GtdProvider *provider;
 
   g_return_if_fail (GTD_IS_MANAGER (manager));
   g_return_if_fail (GTD_IS_TASK_LIST (list));
 
+  priv = gtd_manager_get_instance_private (manager);
   provider = gtd_task_list_get_provider (list);
 
-  gtd_provider_create_task_list (provider, list);
+  gtd_provider_create_task_list (provider, list, priv->cancellable, &error);
+
+  if (error)
+    {
+      g_warning ("Error creating task list: %s", error->message);
+      reset_cancellable_if_cancelled (manager);
+    }
 }
 
 /**
@@ -729,14 +781,23 @@ void
 gtd_manager_remove_task_list (GtdManager  *manager,
                               GtdTaskList *list)
 {
+  g_autoptr (GError) error = NULL;
+  GtdManagerPrivate *priv;
   GtdProvider *provider;
 
   g_return_if_fail (GTD_IS_MANAGER (manager));
   g_return_if_fail (GTD_IS_TASK_LIST (list));
 
+  priv = gtd_manager_get_instance_private (manager);
   provider = gtd_task_list_get_provider (list);
 
-  gtd_provider_remove_task_list (provider, list);
+  gtd_provider_remove_task_list (provider, list, priv->cancellable, &error);
+
+  if (error)
+    {
+      g_warning ("Error removing task list: %s", error->message);
+      reset_cancellable_if_cancelled (manager);
+    }
 
   g_signal_emit (manager,
                  signals[LIST_REMOVED],
@@ -755,14 +816,23 @@ void
 gtd_manager_save_task_list (GtdManager  *manager,
                             GtdTaskList *list)
 {
+  g_autoptr (GError) error = NULL;
+  GtdManagerPrivate *priv;
   GtdProvider *provider;
 
   g_return_if_fail (GTD_IS_MANAGER (manager));
   g_return_if_fail (GTD_IS_TASK_LIST (list));
 
+  priv = gtd_manager_get_instance_private (manager);
   provider = gtd_task_list_get_provider (list);
 
-  gtd_provider_update_task_list (provider, list);
+  gtd_provider_update_task_list (provider, list, priv->cancellable, &error);
+
+  if (error)
+    {
+      g_warning ("Error saving task list: %s", error->message);
+      reset_cancellable_if_cancelled (manager);
+    }
 }
 
 /**

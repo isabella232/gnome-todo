@@ -22,8 +22,8 @@
 #include "gtd-object.h"
 #include "gtd-types.h"
 
+#include <gio/gio.h>
 #include <glib.h>
-#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
@@ -49,23 +49,35 @@ struct _GtdProviderInterface
 
   /* Tasks */
   void               (*create_task)                              (GtdProvider        *provider,
-                                                                  GtdTask            *task);
+                                                                  GtdTask            *task,
+                                                                  GCancellable       *cancellable,
+                                                                  GError            **error);
 
   void               (*update_task)                              (GtdProvider        *provider,
-                                                                  GtdTask            *task);
+                                                                  GtdTask            *task,
+                                                                  GCancellable       *cancellable,
+                                                                  GError            **error);
 
   void               (*remove_task)                              (GtdProvider        *provider,
-                                                                  GtdTask            *task);
+                                                                  GtdTask            *task,
+                                                                  GCancellable       *cancellable,
+                                                                  GError            **error);
 
   /* Task lists */
   void               (*create_task_list)                         (GtdProvider        *provider,
-                                                                  GtdTaskList        *list);
+                                                                  GtdTaskList        *list,
+                                                                  GCancellable       *cancellable,
+                                                                  GError            **error);
 
   void               (*update_task_list)                         (GtdProvider        *provider,
-                                                                  GtdTaskList        *list);
+                                                                  GtdTaskList        *list,
+                                                                  GCancellable       *cancellable,
+                                                                  GError            **error);
 
   void               (*remove_task_list)                         (GtdProvider        *provider,
-                                                                  GtdTaskList        *list);
+                                                                  GtdTaskList        *list,
+                                                                  GCancellable       *cancellable,
+                                                                  GError            **error);
 
   GList*             (*get_task_lists)                           (GtdProvider        *provider);
 
@@ -88,22 +100,34 @@ gboolean             gtd_provider_get_enabled                    (GtdProvider   
 GIcon*               gtd_provider_get_icon                       (GtdProvider        *provider);
 
 void                 gtd_provider_create_task                    (GtdProvider        *provider,
-                                                                  GtdTask            *task);
+                                                                  GtdTask            *task,
+                                                                  GCancellable       *cancellable,
+                                                                  GError            **error);
 
 void                 gtd_provider_update_task                    (GtdProvider        *provider,
-                                                                  GtdTask            *task);
+                                                                  GtdTask            *task,
+                                                                  GCancellable       *cancellable,
+                                                                  GError            **error);
 
 void                 gtd_provider_remove_task                    (GtdProvider        *provider,
-                                                                  GtdTask            *task);
+                                                                  GtdTask            *task,
+                                                                  GCancellable       *cancellable,
+                                                                  GError            **error);
 
 void                 gtd_provider_create_task_list               (GtdProvider        *provider,
-                                                                  GtdTaskList        *list);
+                                                                  GtdTaskList        *list,
+                                                                  GCancellable       *cancellable,
+                                                                  GError            **error);
 
 void                 gtd_provider_update_task_list               (GtdProvider        *provider,
-                                                                  GtdTaskList        *list);
+                                                                  GtdTaskList        *list,
+                                                                  GCancellable       *cancellable,
+                                                                  GError            **error);
 
 void                 gtd_provider_remove_task_list               (GtdProvider        *provider,
-                                                                  GtdTaskList        *list);
+                                                                  GtdTaskList        *list,
+                                                                  GCancellable       *cancellable,
+                                                                  GError            **error);
 
 GList*               gtd_provider_get_task_lists                 (GtdProvider        *provider);
 

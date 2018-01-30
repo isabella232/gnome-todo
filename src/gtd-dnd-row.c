@@ -19,6 +19,7 @@
 #define G_LOG_DOMAIN "GtdDndRow"
 
 #include "gtd-dnd-row.h"
+#include "gtd-manager.h"
 #include "gtd-new-task-row.h"
 #include "gtd-provider.h"
 #include "gtd-rows-common-private.h"
@@ -226,7 +227,6 @@ gtd_dnd_row_drag_drop (GtkWidget      *widget,
                        gint            y,
                        guint           time)
 {
-  GtdProvider *provider;
   GtdDndRow *self;
   GtkWidget *source_widget, *row;
   GtdTask *row_task, *target_task;
@@ -277,8 +277,7 @@ gtd_dnd_row_drag_drop (GtkWidget      *widget,
     }
 
   /* Save the task */
-  provider = gtd_task_list_get_provider (gtd_task_get_list (row_task));
-  gtd_provider_update_task (provider, row_task);
+  gtd_manager_update_task (gtd_manager_get_default (), row_task);
 
   gtk_list_box_invalidate_sort (GTK_LIST_BOX (gtk_widget_get_parent (widget)));
 

@@ -376,8 +376,10 @@ gtd_provider_todo_txt_load_source_monitor (GtdProviderTodoTxt *self)
 }
 
 static void
-gtd_provider_todo_txt_create_task (GtdProvider *provider,
-                                   GtdTask     *task)
+gtd_provider_todo_txt_create_task (GtdProvider   *provider,
+                                   GtdTask       *task,
+                                   GCancellable  *cancellable,
+                                   GError       **error)
 {
   GtdProviderTodoTxt *self;
 
@@ -390,23 +392,10 @@ gtd_provider_todo_txt_create_task (GtdProvider *provider,
 }
 
 static void
-gtd_provider_todo_txt_update_task (GtdProvider *provider,
-                                   GtdTask     *task)
-{
-  GtdProviderTodoTxt *self;
-
-  self = GTD_PROVIDER_TODO_TXT (provider);
-
-  g_return_if_fail (GTD_IS_TASK (task));
-  g_return_if_fail (GTD_IS_TASK_LIST (gtd_task_get_list (task)));
-  g_return_if_fail (G_IS_FILE (self->source_file));
-
-  update_source (self);
-}
-
-static void
-gtd_provider_todo_txt_remove_task (GtdProvider *provider,
-                                   GtdTask     *task)
+gtd_provider_todo_txt_update_task (GtdProvider   *provider,
+                                   GtdTask       *task,
+                                   GCancellable  *cancellable,
+                                   GError       **error)
 {
   GtdProviderTodoTxt *self;
 
@@ -420,8 +409,27 @@ gtd_provider_todo_txt_remove_task (GtdProvider *provider,
 }
 
 static void
-gtd_provider_todo_txt_create_task_list (GtdProvider *provider,
-                                        GtdTaskList *list)
+gtd_provider_todo_txt_remove_task (GtdProvider   *provider,
+                                   GtdTask       *task,
+                                   GCancellable  *cancellable,
+                                   GError       **error)
+{
+  GtdProviderTodoTxt *self;
+
+  self = GTD_PROVIDER_TODO_TXT (provider);
+
+  g_return_if_fail (GTD_IS_TASK (task));
+  g_return_if_fail (GTD_IS_TASK_LIST (gtd_task_get_list (task)));
+  g_return_if_fail (G_IS_FILE (self->source_file));
+
+  update_source (self);
+}
+
+static void
+gtd_provider_todo_txt_create_task_list (GtdProvider   *provider,
+                                        GtdTaskList   *list,
+                                        GCancellable  *cancellable,
+                                        GError       **error)
 {
   GtdProviderTodoTxt *self;
   gchar *name;
@@ -441,8 +449,10 @@ gtd_provider_todo_txt_create_task_list (GtdProvider *provider,
 }
 
 static void
-gtd_provider_todo_txt_update_task_list (GtdProvider *provider,
-                                        GtdTaskList *list)
+gtd_provider_todo_txt_update_task_list (GtdProvider   *provider,
+                                        GtdTaskList   *list,
+                                        GCancellable  *cancellable,
+                                        GError       **error)
 {
   GtdProviderTodoTxt *self;
 
@@ -456,8 +466,10 @@ gtd_provider_todo_txt_update_task_list (GtdProvider *provider,
 }
 
 static void
-gtd_provider_todo_txt_remove_task_list (GtdProvider *provider,
-                                        GtdTaskList *list)
+gtd_provider_todo_txt_remove_task_list (GtdProvider   *provider,
+                                        GtdTaskList   *list,
+                                        GCancellable  *cancellable,
+                                        GError       **error)
 {
   GtdProviderTodoTxt *self;
 

@@ -302,7 +302,7 @@ gtd_application_command_line (GApplication            *app,
 
   options = g_application_command_line_get_options_dict (command_line);
 
-  if (g_variant_dict_contains (options, "debug"))
+  //if (g_variant_dict_contains (options, "debug"))
     gtd_log_init ();
 
   if (g_variant_dict_contains (options, "quit"))

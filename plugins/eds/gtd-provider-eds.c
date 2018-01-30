@@ -590,8 +590,10 @@ gtd_provider_eds_get_icon (GtdProvider *provider)
 }
 
 static void
-gtd_provider_eds_create_task (GtdProvider *provider,
-                              GtdTask     *task)
+gtd_provider_eds_create_task (GtdProvider   *provider,
+                              GtdTask       *task,
+                              GCancellable  *cancellable,
+                              GError       **error)
 {
   g_autofree gchar *new_uid = NULL;
   GtdProviderEdsPrivate *priv;
@@ -600,7 +602,6 @@ gtd_provider_eds_create_task (GtdProvider *provider,
   ECalComponent *component;
   ECalClient *client;
   ESource *source;
-  GError *error;
 
   g_return_if_fail (GTD_IS_TASK (task));
   g_return_if_fail (GTD_IS_TASK_LIST_EDS (gtd_task_get_list (task)));
@@ -611,26 +612,17 @@ gtd_provider_eds_create_task (GtdProvider *provider,
   source = gtd_task_list_eds_get_source (tasklist);
   client = g_hash_table_lookup (priv->clients, source);
   component = gtd_task_eds_get_component (GTD_TASK_EDS (task));
-  error = NULL;
 
   /* The task is not ready until we finish the operation */
   gtd_object_set_ready (GTD_OBJECT (task), FALSE);
 
-  e_cal_client_create_object_sync (client,
-                                   e_cal_component_get_icalcomponent (component),
-                                   &new_uid,
-                                   NULL, // We won't cancel the operation
-                                   &error);
-
-  if (error)
+  if (!e_cal_client_create_object_sync (client,
+                                        e_cal_component_get_icalcomponent (component),
+                                        &new_uid,
+                                        cancellable,
+                                        error))
     {
-      gtd_manager_emit_error_message (gtd_manager_get_default (),
-                                      _("Error removing task"),
-                                      error->message,
-                                      NULL,
-                                      NULL);
       gtd_task_list_remove_task (gtd_task_get_list (task), task);
-      g_clear_error (&error);
     }
   else
     {
@@ -647,8 +639,10 @@ gtd_provider_eds_create_task (GtdProvider *provider,
 }
 
 static void
-gtd_provider_eds_update_task (GtdProvider *provider,
-                              GtdTask     *task)
+gtd_provider_eds_update_task (GtdProvider   *provider,
+                              GtdTask       *task,
+                              GCancellable  *cancellable,
+                              GError       **error)
 {
   GtdProviderEdsPrivate *priv;
   GtdProviderEds *self;
@@ -656,7 +650,6 @@ gtd_provider_eds_update_task (GtdProvider *provider,
   ECalComponent *component;
   ECalClient *client;
   ESource *source;
-  GError *error;
 
   g_return_if_fail (GTD_IS_TASK (task));
   g_return_if_fail (GTD_IS_TASK_LIST_EDS (gtd_task_get_list (task)));
@@ -667,7 +660,6 @@ gtd_provider_eds_update_task (GtdProvider *provider,
   source = gtd_task_list_eds_get_source (tasklist);
   client = g_hash_table_lookup (priv->clients, source);
   component = gtd_task_eds_get_component (GTD_TASK_EDS (task));
-  error = NULL;
 
   e_cal_component_commit_sequence (component);
 
@@ -677,25 +669,17 @@ gtd_provider_eds_update_task (GtdProvider *provider,
   e_cal_client_modify_object_sync (client,
                                    e_cal_component_get_icalcomponent (component),
                                    E_CAL_OBJ_MOD_THIS,
-                                   NULL, // We won't cancel the operation
-                                   &error);
-
-  if (error)
-    {
-      gtd_manager_emit_error_message (gtd_manager_get_default (),
-                                      _("Error updating task"),
-                                      error->message,
-                                      NULL,
-                                      NULL);
-      g_clear_error (&error);
-    }
+                                   cancellable,
+                                   error);
 
   gtd_object_set_ready (GTD_OBJECT (task), TRUE);
 }
 
 static void
-gtd_provider_eds_remove_task (GtdProvider *provider,
-                              GtdTask     *task)
+gtd_provider_eds_remove_task (GtdProvider   *provider,
+                              GtdTask       *task,
+                              GCancellable  *cancellable,
+                              GError       **error)
 {
 
   GtdProviderEdsPrivate *priv;
@@ -705,7 +689,6 @@ gtd_provider_eds_remove_task (GtdProvider *provider,
   ECalComponent *component;
   ECalClient *client;
   ESource *source;
-  GError *error;
 
   g_return_if_fail (GTD_IS_TASK (task));
   g_return_if_fail (GTD_IS_TASK_LIST_EDS (gtd_task_get_list (task)));
@@ -717,7 +700,6 @@ gtd_provider_eds_remove_task (GtdProvider *provider,
   client = g_hash_table_lookup (priv->clients, source);
   component = gtd_task_eds_get_component (GTD_TASK_EDS (task));
   id = e_cal_component_get_id (component);
-  error = NULL;
 
   /* The task is not ready until we finish the operation */
   gtd_object_set_ready (GTD_OBJECT (task), FALSE);
@@ -726,36 +708,26 @@ gtd_provider_eds_remove_task (GtdProvider *provider,
                                    id->uid,
                                    id->rid,
                                    E_CAL_OBJ_MOD_THIS,
-                                   NULL, // We won't cancel the operation
-                                   &error);
+                                   cancellable,
+                                   error);
 
   gtd_object_set_ready (GTD_OBJECT (task), TRUE);
-
-  if (error)
-    {
-      gtd_manager_emit_error_message (gtd_manager_get_default (),
-                                      _("Error removing task"),
-                                      error->message,
-                                      NULL,
-                                      NULL);
-      g_clear_error (&error);
-    }
 
   e_cal_component_free_id (id);
 }
 
 static void
-gtd_provider_eds_create_task_list (GtdProvider *provider,
-                                   GtdTaskList *list)
+gtd_provider_eds_create_task_list (GtdProvider   *provider,
+                                   GtdTaskList   *list,
+                                   GCancellable  *cancellable,
+                                   GError       **error)
 {
   GtdProviderEdsPrivate *priv;
   GtdProviderEds *self;
   ESource *source;
-  GError *error;
 
   self = GTD_PROVIDER_EDS (provider);
   priv = gtd_provider_eds_get_instance_private (self);
-  error = NULL;
   source = NULL;
 
   /* Create an ESource */
@@ -769,72 +741,35 @@ gtd_provider_eds_create_task_list (GtdProvider *provider,
   e_source_set_display_name (source, gtd_task_list_get_name (list));
 
   gtd_object_set_ready (GTD_OBJECT (provider), FALSE);
-  e_source_registry_commit_source_sync (priv->source_registry, source, NULL, &error);
 
-  if (error)
-    {
-      gtd_manager_emit_error_message (gtd_manager_get_default (),
-                                      _("Error creating task list"),
-                                      error->message,
-                                      NULL,
-                                      NULL);
-      g_clear_error (&error);
-    }
-
-  if (e_source_get_remote_creatable (source))
-    {
-      ESource *parent;
-
-      parent = e_source_registry_ref_source (priv->source_registry, e_source_get_parent (source));
-
-      e_source_remote_create_sync (parent, source, NULL, &error);
-
-      if (error)
-        {
-          gtd_manager_emit_error_message (gtd_manager_get_default (),
-                                          _("Error creating remote task list"),
-                                          error->message,
-                                          NULL,
-                                          NULL);
-          g_clear_error (&error);
-        }
-
-      g_object_unref (parent);
-    }
+  e_source_registry_commit_source_sync (priv->source_registry,
+                                        source,
+                                        cancellable,
+                                        error);
 
   gtd_object_set_ready (GTD_OBJECT (list), TRUE);
 }
 
 static void
-gtd_provider_eds_update_task_list (GtdProvider *provider,
-                                   GtdTaskList *list)
+gtd_provider_eds_update_task_list (GtdProvider   *provider,
+                                   GtdTaskList   *list,
+                                   GCancellable  *cancellable,
+                                   GError       **error)
 {
   GtdProviderEdsPrivate *priv;
   ESource *source;
-  GError *error;
 
   g_return_if_fail (GTD_IS_TASK_LIST (list));
   g_return_if_fail (gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list)));
 
   priv = gtd_provider_eds_get_instance_private (GTD_PROVIDER_EDS (provider));
   source = gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list));
-  error = NULL;
 
   gtd_object_set_ready (GTD_OBJECT (provider), FALSE);
   e_source_registry_commit_source_sync (priv->source_registry,
                                         source,
-                                        NULL,
-                                        &error);
-
-  if (error)
-    {
-      gtd_manager_emit_error_message (gtd_manager_get_default (),
-                                      _("Error updating task list"),
-                                      error->message,
-                                      NULL,
-                                      NULL);
-      g_clear_error (&error);
-    }
+                                        cancellable,
+                                        error);
 
   gtd_object_set_ready (GTD_OBJECT (provider), TRUE);
 
@@ -842,11 +777,12 @@ gtd_provider_eds_update_task_list (GtdProvider *provider,
 }
 
 static void
-gtd_provider_eds_remove_task_list (GtdProvider *provider,
-                                   GtdTaskList *list)
+gtd_provider_eds_remove_task_list (GtdProvider   *provider,
+                                   GtdTaskList   *list,
+                                   GCancellable  *cancellable,
+                                   GError       **error)
 {
   ESource *source;
-  GError *error;
 
   g_return_if_fail (GTD_IS_TASK_LIST (list));
   g_return_if_fail (gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list)));
@@ -856,32 +792,7 @@ gtd_provider_eds_remove_task_list (GtdProvider *provider,
 
   gtd_object_set_ready (GTD_OBJECT (provider), FALSE);
 
-  e_source_remove_sync (source, NULL, &error);
-
-  if (error)
-    {
-      gtd_manager_emit_error_message (gtd_manager_get_default (),
-                                      _("Error removing task list"),
-                                      error->message,
-                                      NULL,
-                                      NULL);
-      g_clear_error (&error);
-    }
-
-  if (e_source_get_remote_deletable (source))
-    {
-      e_source_remote_delete_sync (source, NULL, &error);
-
-      if (error)
-        {
-          gtd_manager_emit_error_message (gtd_manager_get_default (),
-                                          _("Error removing remote task list"),
-                                          error->message,
-                                          NULL,
-                                          NULL);
-          g_clear_error (&error);
-        }
-    }
+  e_source_remove_sync (source, cancellable, error);
 
   gtd_object_set_ready (GTD_OBJECT (provider), TRUE);
 

@@ -682,8 +682,10 @@ synchronize_call (GtdProviderTodoist *self)
 }
 
 static void
-gtd_provider_todoist_create_task (GtdProvider *provider,
-                                  GtdTask     *task)
+gtd_provider_todoist_create_task (GtdProvider   *provider,
+                                  GtdTask       *task,
+                                  GCancellable  *cancellable,
+                                  GError       **error)
 {
   GtdProviderTodoist *self;
   PostCallbackData *data;
@@ -768,8 +770,10 @@ gtd_provider_todoist_create_task (GtdProvider *provider,
 }
 
 static void
-gtd_provider_todoist_update_task (GtdProvider *provider,
-                                  GtdTask     *task)
+gtd_provider_todoist_update_task (GtdProvider   *provider,
+                                  GtdTask       *task,
+                                  GCancellable  *cancellable,
+                                  GError       **error)
 {
   GtdProviderTodoist *self;
   PostCallbackData *data;
@@ -842,8 +846,10 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
 }
 
 static void
-gtd_provider_todoist_remove_task (GtdProvider *provider,
-                                  GtdTask     *task)
+gtd_provider_todoist_remove_task (GtdProvider   *provider,
+                                  GtdTask       *task,
+                                  GCancellable  *cancellable,
+                                  GError       **error)
 {
   GtdProviderTodoist *self;
   PostCallbackData *data;
@@ -885,8 +891,10 @@ gtd_provider_todoist_remove_task (GtdProvider *provider,
 }
 
 static void
-gtd_provider_todoist_create_task_list (GtdProvider *provider,
-                                       GtdTaskList *list)
+gtd_provider_todoist_create_task_list (GtdProvider   *provider,
+                                       GtdTaskList   *list,
+                                       GCancellable  *cancellable,
+                                       GError       **error)
 {
   GtdProviderTodoist *self;
   PostCallbackData *data;
@@ -946,8 +954,10 @@ gtd_provider_todoist_create_task_list (GtdProvider *provider,
 }
 
 static void
-gtd_provider_todoist_update_task_list (GtdProvider *provider,
-                                        GtdTaskList *list)
+gtd_provider_todoist_update_task_list (GtdProvider   *provider,
+                                       GtdTaskList   *list,
+                                       GCancellable  *cancellable,
+                                       GError       **error)
 {
   GtdProviderTodoist *self;
   PostCallbackData *data;
@@ -995,8 +1005,10 @@ gtd_provider_todoist_update_task_list (GtdProvider *provider,
 }
 
 static void
-gtd_provider_todoist_remove_task_list (GtdProvider *provider,
-                                       GtdTaskList *list)
+gtd_provider_todoist_remove_task_list (GtdProvider   *provider,
+                                       GtdTaskList   *list,
+                                       GCancellable  *cancellable,
+                                       GError       **error)
 {
   GtdProviderTodoist *self;
   PostCallbackData *data;

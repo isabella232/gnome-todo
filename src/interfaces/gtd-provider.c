@@ -295,102 +295,126 @@ gtd_provider_get_icon (GtdProvider *provider)
  * gtd_provider_create_task:
  * @provider: a #GtdProvider
  * @task: a #GtdTask
+ * @cancellable: (nullable): a #GCancellable
+ * @error: (nullable): return location for a #GError
  *
  * Creates the given task in @provider.
  */
 void
-gtd_provider_create_task (GtdProvider *provider,
-                          GtdTask     *task)
+gtd_provider_create_task (GtdProvider   *provider,
+                          GtdTask       *task,
+                          GCancellable  *cancellable,
+                          GError       **error)
 {
   g_return_if_fail (GTD_IS_PROVIDER (provider));
   g_return_if_fail (GTD_PROVIDER_GET_IFACE (provider)->create_task);
 
-  GTD_PROVIDER_GET_IFACE (provider)->create_task (provider, task);
+  GTD_PROVIDER_GET_IFACE (provider)->create_task (provider, task, cancellable, error);
 }
 
 /**
  * gtd_provider_update_task:
  * @provider: a #GtdProvider
  * @task: a #GtdTask
+ * @cancellable: (nullable): a #GCancellable
+ * @error: (nullable): return location for a #GError
  *
  * Updates the given task in @provider.
  */
 void
-gtd_provider_update_task (GtdProvider *provider,
-                          GtdTask     *task)
+gtd_provider_update_task (GtdProvider   *provider,
+                          GtdTask       *task,
+                          GCancellable  *cancellable,
+                          GError       **error)
 {
   g_return_if_fail (GTD_IS_PROVIDER (provider));
   g_return_if_fail (GTD_PROVIDER_GET_IFACE (provider)->update_task);
 
-  GTD_PROVIDER_GET_IFACE (provider)->update_task (provider, task);
+  GTD_PROVIDER_GET_IFACE (provider)->update_task (provider, task, cancellable, error);
 }
 
 /**
  * gtd_provider_remove_task:
  * @provider: a #GtdProvider
  * @task: a #GtdTask
+ * @cancellable: (nullable): a #GCancellable
+ * @error: (nullable): return location for a #GError
  *
  * Removes the given task from @provider.
  */
 void
-gtd_provider_remove_task (GtdProvider *provider,
-                          GtdTask     *task)
+gtd_provider_remove_task (GtdProvider   *provider,
+                          GtdTask       *task,
+                          GCancellable  *cancellable,
+                          GError       **error)
 {
   g_return_if_fail (GTD_IS_PROVIDER (provider));
   g_return_if_fail (GTD_PROVIDER_GET_IFACE (provider)->remove_task);
 
-  GTD_PROVIDER_GET_IFACE (provider)->remove_task (provider, task);
+  GTD_PROVIDER_GET_IFACE (provider)->remove_task (provider, task, cancellable, error);
 }
 
 /**
  * gtd_provider_create_task_list:
  * @provider: a #GtdProvider
  * @list: a #GtdTaskList
+ * @cancellable: (nullable): a #GCancellable
+ * @error: (nullable): return location for a #GError
  *
  * Creates the given list in @provider.
  */
 void
-gtd_provider_create_task_list (GtdProvider *provider,
-                               GtdTaskList *list)
+gtd_provider_create_task_list (GtdProvider   *provider,
+                               GtdTaskList   *list,
+                               GCancellable  *cancellable,
+                               GError       **error)
 {
   g_return_if_fail (GTD_IS_PROVIDER (provider));
   g_return_if_fail (GTD_PROVIDER_GET_IFACE (provider)->create_task_list);
 
-  GTD_PROVIDER_GET_IFACE (provider)->create_task_list (provider, list);
+  GTD_PROVIDER_GET_IFACE (provider)->create_task_list (provider, list, cancellable, error);
 }
 
 /**
  * gtd_provider_update_task_list:
  * @provider: a #GtdProvider
  * @list: a #GtdTaskList
+ * @cancellable: (nullable): a #GCancellable
+ * @error: (nullable): return location for a #GError
  *
  * Updates the given list in @provider.
  */
 void
-gtd_provider_update_task_list (GtdProvider *provider,
-                               GtdTaskList *list)
+gtd_provider_update_task_list (GtdProvider   *provider,
+                               GtdTaskList   *list,
+                               GCancellable  *cancellable,
+                               GError       **error)
 {
   g_return_if_fail (GTD_IS_PROVIDER (provider));
   g_return_if_fail (GTD_PROVIDER_GET_IFACE (provider)->update_task_list);
 
-  GTD_PROVIDER_GET_IFACE (provider)->update_task_list (provider, list);
+  GTD_PROVIDER_GET_IFACE (provider)->update_task_list (provider, list, cancellable, error);
 }
 
 /**
  * gtd_provider_remove_task_list:
  * @provider: a #GtdProvider
  * @list: a #GtdTaskList
+ * @cancellable: (nullable): a #GCancellable
+ * @error: (nullable): return location for a #GError
  *
  * Removes the given list from @provider.
  */
 void
-gtd_provider_remove_task_list (GtdProvider *provider,
-                               GtdTaskList *list)
+gtd_provider_remove_task_list (GtdProvider   *provider,
+                               GtdTaskList   *list,
+                               GCancellable  *cancellable,
+                               GError       **error)
 {
   g_return_if_fail (GTD_IS_PROVIDER (provider));
   g_return_if_fail (GTD_PROVIDER_GET_IFACE (provider)->remove_task_list);
 
-  GTD_PROVIDER_GET_IFACE (provider)->remove_task_list (provider, list);
+  GTD_PROVIDER_GET_IFACE (provider)->remove_task_list (provider, list, cancellable, error);
 }
 
 /**
