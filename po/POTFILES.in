@@ -18,7 +18,6 @@ data/ui/window.ui
 plugins/background/gtd-plugin-background.c
 plugins/background/org.gnome.todo.background.gschema.xml
 plugins/background/ui/preferences.ui
-plugins/eds/edit-pane.ui
 plugins/eds/gtd-plugin-eds.c
 plugins/eds/gtd-provider-eds.c
 plugins/eds/gtd-provider-local.c
