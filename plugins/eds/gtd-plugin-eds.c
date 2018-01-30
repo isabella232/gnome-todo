@@ -181,62 +181,16 @@ gtd_plugin_eds_goa_client_finish_cb (GObject      *client,
                                      GAsyncResult *result,
                                      gpointer      user_data)
 {
+  g_autoptr (GError) error = NULL;
   GtdPluginEds *self;
   GoaClient *goa_client;
-  GError *error;
+  GList *accounts;
+  GList *l;
 
   self = GTD_PLUGIN_EDS (user_data);
-  error = NULL;
-
   goa_client = goa_client_new_finish (result, &error);
 
-  if (!error)
-    {
-      GList *accounts;
-      GList *l;
-
-      /* Load each supported GoaAccount into a GtdProviderGoa */
-      accounts = goa_client_get_accounts (goa_client);
-
-      for (l = accounts; l != NULL; l = l->next)
-        {
-          GoaObject *object;
-          GoaAccount *account;
-
-          object = l->data;
-          account = goa_object_get_account (object);
-
-          if (g_strv_contains (supported_accounts, goa_account_get_provider_type (account)))
-            {
-              GtdProviderGoa *provider;
-
-              g_debug ("Creating new provider for account '%s'", goa_account_get_identity (account));
-
-              /* Create the new GOA provider */
-              provider = gtd_provider_goa_new (self->registry, account);
-
-              self->providers = g_list_append (self->providers, provider);
-
-              g_signal_emit_by_name (self, "provider-added", provider);
-            }
-
-          g_object_unref (account);
-        }
-
-      /* Connect GoaClient signals */
-      g_signal_connect (goa_client,
-                        "account-added",
-                        G_CALLBACK (gtd_plugin_eds_goa_account_added_cb),
-                        user_data);
-
-      g_signal_connect (goa_client,
-                        "account-removed",
-                        G_CALLBACK (gtd_plugin_eds_goa_account_removed_cb),
-                        user_data);
-
-      g_list_free_full (accounts, g_object_unref);
-    }
-  else
+  if (error)
     {
       g_warning ("%s: %s: %s",
                  G_STRFUNC,
@@ -250,6 +204,49 @@ gtd_plugin_eds_goa_client_finish_cb (GObject      *client,
                                       NULL);
       g_clear_error (&error);
     }
+
+  /* Load each supported GoaAccount into a GtdProviderGoa */
+  accounts = goa_client_get_accounts (goa_client);
+
+  for (l = accounts; l != NULL; l = l->next)
+    {
+      GtdProviderGoa *provider;
+      GoaAccount *account;
+      GoaObject *object;
+
+      object = l->data;
+      account = goa_object_get_account (object);
+
+      if (!g_strv_contains (supported_accounts, goa_account_get_provider_type (account)))
+        {
+          g_object_unref (account);
+          continue;
+        }
+
+      g_debug ("Creating new provider for account '%s'", goa_account_get_identity (account));
+
+      /* Create the new GOA provider */
+      provider = gtd_provider_goa_new (self->registry, account);
+
+      self->providers = g_list_append (self->providers, provider);
+
+      g_signal_emit_by_name (self, "provider-added", provider);
+
+      g_object_unref (account);
+    }
+
+  /* Connect GoaClient signals */
+  g_signal_connect (goa_client,
+                    "account-added",
+                    G_CALLBACK (gtd_plugin_eds_goa_account_added_cb),
+                    user_data);
+
+  g_signal_connect (goa_client,
+                    "account-removed",
+                    G_CALLBACK (gtd_plugin_eds_goa_account_removed_cb),
+                    user_data);
+
+  g_list_free_full (accounts, g_object_unref);
 }
 
 

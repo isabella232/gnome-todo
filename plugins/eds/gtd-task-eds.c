@@ -204,7 +204,7 @@ gtd_task_eds_set_complete (GtdTask  *task,
 
   if (complete)
     {
-      GDateTime *now = g_date_time_new_now_utc ();
+      g_autoptr (GDateTime) now = g_date_time_new_now_utc ();
 
       percent = 100;
       status = ICAL_STATUS_COMPLETED;
@@ -223,10 +223,7 @@ gtd_task_eds_set_complete (GtdTask  *task,
        * FIXME: This does not do anything until we have an ical
        * timezone associated with the task
        */
-      icaltimezone_convert_time (dt,
-                                 NULL,
-                                 icaltimezone_get_utc_timezone ());
-      g_date_time_unref (now);
+      icaltimezone_convert_time (dt, NULL, icaltimezone_get_utc_timezone ());
     }
   else
     {

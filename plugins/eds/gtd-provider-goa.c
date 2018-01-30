@@ -93,15 +93,15 @@ gtd_provider_goa_set_account (GtdProviderGoa *provider,
 
   if (provider->account != account)
     {
-      gchar *icon_name;
+      g_autofree gchar *icon_name = NULL;
 
       g_set_object (&provider->account, account);
       g_object_notify (G_OBJECT (provider), "account");
 
 
-      g_message ("Setting up Online Account: %s (%s)",
-                 goa_account_get_identity (account),
-                 goa_account_get_id (account));
+      g_debug ("Setting up Online Account: %s (%s)",
+               goa_account_get_identity (account),
+               goa_account_get_id (account));
 
       /* Update icon */
       icon_name = g_strdup_printf ("goa-account-%s", goa_account_get_provider_type (provider->account));
@@ -112,8 +112,6 @@ gtd_provider_goa_set_account (GtdProviderGoa *provider,
       provider->id = g_strdup_printf ("%s@%s",
                                       goa_account_get_provider_type (provider->account),
                                       goa_account_get_id (provider->account));
-
-      g_free (icon_name);
     }
 }
 
