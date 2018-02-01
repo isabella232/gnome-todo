@@ -302,9 +302,6 @@ gtd_application_command_line (GApplication            *app,
 
   options = g_application_command_line_get_options_dict (command_line);
 
-  //if (g_variant_dict_contains (options, "debug"))
-    gtd_log_init ();
-
   if (g_variant_dict_contains (options, "quit"))
     {
       g_application_quit (app);
@@ -328,6 +325,16 @@ gtd_application_local_command_line (GApplication   *application,
                                                                                  exit_status);
 }
 
+static gint
+gtd_application_handle_local_options (GApplication *application,
+                                      GVariantDict *options)
+{
+  if (g_variant_dict_contains (options, "debug"))
+    gtd_log_init ();
+
+  return -1;
+}
+
 static void
 gtd_application_class_init (GtdApplicationClass *klass)
 {
@@ -340,6 +347,7 @@ gtd_application_class_init (GtdApplicationClass *klass)
   application_class->startup = gtd_application_startup;
   application_class->command_line = gtd_application_command_line;
   application_class->local_command_line = gtd_application_local_command_line;
+  application_class->handle_local_options = gtd_application_handle_local_options;
 }
 
 static void
