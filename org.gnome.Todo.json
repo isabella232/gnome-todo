@@ -25,6 +25,7 @@
             "V": "1"
         }
     },
+    "x-run-args" : [ "--debug" ],
     "cleanup": ["/include", "/lib/pkgconfig",
                 "/share/pkgconfig", "/share/aclocal",
                 "/man", "/share/man", "/share/gtk-doc",
@@ -111,7 +112,8 @@
                     "type": "git",
                     "url": "https://gitlab.gnome.org/GNOME/gnome-todo.git"
                 }
-            ]
+            ],
+            "config-opts": ["-Dtracing=true"]
         }
     ]
 }
