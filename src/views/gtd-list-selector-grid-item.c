@@ -67,6 +67,22 @@ enum {
   LAST_PROP
 };
 
+static gboolean
+task_or_parent_is_complete (GtdTask *task)
+{
+  GtdTask *aux = task;
+
+  while (aux)
+    {
+      if (gtd_task_get_complete (aux))
+        return TRUE;
+
+      aux = gtd_task_get_parent (aux);
+    }
+
+  return FALSE;
+}
+
 static cairo_surface_t*
 gtd_list_selector_grid_item__render_thumbnail (GtdListSelectorGridItem *item)
 {
@@ -167,7 +183,7 @@ gtd_list_selector_grid_item__render_thumbnail (GtdListSelectorGridItem *item)
           gint i, font_height;
 
           /* Don't render completed tasks */
-          if (gtd_task_get_complete (l->data))
+          if (task_or_parent_is_complete (l->data))
             continue;
 
           /* Hardcoded spacing between tasks */
