@@ -31,6 +31,7 @@ gtd_str_replace (const gchar *source,
   gint64 n_ocurrences;
   gint64 replacement_len;
   gint64 search_len;
+  gint64 source_len;
   gint64 final_size;
   gint64 diff;
 
@@ -39,6 +40,7 @@ gtd_str_replace (const gchar *source,
   g_assert_nonnull (replacement);
 
   /* Count the number of ocurrences of "search" inside "source" */
+  source_len = strlen (source);
   search_len = strlen (search);
   replacement_len = strlen (replacement);
   n_ocurrences = 0;
@@ -52,10 +54,11 @@ gtd_str_replace (const gchar *source,
 
   /* Calculate size of the new string */
   diff = replacement_len - search_len;
-  final_size = strlen (source) + diff * n_ocurrences + 1;
+  final_size = source_len + diff * n_ocurrences + 1;
 
   /* Create the new string */
-  new_string = g_malloc0 (final_size);
+  new_string = g_malloc (final_size);
+  new_string[final_size - 1] = '\0';
 
   /*
    * And copy the contents of the source string into the new string,
@@ -83,7 +86,7 @@ gtd_str_replace (const gchar *source,
     }
 
   /* Copy the last chunk of string if any */
-  diff = strlen (source) - (source_aux2 - source);
+  diff = source_len - (source_aux2 - source);
   strncpy (new_aux, source_aux2, diff);
 
   return new_string;
