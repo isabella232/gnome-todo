@@ -27,6 +27,7 @@ headers = enum_headers + files(
   'gtd-task-list-view.h',
   'gtd-timer.h',
   'gtd-types.h',
+  'gtd-utils.h',
   'gtd-window.h',
   'gnome-todo.h'
 )
@@ -73,6 +74,7 @@ sources = files(
   'gtd-task-list-view.c',
   'gtd-task-row.c',
   'gtd-timer.c',
+  'gtd-utils.c',
   'gtd-window.c',
   'main.c'
 )

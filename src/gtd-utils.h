@@ -1,6 +1,6 @@
-/* gnome-todo.h
+/* gtd-utils.h
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,23 +14,18 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-#ifndef GNOME_TODO_H
-#define GNOME_TODO_H
+#pragma once
 
-#include "gtd-activatable.h"
-#include "gtd-enums.h"
-#include "gtd-manager.h"
-#include "gtd-notification.h"
-#include "gtd-object.h"
-#include "gtd-panel.h"
-#include "gtd-provider.h"
-#include "gtd-task.h"
-#include "gtd-task-list.h"
-#include "gtd-task-list-view.h"
-#include "gtd-types.h"
-#include "gtd-utils.h"
-#include "gtd-window.h"
+#include <glib.h>
 
-#endif /* GNOME_TODO_H */
+G_BEGIN_DECLS
+
+gchar*               gtd_str_replace                             (const gchar        *source,
+                                                                  const gchar        *search,
+                                                                  const gchar        *replacement);
+
+G_END_DECLS
