@@ -48,7 +48,7 @@ typedef struct
   gchar           *title;
 
   gint32           priority;
-  gboolean         complete : 1;
+  gboolean         complete;
 } GtdTaskPrivate;
 
 G_DEFINE_TYPE_WITH_PRIVATE (GtdTask, gtd_task, GTD_TYPE_OBJECT)
