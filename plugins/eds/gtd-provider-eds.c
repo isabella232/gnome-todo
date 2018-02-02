@@ -124,14 +124,17 @@ gtd_provider_eds_fill_task_list (GObject      *client,
                                  GAsyncResult *result,
                                  gpointer      user_data)
 {
+  g_autoptr (GError) error = NULL;
+  GtdProviderEds *self;
   GtdTaskList *list;
   TaskData *data = user_data;
   GSList *component_list;
-  GError *error = NULL;
+  GSList *l;
 
   g_return_if_fail (GTD_IS_PROVIDER_EDS (data->provider));
 
   list = GTD_TASK_LIST (data->data);
+  self = data->provider;
 
   e_cal_client_get_object_list_as_comps_finish (E_CAL_CLIENT (client),
                                                 result,
@@ -141,37 +144,32 @@ gtd_provider_eds_fill_task_list (GObject      *client,
   gtd_object_set_ready (GTD_OBJECT (data->data), TRUE);
   g_free (data);
 
-  if (!error)
+  if (error)
     {
-      GSList *l;
-
-      for (l = component_list; l != NULL; l = l->next)
-        {
-          GtdTask *task;
-
-          task = gtd_task_eds_new (l->data);
-          gtd_task_set_list (task, list);
-
-          gtd_task_list_save_task (list, task);
-        }
-
-      e_cal_client_free_ecalcomp_slist (component_list);
-    }
-  else
-    {
-      g_warning ("%s: %s: %s",
-                 G_STRFUNC,
-                 "Error fetching tasks from list",
-                 error->message);
+      g_warning ("Error fetching tasks from list: %s", error->message);
 
       gtd_manager_emit_error_message (gtd_manager_get_default (),
                                       _("Error fetching tasks from list"),
                                       error->message,
                                       NULL,
                                       NULL);
-      g_error_free (error);
       return;
     }
+
+  for (l = component_list; l != NULL; l = l->next)
+    {
+      GtdTask *task;
+
+      task = gtd_task_eds_new (l->data);
+      gtd_task_set_list (task, list);
+
+      gtd_task_list_save_task (list, task);
+    }
+
+  e_cal_client_free_ecalcomp_slist (component_list);
+
+  /* Emit LIST_ADDED signal */
+  g_signal_emit_by_name (self, "list-added", list);
 }
 
 static void
@@ -179,6 +177,7 @@ gtd_provider_eds_on_client_connected (GObject      *source_object,
                                       GAsyncResult *result,
                                       gpointer      user_data)
 {
+  g_autoptr (GError) error = NULL;
   GtdProviderEdsPrivate *priv;
   GtdProviderEds *self;
   GtdTaskListEds *list;
@@ -187,29 +186,21 @@ gtd_provider_eds_on_client_connected (GObject      *source_object,
   ESource *default_source;
   ESource *source;
   ESource *parent;
-  GError *error;
 
   self = GTD_PROVIDER_EDS (user_data);
   priv = gtd_provider_eds_get_instance_private (self);
-  error = NULL;
   source = e_client_get_source (E_CLIENT (source_object));
   client = E_CAL_CLIENT (e_cal_client_connect_finish (result, &error));
 
   if (error)
     {
-      g_debug ("%s: %s (%s): %s",
-               G_STRFUNC,
-               "Failed to connect to task list",
-               e_source_get_uid (source),
-               error->message);
+      g_debug ("Failed to connect to task list '%s': %s", e_source_get_uid (source), error->message);
 
       gtd_manager_emit_error_message (gtd_manager_get_default (),
                                       _("Failed to connect to task list"),
                                       error->message,
                                       NULL,
                                       NULL);
-
-      g_error_free (error);
       return;
     }
 
@@ -248,15 +239,9 @@ gtd_provider_eds_on_client_connected (GObject      *source_object,
 
   g_clear_object (&default_source);
 
-  /* Emit LIST_ADDED signal */
-  g_signal_emit_by_name (self, "list-added", list);
-
   g_object_unref (parent);
 
-  g_debug ("%s: %s (%s)",
-           G_STRFUNC,
-           "Task list source successfully connected",
-           e_source_get_display_name (source));
+  g_debug ("Task list '%s' successfully connected", e_source_get_display_name (source));
 }
 
 typedef struct
