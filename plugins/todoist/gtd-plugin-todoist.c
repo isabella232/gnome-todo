@@ -1,6 +1,7 @@
 /* gtd-plugin-todoist.c
  *
  * Copyright (C) 2017 Rohit Kaushik <kaushikrohit325@gmail.com>
+ *               2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +36,8 @@ struct _GtdPluginTodoist
   PeasExtensionBase   parent;
 
   GtkWidget          *preferences;
+
+  GoaClient          *goa_client;
 
   /* Providers */
   GList              *providers;
@@ -99,9 +102,9 @@ gtd_plugin_todoist_get_providers (GtdActivatable *activatable)
 }
 
 static void
-gtd_plugin_todoist_account_added (GtdTodoistPreferencesPanel *panel,
-                                  GoaObject                  *account_object,
-                                  GtdPluginTodoist           *self)
+on_account_added_cb (GoaClient        *client,
+                     GoaObject        *account_object,
+                     GtdPluginTodoist *self)
 {
   GtdProviderTodoist *provider;
   GoaAccount *goa_account;
@@ -109,6 +112,8 @@ gtd_plugin_todoist_account_added (GtdTodoistPreferencesPanel *panel,
 
   goa_account = goa_object_get_account (account_object);
   provider_name = goa_account_get_provider_name (goa_account);
+
+  g_object_unref (goa_account);
 
   if (g_strcmp0 (provider_name, "Todoist") != 0)
     return;
@@ -121,9 +126,9 @@ gtd_plugin_todoist_account_added (GtdTodoistPreferencesPanel *panel,
 }
 
 static void
-gtd_plugin_todoist_account_removed (GtdTodoistPreferencesPanel *panel,
-                                    GoaObject                  *account_object,
-                                    GtdPluginTodoist           *self)
+on_account_removed_cb (GoaClient        *client,
+                       GoaObject        *account_object,
+                       GtdPluginTodoist *self)
 {
   GoaAccount *goa_account;
   const gchar *provider_name;
@@ -132,6 +137,8 @@ gtd_plugin_todoist_account_removed (GtdTodoistPreferencesPanel *panel,
   goa_account = goa_object_get_account (account_object);
   provider_name = goa_account_get_provider_name (goa_account);
   l = NULL;
+
+  g_object_unref (goa_account);
 
   if (g_strcmp0 (provider_name, "Todoist") != 0)
     return;
@@ -147,38 +154,29 @@ gtd_plugin_todoist_account_removed (GtdTodoistPreferencesPanel *panel,
           self->providers = g_list_remove (self->providers, l->data);
 
           g_signal_emit_by_name (self, "provider-removed", l->data);
-
           break;
         }
     }
 }
 
 static void
-gtd_plugin_todoist_account_changed (GtdTodoistPreferencesPanel *panel,
-                                    GoaObject                  *account_object,
-                                    GtdPluginTodoist           *self)
+on_goa_client_ready_cb (GObject          *source,
+                        GAsyncResult     *result,
+                        GtdPluginTodoist *self)
 {
-  GoaAccount *goa_account;
-  const gchar *provider_name;
-
-  goa_account = goa_object_get_account (account_object);
-  provider_name = goa_account_get_provider_name (goa_account);
-
-  if (g_strcmp0 (provider_name, "Todoist") != 0)
-    return;
-}
-
-static void
-goa_client_ready (GObject           *source,
-                  GAsyncResult      *res,
-                  GtdPluginTodoist  *self)
-{
-  GoaClient *client;
+  g_autoptr (GError) error = NULL;
   GList *accounts;
   GList *l;
 
-  client = goa_client_new_finish (res, NULL);
-  accounts = goa_client_get_accounts (client);
+  self->goa_client = goa_client_new_finish (result, &error);
+
+  if (error)
+    {
+      g_warning ("Error retriving GNOME Online Accounts client: %s", error->message);
+      return;
+    }
+
+  accounts = goa_client_get_accounts (self->goa_client);
 
   for (l = accounts; l != NULL; l = l->next)
     {
@@ -189,23 +187,18 @@ goa_client_ready (GObject           *source,
       provider_type = goa_account_get_provider_type (account);
 
       if (g_strcmp0 (provider_type, "todoist") == 0)
-        {
-          gtd_plugin_todoist_account_added (GTD_TODOIST_PREFERENCES_PANEL (self->preferences),
-                                            l->data,
-                                            self);
-        }
+        on_account_added_cb (self->goa_client, l->data, self);
 
       g_object_unref (account);
     }
 
   /* Connect signals */
-  g_signal_connect (client, "account-added", G_CALLBACK (gtd_plugin_todoist_account_added), self);
-  g_signal_connect (client, "account-removed", G_CALLBACK (gtd_plugin_todoist_account_removed), self);
-  g_signal_connect (client, "account-changed", G_CALLBACK (gtd_plugin_todoist_account_changed), self);
+  g_signal_connect (self->goa_client, "account-added", G_CALLBACK (on_account_added_cb), self);
+  g_signal_connect (self->goa_client, "account-removed", G_CALLBACK (on_account_removed_cb), self);
 
-  gtd_todoist_preferences_panel_set_client (GTD_TODOIST_PREFERENCES_PANEL (self->preferences), client);
+  gtd_todoist_preferences_panel_set_client (GTD_TODOIST_PREFERENCES_PANEL (self->preferences), self->goa_client);
 
-  g_list_free_full (accounts,  g_object_unref);
+  g_list_free_full (accounts, g_object_unref);
 }
 
 static void
@@ -220,7 +213,7 @@ gtd_activatable_iface_init (GtdActivatableInterface *iface)
 }
 
 /*
- * Init
+ * GObject overrides
  */
 
 static void
@@ -230,6 +223,8 @@ gtd_plugin_todoist_finalize (GObject *object)
 
   g_list_free_full (self->providers, g_object_unref);
   self->providers = NULL;
+
+  g_clear_object (&self->goa_client);
 
   G_OBJECT_CLASS (gtd_plugin_todoist_parent_class)->finalize (object);
 }
@@ -257,12 +252,10 @@ gtd_plugin_todoist_class_init (GtdPluginTodoistClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize     = gtd_plugin_todoist_finalize;
+  object_class->finalize = gtd_plugin_todoist_finalize;
   object_class->get_property = gtd_plugin_todoist_get_property;
 
-  g_object_class_override_property (object_class,
-                                    PROP_PREFERENCES_PANEL,
-                                    "preferences-panel");
+  g_object_class_override_property (object_class, PROP_PREFERENCES_PANEL, "preferences-panel");
 }
 
 static void
@@ -270,7 +263,7 @@ gtd_plugin_todoist_init (GtdPluginTodoist *self)
 {
   self->preferences = GTK_WIDGET (gtd_todoist_preferences_panel_new ());
 
-  goa_client_new (NULL, (GAsyncReadyCallback) goa_client_ready, self);
+  goa_client_new (NULL, (GAsyncReadyCallback) on_goa_client_ready_cb, self);
 }
 
 /* Empty class_finalize method */
