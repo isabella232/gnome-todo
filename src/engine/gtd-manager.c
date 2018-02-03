@@ -20,6 +20,7 @@
 
 #include "interfaces/gtd-provider.h"
 #include "interfaces/gtd-panel.h"
+#include "gtd-debug.h"
 #include "gtd-manager.h"
 #include "gtd-manager-protected.h"
 #include "gtd-plugin-manager.h"
@@ -44,29 +45,23 @@
  * To Do. This will create a #GtdNotification internally.
  */
 
-typedef struct
-{
-  GSettings             *settings;
-  GtdPluginManager      *plugin_manager;
-
-  GList                 *tasklists;
-  GList                 *providers;
-  GList                 *panels;
-  GtdProvider           *default_provider;
-  GtdTimer              *timer;
-
-  GCancellable          *cancellable;
-} GtdManagerPrivate;
-
 struct _GtdManager
 {
-   GtdObject           parent;
+   GtdObject          parent;
 
-  /*< private >*/
-  GtdManagerPrivate *priv;
+  GSettings          *settings;
+  GtdPluginManager   *plugin_manager;
+
+  GList              *tasklists;
+  GList              *providers;
+  GList              *panels;
+  GtdProvider        *default_provider;
+  GtdTimer           *timer;
+
+  GCancellable       *cancellable;
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (GtdManager, gtd_manager, GTD_TYPE_OBJECT)
+G_DEFINE_TYPE (GtdManager, gtd_manager, GTD_TYPE_OBJECT)
 
 /* Singleton instance */
 GtdManager *gtd_manager_instance = NULL;
@@ -96,42 +91,41 @@ enum
 
 static guint signals[NUM_SIGNALS] = { 0, };
 
+
+/*
+ * Auxiliary methods
+ */
+
 static void
 reset_cancellable_if_cancelled (GtdManager *self)
 {
-  GtdManagerPrivate *priv = gtd_manager_get_instance_private (self);
-
-  if (!g_cancellable_is_cancelled (priv->cancellable))
+  if (!g_cancellable_is_cancelled (self->cancellable))
     return;
 
-  g_clear_object (&priv->cancellable);
-  priv->cancellable = g_cancellable_new ();
+  g_clear_object (&self->cancellable);
+  self->cancellable = g_cancellable_new ();
 }
 
 static void
-check_provider_is_default (GtdManager  *manager,
+check_provider_is_default (GtdManager  *self,
                            GtdProvider *provider)
 {
-  GtdManagerPrivate *priv;
-  gchar *default_provider;
+  g_autofree gchar *default_provider = NULL;
 
-  priv = manager->priv;
-  default_provider = g_settings_get_string (priv->settings, "default-provider");
+  default_provider = g_settings_get_string (self->settings, "default-provider");
 
   if (g_strcmp0 (default_provider, gtd_provider_get_id (provider)) == 0)
-    gtd_manager_set_default_provider (manager, provider);
-
-  g_free (default_provider);
+    gtd_manager_set_default_provider (self, provider);
 }
 
 static void
-emit_show_error_message (GtdManager                *manager,
+emit_show_error_message (GtdManager                *self,
                          const gchar               *primary_text,
                          const gchar               *secondary_text,
                          GtdNotificationActionFunc  action,
                          gpointer                   user_data)
 {
-  g_signal_emit (manager,
+  g_signal_emit (self,
                  signals[SHOW_ERROR_MESSAGE],
                  0,
                  primary_text,
@@ -140,15 +134,173 @@ emit_show_error_message (GtdManager                *manager,
                  user_data);
 }
 
+
+/*
+ * Callbacks
+ */
+
+static void
+on_default_list_changed_cb (GtdProvider *provider,
+                            GParamSpec  *pspec,
+                            GtdManager  *self)
+{
+  g_object_notify (G_OBJECT (self), "default-task-list");
+}
+
+static void
+on_task_list_modified_cb (GtdTaskList *list,
+                          GtdTask     *task,
+                          GtdManager  *self)
+{
+  g_signal_emit (self, signals[LIST_CHANGED], 0, list);
+}
+
+static void
+on_panel_added_cb (GtdPluginManager *plugin_manager,
+                   GtdPanel         *panel,
+                   GtdManager       *self)
+{
+  self->panels = g_list_append (self->panels, panel);
+
+  g_signal_emit (self, signals[PANEL_ADDED], 0, panel);
+}
+
+static void
+on_panel_removed_cb (GtdPluginManager *plugin_manager,
+                     GtdPanel         *panel,
+                     GtdManager       *self)
+{
+  self->panels = g_list_remove (self->panels, panel);
+
+  g_signal_emit (self, signals[PANEL_REMOVED], 0, panel);
+}
+
+static void
+on_list_added_cb (GtdProvider *provider,
+                  GtdTaskList *list,
+                  GtdManager  *self)
+{
+  self->tasklists = g_list_append (self->tasklists, list);
+
+  g_signal_connect (list,
+                    "task-added",
+                    G_CALLBACK (on_task_list_modified_cb),
+                    self);
+
+  g_signal_connect (list,
+                    "task-updated",
+                    G_CALLBACK (on_task_list_modified_cb),
+                    self);
+
+  g_signal_connect (list,
+                    "task-removed",
+                    G_CALLBACK (on_task_list_modified_cb),
+                    self);
+
+  g_signal_emit (self, signals[LIST_ADDED], 0, list);
+}
+
+static void
+on_list_changed_cb (GtdProvider *provider,
+                    GtdTaskList *list,
+                    GtdManager  *self)
+{
+  g_signal_emit (self, signals[LIST_CHANGED], 0, list);
+}
+
+static void
+on_list_removed_cb (GtdProvider *provider,
+                    GtdTaskList *list,
+                    GtdManager  *self)
+{
+  if (!list)
+      return;
+
+  self->tasklists = g_list_remove (self->tasklists, list);
+
+  g_signal_handlers_disconnect_by_func (list,
+                                        on_task_list_modified_cb,
+                                        self);
+
+  g_signal_emit (self, signals[LIST_REMOVED], 0, list);
+}
+
+static void
+on_provider_added_cb (GtdPluginManager *plugin_manager,
+                      GtdProvider      *provider,
+                      GtdManager       *self)
+{
+  GList *lists;
+  GList *l;
+
+  self->providers = g_list_append (self->providers, provider);
+
+  /* Add lists */
+  lists = gtd_provider_get_task_lists (provider);
+
+  for (l = lists; l != NULL; l = l->next)
+    on_list_added_cb (provider, l->data, self);
+
+  g_signal_connect (provider,
+                    "list-added",
+                    G_CALLBACK (on_list_added_cb),
+                    self);
+
+  g_signal_connect (provider,
+                    "list-changed",
+                    G_CALLBACK (on_list_changed_cb),
+                    self);
+
+  g_signal_connect (provider,
+                    "list-removed",
+                    G_CALLBACK (on_list_removed_cb),
+                    self);
+
+  /* If we just added the default provider, update the property */
+  check_provider_is_default (self, provider);
+
+  g_signal_emit (self, signals[PROVIDER_ADDED], 0, provider);
+}
+
+static void
+on_provider_removed_cb (GtdPluginManager *plugin_manager,
+                        GtdProvider      *provider,
+                        GtdManager       *self)
+{
+  GList *lists;
+  GList *l;
+
+  self->providers = g_list_remove (self->providers, provider);
+
+  /* Remove lists */
+  lists = gtd_provider_get_task_lists (provider);
+
+  for (l = lists; l != NULL; l = l->next)
+    on_list_removed_cb (provider, l->data, self);
+
+  g_signal_handlers_disconnect_by_func (provider, on_default_list_changed_cb, self);
+  g_signal_handlers_disconnect_by_func (provider, on_list_added_cb, self);
+  g_signal_handlers_disconnect_by_func (provider, on_list_changed_cb, self);
+  g_signal_handlers_disconnect_by_func (provider, on_list_removed_cb, self);
+
+  g_signal_emit (self, signals[PROVIDER_REMOVED], 0, provider);
+}
+
+
+/*
+ * GObject overrides
+ */
+
 static void
 gtd_manager_finalize (GObject *object)
 {
   GtdManager *self = (GtdManager *)object;
 
-  g_clear_object (&self->priv->cancellable);
-  g_clear_object (&self->priv->plugin_manager);
-  g_clear_object (&self->priv->settings);
-  g_clear_object (&self->priv->timer);
+  g_cancellable_cancel (self->cancellable);
+  g_clear_object (&self->cancellable);
+  g_clear_object (&self->plugin_manager);
+  g_clear_object (&self->settings);
+  g_clear_object (&self->timer);
 
   G_OBJECT_CLASS (gtd_manager_parent_class)->finalize (object);
 }
@@ -159,24 +311,24 @@ gtd_manager_get_property (GObject    *object,
                           GValue     *value,
                           GParamSpec *pspec)
 {
-  GtdManagerPrivate *priv = gtd_manager_get_instance_private (GTD_MANAGER (object));
+  GtdManager *self = (GtdManager *) object;
 
   switch (prop_id)
     {
     case PROP_DEFAULT_PROVIDER:
-      g_value_set_object (value, priv->default_provider);
+      g_value_set_object (value, self->default_provider);
       break;
 
     case PROP_DEFAULT_TASKLIST:
-      g_value_set_object (value, gtd_provider_get_default_task_list (priv->default_provider));
+      g_value_set_object (value, gtd_provider_get_default_task_list (self->default_provider));
       break;
 
     case PROP_TIMER:
-      g_value_set_object (value, priv->timer);
+      g_value_set_object (value, self->timer);
       break;
 
     case PROP_PLUGIN_MANAGER:
-      g_value_set_object (value, priv->plugin_manager);
+      g_value_set_object (value, self->plugin_manager);
       break;
 
     default:
@@ -190,16 +342,12 @@ gtd_manager_set_property (GObject      *object,
                           const GValue *value,
                           GParamSpec   *pspec)
 {
-  GtdManagerPrivate *priv;
-  GtdManager *self;
-
-  self = GTD_MANAGER (object);
-  priv = gtd_manager_get_instance_private (self);
+  GtdManager *self = (GtdManager *) object;
 
   switch (prop_id)
     {
     case PROP_DEFAULT_PROVIDER:
-      if (g_set_object (&priv->default_provider, g_value_get_object (value)))
+      if (g_set_object (&self->default_provider, g_value_get_object (value)))
         g_object_notify (object, "default-provider");
       break;
 
@@ -436,184 +584,14 @@ gtd_manager_class_init (GtdManagerClass *klass)
                                             GTD_TYPE_PROVIDER);
 }
 
-static void
-gtd_manager__default_list_changed_cb (GtdProvider *provider,
-                                      GParamSpec  *pspec,
-                                      GtdManager  *self)
-{
-  g_object_notify (G_OBJECT (self), "default-task-list");
-}
-
-static void
-gtd_manager__task_list_modified (GtdTaskList *list,
-                                 GtdTask     *task,
-                                 GtdManager  *self)
-{
-  g_signal_emit (self, signals[LIST_CHANGED], 0, list);
-}
-
-static void
-gtd_manager__panel_added (GtdPluginManager *plugin_manager,
-                          GtdPanel         *panel,
-                          GtdManager       *self)
-{
-  GtdManagerPrivate *priv = gtd_manager_get_instance_private (self);
-
-  priv->panels = g_list_append (priv->panels, panel);
-
-  g_signal_emit (self, signals[PANEL_ADDED], 0, panel);
-}
-
-static void
-gtd_manager__panel_removed (GtdPluginManager *plugin_manager,
-                            GtdPanel         *panel,
-                            GtdManager       *self)
-{
-  GtdManagerPrivate *priv = gtd_manager_get_instance_private (self);
-
-  priv->panels = g_list_remove (priv->panels, panel);
-
-  g_signal_emit (self, signals[PANEL_REMOVED], 0, panel);
-}
-
-static void
-gtd_manager__list_added (GtdProvider *provider,
-                         GtdTaskList *list,
-                         GtdManager  *self)
-{
-  GtdManagerPrivate *priv = gtd_manager_get_instance_private (self);
-
-  priv->tasklists = g_list_append (priv->tasklists, list);
-
-  g_signal_connect (list,
-                    "task-added",
-                    G_CALLBACK (gtd_manager__task_list_modified),
-                    self);
-
-  g_signal_connect (list,
-                    "task-updated",
-                    G_CALLBACK (gtd_manager__task_list_modified),
-                    self);
-
-  g_signal_connect (list,
-                    "task-removed",
-                    G_CALLBACK (gtd_manager__task_list_modified),
-                    self);
-
-  g_signal_emit (self, signals[LIST_ADDED], 0, list);
-}
-
-static void
-gtd_manager__list_changed (GtdProvider *provider,
-                           GtdTaskList *list,
-                           GtdManager  *self)
-{
-  g_signal_emit (self, signals[LIST_CHANGED], 0, list);
-}
-
-static void
-gtd_manager__list_removed (GtdProvider *provider,
-                           GtdTaskList *list,
-                           GtdManager  *self)
-{
-  GtdManagerPrivate *priv = gtd_manager_get_instance_private (self);
-
-  if (!list)
-      return;
-
-  priv->tasklists = g_list_remove (priv->tasklists, list);
-
-  g_signal_handlers_disconnect_by_func (list,
-                                        gtd_manager__task_list_modified,
-                                        self);
-
-  g_signal_emit (self, signals[LIST_REMOVED], 0, list);
-}
-
-static void
-gtd_manager__provider_added (GtdPluginManager *plugin_manager,
-                             GtdProvider      *provider,
-                             GtdManager       *self)
-{
-  GtdManagerPrivate *priv = gtd_manager_get_instance_private (self);
-  GList *lists;
-  GList *l;
-
-  priv->providers = g_list_append (priv->providers, provider);
-
-  /* Add lists */
-  lists = gtd_provider_get_task_lists (provider);
-
-  for (l = lists; l != NULL; l = l->next)
-    gtd_manager__list_added (provider, l->data, self);
-
-  g_signal_connect (provider,
-                    "list-added",
-                    G_CALLBACK (gtd_manager__list_added),
-                    self);
-
-  g_signal_connect (provider,
-                    "list-changed",
-                    G_CALLBACK (gtd_manager__list_changed),
-                    self);
-
-  g_signal_connect (provider,
-                    "list-removed",
-                    G_CALLBACK (gtd_manager__list_removed),
-                    self);
-
-  /* If we just added the default provider, update the property */
-  check_provider_is_default (self, provider);
-
-  g_signal_emit (self, signals[PROVIDER_ADDED], 0, provider);
-}
-
-static void
-gtd_manager__provider_removed (GtdPluginManager *plugin_manager,
-                               GtdProvider      *provider,
-                               GtdManager       *self)
-{
-  GtdManagerPrivate *priv = gtd_manager_get_instance_private (self);
-  GList *lists;
-  GList *l;
-
-  priv->providers = g_list_remove (priv->providers, provider);
-
-  /* Remove lists */
-  lists = gtd_provider_get_task_lists (provider);
-
-  for (l = lists; l != NULL; l = l->next)
-    gtd_manager__list_removed (provider, l->data, self);
-
-  /* Disconnect old signals */
-  
-  g_signal_handlers_disconnect_by_func (provider,
-                                        gtd_manager__default_list_changed_cb,
-                                        self);
-
-  g_signal_handlers_disconnect_by_func (provider,
-                                        gtd_manager__list_added,
-                                        self);
-
-  g_signal_handlers_disconnect_by_func (provider,
-                                        gtd_manager__list_changed,
-                                        self);
-
-  g_signal_handlers_disconnect_by_func (provider,
-                                        gtd_manager__list_removed,
-                                        self);
-
-  g_signal_emit (self, signals[PROVIDER_REMOVED], 0, provider);
-}
 
 static void
 gtd_manager_init (GtdManager *self)
 {
-  self->priv = gtd_manager_get_instance_private (self);
-  self->priv->settings = g_settings_new ("org.gnome.todo");
-  self->priv->plugin_manager = gtd_plugin_manager_new ();
-  self->priv->timer = gtd_timer_new ();
-  self->priv->cancellable = g_cancellable_new ();
+  self->settings = g_settings_new ("org.gnome.todo");
+  self->plugin_manager = gtd_plugin_manager_new ();
+  self->timer = gtd_timer_new ();
+  self->cancellable = g_cancellable_new ();
 }
 
 /**
@@ -647,27 +625,25 @@ gtd_manager_new (void)
  * Ask for @task's parent list source to create @task.
  */
 void
-gtd_manager_create_task (GtdManager *manager,
+gtd_manager_create_task (GtdManager *self,
                          GtdTask    *task)
 {
   g_autoptr (GError) error = NULL;
-  GtdManagerPrivate *priv;
   GtdTaskList *list;
   GtdProvider *provider;
 
-  g_return_if_fail (GTD_IS_MANAGER (manager));
+  g_return_if_fail (GTD_IS_MANAGER (self));
   g_return_if_fail (GTD_IS_TASK (task));
 
-  priv = gtd_manager_get_instance_private (manager);
   list = gtd_task_get_list (task);
   provider = gtd_task_list_get_provider (list);
 
-  gtd_provider_create_task (provider, task, priv->cancellable, &error);
+  gtd_provider_create_task (provider, task, self->cancellable, &error);
 
   if (error)
     {
       g_warning ("Error creating task: %s", error->message);
-      reset_cancellable_if_cancelled (manager);
+      reset_cancellable_if_cancelled (self);
     }
 }
 
@@ -679,27 +655,25 @@ gtd_manager_create_task (GtdManager *manager,
  * Ask for @task's parent list source to remove @task.
  */
 void
-gtd_manager_remove_task (GtdManager *manager,
+gtd_manager_remove_task (GtdManager *self,
                          GtdTask    *task)
 {
   g_autoptr (GError) error = NULL;
-  GtdManagerPrivate *priv;
   GtdTaskList *list;
   GtdProvider *provider;
 
-  g_return_if_fail (GTD_IS_MANAGER (manager));
+  g_return_if_fail (GTD_IS_MANAGER (self));
   g_return_if_fail (GTD_IS_TASK (task));
 
-  priv = gtd_manager_get_instance_private (manager);
   list = gtd_task_get_list (task);
   provider = gtd_task_list_get_provider (list);
 
-  gtd_provider_remove_task (provider, task, priv->cancellable, &error);
+  gtd_provider_remove_task (provider, task, self->cancellable, &error);
 
   if (error)
     {
       g_warning ("Error removing task: %s", error->message);
-      reset_cancellable_if_cancelled (manager);
+      reset_cancellable_if_cancelled (self);
     }
 }
 
@@ -711,15 +685,14 @@ gtd_manager_remove_task (GtdManager *manager,
  * Ask for @task's parent list source to update @task.
  */
 void
-gtd_manager_update_task (GtdManager *manager,
+gtd_manager_update_task (GtdManager *self,
                          GtdTask    *task)
 {
   g_autoptr (GError) error = NULL;
-  GtdManagerPrivate *priv;
   GtdTaskList *list;
   GtdProvider *provider;
 
-  g_return_if_fail (GTD_IS_MANAGER (manager));
+  g_return_if_fail (GTD_IS_MANAGER (self));
   g_return_if_fail (GTD_IS_TASK (task));
 
   list = gtd_task_get_list (task);
@@ -728,15 +701,14 @@ gtd_manager_update_task (GtdManager *manager,
   if (!list)
       return;
 
-  priv = gtd_manager_get_instance_private (manager);
   provider = gtd_task_list_get_provider (list);
 
-  gtd_provider_update_task (provider, task, priv->cancellable, &error);
+  gtd_provider_update_task (provider, task, self->cancellable, &error);
 
   if (error)
     {
       g_warning ("Error updating task: %s", error->message);
-      reset_cancellable_if_cancelled (manager);
+      reset_cancellable_if_cancelled (self);
     }
 }
 
@@ -748,25 +720,23 @@ gtd_manager_update_task (GtdManager *manager,
  * Creates a new task list at the given source.
  */
 void
-gtd_manager_create_task_list (GtdManager  *manager,
+gtd_manager_create_task_list (GtdManager  *self,
                               GtdTaskList *list)
 {
   g_autoptr (GError) error = NULL;
-  GtdManagerPrivate *priv;
   GtdProvider *provider;
 
-  g_return_if_fail (GTD_IS_MANAGER (manager));
+  g_return_if_fail (GTD_IS_MANAGER (self));
   g_return_if_fail (GTD_IS_TASK_LIST (list));
 
-  priv = gtd_manager_get_instance_private (manager);
   provider = gtd_task_list_get_provider (list);
 
-  gtd_provider_create_task_list (provider, list, priv->cancellable, &error);
+  gtd_provider_create_task_list (provider, list, self->cancellable, &error);
 
   if (error)
     {
       g_warning ("Error creating task list: %s", error->message);
-      reset_cancellable_if_cancelled (manager);
+      reset_cancellable_if_cancelled (self);
     }
 }
 
@@ -778,28 +748,26 @@ gtd_manager_create_task_list (GtdManager  *manager,
  * Deletes @list from the registry.
  */
 void
-gtd_manager_remove_task_list (GtdManager  *manager,
+gtd_manager_remove_task_list (GtdManager  *self,
                               GtdTaskList *list)
 {
   g_autoptr (GError) error = NULL;
-  GtdManagerPrivate *priv;
   GtdProvider *provider;
 
-  g_return_if_fail (GTD_IS_MANAGER (manager));
+  g_return_if_fail (GTD_IS_MANAGER (self));
   g_return_if_fail (GTD_IS_TASK_LIST (list));
 
-  priv = gtd_manager_get_instance_private (manager);
   provider = gtd_task_list_get_provider (list);
 
-  gtd_provider_remove_task_list (provider, list, priv->cancellable, &error);
+  gtd_provider_remove_task_list (provider, list, self->cancellable, &error);
 
   if (error)
     {
       g_warning ("Error removing task list: %s", error->message);
-      reset_cancellable_if_cancelled (manager);
+      reset_cancellable_if_cancelled (self);
     }
 
-  g_signal_emit (manager,
+  g_signal_emit (self,
                  signals[LIST_REMOVED],
                  0,
                  list);
@@ -813,25 +781,23 @@ gtd_manager_remove_task_list (GtdManager  *manager,
  * Save or create @list.
  */
 void
-gtd_manager_save_task_list (GtdManager  *manager,
+gtd_manager_save_task_list (GtdManager  *self,
                             GtdTaskList *list)
 {
   g_autoptr (GError) error = NULL;
-  GtdManagerPrivate *priv;
   GtdProvider *provider;
 
-  g_return_if_fail (GTD_IS_MANAGER (manager));
+  g_return_if_fail (GTD_IS_MANAGER (self));
   g_return_if_fail (GTD_IS_TASK_LIST (list));
 
-  priv = gtd_manager_get_instance_private (manager);
   provider = gtd_task_list_get_provider (list);
 
-  gtd_provider_update_task_list (provider, list, priv->cancellable, &error);
+  gtd_provider_update_task_list (provider, list, self->cancellable, &error);
 
   if (error)
     {
       g_warning ("Error saving task list: %s", error->message);
-      reset_cancellable_if_cancelled (manager);
+      reset_cancellable_if_cancelled (self);
     }
 }
 
@@ -844,11 +810,11 @@ gtd_manager_save_task_list (GtdManager  *manager,
  * Returns: (transfer container) (element-type Gtd.TaskList): a newly allocated list of #GtdTaskList, or %NULL if none.
  */
 GList*
-gtd_manager_get_task_lists (GtdManager *manager)
+gtd_manager_get_task_lists (GtdManager *self)
 {
-  g_return_val_if_fail (GTD_IS_MANAGER (manager), NULL);
+  g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
-  return g_list_copy (manager->priv->tasklists);
+  return g_list_copy (self->tasklists);
 }
 
 /**
@@ -861,11 +827,11 @@ gtd_manager_get_task_lists (GtdManager *manager)
  * #GtdStorage. Free with @g_list_free after use.
  */
 GList*
-gtd_manager_get_providers (GtdManager *manager)
+gtd_manager_get_providers (GtdManager *self)
 {
-  g_return_val_if_fail (GTD_IS_MANAGER (manager), NULL);
+  g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
-  return g_list_copy (manager->priv->providers);
+  return g_list_copy (self->providers);
 }
 
 /**
@@ -878,11 +844,11 @@ gtd_manager_get_providers (GtdManager *manager)
  * Returns: (transfer container) (element-type Gtd.Panel): a #GList of #GtdPanel
  */
 GList*
-gtd_manager_get_panels (GtdManager *manager)
+gtd_manager_get_panels (GtdManager *self)
 {
-  g_return_val_if_fail (GTD_IS_MANAGER (manager), NULL);
+  g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
-  return g_list_copy (manager->priv->panels);
+  return g_list_copy (self->panels);
 }
 
 /**
@@ -894,11 +860,11 @@ gtd_manager_get_panels (GtdManager *manager)
  * Returns: (transfer none): the default provider.
  */
 GtdProvider*
-gtd_manager_get_default_provider (GtdManager *manager)
+gtd_manager_get_default_provider (GtdManager *self)
 {
-  g_return_val_if_fail (GTD_IS_MANAGER (manager), NULL);
+  g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
-  return manager->priv->default_provider;
+  return self->default_provider;
 }
 
 /**
@@ -909,20 +875,18 @@ gtd_manager_get_default_provider (GtdManager *manager)
  * Sets the provider.
  */
 void
-gtd_manager_set_default_provider (GtdManager  *manager,
+gtd_manager_set_default_provider (GtdManager  *self,
                                   GtdProvider *provider)
 {
-  GtdManagerPrivate *priv;
   GtdProvider *previous;
 
-  g_return_if_fail (GTD_IS_MANAGER (manager));
+  g_return_if_fail (GTD_IS_MANAGER (self));
 
-  priv = manager->priv;
-  previous = priv->default_provider;
+  previous = self->default_provider;
 
-  if (g_set_object (&priv->default_provider, provider))
+  if (g_set_object (&self->default_provider, provider))
     {
-      g_settings_set_string (priv->settings,
+      g_settings_set_string (self->settings,
                              "default-provider",
                              provider ? gtd_provider_get_id (provider) : "local");
 
@@ -930,8 +894,8 @@ gtd_manager_set_default_provider (GtdManager  *manager,
       if (previous)
         {
           g_signal_handlers_disconnect_by_func (previous,
-                                                gtd_manager__default_list_changed_cb,
-                                                manager);
+                                                on_default_list_changed_cb,
+                                                self);
         }
 
       /* ... and connect the current one */
@@ -939,12 +903,12 @@ gtd_manager_set_default_provider (GtdManager  *manager,
         {
           g_signal_connect (provider,
                             "notify::default-task-list",
-                            G_CALLBACK (gtd_manager__default_list_changed_cb),
-                            manager);
+                            G_CALLBACK (on_default_list_changed_cb),
+                            self);
         }
 
-      g_object_notify (G_OBJECT (manager), "default-provider");
-      g_object_notify (G_OBJECT (manager), "default-task-list");
+      g_object_notify (G_OBJECT (self), "default-provider");
+      g_object_notify (G_OBJECT (self), "default-task-list");
     }
 }
 
@@ -959,16 +923,12 @@ gtd_manager_set_default_provider (GtdManager  *manager,
 GtdTaskList*
 gtd_manager_get_default_task_list (GtdManager *self)
 {
-  GtdManagerPrivate *priv;
-
   g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
-  priv = gtd_manager_get_instance_private (self);
-
-  if (!priv->default_provider)
+  if (!self->default_provider)
     return NULL;
 
-  return gtd_provider_get_default_task_list (priv->default_provider);
+  return gtd_provider_get_default_task_list (self->default_provider);
 }
 
 /**
@@ -1007,11 +967,11 @@ gtd_manager_set_default_task_list (GtdManager  *self,
  * Returns: (transfer none): the internal #GSettings of @manager
  */
 GSettings*
-gtd_manager_get_settings (GtdManager *manager)
+gtd_manager_get_settings (GtdManager *self)
 {
-  g_return_val_if_fail (GTD_IS_MANAGER (manager), NULL);
+  g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
-  return manager->priv->settings;
+  return self->settings;
 }
 
 /**
@@ -1023,11 +983,11 @@ gtd_manager_get_settings (GtdManager *manager)
  * Returns: %TRUE if GNOME To Do was never run before, %FALSE otherwise.
  */
 gboolean
-gtd_manager_get_is_first_run (GtdManager *manager)
+gtd_manager_get_is_first_run (GtdManager *self)
 {
-  g_return_val_if_fail (GTD_IS_MANAGER (manager), FALSE);
+  g_return_val_if_fail (GTD_IS_MANAGER (self), FALSE);
 
-  return g_settings_get_boolean (manager->priv->settings, "first-run");
+  return g_settings_get_boolean (self->settings, "first-run");
 }
 
 /**
@@ -1038,26 +998,24 @@ gtd_manager_get_is_first_run (GtdManager *manager)
  * Sets the 'first-run' setting.
  */
 void
-gtd_manager_set_is_first_run (GtdManager *manager,
+gtd_manager_set_is_first_run (GtdManager *self,
                               gboolean    is_first_run)
 {
-  g_return_if_fail (GTD_IS_MANAGER (manager));
+  g_return_if_fail (GTD_IS_MANAGER (self));
 
-  g_settings_set_boolean (manager->priv->settings,
-                          "first-run",
-                          is_first_run);
+  g_settings_set_boolean (self->settings, "first-run", is_first_run);
 }
 
 void
-gtd_manager_emit_error_message (GtdManager                *manager,
+gtd_manager_emit_error_message (GtdManager                *self,
                                 const gchar               *primary_message,
                                 const gchar               *secondary_message,
                                 GtdNotificationActionFunc  function,
                                 gpointer                   user_data)
 {
-  g_return_if_fail (GTD_IS_MANAGER (manager));
+  g_return_if_fail (GTD_IS_MANAGER (self));
 
-  emit_show_error_message (manager,
+  emit_show_error_message (self,
                            primary_message,
                            secondary_message,
                            function,
@@ -1076,47 +1034,46 @@ gtd_manager_emit_error_message (GtdManager                *manager,
 GtdTimer*
 gtd_manager_get_timer (GtdManager *self)
 {
-  GtdManagerPrivate *priv;
 
   g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
-  priv = gtd_manager_get_instance_private (self);
-
-  return priv->timer;
+  return self->timer;
 }
 
 void
-gtd_manager_load_plugins (GtdManager *manager)
+gtd_manager_load_plugins (GtdManager *self)
 {
-  GtdManagerPrivate *priv = gtd_manager_get_instance_private (manager);
+  GTD_ENTRY;
 
-  g_signal_connect (priv->plugin_manager,
+  g_signal_connect (self->plugin_manager,
                     "panel-registered",
-                    G_CALLBACK (gtd_manager__panel_added),
-                    manager);
+                    G_CALLBACK (on_panel_added_cb),
+                    self);
 
-  g_signal_connect (priv->plugin_manager,
+  g_signal_connect (self->plugin_manager,
                     "panel-unregistered",
-                    G_CALLBACK (gtd_manager__panel_removed),
-                    manager);
+                    G_CALLBACK (on_panel_removed_cb),
+                    self);
 
-  g_signal_connect (priv->plugin_manager,
+  g_signal_connect (self->plugin_manager,
                     "provider-registered",
-                    G_CALLBACK (gtd_manager__provider_added),
-                    manager);
+                    G_CALLBACK (on_provider_added_cb),
+                    self);
 
-  g_signal_connect (priv->plugin_manager,
+  g_signal_connect (self->plugin_manager,
                     "provider-unregistered",
-                    G_CALLBACK (gtd_manager__provider_removed),
-                    manager);
+                    G_CALLBACK (on_provider_removed_cb),
+                    self);
 
-  gtd_plugin_manager_load_plugins (priv->plugin_manager);
+  gtd_plugin_manager_load_plugins (self->plugin_manager);
+
+  GTD_EXIT;
 }
 
 GtdPluginManager*
-gtd_manager_get_plugin_manager (GtdManager *manager)
+gtd_manager_get_plugin_manager (GtdManager *self)
 {
-  g_return_val_if_fail (GTD_IS_MANAGER (manager), NULL);
+  g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
-  return manager->priv->plugin_manager;
+  return self->plugin_manager;
 }

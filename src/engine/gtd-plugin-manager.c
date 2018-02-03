@@ -37,12 +37,6 @@ G_DEFINE_TYPE (GtdPluginManager, gtd_plugin_manager, GTD_TYPE_OBJECT)
 
 enum
 {
-  PROP_0,
-  LAST_PROP
-};
-
-enum
-{
   PANEL_REGISTERED,
   PANEL_UNREGISTERED,
   PLUGIN_LOADED,
@@ -53,6 +47,173 @@ enum
 };
 
 static guint signals[NUM_SIGNALS] = { 0, };
+
+static void
+on_panel_added_cb (GtdActivatable   *activatable,
+                   GtdPanel         *panel,
+                   GtdPluginManager *self)
+{
+  g_signal_emit_by_name (self, "panel-registered", panel);
+}
+
+static void
+on_panel_removed_cb (GtdActivatable   *activatable,
+                     GtdPanel         *panel,
+                     GtdPluginManager *self)
+{
+  g_signal_emit_by_name (self, "panel-unregistered", panel);
+}
+
+static void
+on_provider_added_cb (GtdActivatable   *activatable,
+                      GtdProvider      *provider,
+                      GtdPluginManager *self)
+{
+  g_signal_emit_by_name (self, "provider-registered", provider);
+}
+
+static void
+on_provider_removed_cb (GtdActivatable   *activatable,
+                        GtdProvider      *provider,
+                        GtdPluginManager *self)
+{
+  g_signal_emit_by_name (self, "provider-unregistered", provider);
+}
+
+static void
+on_plugin_unloaded_cb (PeasEngine       *engine,
+                       PeasPluginInfo   *info,
+                       GtdPluginManager *self)
+{
+  GtdActivatable *activatable;
+  GList *extension_providers;
+  GList *extension_panels;
+  GList *l;
+
+  activatable = g_hash_table_lookup (self->info_to_extension, info);
+
+  if (!activatable)
+    return;
+
+  /* Remove all panels */
+  extension_panels = gtd_activatable_get_panels (activatable);
+
+  for (l = extension_panels; l != NULL; l = l->next)
+    on_panel_removed_cb (activatable, l->data, self);
+
+  /* Remove all registered providers */
+  extension_providers = gtd_activatable_get_providers (activatable);
+
+  for (l = extension_providers; l != NULL; l = l->next)
+    on_provider_removed_cb (activatable, l->data, self);
+
+  /* Deactivates the extension */
+  gtd_activatable_deactivate (activatable);
+
+  /* Emit the signal */
+  g_signal_emit (self, signals[PLUGIN_UNLOADED], 0, info, activatable);
+
+  /* Disconnect old signals */
+  g_signal_handlers_disconnect_by_func (activatable, on_panel_added_cb, self);
+  g_signal_handlers_disconnect_by_func (activatable, on_panel_removed_cb, self);
+  g_signal_handlers_disconnect_by_func (activatable, on_provider_added_cb, self);
+  g_signal_handlers_disconnect_by_func (activatable, on_provider_removed_cb, self);
+
+  g_hash_table_remove (self->info_to_extension, info);
+
+  /* Destroy the extension */
+  g_clear_object (&activatable);
+}
+
+static void
+on_plugin_loaded_cb (PeasEngine       *engine,
+                     PeasPluginInfo   *info,
+                     GtdPluginManager *self)
+{
+  if (peas_engine_provides_extension (engine, info, GTD_TYPE_ACTIVATABLE))
+    {
+      GtdActivatable *activatable;
+      PeasExtension *extension;
+      const GList *l;
+
+      /*
+       * Actually create the plugin object,
+       * which should load all the providers.
+       */
+      extension = peas_engine_create_extension (engine,
+                                                info,
+                                                GTD_TYPE_ACTIVATABLE,
+                                                NULL);
+
+      /* All extensions shall be GtdActivatable impls */
+      activatable = GTD_ACTIVATABLE (extension);
+
+      g_hash_table_insert (self->info_to_extension,
+                           info,
+                           extension);
+
+      /* Load all providers */
+      for (l = gtd_activatable_get_providers (activatable); l != NULL; l = l->next)
+        on_provider_added_cb (activatable, l->data, self);
+
+      /* Load all panels */
+      for (l = gtd_activatable_get_panels (activatable); l != NULL; l = l->next)
+        on_panel_added_cb (activatable, l->data, self);
+
+      g_signal_connect (activatable, "provider-added", G_CALLBACK (on_provider_added_cb), self);
+      g_signal_connect (activatable, "provider-removed", G_CALLBACK (on_provider_removed_cb), self);
+      g_signal_connect (activatable, "panel-added", G_CALLBACK (on_panel_added_cb), self);
+      g_signal_connect (activatable, "panel-removed", G_CALLBACK (on_panel_removed_cb), self);
+
+      /* Activate extension */
+      gtd_activatable_activate (activatable);
+
+      /* Emit the signal */
+      g_signal_emit (self, signals[PLUGIN_LOADED], 0, info, extension);
+    }
+}
+
+static void
+setup_engine (GtdPluginManager *self)
+{
+  PeasEngine *engine;
+  gchar *plugin_dir;
+
+  engine = peas_engine_get_default ();
+
+  /* Enable Python3 plugins */
+  peas_engine_enable_loader (engine, "python3");
+
+  /* Let Peas search for plugins in the specified directory */
+  plugin_dir = g_build_filename (PACKAGE_LIB_DIR,
+                                 "plugins",
+                                 NULL);
+
+  peas_engine_add_search_path (engine,
+                               plugin_dir,
+                               NULL);
+
+  g_free (plugin_dir);
+
+  /* User-installed plugins shall be detected too */
+  plugin_dir = g_build_filename (g_get_home_dir (),
+                                 ".local",
+                                 "lib",
+                                 "gnome-todo",
+                                 "plugins",
+                                 NULL);
+
+  peas_engine_add_search_path (engine, plugin_dir, NULL);
+  peas_engine_prepend_search_path (engine,
+                                   "resource:///org/gnome/todo/plugins",
+                                   "resource:///org/gnome/todo/plugins");
+
+  g_free (plugin_dir);
+
+  /* Hear about loaded plugins */
+  g_signal_connect_after (engine, "load-plugin", G_CALLBACK (on_plugin_loaded_cb), self);
+  g_signal_connect (engine, "unload-plugin",G_CALLBACK (on_plugin_unloaded_cb), self);
+}
 
 static void
 gtd_plugin_manager_finalize (GObject *object)
@@ -141,206 +302,6 @@ gtd_plugin_manager_class_init (GtdPluginManagerClass *klass)
 }
 
 static void
-on_panel_added (GtdActivatable   *activatable,
-                GtdPanel         *panel,
-                GtdPluginManager *self)
-{
-  g_signal_emit_by_name (self, "panel-registered", panel);
-}
-
-static void
-on_panel_removed (GtdActivatable   *activatable,
-                  GtdPanel         *panel,
-                  GtdPluginManager *self)
-{
-  g_signal_emit_by_name (self, "panel-unregistered", panel);
-}
-
-static void
-on_provider_added (GtdActivatable   *activatable,
-                   GtdProvider      *provider,
-                   GtdPluginManager *self)
-{
-  g_signal_emit_by_name (self, "provider-registered", provider);
-}
-
-static void
-on_provider_removed (GtdActivatable   *activatable,
-                     GtdProvider      *provider,
-                     GtdPluginManager *self)
-{
-  g_signal_emit_by_name (self, "provider-unregistered", provider);
-}
-
-static void
-on_plugin_unloaded (PeasEngine       *engine,
-                    PeasPluginInfo   *info,
-                    GtdPluginManager *self)
-{
-  GtdActivatable *activatable;
-  GList *extension_providers;
-  GList *extension_panels;
-  GList *l;
-
-  activatable = g_hash_table_lookup (self->info_to_extension, info);
-
-  if (!activatable)
-    return;
-
-  /* Remove all panels */
-  extension_panels = gtd_activatable_get_panels (activatable);
-
-  for (l = extension_panels; l != NULL; l = l->next)
-    on_panel_removed (activatable, l->data, self);
-
-  /* Remove all registered providers */
-  extension_providers = gtd_activatable_get_providers (activatable);
-
-  for (l = extension_providers; l != NULL; l = l->next)
-    on_provider_removed (activatable, l->data, self);
-
-  /* Deactivates the extension */
-  gtd_activatable_deactivate (activatable);
-
-  /* Emit the signal */
-  g_signal_emit (self, signals[PLUGIN_UNLOADED], 0, info, activatable);
-
-  /* Disconnect old signals */
-  g_signal_handlers_disconnect_by_func (activatable,
-                                        on_panel_added,
-                                        self);
-
-  g_signal_handlers_disconnect_by_func (activatable,
-                                        on_panel_removed,
-                                        self);
-
-  g_signal_handlers_disconnect_by_func (activatable,
-                                        on_provider_added,
-                                        self);
-
-  g_signal_handlers_disconnect_by_func (activatable,
-                                        on_provider_removed,
-                                        self);
-
-  g_hash_table_remove (self->info_to_extension, info);
-
-  /* Destroy the extension */
-  g_clear_object (&activatable);
-}
-
-static void
-on_plugin_loaded (PeasEngine       *engine,
-                  PeasPluginInfo   *info,
-                  GtdPluginManager *self)
-{
-  if (peas_engine_provides_extension (engine, info, GTD_TYPE_ACTIVATABLE))
-    {
-      GtdActivatable *activatable;
-      PeasExtension *extension;
-      const GList *l;
-
-      /*
-       * Actually create the plugin object,
-       * which should load all the providers.
-       */
-      extension = peas_engine_create_extension (engine,
-                                                info,
-                                                GTD_TYPE_ACTIVATABLE,
-                                                NULL);
-
-      /* All extensions shall be GtdActivatable impls */
-      activatable = GTD_ACTIVATABLE (extension);
-
-      g_hash_table_insert (self->info_to_extension,
-                           info,
-                           extension);
-
-      /* Load all providers */
-      for (l = gtd_activatable_get_providers (activatable); l != NULL; l = l->next)
-        on_provider_added (activatable, l->data, self);
-
-      /* Load all panels */
-      for (l = gtd_activatable_get_panels (activatable); l != NULL; l = l->next)
-        on_panel_added (activatable, l->data, self);
-
-      g_signal_connect (activatable,
-                        "provider-added",
-                        G_CALLBACK (on_provider_added),
-                        self);
-
-      g_signal_connect (activatable,
-                        "provider-removed",
-                        G_CALLBACK (on_provider_removed),
-                        self);
-
-      g_signal_connect (activatable,
-                        "panel-added",
-                        G_CALLBACK (on_panel_added),
-                        self);
-
-      g_signal_connect (activatable,
-                        "panel-removed",
-                        G_CALLBACK (on_panel_removed),
-                        self);
-
-      /* Activate extension */
-      gtd_activatable_activate (activatable);
-
-      /* Emit the signal */
-      g_signal_emit (self, signals[PLUGIN_LOADED], 0, info, extension);
-    }
-}
-
-static void
-setup_engine (GtdPluginManager *self)
-{
-  PeasEngine *engine;
-  gchar *plugin_dir;
-
-  engine = peas_engine_get_default ();
-
-  /* Enable Python3 plugins */
-  peas_engine_enable_loader (engine, "python3");
-
-  /* Let Peas search for plugins in the specified directory */
-  plugin_dir = g_build_filename (PACKAGE_LIB_DIR,
-                                 "plugins",
-                                 NULL);
-
-  peas_engine_add_search_path (engine,
-                               plugin_dir,
-                               NULL);
-
-  g_free (plugin_dir);
-
-  /* User-installed plugins shall be detected too */
-  plugin_dir = g_build_filename (g_get_home_dir (),
-                                 ".local",
-                                 "lib",
-                                 "gnome-todo",
-                                 "plugins",
-                                 NULL);
-
-  peas_engine_add_search_path (engine, plugin_dir, NULL);
-  peas_engine_prepend_search_path (engine,
-                                   "resource:///org/gnome/todo/plugins",
-                                   "resource:///org/gnome/todo/plugins");
-
-  g_free (plugin_dir);
-
-  /* Hear about loaded plugins */
-  g_signal_connect_after (engine,
-                          "load-plugin",
-                          G_CALLBACK (on_plugin_loaded),
-                          self);
-
-  g_signal_connect (engine,
-                    "unload-plugin",
-                    G_CALLBACK (on_plugin_unloaded),
-                    self);
-}
-
-static void
 gtd_plugin_manager_init (GtdPluginManager *self)
 {
   self->info_to_extension = g_hash_table_new (g_direct_hash, g_direct_equal);
@@ -368,10 +329,10 @@ gtd_plugin_manager_load_plugins (GtdPluginManager *self)
   settings = gtd_manager_get_settings (gtd_manager_get_default ());
 
   g_settings_bind (settings,
-		   "active-extensions",
-		   engine,
-		   "loaded-plugins",
-		   G_SETTINGS_BIND_DEFAULT);
+		               "active-extensions",
+		               engine,
+		               "loaded-plugins",
+		               G_SETTINGS_BIND_DEFAULT);
 }
 
 GtdActivatable*
