@@ -32,6 +32,8 @@ main (gint  argc,
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   textdomain (GETTEXT_PACKAGE);
 
+  g_set_application_name (_("To Do"));
+
   app = gtd_application_new ();
   g_application_set_default (G_APPLICATION (app));
 

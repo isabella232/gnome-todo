@@ -21,6 +21,7 @@
 #include "config.h"
 
 #include "gtd-application.h"
+#include "gtd-debug.h"
 #include "gtd-initial-setup-window.h"
 #include "gtd-log.h"
 #include "gtd-manager.h"
@@ -98,7 +99,7 @@ gtd_application_start_client (GSimpleAction *simple,
                               gpointer       user_data)
 {
   /* TODO */
-  g_message ("Starting up client");
+  g_debug ("Starting up client");
 }
 
 static void
@@ -176,8 +177,6 @@ gtd_application_quit (GSimpleAction *simple,
 GtdApplication *
 gtd_application_new (void)
 {
-  g_set_application_name (_("To Do"));
-
   return g_object_new (GTD_TYPE_APPLICATION,
                        "application-id", "org.gnome.Todo",
                        "flags", G_APPLICATION_HANDLES_COMMAND_LINE,
@@ -236,16 +235,14 @@ run_initial_setup (GtdApplication *application)
 static void
 gtd_application_activate (GApplication *application)
 {
+  GTD_ENTRY;
+
   /* FIXME: the initial setup is disabled for the 3.18 release because
    * we can't create tasklists on GOA accounts.
    */
   run_window (GTD_APPLICATION (application));
-}
 
-static void
-gtd_application_finalize (GObject *object)
-{
-  G_OBJECT_CLASS (gtd_application_parent_class)->finalize (object);
+  GTD_EXIT;
 }
 
 static void
@@ -255,6 +252,8 @@ gtd_application_startup (GApplication *application)
   g_autoptr (GtkCssProvider) css_provider;
   g_autoptr (GFile) css_file;
   g_autofree gchar *theme_name, *theme_uri;
+
+  GTD_ENTRY;
 
   self = GTD_APPLICATION (application);
 
@@ -292,6 +291,8 @@ gtd_application_startup (GApplication *application)
 
   /* Load the plugins */
   gtd_manager_load_plugins (gtd_manager_get_default ());
+
+  GTD_EXIT;
 }
 
 static gint
@@ -338,10 +339,7 @@ gtd_application_handle_local_options (GApplication *application,
 static void
 gtd_application_class_init (GtdApplicationClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GApplicationClass *application_class = G_APPLICATION_CLASS (klass);
-
-  object_class->finalize = gtd_application_finalize;
 
   application_class->activate = gtd_application_activate;
   application_class->startup = gtd_application_startup;
