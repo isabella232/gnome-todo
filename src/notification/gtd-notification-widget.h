@@ -31,10 +31,10 @@ G_DECLARE_FINAL_TYPE (GtdNotificationWidget, gtd_notification_widget, GTD, NOTIF
 
 GtkWidget*           gtd_notification_widget_new                 (void);
 
-void                 gtd_notification_widget_notify              (GtdNotificationWidget *widget,
+void                 gtd_notification_widget_notify              (GtdNotificationWidget *self,
                                                                   GtdNotification       *notification);
 
-void                 gtd_notification_widget_cancel              (GtdNotificationWidget *widget,
+void                 gtd_notification_widget_cancel              (GtdNotificationWidget *self,
                                                                   GtdNotification       *notification);
 
 G_END_DECLS

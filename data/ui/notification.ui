@@ -8,8 +8,8 @@
       <object class="GtkEventBox" id="eventbox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <signal name="enter-notify-event" handler="gtd_notification_widget__enter_notify_cb" object="GtdNotificationWidget" swapped="yes" />
-        <signal name="leave-notify-event" handler="gtd_notification_widget__leave_notify_cb" object="GtdNotificationWidget" swapped="yes" />
+        <signal name="enter-notify-event" handler="on_enter_notify_cb" object="GtdNotificationWidget" swapped="yes" />
+        <signal name="leave-notify-event" handler="on_leave_notify_cb" object="GtdNotificationWidget" swapped="yes" />
         <child>
           <object class="GtkFrame" id="frame">
             <property name="visible">True</property>
@@ -40,6 +40,8 @@
                     <property name="hexpand">True</property>
                     <property name="use_markup">True</property>
                     <property name="xalign">0</property>
+                    <property name="max-width-chars">30</property>
+                    <property name="ellipsize">middle</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -52,7 +54,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <signal name="clicked" handler="gtd_notification_widget__secondary_button_clicked_cb" object="GtdNotificationWidget" swapped="yes" />
+                    <signal name="clicked" handler="on_secondary_button_clicked_cb" object="GtdNotificationWidget" swapped="yes" />
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -66,7 +68,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="relief">none</property>
-                    <signal name="clicked" handler="gtd_notification_widget__close_button_clicked_cb" object="GtdNotificationWidget" swapped="yes" />
+                    <signal name="clicked" handler="on_close_button_clicked_cb" object="GtdNotificationWidget" swapped="yes" />
                     <child>
                       <object class="GtkImage" id="close_button_image">
                         <property name="visible">True</property>

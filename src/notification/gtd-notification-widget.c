@@ -27,8 +27,10 @@ typedef enum
   STATE_EXECUTING
 } GtdExecutionState;
 
-typedef struct
+struct _GtdNotificationWidget
 {
+  GtkRevealer         parent;
+
   /* widgets */
   GtkButton          *secondary_button;
   GtkSpinner         *spinner;
@@ -44,52 +46,26 @@ typedef struct
   GBinding           *message_label_binding;
   GBinding           *ready_binding;
   GBinding           *secondary_label_binding;
-} GtdNotificationWidgetPrivate;
-
-struct _GtdNotificationWidget
-{
-  GtkRevealer                   parent;
-
-  /*< private >*/
-  GtdNotificationWidgetPrivate *priv;
 };
 
-/* Prototypes */
-static void         gtd_notification_widget_execute_notification (GtdNotificationWidget *widget,
+
+static void          execute_notification                        (GtdNotificationWidget *self,
                                                                   GtdNotification       *notification);
 
-G_DEFINE_TYPE_WITH_PRIVATE (GtdNotificationWidget, gtd_notification_widget, GTK_TYPE_REVEALER)
+static void          on_notification_executed_cb                 (GtdNotification       *notification,
+                                                                  GtdNotificationWidget *self);
+
+G_DEFINE_TYPE (GtdNotificationWidget, gtd_notification_widget, GTK_TYPE_REVEALER)
 
 static void
-gtd_notification_widget_clear_bindings (GtdNotificationWidget *widget)
+clear_bindings (GtdNotificationWidget *self)
 {
-  GtdNotificationWidgetPrivate *priv = widget->priv;
-
-  g_clear_pointer (&priv->has_secondary_action_binding, g_binding_unbind);
-  g_clear_pointer (&priv->message_label_binding, g_binding_unbind);
-  g_clear_pointer (&priv->ready_binding, g_binding_unbind);
-  g_clear_pointer (&priv->secondary_label_binding, g_binding_unbind);
+  g_clear_pointer (&self->has_secondary_action_binding, g_binding_unbind);
+  g_clear_pointer (&self->message_label_binding, g_binding_unbind);
+  g_clear_pointer (&self->ready_binding, g_binding_unbind);
+  g_clear_pointer (&self->secondary_label_binding, g_binding_unbind);
 }
 
-static void
-gtd_notification_widget__enter_notify_cb (GtdNotificationWidget *widget)
-{
-  GtdNotificationWidgetPrivate *priv = widget->priv;
-
-  /* Stop the timer when mouse enters */
-  if (priv->current_notification)
-    gtd_notification_stop (priv->current_notification);
-}
-
-static void
-gtd_notification_widget__leave_notify_cb (GtdNotificationWidget *widget)
-{
-  GtdNotificationWidgetPrivate *priv = widget->priv;
-
-  /* Restart the timer when mouse leaves */
-  if (priv->current_notification)
-    gtd_notification_start (priv->current_notification);
-}
 
 /*
  * This method is called after a notification is dismissed
@@ -97,119 +73,125 @@ gtd_notification_widget__leave_notify_cb (GtdNotificationWidget *widget)
  * continue the execution of notifications.
  */
 static void
-gtd_notification_widget_stop_or_run (GtdNotificationWidget *widget)
+stop_or_run_notifications (GtdNotificationWidget *self)
 {
-  GtdNotificationWidgetPrivate *priv = widget->priv;
+  self->current_notification = g_queue_pop_head (self->queue);
 
-  priv->current_notification = g_queue_pop_head (priv->queue);
-
-  if (priv->current_notification)
+  if (self->current_notification)
     {
-      gtk_revealer_set_reveal_child (GTK_REVEALER (widget), TRUE);
-      gtd_notification_widget_execute_notification (widget, priv->current_notification);
-      priv->state = STATE_EXECUTING;
+      gtk_revealer_set_reveal_child (GTK_REVEALER (self), TRUE);
+      execute_notification (self, self->current_notification);
+      self->state = STATE_EXECUTING;
     }
   else
     {
-      gtk_revealer_set_reveal_child (GTK_REVEALER (widget), FALSE);
-      priv->state = STATE_IDLE;
+      gtk_revealer_set_reveal_child (GTK_REVEALER (self), FALSE);
+      self->state = STATE_IDLE;
     }
 }
 
-static void
-gtd_notification_widget__close_button_clicked_cb (GtdNotificationWidget *widget)
-{
-  GtdNotificationWidgetPrivate *priv = widget->priv;
-
-  gtd_notification_stop (priv->current_notification);
-  gtd_notification_execute_primary_action (priv->current_notification);
-}
 
 static void
-gtd_notification_widget__secondary_button_clicked_cb (GtdNotificationWidget *widget)
+execute_notification (GtdNotificationWidget *self,
+                      GtdNotification       *notification)
 {
-  GtdNotificationWidgetPrivate *priv = widget->priv;
-
-  gtd_notification_stop (priv->current_notification);
-  gtd_notification_execute_secondary_action (priv->current_notification);
-}
-
-static void
-gtd_notification_widget__notification_executed_cb (GtdNotification       *notification,
-                                                   GtdNotificationWidget *widget)
-{
-  gtd_notification_widget_clear_bindings (widget);
-  gtd_notification_widget_stop_or_run (widget);
-
-  g_signal_handlers_disconnect_by_func (notification,
-                                        gtd_notification_widget__notification_executed_cb,
-                                        widget);
-}
-
-static void
-gtd_notification_widget_execute_notification (GtdNotificationWidget *widget,
-                                              GtdNotification       *notification)
-{
-  GtdNotificationWidgetPrivate *priv = widget->priv;
-
   g_signal_connect (notification,
                     "executed",
-                    G_CALLBACK (gtd_notification_widget__notification_executed_cb),
-                    widget);
+                    G_CALLBACK (on_notification_executed_cb),
+                    self);
 
-  priv->has_secondary_action_binding =
-          g_object_bind_property (notification,
-                                  "has-secondary-action",
-                                  priv->secondary_button,
-                                  "visible",
-                                  G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+  self->has_secondary_action_binding = g_object_bind_property (notification,
+                                                               "has-secondary-action",
+                                                               self->secondary_button,
+                                                               "visible",
+                                                               G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
-  priv->message_label_binding =
-          g_object_bind_property (notification,
-                                  "text",
-                                  priv->text_label,
-                                  "label",
-                                  G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+  self->message_label_binding = g_object_bind_property (notification,
+                                                        "text",
+                                                        self->text_label,
+                                                        "label",
+                                                        G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
-  priv->ready_binding =
-          g_object_bind_property (notification,
-                                  "ready",
-                                  priv->spinner,
-                                  "visible",
-                                  G_BINDING_DEFAULT | G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE);
+  self->ready_binding = g_object_bind_property (notification,
+                                                "ready",
+                                                self->spinner,
+                                                "visible",
+                                                G_BINDING_DEFAULT | G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE);
 
-  priv->secondary_label_binding =
-          g_object_bind_property (notification,
-                                  "secondary-action-name",
-                                  priv->secondary_button,
-                                  "label",
-                                  G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+  self->secondary_label_binding = g_object_bind_property (notification,
+                                                          "secondary-action-name",
+                                                          self->secondary_button,
+                                                          "label",
+                                                          G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
   gtd_notification_start (notification);
+}
+
+
+static void
+on_enter_notify_cb (GtdNotificationWidget *self)
+{
+  /* Stop the timer when mouse enters */
+  if (self->current_notification)
+    gtd_notification_stop (self->current_notification);
+}
+
+static void
+on_leave_notify_cb (GtdNotificationWidget *self)
+{
+  /* Restart the timer when mouse leaves */
+  if (self->current_notification)
+    gtd_notification_start (self->current_notification);
+}
+
+static void
+on_close_button_clicked_cb (GtdNotificationWidget *self)
+{
+  gtd_notification_stop (self->current_notification);
+  gtd_notification_execute_primary_action (self->current_notification);
+}
+
+static void
+on_secondary_button_clicked_cb (GtdNotificationWidget *self)
+{
+  gtd_notification_stop (self->current_notification);
+  gtd_notification_execute_secondary_action (self->current_notification);
+}
+
+static void
+on_notification_executed_cb (GtdNotification       *notification,
+                             GtdNotificationWidget *self)
+{
+  clear_bindings (self);
+  stop_or_run_notifications (self);
+
+  g_signal_handlers_disconnect_by_func (notification,
+                                        on_notification_executed_cb,
+                                        self);
 }
 
 static void
 gtd_notification_widget_finalize (GObject *object)
 {
   GtdNotificationWidget *self = (GtdNotificationWidget *)object;
-  GtdNotificationWidgetPrivate *priv = gtd_notification_widget_get_instance_private (self);
   GList *l;
 
   /* When quitting, always execute the primary option of the notifications */
-  if (priv->current_notification)
+  if (self->current_notification)
     {
-      g_signal_handlers_disconnect_by_func (priv->current_notification,
-                                            gtd_notification_widget__notification_executed_cb,
-                                            self);
-
-      gtd_notification_execute_primary_action (priv->current_notification);
+      g_signal_handlers_disconnect_by_func (self->current_notification, on_notification_executed_cb, self);
+      gtd_notification_execute_primary_action (self->current_notification);
     }
 
-  for (l = priv->queue->head; l != NULL; l = l->next)
+  for (l = self->queue->head; l != NULL; l = l->next)
     gtd_notification_execute_primary_action (l->data);
 
   /* And only after executing all of them, release the queue */
-  g_queue_free_full (priv->queue, g_object_unref);
+  if (self->queue)
+    {
+      g_queue_free_full (self->queue, g_object_unref);
+      self->queue = NULL;
+    }
 
   G_OBJECT_CLASS (gtd_notification_widget_parent_class)->finalize (object);
 }
@@ -224,22 +206,21 @@ gtd_notification_widget_class_init (GtdNotificationWidgetClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/notification.ui");
 
-  gtk_widget_class_bind_template_child_private (widget_class, GtdNotificationWidget, secondary_button);
-  gtk_widget_class_bind_template_child_private (widget_class, GtdNotificationWidget, spinner);
-  gtk_widget_class_bind_template_child_private (widget_class, GtdNotificationWidget, text_label);
+  gtk_widget_class_bind_template_child (widget_class, GtdNotificationWidget, secondary_button);
+  gtk_widget_class_bind_template_child (widget_class, GtdNotificationWidget, spinner);
+  gtk_widget_class_bind_template_child (widget_class, GtdNotificationWidget, text_label);
 
-  gtk_widget_class_bind_template_callback (widget_class, gtd_notification_widget__close_button_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, gtd_notification_widget__enter_notify_cb);
-  gtk_widget_class_bind_template_callback (widget_class, gtd_notification_widget__leave_notify_cb);
-  gtk_widget_class_bind_template_callback (widget_class, gtd_notification_widget__secondary_button_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_close_button_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_enter_notify_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_leave_notify_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_secondary_button_clicked_cb);
 }
 
 static void
 gtd_notification_widget_init (GtdNotificationWidget *self)
 {
-  self->priv = gtd_notification_widget_get_instance_private (self);
-  self->priv->queue = g_queue_new ();
-  self->priv->state = STATE_IDLE;
+  self->queue = g_queue_new ();
+  self->state = STATE_IDLE;
 
   gtk_widget_init_template (GTK_WIDGET (self));
 }
@@ -264,21 +245,17 @@ gtd_notification_widget_new (void)
  * consume it.
  */
 void
-gtd_notification_widget_notify (GtdNotificationWidget *widget,
+gtd_notification_widget_notify (GtdNotificationWidget *self,
                                 GtdNotification       *notification)
 {
-  GtdNotificationWidgetPrivate *priv;
+  g_return_if_fail (GTD_IS_NOTIFICATION_WIDGET (self));
 
-  g_return_if_fail (GTD_IS_NOTIFICATION_WIDGET (widget));
-
-  priv = widget->priv;
-
-  if (!g_queue_find (priv->queue, notification))
+  if (!g_queue_find (self->queue, notification))
     {
-      g_queue_push_tail (priv->queue, notification);
+      g_queue_push_tail (self->queue, notification);
 
-      if (priv->state == STATE_IDLE)
-        gtd_notification_widget_stop_or_run (widget);
+      if (self->state == STATE_IDLE)
+        stop_or_run_notifications (self);
     }
 }
 
@@ -289,22 +266,18 @@ gtd_notification_widget_notify (GtdNotificationWidget *widget,
  * queued, nothing happens.
  */
 void
-gtd_notification_widget_cancel (GtdNotificationWidget *widget,
+gtd_notification_widget_cancel (GtdNotificationWidget *self,
                                 GtdNotification       *notification)
 {
-  GtdNotificationWidgetPrivate *priv;
+  g_return_if_fail (GTD_IS_NOTIFICATION_WIDGET (self));
 
-  g_return_if_fail (GTD_IS_NOTIFICATION_WIDGET (widget));
-
-  priv = widget->priv;
-
-  if (notification == priv->current_notification)
+  if (notification == self->current_notification)
     {
       gtd_notification_stop (notification);
-      gtd_notification_widget_stop_or_run (widget);
+      stop_or_run_notifications (self);
     }
-  else if (g_queue_find (priv->queue, notification))
+  else if (g_queue_find (self->queue, notification))
     {
-      g_queue_remove (priv->queue, notification);
+      g_queue_remove (self->queue, notification);
     }
 }
