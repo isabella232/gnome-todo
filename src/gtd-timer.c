@@ -128,20 +128,25 @@ login_proxy_acquired_cb (GObject      *source,
                          GAsyncResult *res,
                          gpointer      user_data)
 {
+  g_autoptr (GError) error = NULL;
   GtdTimer *self;
-  GError *error;
 
   self = GTD_TIMER (user_data);
-  error = NULL;
+
+  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
 
   self->logind = g_dbus_proxy_new_for_bus_finish (res, &error);
+
+  if (error)
+    {
+      g_warning ("Error acquiring org.freedesktop.login1: %s", error->message);
+      return;
+    }
 
   g_signal_connect (self->logind,
                     "g-signal",
                     G_CALLBACK (logind_signal_received_cb),
                     self);
-
-  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
 }
 
 static gboolean
