@@ -61,7 +61,8 @@ G_DEFINE_TYPE_WITH_CODE (GtdProviderEds, gtd_provider_eds, GTD_TYPE_OBJECT,
                          G_ADD_PRIVATE (GtdProviderEds)
                          G_IMPLEMENT_INTERFACE (GTD_TYPE_PROVIDER, gtd_provider_iface_init))
 
-enum {
+enum
+{
   PROP_0,
   PROP_ENABLED,
   PROP_DEFAULT_TASKLIST,
@@ -333,9 +334,11 @@ gtd_manager__invoke_authentication (GObject      *source_object,
                                     GAsyncResult *result,
                                     gpointer      user_data)
 {
-  ESource *source = E_SOURCE (source_object);
-  GError *error = NULL;
+  g_autoptr (GError) error = NULL;
+  ESource *source;
   gboolean canceled;
+
+  source = E_SOURCE (source_object);
 
   e_source_invoke_authenticate_finish (source,
                                        result,
@@ -346,15 +349,7 @@ gtd_manager__invoke_authentication (GObject      *source_object,
                                    G_IO_ERROR_CANCELLED);
 
   if (!canceled)
-    {
-      g_warning ("%s: %s (%s): %s",
-                 G_STRFUNC,
-                 "Failed to prompt for credentials",
-                 e_source_get_uid (source),
-                 error->message);
-    }
-
-  g_clear_error (&error);
+    g_warning ("Failed to prompt for credentials (%s): %s", e_source_get_uid (source), error->message);
 }
 
 static void
@@ -364,7 +359,7 @@ gtd_provider_local_credentials_prompt_done (GObject      *source_object,
 {
   ETrustPromptResponse response = E_TRUST_PROMPT_RESPONSE_UNKNOWN;
   ESource *source = E_SOURCE (source_object);
-  GError *error = NULL;
+  g_autoptr (GError) error = NULL;
 
   e_trust_prompt_run_for_source_finish (source, result, &response, &error);
 
@@ -375,19 +370,18 @@ gtd_provider_local_credentials_prompt_done (GObject      *source_object,
                  "Failed to prompt for credentials for",
                  e_source_get_display_name (source),
                  error->message);
-
-    }
-  else if (response == E_TRUST_PROMPT_RESPONSE_ACCEPT || response == E_TRUST_PROMPT_RESPONSE_ACCEPT_TEMPORARILY)
-    {
-      /* Use NULL credentials to reuse those from the last time. */
-      e_source_invoke_authenticate (source,
-                                    NULL,
-                                    NULL /* cancellable */,
-                                    gtd_manager__invoke_authentication,
-                                    NULL);
+      return;
     }
 
-  g_clear_error (&error);
+  if (response != E_TRUST_PROMPT_RESPONSE_ACCEPT && response != E_TRUST_PROMPT_RESPONSE_ACCEPT_TEMPORARILY)
+      return;
+
+  /* Use NULL credentials to reuse those from the last time. */
+  e_source_invoke_authenticate (source,
+                                NULL,
+                                NULL /* cancellable */,
+                                gtd_manager__invoke_authentication,
+                                NULL);
 }
 
 static void
@@ -424,9 +418,7 @@ gtd_provider_eds_credentials_required (ESourceRegistry          *registry,
     }
   else if (error && reason == E_SOURCE_CREDENTIALS_REASON_ERROR)
     {
-      g_warning ("%s: %s '%s': %s",
-                 G_STRFUNC,
-                 "Authentication failure",
+      g_warning ("Authentication failure '%s': %s",
                  e_source_get_display_name (source),
                  error->message);
     }
@@ -457,16 +449,15 @@ static void
 gtd_provider_eds_load_registry (GtdProviderEds  *provider)
 {
   GtdProviderEdsPrivate *priv = gtd_provider_eds_get_instance_private (provider);
+  g_autoptr (GError) error = NULL;
   GList *sources;
   GList *l;
-  GError *error = NULL;
 
   priv->credentials_prompter = e_credentials_prompter_new (priv->source_registry);
 
-  if (error != NULL)
+  if (error)
     {
       g_warning ("%s: %s", "Error loading task manager", error->message);
-      g_error_free (error);
       return;
     }
 
