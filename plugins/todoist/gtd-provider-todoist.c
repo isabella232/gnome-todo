@@ -194,11 +194,6 @@ convert_color_code (gint index)
 static void
 emit_access_token_error (void)
 {
-  g_warning ("%s: %s: %s",
-             G_STRFUNC,
-             "Error fetching Todoist account access_token",
-             "Unable to get access token from gnome-online-accounts");
-
   gtd_manager_emit_error_message (gtd_manager_get_default (),
                                   _("Error fetching Todoist account key"),
                                   _("Please ensure that Todoist account is correctly configured."),
