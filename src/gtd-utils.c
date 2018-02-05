@@ -45,7 +45,7 @@ gtd_str_replace (const gchar *source,
   replacement_len = strlen (replacement);
   n_ocurrences = 0;
 
-  for (source_aux = g_strstr_len (source, -1, search);
+  for (source_aux = g_strstr_len (source, source_len, search);
        source_aux != NULL;
        source_aux = g_strstr_len (source_aux + search_len, -1, search))
     {
@@ -67,7 +67,7 @@ gtd_str_replace (const gchar *source,
   source_aux2 = source;
   new_aux = new_string;
 
-  for (source_aux = g_strstr_len (source, -1, search);
+  for (source_aux = g_strstr_len (source, source_len, search);
        source_aux != NULL;
        source_aux = g_strstr_len (source_aux + search_len, -1, search))
     {
