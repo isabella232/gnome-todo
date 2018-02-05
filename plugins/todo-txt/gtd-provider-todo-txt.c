@@ -1,6 +1,7 @@
 /* gtd-provider-todo-txt.c
  *
- * Copyright (C) 2016 Rohit Kaushik <kaushikrohit325@gmail.com>
+ * Copyright © 2016 Rohit Kaushik <kaushikrohit325@gmail.com>
+ *             2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +19,7 @@
 
 #define G_LOG_DOMAIN "GtdProviderTodoTxt"
 
+#include "gtd-debug.h"
 #include "gtd-provider-todo-txt.h"
 #include "gtd-plugin-todo-txt.h"
 #include "gtd-todo-txt-parser.h"
@@ -29,7 +31,7 @@
 
 struct _GtdProviderTodoTxt
 {
-  GtdObject          parent;
+  GtdObject           parent;
 
   GIcon              *icon;
 
@@ -41,16 +43,24 @@ struct _GtdProviderTodoTxt
 
   GList              *task_lists;
   GPtrArray          *cache;
+
+  guint64             task_counter;
   gboolean            should_reload;
 };
+
+static void          on_file_monitor_changed_cb                  (GFileMonitor       *monitor,
+                                                                  GFile              *first,
+                                                                  GFile              *second,
+                                                                  GFileMonitorEvent   event,
+                                                                  GtdProviderTodoTxt *self);
 
 static void          gtd_provider_iface_init                     (GtdProviderInterface *iface);
 
 G_DEFINE_TYPE_WITH_CODE (GtdProviderTodoTxt, gtd_provider_todo_txt, GTD_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GTD_TYPE_PROVIDER,
-                                                gtd_provider_iface_init))
+                         G_IMPLEMENT_INTERFACE (GTD_TYPE_PROVIDER, gtd_provider_iface_init))
 
-enum {
+enum
+{
   PROP_0,
   PROP_DEFAULT_TASKLIST,
   PROP_DESCRIPTION,
@@ -62,9 +72,312 @@ enum {
   LAST_PROP
 };
 
+
+/*
+ * Auxiliary methods
+ */
+
+static void
+print_task (GString *output,
+            GtdTask *task)
+{
+  GtdTaskList *list;
+  GDateTime *dt;
+  GtdTask *parent;
+  const gchar *list_name;
+  const gchar *title;
+  gint priority;
+  gboolean is_complete;
+
+  is_complete = gtd_task_get_complete (task);
+  title = gtd_task_get_title (task);
+  priority = gtd_task_get_priority (task);
+  dt = gtd_task_get_due_date (task);
+  list = gtd_task_get_list (task);
+  parent = gtd_task_get_parent (task);
+
+  list_name = gtd_task_list_get_name (list);
+
+  if (is_complete)
+    g_string_append (output, "x ");
+
+  if (priority)
+    {
+      if (priority == 1)
+        g_string_append (output, "(C) ");
+      else if (priority == 2)
+        g_string_append (output, "(B) ");
+      else if (priority == 3)
+        g_string_append (output, "(A) ");
+    }
+
+  g_string_append_printf (output, "%s @%s", title, list_name);
+
+  if (dt)
+    {
+      g_autofree gchar *formatted_time = g_date_time_format (dt, "%F");
+      g_string_append_printf (output, " due:%s", formatted_time);
+    }
+
+  g_string_append (output, "\n");
+}
+
+static void
+update_source (GtdProviderTodoTxt *self)
+{
+  g_autofree gchar *output_path = NULL;
+  g_autoptr (GString) contents = NULL;
+  g_autoptr (GError) error = NULL;
+  GtdTaskList *list;
+  guint i;
+
+  GTD_ENTRY;
+
+  contents = g_string_new ("");
+
+  for (i = 0; i < self->cache->len; i++)
+    {
+      g_autofree gchar *color_str = NULL;
+      g_autoptr (GdkRGBA) color = NULL;
+      GList *tasks, *l;
+
+      list = g_ptr_array_index (self->cache, i);
+
+      tasks = gtd_task_list_get_tasks (list);
+
+      /* Print the list as the first line */
+      color = gtd_task_list_get_color (list);
+      color_str = gdk_rgba_to_string (color);
+
+      g_string_append_printf (contents, "@%s color:%s\n",
+                              gtd_task_list_get_name (list),
+                              color_str);
+
+      /* And now each task */
+      for (l = tasks; l != NULL; l = l->next)
+        print_task (contents, l->data);
+    }
+
+  output_path = g_file_get_path (self->source_file);
+  g_file_set_contents (output_path, contents->str, contents->len, &error);
+
+  if (error)
+    {
+      g_warning ("Error saving Todo.txt file: %s", error->message);
+      return;
+    }
+
+  self->should_reload = FALSE;
+
+  GTD_EXIT;
+}
+
+static void
+add_task_list (GtdProviderTodoTxt *self,
+               GtdTaskList        *list)
+{
+  if (g_hash_table_contains (self->lists, gtd_task_list_get_name (list)))
+    return;
+
+  g_ptr_array_add (self->cache, list);
+  g_hash_table_insert (self->lists, g_strdup (gtd_task_list_get_name (list)), list);
+
+  self->task_lists = g_list_append (self->task_lists, list);
+}
+
+static void
+parse_task_list (GtdProviderTodoTxt *self,
+                 const gchar        *line)
+{
+  g_autoptr (GtdTaskList) list = NULL;
+
+  list = gtd_todo_txt_parser_parse_task_list (GTD_PROVIDER (self), line);
+
+  if (!list)
+    return;
+
+  add_task_list (self, g_steal_pointer (&list));
+}
+
+static void
+parse_task (GtdProviderTodoTxt *self,
+            const gchar        *line)
+{
+  g_autofree gchar *list_name = NULL;
+  GtdTaskList *list;
+  GtdTask *task;
+
+  task = gtd_todo_txt_parser_parse_task (GTD_PROVIDER (self), line, &list_name);
+
+  /*
+   * Create the list if it doesn't exist yet; this might happen with todo.txt files
+   * that are not saved from GNOME To Do.
+   */
+  if (!g_hash_table_contains (self->lists, list_name))
+    {
+      GTD_TRACE_MSG ("Creating new list with name '%s'", list_name);
+
+      list = g_object_new (GTD_TYPE_TASK_LIST,
+                           "provider", self,
+                           "name", list_name,
+                           "is-removable", TRUE,
+                           NULL);
+
+      add_task_list (self, list);
+    }
+  else
+    {
+      GTD_TRACE_MSG ("List with name '%s' already exists, reusing", list_name);
+
+      list = g_hash_table_lookup (self->lists, list_name);
+    }
+
+  gtd_task_set_list (task, list);
+  gtd_task_list_save_task (list, task);
+
+  g_hash_table_insert (self->tasks, (gpointer) gtd_object_get_uid (GTD_OBJECT (task)), task);
+  self->task_counter++;
+}
+
+static void
+reload_tasks (GtdProviderTodoTxt *self)
+{
+  g_autofree gchar *input_path = NULL;
+  g_autofree gchar *file_contents = NULL;
+  g_autoptr (GError) error = NULL;
+  g_auto (GStrv) lines = NULL;
+  guint i;
+
+  GTD_ENTRY;
+
+  input_path = g_file_get_path (self->source_file);
+
+  g_debug ("Reading the contents of %s", input_path);
+
+  g_file_get_contents (input_path, &file_contents, NULL, &error);
+
+  if (error)
+    {
+      g_warning ("Error reading Todo.txt file: %s", error->message);
+      return;
+    }
+
+  self->task_counter = 0;
+
+  lines = g_strsplit (file_contents, "\n", -1);
+
+  for (i = 0; lines && lines[i]; i++)
+    {
+      GtdTodoTxtLineType line_type;
+      gchar *line;
+
+      line = lines[i];
+
+      /* Last element of the array is NULL */
+      if (!line || line[0] == '\0')
+        break;
+
+      g_strstrip (line);
+
+      GTD_TRACE_MSG ("Parsing line %d: %s", i, line);
+
+      line_type = gtd_todo_txt_parser_get_line_type (line, &error);
+
+      if (error)
+        {
+          g_warning ("Error parsing line %d: %s", i + 1, error->message);
+          g_clear_error (&error);
+          continue;
+        }
+
+      switch (line_type)
+        {
+        case GTD_TODO_TXT_LINE_TYPE_TASKLIST:
+          parse_task_list (self, line);
+          break;
+
+        case GTD_TODO_TXT_LINE_TYPE_TASK:
+          parse_task (self, line);
+          break;
+        }
+    }
+
+  GTD_EXIT;
+}
+
+static void
+setup_file_monitor (GtdProviderTodoTxt *self)
+{
+  g_autoptr (GError) error = NULL;
+
+  self->monitor = g_file_monitor_file (self->source_file,
+                                       G_FILE_MONITOR_WATCH_MOVES,
+                                       NULL,
+                                       &error);
+
+  if (error)
+    {
+      gtd_manager_emit_error_message (gtd_manager_get_default (),
+                                      _("Error while opening the file monitor. Todo.txt will not be monitored"),
+                                      error->message,
+                                      NULL,
+                                      NULL);
+      return;
+    }
+
+  g_signal_connect (self->monitor, "changed", G_CALLBACK (on_file_monitor_changed_cb), self);
+}
+
+
+/*
+ * Callbacks
+ */
+
+static void
+on_file_monitor_changed_cb (GFileMonitor       *monitor,
+                            GFile              *first,
+                            GFile              *second,
+                            GFileMonitorEvent   event,
+                            GtdProviderTodoTxt *self)
+{
+  GList *l = NULL;
+  guint i;
+
+  if (!self->should_reload)
+    {
+      self->should_reload = TRUE;
+      return;
+    }
+
+  g_clear_pointer (&self->lists, g_hash_table_destroy);
+  g_clear_pointer (&self->tasks, g_hash_table_destroy);
+  g_ptr_array_free (self->cache, TRUE);
+
+  for (l = self->task_lists; l != NULL; l = l->next)
+    g_signal_emit_by_name (self, "list-removed", l->data);
+
+  g_list_free (self->task_lists);
+
+  self->task_lists = NULL;
+  self->lists = g_hash_table_new ((GHashFunc) g_str_hash, (GEqualFunc) g_str_equal);
+  self->tasks = g_hash_table_new ((GHashFunc) g_str_hash, (GEqualFunc) g_str_equal);
+  self->cache = g_ptr_array_new ();
+
+  reload_tasks (self);
+
+  for (i = 0; i < self->cache->len; i++)
+    {
+      GtdTaskList *list;
+      list = g_ptr_array_index (self->cache, i);
+      g_signal_emit_by_name (self, "list-added", list);
+    }
+}
+
+
 /*
  * GtdProviderInterface implementation
  */
+
 static const gchar*
 gtd_provider_todo_txt_get_id (GtdProvider *provider)
 {
@@ -83,7 +396,6 @@ gtd_provider_todo_txt_get_description (GtdProvider *provider)
   return _("On the Todo.txt file");
 }
 
-
 static gboolean
 gtd_provider_todo_txt_get_enabled (GtdProvider *provider)
 {
@@ -93,286 +405,9 @@ gtd_provider_todo_txt_get_enabled (GtdProvider *provider)
 static GIcon*
 gtd_provider_todo_txt_get_icon (GtdProvider *provider)
 {
-  GtdProviderTodoTxt *self;
-
-  self = GTD_PROVIDER_TODO_TXT (provider);
+  GtdProviderTodoTxt *self = GTD_PROVIDER_TODO_TXT (provider);
 
   return self->icon;
-}
-
-static void
-emit_generic_error (GError *error)
-{
-  g_warning ("%s: %s: %s",
-             G_STRFUNC,
-             "Error while opening Todo.txt",
-             error->message);
-
-  gtd_manager_emit_error_message (gtd_manager_get_default (),
-                                  _("Error while opening Todo.txt"),
-                                  error->message,
-                                  NULL,
-                                  NULL);
-}
-
-static void
-update_source (GtdProviderTodoTxt *self)
-{
-
-  GFileOutputStream *write_stream;
-  GDataOutputStream *writer;
-  GtdTaskList *list;
-  GError *error;
-  GList *tasks, *l;
-  guint i;
-
-  error = NULL;
-  tasks = NULL;
-  l = NULL;
-  self->should_reload = FALSE;
-
-  write_stream = g_file_replace (self->source_file,
-                                 NULL,
-                                 TRUE,
-                                 G_FILE_CREATE_NONE,
-                                 NULL,
-                                 &error);
-  if (error)
-    {
-      emit_generic_error (error);
-      g_error_free (error);
-      return;
-    }
-
-  writer = g_data_output_stream_new (G_OUTPUT_STREAM (write_stream));
-
-  for (i = 0; i < self->cache->len; i++)
-    {
-      gchar *list_line;
-      list = g_ptr_array_index (self->cache, i);
-
-      tasks = gtd_task_list_get_tasks (list);
-      tasks = g_list_sort (tasks, (GCompareFunc) gtd_task_compare);
-
-      list_line = gtd_todo_txt_parser_serialize_list (list);
-
-      g_data_output_stream_put_string (writer,
-                                       list_line,
-                                       NULL,
-                                       NULL);
-
-      for (l = tasks; l != NULL; l = l->next)
-        {
-          gchar *task_line;
-
-          task_line = gtd_todo_txt_parser_serialize_task (l->data);
-
-          g_data_output_stream_put_string (writer,
-                                           task_line,
-                                           NULL,
-                                           NULL);
-
-          g_free (task_line);
-        }
-
-      g_free (list_line);
-    }
-
-  g_output_stream_close (G_OUTPUT_STREAM (writer), NULL, NULL);
-  g_output_stream_close (G_OUTPUT_STREAM (write_stream), NULL, NULL);
-}
-
-static GtdTaskList*
-create_list (GtdProviderTodoTxt *self,
-             gchar              *name)
-{
-  GtdTaskList *task_list;
-
-  if (g_hash_table_contains (self->lists, name))
-    return g_hash_table_lookup (self->lists, name);
-
-  task_list = gtd_task_list_new (GTD_PROVIDER (self));
-  gtd_task_list_set_is_removable (task_list, TRUE);
-  g_ptr_array_add (self->cache, task_list);
-  g_hash_table_insert (self->lists, g_strdup (name), task_list);
-  gtd_task_list_set_name (task_list, name);
-  self->task_lists = g_list_append (self->task_lists, task_list);
-
-  return task_list;
-}
-
-static void
-gtd_provider_todo_txt_load_tasks (GtdProviderTodoTxt *self)
-{
-  GFileInputStream *readstream;
-  GDataInputStream *reader;
-  GtdTaskList *list;
-  GtdTask *parent_task;
-  GtdTask *task;
-  GError *error;
-  GList *tokens;
-  gboolean valid;
-  gchar *line_read;
-  gchar *list_name;
-  gchar *root_task_name;
-
-  g_return_if_fail (G_IS_FILE (self->source_file));
-
-  tokens = NULL;
-  error = NULL;
-  readstream = g_file_read (self->source_file, NULL, &error);
-
-  if (error)
-    {
-      emit_generic_error (error);
-      g_error_free (error);
-      return;
-    }
-
-
-  reader = g_data_input_stream_new (G_INPUT_STREAM (readstream));
-
-  while (!error)
-    {
-      line_read = g_data_input_stream_read_line (reader, NULL, NULL, &error);
-
-      if (error)
-        {
-          g_warning ("%s: %s: %s",
-                     G_STRFUNC,
-                     "Error while reading a line from Todo.txt",
-                     error->message);
-
-          gtd_manager_emit_error_message (gtd_manager_get_default (),
-                                          _("Error while reading a line from Todo.txt"),
-                                          error->message,
-                                          NULL,
-                                          NULL);
-          g_error_free (error);
-
-          continue;
-        }
-
-      if (!line_read)
-        break;
-
-      g_strstrip (line_read);
-      tokens = gtd_todo_txt_parser_tokenize (line_read);
-      valid = gtd_todo_txt_parser_validate_token_format (tokens);
-
-      if (valid)
-        {
-          if (g_list_length (tokens) == 1)
-            {
-              list_name = &((gchar*)tokens->data)[0];
-              list_name++;
-              create_list (self, list_name);
-              continue;
-            }
-
-          task = gtd_provider_generate_task (GTD_PROVIDER (self));
-          gtd_todo_txt_parser_parse_tokens (task, tokens);
-
-          g_hash_table_insert (self->tasks, g_strdup (gtd_task_get_title (task)), task);
-
-          list = create_list (self, g_object_get_data (G_OBJECT (task), "list_name"));
-          gtd_task_set_list (task, list);
-
-          if (g_object_get_data (G_OBJECT (task), "root_task_name"))
-            {
-              root_task_name = g_object_get_data (G_OBJECT (task), "root_task_name");
-
-              if (g_hash_table_contains (self->tasks, root_task_name))
-                {
-                  parent_task =  g_hash_table_lookup (self->tasks, root_task_name);
-                }
-              else
-                {
-                  parent_task = gtd_provider_generate_task (GTD_PROVIDER (self));
-                  gtd_task_set_list (parent_task, list);
-                  gtd_task_set_title (parent_task, g_object_get_data (G_OBJECT (task), "root_task_name"));
-
-                  g_hash_table_insert (self->tasks, root_task_name, parent_task);
-                }
-
-              gtd_task_add_subtask (parent_task, task);
-              gtd_task_list_save_task (list, parent_task);
-            }
-
-          gtd_task_list_save_task (list, task);
-        }
-
-      g_list_free_full (tokens, g_free);
-      g_free (line_read);
-    }
-
-  g_input_stream_close (G_INPUT_STREAM (reader), NULL, NULL);
-  g_input_stream_close (G_INPUT_STREAM (readstream), NULL, NULL);
-}
-
-static void
-gtd_provider_todo_txt_reload (GFileMonitor       *monitor,
-                              GFile              *first,
-                              GFile              *second,
-                              GFileMonitorEvent   event,
-                              GtdProviderTodoTxt *self)
-{
-  GList *l;
-  guint i;
-
-  l = NULL;
-
-  if (!self->should_reload)
-    {
-      self->should_reload = TRUE;
-      return;
-    }
-
-  g_clear_pointer (&self->lists, g_hash_table_destroy);
-  g_clear_pointer (&self->tasks, g_hash_table_destroy);
-  g_ptr_array_free (self->cache, TRUE);
-
-  for (l = self->task_lists; l != NULL; l = l->next)
-    g_signal_emit_by_name (self, "list-removed", l->data);
-
-  g_list_free (self->task_lists);
-  self->task_lists = NULL;
-  self->lists = g_hash_table_new ((GHashFunc) g_str_hash, (GEqualFunc) g_str_equal);
-  self->tasks = g_hash_table_new ((GHashFunc) g_str_hash, (GEqualFunc) g_str_equal);
-  self->cache = g_ptr_array_new ();
-
-  gtd_provider_todo_txt_load_tasks (self);
-
-  for (i = 0; i < self->cache->len; i++)
-    {
-      GtdTaskList *list;
-      list = g_ptr_array_index (self->cache, i);
-      g_signal_emit_by_name (self, "list-added", list);
-    }
-}
-
-static void
-gtd_provider_todo_txt_load_source_monitor (GtdProviderTodoTxt *self)
-{
-  GError *error = NULL;
-
-  self->monitor = g_file_monitor_file (self->source_file,
-                                       G_FILE_MONITOR_WATCH_MOVES,
-                                       NULL,
-                                       &error);
-
-  if (error)
-    {
-      gtd_manager_emit_error_message (gtd_manager_get_default (),
-                                      _("Error while opening the file monitor. Todo.txt will not be monitored"),
-                                      error->message,
-                                      NULL,
-                                      NULL);
-      g_clear_error (&error);
-      return;
-    }
-
-  g_signal_connect (self->monitor, "changed", G_CALLBACK (gtd_provider_todo_txt_reload), self);
 }
 
 static void
@@ -381,14 +416,7 @@ gtd_provider_todo_txt_create_task (GtdProvider   *provider,
                                    GCancellable  *cancellable,
                                    GError       **error)
 {
-  GtdProviderTodoTxt *self;
-
-  self = GTD_PROVIDER_TODO_TXT (provider);
-
-  g_return_if_fail (GTD_IS_TASK (task));
-  g_return_if_fail (GTD_IS_TASK_LIST (gtd_task_get_list (task)));
-
-  update_source (self);
+  update_source (GTD_PROVIDER_TODO_TXT (provider));
 }
 
 static void
@@ -397,15 +425,7 @@ gtd_provider_todo_txt_update_task (GtdProvider   *provider,
                                    GCancellable  *cancellable,
                                    GError       **error)
 {
-  GtdProviderTodoTxt *self;
-
-  self = GTD_PROVIDER_TODO_TXT (provider);
-
-  g_return_if_fail (GTD_IS_TASK (task));
-  g_return_if_fail (GTD_IS_TASK_LIST (gtd_task_get_list (task)));
-  g_return_if_fail (G_IS_FILE (self->source_file));
-
-  update_source (self);
+  update_source (GTD_PROVIDER_TODO_TXT (provider));
 }
 
 static void
@@ -414,15 +434,7 @@ gtd_provider_todo_txt_remove_task (GtdProvider   *provider,
                                    GCancellable  *cancellable,
                                    GError       **error)
 {
-  GtdProviderTodoTxt *self;
-
-  self = GTD_PROVIDER_TODO_TXT (provider);
-
-  g_return_if_fail (GTD_IS_TASK (task));
-  g_return_if_fail (GTD_IS_TASK_LIST (gtd_task_get_list (task)));
-  g_return_if_fail (G_IS_FILE (self->source_file));
-
-  update_source (self);
+  update_source (GTD_PROVIDER_TODO_TXT (provider));
 }
 
 static void
@@ -471,11 +483,7 @@ gtd_provider_todo_txt_remove_task_list (GtdProvider   *provider,
                                         GCancellable  *cancellable,
                                         GError       **error)
 {
-  GtdProviderTodoTxt *self;
-
-  self = GTD_PROVIDER_TODO_TXT (provider);
-
-  g_return_if_fail (GTD_IS_TASK_LIST (list));
+  GtdProviderTodoTxt *self = GTD_PROVIDER_TODO_TXT (provider);
 
   g_ptr_array_remove (self->cache, list);
   self->task_lists = g_list_remove (self->task_lists, list);
@@ -488,9 +496,7 @@ gtd_provider_todo_txt_remove_task_list (GtdProvider   *provider,
 static GList*
 gtd_provider_todo_txt_get_task_lists (GtdProvider *provider)
 {
-  GtdProviderTodoTxt *self;
-
-  self = GTD_PROVIDER_TODO_TXT (provider);
+  GtdProviderTodoTxt *self = GTD_PROVIDER_TODO_TXT (provider);
 
   return self->task_lists;
 }
@@ -506,6 +512,17 @@ gtd_provider_todo_txt_set_default_task_list (GtdProvider *provider,
                                              GtdTaskList *list)
 {
   /* FIXME: implement me */
+}
+
+static GtdTask*
+gtd_provider_todo_txt_generate_task (GtdProvider *provider)
+{
+  GtdProviderTodoTxt *self = (GtdProviderTodoTxt *) provider;
+  g_autofree gchar *uid = NULL;
+
+  uid = g_strdup_printf ("%ld", self->task_counter);
+
+  return g_object_new (GTD_TYPE_TASK, "uid", uid, NULL);
 }
 
 static void
@@ -525,16 +542,13 @@ gtd_provider_iface_init (GtdProviderInterface *iface)
   iface->get_task_lists = gtd_provider_todo_txt_get_task_lists;
   iface->get_default_task_list = gtd_provider_todo_txt_get_default_task_list;
   iface->set_default_task_list = gtd_provider_todo_txt_set_default_task_list;
+  iface->generate_task = gtd_provider_todo_txt_generate_task;
 }
 
-GtdProviderTodoTxt*
-gtd_provider_todo_txt_new (GFile *source_file)
-{
 
-  return g_object_new (GTD_TYPE_PROVIDER_TODO_TXT,
-                       "source", source_file,
-                       NULL);
-}
+/*
+ * GObject overrides
+ */
 
 static void
 gtd_provider_todo_txt_finalize (GObject *object)
@@ -601,8 +615,8 @@ gtd_provider_todo_txt_set_property (GObject      *object,
     {
     case PROP_SOURCE:
       self->source_file = g_value_dup_object (value);
-      gtd_provider_todo_txt_load_source_monitor (self);
-      gtd_provider_todo_txt_load_tasks (self);
+      setup_file_monitor (self);
+      reload_tasks (self);
       break;
 
     default:
@@ -624,7 +638,7 @@ gtd_provider_todo_txt_class_init (GtdProviderTodoTxtClass *klass)
                                    g_param_spec_object ("source",
                                                         "Source file",
                                                         "The Todo.txt source file",
-                                                         G_TYPE_OBJECT,
+                                                        G_TYPE_FILE,
                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_override_property (object_class, PROP_DEFAULT_TASKLIST, "default-task-list");
@@ -640,11 +654,18 @@ gtd_provider_todo_txt_init (GtdProviderTodoTxt *self)
 {
   gtd_object_set_ready (GTD_OBJECT (self), TRUE);
 
-  self->lists = g_hash_table_new ((GHashFunc) g_str_hash, (GEqualFunc) g_str_equal);
-  self->tasks = g_hash_table_new ((GHashFunc) g_str_hash, (GEqualFunc) g_str_equal);
+  self->lists = g_hash_table_new (g_str_hash, g_str_equal);
+  self->tasks = g_hash_table_new (g_str_hash, g_str_equal);
   self->cache = g_ptr_array_new ();
   self->should_reload = TRUE;
-
-  /* icon */
   self->icon = G_ICON (g_themed_icon_new_with_default_fallbacks ("computer-symbolic"));
+}
+
+GtdProviderTodoTxt*
+gtd_provider_todo_txt_new (GFile *source_file)
+{
+
+  return g_object_new (GTD_TYPE_PROVIDER_TODO_TXT,
+                       "source", source_file,
+                       NULL);
 }

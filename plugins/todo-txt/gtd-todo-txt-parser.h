@@ -25,33 +25,33 @@
 
 G_BEGIN_DECLS
 
-#define GTD_TYPE_TODO_TXT_PARSER (gtd_todo_txt_parser_get_type())
+typedef enum
+{
+  GTD_TODO_TXT_PARSER_INVALID_DUE_DATE,
+  GTD_TODO_TXT_PARSER_INVALID_LINE,
+  GTD_TODO_TXT_PARSER_UNSUPPORTED_TOKEN,
+  GTD_TODO_TXT_PARSER_WRONG_LINE_TYPE,
+} GtdTodoTxtParserError;
 
-typedef struct _TaskData TaskData;
+typedef enum
+{
+  GTD_TODO_TXT_LINE_TYPE_TASKLIST,
+  GTD_TODO_TXT_LINE_TYPE_TASK,
+} GtdTodoTxtLineType;
 
-G_DECLARE_FINAL_TYPE (GtdTodoTxtParser, gtd_todo_txt_parser, GTD, TODO_TXT_PARSER, GtdObject)
+#define GTD_TODO_TXT_PARSER_ERROR (gtd_todo_txt_parser_error_quark ())
 
-gint          gtd_todo_txt_parser_get_priority                    (gchar             *token);
+GQuark               gtd_todo_txt_parser_error_quark             (void);
 
-GDateTime*    gtd_todo_txt_parser_get_date                        (gchar             *token);
+GtdTodoTxtLineType   gtd_todo_txt_parser_get_line_type           (const gchar       *line,
+                                                                  GError           **error);
 
-gboolean      gtd_todo_txt_parser_is_date                         (gchar             *dt);
+GtdTaskList*         gtd_todo_txt_parser_parse_task_list         (GtdProvider       *provider,
+                                                                  const gchar       *line);
 
-gboolean      gtd_todo_txt_parser_is_word                         (gchar             *token);
-
-gint          gtd_todo_txt_parser_get_token_id                    (gchar             *token,
-                                                                   gint               last_read);
-
-void          gtd_todo_txt_parser_parse_tokens                    (GtdTask           *task,
-                                                                   GList             *tokens);
-
-gboolean      gtd_todo_txt_parser_validate_token_format           (GList             *tokens);
-
-GList*        gtd_todo_txt_parser_tokenize                        (const gchar       *line);
-
-gchar*        gtd_todo_txt_parser_serialize_list                  (GtdTaskList       *list);
-
-gchar*        gtd_todo_txt_parser_serialize_task                  (GtdTask           *task);
+GtdTask*             gtd_todo_txt_parser_parse_task              (GtdProvider       *provider,
+                                                                  const gchar       *line,
+                                                                  gchar            **out_list_name);
 
 G_END_DECLS
 
