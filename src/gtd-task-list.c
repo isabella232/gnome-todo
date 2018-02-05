@@ -211,9 +211,9 @@ gtd_task_list_class_init (GtdTaskListClass *klass)
                              G_PARAM_READWRITE));
 
   /**
-   * GtdTaskList::source:
+   * GtdTaskList::provider:
    *
-   * The parent source of the list.
+   * The data provider of the list.
    */
   g_object_class_install_property (
         object_class,
