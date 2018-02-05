@@ -34,9 +34,6 @@ GtkWidget*                gtd_task_row_new                      (GtdTask        
 
 GtdTask*                  gtd_task_row_get_task                 (GtdTaskRow          *row);
 
-void                      gtd_task_row_set_task                 (GtdTaskRow          *row,
-                                                                 GtdTask             *task);
-
 void                      gtd_task_row_set_list_name_visible    (GtdTaskRow          *row,
                                                                  gboolean             show_list_name);
 

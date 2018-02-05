@@ -42,12 +42,12 @@
                 <child>
                   <object class="GtkEventBox" id="dnd_event_box">
                     <property name="visible">True</property>
-                    <signal name="button-press-event" handler="button_press_event" object="GtdTaskRow" swapped="no" />
-                    <signal name="drag-begin" handler="drag_begin_cb" object="GtdTaskRow" swapped="no" />
-                    <signal name="drag-end" handler="drag_end_cb" object="GtdTaskRow" swapped="no" />
-                    <signal name="drag-failed" handler="drag_failed_cb" object="GtdTaskRow" swapped="no" />
-                    <signal name="enter-notify-event" handler="mouse_over_dnd_event_cb" object="GtdTaskRow" swapped="no" />
-                    <signal name="leave-notify-event" handler="mouse_out_dnd_event_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="button-press-event" handler="on_button_press_event_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="drag-begin" handler="on_drag_begin_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="drag-end" handler="on_drag_end_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="drag-failed" handler="on_drag_failed_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="enter-notify-event" handler="on_mouse_over_dnd_event_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="leave-notify-event" handler="on_mouse_out_dnd_event_cb" object="GtdTaskRow" swapped="no" />
                     <child>
                       <object class="GtkImage" id="dnd_icon">
                         <property name="visible">True</property>
@@ -72,19 +72,19 @@
                     <property name="vexpand">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="margin-start">6</property>
-                    <signal name="toggled" handler="complete_check_toggled_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="toggled" handler="on_complete_check_toggled_cb" object="GtdTaskRow" swapped="no" />
                   </object>
                 </child>
 
                 <child>
                   <object class="GtkEventBox" id="header_event_box">
                     <property name="visible">True</property>
-                    <signal name="button-press-event" handler="button_press_event" object="GtdTaskRow" swapped="no" />
-                    <signal name="drag-begin" handler="drag_begin_cb" object="GtdTaskRow" swapped="no" />
-                    <signal name="drag-end" handler="drag_end_cb" object="GtdTaskRow" swapped="no" />
-                    <signal name="drag-failed" handler="drag_failed_cb" object="GtdTaskRow" swapped="no" />
-                    <signal name="enter-notify-event" handler="mouse_over_event_cb" object="GtdTaskRow" swapped="no" />
-                    <signal name="leave-notify-event" handler="mouse_out_event_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="button-press-event" handler="on_button_press_event_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="drag-begin" handler="on_drag_begin_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="drag-end" handler="on_drag_end_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="drag-failed" handler="on_drag_failed_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="enter-notify-event" handler="on_mouse_over_event_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="leave-notify-event" handler="on_mouse_out_event_cb" object="GtdTaskRow" swapped="no" />
                     <child>
                       <object class="GtkBox">
                         <property name="visible">True</property>
@@ -140,7 +140,7 @@
                   <object class="GtkButton" id="toggle_button">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <signal name="clicked" handler="toggle_active_cb" object="GtdTaskRow" swapped="no"/>
+                    <signal name="clicked" handler="on_toggle_active_cb" object="GtdTaskRow" swapped="no"/>
                     <style>
                       <class name="flat" />
                       <class name="close-button" />
@@ -169,7 +169,7 @@
                   <object class="GtdEditPane" id="edit_panel">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <signal name="remove-task" handler="remove_task_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="remove-task" handler="on_remove_task_cb" object="GtdTaskRow" swapped="no" />
                   </object>
                 </child>
               </object>

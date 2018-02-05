@@ -18,6 +18,7 @@
 
 #define G_LOG_DOMAIN "GtdTaskRow"
 
+#include "gtd-debug.h"
 #include "gtd-edit-pane.h"
 #include "gtd-expandable-entry.h"
 #include "gtd-manager.h"
@@ -68,6 +69,26 @@ struct _GtdTaskRow
 
 #define PRIORITY_ICON_SIZE 8
 
+static void          on_complete_changed_cb                      (GtdTaskRow         *self,
+                                                                  GParamSpec         *pspec,
+                                                                  GtdTask            *task);
+
+static void          on_complete_check_toggled_cb                (GtkToggleButton    *button,
+                                                                  GtdTaskRow         *self);
+
+static void          on_depth_changed_cb                         (GtdTaskRow         *self,
+                                                                  GParamSpec         *pspec,
+                                                                  GtdTask            *task);
+
+static void          on_priority_changed_cb                      (GtdTaskRow         *row,
+                                                                  GParamSpec         *spec,
+                                                                  GObject            *object);
+
+static void         on_task_title_changed_cb                     (GtdTaskRow         *self);
+
+static void          on_toggle_active_cb                         (GtkWidget          *button,
+                                                                  GtdTaskRow         *self);
+
 
 G_DEFINE_TYPE (GtdTaskRow, gtd_task_row, GTK_TYPE_LIST_BOX_ROW)
 
@@ -94,289 +115,11 @@ static guint signals[NUM_SIGNALS] = { 0, };
  * Auxiliary methods
  */
 
-static GtkWidget*
-create_transient_row (GtdTaskRow *self)
-{
-  GtdTaskRow *new_row;
-
-  new_row = GTD_TASK_ROW (gtd_task_row_new (self->task));
-  gtk_revealer_set_transition_duration (new_row->revealer, 0);
-  gtk_revealer_set_reveal_child (new_row->revealer, TRUE);
-
-  gtk_widget_set_size_request (GTK_WIDGET (new_row),
-                               gtk_widget_get_allocated_width (GTK_WIDGET (self)),
-                               -1);
-
-  gtk_revealer_set_reveal_child (GTK_REVEALER (new_row->edit_panel_revealer), self->active);
-
-  return GTK_WIDGET (new_row);
-}
-
-static void
-set_cursor (GtkWidget   *widget,
-            const gchar *cursor_name)
-{
-  GdkDisplay *display;
-  GdkCursor *cursor;
-
-  if (!gtk_widget_get_realized (widget))
-    return;
-
-  cursor = NULL;
-  display = gtk_widget_get_display (widget);
-
-  if (cursor_name)
-    cursor = gdk_cursor_new_from_name (display, cursor_name);
-
-  gdk_window_set_cursor (gtk_widget_get_window (widget), cursor);
-  gdk_display_flush (display);
-
-  g_clear_object (&cursor);
-}
-
-
-/*
- * Callbacks
- */
-
-static void
-toggle_active_cb (GtkWidget  *button,
-                  GtdTaskRow *self)
-{
-  if (self->active)
-    gtd_manager_update_task (gtd_manager_get_default (), self->task);
-
-  gtd_task_row_set_active (self, !self->active);
-}
-
-static void
-remove_task_cb (GtdEditPane *edit_panel,
-                GtdTask     *task,
-                GtdTaskRow  *self)
-{
-  g_signal_emit (self, signals[REMOVE_TASK], 0);
-}
-
 static gboolean
-mouse_out_event_cb (GtkWidget  *widget,
-                    GdkEvent   *event,
-                    GtdTaskRow *self)
-{
-  set_cursor (widget, NULL);
-
-  return GDK_EVENT_STOP;
-}
-
-static gboolean
-mouse_over_event_cb (GtkWidget  *widget,
-                     GdkEvent   *event,
-                     GtdTaskRow *self)
-{
-  set_cursor (widget, "pointer");
-
-  return GDK_EVENT_STOP;
-}
-
-
-static gboolean
-mouse_out_dnd_event_cb (GtkWidget  *widget,
-                        GdkEvent   *event,
-                        GtdTaskRow *self)
-{
-  set_cursor (widget, NULL);
-
-  return GDK_EVENT_STOP;
-}
-
-static gboolean
-mouse_over_dnd_event_cb (GtkWidget  *widget,
-                         GdkEvent   *event,
-                         GtdTaskRow *self)
-{
-  set_cursor (widget, "grab");
-
-  return GDK_EVENT_STOP;
-}
-
-static gboolean
-button_press_event (GtkWidget      *widget,
-                    GdkEventButton *event,
-                    GtdTaskRow     *self)
-{
-  gint real_x;
-  gint real_y;
-
-  gtk_widget_translate_coordinates (widget,
-                                    GTK_WIDGET (self),
-                                    event->x,
-                                    event->y,
-                                    &real_x,
-                                    &real_y);
-
-  self->clicked_x = real_x;
-  self->clicked_y = real_y;
-
-  return GDK_EVENT_PROPAGATE;
-}
-
-static void
-drag_begin_cb (GtkWidget      *event_box,
-               GdkDragContext *context,
-               GtdTaskRow     *self)
-{
-  GtkWidget *widget, *new_row;
-  gint x_offset;
-
-  widget = GTK_WIDGET (self);
-
-  set_cursor (widget, "grabbing");
-
-  /*
-   * gtk_drag_set_icon_widget() inserts the row in a different GtkWindow, so
-   * we have to create a new, transient row.
-   */
-  new_row = create_transient_row (self);
-
-  if (gtk_widget_get_direction (GTK_WIDGET (self)) == GTK_TEXT_DIR_RTL)
-    x_offset = gtk_widget_get_margin_end (GTK_WIDGET (self));
-  else
-    x_offset = gtk_widget_get_margin_start (GTK_WIDGET (self));
-
-  gtk_drag_set_icon_widget (context,
-                            new_row,
-                            self->clicked_x + x_offset,
-                            self->clicked_y);
-
-  gtk_widget_hide (widget);
-}
-
-static void
-drag_end_cb (GtkWidget      *event_box,
-             GdkDragContext *context,
-             GtdTaskRow     *self)
-{
-  set_cursor (GTK_WIDGET (self), NULL);
-  gtk_widget_show (GTK_WIDGET (self));
-}
-
-static gboolean
-drag_failed_cb (GtkWidget      *widget,
-                GdkDragContext *context,
-                GtkDragResult   result,
-                GtdTaskRow     *self)
-{
-  set_cursor (GTK_WIDGET (self), NULL);
-  gtk_widget_show (GTK_WIDGET (self));
-
-  return FALSE;
-}
-
-static void
-priority_changed_cb (GtdTaskRow *row,
-                     GParamSpec *spec,
-                     GObject    *object)
-{
-  GtkStyleContext *context;
-  gint priority;
-
-  context = gtk_widget_get_style_context (GTK_WIDGET (row));
-  priority = gtd_task_get_priority (GTD_TASK (object));
-
-  /* remove all styles */
-  gtk_style_context_remove_class (context, "priority-low");
-  gtk_style_context_remove_class (context, "priority-medium");
-  gtk_style_context_remove_class (context, "priority-hight");
-
-  switch (priority)
-    {
-    case 1:
-      gtk_style_context_add_class (context, "priority-low");
-      break;
-
-    case 2:
-      gtk_style_context_add_class (context, "priority-medium");
-      break;
-
-    case 3:
-      gtk_style_context_add_class (context, "priority-hight");
-      break;
-
-    default:
-      break;
-    }
-
-  /* redraw background according to the new applied style */
-  gtk_widget_queue_draw (GTK_WIDGET (row));
-}
-
-static void
-complete_changed_cb (GtdTaskRow *self,
-                     GParamSpec *pspec,
-                     GtdTask    *task)
-{
-  GtkStyleContext *context;
-
-  context = gtk_widget_get_style_context (GTK_WIDGET (self));
-
-  if (gtd_task_get_complete (task))
-    gtk_style_context_add_class (context, "complete");
-  else
-    gtk_style_context_remove_class (context, "complete");
-}
-
-static void
-toggle_complete_cb (GtkRevealer *revealer,
-                    GParamSpec  *pspec,
-                    GtdTaskRow  *self)
-{
-  g_signal_handlers_disconnect_by_func (revealer, toggle_complete_cb, self);
-
-  gtd_task_set_complete (self->task, !gtd_task_get_complete (self->task));
-}
-
-static void
-complete_check_toggled_cb (GtkToggleButton *button,
-                           GtdTaskRow      *self)
-{
-  GtdTaskListView *listview;
-
-  listview = GTD_TASK_LIST_VIEW (gtk_widget_get_ancestor (GTK_WIDGET (self),
-                                                          GTD_TYPE_TASK_LIST_VIEW));
-
-  /*
-   * If the parent list view is showing completed tasks, we
-   * don't have to hide the row. Simply toggle the 'complete'
-   * property of the task.
-   */
-  if (gtd_task_list_view_get_show_completed (listview))
-    {
-      gtd_task_set_complete (self->task, !gtd_task_get_complete (self->task));
-      return;
-    }
-
-  gtk_revealer_set_reveal_child (GTK_REVEALER (self->revealer),
-                                 !gtk_toggle_button_get_active (button));
-
-  g_signal_connect (self->revealer,
-                    "notify::child-revealed",
-                    G_CALLBACK (toggle_complete_cb),
-                    self);
-}
-
-static void
-depth_changed_cb (GtdTaskRow *self,
-                  GParamSpec *pspec,
-                  GtdTask    *task)
-{
-  gtk_widget_set_margin_start (GTK_WIDGET (self),
-                               self->handle_subtasks ? 32 * gtd_task_get_depth (task) + 3: 3);
-}
-
-static gboolean
-gtd_task_row__date_changed_binding (GBinding     *binding,
-                                    const GValue *from_value,
-                                    GValue       *to_value,
-                                    gpointer      user_data)
+date_to_label_binding_cb (GBinding     *binding,
+                          const GValue *from_value,
+                          GValue       *to_value,
+                          gpointer      user_data)
 {
   g_autofree gchar *new_label = NULL;
   GDateTime *dt;
@@ -429,8 +172,355 @@ gtd_task_row__date_changed_binding (GBinding     *binding,
   return TRUE;
 }
 
+static GtkWidget*
+create_transient_row (GtdTaskRow *self)
+{
+  GtdTaskRow *new_row;
+
+  new_row = GTD_TASK_ROW (gtd_task_row_new (self->task));
+  gtk_revealer_set_transition_duration (new_row->revealer, 0);
+  gtk_revealer_set_reveal_child (new_row->revealer, TRUE);
+
+  gtk_widget_set_size_request (GTK_WIDGET (new_row),
+                               gtk_widget_get_allocated_width (GTK_WIDGET (self)),
+                               -1);
+
+  gtk_revealer_set_reveal_child (GTK_REVEALER (new_row->edit_panel_revealer), self->active);
+
+  return GTK_WIDGET (new_row);
+}
+
+static void
+set_cursor (GtkWidget   *widget,
+            const gchar *cursor_name)
+{
+  GdkDisplay *display;
+  GdkCursor *cursor;
+
+  if (!gtk_widget_get_realized (widget))
+    return;
+
+  cursor = NULL;
+  display = gtk_widget_get_display (widget);
+
+  if (cursor_name)
+    cursor = gdk_cursor_new_from_name (display, cursor_name);
+
+  gdk_window_set_cursor (gtk_widget_get_window (widget), cursor);
+  gdk_display_flush (display);
+
+  g_clear_object (&cursor);
+}
+
+static void
+gtd_task_row_set_task (GtdTaskRow *row,
+                       GtdTask    *task)
+{
+  g_return_if_fail (GTD_IS_TASK_ROW (row));
+
+  if (!g_set_object (&row->task, task))
+    return;
+
+  if (task)
+    {
+      gtk_label_set_label (row->task_list_label, gtd_task_list_get_name (gtd_task_get_list (task)));
+
+      g_signal_handlers_block_by_func (row->title_entry, on_task_title_changed_cb, row);
+      g_signal_handlers_block_by_func (row->done_check, on_complete_check_toggled_cb, row);
+
+      g_object_bind_property (task,
+                              "title",
+                              row->title_entry,
+                              "text",
+                              G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+
+      g_object_bind_property (task,
+                              "complete",
+                              row->done_check,
+                              "active",
+                              G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+
+      g_object_bind_property_full (task,
+                                   "due-date",
+                                   row->task_date_label,
+                                   "label",
+                                   G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE,
+                                   date_to_label_binding_cb,
+                                   NULL,
+                                   row,
+                                   NULL);
+
+      /*
+       * Here we generate a false callback call just to reuse the method to
+       * sync the initial state of the priority icon.
+       */
+      on_priority_changed_cb (row, NULL, G_OBJECT (task));
+      g_signal_connect_swapped (task,
+                                "notify::priority",
+                                G_CALLBACK (on_priority_changed_cb),
+                                row);
+
+      on_complete_changed_cb (row, NULL, task);
+      g_signal_connect_swapped (task,
+                                "notify::complete",
+                                G_CALLBACK (on_complete_changed_cb),
+                                row);
+
+      on_depth_changed_cb (row, NULL, task);
+      g_signal_connect_swapped (task,
+                                "notify::depth",
+                                G_CALLBACK (on_depth_changed_cb),
+                                row);
+
+      g_signal_handlers_unblock_by_func (row->done_check, on_complete_check_toggled_cb, row);
+      g_signal_handlers_block_by_func (row->title_entry, on_task_title_changed_cb, row);
+
+      gtd_edit_pane_set_task (GTD_EDIT_PANE (row->edit_panel), task);
+    }
+
+  g_object_notify (G_OBJECT (row), "task");
+}
+
+
+
+/*
+ * Callbacks
+ */
+
+static void
+on_toggle_active_cb (GtkWidget  *button,
+                     GtdTaskRow *self)
+{
+  if (self->active)
+    gtd_manager_update_task (gtd_manager_get_default (), self->task);
+
+  gtd_task_row_set_active (self, !self->active);
+}
+
+static void
+on_remove_task_cb (GtdEditPane *edit_panel,
+                   GtdTask     *task,
+                   GtdTaskRow  *self)
+{
+  g_signal_emit (self, signals[REMOVE_TASK], 0);
+}
+
 static gboolean
-gtd_task_row__destroy_cb (GtkWidget *row)
+on_mouse_out_event_cb (GtkWidget  *widget,
+                       GdkEvent   *event,
+                       GtdTaskRow *self)
+{
+  set_cursor (widget, NULL);
+
+  return GDK_EVENT_STOP;
+}
+
+static gboolean
+on_mouse_over_event_cb (GtkWidget  *widget,
+                        GdkEvent   *event,
+                        GtdTaskRow *self)
+{
+  set_cursor (widget, "pointer");
+
+  return GDK_EVENT_STOP;
+}
+
+
+static gboolean
+on_mouse_out_dnd_event_cb (GtkWidget  *widget,
+                           GdkEvent   *event,
+                           GtdTaskRow *self)
+{
+  set_cursor (widget, NULL);
+
+  return GDK_EVENT_STOP;
+}
+
+static gboolean
+on_mouse_over_dnd_event_cb (GtkWidget  *widget,
+                            GdkEvent   *event,
+                            GtdTaskRow *self)
+{
+  set_cursor (widget, "grab");
+
+  return GDK_EVENT_STOP;
+}
+
+static gboolean
+on_button_press_event_cb (GtkWidget      *widget,
+                          GdkEventButton *event,
+                          GtdTaskRow     *self)
+{
+  gint real_x;
+  gint real_y;
+
+  gtk_widget_translate_coordinates (widget,
+                                    GTK_WIDGET (self),
+                                    event->x,
+                                    event->y,
+                                    &real_x,
+                                    &real_y);
+
+  self->clicked_x = real_x;
+  self->clicked_y = real_y;
+
+  return GDK_EVENT_PROPAGATE;
+}
+
+static void
+on_drag_begin_cb (GtkWidget      *event_box,
+                  GdkDragContext *context,
+                  GtdTaskRow     *self)
+{
+  GtkWidget *widget, *new_row;
+  gint x_offset;
+
+  widget = GTK_WIDGET (self);
+
+  set_cursor (widget, "grabbing");
+
+  /*
+   * gtk_drag_set_icon_widget() inserts the row in a different GtkWindow, so
+   * we have to create a new, transient row.
+   */
+  new_row = create_transient_row (self);
+
+  if (gtk_widget_get_direction (GTK_WIDGET (self)) == GTK_TEXT_DIR_RTL)
+    x_offset = gtk_widget_get_margin_end (GTK_WIDGET (self));
+  else
+    x_offset = gtk_widget_get_margin_start (GTK_WIDGET (self));
+
+  gtk_drag_set_icon_widget (context,
+                            new_row,
+                            self->clicked_x + x_offset,
+                            self->clicked_y);
+
+  gtk_widget_hide (widget);
+}
+
+static void
+on_drag_end_cb (GtkWidget      *event_box,
+                GdkDragContext *context,
+                GtdTaskRow     *self)
+{
+  set_cursor (GTK_WIDGET (self), NULL);
+  gtk_widget_show (GTK_WIDGET (self));
+}
+
+static gboolean
+on_drag_failed_cb (GtkWidget      *widget,
+                   GdkDragContext *context,
+                   GtkDragResult   result,
+                   GtdTaskRow     *self)
+{
+  set_cursor (GTK_WIDGET (self), NULL);
+  gtk_widget_show (GTK_WIDGET (self));
+
+  return FALSE;
+}
+
+static void
+on_priority_changed_cb (GtdTaskRow *row,
+                        GParamSpec *spec,
+                        GObject    *object)
+{
+  GtkStyleContext *context;
+  gint priority;
+
+  context = gtk_widget_get_style_context (GTK_WIDGET (row));
+  priority = gtd_task_get_priority (GTD_TASK (object));
+
+  /* remove all styles */
+  gtk_style_context_remove_class (context, "priority-low");
+  gtk_style_context_remove_class (context, "priority-medium");
+  gtk_style_context_remove_class (context, "priority-hight");
+
+  switch (priority)
+    {
+    case 1:
+      gtk_style_context_add_class (context, "priority-low");
+      break;
+
+    case 2:
+      gtk_style_context_add_class (context, "priority-medium");
+      break;
+
+    case 3:
+      gtk_style_context_add_class (context, "priority-hight");
+      break;
+
+    default:
+      break;
+    }
+
+  /* redraw background according to the new applied style */
+  gtk_widget_queue_draw (GTK_WIDGET (row));
+}
+
+static void
+on_complete_changed_cb (GtdTaskRow *self,
+                        GParamSpec *pspec,
+                        GtdTask    *task)
+{
+  GtkStyleContext *context;
+
+  context = gtk_widget_get_style_context (GTK_WIDGET (self));
+
+  if (gtd_task_get_complete (task))
+    gtk_style_context_add_class (context, "complete");
+  else
+    gtk_style_context_remove_class (context, "complete");
+}
+
+static void
+on_toggle_complete_cb (GtkRevealer *revealer,
+                       GParamSpec  *pspec,
+                       GtdTaskRow  *self)
+{
+  g_signal_handlers_disconnect_by_func (revealer, on_toggle_complete_cb, self);
+
+  gtd_task_set_complete (self->task, !gtd_task_get_complete (self->task));
+}
+
+static void
+on_complete_check_toggled_cb (GtkToggleButton *button,
+                              GtdTaskRow      *self)
+{
+  GtdTaskListView *listview;
+
+  listview = GTD_TASK_LIST_VIEW (gtk_widget_get_ancestor (GTK_WIDGET (self), GTD_TYPE_TASK_LIST_VIEW));
+
+  /*
+   * If the parent list view is showing completed tasks, we
+   * don't have to hide the row. Simply toggle the 'complete'
+   * property of the task.
+   */
+  if (gtd_task_list_view_get_show_completed (listview))
+    {
+      gtd_task_set_complete (self->task, !gtd_task_get_complete (self->task));
+      return;
+    }
+
+  gtk_revealer_set_reveal_child (GTK_REVEALER (self->revealer),
+                                 !gtk_toggle_button_get_active (button));
+
+  g_signal_connect (self->revealer,
+                    "notify::child-revealed",
+                    G_CALLBACK (on_toggle_complete_cb),
+                    self);
+}
+
+static void
+on_depth_changed_cb (GtdTaskRow *self,
+                     GParamSpec *pspec,
+                     GtdTask    *task)
+{
+  gtk_widget_set_margin_start (GTK_WIDGET (self),
+                               self->handle_subtasks ? 32 * gtd_task_get_depth (task) + 3: 3);
+}
+
+static gboolean
+on_destroy_cb (GtkWidget *row)
 {
   gtk_widget_destroy (row);
 
@@ -442,19 +532,25 @@ on_update_title_timeout_cb (gpointer data)
 {
   GtdTaskRow *self = data;
 
+  GTD_ENTRY;
+
   gtd_manager_update_task (gtd_manager_get_default (), self->task);
   self->update_title_timeout_id = 0;
 
-  return G_SOURCE_REMOVE;
+  GTD_RETURN (G_SOURCE_REMOVE);
 }
 
 static void
 on_task_title_changed_cb (GtdTaskRow *self)
 {
+  GTD_ENTRY;
+
   if (self->update_title_timeout_id > 0)
     g_source_remove (self->update_title_timeout_id);
 
   self->update_title_timeout_id = g_timeout_add_seconds (2, on_update_title_timeout_cb, self);
+
+  GTD_EXIT;
 }
 
 
@@ -511,10 +607,9 @@ gtd_task_row_dispose (GObject *object)
 
   if (task)
     {
-      g_signal_handlers_disconnect_by_func (task, depth_changed_cb, self);
-      g_signal_handlers_disconnect_by_func (task, complete_changed_cb, self);
-
-      g_signal_handlers_disconnect_by_func (task, priority_changed_cb, self);
+      g_signal_handlers_disconnect_by_func (task, on_depth_changed_cb, self);
+      g_signal_handlers_disconnect_by_func (task, on_complete_changed_cb, self);
+      g_signal_handlers_disconnect_by_func (task, on_priority_changed_cb, self);
     }
 
   G_OBJECT_CLASS (gtd_task_row_parent_class)->dispose (object);
@@ -608,7 +703,7 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
                                "Task of the row",
                                "The task that this row represents",
                                GTD_TYPE_TASK,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
 
   /**
    * GtdTaskRow::enter:
@@ -670,18 +765,18 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, title_entry);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, toggle_button);
 
-  gtk_widget_class_bind_template_callback (widget_class, button_press_event);
-  gtk_widget_class_bind_template_callback (widget_class, complete_check_toggled_cb);
-  gtk_widget_class_bind_template_callback (widget_class, drag_begin_cb);
-  gtk_widget_class_bind_template_callback (widget_class, drag_end_cb);
-  gtk_widget_class_bind_template_callback (widget_class, drag_failed_cb);
-  gtk_widget_class_bind_template_callback (widget_class, mouse_out_event_cb);
-  gtk_widget_class_bind_template_callback (widget_class, mouse_out_dnd_event_cb);
-  gtk_widget_class_bind_template_callback (widget_class, mouse_over_event_cb);
-  gtk_widget_class_bind_template_callback (widget_class, mouse_over_dnd_event_cb);
-  gtk_widget_class_bind_template_callback (widget_class, remove_task_cb);
-  gtk_widget_class_bind_template_callback (widget_class, toggle_active_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_button_press_event_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_complete_check_toggled_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_drag_begin_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_drag_end_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_drag_failed_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_mouse_out_event_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_mouse_out_dnd_event_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_mouse_over_event_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_mouse_over_dnd_event_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_remove_task_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_task_title_changed_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_toggle_active_cb);
 
   gtk_widget_class_set_css_name (widget_class, "taskrow");
 }
@@ -732,81 +827,6 @@ gtd_task_row_get_task (GtdTaskRow *row)
   g_return_val_if_fail (GTD_IS_TASK_ROW (row), NULL);
 
   return row->task;
-}
-
-/**
- * gtd_task_row_set_task:
- * @row: a #GtdTaskRow
- * @task: a #GtdTask
- *
- * Sets the internal #GtdTask of @row. The task must be set to %NULL
- * before setting GtdObject::new-task-mode to %TRUE.
- */
-void
-gtd_task_row_set_task (GtdTaskRow *row,
-                       GtdTask    *task)
-{
-  g_return_if_fail (GTD_IS_TASK_ROW (row));
-
-  if (!g_set_object (&row->task, task))
-    return;
-
-  if (task)
-    {
-      gtk_label_set_label (row->task_list_label, gtd_task_list_get_name (gtd_task_get_list (task)));
-
-      g_signal_handlers_block_by_func (row->done_check, complete_check_toggled_cb, row);
-
-      g_object_bind_property (task,
-                              "title",
-                              row->title_entry,
-                              "text",
-                              G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
-
-      g_object_bind_property (task,
-                              "complete",
-                              row->done_check,
-                              "active",
-                              G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
-
-      g_object_bind_property_full (task,
-                                   "due-date",
-                                   row->task_date_label,
-                                   "label",
-                                   G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE,
-                                   gtd_task_row__date_changed_binding,
-                                   NULL,
-                                   row,
-                                   NULL);
-
-      /*
-       * Here we generate a false callback call just to reuse the method to
-       * sync the initial state of the priority icon.
-       */
-      priority_changed_cb (row, NULL, G_OBJECT (task));
-      g_signal_connect_swapped (task,
-                                "notify::priority",
-                                G_CALLBACK (priority_changed_cb),
-                                row);
-
-      complete_changed_cb (row, NULL, task);
-      g_signal_connect_swapped (task,
-                                "notify::complete",
-                                G_CALLBACK (complete_changed_cb),
-                                row);
-
-      depth_changed_cb (row, NULL, task);
-      g_signal_connect_swapped (task,
-                                "notify::depth",
-                                G_CALLBACK (depth_changed_cb),
-                                row);
-
-      g_signal_handlers_unblock_by_func (row->done_check, complete_check_toggled_cb, row);
-
-      gtd_edit_pane_set_task (GTD_EDIT_PANE (row->edit_panel), task);
-    }
-
-  g_object_notify (G_OBJECT (row), "task");
 }
 
 /**
@@ -878,7 +898,7 @@ gtd_task_row_destroy (GtdTaskRow *self)
 
       gtk_revealer_set_reveal_child (self->revealer, FALSE);
       self->destroy_row_timeout_id = g_timeout_add (duration,
-                                                    (GSourceFunc) gtd_task_row__destroy_cb,
+                                                    (GSourceFunc) on_destroy_cb,
                                                     self);
     }
 }
@@ -904,7 +924,7 @@ gtd_task_row_set_handle_subtasks (GtdTaskRow *self,
 
   gtk_widget_set_visible (self->dnd_box, handle_subtasks);
   gtk_widget_set_visible (self->dnd_event_box, handle_subtasks);
-  depth_changed_cb (self, NULL, self->task);
+  on_depth_changed_cb (self, NULL, self->task);
 
   if (handle_subtasks)
     {
