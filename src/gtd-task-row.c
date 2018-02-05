@@ -62,10 +62,12 @@ struct _GtdTaskRow
   GtdTask            *task;
 
   gint                destroy_row_timeout_id;
+  gint                update_title_timeout_id;
   gboolean            active;
 };
 
 #define PRIORITY_ICON_SIZE 8
+
 
 G_DEFINE_TYPE (GtdTaskRow, gtd_task_row, GTK_TYPE_LIST_BOX_ROW)
 
@@ -86,6 +88,7 @@ enum
 };
 
 static guint signals[NUM_SIGNALS] = { 0, };
+
 
 /*
  * Auxiliary methods
@@ -434,6 +437,26 @@ gtd_task_row__destroy_cb (GtkWidget *row)
   return G_SOURCE_REMOVE;
 }
 
+static gboolean
+on_update_title_timeout_cb (gpointer data)
+{
+  GtdTaskRow *self = data;
+
+  gtd_manager_update_task (gtd_manager_get_default (), self->task);
+  self->update_title_timeout_id = 0;
+
+  return G_SOURCE_REMOVE;
+}
+
+static void
+on_task_title_changed_cb (GtdTaskRow *self)
+{
+  if (self->update_title_timeout_id > 0)
+    g_source_remove (self->update_title_timeout_id);
+
+  self->update_title_timeout_id = g_timeout_add_seconds (2, on_update_title_timeout_cb, self);
+}
+
 
 /*
  * GtkWidget overrides
@@ -464,6 +487,13 @@ static void
 gtd_task_row_finalize (GObject *object)
 {
   GtdTaskRow *self = GTD_TASK_ROW (object);
+
+  if (self->update_title_timeout_id > 0)
+    {
+      if (self->task)
+        gtd_manager_update_task (gtd_manager_get_default (), self->task);
+      self->update_title_timeout_id = 0;
+    }
 
   g_clear_object (&self->task);
 
@@ -651,6 +681,7 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, mouse_over_dnd_event_cb);
   gtk_widget_class_bind_template_callback (widget_class, remove_task_cb);
   gtk_widget_class_bind_template_callback (widget_class, toggle_active_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_task_title_changed_cb);
 
   gtk_widget_class_set_css_name (widget_class, "taskrow");
 }

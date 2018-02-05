@@ -98,6 +98,8 @@
                             <property name="halign">start</property>
                             <property name="width-chars">5</property>
                             <property name="propagate-natural-width">True</property>
+                            <signal name="activate" handler="on_task_title_changed_cb" object="GtdTaskRow" swapped="yes" />
+                            <signal name="notify::text" handler="on_task_title_changed_cb" object="GtdTaskRow" swapped="yes" />
                             <style>
                               <class name="title" />
                             </style>
