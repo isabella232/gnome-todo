@@ -20,6 +20,8 @@
 
 #include "gtd-utils.h"
 
+#include <string.h>
+
 gchar*
 gtd_str_replace (const gchar *source,
                  const gchar *search,
