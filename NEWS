@@ -1,3 +1,32 @@
+===============
+Version 3.27.90
+===============
+
+Project:
+	* Add a 'org-gnome-Todo' style class (Alexis Diavatis)
+	* Remove reduntant 'New List' menu entry from appmenu (Shashwat)
+	* Fix untranslated Python plugins
+	* Add proper logging capabilities
+	* Flatpak master now shows trace messages
+	* Fix an important performance issue on startup
+	* Save edited tasks more aggressively
+	* Minor UI polishing
+	* Many translation updates
+
+Todoist:
+	* Major rework of the Todoist data provider
+	* Errors are identified and treated more accurately now
+	* Tasks are now properly sorted
+	* Subtasks are correctly identified
+
+EDS:
+	* Major rework of the codebase
+	* Correctly detect completed tasks (fixes Google Tasks integration)
+
+Todo.txt:
+	* Initial rework of the Todo.txt data provider
+	* Temporary loss of subtasks
+
 ==============
 Version 3.27.2
 ==============

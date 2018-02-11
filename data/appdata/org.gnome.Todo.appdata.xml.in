@@ -51,6 +51,31 @@
   </kudos>
 
   <releases>
+    <release date="2018-02-11" version="3.27.90">
+      <description>
+        <p>
+          We're proud to annouce GNOME To Do 3.27.90, the alpha release of the
+          next stable release that is going to be released this semester.
+        </p>
+        <p>
+          The highlights of this release are:
+          <ul>
+            <li>The Todoist integration was much polished and improved, and should work more reliably now.</li>
+            <li>A big performance issue on startup was fixed. GNOME To Do should start much faster for users with many tasks.</li>
+            <li>Nightly Flatpaks have debugging and tracing enabled, allowing early testers to accurately report issues in To Do.</li>
+            <li>Google Tasks integration was fixed, and completed tasks now are correctly detected.</li>
+            <li>Many small polishes in the user interface.</li>
+          </ul>
+        </p>
+        <p>
+          One major drawback of this release is that the Todo.txt integration plugin
+          lost the ability to handle subtasks. If you rely on that feature, please
+          refrain from using this version of GNOME To Do.
+        </p>
+        <p>This release also updates translations, and adds new translations.</p>
+      </description>
+    </release>
+
     <release date="2017-11-16" version="3.27.2">
       <description>
         <p>
