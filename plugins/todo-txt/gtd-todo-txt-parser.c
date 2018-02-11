@@ -166,11 +166,9 @@ gtd_todo_txt_parser_parse_task (GtdProvider  *provider,
   GString *parent_task_name;
   Token last_token;
   Token token_id;
-  gboolean is_subtask;
   guint i;
 
   dt = NULL;
-  is_subtask = FALSE;
   title = g_string_new (NULL);
   list_name = g_string_new (NULL);
   parent_task_name = g_string_new (NULL);

@@ -83,7 +83,6 @@ print_task (GString *output,
 {
   GtdTaskList *list;
   GDateTime *dt;
-  GtdTask *parent;
   const gchar *list_name;
   const gchar *title;
   gint priority;
@@ -94,7 +93,6 @@ print_task (GString *output,
   priority = gtd_task_get_priority (task);
   dt = gtd_task_get_due_date (task);
   list = gtd_task_get_list (task);
-  parent = gtd_task_get_parent (task);
 
   list_name = gtd_task_list_get_name (list);
 
