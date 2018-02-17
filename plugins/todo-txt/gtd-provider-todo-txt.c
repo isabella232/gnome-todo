@@ -158,7 +158,7 @@ update_source (GtdProviderTodoTxt *self)
       color_str = gdk_rgba_to_string (color);
 
       g_string_append_printf (contents,
-                              "@%s color:%s\n",
+                              "h:1 @%s color:%s\n",
                               gtd_task_list_get_name (list),
                               color_str);
     }
