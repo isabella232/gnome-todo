@@ -361,8 +361,6 @@ parse_tasks (GtdProviderTodoist *self,
       gtd_task_set_priority (task, priority);
       gtd_task_set_complete (task, complete != 0);
 
-      GTD_TRACE_MSG ("  '%s' → %d", title, gtd_task_get_complete (task));
-
       /* Due date */
       if (due_date)
         gtd_task_set_due_date (task, parse_due_date (due_date));
