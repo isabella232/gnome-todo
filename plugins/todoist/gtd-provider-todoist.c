@@ -358,7 +358,7 @@ parse_tasks (GtdProviderTodoist *self,
       task = gtd_task_new ();
       gtd_object_set_uid (GTD_OBJECT (task), uid);
       gtd_task_set_title (task, title);
-      gtd_task_set_priority (task, priority);
+      gtd_task_set_priority (task, priority - 1);
       gtd_task_set_complete (task, complete != 0);
 
       /* Due date */
@@ -984,7 +984,7 @@ gtd_provider_todoist_update_task (GtdProvider   *provider,
                              command_uid,
                              gtd_object_get_uid (GTD_OBJECT (task)),
                              escaped_title,
-                             gtd_task_get_priority (task),
+                             gtd_task_get_priority (task) + 1,
                              parent ? gtd_object_get_uid (GTD_OBJECT (parent)) : "null",
                              gtd_task_get_depth (task) + 1,
                              gtd_task_get_complete (task),
