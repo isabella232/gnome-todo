@@ -6,22 +6,21 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"todo&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2017-07-14 02:26+0000\n"
-"PO-Revision-Date: 2017-07-27 16:59+0500\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
+"POT-Creation-Date: 2018-02-20 22:47+0000\n"
+"PO-Revision-Date: 2018-02-24 19:18+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
 "Language: kk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Poedit 2.0.3\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:152
-#: src/gtd-application.c:178 src/gtd-window.c:950 src/gtd-window.c:985
+#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
+#: src/gtd-window.c:954 src/gtd-window.c:989 src/main.c:35
 msgid "To Do"
 msgstr "To Do"
 
@@ -62,19 +61,15 @@ msgstr "GNOME To Do үшін қолжетерлік плагиндер"
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr "GNOME To Do-ның бүгінгі күн панелімен бүгінгі тапсырмаларды көрсету"
 
-#: data/gtk/menus.ui:7
-msgid "New List…"
-msgstr "Жаңа тізім…"
-
-#: data/gtk/menus.ui:20 data/ui/plugin-dialog.ui:75
+#: data/gtk/menus.ui:15 data/ui/plugin-dialog.ui:75
 msgid "Extensions"
 msgstr "Кеңейтулер"
 
-#: data/gtk/menus.ui:27
+#: data/gtk/menus.ui:22
 msgid "_About"
 msgstr "Осы тур_алы"
 
-#: data/gtk/menus.ui:31
+#: data/gtk/menus.ui:26
 msgid "_Quit"
 msgstr "_Шығу"
 
@@ -152,59 +147,51 @@ msgstr "Ағымдағы тізім таңдаушысы"
 msgid "The current list selector. Can be “grid” or “list”."
 msgstr "Ағымдағы тізім таңдаушысы. \"grid\" немесе \"list\" болуы мүмкін."
 
-#: data/ui/edit-pane.ui:24 plugins/eds/edit-pane.ui:259
-msgctxt "taskdate"
-msgid "None"
-msgstr "Ешнәрсе"
-
-#: data/ui/edit-pane.ui:94 plugins/eds/edit-pane.ui:43 src/gtd-window.c:546
-msgid "Details"
-msgstr "Ақпараты"
-
-#: data/ui/edit-pane.ui:125
+#: data/ui/edit-pane.ui:43
 msgid "_Notes"
 msgstr "Есте_ліктер"
 
-#: data/ui/edit-pane.ui:168
+#: data/ui/edit-pane.ui:92
 msgid "D_ue Date"
 msgstr "М_ақсат күні"
 
-#: data/ui/edit-pane.ui:188
+#: data/ui/edit-pane.ui:110
+msgid "_Today"
+msgstr "_Бүгін"
+
+#: data/ui/edit-pane.ui:120
+msgid "To_morrow"
+msgstr "_Ертең"
+
+#: data/ui/edit-pane.ui:168
 msgid "_Priority"
 msgstr "_Приоритеті"
 
-#: data/ui/edit-pane.ui:208 plugins/eds/edit-pane.ui:195
+#: data/ui/edit-pane.ui:185
 msgctxt "taskpriority"
 msgid "None"
 msgstr "Ешнәрсе"
 
-#: data/ui/edit-pane.ui:209 plugins/eds/edit-pane.ui:196
+#: data/ui/edit-pane.ui:186
 msgid "Low"
 msgstr "Төмен"
 
-#: data/ui/edit-pane.ui:210 plugins/eds/edit-pane.ui:197
+#: data/ui/edit-pane.ui:187
 msgid "Medium"
 msgstr "Орташа"
 
-#: data/ui/edit-pane.ui:211 plugins/eds/edit-pane.ui:198
+#: data/ui/edit-pane.ui:188
 msgid "High"
 msgstr "Жоғары"
 
-#: data/ui/edit-pane.ui:222 data/ui/list-selector-panel.ui:93
+#: data/ui/edit-pane.ui:196 data/ui/list-selector-panel.ui:93
 msgid "_Delete"
 msgstr "Ө_шіру"
 
-#: data/ui/edit-pane.ui:246
-msgid "_Today"
-msgstr "_Бүгін"
-
-#: data/ui/edit-pane.ui:257
-msgid "To_morrow"
-msgstr "_Ертең"
-
-#: data/ui/edit-pane.ui:268
-msgid "Next _Week"
-msgstr "Келесі _апта"
+#: data/ui/edit-pane.ui:242
+msgctxt "taskdate"
+msgid "None"
+msgstr "Ешнәрсе"
 
 #: data/ui/initial-setup.ui:25
 msgid "Welcome"
@@ -214,8 +201,12 @@ msgstr "Қош келдіңіз"
 msgid "Log in to online accounts to access your tasks"
 msgstr "Тапсырмаларыңызға қатынау үшін желілік тіркелгілерге кіріңіз"
 
+#: data/ui/initial-setup.ui:67
+msgid "To Do Setup"
+msgstr "To Do баптауы"
+
 #: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
-#: data/ui/window.ui:71
+#: data/ui/window.ui:74
 msgid "_Cancel"
 msgstr "Ба_с тарту"
 
@@ -227,7 +218,7 @@ msgstr "_Дайын"
 msgid "_Rename"
 msgstr "Атын ауысты_ру"
 
-#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:470
+#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:473
 msgid "Lists"
 msgstr "Тізімдер"
 
@@ -243,16 +234,16 @@ msgstr "Тапсырмалар тізімінің атауы"
 msgid "_New List"
 msgstr "_Жаңа тізім"
 
-#: data/ui/list-view.ui:111
+#: data/ui/list-view.ui:113
 msgid "Show or hide completed tasks"
 msgstr "Аяқталған тапсырмаларды көрсету не жасыру"
 
-#: data/ui/list-view.ui:137 src/gtd-task-list-view.c:784
-#: src/gtd-task-list-view.c:789
+#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:756
+#: src/gtd-task-list-view.c:761
 msgid "Done"
 msgstr "Дайын"
 
-#: data/ui/new-task-row.ui:39
+#: data/ui/new-task-row.ui:29
 msgid "New task…"
 msgstr "Жаңа тапсырма…"
 
@@ -304,13 +295,13 @@ msgstr "Microsoft Exchange"
 msgid "Or you can just store your tasks on this computer"
 msgstr "Немесе, тапсырмаларды компьютеріңізде сақтай аласыз"
 
-#: plugins/background/gtd-plugin-background.c:148
+#: plugins/background/gtd-plugin-background.c:150
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
 msgstr[0] "%1$s және %2$d басқа тапсырма"
 
-#: plugins/background/gtd-plugin-background.c:247
+#: plugins/background/gtd-plugin-background.c:249
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
@@ -348,144 +339,70 @@ msgstr "Хабарламаларды көрсету"
 msgid "When To Do runs, show a startup notification"
 msgstr "To Do жөнелтілген кезде, іске қосылу хабарламасын көрсету"
 
-#: plugins/eds/edit-pane.ui:76
-msgid "Notes"
-msgstr "Естеліктер"
-
-#: plugins/eds/edit-pane.ui:117
-msgid "Due Date"
-msgstr "Мақсат күні"
-
-#: plugins/eds/edit-pane.ui:177
-msgid "Priority"
-msgstr "Приоритеті"
-
-#: plugins/eds/edit-pane.ui:209
-msgid "Delete"
-msgstr "Өшіру"
-
-#: plugins/eds/gtd-plugin-eds.c:243 plugins/eds/gtd-plugin-eds.c:247
+#: plugins/eds/gtd-plugin-eds.c:201
 msgid "Error loading GNOME Online Accounts"
 msgstr "Gnome желілік тіркелгілерін жүктеу қатесі"
 
-#: plugins/eds/gtd-plugin-eds.c:274
-msgid "Error loading Evolution-Data-Server backend"
-msgstr "Evolution-Data-Server бэкендін жүктеу сәтсіз аяқталды"
-
-#: plugins/eds/gtd-provider-eds.c:136 plugins/eds/gtd-provider-eds.c:140
+#: plugins/eds/gtd-provider-eds.c:153
 msgid "Error fetching tasks from list"
 msgstr "Тізімнен тапсырмаларды алу қатесі"
 
-#: plugins/eds/gtd-provider-eds.c:174 plugins/eds/gtd-provider-eds.c:179
+#: plugins/eds/gtd-provider-eds.c:201
 msgid "Failed to connect to task list"
 msgstr "Тапсырмалар тізіміне байланысты орнату сәтсіз"
 
-#: plugins/eds/gtd-provider-eds.c:227
-msgid "Task list source successfully connected"
-msgstr "Тапсырмалар тізімінің қайнар көзіне байланыс сәтті орнатылды"
-
-#: plugins/eds/gtd-provider-eds.c:336
-msgid "Failed to prompt for credentials"
-msgstr "Тіркелу мәліметтерін сұрау қатесі"
-
-#: plugins/eds/gtd-provider-eds.c:359
-msgid "Failed to prompt for credentials for"
-msgstr "Келесі үшін тіркелу мәліметтерін сұрау қатесі:"
-
-#: plugins/eds/gtd-provider-eds.c:413
-msgid "Authentication failure"
-msgstr "Аутентификация қатесі"
-
-#: plugins/eds/gtd-provider-eds.c:487
-msgid "Error loading task manager"
-msgstr "Тапсырмалар басқарушысын жүктеу қатесі"
-
-#: plugins/eds/gtd-provider-eds.c:573 plugins/eds/gtd-provider-eds.c:581
-msgid "Error creating task"
-msgstr "Тапсырманы жасау қатесі"
-
-#: plugins/eds/gtd-provider-eds.c:623 plugins/eds/gtd-provider-eds.c:627
-msgid "Error updating task"
-msgstr "Тапсырманы жаңарту қатесі"
-
-#: plugins/eds/gtd-provider-eds.c:661 plugins/eds/gtd-provider-eds.c:665
-msgid "Error removing task"
-msgstr "Тапсырманы өшіру қатесі"
-
-#: plugins/eds/gtd-provider-eds.c:691 plugins/eds/gtd-provider-eds.c:695
-msgid "Error creating task list"
-msgstr "Тапсырмалар тізімін жасау қатесі"
-
-#: plugins/eds/gtd-provider-eds.c:716 plugins/eds/gtd-provider-eds.c:720
-msgid "Error removing task list"
-msgstr "Тапсырмалар тізімін өшіру қатесі"
-
-#: plugins/eds/gtd-provider-eds.c:779 plugins/eds/gtd-provider-eds.c:783
-#: plugins/eds/gtd-task-list-eds.c:69
-msgid "Error saving task list"
-msgstr "Тапсырмалар тізімін сақтау қатесі"
-
-#: plugins/eds/gtd-provider-local.c:61
+#: plugins/eds/gtd-provider-local.c:50
 msgid "Local"
 msgstr "Жергілікті"
 
-#: plugins/eds/gtd-provider-local.c:67
+#: plugins/eds/gtd-provider-local.c:56
 msgid "On This Computer"
 msgstr "Бұл компьютерде"
 
-#: plugins/eds/gtd-provider-local.c:134 plugins/eds/gtd-provider-local.c:138
+#: plugins/eds/gtd-provider-local.c:95
 msgid "Error creating new task list"
 msgstr "Жаңа тапсырмалар тізімін жасау кезінде қате кетті"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:93 src/gtd-edit-pane.c:217
-#: src/gtd-task-row.c:374
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:161
 msgid "No date set"
 msgstr "Күні орнатылмаған"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:101 src/gtd-task-row.c:352
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-task-row.c:148
 #, c-format
 msgid "Yesterday"
 msgid_plural "%d days ago"
 msgstr[0] "%d күн бұрын"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:105
-#: plugins/score/score/__init__.py:95 plugins/today-panel/gtd-panel-today.c:132
-#: plugins/today-panel/gtd-panel-today.c:137
-#: plugins/today-panel/gtd-panel-today.c:271 src/gtd-task-row.c:344
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:101
+#: plugins/score/score/__init__.py:101
+#: plugins/today-panel/gtd-panel-today.c:134
+#: plugins/today-panel/gtd-panel-today.c:139
+#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:140
 msgid "Today"
 msgstr "Бүгін"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:109 src/gtd-task-row.c:348
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:105 src/gtd-task-row.c:144
 msgid "Tomorrow"
 msgstr "Ертең"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:365
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:370
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:507
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:356
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:361
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:498
 msgid "Scheduled"
 msgstr "Жоспарланған"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:512
-#: plugins/today-panel/gtd-panel-today.c:276
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:52
-#: src/views/gtd-list-selector-panel.c:716
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:503
+#: plugins/today-panel/gtd-panel-today.c:278
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
+#: src/views/gtd-list-selector-panel.c:714
 msgid "Clear completed tasks…"
 msgstr "Аяқталған тапсырмаларды тазарту…"
 
-#: plugins/score/score/__init__.py:84
+#: plugins/score/score/__init__.py:90
 msgid "No task completed today"
 msgstr "Бүгін аяқталған тапсырмалар жоқ"
-
-#: plugins/todoist/gtd-provider-todoist.c:103
-msgid "Todoist"
-msgstr "Todoist"
-
-#: plugins/todoist/gtd-provider-todoist.c:183
-#: plugins/todoist/gtd-provider-todoist.c:415
-msgid "Error loading Todoist tasks"
-msgstr "Todoist тапсырмаларын жүктеу қатесі"
 
 #: plugins/todoist/gtd-provider-todoist.c:198
 msgid "Error fetching Todoist account key"
@@ -495,12 +412,11 @@ msgstr "Todoist тіркелгісінің кілтін алу қатесу"
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Todoist тіркелгісінің дұрыс бапталғанын тексеріңіз."
 
-#: plugins/todoist/gtd-provider-todoist.c:412
-#, c-format
-msgid "Bad status code (%d) received. Please check your connection."
-msgstr "Жарамсыз қалып-күй коды алынды (%d). Байланысыңызды тексеріңіз."
+#: plugins/todoist/gtd-provider-todoist.c:856
+msgid "Todoist"
+msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:768
+#: plugins/todoist/gtd-provider-todoist.c:1161
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -513,73 +429,30 @@ msgstr "Todoist тіркелгілері табылмады"
 msgid "Add a Todoist account"
 msgstr "Todoist тіркелгісін қосу"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:142
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:183
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:84
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:121
 msgid "Cannot create Todo.txt file"
 msgstr "Todo.txt файлын жасау мүмкін емес"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:307
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:312
 msgid "Select a Todo.txt-formatted file:"
 msgstr "Todo.txt-пішімделген файлын таңдаңыз:"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:308
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:313
 msgid "Select a file"
 msgstr "Файлды таңдау"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:75
-msgid "Todo.txt"
-msgstr "Todo.txt"
-
-#: plugins/todo-txt/gtd-provider-todo-txt.c:81
-msgid "On the Todo.txt file"
-msgstr "Todo.txt файлы"
-
-#: plugins/todo-txt/gtd-provider-todo-txt.c:112
-#: plugins/todo-txt/gtd-provider-todo-txt.c:116
-msgid "Error while opening Todo.txt"
-msgstr "Todo.txt файлын ашу қатесі"
-
-#: plugins/todo-txt/gtd-provider-todo-txt.c:263
-#: plugins/todo-txt/gtd-provider-todo-txt.c:267
-msgid "Error while reading a line from Todo.txt"
-msgstr "Todo.txt файлынан жолды оқу қатесі"
-
-#: plugins/todo-txt/gtd-provider-todo-txt.c:384
+#: plugins/todo-txt/gtd-provider-todo-txt.c:319
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr "Файлдық бақылаушыны ашу қатесі. Todo.txt файлы бақыланбайтын болады"
 
-#: plugins/todo-txt/gtd-todo-txt-parser.c:309
-msgid "Incorrect date"
-msgstr "Қате күн"
+#: plugins/todo-txt/gtd-provider-todo-txt.c:388
+msgid "Todo.txt"
+msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-todo-txt-parser.c:310
-msgid "Please make sure the date in Todo.txt is valid."
-msgstr "Todo.txt файлындағы күннің дұрыстығын тексеріңіз."
-
-#: plugins/todo-txt/gtd-todo-txt-parser.c:341
-msgid "Unrecognized token in a Todo.txt line"
-msgstr "Todo.txt файлындағы белгісіз токен"
-
-#: plugins/todo-txt/gtd-todo-txt-parser.c:342
-msgid ""
-"To Do cannot recognize some tags in your Todo.txt file. Some tasks may not "
-"be loaded"
-msgstr ""
-"To Do сіздің Todo.txt файлындағы кейбір тегтерді тани алмады. Кейбір "
-"тапсырмалар жүктелмеуі мүмкін"
-
-#: plugins/todo-txt/gtd-todo-txt-parser.c:353
-msgid "No task list found for some tasks"
-msgstr "Кейбір тапсырмалар үшін тапсырма тізімі табылмады"
-
-#: plugins/todo-txt/gtd-todo-txt-parser.c:354
-msgid ""
-"Some of the tasks in your Todo.txt file do not have a task list. To Do "
-"supports tasks with a task list. Please add a list to all your tasks"
-msgstr ""
-"Сіздің Todo.txt файлындағы кейбір тапсырмаларда тапсырма тізімі жоқ. To Do "
-"тапсырма тізімі бар тапсырмаларды қолдайды. Тапсырмаларыңыздың барлығына "
-"тізімді қосыңыз"
+#: plugins/todo-txt/gtd-provider-todo-txt.c:394
+msgid "On the Todo.txt file"
+msgstr "Todo.txt файлы"
 
 #: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:6
 msgid "Todo.txt File"
@@ -590,137 +463,243 @@ msgid "Source of the Todo.txt file"
 msgstr "Todo.txt файлының бастапқы коды"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:34
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:96
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:40
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:102
 msgid "Unscheduled"
 msgstr "Жоспарланбаған"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:99
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:105
 #, python-format
 msgid "Unscheduled (%d)"
 msgstr "Жоспарланбаған (%d)"
 
-#: src/gtd-application.c:142
-#, c-format
-msgid "Copyright © %d The To Do authors"
-msgstr "Copyright © %d To Do авторлары"
+#: src/gtd-application.c:72
+msgid "Quit GNOME To Do"
+msgstr "GNOME To Do жұмысын аяқтау"
 
-#: src/gtd-application.c:147
-#, c-format
-msgid "Copyright © %d–%d The To Do authors"
-msgstr "Copyright © %d–%d To Do авторлары"
+#: src/gtd-application.c:73
+msgid "Enable debug messages"
+msgstr "Жөндеу хабарламаларын іске қосу"
 
-#: src/gtd-application.c:159
+#: src/gtd-application.c:146
+#, c-format
+#| msgid "Copyright © %d The To Do authors"
+msgid "Copyright © %1$d The To Do authors"
+msgstr "Copyright © %1$d To Do авторлары"
+
+#: src/gtd-application.c:151
+#, c-format
+#| msgid "Copyright © %d–%d The To Do authors"
+msgid "Copyright © %1$d–%2$d The To Do authors"
+msgstr "Copyright © %1$d–%2$d To Do авторлары"
+
+#: src/gtd-application.c:163
 msgid "translator-credits"
 msgstr "Baurzhan Muftakhidinov <baurthefirst@gmail.com>"
 
-#: src/gtd-empty-list-widget.c:49
+#: src/gtd-empty-list-widget.c:51
 msgid "No more tasks left"
 msgstr "Тапсырмалар қалмады"
 
-#: src/gtd-empty-list-widget.c:50
+#: src/gtd-empty-list-widget.c:52
 msgid "Nothing else to do here"
 msgstr "Осында жасайтын ешнәрсе жоқ"
 
-#: src/gtd-empty-list-widget.c:51
+#: src/gtd-empty-list-widget.c:53
 msgid "You made it!"
 msgstr "Тамаша!"
 
-#: src/gtd-empty-list-widget.c:52
+#: src/gtd-empty-list-widget.c:54
 msgid "Looks like there’s nothing else left here"
 msgstr "Осында жасайтын ешнәрсе қалмаған сияқты"
 
-#: src/gtd-empty-list-widget.c:57
+#: src/gtd-empty-list-widget.c:59
 msgid "Get some rest now"
 msgstr "Кішкене демалуыңызға болады"
 
-#: src/gtd-empty-list-widget.c:58
+#: src/gtd-empty-list-widget.c:60
 msgid "Enjoy the rest of your day"
 msgstr "Күннің қалған уақытынан рахат алыңыз"
 
-#: src/gtd-empty-list-widget.c:59
+#: src/gtd-empty-list-widget.c:61
 msgid "Good job!"
 msgstr "Тамаша!"
 
-#: src/gtd-empty-list-widget.c:60
+#: src/gtd-empty-list-widget.c:62
 msgid "Meanwhile, spread the love"
 msgstr "Бос уақытта достарыңызды ұмытпаңыз"
 
-#: src/gtd-empty-list-widget.c:61
+#: src/gtd-empty-list-widget.c:63
 msgid "Working hard is always rewarded"
 msgstr "Еңбек етсең ерінбей, тояды қарның тіленбей"
 
-#: src/gtd-empty-list-widget.c:72
+#: src/gtd-empty-list-widget.c:74
 msgid "No tasks found"
 msgstr "Тапсырмалар табылмады"
 
-#: src/gtd-empty-list-widget.c:73
+#: src/gtd-empty-list-widget.c:75
 msgid "You can add tasks using the <b>+</b> above"
 msgstr "Тапсырмаларды жоғарыдағы <b>+</b> арқылы қоса аласыз"
 
-#: src/gtd-plugin-dialog-row.c:95
+#: src/gtd-plugin-dialog-row.c:97
 msgid "Error loading plugin"
 msgstr "Плагинді жүктеу қатесі"
 
-#: src/gtd-plugin-dialog-row.c:95
+#: src/gtd-plugin-dialog-row.c:97
 msgid "Error unloading plugin"
 msgstr "Плагинді босату қатесі"
 
-#: src/gtd-task-list-view.c:612
+#: src/gtd-task-list-view.c:616
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Бұл тапсырманы өшіру оның ішкі тапсырмаларын да өшіреді. Сонда да өшіру "
 "керек пе?"
 
-#: src/gtd-task-list-view.c:615
+#: src/gtd-task-list-view.c:619
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Өшірілсе, тапсырмаларды қайтару мүмкін емес болады."
 
-#: src/gtd-task-list-view.c:618 src/views/gtd-list-selector-panel.c:391
+#: src/gtd-task-list-view.c:622 src/views/gtd-list-selector-panel.c:394
 msgid "Cancel"
 msgstr "Бас тарту"
 
-#: src/gtd-task-list-view.c:620
+#: src/gtd-task-list-view.c:624
 msgid "Remove"
 msgstr "Өшіру"
 
-#: src/gtd-task-list-view.c:669
+#: src/gtd-task-list-view.c:672
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "<b>%s</b> тапсырмасы өшірілген"
 
-#: src/gtd-task-list-view.c:699
+#: src/gtd-task-list-view.c:696
 msgid "Undo"
 msgstr "Болдырмау"
 
-#: src/gtd-window.c:818
+#: src/gtd-window.c:548
+msgid "Details"
+msgstr "Ақпараты"
+
+#: src/gtd-window.c:822
 msgid "Loading your task lists…"
 msgstr "Тапсырмалар тізімдерінізді жүктеу…"
 
-#: src/gtd-window.c:944
+#: src/gtd-window.c:948
 msgid "Click a task list to select"
 msgstr "Таңдау үшін тапсырмалар тізімінің үстіне шертіңіз"
 
-#: src/views/gtd-list-selector-grid-item.c:234
+#: src/views/gtd-list-selector-grid-item.c:252
 msgid "No tasks"
 msgstr "Тапсырмалар жоқ"
 
-#: src/views/gtd-list-selector-panel.c:185
-msgid "Setting new color for task list"
-msgstr "Тапсырмалар тізімін үшін жаңа түсті орнату"
-
-#: src/views/gtd-list-selector-panel.c:384
+#: src/views/gtd-list-selector-panel.c:387
 msgid "Remove the selected task lists?"
 msgstr "Таңдалған тапсырмалар тізімдерін өшіру керек пе?"
 
-#: src/views/gtd-list-selector-panel.c:387
+#: src/views/gtd-list-selector-panel.c:390
 msgid "Once removed, the task lists cannot be recovered."
 msgstr "Өшірілсе, тапсырмалар тізімін қалпына келтіру мүмкін емес болады."
 
-#: src/views/gtd-list-selector-panel.c:399
+#: src/views/gtd-list-selector-panel.c:402
 msgid "Remove task lists"
 msgstr "Тапсырмалар тізімдерін өшіру"
+
+#~ msgid "New List…"
+#~ msgstr "Жаңа тізім…"
+
+#~ msgid "Next _Week"
+#~ msgstr "Келесі _апта"
+
+#~ msgid "Notes"
+#~ msgstr "Естеліктер"
+
+#~ msgid "Due Date"
+#~ msgstr "Мақсат күні"
+
+#~ msgid "Priority"
+#~ msgstr "Приоритеті"
+
+#~ msgid "Delete"
+#~ msgstr "Өшіру"
+
+#~ msgid "Error loading Evolution-Data-Server backend"
+#~ msgstr "Evolution-Data-Server бэкендін жүктеу сәтсіз аяқталды"
+
+#~ msgid "Task list source successfully connected"
+#~ msgstr "Тапсырмалар тізімінің қайнар көзіне байланыс сәтті орнатылды"
+
+#~ msgid "Failed to prompt for credentials"
+#~ msgstr "Тіркелу мәліметтерін сұрау қатесі"
+
+#~ msgid "Failed to prompt for credentials for"
+#~ msgstr "Келесі үшін тіркелу мәліметтерін сұрау қатесі:"
+
+#~ msgid "Authentication failure"
+#~ msgstr "Аутентификация қатесі"
+
+#~ msgid "Error loading task manager"
+#~ msgstr "Тапсырмалар басқарушысын жүктеу қатесі"
+
+#~ msgid "Error creating task"
+#~ msgstr "Тапсырманы жасау қатесі"
+
+#~ msgid "Error updating task"
+#~ msgstr "Тапсырманы жаңарту қатесі"
+
+#~ msgid "Error removing task"
+#~ msgstr "Тапсырманы өшіру қатесі"
+
+#~ msgid "Error creating task list"
+#~ msgstr "Тапсырмалар тізімін жасау қатесі"
+
+#~ msgid "Error removing task list"
+#~ msgstr "Тапсырмалар тізімін өшіру қатесі"
+
+#~ msgid "Error saving task list"
+#~ msgstr "Тапсырмалар тізімін сақтау қатесі"
+
+#~ msgid "Error loading Todoist tasks"
+#~ msgstr "Todoist тапсырмаларын жүктеу қатесі"
+
+#~ msgid "Bad status code (%d) received. Please check your connection."
+#~ msgstr "Жарамсыз қалып-күй коды алынды (%d). Байланысыңызды тексеріңіз."
+
+#~ msgid "Error while opening Todo.txt"
+#~ msgstr "Todo.txt файлын ашу қатесі"
+
+#~ msgid "Error while reading a line from Todo.txt"
+#~ msgstr "Todo.txt файлынан жолды оқу қатесі"
+
+#~ msgid "Incorrect date"
+#~ msgstr "Қате күн"
+
+#~ msgid "Please make sure the date in Todo.txt is valid."
+#~ msgstr "Todo.txt файлындағы күннің дұрыстығын тексеріңіз."
+
+#~ msgid "Unrecognized token in a Todo.txt line"
+#~ msgstr "Todo.txt файлындағы белгісіз токен"
+
+#~ msgid ""
+#~ "To Do cannot recognize some tags in your Todo.txt file. Some tasks may "
+#~ "not be loaded"
+#~ msgstr ""
+#~ "To Do сіздің Todo.txt файлындағы кейбір тегтерді тани алмады. Кейбір "
+#~ "тапсырмалар жүктелмеуі мүмкін"
+
+#~ msgid "No task list found for some tasks"
+#~ msgstr "Кейбір тапсырмалар үшін тапсырма тізімі табылмады"
+
+#~ msgid ""
+#~ "Some of the tasks in your Todo.txt file do not have a task list. To Do "
+#~ "supports tasks with a task list. Please add a list to all your tasks"
+#~ msgstr ""
+#~ "Сіздің Todo.txt файлындағы кейбір тапсырмаларда тапсырма тізімі жоқ. To "
+#~ "Do тапсырма тізімі бар тапсырмаларды қолдайды. Тапсырмаларыңыздың "
+#~ "барлығына тізімді қосыңыз"
+
+#~ msgid "Setting new color for task list"
+#~ msgstr "Тапсырмалар тізімін үшін жаңа түсті орнату"
 
 #~ msgid "Todoist Plugin for GNOME To Do"
 #~ msgstr "GNOME To Do үшін Todoist плагині"
