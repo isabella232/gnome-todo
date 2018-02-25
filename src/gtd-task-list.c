@@ -44,8 +44,10 @@ typedef struct
   GHashTable          *uid_to_task;
 
   gchar               *name;
-  gboolean             removable : 1;
+  gboolean             removable;
 } GtdTaskListPrivate;
+
+G_DEFINE_TYPE_WITH_PRIVATE (GtdTaskList, gtd_task_list, GTD_TYPE_OBJECT)
 
 enum
 {
@@ -55,10 +57,6 @@ enum
   NUM_SIGNALS
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (GtdTaskList, gtd_task_list, GTD_TYPE_OBJECT)
-
-static guint signals[NUM_SIGNALS] = { 0, };
-
 enum
 {
   PROP_0,
@@ -66,8 +64,11 @@ enum
   PROP_IS_REMOVABLE,
   PROP_NAME,
   PROP_PROVIDER,
-  LAST_PROP
+  N_PROPS
 };
+
+static guint signals[NUM_SIGNALS] = { 0, };
+static GParamSpec *properties[N_PROPS] = { NULL, };
 
 static void
 task_changed_cb (GtdTask     *task,
@@ -173,56 +174,46 @@ gtd_task_list_class_init (GtdTaskListClass *klass)
    *
    * The color of the list.
    */
-  g_object_class_install_property (
-        object_class,
-        PROP_COLOR,
-        g_param_spec_boxed ("color",
-                            "Color of the list",
-                            "The color of the list",
-                            GDK_TYPE_RGBA,
-                            G_PARAM_READWRITE));
+  properties[PROP_COLOR] = g_param_spec_boxed ("color",
+                                               "Color of the list",
+                                               "The color of the list",
+                                               GDK_TYPE_RGBA,
+                                               G_PARAM_READWRITE);
 
   /**
    * GtdTaskList::is-removable:
    *
    * Whether the task list can be removed from the system.
    */
-  g_object_class_install_property (
-        object_class,
-        PROP_IS_REMOVABLE,
-        g_param_spec_boolean ("is-removable",
-                              "Whether the task list is removable",
-                              "Whether the task list can be removed from the system",
-                              FALSE,
-                              G_PARAM_READWRITE));
+  properties[PROP_IS_REMOVABLE] = g_param_spec_boolean ("is-removable",
+                                                        "Whether the task list is removable",
+                                                        "Whether the task list can be removed from the system",
+                                                        FALSE,
+                                                        G_PARAM_READWRITE);
 
   /**
    * GtdTaskList::name:
    *
    * The display name of the list.
    */
-  g_object_class_install_property (
-        object_class,
-        PROP_NAME,
-        g_param_spec_string ("name",
-                             "Name of the list",
-                             "The name of the list",
-                             NULL,
-                             G_PARAM_READWRITE));
+  properties[PROP_NAME] = g_param_spec_string ("name",
+                                               "Name of the list",
+                                               "The name of the list",
+                                               NULL,
+                                               G_PARAM_READWRITE);
 
   /**
    * GtdTaskList::provider:
    *
    * The data provider of the list.
    */
-  g_object_class_install_property (
-        object_class,
-        PROP_PROVIDER,
-        g_param_spec_object ("provider",
-                             "Provider of the list",
-                             "The provider that handles the list",
-                             GTD_TYPE_PROVIDER,
-                             G_PARAM_READWRITE));
+  properties[PROP_PROVIDER] =  g_param_spec_object ("provider",
+                                                    "Provider of the list",
+                                                    "The provider that handles the list",
+                                                    GTD_TYPE_PROVIDER,
+                                                    G_PARAM_READWRITE);
+
+  g_object_class_install_properties (object_class, N_PROPS, properties);
 
   /**
    * GtdTaskList::task-added:
