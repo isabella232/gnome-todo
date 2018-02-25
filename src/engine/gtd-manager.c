@@ -97,16 +97,6 @@ static guint signals[NUM_SIGNALS] = { 0, };
  */
 
 static void
-reset_cancellable_if_cancelled (GtdManager *self)
-{
-  if (!g_cancellable_is_cancelled (self->cancellable))
-    return;
-
-  g_clear_object (&self->cancellable);
-  self->cancellable = g_cancellable_new ();
-}
-
-static void
 check_provider_is_default (GtdManager  *self,
                            GtdProvider *provider)
 {
@@ -615,36 +605,6 @@ GtdManager*
 gtd_manager_new (void)
 {
   return g_object_new (GTD_TYPE_MANAGER, NULL);
-}
-
-/**
- * gtd_manager_create_task:
- * @manager: a #GtdManager
- * @task: a #GtdTask
- *
- * Ask for @task's parent list source to create @task.
- */
-void
-gtd_manager_create_task (GtdManager *self,
-                         GtdTask    *task)
-{
-  g_autoptr (GError) error = NULL;
-  GtdTaskList *list;
-  GtdProvider *provider;
-
-  g_return_if_fail (GTD_IS_MANAGER (self));
-  g_return_if_fail (GTD_IS_TASK (task));
-
-  list = gtd_task_get_list (task);
-  provider = gtd_task_list_get_provider (list);
-
-  gtd_provider_create_task (provider, task, self->cancellable, &error);
-
-  if (error)
-    {
-      g_warning ("Error creating task: %s", error->message);
-      reset_cancellable_if_cancelled (self);
-    }
 }
 
 /**

@@ -49,29 +49,9 @@ enum
 static guint signals[NUM_SIGNALS] = { 0, };
 
 
-/*
- * Default implementations
- */
-
-static GtdTask*
-gtd_provider_default_generate_task (GtdProvider *self)
-{
-  g_autofree gchar *uuid;
-  GtdTask *task;
-
-  uuid = g_uuid_string_random ();
-
-  task = gtd_task_new ();
-  gtd_object_set_uid (GTD_OBJECT (task), uuid);
-
-  return task;
-}
-
 static void
 gtd_provider_default_init (GtdProviderInterface *iface)
 {
-  iface->generate_task = gtd_provider_default_generate_task;
-
   /**
    * GtdProvider::enabled:
    *
@@ -302,14 +282,16 @@ gtd_provider_get_icon (GtdProvider *provider)
  */
 void
 gtd_provider_create_task (GtdProvider   *provider,
-                          GtdTask       *task,
+                          GtdTaskList   *list,
+                          const gchar   *title,
+                          GDateTime     *due_date,
                           GCancellable  *cancellable,
                           GError       **error)
 {
   g_return_if_fail (GTD_IS_PROVIDER (provider));
   g_return_if_fail (GTD_PROVIDER_GET_IFACE (provider)->create_task);
 
-  GTD_PROVIDER_GET_IFACE (provider)->create_task (provider, task, cancellable, error);
+  GTD_PROVIDER_GET_IFACE (provider)->create_task (provider, list, title, due_date, cancellable, error);
 }
 
 /**
@@ -468,21 +450,4 @@ gtd_provider_set_default_task_list (GtdProvider *provider,
   g_return_if_fail (GTD_PROVIDER_GET_IFACE (provider)->set_default_task_list);
 
   return GTD_PROVIDER_GET_IFACE (provider)->set_default_task_list (provider, list);
-}
-
-/**
- * gtd_provider_generate_task:
- * @provider: a #GtdProvider
- *
- * Creates a new, empty #GtdTask.
- *
- * Returns: (transfer full): a #GtdTask
- */
-GtdTask*
-gtd_provider_generate_task (GtdProvider *self)
-{
-  g_return_val_if_fail (GTD_IS_PROVIDER (self), NULL);
-  g_return_val_if_fail (GTD_PROVIDER_GET_IFACE (self)->generate_task, NULL);
-
-  return GTD_PROVIDER_GET_IFACE (self)->generate_task (self);
 }

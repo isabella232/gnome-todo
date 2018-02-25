@@ -590,7 +590,7 @@ update_transient_id (GtdProviderTodoist *self,
       uid = g_strdup_printf ("%u", id);
 
       /* Update temp id to permanent id if temp-id in response matches object temp-id */
-      if (!g_str_equal (temp_id, l->data))
+      if (g_str_equal (temp_id, l->data))
         gtd_object_set_uid (object, uid);
 
       switch (req)
@@ -602,6 +602,7 @@ update_transient_id (GtdProviderTodoist *self,
 
         case REQUEST_TASK_CREATE:
           g_hash_table_insert (self->tasks, GUINT_TO_POINTER (id), GTD_TASK (object));
+          gtd_task_list_save_task (gtd_task_get_list (GTD_TASK (object)), GTD_TASK (object));
           break;
 
         case REQUEST_OTHER:
@@ -895,37 +896,38 @@ gtd_provider_todoist_get_icon (GtdProvider *provider)
 
 static void
 gtd_provider_todoist_create_task (GtdProvider   *provider,
-                                  GtdTask       *task,
+                                  GtdTaskList   *list,
+                                  const gchar   *title,
+                                  GDateTime     *due_date,
                                   GCancellable  *cancellable,
                                   GError       **error)
 {
   GtdProviderTodoist *self;
-  g_autoptr (GDateTime) due_date = NULL;
+  g_autoptr (GtdTask) new_task = NULL;
   g_autofree gchar *command = NULL;
   g_autofree gchar *command_uid = NULL;
   g_autofree gchar *temp_id = NULL;
   g_autofree gchar *due_dt = NULL;
   g_autofree gchar *escaped_title = NULL;
-  GtdTaskList *project;
-  GtdTask *parent;
   const gchar *project_id;
 
   self = GTD_PROVIDER_TODOIST (provider);
 
   CHECK_ACCESS_TOKEN (self);
 
-  parent = gtd_task_get_parent (task);
-  due_date = gtd_task_get_due_date (task);
-  project = gtd_task_get_list (task);
-  project_id = gtd_object_get_uid (GTD_OBJECT (project));
-  escaped_title = escape_string_for_post (gtd_task_get_title (task));
+  project_id = gtd_object_get_uid (GTD_OBJECT (list));
+  escaped_title = escape_string_for_post (title);
   due_dt = due_date ? g_date_time_format (due_date, "\"%FT%R\"") : g_strdup ("null");
 
   command_uid = g_uuid_string_random ();
   temp_id = g_uuid_string_random ();
 
-  /* Set the temporary id */
-  gtd_object_set_uid (GTD_OBJECT (task), temp_id);
+  /* Create the new task */
+  new_task = gtd_task_new ();
+  gtd_task_set_due_date (new_task, due_date);
+  gtd_task_set_list (new_task, list);
+  gtd_task_set_title (new_task, title);
+  gtd_object_set_uid (GTD_OBJECT (new_task), temp_id);
 
   command = g_strdup_printf ("[{                             \n"
                              "    \"type\": \"item_add\",    \n"
@@ -933,25 +935,20 @@ gtd_provider_todoist_create_task (GtdProvider   *provider,
                              "    \"uuid\": \"%s\",          \n"
                              "    \"args\": {                \n"
                              "        \"content\": \"%s\",   \n"
-                             "        \"priority\": %d,      \n"
-                             "        \"parent_id\": %s,     \n"
+                             "        \"priority\": 1,       \n"
                              "        \"project_id\": %s,    \n"
-                             "        \"indent\": %d,        \n"
-                             "        \"checked\": %d,       \n"
+                             "        \"indent\": 1,         \n"
+                             "        \"checked\": 0,        \n"
                              "        \"due_date_utc\": %s   \n"
                              "    }                          \n"
                              "}]",
                              temp_id,
                              command_uid,
                              escaped_title,
-                             gtd_task_get_priority (task),
-                             parent ? gtd_object_get_uid (GTD_OBJECT (parent)) : "null",
                              project_id,
-                             gtd_task_get_depth (task) + 1,
-                             gtd_task_get_complete (task),
                              due_dt);
 
-  schedule_post_request (self, task, REQUEST_TASK_CREATE, command_uid, command);
+  schedule_post_request (self, g_steal_pointer (&new_task), REQUEST_TASK_CREATE, command_uid, command);
 }
 
 static void

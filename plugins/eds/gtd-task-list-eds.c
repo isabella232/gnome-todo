@@ -87,11 +87,15 @@ get_task_from_uuid (GList       *tasks,
 
   for (t = tasks; t; t = t->next)
     {
-      GtdTask *task = t->data;
+      g_autoptr (ECalComponentId) id = NULL;
+      GtdTask *task;
 
-      g_assert (GTD_IS_TASK_EDS (task));
+      g_assert (GTD_IS_TASK_EDS (t->data));
 
-      if (g_strcmp0 (uuid, gtd_object_get_uid (GTD_OBJECT (task))) != 0)
+      task = t->data;
+      id = e_cal_component_get_id (gtd_task_eds_get_component (GTD_TASK_EDS (task)));
+
+      if (g_strcmp0 (uuid, id->uid) != 0)
         continue;
 
       return task;

@@ -47,9 +47,9 @@
                         <child>
                           <object class="GtdNewTaskRow" id="new_task_row">
                             <property name="visible">True</property>
-                            <signal name="create-task" handler="create_task_cb" object="GtdTaskListView" swapped="no" />
-                            <signal name="enter" handler="task_row_entered_cb" object="GtdTaskListView" swapped="yes" />
-                            <signal name="exit" handler="task_row_exited_cb" object="GtdTaskListView" swapped="yes" />
+                            <signal name="create-task" handler="on_create_task_cb" object="GtdTaskListView" swapped="no" />
+                            <signal name="enter" handler="on_task_row_entered_cb" object="GtdTaskListView" swapped="yes" />
+                            <signal name="exit" handler="on_task_row_exited_cb" object="GtdTaskListView" swapped="yes" />
                           </object>
                         </child>
                         <child>
@@ -114,7 +114,7 @@
                     <property name="border_width">12</property>
                     <property name="relief">none</property>
                     <property name="halign">center</property>
-                    <signal name="clicked" handler="gtd_task_list_view__done_button_clicked" object="GtdTaskListView" swapped="no" />
+                    <signal name="clicked" handler="on_done_button_clicked_cb" object="GtdTaskListView" swapped="no" />
                     <child>
                       <object class="GtkBox" id="done_button_box">
                         <property name="visible">True</property>

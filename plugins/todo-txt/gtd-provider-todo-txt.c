@@ -410,10 +410,25 @@ gtd_provider_todo_txt_get_icon (GtdProvider *provider)
 
 static void
 gtd_provider_todo_txt_create_task (GtdProvider   *provider,
-                                   GtdTask       *task,
+                                   GtdTaskList   *list,
+                                   const gchar   *title,
+                                   GDateTime     *due_date,
                                    GCancellable  *cancellable,
                                    GError       **error)
 {
+  GtdProviderTodoTxt *self;
+  g_autoptr (GtdTask) new_task = NULL;
+
+  self = GTD_PROVIDER_TODO_TXT (provider);
+
+  /* Create the new task */
+  new_task = gtd_provider_todo_txt_generate_task (self);
+  gtd_task_set_due_date (new_task, due_date);
+  gtd_task_set_list (new_task, list);
+  gtd_task_set_title (new_task, title);
+
+  gtd_task_list_save_task (list, new_task);
+
   update_source (GTD_PROVIDER_TODO_TXT (provider));
 }
 
@@ -513,17 +528,6 @@ gtd_provider_todo_txt_set_default_task_list (GtdProvider *provider,
   /* FIXME: implement me */
 }
 
-static GtdTask*
-gtd_provider_todo_txt_generate_task (GtdProvider *provider)
-{
-  GtdProviderTodoTxt *self = (GtdProviderTodoTxt *) provider;
-  g_autofree gchar *uid = NULL;
-
-  uid = g_strdup_printf ("%ld", self->task_counter);
-
-  return g_object_new (GTD_TYPE_TASK, "uid", uid, NULL);
-}
-
 static void
 gtd_provider_iface_init (GtdProviderInterface *iface)
 {
@@ -541,7 +545,6 @@ gtd_provider_iface_init (GtdProviderInterface *iface)
   iface->get_task_lists = gtd_provider_todo_txt_get_task_lists;
   iface->get_default_task_list = gtd_provider_todo_txt_get_default_task_list;
   iface->set_default_task_list = gtd_provider_todo_txt_set_default_task_list;
-  iface->generate_task = gtd_provider_todo_txt_generate_task;
 }
 
 
@@ -667,4 +670,15 @@ gtd_provider_todo_txt_new (GFile *source_file)
   return g_object_new (GTD_TYPE_PROVIDER_TODO_TXT,
                        "source", source_file,
                        NULL);
+}
+
+GtdTask*
+gtd_provider_todo_txt_generate_task (GtdProviderTodoTxt *self)
+{
+  g_autofree gchar *uid = NULL;
+
+  g_return_val_if_fail (GTD_IS_PROVIDER_TODO_TXT (self), NULL);
+  uid = g_strdup_printf ("%ld", self->task_counter);
+
+  return g_object_new (GTD_TYPE_TASK, "uid", uid, NULL);
 }

@@ -44,10 +44,6 @@ GList*               gtd_manager_get_providers                   (GtdManager    
 
 GList*               gtd_manager_get_panels                      (GtdManager         *manager);
 
-/* Tasks */
-void                 gtd_manager_create_task                     (GtdManager         *manager,
-                                                                  GtdTask            *task);
-
 /* Settings */
 GtdProvider*         gtd_manager_get_default_provider            (GtdManager         *manager);
 

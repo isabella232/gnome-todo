@@ -144,7 +144,6 @@ on_client_connected_cb (GObject      *source_object,
   priv->task_lists = g_list_append (priv->task_lists, list);
 
   g_object_set_data (G_OBJECT (source), "task-list", list);
-  g_object_set_data (G_OBJECT (client), "task-list", list);
 
   /* Check if the current list is the default one */
   default_source = e_source_registry_ref_default_task_list (priv->source_registry);
@@ -469,46 +468,55 @@ gtd_provider_eds_get_icon (GtdProvider *provider)
 
 static void
 gtd_provider_eds_create_task (GtdProvider   *provider,
-                              GtdTask       *task,
+                              GtdTaskList   *list,
+                              const gchar   *title,
+                              GDateTime     *due_date,
                               GCancellable  *cancellable,
                               GError       **error)
 {
   g_autofree gchar *new_uid = NULL;
-  GtdProviderEds *self;
   GtdTaskListEds *tasklist;
+  GtdProviderEds *self;
   ECalComponent *component;
   ECalClient *client;
+  GtdTask *new_task;
 
-  g_return_if_fail (GTD_IS_TASK (task));
-  g_return_if_fail (GTD_IS_TASK_LIST_EDS (gtd_task_get_list (task)));
+  g_return_if_fail (GTD_IS_TASK_LIST_EDS (list));
 
   self = GTD_PROVIDER_EDS (provider);
-  tasklist = GTD_TASK_LIST_EDS (gtd_task_get_list (task));
+  tasklist = GTD_TASK_LIST_EDS (list);
   client = gtd_task_list_eds_get_client (tasklist);
-  component = gtd_task_eds_get_component (GTD_TASK_EDS (task));
+
+  /* Create the new task */
+  component = e_cal_component_new ();
+  e_cal_component_set_new_vtype (component, E_CAL_COMPONENT_TODO);
+
+  new_task = gtd_task_eds_new (component);
+  gtd_task_set_title (new_task, title);
+  gtd_task_set_due_date (new_task, due_date);
+  gtd_task_set_list (new_task, list);
 
   /* The task is not ready until we finish the operation */
-  gtd_object_set_ready (GTD_OBJECT (task), FALSE);
+  gtd_object_set_ready (GTD_OBJECT (new_task), FALSE);
 
-  if (!e_cal_client_create_object_sync (client,
-                                        e_cal_component_get_icalcomponent (component),
-                                        &new_uid,
-                                        cancellable,
-                                        error))
+  if (e_cal_client_create_object_sync (client,
+                                       e_cal_component_get_icalcomponent (component),
+                                       &new_uid,
+                                       cancellable,
+                                       error))
     {
-      gtd_task_list_remove_task (gtd_task_get_list (task), task);
-    }
-  else
-    {
+      /* Add to the list */
+      gtd_task_list_save_task (list, new_task);
+
       /* Update the default tasklist */
-      gtd_provider_eds_set_default (self, gtd_task_get_list (task));
+      gtd_provider_eds_set_default (self, list);
 
       /*
        * In the case the task UID changes because of creation proccess,
        * reapply it to the task.
        */
       if (new_uid)
-        gtd_object_set_uid (GTD_OBJECT (task), new_uid);
+        gtd_object_set_uid (GTD_OBJECT (new_task), new_uid);
     }
 }
 
@@ -703,20 +711,6 @@ gtd_provider_eds_set_default_task_list (GtdProvider *provider,
   g_object_notify (G_OBJECT (provider), "default-task-list");
 }
 
-static GtdTask*
-gtd_provider_eds_generate_task (GtdProvider *self)
-{
-  g_autoptr (ECalComponent) component = NULL;
-  g_autoptr (GtdTask) task = NULL;
-
-  component = e_cal_component_new ();
-  e_cal_component_set_new_vtype (component, E_CAL_COMPONENT_TODO);
-
-  task = gtd_task_eds_new (component);
-
-  return g_steal_pointer (&task);
-}
-
 static void
 gtd_provider_iface_init (GtdProviderInterface *iface)
 {
@@ -734,7 +728,6 @@ gtd_provider_iface_init (GtdProviderInterface *iface)
   iface->get_task_lists = gtd_provider_eds_get_task_lists;
   iface->get_default_task_list = gtd_provider_eds_get_default_task_list;
   iface->set_default_task_list = gtd_provider_eds_set_default_task_list;
-  iface->generate_task = gtd_provider_eds_generate_task;
 }
 
 

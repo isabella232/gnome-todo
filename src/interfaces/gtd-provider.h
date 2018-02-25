@@ -49,7 +49,9 @@ struct _GtdProviderInterface
 
   /* Tasks */
   void               (*create_task)                              (GtdProvider        *provider,
-                                                                  GtdTask            *task,
+                                                                  GtdTaskList        *list,
+                                                                  const gchar        *title,
+                                                                  GDateTime          *due_date,
                                                                   GCancellable       *cancellable,
                                                                   GError            **error);
 
@@ -85,8 +87,6 @@ struct _GtdProviderInterface
 
   void               (*set_default_task_list)                    (GtdProvider        *provider,
                                                                   GtdTaskList        *list);
-
-  GtdTask*           (*generate_task)                            (GtdProvider        *self);
 };
 
 const gchar*         gtd_provider_get_id                         (GtdProvider        *provider);
@@ -100,7 +100,9 @@ gboolean             gtd_provider_get_enabled                    (GtdProvider   
 GIcon*               gtd_provider_get_icon                       (GtdProvider        *provider);
 
 void                 gtd_provider_create_task                    (GtdProvider        *provider,
-                                                                  GtdTask            *task,
+                                                                  GtdTaskList        *list,
+                                                                  const gchar        *title,
+                                                                  GDateTime          *due_date,
                                                                   GCancellable       *cancellable,
                                                                   GError            **error);
 
@@ -135,8 +137,6 @@ GtdTaskList*         gtd_provider_get_default_task_list          (GtdProvider   
 
 void                 gtd_provider_set_default_task_list          (GtdProvider        *provider,
                                                                   GtdTaskList        *list);
-
-GtdTask*             gtd_provider_generate_task                  (GtdProvider        *self);
 
 G_END_DECLS
 
