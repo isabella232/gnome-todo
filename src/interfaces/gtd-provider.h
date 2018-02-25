@@ -65,7 +65,7 @@ struct _GtdProviderInterface
 
   /* Task lists */
   void               (*create_task_list)                         (GtdProvider        *provider,
-                                                                  GtdTaskList        *list,
+                                                                  const gchar        *name,
                                                                   GCancellable       *cancellable,
                                                                   GError            **error);
 
@@ -115,7 +115,7 @@ void                 gtd_provider_remove_task                    (GtdProvider   
                                                                   GError            **error);
 
 void                 gtd_provider_create_task_list               (GtdProvider        *provider,
-                                                                  GtdTaskList        *list,
+                                                                  const gchar        *name,
                                                                   GCancellable       *cancellable,
                                                                   GError            **error);
 

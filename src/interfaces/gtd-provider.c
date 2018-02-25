@@ -357,7 +357,7 @@ gtd_provider_remove_task (GtdProvider   *provider,
 /**
  * gtd_provider_create_task_list:
  * @provider: a #GtdProvider
- * @list: a #GtdTaskList
+ * @name: (nullable): the name of the new task list
  * @cancellable: (nullable): a #GCancellable
  * @error: (nullable): return location for a #GError
  *
@@ -365,14 +365,14 @@ gtd_provider_remove_task (GtdProvider   *provider,
  */
 void
 gtd_provider_create_task_list (GtdProvider   *provider,
-                               GtdTaskList   *list,
+                               const gchar   *name,
                                GCancellable  *cancellable,
                                GError       **error)
 {
   g_return_if_fail (GTD_IS_PROVIDER (provider));
   g_return_if_fail (GTD_PROVIDER_GET_IFACE (provider)->create_task_list);
 
-  GTD_PROVIDER_GET_IFACE (provider)->create_task_list (provider, list, cancellable, error);
+  GTD_PROVIDER_GET_IFACE (provider)->create_task_list (provider, name, cancellable, error);
 }
 
 /**

@@ -45,9 +45,6 @@ GList*               gtd_manager_get_providers                   (GtdManager    
 GList*               gtd_manager_get_panels                      (GtdManager         *manager);
 
 /* Task lists */
-void                 gtd_manager_create_task_list                (GtdManager         *manager,
-                                                                  GtdTaskList        *list);
-
 void                 gtd_manager_remove_task_list                (GtdManager         *manager,
                                                                   GtdTaskList        *list);
 

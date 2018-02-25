@@ -713,34 +713,6 @@ gtd_manager_update_task (GtdManager *self,
 }
 
 /**
- * gtd_manager_create_task_list:
- * @manager: a #GtdManager
- * @list: a #GtdTaskList
- *
- * Creates a new task list at the given source.
- */
-void
-gtd_manager_create_task_list (GtdManager  *self,
-                              GtdTaskList *list)
-{
-  g_autoptr (GError) error = NULL;
-  GtdProvider *provider;
-
-  g_return_if_fail (GTD_IS_MANAGER (self));
-  g_return_if_fail (GTD_IS_TASK_LIST (list));
-
-  provider = gtd_task_list_get_provider (list);
-
-  gtd_provider_create_task_list (provider, list, self->cancellable, &error);
-
-  if (error)
-    {
-      g_warning ("Error creating task list: %s", error->message);
-      reset_cancellable_if_cancelled (self);
-    }
-}
-
-/**
  * gtd_manager_remove_task_list:
  * @manager: a #GtdManager
  * @list: a #GtdTaskList

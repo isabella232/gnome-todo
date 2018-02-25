@@ -589,14 +589,26 @@ update_transient_id (GtdProviderTodoist *self,
       id = json_object_get_int_member (id_map, l->data);
       uid = g_strdup_printf ("%u", id);
 
-      /* Update temp id to permanent id if temp-id in response matches object temo-id */
+      /* Update temp id to permanent id if temp-id in response matches object temp-id */
       if (!g_str_equal (temp_id, l->data))
         gtd_object_set_uid (object, uid);
 
-      if (req == REQUEST_LIST_CREATE)
-        g_hash_table_insert (self->lists, GUINT_TO_POINTER (id), GTD_TASK_LIST (object));
-      else if (req == REQUEST_TASK_CREATE)
-        g_hash_table_insert (self->tasks, GUINT_TO_POINTER (id), GTD_TASK (object));
+      switch (req)
+        {
+        case REQUEST_LIST_CREATE:
+          g_hash_table_insert (self->lists, GUINT_TO_POINTER (id), GTD_TASK_LIST (object));
+          g_signal_emit_by_name (self, "list-added", object);
+          break;
+
+        case REQUEST_TASK_CREATE:
+          g_hash_table_insert (self->tasks, GUINT_TO_POINTER (id), GTD_TASK (object));
+          break;
+
+        case REQUEST_OTHER:
+          /* Nothing */
+          break;
+        }
+
     }
 }
 
@@ -1021,29 +1033,34 @@ gtd_provider_todoist_remove_task (GtdProvider   *provider,
 
 static void
 gtd_provider_todoist_create_task_list (GtdProvider   *provider,
-                                       GtdTaskList   *list,
+                                       const gchar   *name,
                                        GCancellable  *cancellable,
                                        GError       **error)
 {
-  g_autoptr (GdkRGBA) list_color = NULL;
+  g_autoptr (GtdTaskList) new_list = NULL;
   g_autofree gchar *command = NULL;
   g_autofree gchar *command_uid = NULL;
   g_autofree gchar *escaped_name = NULL;
   g_autofree gchar *temp_id = NULL;
   GtdProviderTodoist *self;
+  GdkRGBA color;
 
   self = GTD_PROVIDER_TODOIST (provider);
 
   CHECK_ACCESS_TOKEN (self);
 
-  list_color = gtd_task_list_get_color (list);
-
-  escaped_name = escape_string_for_post (gtd_task_list_get_name (list));
+  escaped_name = escape_string_for_post (name);
   command_uid = g_uuid_string_random ();
   temp_id = g_uuid_string_random ();
 
-  /* Set the temporary id */
-  gtd_object_set_uid (GTD_OBJECT (list), temp_id);
+  /* Create the new list */
+  new_list = gtd_task_list_new (provider);
+  gtd_task_list_set_name (new_list, name);
+  gtd_object_set_uid (GTD_OBJECT (new_list), temp_id);
+
+  /* Default color is Todoist orange/red, since it has no white */
+  gdk_rgba_parse (&color, colormap [8]);
+  gtd_task_list_set_color (new_list, &color);
 
   command = g_strdup_printf ("[{                                \n"
                              "    \"type\": \"project_add\",    \n"
@@ -1051,17 +1068,14 @@ gtd_provider_todoist_create_task_list (GtdProvider   *provider,
                              "    \"uuid\": \"%s\",             \n"
                              "    \"args\": {                   \n"
                              "        \"name\": \"%s\",         \n"
-                             "        \"color\": %d             \n"
+                             "        \"color\": 8              \n"
                              "    }                             \n"
                              "}]",
                              temp_id,
                              command_uid,
-                             escaped_name,
-                             get_color_code_index (list_color));
+                             escaped_name);
 
-  schedule_post_request (self, list, REQUEST_LIST_CREATE, command_uid, command);
-
-  g_signal_emit_by_name (provider, "list-added", list);
+  schedule_post_request (self, g_steal_pointer (&new_list), REQUEST_LIST_CREATE, command_uid, command);
 }
 
 static void

@@ -83,17 +83,14 @@ gtd_provider_popover__closed (GtdProviderPopover *popover)
 static void
 create_task_list (GtdProviderPopover *popover)
 {
-  GtdTaskList *task_list;
+  g_autoptr (GError) error = NULL;
   GtdProvider *provider;
   const gchar *name;
 
   provider = gtd_provider_selector_get_selected_provider (GTD_PROVIDER_SELECTOR (popover->provider_selector));
   name = gtk_entry_get_text (GTK_ENTRY (popover->new_list_name_entry));
 
-  task_list = gtd_task_list_new (provider);
-  gtd_task_list_set_name (task_list, name);
-
-  gtd_manager_create_task_list (gtd_manager_get_default (), task_list);
+  gtd_provider_create_task_list (provider, name, NULL, &error);
 }
 
 static void

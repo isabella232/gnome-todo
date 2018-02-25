@@ -579,7 +579,7 @@ gtd_provider_eds_remove_task (GtdProvider   *provider,
 
 static void
 gtd_provider_eds_create_task_list (GtdProvider   *provider,
-                                   GtdTaskList   *list,
+                                   const gchar   *name,
                                    GCancellable  *cancellable,
                                    GError       **error)
 {
@@ -593,22 +593,18 @@ gtd_provider_eds_create_task_list (GtdProvider   *provider,
 
   /* Create an ESource */
   if (GTD_PROVIDER_EDS_CLASS (G_OBJECT_GET_CLASS (provider))->create_source)
-    source = GTD_PROVIDER_EDS_CLASS (G_OBJECT_GET_CLASS (provider))->create_source (self);
+    source = GTD_PROVIDER_EDS_CLASS (G_OBJECT_GET_CLASS (provider))->create_source (self, error);
 
   if (!source)
     return;
 
   /* EDS properties */
-  e_source_set_display_name (source, gtd_task_list_get_name (list));
-
-  gtd_object_set_ready (GTD_OBJECT (provider), FALSE);
+  e_source_set_display_name (source, name);
 
   e_source_registry_commit_source_sync (priv->source_registry,
                                         source,
                                         cancellable,
                                         error);
-
-  gtd_object_set_ready (GTD_OBJECT (list), TRUE);
 }
 
 static void

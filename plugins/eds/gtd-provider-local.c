@@ -71,35 +71,17 @@ gtd_provider_local_get_icon (GtdProviderEds *provider)
 }
 
 static ESource*
-gtd_provider_local_create_source (GtdProviderEds *provider)
+gtd_provider_local_create_source (GtdProviderEds  *provider,
+                                  GError         **error)
 {
   ESourceExtension *extension;
   ESource *source;
-  GError *error;
-
-  error = NULL;
 
   /* Create the source */
-  source = e_source_new (NULL,
-                         NULL,
-                         &error);
+  source = e_source_new (NULL, NULL, error);
 
-  if (error)
-    {
-      g_warning ("%s: %s: %s",
-                 G_STRFUNC,
-                 "Error creating new task list",
-                 error->message);
-
-      gtd_manager_emit_error_message (gtd_manager_get_default (),
-                                      _("Error creating new task list"),
-                                      error->message,
-                                      NULL,
-                                      NULL);
-
-      g_clear_error (&error);
-      return NULL;
-    }
+  if (!source)
+    return NULL;
 
   /* Make it a local source */
   extension = e_source_get_extension (source, E_SOURCE_EXTENSION_TASK_LIST);

@@ -437,25 +437,26 @@ gtd_provider_todo_txt_remove_task (GtdProvider   *provider,
 
 static void
 gtd_provider_todo_txt_create_task_list (GtdProvider   *provider,
-                                        GtdTaskList   *list,
+                                        const gchar   *name,
                                         GCancellable  *cancellable,
                                         GError       **error)
 {
   GtdProviderTodoTxt *self;
-  gchar *name;
-  g_return_if_fail (GTD_IS_TASK_LIST (list));
+  GtdTaskList *new_list;
 
   self = GTD_PROVIDER_TODO_TXT (provider);
-  name = g_strdup (gtd_task_list_get_name (list));
-  gtd_task_list_set_is_removable (list, TRUE);
 
-  self->task_lists = g_list_append (self->task_lists, list);
-  g_ptr_array_add (self->cache, list);
-  g_hash_table_insert (self->lists, name, list);
+  new_list = gtd_task_list_new (provider);
+  gtd_task_list_set_name (new_list, name);
+  gtd_task_list_set_is_removable (new_list, TRUE);
+
+  self->task_lists = g_list_append (self->task_lists, new_list);
+  g_ptr_array_add (self->cache, new_list);
+  g_hash_table_insert (self->lists, g_strdup (name), new_list);
 
   update_source (self);
 
-  g_signal_emit_by_name (provider, "list-added", list);
+  g_signal_emit_by_name (provider, "list-added", new_list);
 }
 
 static void
