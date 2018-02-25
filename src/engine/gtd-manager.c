@@ -713,67 +713,6 @@ gtd_manager_update_task (GtdManager *self,
 }
 
 /**
- * gtd_manager_remove_task_list:
- * @manager: a #GtdManager
- * @list: a #GtdTaskList
- *
- * Deletes @list from the registry.
- */
-void
-gtd_manager_remove_task_list (GtdManager  *self,
-                              GtdTaskList *list)
-{
-  g_autoptr (GError) error = NULL;
-  GtdProvider *provider;
-
-  g_return_if_fail (GTD_IS_MANAGER (self));
-  g_return_if_fail (GTD_IS_TASK_LIST (list));
-
-  provider = gtd_task_list_get_provider (list);
-
-  gtd_provider_remove_task_list (provider, list, self->cancellable, &error);
-
-  if (error)
-    {
-      g_warning ("Error removing task list: %s", error->message);
-      reset_cancellable_if_cancelled (self);
-    }
-
-  g_signal_emit (self,
-                 signals[LIST_REMOVED],
-                 0,
-                 list);
-}
-
-/**
- * gtd_manager_save_task_list:
- * @manager: a #GtdManager
- * @list: a #GtdTaskList
- *
- * Save or create @list.
- */
-void
-gtd_manager_save_task_list (GtdManager  *self,
-                            GtdTaskList *list)
-{
-  g_autoptr (GError) error = NULL;
-  GtdProvider *provider;
-
-  g_return_if_fail (GTD_IS_MANAGER (self));
-  g_return_if_fail (GTD_IS_TASK_LIST (list));
-
-  provider = gtd_task_list_get_provider (list);
-
-  gtd_provider_update_task_list (provider, list, self->cancellable, &error);
-
-  if (error)
-    {
-      g_warning ("Error saving task list: %s", error->message);
-      reset_cancellable_if_cancelled (self);
-    }
-}
-
-/**
  * gtd_manager_get_task_lists:
  * @manager: a #GtdManager
  *

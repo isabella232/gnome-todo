@@ -177,21 +177,16 @@ gtd_list_selector_panel_list_color_set (GtkColorChooser      *button,
                                         GtdListSelectorPanel *panel)
 {
   GtdTaskList *list;
-  GtdManager *manager;
   GdkRGBA new_color;
 
-  manager = gtd_manager_get_default ();
   list = gtd_task_list_view_get_task_list (GTD_TASK_LIST_VIEW (panel->tasklist_view));
 
-  g_debug ("%s: %s: %s",
-           G_STRFUNC,
-           "Setting new color for task list",
-           gtd_task_list_get_name (list));
+  g_debug ("Setting new color for task list '%s'", gtd_task_list_get_name (list));
 
   gtk_color_chooser_get_rgba (button, &new_color);
   gtd_task_list_set_color (list, &new_color);
 
-  gtd_manager_save_task_list (manager, list);
+  gtd_provider_update_task_list (gtd_task_list_get_provider (list), list, NULL, NULL);
 }
 
 static void
@@ -311,7 +306,6 @@ static void
 gtd_list_selector_panel_rename_task_list (GtdListSelectorPanel *panel)
 {
   GList *selection;
-  GtdManager *manager;
 
   /*
    * If the save_rename_button is insensitive, the list name is
@@ -320,7 +314,6 @@ gtd_list_selector_panel_rename_task_list (GtdListSelectorPanel *panel)
   if (!gtk_widget_get_sensitive (panel->save_rename_button))
     return;
   
-  manager = gtd_manager_get_default ();
   selection = gtd_list_selector_get_selected_lists (panel->active_selector);
 
   if (selection && selection->data)
@@ -335,7 +328,8 @@ gtd_list_selector_panel_rename_task_list (GtdListSelectorPanel *panel)
 
       gtd_task_list_set_name (list, gtk_entry_get_text (GTK_ENTRY (panel->rename_entry)));
       gtd_window_set_mode (window, GTD_WINDOW_MODE_NORMAL);
-      gtd_manager_save_task_list (manager, list);
+
+      gtd_provider_update_task_list (gtd_task_list_get_provider (list), list, NULL, NULL);
 
       gtk_widget_hide (panel->rename_popover);
     }
@@ -418,8 +412,10 @@ gtd_list_selector_panel_delete_button_clicked (GtdListSelectorPanel *panel)
 
           list = gtd_list_selector_item_get_list (l->data);
 
-          if (gtd_task_list_is_removable (list))
-            gtd_manager_remove_task_list (gtd_manager_get_default (), list);
+          if (!gtd_task_list_is_removable (list))
+            continue;
+
+          gtd_provider_remove_task_list (gtd_task_list_get_provider (list), list, NULL, NULL);
         }
 
       g_list_free (children);

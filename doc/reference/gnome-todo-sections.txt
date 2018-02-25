@@ -28,9 +28,6 @@ gtd_manager_get_default
 gtd_manager_get_task_lists
 gtd_manager_get_providers
 gtd_manager_get_panels
-gtd_manager_create_task_list
-gtd_manager_remove_task_list
-gtd_manager_save_task_list
 gtd_manager_create_task
 gtd_manager_remove_task
 gtd_manager_update_task
