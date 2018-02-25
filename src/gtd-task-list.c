@@ -37,11 +37,10 @@
 
 typedef struct
 {
-  GList               *tasks;
   GtdProvider         *provider;
   GdkRGBA             *color;
 
-  GHashTable          *uid_to_task;
+  GHashTable          *tasks;
 
   gchar               *name;
   gboolean             removable;
@@ -86,9 +85,9 @@ gtd_task_list_finalize (GObject *object)
 
   g_clear_object (&priv->provider);
 
-  g_clear_pointer (&priv->uid_to_task, g_hash_table_destroy);
   g_clear_pointer (&priv->color, gdk_rgba_free);
   g_clear_pointer (&priv->name, g_free);
+  g_clear_pointer (&priv->tasks, g_hash_table_destroy);
 
   G_OBJECT_CLASS (gtd_task_list_parent_class)->finalize (object);
 }
@@ -276,14 +275,9 @@ gtd_task_list_class_init (GtdTaskListClass *klass)
 static void
 gtd_task_list_init (GtdTaskList *self)
 {
-  GtdTaskListPrivate *priv;
+  GtdTaskListPrivate *priv = gtd_task_list_get_instance_private (self);
 
-  priv = gtd_task_list_get_instance_private (self);
-
-  priv->uid_to_task = g_hash_table_new_full (g_str_hash,
-                                             g_str_equal,
-                                             g_free,
-                                             NULL);
+  priv->tasks = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
 }
 
 /**
@@ -465,7 +459,7 @@ gtd_task_list_get_tasks (GtdTaskList *list)
 
   priv = gtd_task_list_get_instance_private (list);
 
-  return g_list_copy (priv->tasks);
+  return g_hash_table_get_values (priv->tasks);
 }
 
 /**
@@ -492,18 +486,11 @@ gtd_task_list_save_task (GtdTaskList *list,
     }
   else
     {
-      const gchar *uid;
+      const gchar *uid = gtd_object_get_uid (GTD_OBJECT (task));
 
-      uid = gtd_object_get_uid (GTD_OBJECT (task));
+      g_hash_table_insert (priv->tasks, g_strdup (uid), g_object_ref (task));
 
-      priv->tasks = g_list_prepend (priv->tasks, task);
-
-      g_hash_table_insert (priv->uid_to_task, g_strdup (uid), task);
-
-      g_signal_connect (task,
-                        "notify",
-                        G_CALLBACK (task_changed_cb),
-                        list);
+      g_signal_connect (task, "notify", G_CALLBACK (task_changed_cb), list);
 
       g_signal_emit (list, signals[TASK_ADDED], 0, task);
     }
@@ -530,13 +517,9 @@ gtd_task_list_remove_task (GtdTaskList *list,
   if (!gtd_task_list_contains (list, task))
     return;
 
-  g_signal_handlers_disconnect_by_func (task,
-                                        task_changed_cb,
-                                        list);
+  g_signal_handlers_disconnect_by_func (task, task_changed_cb, list);
 
-  priv->tasks = g_list_remove (priv->tasks, task);
-
-  g_hash_table_remove (priv->uid_to_task, gtd_object_get_uid (GTD_OBJECT (task)));
+  g_hash_table_remove (priv->tasks, gtd_object_get_uid (GTD_OBJECT (task)));
 
   g_signal_emit (list, signals[TASK_REMOVED], 0, task);
 }
@@ -561,7 +544,7 @@ gtd_task_list_contains (GtdTaskList *list,
 
   priv = gtd_task_list_get_instance_private (list);
 
-  return g_list_find (priv->tasks, task) != NULL;
+  return g_hash_table_contains (priv->tasks, gtd_object_get_uid (GTD_OBJECT (task)));
 }
 
 /**
@@ -628,5 +611,5 @@ gtd_task_list_get_task_by_id (GtdTaskList *self,
 
   priv = gtd_task_list_get_instance_private (self);
 
-  return g_hash_table_lookup (priv->uid_to_task, id);
+  return g_hash_table_lookup (priv->tasks, id);
 }
