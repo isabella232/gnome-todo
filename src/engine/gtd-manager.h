@@ -48,12 +48,6 @@ GList*               gtd_manager_get_panels                      (GtdManager    
 void                 gtd_manager_create_task                     (GtdManager         *manager,
                                                                   GtdTask            *task);
 
-void                 gtd_manager_remove_task                     (GtdManager         *manager,
-                                                                  GtdTask            *task);
-
-void                 gtd_manager_update_task                     (GtdManager         *manager,
-                                                                  GtdTask            *task);
-
 /* Settings */
 GtdProvider*         gtd_manager_get_default_provider            (GtdManager         *manager);
 

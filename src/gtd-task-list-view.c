@@ -274,14 +274,14 @@ static inline gboolean
 real_remove_task (GtdTaskListView *self,
                   GtdTask         *task)
 {
-  gtd_manager_remove_task (gtd_manager_get_default (), task);
-
+  gtd_task_list_remove_task (gtd_task_get_list (task), task);
+  gtd_provider_remove_task (gtd_task_get_provider (task), task, NULL, NULL);
   return TRUE;
 }
 
 static inline gboolean
-remove_task_from_list (GtdTaskListView *self,
-                       GtdTask         *task)
+remove_task_from_list_view (GtdTaskListView *self,
+                            GtdTask         *task)
 {
   GtdTaskListViewPrivate *priv;
   GtdTaskList *list;
@@ -551,14 +551,12 @@ gtd_task_list_view__clear_completed_tasks (GSimpleAction *simple,
 
   for (l = tasks; l != NULL; l = l->next)
     {
-      if (gtd_task_get_complete (l->data))
+      GtdTask *task = l->data;
+
+      if (gtd_task_get_complete (task))
         {
-          GtdTaskList *list;
-
-          list = gtd_task_get_list (l->data);
-
-          gtd_task_list_remove_task (list, l->data);
-          gtd_manager_remove_task (gtd_manager_get_default (), l->data);
+          gtd_task_list_remove_task (gtd_task_get_list (task), task);
+          gtd_provider_remove_task (gtd_task_get_provider (task), task, NULL, NULL);
         }
     }
 
@@ -677,7 +675,7 @@ remove_task_cb (GtdTaskRow      *row,
   data->task = task;
 
   /* Always remove tasks and subtasks */
-  iterate_subtasks (self, task, remove_task_from_list, FALSE);
+  iterate_subtasks (self, task, remove_task_from_list_view, FALSE);
 
   /*
    * Reset the DnD row, to avoid getting into an inconsistent state where
@@ -1041,7 +1039,7 @@ task_completed_cb (GtdTask         *task,
 
   task_complete = gtd_task_get_complete (task);
 
-  gtd_manager_update_task (gtd_manager_get_default (), task);
+  gtd_provider_update_task (gtd_task_get_provider (task), task, NULL, NULL);
   real_save_task (self, task);
 
   if (task_complete)

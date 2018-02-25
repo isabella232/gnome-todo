@@ -20,6 +20,7 @@
 
 #include "gtd-edit-pane.h"
 #include "gtd-manager.h"
+#include "gtd-provider.h"
 #include "gtd-task.h"
 #include "gtd-task-list.h"
 
@@ -74,7 +75,7 @@ gtd_edit_pane__no_date_button_clicked (GtkButton   *button,
 static void
 save_task (GtdEditPane *self)
 {
-  gtd_manager_update_task (gtd_manager_get_default (), self->task);
+  gtd_provider_update_task (gtd_task_get_provider (self->task), self->task, NULL, NULL);
 }
 
 static void

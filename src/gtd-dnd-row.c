@@ -277,7 +277,7 @@ gtd_dnd_row_drag_drop (GtkWidget      *widget,
     }
 
   /* Save the task */
-  gtd_manager_update_task (gtd_manager_get_default (), row_task);
+  gtd_provider_update_task (gtd_task_get_provider (row_task), row_task, NULL, NULL);
 
   gtk_list_box_invalidate_sort (GTK_LIST_BOX (gtk_widget_get_parent (widget)));
 
