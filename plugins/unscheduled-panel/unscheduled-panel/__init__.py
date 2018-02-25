@@ -2,7 +2,7 @@
 
 # __init__.py
 #
-# Copyright (C) 2016 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+# Copyright ® 2016 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,8 +29,9 @@ try:
     gettext.bindtextdomain('gnome-todo')
     gettext.textdomain('gnome-todo')
     _ = gettext.gettext
-except:
-    _ = lambda s: s
+except Exception:
+    def _(s):
+        return s
 
 
 class UnscheduledPanel(Gtk.Box, Gtd.Panel):
@@ -49,13 +50,13 @@ class UnscheduledPanel(Gtk.Box, Gtd.Panel):
 
         self.task_counter = 0
 
-        self.view = Gtd.TaskListView(hexpand=True,
-                                     vexpand=True)
+        self.view = Gtd.TaskListView(hexpand=True, vexpand=True)
         self.view.set_show_list_name(True)
         self.view.set_handle_subtasks(False)
 
         self.menu = Gio.Menu()
-        self.menu.append(_("Clear completed tasks…"), "list.clear-completed-tasks")
+        self.menu.append(_("Clear completed tasks…"),
+                         "list.clear-completed-tasks")
 
         self.add(self.view)
         self.show_all()
@@ -103,6 +104,7 @@ class UnscheduledPanel(Gtk.Box, Gtd.Panel):
         else:
             # Translators: 'Unscheduled' as in 'Unscheduled tasks'
             return _("Unscheduled (%d)" % self.task_counter)
+
 
 class UnscheduledPanelPlugin(GObject.Object, Gtd.Activatable):
 
