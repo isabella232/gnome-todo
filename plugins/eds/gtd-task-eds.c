@@ -594,3 +594,4 @@ gtd_task_eds_get_component (GtdTaskEds *self)
 
   return self->component;
 }
+

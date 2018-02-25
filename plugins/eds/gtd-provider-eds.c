@@ -18,6 +18,8 @@
 
 #define G_LOG_DOMAIN "GtdProviderEds"
 
+#include "gtd-debug.h"
+#include "gtd-eds-autoptr.h"
 #include "gtd-provider-eds.h"
 #include "gtd-task-eds.h"
 #include "gtd-task-list-eds.h"
@@ -42,24 +44,19 @@ typedef struct
   ESourceRegistry      *source_registry;
   ECredentialsPrompter *credentials_prompter;
 
-  GHashTable           *clients;
+  GCancellable         *cancellable;
 
   gint                  lazy_load_id;
 } GtdProviderEdsPrivate;
 
-/* Auxiliary struct for asyncronous task operations */
-typedef struct _TaskData
-{
-  GtdProviderEds     *provider;
-  gpointer           *data;
-} TaskData;
-
 
 static void          gtd_provider_iface_init                     (GtdProviderInterface *iface);
+
 
 G_DEFINE_TYPE_WITH_CODE (GtdProviderEds, gtd_provider_eds, GTD_TYPE_OBJECT,
                          G_ADD_PRIVATE (GtdProviderEds)
                          G_IMPLEMENT_INTERFACE (GTD_TYPE_PROVIDER, gtd_provider_iface_init))
+
 
 enum
 {
@@ -73,34 +70,6 @@ enum
   PROP_REGISTRY,
   N_PROPS
 };
-
-static TaskData*
-task_data_new (GtdProviderEds *provider,
-               gpointer       *data)
-{
-  TaskData *tdata;
-
-  tdata = g_new0 (TaskData, 1);
-  tdata->provider = provider;
-  tdata->data = data;
-
-  return tdata;
-}
-
-static void
-ensure_offline_sync (GtdProviderEds *self,
-                     ESource        *source)
-{
-  GtdProviderEdsPrivate *priv;
-  ESourceOffline *extension;
-
-  priv = gtd_provider_eds_get_instance_private (self);
-
-  extension = e_source_get_extension (source, E_SOURCE_EXTENSION_OFFLINE);
-  e_source_offline_set_stay_synchronized (extension, TRUE);
-
-  e_source_registry_commit_source (priv->source_registry, source, NULL, NULL, NULL);
-}
 
 static void
 gtd_provider_eds_set_default (GtdProviderEds *self,
@@ -121,72 +90,31 @@ gtd_provider_eds_set_default (GtdProviderEds *self,
 }
 
 static void
-gtd_provider_eds_fill_task_list (GObject      *client,
-                                 GAsyncResult *result,
-                                 gpointer      user_data)
+ensure_offline_sync (GtdProviderEds *self,
+                     ESource        *source)
 {
-  g_autoptr (GError) error = NULL;
-  GtdProviderEds *self;
-  GtdTaskList *list;
-  TaskData *data = user_data;
-  GSList *component_list;
-  GSList *l;
+  GtdProviderEdsPrivate *priv = gtd_provider_eds_get_instance_private (self);
+  ESourceOffline *extension;
 
-  g_return_if_fail (GTD_IS_PROVIDER_EDS (data->provider));
+  extension = e_source_get_extension (source, E_SOURCE_EXTENSION_OFFLINE);
+  e_source_offline_set_stay_synchronized (extension, TRUE);
 
-  list = GTD_TASK_LIST (data->data);
-  self = data->provider;
-
-  e_cal_client_get_object_list_as_comps_finish (E_CAL_CLIENT (client),
-                                                result,
-                                                &component_list,
-                                                &error);
-
-  gtd_object_set_ready (GTD_OBJECT (data->data), TRUE);
-  g_free (data);
-
-  if (error)
-    {
-      g_warning ("Error fetching tasks from list: %s", error->message);
-
-      gtd_manager_emit_error_message (gtd_manager_get_default (),
-                                      _("Error fetching tasks from list"),
-                                      error->message,
-                                      NULL,
-                                      NULL);
-      return;
-    }
-
-  for (l = component_list; l != NULL; l = l->next)
-    {
-      GtdTask *task;
-
-      task = gtd_task_eds_new (l->data);
-      gtd_task_set_list (task, list);
-
-      gtd_task_list_save_task (list, task);
-    }
-
-  e_cal_client_free_ecalcomp_slist (component_list);
-
-  /* Emit LIST_ADDED signal */
-  g_signal_emit_by_name (self, "list-added", list);
+  e_source_registry_commit_source (priv->source_registry, source, NULL, NULL, NULL);
 }
 
 static void
-gtd_provider_eds_on_client_connected (GObject      *source_object,
-                                      GAsyncResult *result,
-                                      gpointer      user_data)
+on_client_connected_cb (GObject      *source_object,
+                        GAsyncResult *result,
+                        gpointer      user_data)
 {
+  g_autoptr (ESource) default_source = NULL;
+  g_autoptr (ESource) parent = NULL;
   g_autoptr (GError) error = NULL;
   GtdProviderEdsPrivate *priv;
   GtdProviderEds *self;
   GtdTaskListEds *list;
   ECalClient *client;
-  TaskData *data;
-  ESource *default_source;
   ESource *source;
-  ESource *parent;
 
   self = GTD_PROVIDER_EDS (user_data);
   priv = gtd_provider_eds_get_instance_private (self);
@@ -195,7 +123,7 @@ gtd_provider_eds_on_client_connected (GObject      *source_object,
 
   if (error)
     {
-      g_debug ("Failed to connect to task list '%s': %s", e_source_get_uid (source), error->message);
+      g_warning ("Failed to connect to task list '%s': %s", e_source_get_uid (source), error->message);
 
       gtd_manager_emit_error_message (gtd_manager_get_default (),
                                       _("Failed to connect to task list"),
@@ -205,42 +133,24 @@ gtd_provider_eds_on_client_connected (GObject      *source_object,
       return;
     }
 
+  ensure_offline_sync (self, source);
+
   /* parent source's display name is list's origin */
   parent = e_source_registry_ref_source (priv->source_registry, e_source_get_parent (source));
 
   /* creates a new task list */
-  list = gtd_task_list_eds_new (GTD_PROVIDER (self), source);
-
-  /* ensure tasklist is cached offline */
-  ensure_offline_sync (self, source);
-
-  /* it's not ready until we fetch the list of tasks from client */
-  gtd_object_set_ready (GTD_OBJECT (list), FALSE);
-
-  /* async data */
-  data = task_data_new (user_data, (gpointer) list);
-
-  /* asyncronously fetch the task list */
-  e_cal_client_get_object_list_as_comps (client,
-                                         "contains? \"any\" \"\"",
-                                         NULL,
-                                         gtd_provider_eds_fill_task_list,
-                                         data);
+  list = gtd_task_list_eds_new (GTD_PROVIDER (self), source, client);
 
   priv->task_lists = g_list_append (priv->task_lists, list);
 
   g_object_set_data (G_OBJECT (source), "task-list", list);
-  g_hash_table_insert (priv->clients, source, client);
+  g_object_set_data (G_OBJECT (client), "task-list", list);
 
   /* Check if the current list is the default one */
   default_source = e_source_registry_ref_default_task_list (priv->source_registry);
 
   if (default_source == source)
     g_object_notify (G_OBJECT (self), "default-task-list");
-
-  g_clear_object (&default_source);
-
-  g_object_unref (parent);
 
   g_debug ("Task list '%s' successfully connected", e_source_get_display_name (source));
 }
@@ -254,23 +164,20 @@ typedef struct
 static gboolean
 gtd_provider_eds_load_source_cb (LoadSourceData *data)
 {
-  GtdProviderEdsPrivate *priv;
   GtdProviderEds *provider;
   ESource *source;
 
   provider = data->provider;
   source = data->source;
-  priv = gtd_provider_eds_get_instance_private (provider);
 
   if (e_source_has_extension (source, E_SOURCE_EXTENSION_TASK_LIST) &&
-      !g_hash_table_lookup (priv->clients, source) &&
       GTD_PROVIDER_EDS_CLASS (G_OBJECT_GET_CLASS (provider))->should_load_source (provider, source))
     {
       e_cal_client_connect (source,
                             E_CAL_CLIENT_SOURCE_TYPE_TASKS,
                             10, /* seconds to wait */
                             NULL,
-                            gtd_provider_eds_on_client_connected,
+                            on_client_connected_cb,
                             provider);
     }
 
@@ -313,8 +220,6 @@ gtd_provider_eds_remove_source (GtdProviderEds *provider,
 
   priv->task_lists = g_list_remove (priv->task_lists, list);
 
-  g_hash_table_remove (priv->clients, source);
-
   /* Since all subclasses will have this signal given that they
    * are all GtdProvider implementations, it's not that bad
    * to let it stay here.
@@ -322,12 +227,9 @@ gtd_provider_eds_remove_source (GtdProviderEds *provider,
   g_signal_emit_by_name (provider, "list-removed", list);
 }
 
-
-
-
-/************************
- * Credentials prompter *
- ************************/
+/*
+ * Credentials prompter
+ */
 
 static void
 gtd_manager__invoke_authentication (GObject      *source_object,
@@ -572,21 +474,17 @@ gtd_provider_eds_create_task (GtdProvider   *provider,
                               GError       **error)
 {
   g_autofree gchar *new_uid = NULL;
-  GtdProviderEdsPrivate *priv;
   GtdProviderEds *self;
   GtdTaskListEds *tasklist;
   ECalComponent *component;
   ECalClient *client;
-  ESource *source;
 
   g_return_if_fail (GTD_IS_TASK (task));
   g_return_if_fail (GTD_IS_TASK_LIST_EDS (gtd_task_get_list (task)));
 
   self = GTD_PROVIDER_EDS (provider);
-  priv = gtd_provider_eds_get_instance_private (self);
   tasklist = GTD_TASK_LIST_EDS (gtd_task_get_list (task));
-  source = gtd_task_list_eds_get_source (tasklist);
-  client = g_hash_table_lookup (priv->clients, source);
+  client = gtd_task_list_eds_get_client (tasklist);
   component = gtd_task_eds_get_component (GTD_TASK_EDS (task));
 
   /* The task is not ready until we finish the operation */
@@ -620,21 +518,15 @@ gtd_provider_eds_update_task (GtdProvider   *provider,
                               GCancellable  *cancellable,
                               GError       **error)
 {
-  GtdProviderEdsPrivate *priv;
-  GtdProviderEds *self;
   GtdTaskListEds *tasklist;
   ECalComponent *component;
   ECalClient *client;
-  ESource *source;
 
   g_return_if_fail (GTD_IS_TASK (task));
   g_return_if_fail (GTD_IS_TASK_LIST_EDS (gtd_task_get_list (task)));
 
-  self = GTD_PROVIDER_EDS (provider);
-  priv = gtd_provider_eds_get_instance_private (self);
   tasklist = GTD_TASK_LIST_EDS (gtd_task_get_list (task));
-  source = gtd_task_list_eds_get_source (tasklist);
-  client = g_hash_table_lookup (priv->clients, source);
+  client = gtd_task_list_eds_get_client (tasklist);
   component = gtd_task_eds_get_component (GTD_TASK_EDS (task));
 
   e_cal_component_commit_sequence (component);
@@ -657,23 +549,16 @@ gtd_provider_eds_remove_task (GtdProvider   *provider,
                               GCancellable  *cancellable,
                               GError       **error)
 {
-
-  GtdProviderEdsPrivate *priv;
   ECalComponentId *id;
-  GtdProviderEds *self;
   GtdTaskListEds *tasklist;
   ECalComponent *component;
   ECalClient *client;
-  ESource *source;
 
   g_return_if_fail (GTD_IS_TASK (task));
   g_return_if_fail (GTD_IS_TASK_LIST_EDS (gtd_task_get_list (task)));
 
-  self = GTD_PROVIDER_EDS (provider);
-  priv = gtd_provider_eds_get_instance_private (self);
   tasklist = GTD_TASK_LIST_EDS (gtd_task_get_list (task));
-  source = gtd_task_list_eds_get_source (tasklist);
-  client = g_hash_table_lookup (priv->clients, source);
+  client = gtd_task_list_eds_get_client (tasklist);
   component = gtd_task_eds_get_component (GTD_TASK_EDS (task));
   id = e_cal_component_get_id (component);
 
@@ -735,8 +620,8 @@ gtd_provider_eds_update_task_list (GtdProvider   *provider,
   GtdProviderEdsPrivate *priv;
   ESource *source;
 
-  g_return_if_fail (GTD_IS_TASK_LIST (list));
-  g_return_if_fail (gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list)));
+  g_assert (GTD_IS_TASK_LIST_EDS (list));
+  g_assert (gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list)) != NULL);
 
   priv = gtd_provider_eds_get_instance_private (GTD_PROVIDER_EDS (provider));
   source = gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list));
@@ -760,8 +645,8 @@ gtd_provider_eds_remove_task_list (GtdProvider   *provider,
 {
   ESource *source;
 
-  g_return_if_fail (GTD_IS_TASK_LIST (list));
-  g_return_if_fail (gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list)));
+  g_assert (GTD_IS_TASK_LIST_EDS (list));
+  g_assert (gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list)) != NULL);
 
   error = NULL;
   source = gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list));
@@ -812,8 +697,10 @@ gtd_provider_eds_set_default_task_list (GtdProvider *provider,
   GtdProviderEdsPrivate *priv;
   ESource *source;
 
+  g_assert (GTD_IS_TASK_LIST_EDS (list));
+
   priv = gtd_provider_eds_get_instance_private (GTD_PROVIDER_EDS (provider));
-  source = g_object_get_data (G_OBJECT (list), "task-list");
+  source = gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list));
 
   e_source_registry_set_default_task_list (priv->source_registry, source);
 
@@ -823,17 +710,15 @@ gtd_provider_eds_set_default_task_list (GtdProvider *provider,
 static GtdTask*
 gtd_provider_eds_generate_task (GtdProvider *self)
 {
-  ECalComponent *component;
-  GtdTask *task;
+  g_autoptr (ECalComponent) component = NULL;
+  g_autoptr (GtdTask) task = NULL;
 
   component = e_cal_component_new ();
   e_cal_component_set_new_vtype (component, E_CAL_COMPONENT_TODO);
 
   task = gtd_task_eds_new (component);
 
-  g_object_unref (component);
-
-  return task;
+  return g_steal_pointer (&task);
 }
 
 static void
@@ -869,7 +754,9 @@ gtd_provider_eds_finalize (GObject *object)
 
   g_signal_handlers_disconnect_by_func (priv->source_registry, default_tasklist_changed_cb, self);
 
-  g_clear_pointer (&priv->clients, g_hash_table_destroy);
+  g_cancellable_cancel (priv->cancellable);
+
+  g_clear_object (&priv->cancellable);
   g_clear_object (&priv->credentials_prompter);
   g_clear_object (&priv->source_registry);
 
@@ -974,14 +861,9 @@ gtd_provider_eds_init (GtdProviderEds *self)
 {
   GtdProviderEdsPrivate *priv = gtd_provider_eds_get_instance_private (self);
 
-  /* While it's not ready, we don't load tasklists */
-  gtd_object_set_ready (GTD_OBJECT (self), FALSE);
+  priv->cancellable = g_cancellable_new ();
 
-  /* hash table */
-  priv->clients = g_hash_table_new_full ((GHashFunc) e_source_hash,
-                                         (GEqualFunc) e_source_equal,
-                                         g_object_unref,
-                                         g_object_unref);
+  gtd_object_set_ready (GTD_OBJECT (self), FALSE);
 }
 
 GtdProviderEds*

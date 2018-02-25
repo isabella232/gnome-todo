@@ -54,6 +54,7 @@ struct _GtdProviderEdsClass
 GtdProviderEds*      gtd_provider_eds_new                        (ESourceRegistry    *registry);
 
 ESourceRegistry*     gtd_provider_eds_get_registry               (GtdProviderEds     *local);
+
 G_END_DECLS
 
 #endif /* GTD_PROVIDER_EDS_H */

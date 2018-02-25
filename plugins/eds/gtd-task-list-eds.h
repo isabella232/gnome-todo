@@ -31,12 +31,15 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GtdTaskListEds, gtd_task_list_eds, GTD, TASK_LIST_EDS, GtdTaskList)
 
 GtdTaskListEds*      gtd_task_list_eds_new                       (GtdProvider        *provider,
-                                                                  ESource            *source);
+                                                                  ESource            *source,
+                                                                  ECalClient         *client);
 
 ESource*             gtd_task_list_eds_get_source                (GtdTaskListEds     *list);
 
 void                 gtd_task_list_eds_set_source                (GtdTaskListEds     *list,
                                                                   ESource            *source);
+
+ECalClient*          gtd_task_list_eds_get_client                (GtdTaskListEds     *self);
 
 G_END_DECLS
 

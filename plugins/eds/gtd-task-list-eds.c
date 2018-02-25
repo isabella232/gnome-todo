@@ -18,6 +18,9 @@
 
 #define G_LOG_DOMAIN "GtdTaskListEds"
 
+#include "gtd-debug.h"
+#include "gtd-eds-autoptr.h"
+#include "gtd-provider-eds.h"
 #include "gtd-task-eds.h"
 #include "gtd-task-list-eds.h"
 
@@ -27,6 +30,8 @@ struct _GtdTaskListEds
 {
   GtdTaskList         parent;
 
+  ECalClient         *client;
+  ECalClientView     *client_view;
   ESource            *source;
 
   GPtrArray           *pending_subtasks;
@@ -44,6 +49,7 @@ G_DEFINE_TYPE (GtdTaskListEds, gtd_task_list_eds, GTD_TYPE_TASK_LIST)
 
 enum {
   PROP_0,
+  PROP_CLIENT,
   PROP_SOURCE,
   N_PROPS
 };
@@ -71,6 +77,240 @@ pending_subtask_data_free (PendingSubtaskData *data)
 {
   g_free (data->parent_uid);
   g_free (data);
+}
+
+static GtdTask*
+get_task_from_uuid (GList       *tasks,
+                    const gchar *uuid)
+{
+  GList *t;
+
+  for (t = tasks; t; t = t->next)
+    {
+      GtdTask *task = t->data;
+
+      g_assert (GTD_IS_TASK_EDS (task));
+
+      if (g_strcmp0 (uuid, gtd_object_get_uid (GTD_OBJECT (task))) != 0)
+        continue;
+
+      return task;
+    }
+
+  return NULL;
+}
+
+static void
+on_view_objects_added_cb (ECalClientView *view,
+                          const GSList   *objects,
+                          GtdTaskList    *self)
+{
+  g_autoptr (ECalClient) client = NULL;
+  GSList *l;
+
+  GTD_ENTRY;
+
+  client = e_cal_client_view_ref_client (view);
+
+  for (l = (GSList*) objects; l; l = l->next)
+    {
+      g_autoptr (ECalComponent) component = NULL;
+      GtdTask *task;
+
+      component = e_cal_component_new_from_string (icalcomponent_as_ical_string (l->data));
+      task = gtd_task_eds_new (component);
+      gtd_task_set_list (task, self);
+
+      gtd_task_list_save_task (self, task);
+
+      GTD_TRACE_MSG ("  Added task '%s' (%s) to tasklist %s",
+                     gtd_task_get_title (task),
+                     gtd_object_get_uid (GTD_OBJECT (task)),
+                     gtd_task_list_get_name (self));
+    }
+
+  GTD_EXIT;
+}
+
+static void
+on_view_objects_modified_cb (ECalClientView *view,
+                             const GSList   *objects,
+                             GtdTaskList    *self)
+{
+  g_autoptr (ECalClient) client = NULL;
+  GSList *l;
+  GList *tasks;
+
+  GTD_ENTRY;
+
+  client = e_cal_client_view_ref_client (view);
+  tasks = gtd_task_list_get_tasks (self);
+
+  for (l = (GSList*) objects; l; l = l->next)
+    {
+      g_autoptr (ECalComponent) component = NULL;
+      GtdTask *task;
+      GList *subtasks;
+      GList *s;
+      const gchar *uid;
+
+      component = e_cal_component_new_from_string (icalcomponent_as_ical_string (l->data));
+      e_cal_component_get_uid (component, &uid);
+
+      task = get_task_from_uuid (tasks, uid);
+
+      if (!task)
+        continue;
+
+      /* Remove the subtasks */
+      subtasks = gtd_task_get_subtasks (task);
+
+      for (s = subtasks; s; s = s->next)
+        gtd_task_remove_subtask (task, s->data);
+
+      /* Remove the task from the list */
+      gtd_task_list_remove_task (self, task);
+
+      task = gtd_task_eds_new (component);
+      gtd_task_list_save_task (self, task);
+
+      for (s = subtasks; s; s = s->next)
+        gtd_task_add_subtask (task, s->data);
+
+      GTD_TRACE_MSG ("Updating task '%s' from tasklist '%s'",
+                     gtd_task_get_title (GTD_TASK (task)),
+                     gtd_task_list_get_name (self));
+
+      g_clear_pointer (&subtasks, g_list_free);
+    }
+
+  g_list_free (tasks);
+
+  GTD_EXIT;
+}
+
+static void
+on_view_objects_removed_cb (ECalClientView *view,
+                            const GSList   *uids,
+                            GtdTaskList    *self)
+{
+  GSList *l;
+  GList *tasks;
+
+  GTD_ENTRY;
+
+  tasks = gtd_task_list_get_tasks (self);
+
+  for (l = (GSList*) uids; l; l = l->next)
+    {
+      ECalComponentId *id;
+      GtdTask *task;
+
+      id = l->data;
+      task = get_task_from_uuid (tasks, id->uid);
+
+      if (!task)
+        continue;
+
+      gtd_task_list_remove_task (self, task);
+
+      GTD_TRACE_MSG ("Removed task '%s' from tasklist %s",
+                     gtd_task_get_title (task),
+                     gtd_task_list_get_name (self));
+    }
+
+  g_list_free (tasks);
+
+  GTD_EXIT;
+}
+
+static void
+on_view_completed_cb (ECalClientView *view,
+                      const GError   *error,
+                      GtdTaskList    *self)
+{
+  g_autoptr (ECalClient) client = NULL;
+
+  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
+
+  if (error)
+    {
+      g_warning ("Error fetching tasks from list: %s", error->message);
+
+      gtd_manager_emit_error_message (gtd_manager_get_default (),
+                                      _("Error fetching tasks from list"),
+                                      error->message,
+                                      NULL,
+                                      NULL);
+      return;
+    }
+
+  client = e_cal_client_view_ref_client (view);
+
+  /* Emit LIST_ADDED signal */
+  g_signal_emit_by_name (gtd_task_list_get_provider (self), "list-added", self);
+}
+
+static void
+on_client_view_acquired_cb (GObject      *client,
+                            GAsyncResult *result,
+                            gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+  GtdTaskListEds *self;
+
+  self = GTD_TASK_LIST_EDS (user_data);
+
+  e_cal_client_get_view_finish (E_CAL_CLIENT (client), result, &self->client_view, &error);
+
+  if (error)
+    {
+      g_warning ("Error fetching tasks from list: %s", error->message);
+
+      gtd_manager_emit_error_message (gtd_manager_get_default (),
+                                      _("Error fetching tasks from list"),
+                                      error->message,
+                                      NULL,
+                                      NULL);
+      return;
+    }
+
+  g_debug ("ECalClientView for tasklist '%s' successfully acquired",
+           gtd_task_list_get_name (GTD_TASK_LIST (self)));
+
+  g_signal_connect (self->client_view, "objects-added", G_CALLBACK (on_view_objects_added_cb), self);
+  g_signal_connect (self->client_view, "objects-removed", G_CALLBACK (on_view_objects_removed_cb), self);
+  g_signal_connect (self->client_view, "objects-modified", G_CALLBACK (on_view_objects_modified_cb), self);
+  g_signal_connect (self->client_view, "complete", G_CALLBACK (on_view_completed_cb), self);
+
+  e_cal_client_view_start (self->client_view, &error);
+
+  if (error)
+    {
+      g_warning ("Error starting view: %s", error->message);
+
+      gtd_manager_emit_error_message (gtd_manager_get_default (),
+                                      _("Error fetching tasks from list"),
+                                      error->message,
+                                      NULL,
+                                      NULL);
+    }
+}
+
+static void
+set_client (GtdTaskListEds *self,
+            ECalClient     *client)
+{
+  if (!g_set_object (&self->client, client) || !client)
+    return;
+
+  e_cal_client_get_view (client,
+                         "#t",
+                         self->cancellable,
+                         on_client_view_acquired_cb,
+                         self);
+
+  g_object_notify (G_OBJECT (self), "client");
 }
 
 static void
@@ -245,6 +485,8 @@ gtd_task_list_eds_finalize (GObject *object)
   g_cancellable_cancel (self->cancellable);
 
   g_clear_object (&self->cancellable);
+  g_clear_object (&self->client);
+  g_clear_object (&self->client_view);
   g_clear_object (&self->source);
 
   G_OBJECT_CLASS (gtd_task_list_eds_parent_class)->finalize (object);
@@ -260,6 +502,10 @@ gtd_task_list_eds_get_property (GObject    *object,
 
   switch (prop_id)
     {
+    case PROP_CLIENT:
+      g_value_set_object (value, self->client);
+      break;
+
     case PROP_SOURCE:
       g_value_set_object (value, self->source);
       break;
@@ -279,6 +525,10 @@ gtd_task_list_eds_set_property (GObject      *object,
 
   switch (prop_id)
     {
+    case PROP_CLIENT:
+      set_client (self, g_value_get_object (value));
+      break;
+
     case PROP_SOURCE:
       gtd_task_list_eds_set_source (self, g_value_get_object (value));
       break;
@@ -299,6 +549,20 @@ gtd_task_list_eds_class_init (GtdTaskListEdsClass *klass)
   object_class->finalize = gtd_task_list_eds_finalize;
   object_class->get_property = gtd_task_list_eds_get_property;
   object_class->set_property = gtd_task_list_eds_set_property;
+
+
+  /**
+   * GtdTaskListEds::client:
+   *
+   * The #ECalClient of this #GtdTaskListEds
+   */
+  g_object_class_install_property (object_class,
+                                   PROP_CLIENT,
+                                   g_param_spec_object ("client",
+                                                        "ECalClient of this list",
+                                                        "The ECalClient of this list",
+                                                        E_TYPE_CAL_CLIENT,
+                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
   /**
    * GtdTaskListEds::source:
@@ -322,11 +586,13 @@ gtd_task_list_eds_init (GtdTaskListEds *self)
 
 GtdTaskListEds*
 gtd_task_list_eds_new (GtdProvider *provider,
-                       ESource     *source)
+                       ESource     *source,
+                       ECalClient  *client)
 {
   return g_object_new (GTD_TYPE_TASK_LIST_EDS,
                        "provider", provider,
                        "source", source,
+                       "client", client,
                        NULL);
 }
 
@@ -339,12 +605,12 @@ gtd_task_list_eds_get_source (GtdTaskListEds *list)
 }
 
 void
-gtd_task_list_eds_set_source (GtdTaskListEds *list,
+gtd_task_list_eds_set_source (GtdTaskListEds *self,
                               ESource        *source)
 {
-  g_return_if_fail (GTD_IS_TASK_LIST_EDS (list));
+  g_return_if_fail (GTD_IS_TASK_LIST_EDS (self));
 
-  if (g_set_object (&list->source, source))
+  if (g_set_object (&self->source, source))
     {
       ESourceSelectable *selectable;
       GdkRGBA color;
@@ -355,24 +621,24 @@ gtd_task_list_eds_set_source (GtdTaskListEds *list,
       if (!gdk_rgba_parse (&color, e_source_selectable_get_color (selectable)))
         gdk_rgba_parse (&color, "#ffffff"); /* calendar default color */
 
-      gtd_task_list_set_color (GTD_TASK_LIST (list), &color);
+      gtd_task_list_set_color (GTD_TASK_LIST (self), &color);
 
-      g_object_bind_property_full (list,
+      g_object_bind_property_full (self,
                                    "color",
                                    selectable,
                                    "color",
                                    G_BINDING_BIDIRECTIONAL,
                                    color_to_string,
                                    string_to_color,
-                                   list,
+                                   self,
                                    NULL);
 
       /* Setup tasklist name */
-      gtd_task_list_set_name (GTD_TASK_LIST (list), e_source_get_display_name (source));
+      gtd_task_list_set_name (GTD_TASK_LIST (self), e_source_get_display_name (source));
 
       g_object_bind_property (source,
                               "display-name",
-                              list,
+                              self,
                               "name",
                               G_BINDING_BIDIRECTIONAL);
 
@@ -380,23 +646,31 @@ gtd_task_list_eds_set_source (GtdTaskListEds *list,
       g_signal_connect_swapped (source,
                                 "notify",
                                 G_CALLBACK (save_task_list),
-                                list);
+                                self);
 
       /* Update ::is-removable property */
-      gtd_task_list_set_is_removable (GTD_TASK_LIST (list),
+      gtd_task_list_set_is_removable (GTD_TASK_LIST (self),
                                       e_source_get_removable (source) ||
                                       e_source_get_remote_deletable (source));
 
       g_signal_connect_swapped (source,
                                 "notify::removable",
                                 G_CALLBACK (source_removable_changed),
-                                list);
+                                self);
 
       g_signal_connect_swapped (source,
                                 "notify::remote-deletable",
                                 G_CALLBACK (source_removable_changed),
-                                list);
+                                self);
 
-      g_object_notify (G_OBJECT (list), "source");
+      g_object_notify (G_OBJECT (self), "source");
     }
+}
+
+ECalClient*
+gtd_task_list_eds_get_client (GtdTaskListEds *self)
+{
+  g_return_val_if_fail (GTD_IS_TASK_LIST_EDS (self), NULL);
+
+  return self->client;
 }
