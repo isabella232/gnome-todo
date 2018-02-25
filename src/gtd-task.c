@@ -1246,3 +1246,35 @@ gtd_task_get_depth (GtdTask *self)
 
   return priv->depth;
 }
+
+/**
+ * gtd_task_get_provider:
+ * @self: a #GtdTaskList
+ *
+ * Utility function to retrieve the data provider that backs this
+ * task. Notice that this is exactly the same as writting:
+ *
+ * |[<!-- language="C" -->
+ * GtdTaskList *list;
+ * GtdProvider *provider;
+ *
+ * list = gtd_task_get_list (task);
+ * provider = gtd_task_list_get_provider (list);
+ * ]|
+ *
+ * Returns: (transfer none)(nullable): the #GtdProvider of this task's list.
+ */
+GtdProvider*
+gtd_task_get_provider (GtdTask *self)
+{
+  GtdTaskPrivate *priv;
+
+  g_return_val_if_fail (GTD_IS_TASK (self), NULL);
+
+  priv = gtd_task_get_instance_private (self);
+
+  if (priv->list)
+    return gtd_task_list_get_provider (priv->list);
+
+  return NULL;
+}

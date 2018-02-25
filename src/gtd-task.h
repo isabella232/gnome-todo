@@ -118,6 +118,8 @@ gboolean            gtd_task_is_subtask               (GtdTask              *sel
 
 gint                gtd_task_get_depth                (GtdTask              *self);
 
+GtdProvider*        gtd_task_get_provider             (GtdTask              *self);
+
 G_END_DECLS
 
 #endif /* GTD_TASK_H */
