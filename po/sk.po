@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-02-26 01:23+0000\n"
-"PO-Revision-Date: 2018-02-26 12:23+0100\n"
+"POT-Creation-Date: 2018-02-26 14:13+0000\n"
+"PO-Revision-Date: 2018-02-26 18:37+0100\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: slovenčina <>\n"
 "Language: sk\n"
@@ -356,9 +356,29 @@ msgstr "Zobraziť oznámenia po spustení aplikácie Úlohy"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Chyba pri načítavaní Účtov služieb prostredia GNOME"
 
-#: plugins/eds/gtd-provider-eds.c:129
+#: plugins/eds/gtd-provider-eds.c:145
 msgid "Failed to connect to task list"
 msgstr "Zlyhalo pripojenie k zoznamu úloh"
+
+#: plugins/eds/gtd-provider-eds.c:442
+msgid "An error occurred while creating a task"
+msgstr "Počas vytvárania úlohy sa vyskytla chyba"
+
+#: plugins/eds/gtd-provider-eds.c:477
+msgid "An error occurred while modifying a task"
+msgstr "Počas upravovania úlohy sa vyskytla chyba"
+
+#: plugins/eds/gtd-provider-eds.c:498
+msgid "An error occurred while removing a task"
+msgstr "Počas odstraňovania úlohy sa vyskytla chyba"
+
+#: plugins/eds/gtd-provider-eds.c:516
+msgid "An error occurred while creating a task list"
+msgstr "Počas vytvárania zoznamu úloh sa vyskytla chyba"
+
+#: plugins/eds/gtd-provider-eds.c:537 plugins/eds/gtd-provider-eds.c:561
+msgid "An error occurred while modifying a task list"
+msgstr "Počas upravovania zoznamu úloh sa vyskytla chyba"
 
 #: plugins/eds/gtd-provider-local.c:50
 msgid "Local"
@@ -417,19 +437,43 @@ msgstr "Vymazať dokončené úlohy…"
 msgid "No task completed today"
 msgstr "Dnes nebola dokončená žiadna úloha"
 
-#: plugins/todoist/gtd-provider-todoist.c:198
+#: plugins/todoist/gtd-provider-todoist.c:205
 msgid "Error fetching Todoist account key"
 msgstr "Chyba pri získavaní kľúča účtu služby Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:199
+#: plugins/todoist/gtd-provider-todoist.c:206
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Prosím, uistite sa, že je účet služby Todoist správne nastavený."
 
-#: plugins/todoist/gtd-provider-todoist.c:867
+#: plugins/todoist/gtd-provider-todoist.c:571
+#, c-format
+msgid ""
+"GNOME To Do doesn't have the necessary permissions to perform this action: %s"
+msgstr ""
+"Aplikácia Úlohy prostredia GNOME nemá dostatočné oprávnenia na vykonanie "
+"tejto akcie: %s"
+
+#: plugins/todoist/gtd-provider-todoist.c:579
+#, c-format
+msgid ""
+"Invalid response received from Todoist servers. Please reload GNOME To Do."
+msgstr ""
+"Zo serverov služby Todoist bola prijatá neplatná odpoveď. Prosím, znovu "
+"načítajte aplikáciu Úlohy prostredia GNOME."
+
+#: plugins/todoist/gtd-provider-todoist.c:831
+msgid "An error occurred while retrieving Todoist data"
+msgstr "Počas prijímania údajov zo služby Todoist sa vyskytla chyba"
+
+#: plugins/todoist/gtd-provider-todoist.c:897
+msgid "An error occurred while updating Todoist"
+msgstr "Počas aktualizovania služby Todoist sa vyskytla chyba"
+
+#: plugins/todoist/gtd-provider-todoist.c:951
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1170
+#: plugins/todoist/gtd-provider-todoist.c:1242
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -583,7 +627,6 @@ msgstr "Odstrániť"
 
 #: src/gtd-task-list-view.c:380
 #, c-format
-#| msgid "Done"
 msgid "Done (%d)"
 msgstr "Hotovo (%d)"
 
@@ -654,9 +697,6 @@ msgstr "Odstránenie zoznamov úloh"
 #~ msgid "Error loading task manager"
 #~ msgstr "Chyba pri načítavaní správcu úloh"
 
-#~ msgid "Error removing task"
-#~ msgstr "Chyba pri odstraňovaní úlohy"
-
 #~ msgid "Error updating task"
 #~ msgstr "Chyba pri aktualizovaní úlohy"
 
@@ -668,9 +708,6 @@ msgstr "Odstránenie zoznamov úloh"
 
 #~ msgid "Error updating task list"
 #~ msgstr "Chyba pri aktualizovaní zoznamu úloh"
-
-#~ msgid "Error removing task list"
-#~ msgstr "Chyba pri odstraňovaní zoznamu úloh"
 
 #~ msgid "Error removing remote task list"
 #~ msgstr "Chyba pri odstraňovaní vzdialeného zoznamu úloh"
@@ -742,9 +779,6 @@ msgstr "Odstránenie zoznamov úloh"
 
 #~ msgid "Error while reading tasks from Todo.txt"
 #~ msgstr "Chyba počas čítania úloh zo súboru Todo.txt"
-
-#~ msgid "Error while creating a Todo.txt list"
-#~ msgstr "Chyba počas vytvárania zoznamu Todo.txt"
 
 #~ msgid "Error while reading task lists from Todo.txt"
 #~ msgstr "Chyba počas čítania zoznamov úloh zo súboru Todo.txt"
