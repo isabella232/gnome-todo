@@ -409,6 +409,162 @@ gtd_provider_eds_set_registry (GtdProviderEds  *provider,
   e_credentials_prompter_process_awaiting_credentials (priv->credentials_prompter);
 }
 
+#define REPORT_ERROR(title,error) \
+G_STMT_START \
+  if (error) \
+    { \
+      g_warning ("%s: %s", title, error->message); \
+      gtd_manager_emit_error_message (gtd_manager_get_default (), title, error->message, NULL, NULL); \
+      GTD_RETURN (); \
+    } \
+G_STMT_END
+
+static void
+on_task_created_cb (ECalClient   *client,
+                    GAsyncResult *result,
+                    GtdTask      *task)
+{
+  g_autoptr (GError) error = NULL;
+  g_autofree gchar *new_uid = NULL;
+  GtdProviderEds *self;
+  GtdTaskList *list;
+
+  GTD_ENTRY;
+
+  self = GTD_PROVIDER_EDS (gtd_task_get_provider (task));
+  list = gtd_task_get_list (task);
+
+  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
+  gtd_object_set_ready (GTD_OBJECT (task), TRUE);
+
+  e_cal_client_create_object_finish (client, result, &new_uid, &error);
+
+  REPORT_ERROR (_("An error occurred while creating a task"), error);
+
+  /* Add to the list */
+  gtd_task_list_save_task (list, task);
+
+  /* Update the default tasklist */
+  set_default_list (self, list);
+
+  /*
+   * In the case the task UID changes because of creation proccess,
+   * reapply it to the task.
+   */
+  if (new_uid)
+    gtd_object_set_uid (GTD_OBJECT (task), new_uid);
+
+  GTD_EXIT;
+}
+
+static void
+on_task_modified_cb (ECalClient   *client,
+                     GAsyncResult *result,
+                     GtdTask      *task)
+{
+  g_autoptr (GError) error = NULL;
+  GtdProviderEds *self;
+
+  GTD_ENTRY;
+
+  self = GTD_PROVIDER_EDS (gtd_task_get_provider (task));
+
+  gtd_object_set_ready (GTD_OBJECT (task), TRUE);
+  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
+
+  e_cal_client_modify_object_finish (client, result, &error);
+
+  REPORT_ERROR (_("An error occurred while modifying a task"), error);
+
+  GTD_EXIT;
+}
+
+static void
+on_task_removed_cb (GObject      *object,
+                    GAsyncResult *result,
+                    gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+  GtdProviderEds *self;
+
+  GTD_ENTRY;
+
+  self = GTD_PROVIDER_EDS (user_data);
+
+  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
+
+  e_cal_client_remove_object_finish (E_CAL_CLIENT (object), result, &error);
+
+  REPORT_ERROR (_("An error occurred while removing a task"), error);
+
+  GTD_EXIT;
+}
+
+static void
+on_task_list_created_cb (ESourceRegistry *registry,
+                         GAsyncResult    *result,
+                         GtdProviderEds  *self)
+{
+  g_autoptr (GError) error = NULL;
+
+  GTD_ENTRY;
+
+  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
+
+  e_source_registry_commit_source_finish (registry, result, &error);
+
+  REPORT_ERROR (_("An error occurred while creating a task list"), error);
+
+  GTD_EXIT;
+}
+
+static void
+on_task_list_modified_cb (ESourceRegistry *registry,
+                          GAsyncResult    *result,
+                          GtdTaskList     *list)
+{
+  g_autoptr (GError) error = NULL;
+  GtdProviderEds *self;
+
+  GTD_ENTRY;
+
+  self = GTD_PROVIDER_EDS (gtd_task_list_get_provider (list));
+
+  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
+
+  e_source_registry_commit_source_finish (registry, result, &error);
+
+  REPORT_ERROR (_("An error occurred while modifying a task list"), error);
+
+  g_signal_emit_by_name (self, "list-changed", list);
+
+  GTD_EXIT;
+}
+
+
+static void
+on_task_list_removed_cb (ESource      *source,
+                         GAsyncResult *result,
+                         GtdTaskList  *list)
+{
+  g_autoptr (GError) error = NULL;
+  GtdProviderEds *self;
+
+  GTD_ENTRY;
+
+  self = GTD_PROVIDER_EDS (gtd_task_list_get_provider (list));
+
+  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
+
+  e_source_remove_finish (source, result, &error);
+
+  REPORT_ERROR (_("An error occurred while modifying a task list"), error);
+
+  g_signal_emit_by_name (self, "list-removed", list);
+
+  GTD_EXIT;
+}
+
 
 /*
  * GtdProvider iface
@@ -461,7 +617,6 @@ gtd_provider_eds_create_task (GtdProvider *provider,
                               const gchar *title,
                               GDateTime   *due_date)
 {
-  g_autofree gchar *new_uid = NULL;
   GtdTaskListEds *tasklist;
   GtdProviderEds *self;
   ECalComponent *component;
@@ -469,6 +624,8 @@ gtd_provider_eds_create_task (GtdProvider *provider,
   GtdTask *new_task;
 
   g_return_if_fail (GTD_IS_TASK_LIST_EDS (list));
+
+  GTD_ENTRY;
 
   self = GTD_PROVIDER_EDS (provider);
   tasklist = GTD_TASK_LIST_EDS (list);
@@ -484,27 +641,16 @@ gtd_provider_eds_create_task (GtdProvider *provider,
   gtd_task_set_list (new_task, list);
 
   /* The task is not ready until we finish the operation */
+  gtd_object_set_ready (GTD_OBJECT (self), FALSE);
   gtd_object_set_ready (GTD_OBJECT (new_task), FALSE);
 
-  if (e_cal_client_create_object_sync (client,
-                                       e_cal_component_get_icalcomponent (component),
-                                       &new_uid,
-                                       NULL,
-                                       NULL))
-    {
-      /* Add to the list */
-      gtd_task_list_save_task (list, new_task);
+  e_cal_client_create_object (client,
+                              e_cal_component_get_icalcomponent (component),
+                              NULL,
+                              (GAsyncReadyCallback) on_task_created_cb,
+                              new_task);
 
-      /* Update the default tasklist */
-      set_default_list (self, list);
-
-      /*
-       * In the case the task UID changes because of creation proccess,
-       * reapply it to the task.
-       */
-      if (new_uid)
-        gtd_object_set_uid (GTD_OBJECT (new_task), new_uid);
-    }
+  GTD_EXIT;
 }
 
 static void
@@ -514,6 +660,8 @@ gtd_provider_eds_update_task (GtdProvider *provider,
   GtdTaskListEds *tasklist;
   ECalComponent *component;
   ECalClient *client;
+
+  GTD_ENTRY;
 
   g_return_if_fail (GTD_IS_TASK (task));
   g_return_if_fail (GTD_IS_TASK_LIST_EDS (gtd_task_get_list (task)));
@@ -526,14 +674,16 @@ gtd_provider_eds_update_task (GtdProvider *provider,
 
   /* The task is not ready until we finish the operation */
   gtd_object_set_ready (GTD_OBJECT (task), FALSE);
+  gtd_object_set_ready (GTD_OBJECT (provider), FALSE);
 
-  e_cal_client_modify_object_sync (client,
-                                   e_cal_component_get_icalcomponent (component),
-                                   E_CAL_OBJ_MOD_THIS,
-                                   NULL,
-                                   NULL);
+  e_cal_client_modify_object (client,
+                              e_cal_component_get_icalcomponent (component),
+                              E_CAL_OBJ_MOD_THIS,
+                              NULL,
+                              (GAsyncReadyCallback) on_task_modified_cb,
+                              task);
 
-  gtd_object_set_ready (GTD_OBJECT (task), TRUE);
+  GTD_EXIT;
 }
 
 static void
@@ -545,6 +695,8 @@ gtd_provider_eds_remove_task (GtdProvider *provider,
   ECalComponent *component;
   ECalClient *client;
 
+  GTD_ENTRY;
+
   g_return_if_fail (GTD_IS_TASK (task));
   g_return_if_fail (GTD_IS_TASK_LIST_EDS (gtd_task_get_list (task)));
 
@@ -553,17 +705,17 @@ gtd_provider_eds_remove_task (GtdProvider *provider,
   component = gtd_task_eds_get_component (GTD_TASK_EDS (task));
   id = e_cal_component_get_id (component);
 
-  /* The task is not ready until we finish the operation */
-  gtd_object_set_ready (GTD_OBJECT (task), FALSE);
+  gtd_object_set_ready (GTD_OBJECT (provider), FALSE);
 
-  e_cal_client_remove_object_sync (client,
-                                   id->uid,
-                                   id->rid,
-                                   E_CAL_OBJ_MOD_THIS,
-                                   NULL,
-                                   NULL);
+  e_cal_client_remove_object (client,
+                              id->uid,
+                              id->rid,
+                              E_CAL_OBJ_MOD_THIS,
+                              NULL,
+                              (GAsyncReadyCallback) on_task_removed_cb,
+                              provider);
 
-  gtd_object_set_ready (GTD_OBJECT (task), TRUE);
+  GTD_EXIT;
 }
 
 static void
@@ -573,6 +725,8 @@ gtd_provider_eds_create_task_list (GtdProvider *provider,
   GtdProviderEdsPrivate *priv;
   GtdProviderEds *self;
   ESource *source;
+
+  GTD_ENTRY;
 
   self = GTD_PROVIDER_EDS (provider);
   priv = gtd_provider_eds_get_instance_private (self);
@@ -585,13 +739,18 @@ gtd_provider_eds_create_task_list (GtdProvider *provider,
   if (!source)
     return;
 
+  gtd_object_set_ready (GTD_OBJECT (provider), FALSE);
+
   /* EDS properties */
   e_source_set_display_name (source, name);
 
-  e_source_registry_commit_source_sync (priv->source_registry,
-                                        source,
-                                        NULL,
-                                        NULL);
+  e_source_registry_commit_source (priv->source_registry,
+                                   source,
+                                   NULL,
+                                   (GAsyncReadyCallback) on_task_list_created_cb,
+                                   provider);
+
+  GTD_EXIT;
 }
 
 static void
@@ -601,6 +760,8 @@ gtd_provider_eds_update_task_list (GtdProvider *provider,
   GtdProviderEdsPrivate *priv;
   ESource *source;
 
+  GTD_ENTRY;
+
   g_assert (GTD_IS_TASK_LIST_EDS (list));
   g_assert (gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list)) != NULL);
 
@@ -609,14 +770,13 @@ gtd_provider_eds_update_task_list (GtdProvider *provider,
 
   gtd_object_set_ready (GTD_OBJECT (provider), FALSE);
 
-  e_source_registry_commit_source_sync (priv->source_registry,
-                                        source,
-                                        NULL,
-                                        NULL);
+  e_source_registry_commit_source (priv->source_registry,
+                                   source,
+                                   NULL,
+                                   (GAsyncReadyCallback) on_task_list_modified_cb,
+                                   list);
 
-  gtd_object_set_ready (GTD_OBJECT (provider), TRUE);
-
-  g_signal_emit_by_name (provider, "list-changed", list);
+  GTD_EXIT;
 }
 
 static void
@@ -625,6 +785,8 @@ gtd_provider_eds_remove_task_list (GtdProvider *provider,
 {
   ESource *source;
 
+  GTD_ENTRY;
+
   g_assert (GTD_IS_TASK_LIST_EDS (list));
   g_assert (gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list)) != NULL);
 
@@ -632,11 +794,12 @@ gtd_provider_eds_remove_task_list (GtdProvider *provider,
 
   gtd_object_set_ready (GTD_OBJECT (provider), FALSE);
 
-  e_source_remove_sync (source, NULL, NULL);
+  e_source_remove (source,
+                   NULL,
+                   (GAsyncReadyCallback) on_task_list_removed_cb,
+                   list);
 
-  gtd_object_set_ready (GTD_OBJECT (provider), TRUE);
-
-  g_signal_emit_by_name (provider, "list-removed", list);
+  GTD_EXIT;
 }
 
 static GList*
