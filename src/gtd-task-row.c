@@ -234,12 +234,6 @@ gtd_task_row_set_task (GtdTaskRow *row,
                               "text",
                               G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
-      g_object_bind_property (task,
-                              "complete",
-                              row->done_check,
-                              "active",
-                              G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
-
       g_object_bind_property_full (task,
                                    "due-date",
                                    row->task_date_label,
@@ -280,7 +274,6 @@ gtd_task_row_set_task (GtdTaskRow *row,
 
   g_object_notify (G_OBJECT (row), "task");
 }
-
 
 
 /*
@@ -463,13 +456,24 @@ on_complete_changed_cb (GtdTaskRow *self,
                         GtdTask    *task)
 {
   GtkStyleContext *context;
+  gboolean complete;
 
+  GTD_ENTRY;
+
+  complete = gtd_task_get_complete (task);
   context = gtk_widget_get_style_context (GTK_WIDGET (self));
 
-  if (gtd_task_get_complete (task))
+  if (complete)
     gtk_style_context_add_class (context, "complete");
   else
     gtk_style_context_remove_class (context, "complete");
+
+  /* Update the toggle button as well */
+  g_signal_handlers_block_by_func (self->done_check, on_complete_check_toggled_cb, self);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->done_check), complete);
+  g_signal_handlers_unblock_by_func (self->done_check, on_complete_check_toggled_cb, self);
+
+  GTD_EXIT;
 }
 
 static void
@@ -477,9 +481,14 @@ on_toggle_complete_cb (GtkRevealer *revealer,
                        GParamSpec  *pspec,
                        GtdTaskRow  *self)
 {
+  GtdTask *task;
+
   g_signal_handlers_disconnect_by_func (revealer, on_toggle_complete_cb, self);
 
-  gtd_task_set_complete (self->task, !gtd_task_get_complete (self->task));
+  task = self->task;
+
+  gtd_task_set_complete (task, !gtd_task_get_complete (task));
+  gtd_provider_update_task (gtd_task_get_provider (task), task);
 }
 
 static void
@@ -488,6 +497,8 @@ on_complete_check_toggled_cb (GtkToggleButton *button,
 {
   GtdTaskListView *listview;
 
+  GTD_ENTRY;
+
   listview = GTD_TASK_LIST_VIEW (gtk_widget_get_ancestor (GTK_WIDGET (self), GTD_TYPE_TASK_LIST_VIEW));
 
   /*
@@ -495,19 +506,25 @@ on_complete_check_toggled_cb (GtkToggleButton *button,
    * don't have to hide the row. Simply toggle the 'complete'
    * property of the task.
    */
-  if (gtd_task_list_view_get_show_completed (listview))
+  if (!gtd_task_list_view_get_show_completed (listview))
     {
-      gtd_task_set_complete (self->task, !gtd_task_get_complete (self->task));
-      return;
+      gtk_revealer_set_reveal_child (GTK_REVEALER (self->revealer),
+                                     !gtk_toggle_button_get_active (button));
+
+      g_signal_connect (self->revealer,
+                        "notify::child-revealed",
+                        G_CALLBACK (on_toggle_complete_cb),
+                        self);
+    }
+  else
+    {
+      GtdTask *task = self->task;
+
+      gtd_task_set_complete (task, !gtd_task_get_complete (task));
+      gtd_provider_update_task (gtd_task_get_provider (task), task);
     }
 
-  gtk_revealer_set_reveal_child (GTK_REVEALER (self->revealer),
-                                 !gtk_toggle_button_get_active (button));
-
-  g_signal_connect (self->revealer,
-                    "notify::child-revealed",
-                    G_CALLBACK (on_toggle_complete_cb),
-                    self);
+  GTD_EXIT;
 }
 
 static void
