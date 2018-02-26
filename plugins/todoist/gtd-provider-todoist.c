@@ -24,6 +24,7 @@
 #include "gtd-debug.h"
 #include "gtd-provider-todoist.h"
 #include "gtd-plugin-todoist.h"
+#include "gtd-manager.h"
 #include "gtd-utils.h"
 
 #include <rest/oauth2-proxy.h>
@@ -763,6 +764,12 @@ on_synchronize_completed_cb (RestProxyCall      *call,
 
   if (error)
     {
+      gtd_manager_emit_error_message (gtd_manager_get_default (),
+                                      _("An error occurred while retrieving Todoist data"),
+                                      error->message,
+                                      NULL,
+                                      NULL);
+
       g_warning ("Error synchronizing with Todoist: %s", error->message);
       return;
     }
@@ -819,6 +826,12 @@ on_operation_completed_cb (RestProxyCall    *call,
         }
       else
         {
+          gtd_manager_emit_error_message (gtd_manager_get_default (),
+                                          _("An error occurred while updating Todoist"),
+                                          error->message,
+                                          NULL,
+                                          NULL);
+
           g_warning ("Error executing request: %s", error->message);
         }
 
