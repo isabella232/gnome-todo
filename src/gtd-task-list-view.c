@@ -364,8 +364,14 @@ static void
 update_done_label (GtdTaskListView *view)
 {
   g_autofree gchar *new_label = NULL;
+  GList *l;
 
   g_return_if_fail (GTD_IS_TASK_LIST_VIEW (view));
+
+  /* Update the completed tasks counter */
+  view->priv->complete_tasks = 0;
+  for (l = view->priv->list; l; l = l->next)
+    view->priv->complete_tasks += gtd_task_get_complete (l->data);
 
   gtk_revealer_set_reveal_child (GTK_REVEALER (view->priv->revealer), view->priv->complete_tasks > 0);
 
@@ -413,6 +419,29 @@ update_empty_state (GtdTaskListView *view)
   g_list_free (tasks);
 }
 
+static GtdTaskRow*
+get_row_for_task (GtdTaskListView *self,
+                  GtdTask         *task)
+{
+  g_autoptr (GList) children = NULL;
+  GtdTaskListViewPrivate *priv;
+  GList *l;
+
+  priv = gtd_task_list_view_get_instance_private (self);
+  children = gtk_container_get_children (GTK_CONTAINER (priv->listbox));
+
+  for (l = children; l != NULL; l = l->next)
+    {
+      if (!GTD_IS_TASK_ROW (l->data))
+        continue;
+
+      if (gtd_task_row_get_task (l->data) == task)
+        return l->data;
+    }
+
+  return NULL;
+}
+
 static void
 destroy_task_row (GtdTaskListView *self,
                   GtdTaskRow      *row)
@@ -431,33 +460,17 @@ remove_task (GtdTaskListView *view,
              GtdTask         *task)
 {
   GtdTaskListViewPrivate *priv = view->priv;
-  GList *children;
-  GList *l;
+  GtdTaskRow *row;
 
-  children = gtk_container_get_children (GTK_CONTAINER (view->priv->listbox));
+  row = get_row_for_task (view, task);
 
-  for (l = children; l != NULL; l = l->next)
+  if (row)
     {
-      if (!GTD_IS_TASK_ROW (l->data))
-        continue;
-
-      if (l->data != priv->new_task_row &&
-          gtd_task_row_get_task (l->data) == task)
-        {
-          if (gtd_task_get_complete (task))
-            priv->complete_tasks--;
-
-          g_signal_handlers_disconnect_by_func (task, on_task_completed_cb, view);
-
-          destroy_task_row (view, l->data);
-
-          break;
-        }
+      g_signal_handlers_disconnect_by_func (task, on_task_completed_cb, view);
+      destroy_task_row (view, row);
     }
 
   gtk_revealer_set_reveal_child (priv->revealer, FALSE);
-
-  g_list_free (children);
 }
 
 static inline gboolean
@@ -477,31 +490,18 @@ has_complete_parent (GtdTask *task)
 }
 
 static void
-remove_row_for_task (GtdTaskListView *view,
-                     GtdTask         *task)
+remove_task_row (GtdTaskListView *view,
+                 GtdTask         *task)
 {
-  GtdTaskListViewPrivate *priv = view->priv;
-  GList *children;
-  GList *l;
+  GtdTaskRow *row;
 
   g_return_if_fail (GTD_IS_TASK_LIST_VIEW (view));
   g_return_if_fail (GTD_IS_TASK (task));
 
-  children = gtk_container_get_children (GTK_CONTAINER (priv->listbox));
+  row = get_row_for_task (view, task);
 
-  for (l = children; l != NULL; l = l->next)
-    {
-      if (!GTD_IS_TASK_ROW (l->data))
-        continue;
-
-      if (gtd_task_row_get_task (l->data) == task)
-        {
-          destroy_task_row (view, l->data);
-          break;
-        }
-    }
-
-  g_list_free (children);
+  if (row)
+    destroy_task_row (view, row);
 }
 
 static void
@@ -785,11 +785,7 @@ on_task_list_task_added_cb (GtdTaskList     *list,
   add_task (self, task);
 
   /* Update the "Done" label */
-  if (gtd_task_get_complete (task))
-    {
-      priv->complete_tasks++;
-      update_done_label (self);
-    }
+  update_done_label (self);
 
   /* Also add to the list of current tasks */
   priv->list = g_list_prepend (priv->list, task);
@@ -804,14 +800,10 @@ on_task_list_task_removed_cb (GtdTaskListView *view,
                               GtdTask         *task)
 {
   /* Remove the correspondent row */
-  remove_row_for_task (view, task);
+  remove_task_row (view, task);
 
   /* Update the "Done" label */
-  if (gtd_task_get_complete (task))
-    {
-      view->priv->complete_tasks--;
-      update_done_label (view);
-    }
+  update_done_label (view);
 
   /* Check if it should show the empty state */
   update_empty_state (view);
@@ -1002,7 +994,7 @@ static inline gboolean
 remove_subtasks_of_completed_task_cb (GtdTaskListView *self,
                                       GtdTask         *task)
 {
-  remove_row_for_task (self, task);
+  remove_task_row (self, task);
   return TRUE;
 }
 
@@ -1024,14 +1016,13 @@ on_task_completed_cb (GtdTask         *task,
 
   completed = gtd_task_get_complete (task);
 
-  if (completed)
-    priv->complete_tasks++;
-  else
-    priv->complete_tasks--;
-
   if (!priv->show_completed)
     {
       IterateSubtaskFunc func;
+
+      /* Task already has a row, no need to iterate */
+      if (!completed && get_row_for_task (self, task))
+        return;
 
       func = completed ? remove_subtasks_of_completed_task_cb : add_subtasks_of_task_cb;
 
@@ -1699,15 +1690,8 @@ gtd_task_list_view_set_list (GtdTaskListView *view,
   g_list_free (old_list);
   priv->list = g_list_copy (list);
 
-  /* Update the completed tasks counter */
-  priv->complete_tasks = 0;
-
-  for (l = list; l != NULL; l = l->next)
-    priv->complete_tasks += gtd_task_get_complete (l->data);
-
-  update_done_label (view);
-
   /* Check if it should show the empty state */
+  update_done_label (view);
   update_empty_state (view);
 }
 
