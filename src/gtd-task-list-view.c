@@ -18,6 +18,7 @@
 
 #define G_LOG_DOMAIN "GtdTaskListView"
 
+#include "gtd-debug.h"
 #include "gtd-dnd-row.h"
 #include "gtd-done-button.h"
 #include "gtd-edit-pane.h"
@@ -214,8 +215,7 @@ set_active_row (GtdTaskListView *self,
 static void
 iterate_subtasks (GtdTaskListView    *self,
                   GtdTask            *task,
-                  IterateSubtaskFunc  func,
-                  gboolean            depth_first)
+                  IterateSubtaskFunc  func)
 {
   GtdTask *aux;
   GQueue queue;
@@ -239,12 +239,7 @@ iterate_subtasks (GtdTaskListView    *self,
 
       /* Add the subtasks to the queue so we can keep iterating */
       for (l = subtasks; l != NULL; l = l->next)
-        {
-          if (depth_first)
-            g_queue_push_head (&queue, l->data);
-          else
-            g_queue_push_tail (&queue, l->data);
-        }
+        g_queue_push_tail (&queue, l->data);
 
       g_clear_pointer (&subtasks, g_list_free);
 
@@ -515,19 +510,23 @@ add_task (GtdTaskListView *view,
 {
   GtdTaskListViewPrivate *priv = view->priv;
 
+  GTD_ENTRY;
+
   g_return_if_fail (GTD_IS_TASK_LIST_VIEW (view));
   g_return_if_fail (GTD_IS_TASK (task));
 
   if (!priv->show_completed &&
       (gtd_task_get_complete (task) || has_complete_parent (task)))
     {
-      return;
+      GTD_RETURN ();
     }
 
   add_task_row (view, task);
 
   /* Check if it should show the empty state */
   update_empty_state (view);
+
+  GTD_EXIT;
 }
 
 
@@ -590,7 +589,7 @@ on_remove_task_action_cb (GtdNotification *notification,
     gtd_task_remove_subtask (gtd_task_get_parent (task), task);
 
   /* Remove the subtasks recursively */
-  iterate_subtasks (data->view, data->task, real_remove_task_cb, FALSE);
+  iterate_subtasks (data->view, data->task, real_remove_task_cb);
 
   g_clear_pointer (&data, g_free);
 }
@@ -602,7 +601,7 @@ on_undo_remove_task_action_cb (GtdNotification *notification,
   RemoveTaskData *data = user_data;
 
   /* Save the subtasks recursively */
-  iterate_subtasks (data->view, data->task, undo_remove_task_cb, FALSE);
+  iterate_subtasks (data->view, data->task, undo_remove_task_cb);
 
   g_free (data);
 }
@@ -654,7 +653,7 @@ on_remove_task_row_cb (GtdTaskRow      *row,
   data->task = task;
 
   /* Always remove tasks and subtasks */
-  iterate_subtasks (self, task, remove_task_rows_from_list_view_cb, FALSE);
+  iterate_subtasks (self, task, remove_task_rows_from_list_view_cb);
 
   /*
    * Reset the DnD row, to avoid getting into an inconsistent state where
@@ -780,6 +779,8 @@ on_task_list_task_added_cb (GtdTaskList     *list,
 {
   GtdTaskListViewPrivate *priv = gtd_task_list_view_get_instance_private (self);
 
+  GTD_ENTRY;
+
   /* Add the new task to the list */
   add_task (self, task);
 
@@ -794,6 +795,8 @@ on_task_list_task_added_cb (GtdTaskList     *list,
   priv->list = g_list_prepend (priv->list, task);
 
   g_signal_connect (task, "notify::complete", G_CALLBACK (on_task_completed_cb), self);
+
+  GTD_EXIT;
 }
 
 static void
@@ -1032,7 +1035,7 @@ on_task_completed_cb (GtdTask         *task,
 
       func = completed ? remove_subtasks_of_completed_task_cb : add_subtasks_of_task_cb;
 
-      iterate_subtasks (self, task, func, FALSE);
+      iterate_subtasks (self, task, func);
     }
 
   gtk_list_box_invalidate_sort (priv->listbox);
