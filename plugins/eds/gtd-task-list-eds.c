@@ -81,6 +81,69 @@ pending_subtask_data_free (PendingSubtaskData *data)
 }
 
 static void
+setup_parent_task (GtdTaskListEds *self,
+                   GtdTask        *task)
+{
+  ECalComponent *component;
+  icalcomponent *ical_comp;
+  icalproperty *property;
+  GtdTask *parent_task;
+  const gchar *parent_uid;
+
+  component = gtd_task_eds_get_component (GTD_TASK_EDS (task));
+  ical_comp = e_cal_component_get_icalcomponent (component);
+  property = icalcomponent_get_first_property (ical_comp, ICAL_RELATEDTO_PROPERTY);
+
+  if (!property)
+    return;
+
+  parent_uid = icalproperty_get_relatedto (property);
+  parent_task = gtd_task_list_get_task_by_id (GTD_TASK_LIST (self), parent_uid);
+
+  if (parent_task)
+    {
+      gtd_task_add_subtask (parent_task, task);
+    }
+  else
+    {
+      PendingSubtaskData *data;
+
+      data = pending_subtask_data_new (task, parent_uid);
+
+      g_ptr_array_add (self->pending_subtasks, data);
+    }
+}
+
+static void
+process_pending_subtasks (GtdTaskListEds *self,
+                          GtdTask        *task)
+{
+  const gchar *uid;
+  guint i;
+
+  uid = gtd_object_get_uid (GTD_OBJECT (task));
+
+  for (i = 0; i < self->pending_subtasks->len; i++)
+    {
+      PendingSubtaskData *data;
+
+      data = g_ptr_array_index (self->pending_subtasks, i);
+
+      if (g_strcmp0 (uid, data->parent_uid) == 0)
+        {
+          gtd_task_add_subtask (task, data->child);
+          g_ptr_array_remove (self->pending_subtasks, data);
+          i--;
+        }
+    }
+}
+
+
+/*
+ * Callbacks
+ */
+
+static void
 on_view_objects_added_cb (ECalClientView *view,
                           const GSList   *objects,
                           GtdTaskList    *self)
@@ -119,19 +182,15 @@ on_view_objects_modified_cb (ECalClientView *view,
 {
   g_autoptr (ECalClient) client = NULL;
   GSList *l;
-  GList *tasks;
 
   GTD_ENTRY;
 
   client = e_cal_client_view_ref_client (view);
-  tasks = gtd_task_list_get_tasks (self);
 
   for (l = (GSList*) objects; l; l = l->next)
     {
       g_autoptr (ECalComponent) component = NULL;
       GtdTask *task;
-      GList *subtasks;
-      GList *s;
       const gchar *uid;
 
       component = e_cal_component_new_from_string (icalcomponent_as_ical_string (l->data));
@@ -142,29 +201,12 @@ on_view_objects_modified_cb (ECalClientView *view,
       if (!task)
         continue;
 
-      /* Remove the subtasks */
-      subtasks = gtd_task_get_subtasks (task);
+      gtd_task_eds_set_component (GTD_TASK_EDS (task), component);
 
-      for (s = subtasks; s; s = s->next)
-        gtd_task_remove_subtask (task, s->data);
-
-      /* Remove the task from the list */
-      gtd_task_list_remove_task (self, task);
-
-      task = gtd_task_eds_new (component);
-      gtd_task_list_save_task (self, task);
-
-      for (s = subtasks; s; s = s->next)
-        gtd_task_add_subtask (task, s->data);
-
-      GTD_TRACE_MSG ("Updating task '%s' from tasklist '%s'",
+      GTD_TRACE_MSG ("Updated task '%s' from tasklist '%s'",
                      gtd_task_get_title (GTD_TASK (task)),
                      gtd_task_list_get_name (self));
-
-      g_clear_pointer (&subtasks, g_list_free);
     }
-
-  g_list_free (tasks);
 
   GTD_EXIT;
 }
@@ -175,11 +217,8 @@ on_view_objects_removed_cb (ECalClientView *view,
                             GtdTaskList    *self)
 {
   GSList *l;
-  GList *tasks;
 
   GTD_ENTRY;
-
-  tasks = gtd_task_list_get_tasks (self);
 
   for (l = (GSList*) uids; l; l = l->next)
     {
@@ -198,8 +237,6 @@ on_view_objects_removed_cb (ECalClientView *view,
                      gtd_task_get_title (task),
                      gtd_task_list_get_name (self));
     }
-
-  g_list_free (tasks);
 
   GTD_EXIT;
 }
@@ -278,82 +315,7 @@ on_client_view_acquired_cb (GObject      *client,
 }
 
 static void
-set_client (GtdTaskListEds *self,
-            ECalClient     *client)
-{
-  if (!g_set_object (&self->client, client) || !client)
-    return;
-
-  e_cal_client_get_view (client,
-                         "#t",
-                         self->cancellable,
-                         on_client_view_acquired_cb,
-                         self);
-
-  g_object_notify (G_OBJECT (self), "client");
-}
-
-static void
-setup_parent_task (GtdTaskListEds *self,
-                   GtdTask        *task)
-{
-  ECalComponent *component;
-  icalcomponent *ical_comp;
-  icalproperty *property;
-  GtdTask *parent_task;
-  const gchar *parent_uid;
-
-  component = gtd_task_eds_get_component (GTD_TASK_EDS (task));
-  ical_comp = e_cal_component_get_icalcomponent (component);
-  property = icalcomponent_get_first_property (ical_comp, ICAL_RELATEDTO_PROPERTY);
-
-  if (!property)
-    return;
-
-  parent_uid = icalproperty_get_relatedto (property);
-  parent_task = gtd_task_list_get_task_by_id (GTD_TASK_LIST (self), parent_uid);
-
-  if (parent_task)
-    {
-      gtd_task_add_subtask (parent_task, task);
-    }
-  else
-    {
-      PendingSubtaskData *data;
-
-      data = pending_subtask_data_new (task, parent_uid);
-
-      g_ptr_array_add (self->pending_subtasks, data);
-    }
-}
-
-static void
-process_pending_subtasks (GtdTaskListEds *self,
-                          GtdTask        *task)
-{
-  const gchar *uid;
-  guint i;
-
-  uid = gtd_object_get_uid (GTD_OBJECT (task));
-
-  for (i = 0; i < self->pending_subtasks->len; i++)
-    {
-      PendingSubtaskData *data;
-
-      data = g_ptr_array_index (self->pending_subtasks, i);
-
-      if (g_strcmp0 (uid, data->parent_uid) == 0)
-        {
-          gtd_task_add_subtask (task, data->child);
-          g_ptr_array_remove (self->pending_subtasks, data);
-          i--;
-        }
-    }
-}
-
-
-static void
-source_removable_changed (GtdTaskListEds *list)
+on_source_removable_changed_cb (GtdTaskListEds *list)
 {
   gtd_task_list_set_is_removable (GTD_TASK_LIST (list),
                                   e_source_get_removable (list->source) ||
@@ -361,9 +323,9 @@ source_removable_changed (GtdTaskListEds *list)
 }
 
 static void
-save_task_list_finished_cb (GObject      *source,
-                            GAsyncResult *result,
-                            gpointer      user_data)
+on_save_task_list_finished_cb (GObject      *source,
+                               GAsyncResult *result,
+                               gpointer      user_data)
 {
   GtdTaskListEds *list;
   GError *error;
@@ -373,9 +335,7 @@ save_task_list_finished_cb (GObject      *source,
 
   gtd_object_set_ready (GTD_OBJECT (list), TRUE);
 
-  e_source_write_finish (E_SOURCE (source),
-                         result,
-                         &error);
+  e_source_write_finish (E_SOURCE (source), result, &error);
 
   if (error)
     {
@@ -399,7 +359,7 @@ save_task_list (GtdTaskListEds *list)
 
       e_source_write (list->source,
                       list->cancellable,
-                      save_task_list_finished_cb,
+                      on_save_task_list_finished_cb,
                       list);
     }
 }
@@ -506,7 +466,16 @@ gtd_task_list_eds_set_property (GObject      *object,
   switch (prop_id)
     {
     case PROP_CLIENT:
-      set_client (self, g_value_get_object (value));
+      if (!g_set_object (&self->client, g_value_get_object (value)) || !self->client)
+        return;
+
+      e_cal_client_get_view (self->client,
+                             "#t",
+                             self->cancellable,
+                             on_client_view_acquired_cb,
+                             self);
+
+      g_object_notify (object, "client");
       break;
 
     case PROP_SOURCE:
@@ -635,12 +604,12 @@ gtd_task_list_eds_set_source (GtdTaskListEds *self,
 
       g_signal_connect_swapped (source,
                                 "notify::removable",
-                                G_CALLBACK (source_removable_changed),
+                                G_CALLBACK (on_source_removable_changed_cb),
                                 self);
 
       g_signal_connect_swapped (source,
                                 "notify::remote-deletable",
-                                G_CALLBACK (source_removable_changed),
+                                G_CALLBACK (on_source_removable_changed_cb),
                                 self);
 
       g_object_notify (G_OBJECT (self), "source");

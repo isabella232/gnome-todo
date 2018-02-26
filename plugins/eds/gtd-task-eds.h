@@ -33,6 +33,9 @@ GtdTask*             gtd_task_eds_new                            (ECalComponent 
 
 ECalComponent*       gtd_task_eds_get_component                  (GtdTaskEds         *self);
 
+void                 gtd_task_eds_set_component                  (GtdTaskEds         *self,
+                                                                  ECalComponent      *component);
+
 G_END_DECLS
 
 #endif /* GTD_TASK_EDS_H */

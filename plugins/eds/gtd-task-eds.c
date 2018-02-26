@@ -481,6 +481,7 @@ gtd_task_eds_subtask_removed (GtdTask *task,
   icalcomponent_remove_property (ical_comp, property);
 }
 
+
 /*
  * GObject overrides
  */
@@ -569,7 +570,7 @@ gtd_task_eds_class_init (GtdTaskEdsClass *klass)
                                                     "Component",
                                                     "Component",
                                                     E_TYPE_CAL_COMPONENT,
-                                                    G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS);
+                                                    G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, N_PROPS, properties);
 }
@@ -595,3 +596,27 @@ gtd_task_eds_get_component (GtdTaskEds *self)
   return self->component;
 }
 
+void
+gtd_task_eds_set_component (GtdTaskEds    *self,
+                            ECalComponent *component)
+{
+  GObject *object;
+
+  g_return_if_fail (GTD_IS_TASK_EDS (self));
+  g_return_if_fail (E_IS_CAL_COMPONENT (component));
+
+  if (!g_set_object (&self->component, component))
+    return;
+
+  object = G_OBJECT (self);
+
+  setup_description (self);
+
+  g_object_notify (object, "complete");
+  g_object_notify (object, "creation-date");
+  g_object_notify (object, "description");
+  g_object_notify (object, "due-date");
+  g_object_notify (object, "priority");
+  g_object_notify (object, "title");
+  g_object_notify_by_pspec (object, properties[PROP_COMPONENT]);
+}
