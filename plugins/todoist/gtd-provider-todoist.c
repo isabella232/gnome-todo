@@ -39,10 +39,14 @@
 
 typedef enum
 {
-  REQUEST_LIST_CREATE,
-  REQUEST_TASK_CREATE,
   REQUEST_OTHER,
-} RequestType;
+  REQUEST_LIST_CREATE,
+  REQUEST_LIST_REMOVE,
+  REQUEST_LIST_UPDATE,
+  REQUEST_TASK_CREATE,
+  REQUEST_TASK_REMOVE,
+  REQUEST_TASK_UPDATE,
+} GtdTodoistRequest;
 
 typedef enum
 {
@@ -59,7 +63,7 @@ typedef struct
   GtdObject          *object;
   JsonObject         *params;
   gchar              *command_uid;
-  RequestType         request_type;
+  GtdTodoistRequest   request_type;
 } PostCallbackData;
 
 struct _GtdProviderTodoist
@@ -105,7 +109,8 @@ G_DEFINE_TYPE_WITH_CODE (GtdProviderTodoist, gtd_provider_todoist, GTD_TYPE_OBJE
                          G_IMPLEMENT_INTERFACE (GTD_TYPE_PROVIDER, gtd_provider_iface_init))
 
 
-enum {
+enum
+{
   PROP_0,
   PROP_DEFAULT_TASKLIST,
   PROP_DESCRIPTION,
@@ -573,7 +578,7 @@ static void
 update_transient_id (GtdProviderTodoist *self,
                      JsonObject         *id_map,
                      GtdObject          *object,
-                     RequestType         req)
+                     GtdTodoistRequest   req)
 {
   g_autoptr (GList) temp_ids;
   GList *l;
@@ -593,25 +598,75 @@ update_transient_id (GtdProviderTodoist *self,
       /* Update temp id to permanent id if temp-id in response matches object temp-id */
       if (g_str_equal (temp_id, l->data))
         gtd_object_set_uid (object, uid);
-
-      switch (req)
-        {
-        case REQUEST_LIST_CREATE:
-          g_hash_table_insert (self->lists, GUINT_TO_POINTER (id), GTD_TASK_LIST (object));
-          g_signal_emit_by_name (self, "list-added", object);
-          break;
-
-        case REQUEST_TASK_CREATE:
-          g_hash_table_insert (self->tasks, GUINT_TO_POINTER (id), GTD_TASK (object));
-          gtd_task_list_save_task (gtd_task_get_list (GTD_TASK (object)), GTD_TASK (object));
-          break;
-
-        case REQUEST_OTHER:
-          /* Nothing */
-          break;
-        }
-
     }
+}
+
+static void
+parse_request (GtdProviderTodoist *self,
+               gpointer            object,
+               GtdTodoistRequest   request)
+{
+  GTD_ENTRY;
+
+  GTD_TRACE_MSG ("Applying request %d at %p", request, object);
+
+  switch (request)
+    {
+    case REQUEST_LIST_CREATE:
+      g_assert (GTD_IS_TASK_LIST (object));
+
+      g_hash_table_insert (self->lists, g_strdup (gtd_object_get_uid (object)), object);
+      g_signal_emit_by_name (self, "list-added", object);
+      break;
+
+    case REQUEST_LIST_REMOVE:
+      g_assert (GTD_IS_TASK_LIST (object));
+
+      g_hash_table_remove (self->lists, gtd_object_get_uid (object));
+      g_signal_emit_by_name (self, "list-removed", object);
+      break;
+
+    case REQUEST_LIST_UPDATE:
+      g_assert (GTD_IS_TASK_LIST (object));
+
+      g_signal_emit_by_name (self, "list-changed", object);
+      break;
+
+    case REQUEST_TASK_CREATE:
+      g_assert (GTD_IS_TASK (object));
+
+      g_hash_table_insert (self->tasks, g_strdup (gtd_object_get_uid (object)), object);
+      gtd_task_list_save_task (gtd_task_get_list (object), object);
+      break;
+
+    case REQUEST_TASK_REMOVE:
+        {
+          g_autoptr (GList) subtasks = NULL;
+          g_autoptr (GList) l = NULL;
+
+          g_assert (GTD_IS_TASK (object));
+
+          subtasks = gtd_task_get_subtasks (object);
+          subtasks = g_list_prepend (subtasks, object);
+
+          for (l = subtasks; l; l = l->next)
+            {
+              g_hash_table_remove (self->tasks, gtd_object_get_uid (object));
+              gtd_task_list_remove_task (gtd_task_get_list (object), object);
+            }
+        }
+      break;
+
+    case REQUEST_TASK_UPDATE:
+      g_assert (GTD_IS_TASK (object));
+      break;
+
+    case REQUEST_OTHER:
+      /* Nothing */
+      break;
+    }
+
+  GTD_EXIT;
 }
 
 static void
@@ -689,7 +744,7 @@ process_request_queue (GtdProviderTodoist *self)
 static void
 schedule_post_request (GtdProviderTodoist *self,
                        gpointer            object,
-                       RequestType         type,
+                       GtdTodoistRequest   request,
                        const gchar        *command_uid,
                        const gchar        *command)
 {
@@ -698,7 +753,7 @@ schedule_post_request (GtdProviderTodoist *self,
   /* Set params for post request */
   data = g_new0 (PostCallbackData, 1);
   data->self = self;
-  data->request_type = type;
+  data->request_type = request;
   data->object = GTD_OBJECT (object);
   data->command_uid = g_strdup (command_uid);
   data->params = json_object_new ();
@@ -848,19 +903,21 @@ on_operation_completed_cb (RestProxyCall    *call,
   /* Update temp-id if response contains temp-id mapping */
   if (json_object_has_member (object, "temp_id_mapping"))
     {
-      JsonObject *temp_id_map;
-
-      temp_id_map = json_object_get_object_member (object, "temp_id_mapping");
-
-      update_transient_id (self, temp_id_map, data->object, data->request_type);
+      update_transient_id (self,
+                           json_object_get_object_member (object, "temp_id_mapping"),
+                           data->object,
+                           data->request_type);
     }
+
+  /* Apply the request operation */
+  parse_request (self, data->object, data->request_type);
+
+  /* Dispatch next queued request */
+  process_request_queue (self);
 
   g_clear_pointer (&data->params, json_object_unref);
   g_clear_pointer (&data->command_uid, g_free);
   g_clear_pointer (&data, g_free);
-
-  /* Dispatch next queued request */
-  process_request_queue (self);
 }
 
 
@@ -1008,7 +1065,7 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
                              gtd_task_get_complete (task),
                              due_dt);
 
-  schedule_post_request (self, task, REQUEST_OTHER, command_uid, command);
+  schedule_post_request (self, task, REQUEST_TASK_UPDATE, command_uid, command);
 }
 
 static void
@@ -1032,7 +1089,7 @@ gtd_provider_todoist_remove_task (GtdProvider *provider,
                              command_uid,
                              gtd_object_get_uid (GTD_OBJECT (task)));
 
-  schedule_post_request (self, task, REQUEST_OTHER, command_uid, command);
+  schedule_post_request (self, task, REQUEST_TASK_REMOVE, command_uid, command);
 }
 
 static void
@@ -1110,7 +1167,7 @@ gtd_provider_todoist_update_task_list (GtdProvider *provider,
                              gtd_task_list_get_name (list),
                              get_color_code_index (list_color));
 
-  schedule_post_request (self, list, REQUEST_OTHER, command_uid, command);
+  schedule_post_request (self, list, REQUEST_LIST_UPDATE, command_uid, command);
 }
 
 static void
@@ -1134,7 +1191,7 @@ gtd_provider_todoist_remove_task_list (GtdProvider *provider,
                              command_uid,
                              gtd_object_get_uid (GTD_OBJECT (list)));
 
-  schedule_post_request (self, list, REQUEST_OTHER, command_uid, command);
+  schedule_post_request (self, list, REQUEST_LIST_REMOVE, command_uid, command);
 }
 
 static GList*
