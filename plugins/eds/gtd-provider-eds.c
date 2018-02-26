@@ -49,6 +49,12 @@ typedef struct
   gint                  lazy_load_id;
 } GtdProviderEdsPrivate;
 
+typedef struct
+{
+  GtdProviderEds *provider;
+  ESource        *source;
+} LoadSourceData;
+
 
 static void          gtd_provider_iface_init                     (GtdProviderInterface *iface);
 
@@ -71,9 +77,14 @@ enum
   N_PROPS
 };
 
+
+/*
+ * Auxiliary methods
+ */
+
 static void
-gtd_provider_eds_set_default (GtdProviderEds *self,
-                              GtdTaskList    *list)
+set_default_list (GtdProviderEds *self,
+                  GtdTaskList    *list)
 {
   GtdProviderEdsPrivate *priv;
   GtdManager *manager;
@@ -101,6 +112,11 @@ ensure_offline_sync (GtdProviderEds *self,
 
   e_source_registry_commit_source (priv->source_registry, source, NULL, NULL, NULL);
 }
+
+
+/*
+ * Callbacks
+ */
 
 static void
 on_client_connected_cb (GObject      *source_object,
@@ -154,14 +170,8 @@ on_client_connected_cb (GObject      *source_object,
   g_debug ("Task list '%s' successfully connected", e_source_get_display_name (source));
 }
 
-typedef struct
-{
-  GtdProviderEds *provider;
-  ESource        *source;
-} LoadSourceData;
-
 static gboolean
-gtd_provider_eds_load_source_cb (LoadSourceData *data)
+on_load_source_cb (LoadSourceData *data)
 {
   GtdProviderEds *provider;
   ESource *source;
@@ -186,8 +196,8 @@ gtd_provider_eds_load_source_cb (LoadSourceData *data)
 }
 
 static void
-gtd_provider_eds_load_source (GtdProviderEds *provider,
-                              ESource        *source)
+on_source_added_cb (GtdProviderEds *provider,
+                    ESource        *source)
 {
   LoadSourceData *data;
 
@@ -202,14 +212,12 @@ gtd_provider_eds_load_source (GtdProviderEds *provider,
    * and "guarantee" that other objects will receive the
    * signal.
    */
-  g_timeout_add (1000,
-                 (GSourceFunc) gtd_provider_eds_load_source_cb,
-                 data);
+  g_timeout_add (1000, (GSourceFunc) on_load_source_cb, data);
 }
 
 static void
-gtd_provider_eds_remove_source (GtdProviderEds *provider,
-                                ESource        *source)
+on_source_removed_cb (GtdProviderEds *provider,
+                      ESource        *source)
 {
   GtdProviderEdsPrivate *priv;
   GtdTaskList *list;
@@ -226,37 +234,26 @@ gtd_provider_eds_remove_source (GtdProviderEds *provider,
   g_signal_emit_by_name (provider, "list-removed", list);
 }
 
-/*
- * Credentials prompter
- */
-
 static void
-gtd_manager__invoke_authentication (GObject      *source_object,
-                                    GAsyncResult *result,
-                                    gpointer      user_data)
+on_authentication_invoked_cb (GObject      *source_object,
+                              GAsyncResult *result,
+                              gpointer      user_data)
 {
   g_autoptr (GError) error = NULL;
   ESource *source;
-  gboolean canceled;
 
   source = E_SOURCE (source_object);
 
-  e_source_invoke_authenticate_finish (source,
-                                       result,
-                                       &error);
+  e_source_invoke_authenticate_finish (source, result, &error);
 
-  canceled = g_error_matches (error,
-                                   G_IO_ERROR,
-                                   G_IO_ERROR_CANCELLED);
-
-  if (!canceled)
+  if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
     g_warning ("Failed to prompt for credentials (%s): %s", e_source_get_uid (source), error->message);
 }
 
 static void
-gtd_provider_local_credentials_prompt_done (GObject      *source_object,
-                                            GAsyncResult *result,
-                                            gpointer      user_data)
+on_credentials_prompt_finished_cb (GObject      *source_object,
+                                   GAsyncResult *result,
+                                   gpointer      user_data)
 {
   ETrustPromptResponse response = E_TRUST_PROMPT_RESPONSE_UNKNOWN;
   ESource *source = E_SOURCE (source_object);
@@ -280,19 +277,19 @@ gtd_provider_local_credentials_prompt_done (GObject      *source_object,
   /* Use NULL credentials to reuse those from the last time. */
   e_source_invoke_authenticate (source,
                                 NULL,
-                                NULL /* cancellable */,
-                                gtd_manager__invoke_authentication,
+                                NULL,
+                                on_authentication_invoked_cb,
                                 NULL);
 }
 
 static void
-gtd_provider_eds_credentials_required (ESourceRegistry          *registry,
-                                       ESource                  *source,
-                                       ESourceCredentialsReason  reason,
-                                       const gchar              *certificate_pem,
-                                       GTlsCertificateFlags      certificate_errors,
-                                       const GError             *error,
-                                       gpointer                  user_data)
+on_eds_credentials_required_cb (ESourceRegistry          *registry,
+                                ESource                  *source,
+                                ESourceCredentialsReason  reason,
+                                const gchar              *certificate_pem,
+                                GTlsCertificateFlags      certificate_errors,
+                                const GError             *error,
+                                gpointer                  user_data)
 {
   GtdProviderEdsPrivate *priv;
   GtdProviderEds *self;
@@ -314,7 +311,7 @@ gtd_provider_eds_credentials_required (ESourceRegistry          *registry,
                                      error ? error->message : NULL,
                                      TRUE, // allow saving sources
                                      NULL, // we won't cancel the operation
-                                     gtd_provider_local_credentials_prompt_done,
+                                     on_credentials_prompt_finished_cb,
                                      NULL);
     }
   else if (error && reason == E_SOURCE_CREDENTIALS_REASON_ERROR)
@@ -326,9 +323,9 @@ gtd_provider_eds_credentials_required (ESourceRegistry          *registry,
 }
 
 static void
-default_tasklist_changed_cb (ESourceRegistry *source_registry,
-                             GParamSpec      *pspec,
-                             GtdProviderEds  *self)
+on_default_tasklist_changed_cb (ESourceRegistry *source_registry,
+                                GParamSpec      *pspec,
+                                GtdProviderEds  *self)
 {
   GtdTaskList *list;
   ESource *default_source;
@@ -347,12 +344,15 @@ out:
 }
 
 static void
-gtd_provider_eds_load_registry (GtdProviderEds  *provider)
+gtd_provider_eds_set_registry (GtdProviderEds  *provider,
+                               ESourceRegistry *registry)
 {
   GtdProviderEdsPrivate *priv = gtd_provider_eds_get_instance_private (provider);
   g_autoptr (GError) error = NULL;
   GList *sources;
   GList *l;
+
+  g_set_object (&priv->source_registry, registry);
 
   priv->credentials_prompter = e_credentials_prompter_new (priv->source_registry);
 
@@ -381,43 +381,32 @@ gtd_provider_eds_load_registry (GtdProviderEds  *provider)
   sources = e_source_registry_list_sources (priv->source_registry, E_SOURCE_EXTENSION_TASK_LIST);
 
   for (l = sources; l != NULL; l = l->next)
-    gtd_provider_eds_load_source (provider, l->data);
+    on_source_added_cb (provider, l->data);
 
   g_list_free_full (sources, g_object_unref);
 
   /* listen to the signals, so new sources don't slip by */
   g_signal_connect_swapped (priv->source_registry,
                             "source-added",
-                            G_CALLBACK (gtd_provider_eds_load_source),
+                            G_CALLBACK (on_source_added_cb),
                             provider);
 
   g_signal_connect_swapped (priv->source_registry,
                             "source-removed",
-                            G_CALLBACK (gtd_provider_eds_remove_source),
+                            G_CALLBACK (on_source_removed_cb),
                             provider);
 
   g_signal_connect (priv->source_registry,
                     "credentials-required",
-                    G_CALLBACK (gtd_provider_eds_credentials_required),
+                    G_CALLBACK (on_eds_credentials_required_cb),
                     provider);
 
   g_signal_connect (priv->source_registry,
                     "notify::default-task-list",
-                    G_CALLBACK (default_tasklist_changed_cb),
+                    G_CALLBACK (on_default_tasklist_changed_cb),
                     provider);
 
   e_credentials_prompter_process_awaiting_credentials (priv->credentials_prompter);
-}
-
-static void
-gtd_provider_eds_set_registry (GtdProviderEds  *provider,
-                               ESourceRegistry *registry)
-{
-  GtdProviderEdsPrivate *priv = gtd_provider_eds_get_instance_private (provider);
-
-  g_set_object (&priv->source_registry, registry);
-
-  gtd_provider_eds_load_registry (provider);
 }
 
 
@@ -507,7 +496,7 @@ gtd_provider_eds_create_task (GtdProvider *provider,
       gtd_task_list_save_task (list, new_task);
 
       /* Update the default tasklist */
-      gtd_provider_eds_set_default (self, list);
+      set_default_list (self, list);
 
       /*
        * In the case the task UID changes because of creation proccess,
@@ -551,7 +540,7 @@ static void
 gtd_provider_eds_remove_task (GtdProvider *provider,
                               GtdTask     *task)
 {
-  ECalComponentId *id;
+  g_autoptr (ECalComponentId) id = NULL;
   GtdTaskListEds *tasklist;
   ECalComponent *component;
   ECalClient *client;
@@ -575,8 +564,6 @@ gtd_provider_eds_remove_task (GtdProvider *provider,
                                    NULL);
 
   gtd_object_set_ready (GTD_OBJECT (task), TRUE);
-
-  e_cal_component_free_id (id);
 }
 
 static void
@@ -729,7 +716,7 @@ gtd_provider_eds_finalize (GObject *object)
   GtdProviderEds *self = (GtdProviderEds *)object;
   GtdProviderEdsPrivate *priv = gtd_provider_eds_get_instance_private (self);
 
-  g_signal_handlers_disconnect_by_func (priv->source_registry, default_tasklist_changed_cb, self);
+  g_signal_handlers_disconnect_by_func (priv->source_registry, on_default_tasklist_changed_cb, self);
 
   g_cancellable_cancel (priv->cancellable);
 
@@ -830,7 +817,7 @@ gtd_provider_eds_class_init (GtdProviderEdsClass *klass)
                                                         "Source registry",
                                                         "The EDS source registry object",
                                                         E_TYPE_SOURCE_REGISTRY,
-                                                        G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
 }
 
 static void
