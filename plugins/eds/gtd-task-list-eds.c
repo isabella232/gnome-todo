@@ -80,31 +80,6 @@ pending_subtask_data_free (PendingSubtaskData *data)
   g_free (data);
 }
 
-static GtdTask*
-get_task_from_uuid (GList       *tasks,
-                    const gchar *uuid)
-{
-  GList *t;
-
-  for (t = tasks; t; t = t->next)
-    {
-      g_autoptr (ECalComponentId) id = NULL;
-      GtdTask *task;
-
-      g_assert (GTD_IS_TASK_EDS (t->data));
-
-      task = t->data;
-      id = e_cal_component_get_id (gtd_task_eds_get_component (GTD_TASK_EDS (task)));
-
-      if (g_strcmp0 (uuid, id->uid) != 0)
-        continue;
-
-      return task;
-    }
-
-  return NULL;
-}
-
 static void
 on_view_objects_added_cb (ECalClientView *view,
                           const GSList   *objects,
@@ -162,7 +137,7 @@ on_view_objects_modified_cb (ECalClientView *view,
       component = e_cal_component_new_from_string (icalcomponent_as_ical_string (l->data));
       e_cal_component_get_uid (component, &uid);
 
-      task = get_task_from_uuid (tasks, uid);
+      task = gtd_task_list_get_task_by_id (self, uid);
 
       if (!task)
         continue;
@@ -212,7 +187,7 @@ on_view_objects_removed_cb (ECalClientView *view,
       GtdTask *task;
 
       id = l->data;
-      task = get_task_from_uuid (tasks, id->uid);
+      task = gtd_task_list_get_task_by_id (self, id->uid);
 
       if (!task)
         continue;
