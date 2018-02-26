@@ -50,6 +50,7 @@ typedef enum
 
 typedef enum
 {
+  GTD_PROVIDER_TODOIST_ERROR_BAD_GATEWAY,
   GTD_PROVIDER_TODOIST_ERROR_BAD_REQUEST,
   GTD_PROVIDER_TODOIST_ERROR_BAD_STATUS_CODE,
   GTD_PROVIDER_TODOIST_ERROR_INVALID_RESPONSE,
@@ -506,6 +507,13 @@ check_post_response_for_errors (RestProxyCall     *call,
                    "Too many requests");
       return;
 
+    case 502:
+      g_set_error (error,
+                   GTD_PROVIDER_TODOIST_ERROR,
+                   GTD_PROVIDER_TODOIST_ERROR_BAD_GATEWAY,
+                   "Bad gateway error received when sending POST request to Todoist servers");
+      return;
+
     default:
       break;
     }
@@ -861,16 +869,18 @@ on_operation_completed_cb (RestProxyCall    *call,
 
   check_post_response_for_errors (call, parser, data, post_error, &error);
 
-  /*
-   * Remove the current dispatch timeout and add a new timeout with
-   * interval as 60 seconds (50 request per minute, since we assume
-   * the error was caused because of exceeding request limit).
-   */
   if (error)
     {
-      if (g_error_matches (error,
-                           GTD_PROVIDER_TODOIST_ERROR,
-                           GTD_PROVIDER_TODOIST_ERROR_LIMIT_REACHED))
+      if (g_error_matches (error, GTD_PROVIDER_TODOIST_ERROR, GTD_PROVIDER_TODOIST_ERROR_BAD_GATEWAY))
+        {
+          GTD_TRACE_MSG ("Bad gateway received, trying again immediately");
+
+          g_queue_push_tail (self->queue, data);
+          process_request_queue (self);
+
+          return;
+        }
+      else if (g_error_matches (error, GTD_PROVIDER_TODOIST_ERROR, GTD_PROVIDER_TODOIST_ERROR_LIMIT_REACHED))
         {
           GTD_TRACE_MSG ("Rescheduling dispatch timeout to 60 seconds");
 
@@ -878,6 +888,8 @@ on_operation_completed_cb (RestProxyCall    *call,
 
           if (self->long_wait_timeout_id == 0)
             self->long_wait_timeout_id = g_timeout_add_seconds (60, on_long_wait_timeout_cb, self);
+
+          return;
         }
       else
         {
@@ -888,9 +900,9 @@ on_operation_completed_cb (RestProxyCall    *call,
                                           NULL);
 
           g_warning ("Error executing request: %s", error->message);
-        }
 
-      return;
+          goto out;
+        }
     }
 
   object = json_node_get_object (json_parser_get_root (parser));
@@ -911,6 +923,8 @@ on_operation_completed_cb (RestProxyCall    *call,
 
   /* Apply the request operation */
   parse_request (self, data->object, data->request_type);
+
+out:
 
   /* Dispatch next queued request */
   process_request_queue (self);
