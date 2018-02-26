@@ -568,7 +568,7 @@ check_post_response_for_errors (RestProxyCall     *call,
               g_set_error (error,
                            GTD_PROVIDER_TODOIST_ERROR,
                            GTD_PROVIDER_TODOIST_ERROR_NOT_ALLOWED,
-                           "GNOME To Do doesn't have the necessary permissions to perform this action: %s",
+                           _("GNOME To Do doesn't have the necessary permissions to perform this action: %s"),
                            message);
               break;
 
@@ -576,7 +576,7 @@ check_post_response_for_errors (RestProxyCall     *call,
               g_set_error (error,
                            GTD_PROVIDER_TODOIST_ERROR,
                            GTD_PROVIDER_TODOIST_ERROR_INVALID_RESPONSE,
-                           "Invalid response received");
+                           _("Invalid response received from Todoist servers. Please reload GNOME To Do."));
             }
         }
     }
