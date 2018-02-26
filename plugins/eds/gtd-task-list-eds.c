@@ -159,8 +159,26 @@ on_view_objects_added_cb (ECalClientView *view,
     {
       g_autoptr (ECalComponent) component = NULL;
       GtdTask *task;
+      const gchar *uid;
 
       component = e_cal_component_new_from_string (icalcomponent_as_ical_string (l->data));
+      e_cal_component_get_uid (component, &uid);
+
+      task = gtd_task_list_get_task_by_id (self, uid);
+
+      /* If the task already exists, we must instead update its component */
+      if (task)
+        {
+          gtd_task_eds_set_component (GTD_TASK_EDS (task), component);
+
+          GTD_TRACE_MSG ("Updated task '%s' to tasklist '%s'",
+                         gtd_task_get_title (task),
+                         gtd_task_list_get_name (self));
+
+          continue;
+        }
+
+      /* Add the new task */
       task = gtd_task_eds_new (component);
       gtd_task_set_list (task, self);
 

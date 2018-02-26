@@ -441,9 +441,6 @@ on_task_created_cb (ECalClient   *client,
 
   REPORT_ERROR (_("An error occurred while creating a task"), error);
 
-  /* Add to the list */
-  gtd_task_list_save_task (list, task);
-
   /* Update the default tasklist */
   set_default_list (self, list);
 
