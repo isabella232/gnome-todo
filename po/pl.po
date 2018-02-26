@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-02-26 01:23+0000\n"
-"PO-Revision-Date: 2018-02-26 02:28+0100\n"
+"POT-Creation-Date: 2018-02-26 17:44+0000\n"
+"PO-Revision-Date: 2018-02-26 18:48+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -346,9 +346,29 @@ msgstr "Wyświetla powiadomienie o uruchomieniu Menedżera zadań"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Błąd podczas wczytywania Kont online GNOME"
 
-#: plugins/eds/gtd-provider-eds.c:129
+#: plugins/eds/gtd-provider-eds.c:145
 msgid "Failed to connect to task list"
 msgstr "Połączenie z listą zadań się nie powiodło"
+
+#: plugins/eds/gtd-provider-eds.c:442
+msgid "An error occurred while creating a task"
+msgstr "Wystąpił błąd podczas tworzenia zadania"
+
+#: plugins/eds/gtd-provider-eds.c:477
+msgid "An error occurred while modifying a task"
+msgstr "Wystąpił błąd podczas modyfikowania zadania"
+
+#: plugins/eds/gtd-provider-eds.c:498
+msgid "An error occurred while removing a task"
+msgstr "Wystąpił błąd podczas usuwania zadania"
+
+#: plugins/eds/gtd-provider-eds.c:516
+msgid "An error occurred while creating a task list"
+msgstr "Wystąpił błąd podczas tworzenia listy zadań"
+
+#: plugins/eds/gtd-provider-eds.c:537 plugins/eds/gtd-provider-eds.c:561
+msgid "An error occurred while modifying a task list"
+msgstr "Wystąpił błąd podczas modyfikowania listy zadań"
 
 #: plugins/eds/gtd-provider-local.c:50
 msgid "Local"
@@ -406,19 +426,43 @@ msgstr "Wyczyść ukończone zadania…"
 msgid "No task completed today"
 msgstr "Brak zadań ukończonych dzisiaj"
 
-#: plugins/todoist/gtd-provider-todoist.c:198
+#: plugins/todoist/gtd-provider-todoist.c:205
 msgid "Error fetching Todoist account key"
 msgstr "Błąd podczas pobierania klucza konta Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:199
+#: plugins/todoist/gtd-provider-todoist.c:206
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Proszę się upewnić, że konto Todoist jest poprawnie skonfigurowane."
 
-#: plugins/todoist/gtd-provider-todoist.c:867
+#: plugins/todoist/gtd-provider-todoist.c:571
+#, c-format
+msgid ""
+"GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
+msgstr ""
+"Menedżer zadań GNOME nie ma wymaganych uprawnień do wykonania tego "
+"działania: %s"
+
+#: plugins/todoist/gtd-provider-todoist.c:579
+#, c-format
+msgid ""
+"Invalid response received from Todoist servers. Please reload GNOME To Do."
+msgstr ""
+"Otrzymano nieprawidłową odpowiedź z serwerów Todoist. Proszę ponownie "
+"uruchomić Menedżera zadań GNOME."
+
+#: plugins/todoist/gtd-provider-todoist.c:831
+msgid "An error occurred while retrieving Todoist data"
+msgstr "Wystąpił błąd podczas pobierania danych Todoist"
+
+#: plugins/todoist/gtd-provider-todoist.c:897
+msgid "An error occurred while updating Todoist"
+msgstr "Wystąpił błąd podczas aktualizowania konta Todoist"
+
+#: plugins/todoist/gtd-provider-todoist.c:951
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1170
+#: plugins/todoist/gtd-provider-todoist.c:1242
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
