@@ -280,7 +280,7 @@ parse_task_lists (GtdProviderTodoist *self,
 static GDateTime*
 parse_due_date (const gchar *due_date)
 {
-  GDateTime *dt;
+  g_autoptr (GDateTime) dt = NULL;
   struct tm due_dt = { 0, };
 
   if (!strptime (due_date, "%a %d %b %Y %T %z", &due_dt))
@@ -293,7 +293,7 @@ parse_due_date (const gchar *due_date)
                             due_dt.tm_min,
                             due_dt.tm_sec);
 
-  return dt;
+  return g_date_time_to_local (dt);
 }
 
 static gint
@@ -1037,6 +1037,7 @@ static void
 gtd_provider_todoist_update_task (GtdProvider *provider,
                                   GtdTask     *task)
 {
+  g_autoptr (GDateTime) local_due_date = NULL;
   g_autoptr (GDateTime) due_date = NULL;
   GtdProviderTodoist *self;
   g_autofree gchar *command;
@@ -1052,8 +1053,9 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
   CHECK_ACCESS_TOKEN (self);
 
   parent = gtd_task_get_parent (task);
-  due_date = gtd_task_get_due_date (task);
   escaped_title = escape_string_for_post (gtd_task_get_title (task));
+  local_due_date = gtd_task_get_due_date (task);
+  due_date = local_due_date ? g_date_time_to_utc (local_due_date) : NULL;
   due_dt = due_date ? g_date_time_format (due_date, "\"%FT%R\"") : g_strdup ("null");
 
   command_uid = g_uuid_string_random ();
