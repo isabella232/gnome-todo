@@ -47,7 +47,8 @@ typedef struct
 
 G_DEFINE_TYPE (GtdTaskListEds, gtd_task_list_eds, GTD_TYPE_TASK_LIST)
 
-enum {
+enum
+{
   PROP_0,
   PROP_CLIENT,
   PROP_SOURCE,
@@ -127,7 +128,7 @@ on_view_objects_added_cb (ECalClientView *view,
 
       gtd_task_list_save_task (self, task);
 
-      GTD_TRACE_MSG ("  Added task '%s' (%s) to tasklist %s",
+      GTD_TRACE_MSG ("Added task '%s' (%s) to tasklist '%s'",
                      gtd_task_get_title (task),
                      gtd_object_get_uid (GTD_OBJECT (task)),
                      gtd_task_list_get_name (self));
@@ -218,7 +219,7 @@ on_view_objects_removed_cb (ECalClientView *view,
 
       gtd_task_list_remove_task (self, task);
 
-      GTD_TRACE_MSG ("Removed task '%s' from tasklist %s",
+      GTD_TRACE_MSG ("Removed task '%s' from tasklist '%s'",
                      gtd_task_get_title (task),
                      gtd_task_list_get_name (self));
     }
