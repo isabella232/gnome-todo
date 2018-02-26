@@ -186,7 +186,7 @@ gtd_list_selector_panel_list_color_set (GtkColorChooser      *button,
   gtk_color_chooser_get_rgba (button, &new_color);
   gtd_task_list_set_color (list, &new_color);
 
-  gtd_provider_update_task_list (gtd_task_list_get_provider (list), list, NULL, NULL);
+  gtd_provider_update_task_list (gtd_task_list_get_provider (list), list);
 }
 
 static void
@@ -329,7 +329,7 @@ gtd_list_selector_panel_rename_task_list (GtdListSelectorPanel *panel)
       gtd_task_list_set_name (list, gtk_entry_get_text (GTK_ENTRY (panel->rename_entry)));
       gtd_window_set_mode (window, GTD_WINDOW_MODE_NORMAL);
 
-      gtd_provider_update_task_list (gtd_task_list_get_provider (list), list, NULL, NULL);
+      gtd_provider_update_task_list (gtd_task_list_get_provider (list), list);
 
       gtk_widget_hide (panel->rename_popover);
     }
@@ -415,7 +415,7 @@ gtd_list_selector_panel_delete_button_clicked (GtdListSelectorPanel *panel)
           if (!gtd_task_list_is_removable (list))
             continue;
 
-          gtd_provider_remove_task_list (gtd_task_list_get_provider (list), list, NULL, NULL);
+          gtd_provider_remove_task_list (gtd_task_list_get_provider (list), list);
         }
 
       g_list_free (children);

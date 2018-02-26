@@ -467,12 +467,10 @@ gtd_provider_eds_get_icon (GtdProvider *provider)
 }
 
 static void
-gtd_provider_eds_create_task (GtdProvider   *provider,
-                              GtdTaskList   *list,
-                              const gchar   *title,
-                              GDateTime     *due_date,
-                              GCancellable  *cancellable,
-                              GError       **error)
+gtd_provider_eds_create_task (GtdProvider *provider,
+                              GtdTaskList *list,
+                              const gchar *title,
+                              GDateTime   *due_date)
 {
   g_autofree gchar *new_uid = NULL;
   GtdTaskListEds *tasklist;
@@ -502,8 +500,8 @@ gtd_provider_eds_create_task (GtdProvider   *provider,
   if (e_cal_client_create_object_sync (client,
                                        e_cal_component_get_icalcomponent (component),
                                        &new_uid,
-                                       cancellable,
-                                       error))
+                                       NULL,
+                                       NULL))
     {
       /* Add to the list */
       gtd_task_list_save_task (list, new_task);
@@ -521,10 +519,8 @@ gtd_provider_eds_create_task (GtdProvider   *provider,
 }
 
 static void
-gtd_provider_eds_update_task (GtdProvider   *provider,
-                              GtdTask       *task,
-                              GCancellable  *cancellable,
-                              GError       **error)
+gtd_provider_eds_update_task (GtdProvider *provider,
+                              GtdTask     *task)
 {
   GtdTaskListEds *tasklist;
   ECalComponent *component;
@@ -545,17 +541,15 @@ gtd_provider_eds_update_task (GtdProvider   *provider,
   e_cal_client_modify_object_sync (client,
                                    e_cal_component_get_icalcomponent (component),
                                    E_CAL_OBJ_MOD_THIS,
-                                   cancellable,
-                                   error);
+                                   NULL,
+                                   NULL);
 
   gtd_object_set_ready (GTD_OBJECT (task), TRUE);
 }
 
 static void
-gtd_provider_eds_remove_task (GtdProvider   *provider,
-                              GtdTask       *task,
-                              GCancellable  *cancellable,
-                              GError       **error)
+gtd_provider_eds_remove_task (GtdProvider *provider,
+                              GtdTask     *task)
 {
   ECalComponentId *id;
   GtdTaskListEds *tasklist;
@@ -577,8 +571,8 @@ gtd_provider_eds_remove_task (GtdProvider   *provider,
                                    id->uid,
                                    id->rid,
                                    E_CAL_OBJ_MOD_THIS,
-                                   cancellable,
-                                   error);
+                                   NULL,
+                                   NULL);
 
   gtd_object_set_ready (GTD_OBJECT (task), TRUE);
 
@@ -586,10 +580,8 @@ gtd_provider_eds_remove_task (GtdProvider   *provider,
 }
 
 static void
-gtd_provider_eds_create_task_list (GtdProvider   *provider,
-                                   const gchar   *name,
-                                   GCancellable  *cancellable,
-                                   GError       **error)
+gtd_provider_eds_create_task_list (GtdProvider *provider,
+                                   const gchar *name)
 {
   GtdProviderEdsPrivate *priv;
   GtdProviderEds *self;
@@ -601,7 +593,7 @@ gtd_provider_eds_create_task_list (GtdProvider   *provider,
 
   /* Create an ESource */
   if (GTD_PROVIDER_EDS_CLASS (G_OBJECT_GET_CLASS (provider))->create_source)
-    source = GTD_PROVIDER_EDS_CLASS (G_OBJECT_GET_CLASS (provider))->create_source (self, error);
+    source = GTD_PROVIDER_EDS_CLASS (G_OBJECT_GET_CLASS (provider))->create_source (self);
 
   if (!source)
     return;
@@ -611,15 +603,13 @@ gtd_provider_eds_create_task_list (GtdProvider   *provider,
 
   e_source_registry_commit_source_sync (priv->source_registry,
                                         source,
-                                        cancellable,
-                                        error);
+                                        NULL,
+                                        NULL);
 }
 
 static void
-gtd_provider_eds_update_task_list (GtdProvider   *provider,
-                                   GtdTaskList   *list,
-                                   GCancellable  *cancellable,
-                                   GError       **error)
+gtd_provider_eds_update_task_list (GtdProvider *provider,
+                                   GtdTaskList *list)
 {
   GtdProviderEdsPrivate *priv;
   ESource *source;
@@ -631,10 +621,11 @@ gtd_provider_eds_update_task_list (GtdProvider   *provider,
   source = gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list));
 
   gtd_object_set_ready (GTD_OBJECT (provider), FALSE);
+
   e_source_registry_commit_source_sync (priv->source_registry,
                                         source,
-                                        cancellable,
-                                        error);
+                                        NULL,
+                                        NULL);
 
   gtd_object_set_ready (GTD_OBJECT (provider), TRUE);
 
@@ -642,22 +633,19 @@ gtd_provider_eds_update_task_list (GtdProvider   *provider,
 }
 
 static void
-gtd_provider_eds_remove_task_list (GtdProvider   *provider,
-                                   GtdTaskList   *list,
-                                   GCancellable  *cancellable,
-                                   GError       **error)
+gtd_provider_eds_remove_task_list (GtdProvider *provider,
+                                   GtdTaskList *list)
 {
   ESource *source;
 
   g_assert (GTD_IS_TASK_LIST_EDS (list));
   g_assert (gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list)) != NULL);
 
-  error = NULL;
   source = gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list));
 
   gtd_object_set_ready (GTD_OBJECT (provider), FALSE);
 
-  e_source_remove_sync (source, cancellable, error);
+  e_source_remove_sync (source, NULL, NULL);
 
   gtd_object_set_ready (GTD_OBJECT (provider), TRUE);
 

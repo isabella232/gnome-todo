@@ -895,12 +895,10 @@ gtd_provider_todoist_get_icon (GtdProvider *provider)
 }
 
 static void
-gtd_provider_todoist_create_task (GtdProvider   *provider,
-                                  GtdTaskList   *list,
-                                  const gchar   *title,
-                                  GDateTime     *due_date,
-                                  GCancellable  *cancellable,
-                                  GError       **error)
+gtd_provider_todoist_create_task (GtdProvider *provider,
+                                  GtdTaskList *list,
+                                  const gchar *title,
+                                  GDateTime   *due_date)
 {
   GtdProviderTodoist *self;
   g_autoptr (GtdTask) new_task = NULL;
@@ -952,10 +950,8 @@ gtd_provider_todoist_create_task (GtdProvider   *provider,
 }
 
 static void
-gtd_provider_todoist_update_task (GtdProvider   *provider,
-                                  GtdTask       *task,
-                                  GCancellable  *cancellable,
-                                  GError       **error)
+gtd_provider_todoist_update_task (GtdProvider *provider,
+                                  GtdTask     *task)
 {
   g_autoptr (GDateTime) due_date = NULL;
   GtdProviderTodoist *self;
@@ -1003,10 +999,8 @@ gtd_provider_todoist_update_task (GtdProvider   *provider,
 }
 
 static void
-gtd_provider_todoist_remove_task (GtdProvider   *provider,
-                                  GtdTask       *task,
-                                  GCancellable  *cancellable,
-                                  GError       **error)
+gtd_provider_todoist_remove_task (GtdProvider *provider,
+                                  GtdTask     *task)
 {
   g_autofree gchar *command_uid = NULL;
   g_autofree gchar *command = NULL;
@@ -1029,10 +1023,8 @@ gtd_provider_todoist_remove_task (GtdProvider   *provider,
 }
 
 static void
-gtd_provider_todoist_create_task_list (GtdProvider   *provider,
-                                       const gchar   *name,
-                                       GCancellable  *cancellable,
-                                       GError       **error)
+gtd_provider_todoist_create_task_list (GtdProvider *provider,
+                                       const gchar *name)
 {
   g_autoptr (GtdTaskList) new_list = NULL;
   g_autofree gchar *command = NULL;
@@ -1076,10 +1068,8 @@ gtd_provider_todoist_create_task_list (GtdProvider   *provider,
 }
 
 static void
-gtd_provider_todoist_update_task_list (GtdProvider   *provider,
-                                       GtdTaskList   *list,
-                                       GCancellable  *cancellable,
-                                       GError       **error)
+gtd_provider_todoist_update_task_list (GtdProvider *provider,
+                                       GtdTaskList *list)
 {
   GtdProviderTodoist *self;
   g_autoptr (GdkRGBA) list_color = NULL;
@@ -1111,10 +1101,8 @@ gtd_provider_todoist_update_task_list (GtdProvider   *provider,
 }
 
 static void
-gtd_provider_todoist_remove_task_list (GtdProvider   *provider,
-                                       GtdTaskList   *list,
-                                       GCancellable  *cancellable,
-                                       GError       **error)
+gtd_provider_todoist_remove_task_list (GtdProvider *provider,
+                                       GtdTaskList *list)
 {
   GtdProviderTodoist *self;
   g_autofree gchar *command = NULL;

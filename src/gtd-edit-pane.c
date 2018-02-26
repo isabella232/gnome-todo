@@ -75,7 +75,7 @@ gtd_edit_pane__no_date_button_clicked (GtkButton   *button,
 static void
 save_task (GtdEditPane *self)
 {
-  gtd_provider_update_task (gtd_task_get_provider (self->task), self->task, NULL, NULL);
+  gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
 }
 
 static void

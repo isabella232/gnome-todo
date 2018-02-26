@@ -108,22 +108,6 @@ check_provider_is_default (GtdManager  *self,
     gtd_manager_set_default_provider (self, provider);
 }
 
-static void
-emit_show_error_message (GtdManager                *self,
-                         const gchar               *primary_text,
-                         const gchar               *secondary_text,
-                         GtdNotificationActionFunc  action,
-                         gpointer                   user_data)
-{
-  g_signal_emit (self,
-                 signals[SHOW_ERROR_MESSAGE],
-                 0,
-                 primary_text,
-                 secondary_text,
-                 action,
-                 user_data);
-}
-
 
 /*
  * Callbacks
@@ -812,20 +796,32 @@ gtd_manager_set_is_first_run (GtdManager *self,
   g_settings_set_boolean (self->settings, "first-run", is_first_run);
 }
 
+/**
+ * gtd_manager_emit_error_message:
+ * @self: a #GtdManager
+ * @title: (nullable): the title of the error
+ * @description: (nullable): detailed description of the error
+ * @function: (nullable): function to be called when the notification is dismissed
+ * @user_data: user data
+ *
+ * Reports an error.
+ */
 void
-gtd_manager_emit_error_message (GtdManager                *self,
-                                const gchar               *primary_message,
-                                const gchar               *secondary_message,
-                                GtdNotificationActionFunc  function,
-                                gpointer                   user_data)
+gtd_manager_emit_error_message (GtdManager         *self,
+                                const gchar        *title,
+                                const gchar        *description,
+                                GtdErrorActionFunc  function,
+                                gpointer            user_data)
 {
   g_return_if_fail (GTD_IS_MANAGER (self));
 
-  emit_show_error_message (self,
-                           primary_message,
-                           secondary_message,
-                           function,
-                           user_data);
+  g_signal_emit (self,
+                 signals[SHOW_ERROR_MESSAGE],
+                 0,
+                 title,
+                 description,
+                 function,
+                 user_data);
 }
 
 /**

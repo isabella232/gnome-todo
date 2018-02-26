@@ -45,8 +45,7 @@ struct _GtdProviderEdsClass
 
   GIcon*             (*get_icon)                                 (GtdProviderEds     *self);
 
-  ESource*           (*create_source)                            (GtdProviderEds     *self,
-                                                                  GError            **error);
+  ESource*           (*create_source)                            (GtdProviderEds     *self);
 
   gboolean           (*should_load_source)                       (GtdProviderEds     *provider,
                                                                   ESource            *source);

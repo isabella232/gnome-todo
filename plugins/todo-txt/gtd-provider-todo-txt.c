@@ -409,12 +409,10 @@ gtd_provider_todo_txt_get_icon (GtdProvider *provider)
 }
 
 static void
-gtd_provider_todo_txt_create_task (GtdProvider   *provider,
-                                   GtdTaskList   *list,
-                                   const gchar   *title,
-                                   GDateTime     *due_date,
-                                   GCancellable  *cancellable,
-                                   GError       **error)
+gtd_provider_todo_txt_create_task (GtdProvider *provider,
+                                   GtdTaskList *list,
+                                   const gchar *title,
+                                   GDateTime   *due_date)
 {
   GtdProviderTodoTxt *self;
   g_autoptr (GtdTask) new_task = NULL;
@@ -433,28 +431,22 @@ gtd_provider_todo_txt_create_task (GtdProvider   *provider,
 }
 
 static void
-gtd_provider_todo_txt_update_task (GtdProvider   *provider,
-                                   GtdTask       *task,
-                                   GCancellable  *cancellable,
-                                   GError       **error)
+gtd_provider_todo_txt_update_task (GtdProvider *provider,
+                                   GtdTask     *task)
 {
   update_source (GTD_PROVIDER_TODO_TXT (provider));
 }
 
 static void
-gtd_provider_todo_txt_remove_task (GtdProvider   *provider,
-                                   GtdTask       *task,
-                                   GCancellable  *cancellable,
-                                   GError       **error)
+gtd_provider_todo_txt_remove_task (GtdProvider *provider,
+                                   GtdTask     *task)
 {
   update_source (GTD_PROVIDER_TODO_TXT (provider));
 }
 
 static void
-gtd_provider_todo_txt_create_task_list (GtdProvider   *provider,
-                                        const gchar   *name,
-                                        GCancellable  *cancellable,
-                                        GError       **error)
+gtd_provider_todo_txt_create_task_list (GtdProvider *provider,
+                                        const gchar *name)
 {
   GtdProviderTodoTxt *self;
   GtdTaskList *new_list;
@@ -475,10 +467,8 @@ gtd_provider_todo_txt_create_task_list (GtdProvider   *provider,
 }
 
 static void
-gtd_provider_todo_txt_update_task_list (GtdProvider   *provider,
-                                        GtdTaskList   *list,
-                                        GCancellable  *cancellable,
-                                        GError       **error)
+gtd_provider_todo_txt_update_task_list (GtdProvider *provider,
+                                        GtdTaskList *list)
 {
   GtdProviderTodoTxt *self;
 
@@ -492,10 +482,8 @@ gtd_provider_todo_txt_update_task_list (GtdProvider   *provider,
 }
 
 static void
-gtd_provider_todo_txt_remove_task_list (GtdProvider   *provider,
-                                        GtdTaskList   *list,
-                                        GCancellable  *cancellable,
-                                        GError       **error)
+gtd_provider_todo_txt_remove_task_list (GtdProvider *provider,
+                                        GtdTaskList *list)
 {
   GtdProviderTodoTxt *self = GTD_PROVIDER_TODO_TXT (provider);
 

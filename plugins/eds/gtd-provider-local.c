@@ -71,14 +71,13 @@ gtd_provider_local_get_icon (GtdProviderEds *provider)
 }
 
 static ESource*
-gtd_provider_local_create_source (GtdProviderEds  *provider,
-                                  GError         **error)
+gtd_provider_local_create_source (GtdProviderEds *provider)
 {
   ESourceExtension *extension;
   ESource *source;
 
   /* Create the source */
-  source = e_source_new (NULL, NULL, error);
+  source = e_source_new (NULL, NULL, NULL);
 
   if (!source)
     return NULL;

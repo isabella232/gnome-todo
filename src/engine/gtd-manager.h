@@ -16,8 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GTD_MANAGER_H
-#define GTD_MANAGER_H
+#pragma once
 
 #include <gio/gio.h>
 
@@ -30,8 +29,11 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (GtdManager, gtd_manager, GTD, MANAGER, GtdObject)
 
-typedef void (*GtdNotificationActionFunc) (GtdNotification *notification,
-                                           gpointer         user_data);
+/**
+ * GtdErrorActionFunc:
+ */
+typedef void         (*GtdErrorActionFunc)                       (GtdNotification    *notification,
+                                                                  gpointer            user_data);
 
 
 GtdManager*          gtd_manager_new                             (void);
@@ -44,7 +46,6 @@ GList*               gtd_manager_get_providers                   (GtdManager    
 
 GList*               gtd_manager_get_panels                      (GtdManager         *manager);
 
-/* Settings */
 GtdProvider*         gtd_manager_get_default_provider            (GtdManager         *manager);
 
 void                 gtd_manager_set_default_provider            (GtdManager         *manager,
@@ -63,13 +64,11 @@ void                 gtd_manager_set_is_first_run                (GtdManager    
                                                                   gboolean            is_first_run);
 
 void                 gtd_manager_emit_error_message              (GtdManager         *manager,
-                                                                  const gchar        *primary_message,
-                                                                  const gchar        *secondary_message,
-                                                                  GtdNotificationActionFunc  function,
+                                                                  const gchar        *title,
+                                                                  const gchar        *description,
+                                                                  GtdErrorActionFunc  function,
                                                                   gpointer            user_data);
 
 GtdTimer*            gtd_manager_get_timer                       (GtdManager         *self);
 
 G_END_DECLS
-
-#endif /* GTD_MANAGER_H */

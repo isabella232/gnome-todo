@@ -292,7 +292,7 @@ on_toggle_active_cb (GtkWidget  *button,
                      GtdTaskRow *self)
 {
   if (self->active)
-    gtd_provider_update_task (gtd_task_get_provider (self->task), self->task, NULL, NULL);
+    gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
 
   gtd_task_row_set_active (self, !self->active);
 }
@@ -534,7 +534,7 @@ on_update_title_timeout_cb (gpointer data)
 
   GTD_ENTRY;
 
-  gtd_provider_update_task (gtd_task_get_provider (self->task), self->task, NULL, NULL);
+  gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
   self->update_title_timeout_id = 0;
 
   GTD_RETURN (G_SOURCE_REMOVE);
@@ -587,7 +587,7 @@ gtd_task_row_finalize (GObject *object)
   if (self->update_title_timeout_id > 0)
     {
       if (self->task)
-        gtd_provider_update_task (gtd_task_get_provider (self->task), self->task, NULL, NULL);
+        gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
       self->update_title_timeout_id = 0;
     }
 

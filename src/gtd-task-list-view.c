@@ -552,7 +552,7 @@ on_clear_completed_tasks_activated_cb (GSimpleAction *simple,
       GtdTask *task = l->data;
 
       if (gtd_task_get_complete (task))
-        gtd_provider_remove_task (gtd_task_get_provider (task), task, NULL, NULL);
+        gtd_provider_remove_task (gtd_task_get_provider (task), task);
     }
 
   update_done_label (view);
@@ -572,7 +572,7 @@ static inline gboolean
 real_remove_task_cb (GtdTaskListView *self,
                      GtdTask         *task)
 {
-  gtd_provider_remove_task (gtd_task_get_provider (task), task, NULL, NULL);
+  gtd_provider_remove_task (gtd_task_get_provider (task), task);
   return TRUE;
 }
 
@@ -1069,12 +1069,7 @@ on_create_task_cb (GtdTaskRow  *row,
 
   g_return_if_fail (GTD_IS_TASK_LIST (list));
 
-  gtd_provider_create_task (gtd_task_list_get_provider (list),
-                            list,
-                            title,
-                            priv->default_date,
-                            NULL,
-                            NULL);
+  gtd_provider_create_task (gtd_task_list_get_provider (list), list, title, priv->default_date);
 }
 
 
