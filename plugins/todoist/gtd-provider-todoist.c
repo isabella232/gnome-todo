@@ -300,15 +300,12 @@ static gint
 compare_tasks_by_position (gconstpointer a,
                            gconstpointer b)
 {
-  GTask *task_a, *task_b;
-  gint64 position_a, position_b;
+  GtdTask *task_a, *task_b;
 
-  task_a = *((GTask **) a);
-  task_b = *((GTask **) b);
-  position_a = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (task_a), "position"));
-  position_b = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (task_b), "position"));
+  task_a = *((GtdTask **) a);
+  task_b = *((GtdTask **) b);
 
-  return position_a - position_b;
+  return gtd_task_get_position (task_a) - gtd_task_get_position (task_b);
 }
 
 static void
@@ -367,13 +364,13 @@ parse_tasks (GtdProviderTodoist *self,
       gtd_task_set_title (task, title);
       gtd_task_set_priority (task, priority - 1);
       gtd_task_set_complete (task, complete != 0);
+      gtd_task_set_position (task, position);
 
       /* Due date */
       if (due_date)
         gtd_task_set_due_date (task, parse_due_date (due_date));
 
       g_object_set_data (G_OBJECT (task), "indent", GINT_TO_POINTER (indent));
-      g_object_set_data (G_OBJECT (task), "position", GINT_TO_POINTER (position));
 
       g_hash_table_insert (self->tasks, (gpointer) id, task);
 
