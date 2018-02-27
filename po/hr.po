@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-02-11 20:01+0000\n"
-"PO-Revision-Date: 2018-02-16 21:55+0100\n"
+"POT-Creation-Date: 2018-02-26 17:44+0000\n"
+"PO-Revision-Date: 2018-02-27 15:18+0100\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
@@ -219,7 +219,7 @@ msgstr "_Završeno"
 msgid "_Rename"
 msgstr "_Preimenuj"
 
-#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:473
+#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:469
 msgid "Lists"
 msgstr "Popis"
 
@@ -239,8 +239,7 @@ msgstr "_Novi popis"
 msgid "Show or hide completed tasks"
 msgstr "Prikaži ili sakrij završene zadatke"
 
-#: data/ui/list-view.ui:139 src/gtd-task-list-view.c:755
-#: src/gtd-task-list-view.c:760
+#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:378
 msgid "Done"
 msgstr "Završeno"
 
@@ -348,13 +347,29 @@ msgstr "Kada se Popis zadataka pokrene, prikaži obavijest pokretanja"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Greška učitavanja GNOME mrežnih računa"
 
-#: plugins/eds/gtd-provider-eds.c:153
-msgid "Error fetching tasks from list"
-msgstr "Greška preuzimanja zadataka s popisa"
-
-#: plugins/eds/gtd-provider-eds.c:201
+#: plugins/eds/gtd-provider-eds.c:145
 msgid "Failed to connect to task list"
 msgstr "Neuspješno povezivanje s popisom zadatka"
+
+#: plugins/eds/gtd-provider-eds.c:442
+msgid "An error occurred while creating a task"
+msgstr "Greška pri stvaranju zadatka"
+
+#: plugins/eds/gtd-provider-eds.c:477
+msgid "An error occurred while modifying a task"
+msgstr "Greška pri promijeni zadatka"
+
+#: plugins/eds/gtd-provider-eds.c:498
+msgid "An error occurred while removing a task"
+msgstr "Greška pri uklanjanju zadatka"
+
+#: plugins/eds/gtd-provider-eds.c:516
+msgid "An error occurred while creating a task list"
+msgstr "Greška pri stvaranju popisa zadatka"
+
+#: plugins/eds/gtd-provider-eds.c:537 plugins/eds/gtd-provider-eds.c:561
+msgid "An error occurred while modifying a task list"
+msgstr "Greška pri uklanjanju popisa zadatka"
 
 #: plugins/eds/gtd-provider-local.c:50
 msgid "Local"
@@ -364,11 +379,12 @@ msgstr "Lokalno"
 msgid "On This Computer"
 msgstr "Na ovom računalu"
 
-#: plugins/eds/gtd-provider-local.c:95
-msgid "Error creating new task list"
-msgstr "Greška stvaranja novog popisa zadatka"
+#: plugins/eds/gtd-task-list-eds.c:245 plugins/eds/gtd-task-list-eds.c:275
+#: plugins/eds/gtd-task-list-eds.c:297
+msgid "Error fetching tasks from list"
+msgstr "Greška preuzimanja zadataka s popisa"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:161
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:162
 msgid "No date set"
 msgstr "Datum nije postavljen"
 
@@ -403,7 +419,7 @@ msgstr "Raspored"
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:503
 #: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
-#: src/views/gtd-list-selector-panel.c:714
+#: src/views/gtd-list-selector-panel.c:710
 msgid "Clear completed tasks…"
 msgstr "Obriši završene zadatke…"
 
@@ -411,19 +427,42 @@ msgstr "Obriši završene zadatke…"
 msgid "No task completed today"
 msgstr "Danas nema završenih zadataka"
 
-#: plugins/todoist/gtd-provider-todoist.c:198
+#: plugins/todoist/gtd-provider-todoist.c:205
 msgid "Error fetching Todoist account key"
 msgstr "Greška preuzimanja ključa Todoist računa"
 
-#: plugins/todoist/gtd-provider-todoist.c:199
+#: plugins/todoist/gtd-provider-todoist.c:206
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Pobrinite se da je Todoist račun pravilno podešen."
 
-#: plugins/todoist/gtd-provider-todoist.c:856
+#: plugins/todoist/gtd-provider-todoist.c:571
+#, c-format
+msgid ""
+"GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
+msgstr ""
+"GNOME Popis zadataka nema potrebne dozvole za obavljanje ove radnje: %s"
+
+#: plugins/todoist/gtd-provider-todoist.c:579
+#, c-format
+msgid ""
+"Invalid response received from Todoist servers. Please reload GNOME To Do."
+msgstr ""
+"Neispravan odgovor je primljen sa Todoist poslužitelja. Ponovno učitajte "
+"GNOME Popis zadataka."
+
+#: plugins/todoist/gtd-provider-todoist.c:831
+msgid "An error occurred while retrieving Todoist data"
+msgstr "Greška se dogodila pri primanju Todoist podataka"
+
+#: plugins/todoist/gtd-provider-todoist.c:897
+msgid "An error occurred while updating Todoist"
+msgstr "Greška pri Todoist nadopuni"
+
+#: plugins/todoist/gtd-provider-todoist.c:951
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1161
+#: plugins/todoist/gtd-provider-todoist.c:1242
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -472,13 +511,13 @@ msgid "Source of the Todo.txt file"
 msgstr "Izvor Popis-zadataka.txt datoteke"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:40
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:102
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:103
 msgid "Unscheduled"
 msgstr "Uklonjeno s rasporeda"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:105
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:106
 #, python-format
 msgid "Unscheduled (%d)"
 msgstr "Uklonjeno s rasporeda (%d)"
@@ -559,29 +598,34 @@ msgstr "Greška učitavanja priključka"
 msgid "Error unloading plugin"
 msgstr "Greška oslobađanja priključka"
 
-#: src/gtd-task-list-view.c:615
+#: src/gtd-task-list-view.c:298
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Uklanjanje ovog zadatka će isto ukloniti njegove podzadatke. Svejedno ukloni?"
 
-#: src/gtd-task-list-view.c:618
+#: src/gtd-task-list-view.c:301
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Jednom uklonjen, zadatak se više ne može obnoviti."
 
-#: src/gtd-task-list-view.c:621 src/views/gtd-list-selector-panel.c:394
+#: src/gtd-task-list-view.c:304 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "Odustani"
 
-#: src/gtd-task-list-view.c:623
+#: src/gtd-task-list-view.c:306
 msgid "Remove"
 msgstr "Ukloni"
 
-#: src/gtd-task-list-view.c:671
+#: src/gtd-task-list-view.c:380
+#, c-format
+msgid "Done (%d)"
+msgstr "Završeno (%d)"
+
+#: src/gtd-task-list-view.c:649
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Zadatak <b>%s</b> je uklonjen"
 
-#: src/gtd-task-list-view.c:695
+#: src/gtd-task-list-view.c:673
 msgid "Undo"
 msgstr "Poništi"
 
@@ -601,17 +645,20 @@ msgstr "Klikni popis zadatka za odabir"
 msgid "No tasks"
 msgstr "Nema zadataka"
 
-#: src/views/gtd-list-selector-panel.c:387
+#: src/views/gtd-list-selector-panel.c:381
 msgid "Remove the selected task lists?"
 msgstr "Ukloni odabrane popise zadatka?"
 
-#: src/views/gtd-list-selector-panel.c:390
+#: src/views/gtd-list-selector-panel.c:384
 msgid "Once removed, the task lists cannot be recovered."
 msgstr "Jednom uklonjeni, popisi zadatka se više ne mogu obnoviti."
 
-#: src/views/gtd-list-selector-panel.c:402
+#: src/views/gtd-list-selector-panel.c:396
 msgid "Remove task lists"
 msgstr "Ukloni popise zadatka"
+
+#~ msgid "Error creating new task list"
+#~ msgstr "Greška stvaranja novog popisa zadatka"
 
 #~ msgid "New List…"
 #~ msgstr "Novi popis…"
@@ -647,20 +694,8 @@ msgstr "Ukloni popise zadatka"
 #~ msgid "Error loading task manager"
 #~ msgstr "Greška učitavanja upravitelja zadatka"
 
-#~ msgid "Error creating task"
-#~ msgstr "Greška stvaranja zadatka"
-
 #~ msgid "Error updating task"
 #~ msgstr "Greška nadopune zadatka"
-
-#~ msgid "Error removing task"
-#~ msgstr "Greška uklanjanja zadatka"
-
-#~ msgid "Error creating task list"
-#~ msgstr "Greška stvaranja popisa zadatka"
-
-#~ msgid "Error removing task list"
-#~ msgstr "Greška uklanjanja popisa zadatka"
 
 #~ msgid "Error saving task list"
 #~ msgstr "Greška spremanja popisa zadatka"
@@ -670,9 +705,6 @@ msgstr "Ukloni popise zadatka"
 
 #~ msgid "Bad status code (%d) received. Please check your connection."
 #~ msgstr "Kôd lošeg stanja (%d) primljen. Provjerite pristup internetu."
-
-#~ msgid "Error while opening Todo.txt"
-#~ msgstr "Greška otvaranja Popis-zadataka.txt"
 
 #~ msgid "Error while reading a line from Todo.txt"
 #~ msgstr "Greška pri čitanju redka iz Popis-zadataka.txt"
