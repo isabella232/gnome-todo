@@ -133,6 +133,7 @@
         },
         {
             "name" : "gnome-todo",
+            "buildsystem" : "meson",
             "sources" : [
                 {
                     "type" : "git",
