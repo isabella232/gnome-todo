@@ -48,6 +48,7 @@ typedef struct
   gchar           *title;
 
   gint32           priority;
+  gint64           position;
   gboolean         complete;
 } GtdTaskPrivate;
 
@@ -63,6 +64,7 @@ enum
   PROP_DUE_DATE,
   PROP_LIST,
   PROP_PARENT,
+  PROP_POSITION,
   PROP_PRIORITY,
   PROP_TITLE,
   LAST_PROP
@@ -323,6 +325,23 @@ gtd_task_real_set_due_date (GtdTask   *self,
     priv->due_date = g_date_time_ref (due_date);
 }
 
+static gint64
+gtd_task_real_get_position (GtdTask *self)
+{
+  GtdTaskPrivate *priv = gtd_task_get_instance_private (self);
+
+  return priv->position;
+}
+
+static void
+gtd_task_real_set_position (GtdTask *self,
+                            gint64   position)
+{
+  GtdTaskPrivate *priv = gtd_task_get_instance_private (self);
+
+  priv->position = position;
+}
+
 static gint32
 gtd_task_real_get_priority (GtdTask *self)
 {
@@ -420,6 +439,10 @@ gtd_task_get_property (GObject    *object,
       g_value_set_object (value, priv->parent);
       break;
 
+    case PROP_POSITION:
+      g_value_set_int64 (value, gtd_task_get_position (self));
+      break;
+
     case PROP_PRIORITY:
       g_value_set_int (value, gtd_task_get_priority (self));
       break;
@@ -459,6 +482,10 @@ gtd_task_set_property (GObject      *object,
       gtd_task_set_list (self, g_value_get_object (value));
       break;
 
+    case PROP_POSITION:
+      gtd_task_set_position (self, g_value_get_int64 (value));
+      break;
+
     case PROP_PRIORITY:
       gtd_task_set_priority (self, g_value_get_int (value));
       break;
@@ -484,6 +511,8 @@ gtd_task_class_init (GtdTaskClass *klass)
   klass->set_description = gtd_task_real_set_description;
   klass->get_due_date = gtd_task_real_get_due_date;
   klass->set_due_date = gtd_task_real_set_due_date;
+  klass->get_position = gtd_task_real_get_position;
+  klass->set_position = gtd_task_real_set_position;
   klass->get_priority = gtd_task_real_get_priority;
   klass->set_priority = gtd_task_real_set_priority;
   klass->get_title = gtd_task_real_get_title;
@@ -614,6 +643,22 @@ gtd_task_class_init (GtdTaskClass *klass)
                           G_PARAM_READWRITE));
 
   /**
+   * GtdTask::position:
+   *
+   * Position of the task, -1 if not set.
+   */
+  g_object_class_install_property (
+        object_class,
+        PROP_POSITION,
+        g_param_spec_int64 ("position",
+                            "Position of the task",
+                            "The position of the task. -1 means no position, and tasks will be sorted alphabetically.",
+                            -1,
+                            G_MAXINT64,
+                            0,
+                            G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  /**
    * GtdTask::title:
    *
    * The title of the task, usually the task name.
@@ -664,6 +709,9 @@ gtd_task_class_init (GtdTaskClass *klass)
 static void
 gtd_task_init (GtdTask *self)
 {
+  GtdTaskPrivate *priv = gtd_task_get_instance_private (self);
+
+  priv->position = -1;
 }
 
 /**
@@ -706,7 +754,7 @@ void
 gtd_task_set_complete (GtdTask  *task,
                        gboolean  complete)
 {
-  g_assert (GTD_IS_TASK (task));
+  g_return_if_fail (GTD_IS_TASK (task));
 
   if (gtd_task_get_complete (task) == complete)
     return;
@@ -872,6 +920,46 @@ gtd_task_set_list (GtdTask     *task,
   priv->list = list;
   g_object_weak_ref (G_OBJECT (priv->list), task_list_weak_notified, task);
   g_object_notify (G_OBJECT (task), "list");
+}
+
+/**
+ * gtd_task_get_position:
+ * @task: a #GtdTask
+ *
+ * Returns the position of @task inside the parent #GtdTaskList,
+ * or -1 if not set.
+ *
+ * Returns: the position of the task, or -1
+ */
+gint64
+gtd_task_get_position (GtdTask *self)
+{
+  g_return_val_if_fail (GTD_IS_TASK (self), -1);
+
+  return GTD_TASK_CLASS (G_OBJECT_GET_CLASS (self))->get_position (self);
+}
+
+/**
+ * gtd_task_set_position:
+ * @task: a #GtdTask
+ * @position: the priority of @task, or -1
+ *
+ * Sets the @task position inside the parent #GtdTaskList. It
+ * is up to the interface to handle two or more #GtdTask with
+ * the same position value.
+ */
+void
+gtd_task_set_position (GtdTask *self,
+                       gint64   position)
+{
+  g_return_if_fail (GTD_IS_TASK (self));
+
+  if (gtd_task_get_position (self) == position)
+    return;
+
+  GTD_TASK_CLASS (G_OBJECT_GET_CLASS (self))->set_position (self, position);
+
+  g_object_notify (G_OBJECT (self), "position");
 }
 
 /**

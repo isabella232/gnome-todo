@@ -47,6 +47,10 @@ struct _GtdTaskClass
   void          (*set_due_date)                       (GtdTask              *self,
                                                        GDateTime            *due_date);
 
+  gint64        (*get_position)                       (GtdTask              *task);
+  void          (*set_position)                       (GtdTask              *task,
+                                                       gint64                position);
+
   gint32        (*get_priority)                       (GtdTask              *self);
   void          (*set_priority)                       (GtdTask              *self,
                                                        gint32                priority);
@@ -89,6 +93,11 @@ GtdTaskList*        gtd_task_get_list                 (GtdTask              *tas
 
 void                gtd_task_set_list                 (GtdTask              *task,
                                                        GtdTaskList          *list);
+
+gint64              gtd_task_get_position             (GtdTask              *self);
+
+void                gtd_task_set_position             (GtdTask              *self,
+                                                       gint64                position);
 
 gint                gtd_task_get_priority             (GtdTask              *task);
 
