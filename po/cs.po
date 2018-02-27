@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-02-26 14:13+0000\n"
-"PO-Revision-Date: 2018-02-26 16:21+0100\n"
+"POT-Creation-Date: 2018-02-26 17:44+0000\n"
+"PO-Revision-Date: 2018-02-27 20:59+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -440,7 +440,7 @@ msgstr "Zkontrolujte prosím, jestli je účet Todoist správně nastavený."
 #: plugins/todoist/gtd-provider-todoist.c:571
 #, c-format
 msgid ""
-"GNOME To Do doesn't have the necessary permissions to perform this action: %s"
+"GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr "Úkoly GNOME nemají dostatečná oprávnění k provedení této činnosti: %s"
 
 #: plugins/todoist/gtd-provider-todoist.c:579
