@@ -278,7 +278,7 @@ parse_task_lists (GtdProviderTodoist *self,
 }
 
 static GDateTime*
-parse_due_date (const gchar *due_date)
+parse_date (const gchar *due_date)
 {
   g_autoptr (GDateTime) dt = NULL;
   struct tm due_dt = { 0, };
@@ -335,6 +335,7 @@ parse_tasks (GtdProviderTodoist *self,
       GtdTask *task;
       const gchar *title;
       const gchar *due_date;
+      const gchar *date_added;
       gint64 complete;
       gint64 position;
       gint64 indent;
@@ -353,6 +354,7 @@ parse_tasks (GtdProviderTodoist *self,
       project = json_object_get_int_member (object, "project_id");
       complete = json_object_get_int_member (object, "checked");
       due_date = json_object_get_string_member (object, "due_date_utc");
+      date_added = json_object_get_string_member (object, "date_added");
       indent = json_object_get_int_member (object, "indent");
       position = json_object_get_int_member (object, "item_order");
 
@@ -368,7 +370,17 @@ parse_tasks (GtdProviderTodoist *self,
 
       /* Due date */
       if (due_date)
-        gtd_task_set_due_date (task, parse_due_date (due_date));
+        {
+          g_autoptr (GDateTime) dt = parse_date (due_date);
+          gtd_task_set_due_date (task, dt);
+        }
+
+      /* Date added */
+      if (date_added)
+        {
+          g_autoptr (GDateTime) dt = parse_date (date_added);
+          gtd_task_set_creation_date (task, dt);
+        }
 
       g_object_set_data (G_OBJECT (task), "indent", GINT_TO_POINTER (indent));
 
@@ -982,6 +994,7 @@ gtd_provider_todoist_create_task (GtdProvider *provider,
                                   GDateTime   *due_date)
 {
   GtdProviderTodoist *self;
+  g_autoptr (GDateTime) creation_date = NULL;
   g_autoptr (GtdTask) new_task = NULL;
   g_autofree gchar *command = NULL;
   g_autofree gchar *command_uid = NULL;
@@ -999,6 +1012,7 @@ gtd_provider_todoist_create_task (GtdProvider *provider,
   escaped_title = escape_string_for_post (title);
   due_dt = due_date ? g_date_time_format (due_date, "\"%FT%R\"") : g_strdup ("null");
   position = g_hash_table_size (self->tasks);
+  creation_date = g_date_time_new_now_utc ();
 
   command_uid = g_uuid_string_random ();
   temp_id = g_uuid_string_random ();
@@ -1009,6 +1023,7 @@ gtd_provider_todoist_create_task (GtdProvider *provider,
   gtd_task_set_list (new_task, list);
   gtd_task_set_title (new_task, title);
   gtd_task_set_position (new_task, position);
+  gtd_task_set_creation_date (new_task, creation_date);
   gtd_object_set_uid (GTD_OBJECT (new_task), temp_id);
 
   command = g_strdup_printf ("[{                             \n"
