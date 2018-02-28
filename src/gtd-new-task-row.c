@@ -24,6 +24,7 @@
 #include "gtd-rows-common-private.h"
 #include "gtd-task.h"
 #include "gtd-task-list.h"
+#include "gtd-task-list-view.h"
 
 #include <math.h>
 
@@ -50,7 +51,6 @@ enum
 {
   ENTER,
   EXIT,
-  CREATE_TASK,
   NUM_SIGNALS
 };
 
@@ -139,11 +139,41 @@ default_tasklist_changed_cb (GtdNewTaskRow *self)
 static void
 entry_activated_cb (GtdNewTaskRow *self)
 {
+  GtdTaskListView *view;
+  GtdTaskList *list;
+
   /* Cannot create empty tasks */
   if (gtk_entry_get_text_length (self->entry) == 0)
     return;
 
-  g_signal_emit (self, signals[CREATE_TASK], 0, gtk_entry_get_text (self->entry), self->selected_tasklist);
+  view = GTD_TASK_LIST_VIEW (gtk_widget_get_ancestor (GTK_WIDGET (self), GTD_TYPE_TASK_LIST_VIEW));
+
+  /* If there's a task list set, always go for it */
+  list = gtd_task_list_view_get_task_list (view);
+
+  /*
+   * If there is no current list set, use the default list from the
+   * default provider.
+   */
+  if (!list)
+    {
+      if (self->selected_tasklist)
+        {
+          list = self->selected_tasklist;
+        }
+      else
+        {
+          GtdProvider *provider = gtd_manager_get_default_provider (gtd_manager_get_default ());
+          list = gtd_provider_get_default_task_list (provider);
+        }
+    }
+
+  g_return_if_fail (GTD_IS_TASK_LIST (list));
+
+  gtd_provider_create_task (gtd_task_list_get_provider (list),
+                            list,
+                            gtk_entry_get_text (self->entry),
+                            gtd_task_list_view_get_default_date (view));
 
   gtk_entry_set_text (self->entry, "");
 }
@@ -310,25 +340,6 @@ gtd_new_task_row_class_init (GtdNewTaskRowClass *klass)
                                 NULL,
                                 G_TYPE_NONE,
                                 0);
-
-  /**
-   * GtdNewTaskRow::create-task:
-   *
-   * Emitted when the row wants the parent widget to create a new task.
-   * If the task list is %NULL, assume the default task list of the
-   * default provider.
-   */
-  signals[CREATE_TASK] = g_signal_new ("create-task",
-                                       GTD_TYPE_NEW_TASK_ROW,
-                                       G_SIGNAL_RUN_LAST,
-                                       0,
-                                       NULL,
-                                       NULL,
-                                       NULL,
-                                       G_TYPE_NONE,
-                                       2,
-                                       G_TYPE_STRING,
-                                       GTD_TYPE_TASK_LIST);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/new-task-row.ui");
 

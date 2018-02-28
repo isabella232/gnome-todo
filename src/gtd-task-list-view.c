@@ -1035,37 +1035,6 @@ on_task_completed_cb (GtdTask         *task,
   update_done_label (self);
 }
 
-static void
-on_create_task_cb (GtdTaskRow  *row,
-                   const gchar *title,
-                   GtdTaskList *list,
-                   gpointer     user_data)
-{
-  GtdTaskListViewPrivate *priv;
-
-  priv = GTD_TASK_LIST_VIEW (user_data)->priv;
-
-  /* If there's a task list set, always go for it */
-  if (priv->task_list)
-    list = priv->task_list;
-
-  /*
-   * If there is no current list set, use the default list from the
-   * default provider.
-   */
-  if (!list)
-    {
-      GtdProvider *provider;
-
-      provider = gtd_manager_get_default_provider (gtd_manager_get_default ());
-      list = gtd_provider_get_default_task_list (provider);
-    }
-
-  g_return_if_fail (GTD_IS_TASK_LIST (list));
-
-  gtd_provider_create_task (gtd_task_list_get_provider (list), list, title, priv->default_date);
-}
-
 
 /*
  * Drag n' Drop functions
@@ -1583,7 +1552,6 @@ gtd_task_list_view_class_init (GtdTaskListViewClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, listbox_drag_leave);
   gtk_widget_class_bind_template_callback (widget_class, listbox_drag_motion);
   gtk_widget_class_bind_template_callback (widget_class, listbox_row_activated);
-  gtk_widget_class_bind_template_callback (widget_class, on_create_task_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_done_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_task_row_entered_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_task_row_exited_cb);
