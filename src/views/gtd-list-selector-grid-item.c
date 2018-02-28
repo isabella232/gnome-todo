@@ -83,6 +83,27 @@ task_or_parent_is_complete (GtdTask *task)
   return FALSE;
 }
 
+static gint32
+count_incomplete_tasks (GList *tasks)
+{
+  GList *l;
+  gint i;
+
+  for (l = tasks, i = 0; l; l = l->next)
+    {
+      g_autoptr (GList) subtasks = NULL;
+
+      if (task_or_parent_is_complete (l->data))
+        continue;
+
+      subtasks = gtd_task_get_subtasks (l->data);
+
+      i += count_incomplete_tasks (subtasks) + 1;
+    }
+
+  return i;
+}
+
 static cairo_surface_t*
 gtd_list_selector_grid_item__render_thumbnail (GtdListSelectorGridItem *item)
 {
@@ -97,6 +118,7 @@ gtd_list_selector_grid_item__render_thumbnail (GtdListSelectorGridItem *item)
   GdkRGBA *color;
   cairo_t *cr;
   GList *tasks;
+  gint32 incomplete_tasks;
   gint scale_factor;
   gint width, height;
 
@@ -105,9 +127,8 @@ gtd_list_selector_grid_item__render_thumbnail (GtdListSelectorGridItem *item)
   scale_factor = gtk_widget_get_scale_factor (GTK_WIDGET (item));
   width = THUMBNAIL_SIZE * scale_factor;
   height = THUMBNAIL_SIZE * scale_factor;
-  surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
-                                        width,
-                                        height);
+
+  surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
   cr = cairo_create (surface);
 
   /*
@@ -162,12 +183,9 @@ gtd_list_selector_grid_item__render_thumbnail (GtdListSelectorGridItem *item)
   pango_layout_set_ellipsize (layout, PANGO_ELLIPSIZE_END);
   pango_layout_set_width (layout, width * PANGO_SCALE);
 
-  /*
-   * If the list exists and it's first element is a completed task,
-   * we know for sure (since the list is already sorted) that there's
-   * no undone tasks here.
-   */
-  if (tasks && !gtd_task_get_complete (tasks->data))
+  incomplete_tasks = count_incomplete_tasks (tasks);
+
+  if (incomplete_tasks > 0)
     {
       /* Draw the task name for each selected row. */
       gdouble x, y;
@@ -176,10 +194,10 @@ gtd_list_selector_grid_item__render_thumbnail (GtdListSelectorGridItem *item)
       x = margin.left + padding.left;
       y = margin.top + padding.top;
 
-      for (l = tasks; l != NULL; l = l->next)
+      for (l = tasks; l; l = l->next)
         {
+          g_autofree gchar *formatted_title = NULL;
           GString *string;
-          gchar *formatted_title;
           gint i, font_height;
 
           /* Don't render completed tasks */
@@ -193,80 +211,54 @@ gtd_list_selector_grid_item__render_thumbnail (GtdListSelectorGridItem *item)
           string = g_string_new ("");
 
           for (i = 0; i < gtd_task_get_depth (l->data); i++)
-            g_string_append (string, "    ");
+            g_string_append (string, "   ");
 
           g_string_append (string, gtd_task_get_title (l->data));
 
           formatted_title = g_string_free (string, FALSE);
 
           /* Set the real title */
-          pango_layout_set_text (layout,
-                                 formatted_title,
-                                 -1);
-
-          pango_layout_get_pixel_size (layout,
-                                       NULL,
-                                       &font_height);
-
-          g_free (formatted_title);
+          pango_layout_set_text (layout, formatted_title, -1);
+          pango_layout_get_pixel_size (layout, NULL, &font_height);
 
           /*
            * If we reach the last visible row, it should draw a
            * "…" mark and stop drawing anything else
            */
-          if (y + font_height + 4 + margin.bottom + padding.bottom > THUMBNAIL_SIZE * scale_factor)
+          if (y + 2 * (font_height + 4) + margin.bottom + padding.bottom > height)
             {
-              pango_layout_set_text (layout,
-                                     "…",
-                                     -1);
-
-              gtk_render_layout (context,
-                             cr,
-                             x,
-                             y,
-                             layout);
+              pango_layout_set_text (layout, "…", -1);
+              gtk_render_layout (context, cr, x, y, layout);
               break;
             }
 
-          gtk_render_layout (context,
-                             cr,
-                             x,
-                             y,
-                             layout);
+          gtk_render_layout (context, cr, x, y, layout);
 
           y += font_height;
         }
-
-      g_list_free (tasks);
     }
   else
     {
+      gdouble y;
+      gint font_height;
+
       /*
        * If there's no task available, draw a "No tasks" string at
        * the middle of the list thumbnail.
        */
-      gdouble y;
-      gint font_height;
 
-      pango_layout_set_text (layout,
-                             _("No tasks"),
-                             -1);
+      pango_layout_set_text (layout, _("No tasks"), -1);
       pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
-      pango_layout_get_pixel_size (layout,
-                                   NULL,
-                                   &font_height);
+      pango_layout_get_pixel_size (layout, NULL, &font_height);
 
       y = (THUMBNAIL_SIZE - font_height) * scale_factor / 2.0;
 
-      gtk_render_layout (context,
-                         cr,
-                         margin.left,
-                         y,
-                         layout);
+      gtk_render_layout (context, cr, margin.left, y, layout);
     }
 
   pango_font_description_free (font_desc);
   g_object_unref (layout);
+  g_list_free (tasks);
 
   /* Draws the selection checkbox */
   if (item->mode == GTD_WINDOW_MODE_SELECTION)
