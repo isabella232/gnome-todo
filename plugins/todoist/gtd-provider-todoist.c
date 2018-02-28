@@ -1046,7 +1046,6 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
   g_autofree gchar *command_uid;
   g_autofree gchar *due_dt;
   g_autofree gchar *escaped_title;
-  GtdTask *parent;
 
   self = GTD_PROVIDER_TODOIST (provider);
   due_dt = command = command_uid = NULL;
@@ -1054,7 +1053,6 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
 
   CHECK_ACCESS_TOKEN (self);
 
-  parent = gtd_task_get_parent (task);
   escaped_title = escape_string_for_post (gtd_task_get_title (task));
   local_due_date = gtd_task_get_due_date (task);
   due_date = local_due_date ? g_date_time_to_utc (local_due_date) : NULL;
@@ -1065,23 +1063,23 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
                              "    \"type\": \"item_update\",   \n"
                              "    \"uuid\": \"%s\",            \n"
                              "    \"args\": {                  \n"
-                             "        \"id\": %s,              \n"
-                             "        \"content\": \"%s\",     \n"
-                             "        \"priority\": %d,        \n"
-                             "        \"parent_id\": %s,       \n"
-                             "        \"indent\": %d,          \n"
                              "        \"checked\": %d,         \n"
-                             "        \"due_date_utc\": %s     \n"
+                             "        \"content\": \"%s\",     \n"
+                             "        \"due_date_utc\": %s,    \n"
+                             "        \"id\": %s,              \n"
+                             "        \"indent\": %d,          \n"
+                             "        \"item_order\": %ld,     \n"
+                             "        \"priority\": %d,        \n"
                              "    }                            \n"
                              "}]",
                              command_uid,
-                             gtd_object_get_uid (GTD_OBJECT (task)),
-                             escaped_title,
-                             gtd_task_get_priority (task) + 1,
-                             parent ? gtd_object_get_uid (GTD_OBJECT (parent)) : "null",
-                             gtd_task_get_depth (task) + 1,
                              gtd_task_get_complete (task),
-                             due_dt);
+                             escaped_title,
+                             due_dt,
+                             gtd_object_get_uid (GTD_OBJECT (task)),
+                             gtd_task_get_depth (task) + 1,
+                             gtd_task_get_position (task),
+                             gtd_task_get_priority (task) + 1);
 
   schedule_post_request (self, task, REQUEST_TASK_UPDATE, command_uid, command);
 }
