@@ -989,6 +989,7 @@ gtd_provider_todoist_create_task (GtdProvider *provider,
   g_autofree gchar *due_dt = NULL;
   g_autofree gchar *escaped_title = NULL;
   const gchar *project_id;
+  gint position;
 
   self = GTD_PROVIDER_TODOIST (provider);
 
@@ -997,6 +998,7 @@ gtd_provider_todoist_create_task (GtdProvider *provider,
   project_id = gtd_object_get_uid (GTD_OBJECT (list));
   escaped_title = escape_string_for_post (title);
   due_dt = due_date ? g_date_time_format (due_date, "\"%FT%R\"") : g_strdup ("null");
+  position = g_hash_table_size (self->tasks);
 
   command_uid = g_uuid_string_random ();
   temp_id = g_uuid_string_random ();
@@ -1006,6 +1008,7 @@ gtd_provider_todoist_create_task (GtdProvider *provider,
   gtd_task_set_due_date (new_task, due_date);
   gtd_task_set_list (new_task, list);
   gtd_task_set_title (new_task, title);
+  gtd_task_set_position (new_task, position);
   gtd_object_set_uid (GTD_OBJECT (new_task), temp_id);
 
   command = g_strdup_printf ("[{                             \n"
@@ -1018,6 +1021,7 @@ gtd_provider_todoist_create_task (GtdProvider *provider,
                              "        \"project_id\": %s,    \n"
                              "        \"indent\": 1,         \n"
                              "        \"checked\": 0,        \n"
+                             "        \"item_order\": %d,    \n"
                              "        \"due_date_utc\": %s   \n"
                              "    }                          \n"
                              "}]",
@@ -1025,6 +1029,7 @@ gtd_provider_todoist_create_task (GtdProvider *provider,
                              command_uid,
                              escaped_title,
                              project_id,
+                             position,
                              due_dt);
 
   schedule_post_request (self, g_steal_pointer (&new_task), REQUEST_TASK_CREATE, command_uid, command);
