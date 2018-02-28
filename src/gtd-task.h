@@ -38,6 +38,8 @@ struct _GtdTaskClass
                                                        gboolean              complete);
 
   GDateTime*    (*get_creation_date)                  (GtdTask              *self);
+  void          (*set_creation_date)                  (GtdTask              *self,
+                                                       GDateTime            *dt);
 
   const gchar*  (*get_description)                    (GtdTask              *self);
   void          (*set_description)                    (GtdTask              *self,
@@ -78,6 +80,9 @@ void                gtd_task_set_complete             (GtdTask              *tas
                                                        gboolean              complete);
 
 GDateTime*          gtd_task_get_creation_date        (GtdTask              *task);
+
+void                gtd_task_set_creation_date        (GtdTask              *task,
+                                                       GDateTime            *dt);
 
 const gchar*        gtd_task_get_description          (GtdTask              *task);
 

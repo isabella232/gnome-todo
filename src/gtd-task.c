@@ -284,7 +284,19 @@ gtd_task_real_set_complete (GtdTask  *self,
 static GDateTime*
 gtd_task_real_get_creation_date (GtdTask *self)
 {
-  return NULL;
+  GtdTaskPrivate *priv = gtd_task_get_instance_private (self);
+
+  return priv->creation_date;
+}
+
+static void
+gtd_task_real_set_creation_date (GtdTask   *self,
+                                 GDateTime *dt)
+{
+  GtdTaskPrivate *priv = gtd_task_get_instance_private (self);
+
+  g_clear_pointer (&priv->creation_date, g_date_time_unref);
+  priv->creation_date = dt ? g_date_time_ref (dt) : NULL;
 }
 
 static const gchar*
@@ -470,6 +482,10 @@ gtd_task_set_property (GObject      *object,
       gtd_task_set_complete (self, g_value_get_boolean (value));
       break;
 
+    case PROP_CREATION_DATE:
+      gtd_task_set_creation_date (self, g_value_get_boxed (value));
+      break;
+
     case PROP_DESCRIPTION:
       gtd_task_set_description (self, g_value_get_string (value));
       break;
@@ -507,6 +523,7 @@ gtd_task_class_init (GtdTaskClass *klass)
   klass->get_complete = gtd_task_real_get_complete;
   klass->set_complete = gtd_task_real_set_complete;
   klass->get_creation_date = gtd_task_real_get_creation_date;
+  klass->set_creation_date = gtd_task_real_set_creation_date;
   klass->get_description = gtd_task_real_get_description;
   klass->set_description = gtd_task_real_set_description;
   klass->get_due_date = gtd_task_real_get_due_date;
@@ -551,7 +568,7 @@ gtd_task_class_init (GtdTaskClass *klass)
                             "Creation date of the task",
                             "The day the task was created.",
                             G_TYPE_DATE_TIME,
-                            G_PARAM_READABLE));
+                            G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   /**
    * GtdTask::depth:
@@ -781,6 +798,26 @@ gtd_task_get_creation_date (GtdTask *task)
   g_return_val_if_fail (GTD_IS_TASK (task), NULL);
 
   return GTD_TASK_CLASS (G_OBJECT_GET_CLASS (task))->get_creation_date (task);
+}
+
+/**
+ * gtd_task_set_creation_date:
+ * @task: a #GtdTask
+ *
+ * Sets the creation date of @task.
+ */
+void
+gtd_task_set_creation_date (GtdTask   *task,
+                            GDateTime *dt)
+{
+  g_return_if_fail (GTD_IS_TASK (task));
+
+  if (gtd_task_get_creation_date (task) == dt)
+    return;
+
+  GTD_TASK_CLASS (G_OBJECT_GET_CLASS (task))->set_creation_date (task, dt);
+
+  g_object_notify (G_OBJECT (task), "complete");
 }
 
 /**
