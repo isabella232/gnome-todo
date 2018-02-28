@@ -1,13 +1,14 @@
 
-###################
-# VCS Identifiter #
-###################
+##################
+# VCS Identifier #
+##################
 
 vcs_identifier_h = vcs_tag(
     fallback: meson.project_version(),
        input: 'gtd-vcs-identifier.h.in',
       output: 'gtd-vcs-identifier.h',
 )
+
 
 ################
 # Header files #
