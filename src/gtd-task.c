@@ -1084,6 +1084,18 @@ gtd_task_compare (GtdTask *t1,
     return -1;
 
   /*
+   * The custom position overrides any comparison we can make. To keep compatibility,
+   * for now, we only compare by position if both tasks have a custom position set.
+   */
+  if (gtd_task_get_position (t1) != -1 && gtd_task_get_position (t2) != -1)
+    {
+      retval = gtd_task_get_position (t1) - gtd_task_get_position (t2);
+
+      if (retval != 0)
+        return retval;
+    }
+
+  /*
    * Zero, compare by subtask hierarchy
    */
   retval = compare_by_subtasks (&t1, &t2);
