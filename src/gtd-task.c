@@ -1231,9 +1231,7 @@ gtd_task_add_subtask (GtdTask *self,
   priv = gtd_task_get_instance_private (self);
 
   if (!g_list_find (priv->subtasks, subtask) && !gtd_task_is_subtask (subtask, self))
-    {
-      g_signal_emit (self, signals[SUBTASK_ADDED], 0, subtask);
-    }
+    g_signal_emit (self, signals[SUBTASK_ADDED], 0, subtask);
 }
 
 /**
@@ -1255,9 +1253,7 @@ gtd_task_remove_subtask (GtdTask *self,
   priv = gtd_task_get_instance_private (self);
 
   if (g_list_find (priv->subtasks, subtask))
-    {
-      g_signal_emit (self, signals[SUBTASK_REMOVED], 0, subtask);
-    }
+    g_signal_emit (self, signals[SUBTASK_REMOVED], 0, subtask);
 }
 
 /**
@@ -1274,15 +1270,16 @@ gtd_task_is_subtask (GtdTask *self,
                      GtdTask *subtask)
 {
   GtdTask *aux;
-  GQueue *queue;
+  GQueue queue;
   gboolean is_subtask;
 
   g_return_val_if_fail (GTD_IS_TASK (self), FALSE);
   g_return_val_if_fail (GTD_IS_TASK (subtask), FALSE);
 
   aux = self;
-  queue = g_queue_new ();
   is_subtask = FALSE;
+
+  g_queue_init (&queue);
 
   do
     {
@@ -1300,17 +1297,15 @@ gtd_task_is_subtask (GtdTask *self,
               break;
             }
 
-          g_queue_push_tail (queue, l->data);
+          g_queue_push_tail (&queue, l->data);
         }
 
       if (is_subtask)
         break;
 
-      aux = g_queue_pop_head (queue);
+      aux = g_queue_pop_head (&queue);
     }
   while (aux);
-
-  g_queue_free (queue);
 
   return is_subtask;
 }
