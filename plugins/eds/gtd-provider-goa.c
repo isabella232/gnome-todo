@@ -35,11 +35,13 @@ struct _GtdProviderGoa
 
 G_DEFINE_TYPE (GtdProviderGoa, gtd_provider_goa, GTD_TYPE_PROVIDER_EDS)
 
-enum {
+enum
+{
   PROP_0,
   PROP_ACCOUNT,
   N_PROPS
 };
+
 
 /*
  * GtdProviderEds overrides
@@ -97,7 +99,6 @@ gtd_provider_goa_set_account (GtdProviderGoa *provider,
 
       g_set_object (&provider->account, account);
       g_object_notify (G_OBJECT (provider), "account");
-
 
       g_debug ("Setting up Online Account: %s (%s)",
                goa_account_get_identity (account),

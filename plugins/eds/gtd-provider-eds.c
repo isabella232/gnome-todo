@@ -227,7 +227,8 @@ on_source_removed_cb (GtdProviderEds *provider,
 
   priv->task_lists = g_list_remove (priv->task_lists, list);
 
-  /* Since all subclasses will have this signal given that they
+  /*
+   * Since all subclasses will have this signal given that they
    * are all GtdProvider implementations, it's not that bad
    * to let it stay here.
    */
@@ -537,7 +538,6 @@ on_task_list_modified_cb (ESourceRegistry *registry,
 
   GTD_EXIT;
 }
-
 
 static void
 on_task_list_removed_cb (ESource      *source,
