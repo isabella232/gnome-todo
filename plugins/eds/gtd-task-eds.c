@@ -261,6 +261,13 @@ gtd_task_eds_get_creation_date (GtdTask *task)
   return dt;
 }
 
+static void
+gtd_task_eds_set_creation_date (GtdTask   *task,
+                                GDateTime *dt)
+{
+  g_assert_not_reached ();
+}
+
 static const gchar*
 gtd_task_eds_get_description (GtdTask *task)
 {
@@ -552,6 +559,7 @@ gtd_task_eds_class_init (GtdTaskEdsClass *klass)
   task_class->get_complete = gtd_task_eds_get_complete;
   task_class->set_complete = gtd_task_eds_set_complete;
   task_class->get_creation_date = gtd_task_eds_get_creation_date;
+  task_class->set_creation_date = gtd_task_eds_set_creation_date;
   task_class->get_description = gtd_task_eds_get_description;
   task_class->set_description = gtd_task_eds_set_description;
   task_class->get_due_date = gtd_task_eds_get_due_date;
