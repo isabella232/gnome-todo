@@ -2123,14 +2123,11 @@ gtd_task_list_view_set_default_date   (GtdTaskListView *self,
 
   priv = gtd_task_list_view_get_instance_private (self);
 
-  if (priv->default_date != default_date)
-    {
-      g_clear_pointer (&priv->default_date, g_date_time_unref);
-      priv->default_date = default_date ? g_date_time_ref (default_date) : NULL;
+  if (priv->default_date == default_date)
+    return;
 
-      gtk_list_box_invalidate_headers (priv->listbox);
-      gtk_list_box_invalidate_sort (priv->listbox);
-    }
+  g_clear_pointer (&priv->default_date, g_date_time_unref);
+  priv->default_date = default_date ? g_date_time_ref (default_date) : NULL;
 }
 
 /**
