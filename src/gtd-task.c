@@ -286,7 +286,7 @@ gtd_task_real_get_creation_date (GtdTask *self)
 {
   GtdTaskPrivate *priv = gtd_task_get_instance_private (self);
 
-  return priv->creation_date;
+  return priv->creation_date ? g_date_time_ref (priv->creation_date) : NULL;
 }
 
 static void
@@ -1121,6 +1121,14 @@ gtd_task_compare (GtdTask *t1,
     return -1;
 
   /*
+   * Zero, compare by subtask hierarchy
+   */
+  retval = compare_by_subtasks (&t1, &t2);
+
+  if (retval != 0)
+    return retval;
+
+  /*
    * The custom position overrides any comparison we can make. To keep compatibility,
    * for now, we only compare by position if both tasks have a custom position set.
    */
@@ -1131,14 +1139,6 @@ gtd_task_compare (GtdTask *t1,
       if (retval != 0)
         return retval;
     }
-
-  /*
-   * Zero, compare by subtask hierarchy
-   */
-  retval = compare_by_subtasks (&t1, &t2);
-
-  if (retval != 0)
-    return retval;
 
   /*
    * First, compare by ::complete.
