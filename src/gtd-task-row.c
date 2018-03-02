@@ -573,8 +573,8 @@ on_task_title_changed_cb (GtdTaskRow *self)
  */
 
 static gboolean
-gtd_task_row__key_press_event (GtkWidget   *row,
-                               GdkEventKey *event)
+gtd_task_row_key_press_event (GtkWidget   *row,
+                              GdkEventKey *event)
 {
   GtdTaskRow *self = GTD_TASK_ROW (row);
 
@@ -686,7 +686,7 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   object_class->get_property = gtd_task_row_get_property;
   object_class->set_property = gtd_task_row_set_property;
 
-  widget_class->key_press_event = gtd_task_row__key_press_event;
+  widget_class->key_press_event = gtd_task_row_key_press_event;
   widget_class->get_preferred_width = gtd_row_get_preferred_width_with_max;
 
   g_type_ensure (GTD_TYPE_EXPANDABLE_ENTRY);
