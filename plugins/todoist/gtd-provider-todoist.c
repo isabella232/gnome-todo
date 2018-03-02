@@ -591,6 +591,60 @@ check_post_response_for_errors (RestProxyCall     *call,
     }
 }
 
+static gchar *
+update_task_position (GtdTask *task)
+{
+  g_autoptr (GList) tasks = NULL;
+  g_autoptr (GList) l = NULL;
+  GtdTaskList *list;
+  GString *string;
+  gint64 i;
+
+  list = gtd_task_get_list (task);
+  tasks = gtd_task_list_get_tasks (list);
+  string = g_string_new (NULL);
+
+  /* Reset the position so that we can properly calculate it again */
+  gtd_task_set_position (task, -1);
+
+  tasks = g_list_sort (tasks, (GCompareFunc) gtd_task_compare);
+
+  for (l = tasks, i = 0; l; l = l->next, i++)
+    {
+      g_autofree gchar *command_uid = NULL;
+      GtdTask *t = l->data;
+
+      if (gtd_task_get_position (t) == i)
+        continue;
+
+      GTD_TRACE_MSG ("%s → %ld", gtd_task_get_title (l->data), i);
+
+      /* Update the position */
+      gtd_task_set_position (l->data, i);
+
+      if (t == task)
+        continue;
+
+      /* Add to the final string */
+      command_uid = g_uuid_string_random ();
+      g_string_append_printf (string,
+                              ",                                \n"
+                              "{                                \n"
+                              "    \"type\": \"item_update\",   \n"
+                              "    \"uuid\": \"%s\",            \n"
+                              "    \"args\": {                  \n"
+                              "        \"id\": %s,              \n"
+                              "        \"item_order\": %ld      \n"
+                              "    }                            \n"
+                              "}",
+                              command_uid,
+                              gtd_object_get_uid (GTD_OBJECT (t)),
+                              i);
+    }
+
+  return g_string_free (string, FALSE);
+}
+
 static void
 update_transient_id (GtdProviderTodoist *self,
                      JsonObject         *id_map,
@@ -1057,10 +1111,11 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
   g_autoptr (GDateTime) local_due_date = NULL;
   g_autoptr (GDateTime) due_date = NULL;
   GtdProviderTodoist *self;
-  g_autofree gchar *command;
-  g_autofree gchar *command_uid;
-  g_autofree gchar *due_dt;
-  g_autofree gchar *escaped_title;
+  g_autofree gchar *updated_task_positions = NULL;
+  g_autofree gchar *escaped_title = NULL;
+  g_autofree gchar *command_uid = NULL;
+  g_autofree gchar *command = NULL;
+  g_autofree gchar *due_dt = NULL;
 
   self = GTD_PROVIDER_TODOIST (provider);
   due_dt = command = command_uid = NULL;
@@ -1068,6 +1123,7 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
 
   CHECK_ACCESS_TOKEN (self);
 
+  updated_task_positions = update_task_position (task);
   escaped_title = escape_string_for_post (gtd_task_get_title (task));
   local_due_date = gtd_task_get_due_date (task);
   due_date = local_due_date ? g_date_time_to_utc (local_due_date) : NULL;
@@ -1086,7 +1142,7 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
                              "        \"item_order\": %ld,     \n"
                              "        \"priority\": %d,        \n"
                              "    }                            \n"
-                             "}]",
+                             "}%s]",
                              command_uid,
                              gtd_task_get_complete (task),
                              escaped_title,
@@ -1094,7 +1150,8 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
                              gtd_object_get_uid (GTD_OBJECT (task)),
                              gtd_task_get_depth (task) + 1,
                              gtd_task_get_position (task),
-                             gtd_task_get_priority (task) + 1);
+                             gtd_task_get_priority (task) + 1,
+                             updated_task_positions);
 
   schedule_post_request (self, task, REQUEST_TASK_UPDATE, command_uid, command);
 }
