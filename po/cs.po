@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-02-26 17:44+0000\n"
-"PO-Revision-Date: 2018-02-27 20:59+0100\n"
+"POT-Creation-Date: 2018-03-03 03:14+0000\n"
+"PO-Revision-Date: 2018-03-03 07:19+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -237,11 +237,11 @@ msgstr "Název seznamu úkolů"
 msgid "_New List"
 msgstr "_Nový seznam"
 
-#: data/ui/list-view.ui:113
+#: data/ui/list-view.ui:112
 msgid "Show or hide completed tasks"
 msgstr "Zobrazit nebo skrýt splněné úkoly"
 
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:378
+#: data/ui/list-view.ui:139 src/gtd-task-list-view.c:379
 msgid "Done"
 msgstr "Hotovo"
 
@@ -353,23 +353,23 @@ msgstr "Chyba při načítání Účtů on-line GNOME"
 msgid "Failed to connect to task list"
 msgstr "Připojení k seznamu úkolů selhalo"
 
-#: plugins/eds/gtd-provider-eds.c:442
+#: plugins/eds/gtd-provider-eds.c:443
 msgid "An error occurred while creating a task"
 msgstr "Při vytváření úkolu se vyskytla chyba"
 
-#: plugins/eds/gtd-provider-eds.c:477
+#: plugins/eds/gtd-provider-eds.c:475
 msgid "An error occurred while modifying a task"
 msgstr "Při změně úkolu se vyskytla chyba"
 
-#: plugins/eds/gtd-provider-eds.c:498
+#: plugins/eds/gtd-provider-eds.c:496
 msgid "An error occurred while removing a task"
 msgstr "Při odstraňování úkolu se vyskytla chyba"
 
-#: plugins/eds/gtd-provider-eds.c:516
+#: plugins/eds/gtd-provider-eds.c:514
 msgid "An error occurred while creating a task list"
 msgstr "Při vytváření seznamu úkolů se vyskytla chyba"
 
-#: plugins/eds/gtd-provider-eds.c:537 plugins/eds/gtd-provider-eds.c:561
+#: plugins/eds/gtd-provider-eds.c:535 plugins/eds/gtd-provider-eds.c:558
 msgid "An error occurred while modifying a task list"
 msgstr "Při změně seznamu úkolů se vyskytla chyba"
 
@@ -381,8 +381,8 @@ msgstr "Místní"
 msgid "On This Computer"
 msgstr "Na tomto počítači"
 
-#: plugins/eds/gtd-task-list-eds.c:245 plugins/eds/gtd-task-list-eds.c:275
-#: plugins/eds/gtd-task-list-eds.c:297
+#: plugins/eds/gtd-task-list-eds.c:276 plugins/eds/gtd-task-list-eds.c:306
+#: plugins/eds/gtd-task-list-eds.c:328
 msgid "Error fetching tasks from list"
 msgstr "Chyba při získávání úkolů ze seznamu"
 
@@ -429,21 +429,21 @@ msgstr "Vymazat splněné úkoly…"
 msgid "No task completed today"
 msgstr "Dnes nebyl dokončen žádný úkol"
 
-#: plugins/todoist/gtd-provider-todoist.c:205
+#: plugins/todoist/gtd-provider-todoist.c:212
 msgid "Error fetching Todoist account key"
 msgstr "Chyba při získávání klíče účtu Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:206
+#: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Zkontrolujte prosím, jestli je účet Todoist správně nastavený."
 
-#: plugins/todoist/gtd-provider-todoist.c:571
+#: plugins/todoist/gtd-provider-todoist.c:557
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr "Úkoly GNOME nemají dostatečná oprávnění k provedení této činnosti: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:579
+#: plugins/todoist/gtd-provider-todoist.c:565
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
@@ -451,19 +451,23 @@ msgstr ""
 "Obdržena neplatná odpověď od serverů Todoist. Načtěte prosím znovu Úkoly "
 "GNOME."
 
-#: plugins/todoist/gtd-provider-todoist.c:831
+#: plugins/todoist/gtd-provider-todoist.c:836
+msgid "An error occurred while updating a Todoist task"
+msgstr "Při aktualizaci úkolu Todoist se vyskytla chyba"
+
+#: plugins/todoist/gtd-provider-todoist.c:945
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Při získávání data Todoist se vyskytla chyba"
 
-#: plugins/todoist/gtd-provider-todoist.c:897
+#: plugins/todoist/gtd-provider-todoist.c:1018
 msgid "An error occurred while updating Todoist"
 msgstr "Při aktualizaci Todoist se vyskytla chyba"
 
-#: plugins/todoist/gtd-provider-todoist.c:951
+#: plugins/todoist/gtd-provider-todoist.c:1077
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1242
+#: plugins/todoist/gtd-provider-todoist.c:1385
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -597,35 +601,35 @@ msgstr "Chyba při načítaní zásuvného modulu"
 msgid "Error unloading plugin"
 msgstr "Chyba při ukončování zásuvného modulu"
 
-#: src/gtd-task-list-view.c:298
+#: src/gtd-task-list-view.c:293
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Odstraněním tohoto úkolu se odstraní i jeho dílčí části. Má se i tak "
 "odstranit?"
 
-#: src/gtd-task-list-view.c:301
+#: src/gtd-task-list-view.c:296
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Jakmile jej odstraníte, již jej nelze obnovit."
 
-#: src/gtd-task-list-view.c:304 src/views/gtd-list-selector-panel.c:388
+#: src/gtd-task-list-view.c:299 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: src/gtd-task-list-view.c:306
+#: src/gtd-task-list-view.c:301
 msgid "Remove"
 msgstr "Odstranit"
 
-#: src/gtd-task-list-view.c:380
+#: src/gtd-task-list-view.c:381
 #, c-format
 msgid "Done (%d)"
 msgstr "Hotovo (%d)"
 
-#: src/gtd-task-list-view.c:649
+#: src/gtd-task-list-view.c:648
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Úkol <b>%s</b> byl odstraněn"
 
-#: src/gtd-task-list-view.c:673
+#: src/gtd-task-list-view.c:672
 msgid "Undo"
 msgstr "Zpět"
 
@@ -641,7 +645,11 @@ msgstr "Načítají se vaše seznamy úkolů…"
 msgid "Click a task list to select"
 msgstr "Kliknutím vyberte seznam úkolů"
 
-#: src/views/gtd-list-selector-grid-item.c:252
+#.
+#. * If there's no task available, draw a "No tasks" string at
+#. * the middle of the list thumbnail.
+#.
+#: src/views/gtd-list-selector-grid-item.c:250
 msgid "No tasks"
 msgstr "Žádné úkoly"
 
