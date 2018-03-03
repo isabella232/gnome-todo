@@ -63,13 +63,11 @@ G_DEFINE_DYNAMIC_TYPE_EXTENDED (GtdPluginTodoist, gtd_plugin_todoist, PEAS_TYPE_
 static void
 gtd_plugin_todoist_activate (GtdActivatable *activatable)
 {
-  ;
 }
 
 static void
 gtd_plugin_todoist_deactivate (GtdActivatable *activatable)
 {
-  ;
 }
 
 static GList*
