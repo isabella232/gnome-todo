@@ -893,11 +893,13 @@ update_task_position (GtdProviderTodoist *self,
                                  "    \"uuid\": \"%s\",            \n"
                                  "    \"args\": {                  \n"
                                  "        \"id\": %s,              \n"
+                                 "        \"indent\": %d,          \n"
                                  "        \"item_order\": %ld      \n"
                                  "    }                            \n"
                                  "}",
                                  command_uid,
                                  gtd_object_get_uid (GTD_OBJECT (t)),
+                                 gtd_task_get_depth (t) + 1,
                                  i);
 
       schedule_post_request (self, t, REQUEST_TASK_UPDATE, command_uid, command);
