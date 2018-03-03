@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-02-26 17:44+0000\n"
-"PO-Revision-Date: 2018-02-28 20:01+0500\n"
+"POT-Creation-Date: 2018-03-03 03:14+0000\n"
+"PO-Revision-Date: 2018-03-03 20:25+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
 "Language: kk\n"
@@ -234,11 +234,11 @@ msgstr "Тапсырмалар тізімінің атауы"
 msgid "_New List"
 msgstr "_Жаңа тізім"
 
-#: data/ui/list-view.ui:113
+#: data/ui/list-view.ui:112
 msgid "Show or hide completed tasks"
 msgstr "Аяқталған тапсырмаларды көрсету не жасыру"
 
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:378
+#: data/ui/list-view.ui:139 src/gtd-task-list-view.c:379
 msgid "Done"
 msgstr "Дайын"
 
@@ -346,23 +346,23 @@ msgstr "Gnome желілік тіркелгілерін жүктеу қатес�
 msgid "Failed to connect to task list"
 msgstr "Тапсырмалар тізіміне байланысты орнату сәтсіз"
 
-#: plugins/eds/gtd-provider-eds.c:442
+#: plugins/eds/gtd-provider-eds.c:443
 msgid "An error occurred while creating a task"
 msgstr "Тапсырманы жасау кезінде қате орын алды"
 
-#: plugins/eds/gtd-provider-eds.c:477
+#: plugins/eds/gtd-provider-eds.c:475
 msgid "An error occurred while modifying a task"
 msgstr "Тапсырманы түзету кезінде қате орын алды"
 
-#: plugins/eds/gtd-provider-eds.c:498
+#: plugins/eds/gtd-provider-eds.c:496
 msgid "An error occurred while removing a task"
 msgstr "Тапсырманы өшіру кезінде қате орын алды"
 
-#: plugins/eds/gtd-provider-eds.c:516
+#: plugins/eds/gtd-provider-eds.c:514
 msgid "An error occurred while creating a task list"
 msgstr "Тапсырмалар тізімін жасау кезінде қате орын алды"
 
-#: plugins/eds/gtd-provider-eds.c:537 plugins/eds/gtd-provider-eds.c:561
+#: plugins/eds/gtd-provider-eds.c:535 plugins/eds/gtd-provider-eds.c:558
 msgid "An error occurred while modifying a task list"
 msgstr "Тапсырмалар тізімін түзету кезінде қате орын алды"
 
@@ -374,8 +374,8 @@ msgstr "Жергілікті"
 msgid "On This Computer"
 msgstr "Бұл компьютерде"
 
-#: plugins/eds/gtd-task-list-eds.c:245 plugins/eds/gtd-task-list-eds.c:275
-#: plugins/eds/gtd-task-list-eds.c:297
+#: plugins/eds/gtd-task-list-eds.c:276 plugins/eds/gtd-task-list-eds.c:306
+#: plugins/eds/gtd-task-list-eds.c:328
 msgid "Error fetching tasks from list"
 msgstr "Тізімнен тапсырмаларды алу қатесі"
 
@@ -420,42 +420,45 @@ msgstr "Аяқталған тапсырмаларды тазарту…"
 msgid "No task completed today"
 msgstr "Бүгін аяқталған тапсырмалар жоқ"
 
-#: plugins/todoist/gtd-provider-todoist.c:205
+#: plugins/todoist/gtd-provider-todoist.c:212
 msgid "Error fetching Todoist account key"
 msgstr "Todoist тіркелгісінің кілтін алу қатесу"
 
-#: plugins/todoist/gtd-provider-todoist.c:206
+#: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Todoist тіркелгісінің дұрыс бапталғанын тексеріңіз."
 
-#: plugins/todoist/gtd-provider-todoist.c:571
+#: plugins/todoist/gtd-provider-todoist.c:557
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr ""
 "GNOME To Do қолданбасының бұл әрекетті орындауға керек рұқсаттары жоқ: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:579
+#: plugins/todoist/gtd-provider-todoist.c:565
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
 msgstr ""
 "Todoist серверлерінен жарамсыз жауап алынды. GNOME To Do қайта жүктеңіз."
 
-#: plugins/todoist/gtd-provider-todoist.c:831
-#| msgid "Error while creating a Todo.txt list"
+#: plugins/todoist/gtd-provider-todoist.c:836
+msgid "An error occurred while updating a Todoist task"
+msgstr "Todoist тапсырмасын жаңарту кезінде қате орын алды"
+
+#: plugins/todoist/gtd-provider-todoist.c:945
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Todoist деректерін алу кезінде қате орын алды"
 
-#: plugins/todoist/gtd-provider-todoist.c:897
+#: plugins/todoist/gtd-provider-todoist.c:1018
 msgid "An error occurred while updating Todoist"
 msgstr "Todoist жаңарту кезінде қате орын алды"
 
-#: plugins/todoist/gtd-provider-todoist.c:951
+#: plugins/todoist/gtd-provider-todoist.c:1077
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1242
+#: plugins/todoist/gtd-provider-todoist.c:1385
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -587,35 +590,35 @@ msgstr "Плагинді жүктеу қатесі"
 msgid "Error unloading plugin"
 msgstr "Плагинді босату қатесі"
 
-#: src/gtd-task-list-view.c:298
+#: src/gtd-task-list-view.c:293
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Бұл тапсырманы өшіру оның ішкі тапсырмаларын да өшіреді. Сонда да өшіру "
 "керек пе?"
 
-#: src/gtd-task-list-view.c:301
+#: src/gtd-task-list-view.c:296
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Өшірілсе, тапсырмаларды қайтару мүмкін емес болады."
 
-#: src/gtd-task-list-view.c:304 src/views/gtd-list-selector-panel.c:388
+#: src/gtd-task-list-view.c:299 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "Бас тарту"
 
-#: src/gtd-task-list-view.c:306
+#: src/gtd-task-list-view.c:301
 msgid "Remove"
 msgstr "Өшіру"
 
-#: src/gtd-task-list-view.c:380
+#: src/gtd-task-list-view.c:381
 #, c-format
 msgid "Done (%d)"
 msgstr "Дайын (%d)"
 
-#: src/gtd-task-list-view.c:649
+#: src/gtd-task-list-view.c:648
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "<b>%s</b> тапсырмасы өшірілген"
 
-#: src/gtd-task-list-view.c:673
+#: src/gtd-task-list-view.c:672
 msgid "Undo"
 msgstr "Болдырмау"
 
@@ -631,7 +634,11 @@ msgstr "Тапсырмалар тізімдерінізді жүктеу…"
 msgid "Click a task list to select"
 msgstr "Таңдау үшін тапсырмалар тізімінің үстіне шертіңіз"
 
-#: src/views/gtd-list-selector-grid-item.c:252
+#.
+#. * If there's no task available, draw a "No tasks" string at
+#. * the middle of the list thumbnail.
+#.
+#: src/views/gtd-list-selector-grid-item.c:250
 msgid "No tasks"
 msgstr "Тапсырмалар жоқ"
 
