@@ -724,18 +724,13 @@ synchronize (GtdProviderTodoist *self)
   post (self, params, (RestProxyCallAsyncCallback) on_synchronize_completed_cb, self);
 }
 
-static void
-process_request_queue (GtdProviderTodoist *self)
+static gchar*
+compress_commands (GtdProviderTodoist  *self,
+                   GList              **out_list)
 {
-  g_autoptr (JsonObject) params = NULL;
   g_autoptr (GString) command = NULL;
   g_autoptr (GList) requests = NULL;
   guint i;
-
-  if (g_queue_is_empty (self->queue) || self->timeout_id > 0)
-    return;
-
-  g_debug ("Processing request queue");
 
   /*
    * Compress at most MAX_COMMANDS_PER_REQUEST (which is 100 - see the developer doc at
@@ -764,12 +759,32 @@ process_request_queue (GtdProviderTodoist *self)
   /* We need to parse the commands back in the order they were sent */
   requests = g_list_reverse (requests);
 
-  /* Build up the JSON command */
-  params = json_object_new ();
-  json_object_set_string_member (params, "commands", command->str);
-  json_object_set_string_member (params, "token", self->access_token);
+  g_assert (out_list != NULL);
+  *out_list = g_steal_pointer (&requests);
 
   g_debug ("Compressed %u commands, request is:\n%s", i, command->str);
+
+  return g_string_free (g_steal_pointer (&command), FALSE);
+}
+
+static void
+process_request_queue (GtdProviderTodoist *self)
+{
+  g_autoptr (JsonObject) params = NULL;
+  g_autoptr (GList) requests = NULL;
+  g_autofree gchar *command = NULL;
+
+  if (g_queue_is_empty (self->queue) || self->timeout_id > 0)
+    return;
+
+  g_debug ("Processing request queue");
+
+  command = compress_commands (self, &requests);
+
+  /* Build up the JSON command */
+  params = json_object_new ();
+  json_object_set_string_member (params, "commands", command);
+  json_object_set_string_member (params, "token", self->access_token);
 
   post (self, params, (RestProxyCallAsyncCallback) on_operation_completed_cb, g_steal_pointer (&requests));
 }
