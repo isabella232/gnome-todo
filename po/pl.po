@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-02-26 17:44+0000\n"
-"PO-Revision-Date: 2018-02-26 18:48+0100\n"
+"POT-Creation-Date: 2018-03-03 03:14+0000\n"
+"PO-Revision-Date: 2018-03-03 17:12+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -234,11 +234,11 @@ msgstr "Nazwa listy zadań"
 msgid "_New List"
 msgstr "_Nowa lista"
 
-#: data/ui/list-view.ui:113
+#: data/ui/list-view.ui:112
 msgid "Show or hide completed tasks"
 msgstr "Wyświetla lub ukrywa ukończone zadania"
 
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:378
+#: data/ui/list-view.ui:139 src/gtd-task-list-view.c:379
 msgid "Done"
 msgstr "Ukończone"
 
@@ -350,23 +350,23 @@ msgstr "Błąd podczas wczytywania Kont online GNOME"
 msgid "Failed to connect to task list"
 msgstr "Połączenie z listą zadań się nie powiodło"
 
-#: plugins/eds/gtd-provider-eds.c:442
+#: plugins/eds/gtd-provider-eds.c:443
 msgid "An error occurred while creating a task"
 msgstr "Wystąpił błąd podczas tworzenia zadania"
 
-#: plugins/eds/gtd-provider-eds.c:477
+#: plugins/eds/gtd-provider-eds.c:475
 msgid "An error occurred while modifying a task"
 msgstr "Wystąpił błąd podczas modyfikowania zadania"
 
-#: plugins/eds/gtd-provider-eds.c:498
+#: plugins/eds/gtd-provider-eds.c:496
 msgid "An error occurred while removing a task"
 msgstr "Wystąpił błąd podczas usuwania zadania"
 
-#: plugins/eds/gtd-provider-eds.c:516
+#: plugins/eds/gtd-provider-eds.c:514
 msgid "An error occurred while creating a task list"
 msgstr "Wystąpił błąd podczas tworzenia listy zadań"
 
-#: plugins/eds/gtd-provider-eds.c:537 plugins/eds/gtd-provider-eds.c:561
+#: plugins/eds/gtd-provider-eds.c:535 plugins/eds/gtd-provider-eds.c:558
 msgid "An error occurred while modifying a task list"
 msgstr "Wystąpił błąd podczas modyfikowania listy zadań"
 
@@ -378,8 +378,8 @@ msgstr "Lokalne"
 msgid "On This Computer"
 msgstr "Na tym komputerze"
 
-#: plugins/eds/gtd-task-list-eds.c:245 plugins/eds/gtd-task-list-eds.c:275
-#: plugins/eds/gtd-task-list-eds.c:297
+#: plugins/eds/gtd-task-list-eds.c:276 plugins/eds/gtd-task-list-eds.c:306
+#: plugins/eds/gtd-task-list-eds.c:328
 msgid "Error fetching tasks from list"
 msgstr "Błąd podczas pobierania zadań z listy"
 
@@ -426,15 +426,15 @@ msgstr "Wyczyść ukończone zadania…"
 msgid "No task completed today"
 msgstr "Brak zadań ukończonych dzisiaj"
 
-#: plugins/todoist/gtd-provider-todoist.c:205
+#: plugins/todoist/gtd-provider-todoist.c:212
 msgid "Error fetching Todoist account key"
 msgstr "Błąd podczas pobierania klucza konta Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:206
+#: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Proszę się upewnić, że konto Todoist jest poprawnie skonfigurowane."
 
-#: plugins/todoist/gtd-provider-todoist.c:571
+#: plugins/todoist/gtd-provider-todoist.c:557
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
@@ -442,7 +442,7 @@ msgstr ""
 "Menedżer zadań GNOME nie ma wymaganych uprawnień do wykonania tego "
 "działania: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:579
+#: plugins/todoist/gtd-provider-todoist.c:565
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
@@ -450,19 +450,23 @@ msgstr ""
 "Otrzymano nieprawidłową odpowiedź z serwerów Todoist. Proszę ponownie "
 "uruchomić Menedżera zadań GNOME."
 
-#: plugins/todoist/gtd-provider-todoist.c:831
+#: plugins/todoist/gtd-provider-todoist.c:836
+msgid "An error occurred while updating a Todoist task"
+msgstr "Wystąpił błąd podczas aktualizowania zadania Todoist"
+
+#: plugins/todoist/gtd-provider-todoist.c:945
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Wystąpił błąd podczas pobierania danych Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:897
+#: plugins/todoist/gtd-provider-todoist.c:1018
 msgid "An error occurred while updating Todoist"
 msgstr "Wystąpił błąd podczas aktualizowania konta Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:951
+#: plugins/todoist/gtd-provider-todoist.c:1077
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1242
+#: plugins/todoist/gtd-provider-todoist.c:1385
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -597,33 +601,33 @@ msgstr "Błąd podczas wczytywania wtyczki"
 msgid "Error unloading plugin"
 msgstr "Błąd podczas usuwania wtyczki"
 
-#: src/gtd-task-list-view.c:298
+#: src/gtd-task-list-view.c:293
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr "Usunięcie tego zadania usunie także jego podzadania. Usunąć mimo to?"
 
-#: src/gtd-task-list-view.c:301
+#: src/gtd-task-list-view.c:296
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Nie można będzie ich przywrócić po usunięciu."
 
-#: src/gtd-task-list-view.c:304 src/views/gtd-list-selector-panel.c:388
+#: src/gtd-task-list-view.c:299 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: src/gtd-task-list-view.c:306
+#: src/gtd-task-list-view.c:301
 msgid "Remove"
 msgstr "Usuń"
 
-#: src/gtd-task-list-view.c:380
+#: src/gtd-task-list-view.c:381
 #, c-format
 msgid "Done (%d)"
 msgstr "Ukończone (%d)"
 
-#: src/gtd-task-list-view.c:649
+#: src/gtd-task-list-view.c:648
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Usunięto zadanie <b>%s</b>"
 
-#: src/gtd-task-list-view.c:673
+#: src/gtd-task-list-view.c:672
 msgid "Undo"
 msgstr "Cofnij"
 
@@ -639,7 +643,11 @@ msgstr "Wczytywanie list zadań…"
 msgid "Click a task list to select"
 msgstr "Kliknięcie listy zadań zaznacza ją"
 
-#: src/views/gtd-list-selector-grid-item.c:252
+#.
+#. * If there's no task available, draw a "No tasks" string at
+#. * the middle of the list thumbnail.
+#.
+#: src/views/gtd-list-selector-grid-item.c:250
 msgid "No tasks"
 msgstr "Brak zadań"
 
