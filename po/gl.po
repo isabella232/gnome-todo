@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-toto 3.18\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-02-26 17:44+0000\n"
-"PO-Revision-Date: 2018-03-01 14:20+0200\n"
+"POT-Creation-Date: 2018-03-03 03:14+0000\n"
+"PO-Revision-Date: 2018-03-03 14:20+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician\n"
 "Language: gl\n"
@@ -234,11 +234,11 @@ msgstr "Nome da lista de tarefas"
 msgid "_New List"
 msgstr "Nova _lista"
 
-#: data/ui/list-view.ui:113
+#: data/ui/list-view.ui:112
 msgid "Show or hide completed tasks"
 msgstr "Mostrar ou ocultar as tarefas completadas"
 
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:378
+#: data/ui/list-view.ui:139 src/gtd-task-list-view.c:379
 msgid "Done"
 msgstr "Feito"
 
@@ -348,27 +348,23 @@ msgstr "Produciuse un erro ao cargar as contas en liña de GNOME"
 msgid "Failed to connect to task list"
 msgstr "Produciuse un fallo ao conectarse á lista de tarefas"
 
-#: plugins/eds/gtd-provider-eds.c:442
-#| msgid "Error while creating a Todo.txt list"
+#: plugins/eds/gtd-provider-eds.c:443
 msgid "An error occurred while creating a task"
 msgstr "Produciuse un erro ao crear unha tarefa"
 
-#: plugins/eds/gtd-provider-eds.c:477
+#: plugins/eds/gtd-provider-eds.c:475
 msgid "An error occurred while modifying a task"
 msgstr "Produciuse un erro ao modificar unha tarefa"
 
-#: plugins/eds/gtd-provider-eds.c:498
-#| msgid "Error removing task"
+#: plugins/eds/gtd-provider-eds.c:496
 msgid "An error occurred while removing a task"
 msgstr "Produciuse un erro ao eliminar unha tarefa"
 
-#: plugins/eds/gtd-provider-eds.c:516
-#| msgid "Error while creating a Todo.txt list"
+#: plugins/eds/gtd-provider-eds.c:514
 msgid "An error occurred while creating a task list"
 msgstr "Produciuse un erro ao crear unha lista de tarefas"
 
-#: plugins/eds/gtd-provider-eds.c:537 plugins/eds/gtd-provider-eds.c:561
-#| msgid "Error removing task list"
+#: plugins/eds/gtd-provider-eds.c:535 plugins/eds/gtd-provider-eds.c:558
 msgid "An error occurred while modifying a task list"
 msgstr "Produciuse un erro ao modificar unha lista de tarefas"
 
@@ -380,8 +376,8 @@ msgstr "Local"
 msgid "On This Computer"
 msgstr "Neste computador"
 
-#: plugins/eds/gtd-task-list-eds.c:245 plugins/eds/gtd-task-list-eds.c:275
-#: plugins/eds/gtd-task-list-eds.c:297
+#: plugins/eds/gtd-task-list-eds.c:276 plugins/eds/gtd-task-list-eds.c:306
+#: plugins/eds/gtd-task-list-eds.c:328
 msgid "Error fetching tasks from list"
 msgstr "Produciuse un erro ao obter as tarefas da lista"
 
@@ -427,15 +423,15 @@ msgstr "Limpar as tarefas completas…"
 msgid "No task completed today"
 msgstr "Hoxe non se completou ningunha tarefa"
 
-#: plugins/todoist/gtd-provider-todoist.c:205
+#: plugins/todoist/gtd-provider-todoist.c:212
 msgid "Error fetching Todoist account key"
 msgstr "Produciuse un erro ao obter a chave da conta de Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:206
+#: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Asegúrese de que a data en Todoist está configurada correctamente."
 
-#: plugins/todoist/gtd-provider-todoist.c:571
+#: plugins/todoist/gtd-provider-todoist.c:557
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
@@ -443,7 +439,7 @@ msgstr ""
 "Tarefas de GNOME non ten os permisos necesarios para levar a cabo esta "
 "acción: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:579
+#: plugins/todoist/gtd-provider-todoist.c:565
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
@@ -451,21 +447,24 @@ msgstr ""
 "Recibiuse unha resposta non válida desde os servidores de Todoist. Regargue "
 "Taregas de GNOME."
 
-#: plugins/todoist/gtd-provider-todoist.c:831
-#| msgid "Error while creating a Todo.txt list"
+#: plugins/todoist/gtd-provider-todoist.c:836
+#| msgid "An error occurred while updating Todoist"
+msgid "An error occurred while updating a Todoist task"
+msgstr "Produciuse un erro ao actualizar a tarefa de Todoist"
+
+#: plugins/todoist/gtd-provider-todoist.c:945
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Produciuse un erro ao obter os datos de Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:897
-#| msgid "Error while creating a Todo.txt list"
+#: plugins/todoist/gtd-provider-todoist.c:1018
 msgid "An error occurred while updating Todoist"
 msgstr "Produciuse un erro ao actualizar a Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:951
+#: plugins/todoist/gtd-provider-todoist.c:1077
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1242
+#: plugins/todoist/gtd-provider-todoist.c:1385
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -599,36 +598,35 @@ msgstr "Produciuse un erro ao cargar o engadido"
 msgid "Error unloading plugin"
 msgstr "Produciuse un erro ao descargar o engadido"
 
-#: src/gtd-task-list-view.c:298
+#: src/gtd-task-list-view.c:293
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Ao eliminar esta tarefa tamén se eliminarán as súas subtarefas. Desexa "
 "eliminala igualmente?"
 
-#: src/gtd-task-list-view.c:301
+#: src/gtd-task-list-view.c:296
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Logo de eliminalas, as tarefas non se poden recuperar."
 
-#: src/gtd-task-list-view.c:304 src/views/gtd-list-selector-panel.c:388
+#: src/gtd-task-list-view.c:299 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/gtd-task-list-view.c:306
+#: src/gtd-task-list-view.c:301
 msgid "Remove"
 msgstr "Eliminar"
 
-#: src/gtd-task-list-view.c:380
+#: src/gtd-task-list-view.c:381
 #, c-format
-#| msgid "Done"
 msgid "Done (%d)"
 msgstr "Feito (%d)"
 
-#: src/gtd-task-list-view.c:649
+#: src/gtd-task-list-view.c:648
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Tarefa <b>%s</b> eliminada"
 
-#: src/gtd-task-list-view.c:673
+#: src/gtd-task-list-view.c:672
 msgid "Undo"
 msgstr "Desfacer"
 
@@ -644,7 +642,11 @@ msgstr "Cargando a lista de tarefas…"
 msgid "Click a task list to select"
 msgstr "Prema unha lista de tarefas para seleccionala"
 
-#: src/views/gtd-list-selector-grid-item.c:252
+#.
+#. * If there's no task available, draw a "No tasks" string at
+#. * the middle of the list thumbnail.
+#.
+#: src/views/gtd-list-selector-grid-item.c:250
 msgid "No tasks"
 msgstr "Non hai tarefas"
 
