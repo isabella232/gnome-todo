@@ -95,14 +95,14 @@ GQuark               gtd_provider_todoist_error_quark            (void);
 static void          on_operation_completed_cb                   (RestProxyCall    *call,
                                                                   const GError     *error,
                                                                   GObject          *weak_object,
-                                                                  GList            *requests);
+                                                                  gpointer          user_data);
 
 static gboolean      on_schedule_wait_timeout_cb                 (gpointer            data);
 
 static void          on_synchronize_completed_cb                 (RestProxyCall      *call,
                                                                   const GError       *error,
                                                                   GObject            *weak_object,
-                                                                  GtdProviderTodoist *self);
+                                                                  gpointer            user_data);
 
 static void          update_task_position                        (GtdProviderTodoist *self,
                                                                   GtdTask            *task,
@@ -721,7 +721,7 @@ synchronize (GtdProviderTodoist *self)
   json_object_set_string_member (params, "sync_token", self->sync_token);
   json_object_set_string_member (params, "resource_types", "[\"all\"]");
 
-  post (self, params, (RestProxyCallAsyncCallback) on_synchronize_completed_cb, self);
+  post (self, params, on_synchronize_completed_cb, self);
 }
 
 static gchar*
@@ -786,7 +786,7 @@ process_request_queue (GtdProviderTodoist *self)
   json_object_set_string_member (params, "commands", command);
   json_object_set_string_member (params, "token", self->access_token);
 
-  post (self, params, (RestProxyCallAsyncCallback) on_operation_completed_cb, g_steal_pointer (&requests));
+  post (self, params, on_operation_completed_cb, g_steal_pointer (&requests));
 }
 
 static void
@@ -939,15 +939,17 @@ on_schedule_wait_timeout_cb (gpointer data)
 }
 
 static void
-on_synchronize_completed_cb (RestProxyCall      *call,
-                             const GError       *post_error,
-                             GObject            *weak_object,
-                             GtdProviderTodoist *self)
+on_synchronize_completed_cb (RestProxyCall *call,
+                             const GError  *post_error,
+                             GObject       *weak_object,
+                             gpointer       user_data)
 {
   g_autoptr (JsonParser) parser = NULL;
   g_autoptr (JsonObject) object = NULL;
   g_autoptr (GError) error = NULL;
+  GtdProviderTodoist *self;
 
+  self = GTD_PROVIDER_TODOIST (weak_object);
   parser = json_parser_new ();
 
   /* Release the application */
@@ -980,17 +982,19 @@ on_synchronize_completed_cb (RestProxyCall      *call,
 }
 
 static void
-on_operation_completed_cb (RestProxyCall    *call,
-                           const GError     *post_error,
-                           GObject          *weak_object,
-                           GList            *requests)
+on_operation_completed_cb (RestProxyCall *call,
+                           const GError  *post_error,
+                           GObject       *weak_object,
+                           gpointer       user_data)
 {
   g_autoptr (JsonParser) parser = NULL;
+  g_autoptr (GList) requests = NULL;
   g_autoptr (GList) l = NULL;
   GtdProviderTodoist *self;
   JsonObject *object;
 
   self = GTD_PROVIDER_TODOIST (weak_object);
+  requests = (GList *) user_data;
 
   g_debug ("Received response for POST request");
 
@@ -1071,10 +1075,8 @@ on_operation_completed_cb (RestProxyCall    *call,
       g_clear_pointer (&data, g_free);
     }
 
-  /* Dispatch next queued requests */
+  /* Dispatch next batch of queued requests */
   process_request_queue (self);
-
-  g_clear_pointer (&requests, g_list_free);
 }
 
 
