@@ -16,12 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GTD_OBJECT_H
-#define GTD_OBJECT_H
-
-#include <glib-object.h>
+#pragma once
 
 #include "gtd-types.h"
+
+#include <glib-object.h>
 
 G_BEGIN_DECLS
 
@@ -39,18 +38,16 @@ struct _GtdObjectClass
                                         const gchar      *uid);
 };
 
-GtdObject*              gtd_object_new                    (const gchar        *uid);
+GtdObject*           gtd_object_new                              (const gchar        *uid);
 
-const gchar*            gtd_object_get_uid                (GtdObject          *object);
+const gchar*         gtd_object_get_uid                          (GtdObject          *object);
 
-void                    gtd_object_set_uid                (GtdObject          *object,
-                                                           const gchar        *uid);
+void                 gtd_object_set_uid                          (GtdObject          *object,
+                                                                  const gchar        *uid);
 
-gboolean                gtd_object_get_ready              (GtdObject          *object);
+gboolean             gtd_object_get_ready                        (GtdObject          *object);
 
-void                    gtd_object_set_ready              (GtdObject          *object,
-                                                           gboolean            ready);
+void                 gtd_object_set_ready                        (GtdObject          *object,
+                                                                  gboolean            ready);
 
 G_END_DECLS
-
-#endif /* GTD_OBJECT_H */

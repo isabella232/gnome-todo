@@ -35,19 +35,25 @@
 
 typedef struct
 {
-  gboolean       ready;
-  gchar         *uid;
+  gboolean            ready;
+  gchar               *uid;
 } GtdObjectPrivate;
 
+
 G_DEFINE_TYPE_WITH_PRIVATE (GtdObject, gtd_object, G_TYPE_OBJECT)
+
 
 enum
 {
   PROP_0,
   PROP_READY,
   PROP_UID,
-  LAST_PROP
+  N_PROPS
 };
+
+
+static GParamSpec *properties[N_PROPS] = { NULL, };
+
 
 static const gchar*
 gtd_object_real_get_uid (GtdObject *object)
@@ -71,16 +77,19 @@ gtd_object_real_set_uid (GtdObject   *object,
 
   priv = gtd_object_get_instance_private (object);
 
-  if (g_strcmp0 (priv->uid, uid) != 0)
-    {
-      if (priv->uid)
-        g_free (priv->uid);
+  if (g_strcmp0 (priv->uid, uid) == 0)
+    return;
 
-      priv->uid = g_strdup (uid);
+  g_clear_pointer (&priv->uid, g_free);
+  priv->uid = g_strdup (uid);
 
-      g_object_notify (G_OBJECT (object), "uid");
-    }
+  g_object_notify_by_pspec (G_OBJECT (object), properties[PROP_UID]);
 }
+
+
+/*
+ * GObject overrides
+ */
 
 static void
 gtd_object_finalize (GObject *object)
@@ -88,8 +97,7 @@ gtd_object_finalize (GObject *object)
   GtdObject *self = GTD_OBJECT (object);
   GtdObjectPrivate *priv = gtd_object_get_instance_private (self);
 
-  if (priv->uid)
-    g_free (priv->uid);
+  g_clear_pointer (&priv->uid, g_free);
 
   G_OBJECT_CLASS (gtd_object_parent_class)->finalize (object);
 }
@@ -158,28 +166,24 @@ gtd_object_class_init (GtdObjectClass *klass)
    *
    * The unique identified of the object, set by the backend.
    */
-  g_object_class_install_property (
-        object_class,
-        PROP_UID,
-        g_param_spec_string ("uid",
-                             "Unique identifier of the object",
-                             "The unique identifier of the object, defined by the backend",
-                             NULL,
-                             G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+  properties[PROP_UID] = g_param_spec_string ("uid",
+                                              "Unique identifier of the object",
+                                              "The unique identifier of the object, defined by the backend",
+                                              NULL,
+                                              G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
 
   /**
    * GtdObject::ready:
    *
    * Whether the object is ready or not.
    */
-  g_object_class_install_property (
-        object_class,
-        PROP_READY,
-        g_param_spec_boolean ("ready",
-                              "Ready state of the object",
-                              "Whether the object is marked as ready or not",
-                              TRUE,
-                              G_PARAM_READWRITE));
+  properties[PROP_READY] = g_param_spec_boolean ("ready",
+                                                 "Ready state of the object",
+                                                 "Whether the object is marked as ready or not",
+                                                 TRUE,
+                                                 G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_properties (object_class, N_PROPS, properties);
 }
 
 static void
@@ -281,14 +285,14 @@ gtd_object_set_ready (GtdObject *object,
 {
   GtdObjectPrivate *priv;
 
-  g_assert (GTD_IS_OBJECT (object));
+  g_return_if_fail (GTD_IS_OBJECT (object));
 
   priv = gtd_object_get_instance_private (object);
 
-  if (priv->ready != ready)
-    {
-      priv->ready = ready;
+  if (priv->ready == ready)
+    return;
 
-      g_object_notify (G_OBJECT (object), "ready");
-    }
+  priv->ready = ready;
+
+  g_object_notify_by_pspec (G_OBJECT (object), properties[PROP_READY]);
 }
