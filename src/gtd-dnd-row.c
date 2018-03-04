@@ -276,6 +276,9 @@ gtd_dnd_row_drag_drop (GtkWidget      *widget,
         gtd_task_remove_subtask (gtd_task_get_parent (row_task), row_task);
     }
 
+  /* Reset the task position */
+  gtd_task_set_position (row_task, -1);
+
   /* Save the task */
   gtd_provider_update_task (gtd_task_get_provider (row_task), row_task);
 

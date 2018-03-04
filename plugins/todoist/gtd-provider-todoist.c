@@ -1240,7 +1240,6 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
    * Update the task position, and the position of the other tasks too. We need to reset
    * the task position so that we can properly calculate it again
    */
-  gtd_task_set_position (task, -1);
   update_task_position (self, task, TRUE);
 }
 
