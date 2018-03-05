@@ -69,6 +69,46 @@ enum
 static guint signals[NUM_SIGNALS] = { 0, };
 static GParamSpec *properties[N_PROPS] = { NULL, };
 
+
+/*
+ * Auxiliary functions
+ */
+
+static void
+update_task_uid (GtdTaskList *self,
+                 GtdTask     *task)
+{
+  GtdTaskListPrivate *priv = NULL;
+  GHashTableIter iter;
+  gpointer uid;
+  gpointer t;
+
+  priv = gtd_task_list_get_instance_private (self);
+
+  g_debug ("Updating uid of task '%s'", gtd_task_get_title (task));
+
+  /* Iterate until we find the current task */
+  g_hash_table_iter_init (&iter, priv->tasks);
+  while (g_hash_table_iter_next (&iter, &uid, &t))
+    {
+      if (t == task)
+        break;
+    }
+
+  g_assert (t == task);
+
+  /* Increase the refcount before removing, since removing drops a ref */
+  g_object_ref (task);
+
+  g_hash_table_remove (priv->tasks, uid);
+  g_hash_table_insert (priv->tasks, g_strdup (gtd_object_get_uid (GTD_OBJECT (task))), task);
+}
+
+
+/*
+ * Callbacks
+ */
+
 static void
 task_changed_cb (GtdTask     *task,
                  GParamSpec  *pspec,
@@ -77,8 +117,19 @@ task_changed_cb (GtdTask     *task,
   if (g_strcmp0 (g_param_spec_get_name (pspec), "loading") == 0)
     return;
 
+  if (g_strcmp0 (g_param_spec_get_name (pspec), "uid") == 0)
+    {
+      update_task_uid (self, task);
+      return;
+    }
+
   g_signal_emit (self, signals[TASK_UPDATED], 0, task);
 }
+
+
+/*
+ * GObject overrides
+ */
 
 static void
 gtd_task_list_finalize (GObject *object)
