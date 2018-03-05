@@ -563,7 +563,11 @@ static gboolean
 undo_remove_task_cb (GtdTaskListView *self,
                      GtdTask         *task)
 {
+  /* Tasks are not loading anymore */
+  gtd_object_pop_loading (GTD_OBJECT (task));
+
   on_task_list_task_added_cb (NULL, task, self);
+
   return TRUE;
 }
 
@@ -610,7 +614,12 @@ static inline gboolean
 remove_task_rows_from_list_view_cb (GtdTaskListView *self,
                                     GtdTask         *task)
 {
+  /* Task is in loading state until it's either readded, or effectively removed */
+  gtd_object_push_loading (GTD_OBJECT (task));
+
+  /* Remove from the view, but not from the list */
   on_task_list_task_removed_cb (self, task);
+
   return TRUE;
 }
 

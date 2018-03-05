@@ -994,7 +994,8 @@ gtd_task_row_set_active (GtdTaskRow *self,
   /* And the listbox */
   gtk_revealer_set_reveal_child (GTK_REVEALER (self->edit_panel_revealer), active);
 
-  if (!active)
+  /* Save the task if it is not being loaded */
+  if (!active && !gtd_object_get_loading (GTD_OBJECT (self->task)))
     gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
 
   g_signal_emit (self, active ? signals[ENTER] : signals[EXIT], 0);
