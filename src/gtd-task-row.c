@@ -229,6 +229,12 @@ gtd_task_row_set_task (GtdTaskRow *row,
       g_signal_handlers_block_by_func (row->done_check, on_complete_check_toggled_cb, row);
 
       g_object_bind_property (task,
+                              "loading",
+                              row,
+                              "sensitive",
+                              G_BINDING_DEFAULT | G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE);
+
+      g_object_bind_property (task,
                               "title",
                               row->title_entry,
                               "text",
