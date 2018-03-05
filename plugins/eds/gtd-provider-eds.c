@@ -49,12 +49,6 @@ typedef struct
   gint                  lazy_load_id;
 } GtdProviderEdsPrivate;
 
-typedef struct
-{
-  GtdProviderEds *provider;
-  ESource        *source;
-} LoadSourceData;
-
 
 static void          gtd_provider_iface_init                     (GtdProviderInterface *iface);
 
@@ -170,49 +164,29 @@ on_client_connected_cb (GObject      *source_object,
   g_debug ("Task list '%s' successfully connected", e_source_get_display_name (source));
 }
 
-static gboolean
-on_load_source_cb (LoadSourceData *data)
-{
-  GtdProviderEds *provider;
-  ESource *source;
-
-  provider = data->provider;
-  source = data->source;
-
-  if (e_source_has_extension (source, E_SOURCE_EXTENSION_TASK_LIST) &&
-      GTD_PROVIDER_EDS_CLASS (G_OBJECT_GET_CLASS (provider))->should_load_source (provider, source))
-    {
-      e_cal_client_connect (source,
-                            E_CAL_CLIENT_SOURCE_TYPE_TASKS,
-                            10, /* seconds to wait */
-                            NULL,
-                            on_client_connected_cb,
-                            provider);
-    }
-
-  g_free (data);
-
-  return G_SOURCE_REMOVE;
-}
-
 static void
 on_source_added_cb (GtdProviderEds *provider,
                     ESource        *source)
 {
-  LoadSourceData *data;
+  /* Don't load the source if it's not a tasklist */
+  if (!e_source_has_extension (source, E_SOURCE_EXTENSION_TASK_LIST) ||
+      !GTD_PROVIDER_EDS_CLASS (G_OBJECT_GET_CLASS (provider))->should_load_source (provider, source))
+    {
+      return;
+    }
 
-  data = g_new0 (LoadSourceData, 1);
-  data->provider = provider;
-  data->source = source;
-
-  /* HACK: I really don't like to use arbitrary timeouts on
-   * my code, but we have absolutely no guarantees that
-   * ESourceRegistry::source-added was emited to the other
-   * objects before. So Milan Crha told me to add this timeout
-   * and "guarantee" that other objects will receive the
-   * signal.
+  /*
+   * The pop_loading() is actually emited by GtdTaskListEds, after the
+   * ECalClientView sends the :complete signal.
    */
-  g_timeout_add (1000, (GSourceFunc) on_load_source_cb, data);
+  gtd_object_push_loading (GTD_OBJECT (gtd_manager_get_default ()));
+
+  e_cal_client_connect (source,
+                        E_CAL_CLIENT_SOURCE_TYPE_TASKS,
+                        10, /* seconds to wait */
+                        NULL,
+                        on_client_connected_cb,
+                        provider);
 }
 
 static void
@@ -344,72 +318,6 @@ out:
   g_clear_object (&default_source);
 }
 
-static void
-gtd_provider_eds_set_registry (GtdProviderEds  *provider,
-                               ESourceRegistry *registry)
-{
-  GtdProviderEdsPrivate *priv = gtd_provider_eds_get_instance_private (provider);
-  g_autoptr (GError) error = NULL;
-  GList *sources;
-  GList *l;
-
-  g_set_object (&priv->source_registry, registry);
-
-  priv->credentials_prompter = e_credentials_prompter_new (priv->source_registry);
-
-  if (error)
-    {
-      g_warning ("%s: %s", "Error loading task manager", error->message);
-      return;
-    }
-
-  /* First of all, disable authentication dialog for non-tasklists sources */
-  sources = e_source_registry_list_sources (priv->source_registry, NULL);
-
-  for (l = sources; l != NULL; l = g_list_next (l))
-    {
-      ESource *source = E_SOURCE (l->data);
-
-      /* Mark for skip also currently disabled sources */
-      e_credentials_prompter_set_auto_prompt_disabled_for (priv->credentials_prompter,
-                                                           source,
-                                                           !e_source_has_extension (source, E_SOURCE_EXTENSION_TASK_LIST));
-    }
-
-  g_list_free_full (sources, g_object_unref);
-
-  /* Load task list sources */
-  sources = e_source_registry_list_sources (priv->source_registry, E_SOURCE_EXTENSION_TASK_LIST);
-
-  for (l = sources; l != NULL; l = l->next)
-    on_source_added_cb (provider, l->data);
-
-  g_list_free_full (sources, g_object_unref);
-
-  /* listen to the signals, so new sources don't slip by */
-  g_signal_connect_swapped (priv->source_registry,
-                            "source-added",
-                            G_CALLBACK (on_source_added_cb),
-                            provider);
-
-  g_signal_connect_swapped (priv->source_registry,
-                            "source-removed",
-                            G_CALLBACK (on_source_removed_cb),
-                            provider);
-
-  g_signal_connect (priv->source_registry,
-                    "credentials-required",
-                    G_CALLBACK (on_eds_credentials_required_cb),
-                    provider);
-
-  g_signal_connect (priv->source_registry,
-                    "notify::default-task-list",
-                    G_CALLBACK (on_default_tasklist_changed_cb),
-                    provider);
-
-  e_credentials_prompter_process_awaiting_credentials (priv->credentials_prompter);
-}
-
 #define REPORT_ERROR(title,error) \
 G_STMT_START \
   if (error) \
@@ -435,8 +343,8 @@ on_task_created_cb (ECalClient   *client,
   self = GTD_PROVIDER_EDS (gtd_task_get_provider (task));
   list = gtd_task_get_list (task);
 
-  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
-  gtd_object_set_ready (GTD_OBJECT (task), TRUE);
+  gtd_object_pop_loading (GTD_OBJECT (self));
+  gtd_object_pop_loading (GTD_OBJECT (task));
 
   e_cal_client_create_object_finish (client, result, &new_uid, &error);
 
@@ -467,8 +375,8 @@ on_task_modified_cb (ECalClient   *client,
 
   self = GTD_PROVIDER_EDS (gtd_task_get_provider (task));
 
-  gtd_object_set_ready (GTD_OBJECT (task), TRUE);
-  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
+  gtd_object_pop_loading (GTD_OBJECT (task));
+  gtd_object_pop_loading (GTD_OBJECT (self));
 
   e_cal_client_modify_object_finish (client, result, &error);
 
@@ -489,7 +397,7 @@ on_task_removed_cb (GObject      *object,
 
   self = GTD_PROVIDER_EDS (user_data);
 
-  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
+  gtd_object_pop_loading (GTD_OBJECT (self));
 
   e_cal_client_remove_object_finish (E_CAL_CLIENT (object), result, &error);
 
@@ -507,7 +415,7 @@ on_task_list_created_cb (ESourceRegistry *registry,
 
   GTD_ENTRY;
 
-  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
+  gtd_object_pop_loading (GTD_OBJECT (self));
 
   e_source_registry_commit_source_finish (registry, result, &error);
 
@@ -528,7 +436,7 @@ on_task_list_modified_cb (ESourceRegistry *registry,
 
   self = GTD_PROVIDER_EDS (gtd_task_list_get_provider (list));
 
-  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
+  gtd_object_pop_loading (GTD_OBJECT (self));
 
   e_source_registry_commit_source_finish (registry, result, &error);
 
@@ -551,7 +459,7 @@ on_task_list_removed_cb (ESource      *source,
 
   self = GTD_PROVIDER_EDS (gtd_task_list_get_provider (list));
 
-  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
+  gtd_object_pop_loading (GTD_OBJECT (self));
 
   e_source_remove_finish (source, result, &error);
 
@@ -638,8 +546,8 @@ gtd_provider_eds_create_task (GtdProvider *provider,
   gtd_task_set_list (new_task, list);
 
   /* The task is not ready until we finish the operation */
-  gtd_object_set_ready (GTD_OBJECT (self), FALSE);
-  gtd_object_set_ready (GTD_OBJECT (new_task), FALSE);
+  gtd_object_push_loading (GTD_OBJECT (self));
+  gtd_object_push_loading (GTD_OBJECT (new_task));
 
   e_cal_client_create_object (client,
                               e_cal_component_get_icalcomponent (component),
@@ -670,8 +578,8 @@ gtd_provider_eds_update_task (GtdProvider *provider,
   e_cal_component_commit_sequence (component);
 
   /* The task is not ready until we finish the operation */
-  gtd_object_set_ready (GTD_OBJECT (task), FALSE);
-  gtd_object_set_ready (GTD_OBJECT (provider), FALSE);
+  gtd_object_push_loading (GTD_OBJECT (task));
+  gtd_object_push_loading (GTD_OBJECT (provider));
 
   e_cal_client_modify_object (client,
                               e_cal_component_get_icalcomponent (component),
@@ -702,7 +610,7 @@ gtd_provider_eds_remove_task (GtdProvider *provider,
   component = gtd_task_eds_get_component (GTD_TASK_EDS (task));
   id = e_cal_component_get_id (component);
 
-  gtd_object_set_ready (GTD_OBJECT (provider), FALSE);
+  gtd_object_push_loading (GTD_OBJECT (provider));
 
   e_cal_client_remove_object (client,
                               id->uid,
@@ -736,7 +644,7 @@ gtd_provider_eds_create_task_list (GtdProvider *provider,
   if (!source)
     return;
 
-  gtd_object_set_ready (GTD_OBJECT (provider), FALSE);
+  gtd_object_push_loading (GTD_OBJECT (provider));
 
   /* EDS properties */
   e_source_set_display_name (source, name);
@@ -765,7 +673,7 @@ gtd_provider_eds_update_task_list (GtdProvider *provider,
   priv = gtd_provider_eds_get_instance_private (GTD_PROVIDER_EDS (provider));
   source = gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list));
 
-  gtd_object_set_ready (GTD_OBJECT (provider), FALSE);
+  gtd_object_push_loading (GTD_OBJECT (provider));
 
   e_source_registry_commit_source (priv->source_registry,
                                    source,
@@ -789,7 +697,7 @@ gtd_provider_eds_remove_task_list (GtdProvider *provider,
 
   source = gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list));
 
-  gtd_object_set_ready (GTD_OBJECT (provider), FALSE);
+  gtd_object_push_loading (GTD_OBJECT (provider));
 
   e_source_remove (source,
                    NULL,
@@ -888,6 +796,72 @@ gtd_provider_eds_finalize (GObject *object)
 }
 
 static void
+gtd_provider_eds_constructed (GObject *object)
+{
+  GtdProviderEdsPrivate *priv;
+  GtdProviderEds *self;
+  g_autoptr (GError) error = NULL;
+  GList *sources;
+  GList *l;
+
+  self = GTD_PROVIDER_EDS (object);
+  priv = gtd_provider_eds_get_instance_private (self);
+  priv->credentials_prompter = e_credentials_prompter_new (priv->source_registry);
+
+  if (error)
+    {
+      g_warning ("%s: %s", "Error loading task manager", error->message);
+      return;
+    }
+
+  /* First of all, disable authentication dialog for non-tasklists sources */
+  sources = e_source_registry_list_sources (priv->source_registry, NULL);
+
+  for (l = sources; l != NULL; l = g_list_next (l))
+    {
+      ESource *source = E_SOURCE (l->data);
+
+      /* Mark for skip also currently disabled sources */
+      e_credentials_prompter_set_auto_prompt_disabled_for (priv->credentials_prompter,
+                                                           source,
+                                                           !e_source_has_extension (source, E_SOURCE_EXTENSION_TASK_LIST));
+    }
+
+  g_list_free_full (sources, g_object_unref);
+
+  /* Load task list sources */
+  sources = e_source_registry_list_sources (priv->source_registry, E_SOURCE_EXTENSION_TASK_LIST);
+
+  for (l = sources; l != NULL; l = l->next)
+    on_source_added_cb (self, l->data);
+
+  g_list_free_full (sources, g_object_unref);
+
+  /* listen to the signals, so new sources don't slip by */
+  g_signal_connect_swapped (priv->source_registry,
+                            "source-added",
+                            G_CALLBACK (on_source_added_cb),
+                            self);
+
+  g_signal_connect_swapped (priv->source_registry,
+                            "source-removed",
+                            G_CALLBACK (on_source_removed_cb),
+                            self);
+
+  g_signal_connect (priv->source_registry,
+                    "credentials-required",
+                    G_CALLBACK (on_eds_credentials_required_cb),
+                    self);
+
+  g_signal_connect (priv->source_registry,
+                    "notify::default-task-list",
+                    G_CALLBACK (on_default_tasklist_changed_cb),
+                    self);
+
+  e_credentials_prompter_process_awaiting_credentials (priv->credentials_prompter);
+}
+
+static void
 gtd_provider_eds_get_property (GObject    *object,
                                guint       prop_id,
                                GValue     *value,
@@ -939,6 +913,7 @@ gtd_provider_eds_set_property (GObject      *object,
                                GParamSpec   *pspec)
 {
   GtdProviderEds *self = GTD_PROVIDER_EDS (object);
+  GtdProviderEdsPrivate *priv = gtd_provider_eds_get_instance_private (self);
 
   switch (prop_id)
     {
@@ -947,7 +922,8 @@ gtd_provider_eds_set_property (GObject      *object,
       break;
 
     case PROP_REGISTRY:
-      gtd_provider_eds_set_registry (self, g_value_get_object (value));
+      if (g_set_object (&priv->source_registry, g_value_get_object (value)))
+        g_object_notify (object, "registry");
       break;
 
     default:
@@ -961,6 +937,7 @@ gtd_provider_eds_class_init (GtdProviderEdsClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize = gtd_provider_eds_finalize;
+  object_class->constructed = gtd_provider_eds_constructed;
   object_class->get_property = gtd_provider_eds_get_property;
   object_class->set_property = gtd_provider_eds_set_property;
 
@@ -987,7 +964,7 @@ gtd_provider_eds_init (GtdProviderEds *self)
 
   priv->cancellable = g_cancellable_new ();
 
-  gtd_object_set_ready (GTD_OBJECT (self), FALSE);
+  gtd_object_push_loading (GTD_OBJECT (self));
 }
 
 GtdProviderEds*

@@ -486,39 +486,21 @@ gtd_window__stack_visible_child_cb (GtdWindow  *window,
   update_panel_menu (window);
 }
 
-/*
 static void
-gtd_window__create_new_list (GSimpleAction *simple,
-                             GVariant      *parameter,
-                             gpointer       user_data)
+on_loading_changed_cb (GObject    *source,
+                       GParamSpec *spec,
+                       gpointer    user_data)
 {
   GtdWindowPrivate *priv;
 
-  g_return_if_fail (GTD_IS_WINDOW (user_data));
+  g_assert (GTD_IS_WINDOW (user_data));
 
   priv = GTD_WINDOW (user_data)->priv;
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (priv->new_list_button), TRUE);
-}
- */
-
-static void
-gtd_window__manager_ready_changed (GObject    *source,
-                                   GParamSpec *spec,
-                                   gpointer    user_data)
-{
-  GtdWindowPrivate *priv = GTD_WINDOW (user_data)->priv;
-
-  g_return_if_fail (GTD_IS_WINDOW (user_data));
-
-  if (gtd_object_get_ready (GTD_OBJECT (source)))
-    {
-      gtd_notification_widget_cancel (priv->notification_widget, priv->loading_notification);
-    }
+  if (gtd_object_get_loading (GTD_OBJECT (source)))
+    gtd_notification_widget_notify (priv->notification_widget, priv->loading_notification);
   else
-    {
-      gtd_notification_widget_notify (priv->notification_widget, priv->loading_notification);
-    }
+    gtd_notification_widget_cancel (priv->notification_widget, priv->loading_notification);
 }
 
 static void
@@ -709,8 +691,8 @@ gtd_window_set_property (GObject      *object,
       }
 
       g_signal_connect (self->priv->manager,
-                        "notify::ready",
-                        G_CALLBACK (gtd_window__manager_ready_changed),
+                        "notify::loading",
+                        G_CALLBACK (on_loading_changed_cb),
                         self);
       g_signal_connect (self->priv->manager,
                         "panel-added",
@@ -820,7 +802,7 @@ gtd_window_init (GtdWindow *self)
   self->priv = gtd_window_get_instance_private (self);
 
   self->priv->loading_notification = gtd_notification_new (_("Loading your task lists…"), 0);
-  gtd_object_set_ready (GTD_OBJECT (self->priv->loading_notification), FALSE);
+  gtd_object_push_loading (GTD_OBJECT (self->priv->loading_notification));
 
   gtk_widget_init_template (GTK_WIDGET (self));
 

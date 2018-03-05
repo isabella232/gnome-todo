@@ -306,11 +306,11 @@ gtd_plugin_manager_init (GtdPluginManager *self)
 {
   self->info_to_extension = g_hash_table_new (g_direct_hash, g_direct_equal);
 
-  gtd_object_set_ready (GTD_OBJECT (self), FALSE);
+  gtd_object_push_loading (GTD_OBJECT (self));
 
   setup_engine (self);
 
-  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
+  gtd_object_pop_loading (GTD_OBJECT (self));
 }
 
 GtdPluginManager*

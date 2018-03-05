@@ -300,16 +300,16 @@ gtd_list_selector_list_item_set_property (GObject      *object,
                               G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
       g_object_bind_property (self->list,
-                              "ready",
+                              "loading",
                               self->spinner,
                               "visible",
-                              G_BINDING_DEFAULT | G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE);
+                              G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
       g_object_bind_property (self->list,
-                              "ready",
+                              "loading",
                               self->spinner,
                               "active",
-                              G_BINDING_DEFAULT | G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE);
+                              G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
       g_signal_connect_swapped (self->list,
                                 "notify::color",

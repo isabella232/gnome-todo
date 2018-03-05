@@ -45,9 +45,10 @@ const gchar*         gtd_object_get_uid                          (GtdObject     
 void                 gtd_object_set_uid                          (GtdObject          *object,
                                                                   const gchar        *uid);
 
-gboolean             gtd_object_get_ready                        (GtdObject          *object);
+gboolean             gtd_object_get_loading                      (GtdObject          *object);
 
-void                 gtd_object_set_ready                        (GtdObject          *object,
-                                                                  gboolean            ready);
+void                 gtd_object_push_loading                     (GtdObject          *object);
+
+void                 gtd_object_pop_loading                      (GtdObject          *object);
 
 G_END_DECLS

@@ -133,7 +133,7 @@ login_proxy_acquired_cb (GObject      *source,
 
   self = GTD_TIMER (user_data);
 
-  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
+  gtd_object_pop_loading (GTD_OBJECT (self));
 
   self->logind = g_dbus_proxy_new_for_bus_finish (res, &error);
 
@@ -235,7 +235,7 @@ gtd_timer_class_init (GtdTimerClass *klass)
 static void
 gtd_timer_init (GtdTimer *self)
 {
-  gtd_object_set_ready (GTD_OBJECT (self), FALSE);
+  gtd_object_push_loading (GTD_OBJECT (self));
 
   self->current_day = g_date_time_new_now_local ();
   self->cancellable = g_cancellable_new ();

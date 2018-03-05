@@ -328,9 +328,9 @@ gtd_list_selector_grid_item__task_changed (GtdTaskList *list,
 }
 
 static void
-gtd_list_selector_grid_item__notify_ready (GtdListSelectorGridItem *item,
-                                  GParamSpec      *pspec,
-                                  gpointer         user_data)
+on_loading_notify_cb (GtdListSelectorGridItem *item,
+                      GParamSpec              *pspec,
+                      gpointer                 user_data)
 {
   gtd_list_selector_grid_item__update_thumbnail (item);
 }
@@ -461,15 +461,9 @@ gtd_list_selector_grid_item_dispose (GObject *object)
 
   if (self->list)
     {
-      g_signal_handlers_disconnect_by_func (self->list,
-                                            gtd_list_selector_grid_item__notify_ready,
-                                            self);
-      g_signal_handlers_disconnect_by_func (self->list,
-                                            color_changed,
-                                            self);
-      g_signal_handlers_disconnect_by_func (self->list,
-                                            gtd_list_selector_grid_item__task_changed,
-                                            self);
+      g_signal_handlers_disconnect_by_func (self->list, on_loading_notify_cb, self);
+      g_signal_handlers_disconnect_by_func (self->list, color_changed, self);
+      g_signal_handlers_disconnect_by_func (self->list, gtd_list_selector_grid_item__task_changed, self);
       g_clear_object (&self->list);
     }
 
@@ -540,20 +534,20 @@ gtd_list_selector_grid_item_set_property (GObject      *object,
                               G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
       g_object_bind_property (self->list,
-                              "ready",
+                              "loading",
                               self->spinner,
                               "visible",
-                              G_BINDING_DEFAULT | G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE);
+                              G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
       g_object_bind_property (self->list,
-                              "ready",
+                              "loading",
                               self->spinner,
                               "active",
-                              G_BINDING_DEFAULT | G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE);
+                              G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
       g_signal_connect_swapped (self->list,
-                                "notify::ready",
-                                G_CALLBACK (gtd_list_selector_grid_item__notify_ready),
+                                "notify::loading",
+                                G_CALLBACK (on_loading_notify_cb),
                                 self);
       g_signal_connect_swapped (self->list,
                                 "notify::color",

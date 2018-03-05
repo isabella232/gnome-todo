@@ -131,8 +131,6 @@ gtd_provider_local_class_init (GtdProviderLocalClass *klass)
 static void
 gtd_provider_local_init (GtdProviderLocal *self)
 {
-  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
-
   self->icon = G_ICON (g_themed_icon_new_with_default_fallbacks ("computer-symbolic"));
 }
 

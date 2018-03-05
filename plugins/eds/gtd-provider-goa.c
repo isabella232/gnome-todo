@@ -18,6 +18,7 @@
 
 #define G_LOG_DOMAIN "GtdProviderGoa"
 
+#include "gtd-eds-autoptr.h"
 #include "gtd-provider-eds.h"
 #include "gtd-provider-goa.h"
 
@@ -91,8 +92,6 @@ static void
 gtd_provider_goa_set_account (GtdProviderGoa *provider,
                               GoaAccount     *account)
 {
-  gtd_object_set_ready (GTD_OBJECT (provider), account != NULL);
-
   if (provider->account != account)
     {
       g_autofree gchar *icon_name = NULL;
@@ -177,40 +176,30 @@ static gboolean
 gtd_provider_goa_should_load_source (GtdProviderEds *provider,
                                      ESource        *source)
 {
+  g_autoptr (ESource) ancestor = NULL;
   GtdProviderGoa *self;
   gboolean retval;
 
   self = GTD_PROVIDER_GOA (provider);
   retval = FALSE;
 
-  if (e_source_has_extension (source, E_SOURCE_EXTENSION_TASK_LIST))
+  ancestor = e_source_registry_find_extension (gtd_provider_eds_get_registry (provider),
+                                               source,
+                                               E_SOURCE_EXTENSION_GOA);
+
+  /* If we detect that the given source is provided by a GOA account, check the account id */
+  if (ancestor)
     {
-      ESource *ancestor;
+      ESourceExtension *extension;
+      const gchar *ancestor_id;
+      const gchar *account_id;
 
-      ancestor = e_source_registry_find_extension (gtd_provider_eds_get_registry (provider),
-                                                   source,
-                                                   E_SOURCE_EXTENSION_GOA);
+      extension = e_source_get_extension (ancestor, E_SOURCE_EXTENSION_GOA);
+      ancestor_id = e_source_goa_get_account_id (E_SOURCE_GOA (extension));
+      account_id = goa_account_get_id (self->account);
 
-      /*
-       * If we detect that the given source is provided
-       * by a GOA account, check the account id.
-       */
-      if (ancestor)
-        {
-          ESourceExtension *extension;
-          const gchar *ancestor_id;
-          const gchar *account_id;
-
-          extension = e_source_get_extension (ancestor, E_SOURCE_EXTENSION_GOA);
-          ancestor_id = e_source_goa_get_account_id (E_SOURCE_GOA (extension));
-          account_id = goa_account_get_id (self->account);
-
-          /*
-           * When the ancestor's GOA id matches the current
-           * account's id, we shall load this list.
-           */
-          retval = g_strcmp0 (ancestor_id, account_id) == 0;
-        }
+      /* When the ancestor's GOA id matches the current account's id, we shall load this list */
+      retval = g_strcmp0 (ancestor_id, account_id) == 0;
     }
 
   return retval;
@@ -219,8 +208,8 @@ gtd_provider_goa_should_load_source (GtdProviderEds *provider,
 static void
 gtd_provider_goa_class_init (GtdProviderGoaClass *klass)
 {
-  GtdProviderEdsClass *eds_class = GTD_PROVIDER_EDS_CLASS (klass);
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GtdProviderEdsClass *eds_class = GTD_PROVIDER_EDS_CLASS (klass);
 
   eds_class->get_id = gtd_provider_goa_get_id;
   eds_class->get_name = gtd_provider_goa_get_name;

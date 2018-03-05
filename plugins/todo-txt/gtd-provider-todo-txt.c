@@ -642,8 +642,6 @@ gtd_provider_todo_txt_class_init (GtdProviderTodoTxtClass *klass)
 static void
 gtd_provider_todo_txt_init (GtdProviderTodoTxt *self)
 {
-  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
-
   self->lists = g_hash_table_new (g_str_hash, g_str_equal);
   self->tasks = g_hash_table_new (g_str_hash, g_str_equal);
   self->cache = g_ptr_array_new ();

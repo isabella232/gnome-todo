@@ -44,7 +44,7 @@ struct _GtdNotificationWidget
   /* bindings */
   GBinding           *has_secondary_action_binding;
   GBinding           *message_label_binding;
-  GBinding           *ready_binding;
+  GBinding           *loading_binding;
   GBinding           *secondary_label_binding;
 };
 
@@ -62,7 +62,7 @@ clear_bindings (GtdNotificationWidget *self)
 {
   g_clear_pointer (&self->has_secondary_action_binding, g_binding_unbind);
   g_clear_pointer (&self->message_label_binding, g_binding_unbind);
-  g_clear_pointer (&self->ready_binding, g_binding_unbind);
+  g_clear_pointer (&self->loading_binding, g_binding_unbind);
   g_clear_pointer (&self->secondary_label_binding, g_binding_unbind);
 }
 
@@ -112,11 +112,11 @@ execute_notification (GtdNotificationWidget *self,
                                                         "label",
                                                         G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
-  self->ready_binding = g_object_bind_property (notification,
-                                                "ready",
-                                                self->spinner,
-                                                "visible",
-                                                G_BINDING_DEFAULT | G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE);
+  self->loading_binding = g_object_bind_property (notification,
+                                                  "loading",
+                                                  self->spinner,
+                                                  "visible",
+                                                  G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
   self->secondary_label_binding = g_object_bind_property (notification,
                                                           "secondary-action-name",

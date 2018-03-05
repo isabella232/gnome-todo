@@ -266,7 +266,8 @@ on_view_completed_cb (ECalClientView *view,
 {
   g_autoptr (ECalClient) client = NULL;
 
-  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
+  gtd_object_pop_loading (GTD_OBJECT (gtd_manager_get_default ()));
+  gtd_object_pop_loading (GTD_OBJECT (self));
 
   if (error)
     {
@@ -318,6 +319,8 @@ on_client_view_acquired_cb (GObject      *client,
   g_signal_connect (self->client_view, "objects-modified", G_CALLBACK (on_view_objects_modified_cb), self);
   g_signal_connect (self->client_view, "complete", G_CALLBACK (on_view_completed_cb), self);
 
+  gtd_object_push_loading (GTD_OBJECT (self));
+
   e_cal_client_view_start (self->client_view, &error);
 
   if (error)
@@ -351,7 +354,7 @@ on_save_task_list_finished_cb (GObject      *source,
   list = user_data;
   error = NULL;
 
-  gtd_object_set_ready (GTD_OBJECT (list), TRUE);
+  gtd_object_pop_loading (GTD_OBJECT (list));
 
   e_source_write_finish (E_SOURCE (source), result, &error);
 
@@ -373,7 +376,7 @@ save_task_list (GtdTaskListEds *list)
       if (!list->cancellable)
         list->cancellable = g_cancellable_new ();
 
-      gtd_object_set_ready (GTD_OBJECT (list), FALSE);
+      gtd_object_push_loading (GTD_OBJECT (list));
 
       e_source_write (list->source,
                       list->cancellable,

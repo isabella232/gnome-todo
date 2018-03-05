@@ -1,6 +1,6 @@
 /* gtd-object.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright © 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
 
 typedef struct
 {
-  gboolean            ready;
+  guint64              loading;
   gchar               *uid;
 } GtdObjectPrivate;
 
@@ -46,7 +46,7 @@ G_DEFINE_TYPE_WITH_PRIVATE (GtdObject, gtd_object, G_TYPE_OBJECT)
 enum
 {
   PROP_0,
-  PROP_READY,
+  PROP_LOADING,
   PROP_UID,
   N_PROPS
 };
@@ -113,8 +113,8 @@ gtd_object_get_property (GObject    *object,
 
   switch (prop_id)
     {
-    case PROP_READY:
-      g_value_set_boolean (value, priv->ready);
+    case PROP_LOADING:
+      g_value_set_boolean (value, priv->loading > 0);
       break;
 
     case PROP_UID:
@@ -136,10 +136,6 @@ gtd_object_set_property (GObject      *object,
 
   switch (prop_id)
     {
-    case PROP_READY:
-      gtd_object_set_ready (self, g_value_get_boolean (value));
-      break;
-
     case PROP_UID:
       GTD_OBJECT_GET_CLASS (self)->set_uid (self, g_value_get_string (value));
       break;
@@ -173,15 +169,15 @@ gtd_object_class_init (GtdObjectClass *klass)
                                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
 
   /**
-   * GtdObject::ready:
+   * GtdObject::loading:
    *
-   * Whether the object is ready or not.
+   * Whether the object is loading or not.
    */
-  properties[PROP_READY] = g_param_spec_boolean ("ready",
-                                                 "Ready state of the object",
-                                                 "Whether the object is marked as ready or not",
-                                                 TRUE,
-                                                 G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+  properties[PROP_LOADING] = g_param_spec_boolean ("loading",
+                                                   "Loading state of the object",
+                                                   "Whether the object is loading or not",
+                                                   TRUE,
+                                                   G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, N_PROPS, properties);
 }
@@ -189,9 +185,6 @@ gtd_object_class_init (GtdObjectClass *klass)
 static void
 gtd_object_init (GtdObject *self)
 {
-  GtdObjectPrivate *priv = gtd_object_get_instance_private (self);
-
-  priv->ready = TRUE;
 }
 
 /**
@@ -253,15 +246,15 @@ gtd_object_set_uid (GtdObject   *object,
 }
 
 /**
- * gtd_object_get_ready:
+ * gtd_object_get_loading:
  * @object: a #GtdObject
  *
- * Whether @object is ready.
+ * Whether @object is loading or not.
  *
- * Returns: %TRUE if @object is ready, %FALSE otherwise.
+ * Returns: %TRUE if @object is loading, %FALSE otherwise.
  */
 gboolean
-gtd_object_get_ready (GtdObject *object)
+gtd_object_get_loading (GtdObject *object)
 {
   GtdObjectPrivate *priv;
 
@@ -269,19 +262,18 @@ gtd_object_get_ready (GtdObject *object)
 
   priv = gtd_object_get_instance_private (object);
 
-  return priv->ready;
+  return priv->loading > 0;
 }
 
 /**
- * gtd_object_set_ready:
+ * gtd_object_push_loading:
  * @object: a #GtdObject
- * @ready: whether @object is ready or not
  *
- * Sets the GtdObject::ready property to @ready.
+ * Increases the loading counter of @object by one. The object is marked
+ * as loading while the loading counter is greater than zero.
  */
 void
-gtd_object_set_ready (GtdObject *object,
-                      gboolean   ready)
+gtd_object_push_loading (GtdObject *object)
 {
   GtdObjectPrivate *priv;
 
@@ -289,10 +281,33 @@ gtd_object_set_ready (GtdObject *object,
 
   priv = gtd_object_get_instance_private (object);
 
-  if (priv->ready == ready)
-    return;
+  priv->loading++;
 
-  priv->ready = ready;
+  if (priv->loading == 1)
+    g_object_notify_by_pspec (G_OBJECT (object), properties[PROP_LOADING]);
+}
 
-  g_object_notify_by_pspec (G_OBJECT (object), properties[PROP_READY]);
+/**
+ * gtd_object_pop_loading:
+ * @object: a #GtdObject
+ *
+ * Decreases the loading counter of @object by one. The object is marked
+ * as loading while the loading counter is greater than zero.
+ *
+ * It is a programming error to pop more times then push the loading the
+ * counter.
+ */
+void
+gtd_object_pop_loading (GtdObject *object)
+{
+  GtdObjectPrivate *priv;
+
+  g_return_if_fail (GTD_IS_OBJECT (object));
+
+  priv = gtd_object_get_instance_private (object);
+
+  priv->loading--;
+
+  if (priv->loading == 0)
+    g_object_notify_by_pspec (G_OBJECT (object), properties[PROP_LOADING]);
 }

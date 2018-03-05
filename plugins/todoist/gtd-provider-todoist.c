@@ -604,6 +604,9 @@ parse_request (GtdProviderTodoist *self,
 
   GTD_TRACE_MSG ("Applying request %d at %p", request, object);
 
+  /* If we reached here, then the object is not loading anymore */
+  gtd_object_pop_loading (object);
+
   switch (request)
     {
     case REQUEST_LIST_CREATE:
@@ -721,6 +724,13 @@ synchronize (GtdProviderTodoist *self)
   json_object_set_string_member (params, "sync_token", self->sync_token);
   json_object_set_string_member (params, "resource_types", "[\"all\"]");
 
+  /*
+   * While we're synchronizing, the GtdManager is loading, so that the
+   * "Loading task lists" notification is visible.
+   */
+  gtd_object_push_loading (GTD_OBJECT (gtd_manager_get_default ()));
+  gtd_object_push_loading (GTD_OBJECT (self));
+
   post (self, params, on_synchronize_completed_cb, self);
 }
 
@@ -797,6 +807,11 @@ schedule_post_request (GtdProviderTodoist *self,
                        const gchar        *command)
 {
   PostCallbackData *data;
+
+  g_assert (GTD_IS_OBJECT (object));
+
+  /* The object is in loading state while it's in the queue */
+  gtd_object_push_loading (object);
 
   /* Set params for post request */
   data = g_new0 (PostCallbackData, 1);
@@ -952,6 +967,10 @@ on_synchronize_completed_cb (RestProxyCall *call,
   self = GTD_PROVIDER_TODOIST (weak_object);
   parser = json_parser_new ();
 
+  /* Unmark the GtdManager as loading */
+  gtd_object_pop_loading (GTD_OBJECT (self));
+  gtd_object_pop_loading (GTD_OBJECT (gtd_manager_get_default ()));
+
   /* Release the application */
 	g_application_release (g_application_get_default ());
 
@@ -1042,6 +1061,9 @@ on_operation_completed_cb (RestProxyCall *call,
                                               NULL);
 
               g_warning ("Error executing request: %s", error->message);
+
+              /* Not too much we can do here... */
+              gtd_object_pop_loading (data->object);
 
               g_clear_pointer (&data->command_uid, g_free);
               g_clear_pointer (&data->command, g_free);
@@ -1532,8 +1554,6 @@ gtd_provider_todoist_class_init (GtdProviderTodoistClass *klass)
 static void
 gtd_provider_todoist_init (GtdProviderTodoist *self)
 {
-  gtd_object_set_ready (GTD_OBJECT (self), TRUE);
-
   self->sync_token = g_strdup ("*");
   self->queue = g_queue_new ();
   self->icon = G_ICON (g_themed_icon_new_with_default_fallbacks ("goa-account-todoist"));
