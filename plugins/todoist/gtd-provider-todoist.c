@@ -633,7 +633,6 @@ parse_request (GtdProviderTodoist *self,
       g_assert (GTD_IS_TASK (object));
 
       g_hash_table_insert (self->tasks, g_strdup (gtd_object_get_uid (object)), object);
-      gtd_task_list_save_task (gtd_task_get_list (object), object);
       break;
 
     case REQUEST_TASK_REMOVE:
@@ -1185,6 +1184,8 @@ gtd_provider_todoist_create_task (GtdProvider *provider,
   gtd_task_set_position (new_task, position);
   gtd_task_set_creation_date (new_task, creation_date);
   gtd_object_set_uid (GTD_OBJECT (new_task), temp_id);
+
+  gtd_task_list_save_task (list, new_task);
 
   command = g_strdup_printf ("{                              \n"
                              "    \"type\": \"item_add\",    \n"
