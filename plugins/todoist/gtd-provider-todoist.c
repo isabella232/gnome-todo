@@ -761,6 +761,9 @@ compress_commands (GtdProviderTodoist  *self,
        * into the queue if something goes wrong.
        */
       requests = g_list_prepend (requests, data);
+
+      /* The object is in loading state while it's in the queue */
+      gtd_object_push_loading (data->object);
     }
 
   g_string_append (command, "]");
@@ -808,9 +811,6 @@ schedule_post_request (GtdProviderTodoist *self,
   PostCallbackData *data;
 
   g_assert (GTD_IS_OBJECT (object));
-
-  /* The object is in loading state while it's in the queue */
-  gtd_object_push_loading (object);
 
   /* Set params for post request */
   data = g_new0 (PostCallbackData, 1);
