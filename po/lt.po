@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-02-26 17:44+0000\n"
-"PO-Revision-Date: 2018-02-27 23:22+0200\n"
+"POT-Creation-Date: 2018-03-03 03:14+0000\n"
+"PO-Revision-Date: 2018-03-05 22:09+0200\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -233,11 +233,11 @@ msgstr "Naujo užduočių sąrašo pavadinimas"
 msgid "_New List"
 msgstr "_Naujas sąrašas"
 
-#: data/ui/list-view.ui:113
+#: data/ui/list-view.ui:112
 msgid "Show or hide completed tasks"
 msgstr "Rodyti ar slėpti užbaigtas užduotis"
 
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:378
+#: data/ui/list-view.ui:139 src/gtd-task-list-view.c:379
 msgid "Done"
 msgstr "Atlikta"
 
@@ -349,27 +349,23 @@ msgstr "Klaida įkeliant GNOME internetines paskyras"
 msgid "Failed to connect to task list"
 msgstr "Nepavyko prisijungti prie užduočių sąrašo šaltinio"
 
-#: plugins/eds/gtd-provider-eds.c:442
-#| msgid "Error while creating a Todo.txt list"
+#: plugins/eds/gtd-provider-eds.c:443
 msgid "An error occurred while creating a task"
 msgstr "Kilo klaida kuriant užduotį"
 
-#: plugins/eds/gtd-provider-eds.c:477
+#: plugins/eds/gtd-provider-eds.c:475
 msgid "An error occurred while modifying a task"
 msgstr "Kilo klaida keičiant užduotį"
 
-#: plugins/eds/gtd-provider-eds.c:498
-#| msgid "Error removing task"
+#: plugins/eds/gtd-provider-eds.c:496
 msgid "An error occurred while removing a task"
 msgstr "Kilo klaida šalinant užduotį"
 
-#: plugins/eds/gtd-provider-eds.c:516
-#| msgid "Error while creating a Todo.txt list"
+#: plugins/eds/gtd-provider-eds.c:514
 msgid "An error occurred while creating a task list"
 msgstr "Kilo klaida kuriant užduočių sąrašą"
 
-#: plugins/eds/gtd-provider-eds.c:537 plugins/eds/gtd-provider-eds.c:561
-#| msgid "Error removing task list"
+#: plugins/eds/gtd-provider-eds.c:535 plugins/eds/gtd-provider-eds.c:558
 msgid "An error occurred while modifying a task list"
 msgstr "Kilo klaida keičiant užduočių sąrašą"
 
@@ -381,8 +377,8 @@ msgstr "Vietinė"
 msgid "On This Computer"
 msgstr "Šiame kompiuteryje"
 
-#: plugins/eds/gtd-task-list-eds.c:245 plugins/eds/gtd-task-list-eds.c:275
-#: plugins/eds/gtd-task-list-eds.c:297
+#: plugins/eds/gtd-task-list-eds.c:276 plugins/eds/gtd-task-list-eds.c:306
+#: plugins/eds/gtd-task-list-eds.c:328
 msgid "Error fetching tasks from list"
 msgstr "Klaida gaunant užduotis iš sąrašo"
 
@@ -429,21 +425,21 @@ msgstr "Slėpti užbaigtas užduotis…"
 msgid "No task completed today"
 msgstr "Nėra šiandien baigtų užduočių"
 
-#: plugins/todoist/gtd-provider-todoist.c:205
+#: plugins/todoist/gtd-provider-todoist.c:212
 msgid "Error fetching Todoist account key"
 msgstr "Klaida gaunant Todoist paskyros raktą"
 
-#: plugins/todoist/gtd-provider-todoist.c:206
+#: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Įsitikinkite, kad Todoist paskyra yra teisingai sukonfigūruota."
 
-#: plugins/todoist/gtd-provider-todoist.c:571
+#: plugins/todoist/gtd-provider-todoist.c:557
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr "GNOME Darbai neturi reikiamų teisių šiam veiksmui atlikti: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:579
+#: plugins/todoist/gtd-provider-todoist.c:565
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
@@ -451,21 +447,24 @@ msgstr ""
 "Netinkamas atsakas gautas iš Todoist serverių. Iš naujo paleiskite GNOME "
 "Darbus."
 
-#: plugins/todoist/gtd-provider-todoist.c:831
-#| msgid "Error while creating a Todo.txt list"
+#: plugins/todoist/gtd-provider-todoist.c:836
+#| msgid "An error occurred while updating Todoist"
+msgid "An error occurred while updating a Todoist task"
+msgstr "Kilo klaida atnaujinant Todoist užduotį"
+
+#: plugins/todoist/gtd-provider-todoist.c:945
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Kilo klaida gaunant Todoist duomenis"
 
-#: plugins/todoist/gtd-provider-todoist.c:897
-#| msgid "Error while creating a Todo.txt list"
+#: plugins/todoist/gtd-provider-todoist.c:1018
 msgid "An error occurred while updating Todoist"
 msgstr "Kilo klaida atnaujinant Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:951
+#: plugins/todoist/gtd-provider-todoist.c:1077
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1242
+#: plugins/todoist/gtd-provider-todoist.c:1385
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -524,7 +523,6 @@ msgid "Unscheduled (%d)"
 msgstr "Nesuplanuota (%d)"
 
 #: src/gtd-application.c:72
-#| msgid "First run of GNOME To Do"
 msgid "Quit GNOME To Do"
 msgstr "Išeiti iš GNOME Darbų"
 
@@ -534,13 +532,11 @@ msgstr "Įjungti derinimo pranešimus"
 
 #: src/gtd-application.c:146
 #, c-format
-#| msgid "Copyright © %d The To Do authors"
 msgid "Copyright © %1$d The To Do authors"
 msgstr "Autorių teisės © priklauso %1$d Darbų autoriams"
 
 #: src/gtd-application.c:151
 #, c-format
-#| msgid "Copyright © %d–%d The To Do authors"
 msgid "Copyright © %1$d–%2$d The To Do authors"
 msgstr "Autorinės teisės © priklauso %1$d–%2$d Darbų autoriams"
 
@@ -602,36 +598,35 @@ msgstr "Klaida įkeliant plėtinį"
 msgid "Error unloading plugin"
 msgstr "Klaida iškeliant plėtinį"
 
-#: src/gtd-task-list-view.c:298
+#: src/gtd-task-list-view.c:293
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Šios užduoties pašalinimas taip pat pašalins jos po-užduotis. Vis tiek "
 "pašalinti?"
 
-#: src/gtd-task-list-view.c:301
+#: src/gtd-task-list-view.c:296
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Pašalinus, užduočių nebebus galima atgauti."
 
-#: src/gtd-task-list-view.c:304 src/views/gtd-list-selector-panel.c:388
+#: src/gtd-task-list-view.c:299 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "Atsisakyti"
 
-#: src/gtd-task-list-view.c:306
+#: src/gtd-task-list-view.c:301
 msgid "Remove"
 msgstr "Pašalinti"
 
-#: src/gtd-task-list-view.c:380
+#: src/gtd-task-list-view.c:381
 #, c-format
-#| msgid "Done"
 msgid "Done (%d)"
 msgstr "Atlikta (%d)"
 
-#: src/gtd-task-list-view.c:649
+#: src/gtd-task-list-view.c:648
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Užduotis <b>%s</b> pašalinta"
 
-#: src/gtd-task-list-view.c:673
+#: src/gtd-task-list-view.c:672
 msgid "Undo"
 msgstr "Atšaukti"
 
@@ -647,7 +642,11 @@ msgstr "Įkeliami jūsų užduočių sąrašai…"
 msgid "Click a task list to select"
 msgstr "Spauskite ant užduoties jai pažymėti"
 
-#: src/views/gtd-list-selector-grid-item.c:252
+#.
+#. * If there's no task available, draw a "No tasks" string at
+#. * the middle of the list thumbnail.
+#.
+#: src/views/gtd-list-selector-grid-item.c:250
 msgid "No tasks"
 msgstr "Nėra užduočių"
 
