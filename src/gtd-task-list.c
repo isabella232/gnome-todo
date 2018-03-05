@@ -74,6 +74,9 @@ task_changed_cb (GtdTask     *task,
                  GParamSpec  *pspec,
                  GtdTaskList *self)
 {
+  if (g_strcmp0 (g_param_spec_get_name (pspec), "loading") == 0)
+    return;
+
   g_signal_emit (self, signals[TASK_UPDATED], 0, task);
 }
 
