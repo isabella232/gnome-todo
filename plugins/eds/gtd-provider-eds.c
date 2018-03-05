@@ -437,6 +437,7 @@ on_task_list_modified_cb (ESourceRegistry *registry,
   self = GTD_PROVIDER_EDS (gtd_task_list_get_provider (list));
 
   gtd_object_pop_loading (GTD_OBJECT (self));
+  gtd_object_pop_loading (GTD_OBJECT (list));
 
   e_source_registry_commit_source_finish (registry, result, &error);
 
@@ -544,6 +545,8 @@ gtd_provider_eds_create_task (GtdProvider *provider,
   gtd_task_set_title (new_task, title);
   gtd_task_set_due_date (new_task, due_date);
   gtd_task_set_list (new_task, list);
+
+  gtd_task_list_save_task (list, new_task);
 
   /* The task is not ready until we finish the operation */
   gtd_object_push_loading (GTD_OBJECT (self));
@@ -674,6 +677,7 @@ gtd_provider_eds_update_task_list (GtdProvider *provider,
   source = gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list));
 
   gtd_object_push_loading (GTD_OBJECT (provider));
+  gtd_object_push_loading (GTD_OBJECT (list));
 
   e_source_registry_commit_source (priv->source_registry,
                                    source,
