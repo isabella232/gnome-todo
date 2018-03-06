@@ -65,6 +65,7 @@ struct _GtdTaskRow
   gint                destroy_row_timeout_id;
   gint                update_title_timeout_id;
   gboolean            active;
+  gboolean            changed;
 };
 
 #define PRIORITY_ICON_SIZE 8
@@ -84,7 +85,7 @@ static void          on_priority_changed_cb                      (GtdTaskRow    
                                                                   GParamSpec         *spec,
                                                                   GObject            *object);
 
-static void         on_task_title_changed_cb                     (GtdTaskRow         *self);
+static void          on_task_title_changed_cb                    (GtdTaskRow         *self);
 
 static void          on_toggle_active_cb                         (GtkWidget          *button,
                                                                   GtdTaskRow         *self);
@@ -554,10 +555,22 @@ on_update_title_timeout_cb (gpointer data)
 
   GTD_ENTRY;
 
-  gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
+  if (self->changed)
+    {
+      gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
+      self->changed = FALSE;
+    }
+
   self->update_title_timeout_id = 0;
 
   GTD_RETURN (G_SOURCE_REMOVE);
+}
+
+static void
+on_task_changed_cb (GtdEditPane *panel,
+                    GtdTaskRow  *self)
+{
+  self->changed = TRUE;
 }
 
 static void
@@ -795,6 +808,7 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, on_mouse_over_event_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_mouse_over_dnd_event_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_remove_task_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_task_changed_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_task_title_changed_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_toggle_active_cb);
 
@@ -995,8 +1009,13 @@ gtd_task_row_set_active (GtdTaskRow *self,
   gtk_revealer_set_reveal_child (GTK_REVEALER (self->edit_panel_revealer), active);
 
   /* Save the task if it is not being loaded */
-  if (!active && !gtd_object_get_loading (GTD_OBJECT (self->task)))
-    gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
+  if (!active && !gtd_object_get_loading (GTD_OBJECT (self->task)) && self->changed)
+    {
+      g_debug ("Saving task…");
+
+      gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
+      self->changed = FALSE;
+    }
 
   g_signal_emit (self, active ? signals[ENTER] : signals[EXIT], 0);
 }

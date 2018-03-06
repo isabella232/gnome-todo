@@ -20,7 +20,6 @@
 
 #include "gtd-edit-pane.h"
 #include "gtd-manager.h"
-#include "gtd-provider.h"
 #include "gtd-task.h"
 #include "gtd-task-list.h"
 
@@ -44,7 +43,8 @@ struct _GtdEditPane
 
 G_DEFINE_TYPE (GtdEditPane, gtd_edit_pane, GTK_TYPE_GRID)
 
-enum {
+enum
+{
   PROP_0,
   PROP_TASK,
   LAST_PROP
@@ -52,76 +52,24 @@ enum {
 
 enum
 {
+  CHANGED,
   REMOVE_TASK,
   NUM_SIGNALS
 };
 
+
 static guint signals[NUM_SIGNALS] = { 0, };
 
-static void             date_selected_cb                          (GtkCalendar      *calendar,
-                                                                   GtdEditPane      *self);
 
-static void             gtd_edit_pane_update_date                 (GtdEditPane      *pane);
+static void          on_date_selected_cb                         (GtkCalendar        *calendar,
+                                                                  GtdEditPane        *self);
 
-static void
-gtd_edit_pane__no_date_button_clicked (GtkButton   *button,
-                                       GtdEditPane *self)
-{
-  gtd_task_set_due_date (self->task, NULL);
-  gtk_calendar_clear_marks (GTK_CALENDAR (self->calendar));
-  gtd_edit_pane_update_date (self);
-}
+/*
+ * Auxiliary methods
+ */
 
 static void
-save_task (GtdEditPane *self)
-{
-  gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
-}
-
-static void
-gtd_edit_pane__delete_button_clicked (GtkButton   *button,
-                                      GtdEditPane *self)
-{
-  g_signal_emit (self, signals[REMOVE_TASK], 0, self->task);
-}
-
-static void
-today_button_clicked (GtkButton   *button,
-                      GtdEditPane *self)
-{
-  GDateTime *new_dt;
-
-  new_dt = g_date_time_new_now_local ();
-
-  gtd_task_set_due_date (self->task, new_dt);
-  gtd_edit_pane_update_date (self);
-
-  save_task (self);
-
-  g_clear_pointer (&new_dt, g_date_time_unref);
-}
-
-static void
-tomorrow_button_clicked (GtkButton   *button,
-                         GtdEditPane *self)
-{
-  GDateTime *current_date;
-  GDateTime *new_dt;
-
-  current_date = g_date_time_new_now_local ();
-  new_dt = g_date_time_add_days (current_date, 1);
-
-  gtd_task_set_due_date (self->task, new_dt);
-  gtd_edit_pane_update_date (self);
-
-  save_task (self);
-
-  g_clear_pointer (&current_date, g_date_time_unref);
-  g_clear_pointer (&new_dt, g_date_time_unref);
-}
-
-static void
-gtd_edit_pane_update_date (GtdEditPane *self)
+update_date_widgets (GtdEditPane *self)
 {
   GDateTime *dt;
   gchar *text;
@@ -131,7 +79,7 @@ gtd_edit_pane_update_date (GtdEditPane *self)
   dt = self->task ? gtd_task_get_due_date (self->task) : NULL;
   text = dt ? g_date_time_format (dt, "%x") : NULL;
 
-  g_signal_handlers_block_by_func (self->calendar, date_selected_cb, self);
+  g_signal_handlers_block_by_func (self->calendar, on_date_selected_cb, self);
 
   if (dt)
     {
@@ -157,19 +105,24 @@ gtd_edit_pane_update_date (GtdEditPane *self)
       g_clear_pointer (&today, g_date_time_unref);
     }
 
-  g_signal_handlers_unblock_by_func (self->calendar, date_selected_cb, self);
+  g_signal_handlers_unblock_by_func (self->calendar, on_date_selected_cb, self);
 
   gtk_label_set_label (self->date_label, text ? text : _("No date set"));
 
   g_free (text);
 }
 
+
+/*
+ * Callbacks
+ */
+
 static void
-date_selected_cb (GtkCalendar *calendar,
-                  GtdEditPane *self)
+on_date_selected_cb (GtkCalendar *calendar,
+                     GtdEditPane *self)
 {
-  GDateTime *new_dt;
-  gchar *text;
+  g_autoptr (GDateTime) new_dt = NULL;
+  g_autofree gchar *text = NULL;
   guint year;
   guint month;
   guint day;
@@ -190,22 +143,93 @@ date_selected_cb (GtkCalendar *calendar,
 
   gtd_task_set_due_date (self->task, new_dt);
   gtk_label_set_label (self->date_label, text);
+}
 
-  g_date_time_unref (new_dt);
-  g_free (text);
+static void
+on_delete_button_clicked_cb (GtkButton   *button,
+                             GtdEditPane *self)
+{
+  g_signal_emit (self, signals[REMOVE_TASK], 0, self->task);
+}
+
+static void
+on_no_date_button_clicked_cb (GtkButton   *button,
+                              GtdEditPane *self)
+{
+  gtd_task_set_due_date (self->task, NULL);
+  gtk_calendar_clear_marks (GTK_CALENDAR (self->calendar));
+  update_date_widgets (self);
+}
+
+static void
+on_today_button_clicked_cb (GtkButton   *button,
+                            GtdEditPane *self)
+{
+  GDateTime *new_dt;
+
+  new_dt = g_date_time_new_now_local ();
+
+  gtd_task_set_due_date (self->task, new_dt);
+  update_date_widgets (self);
+
+  g_signal_emit (self, signals[CHANGED], 0);
+
+  g_clear_pointer (&new_dt, g_date_time_unref);
+}
+
+static void
+on_priority_changed_cb (GtkComboBox *combobox,
+                        GtdEditPane *self)
+{
+  g_signal_emit (self, signals[CHANGED], 0);
+}
+
+static void
+on_tomorrow_button_clicked_cb (GtkButton   *button,
+                               GtdEditPane *self)
+{
+  GDateTime *current_date;
+  GDateTime *new_dt;
+
+  current_date = g_date_time_new_now_local ();
+  new_dt = g_date_time_add_days (current_date, 1);
+
+  gtd_task_set_due_date (self->task, new_dt);
+  update_date_widgets (self);
+
+  g_signal_emit (self, signals[CHANGED], 0);
+
+  g_clear_pointer (&current_date, g_date_time_unref);
+  g_clear_pointer (&new_dt, g_date_time_unref);
+}
+
+static void
+on_text_buffer_changed_cb (GtkTextBuffer *buffer,
+                           GtdEditPane   *self)
+{
+  g_signal_emit (self, signals[CHANGED], 0);
 }
 
 static gboolean
-trap_textview_clicks_cb (GtkWidget   *textview,
-                         GdkEvent    *event,
-                         GtdEditPane *self)
+on_trap_textview_clicks_cb (GtkWidget   *textview,
+                            GdkEvent    *event,
+                            GtdEditPane *self)
 {
   return GDK_EVENT_STOP;
 }
 
+
+/*
+ * GObject overrides
+ */
+
 static void
 gtd_edit_pane_finalize (GObject *object)
 {
+  GtdEditPane *self = (GtdEditPane *) object;
+
+  g_clear_object (&self->task);
+
   G_OBJECT_CLASS (gtd_edit_pane_parent_class)->finalize (object);
 }
 
@@ -284,9 +308,24 @@ gtd_edit_pane_class_init (GtdEditPaneClass *klass)
                              G_PARAM_READWRITE));
 
   /**
+   * GtdEditPane::changed:
+   *
+   * Emitted when the task was changed.
+   */
+  signals[CHANGED] = g_signal_new ("changed",
+                                   GTD_TYPE_EDIT_PANE,
+                                   G_SIGNAL_RUN_LAST,
+                                   0,
+                                   NULL,
+                                   NULL,
+                                   NULL,
+                                   G_TYPE_NONE,
+                                   0);
+
+  /**
    * GtdEditPane::task-removed:
    *
-   * Emitted when the the user finishes wants to remove the task.
+   * Emitted when the user wants to remove the task.
    */
   signals[REMOVE_TASK] = g_signal_new ("remove-task",
                                        GTD_TYPE_EDIT_PANE,
@@ -307,12 +346,14 @@ gtd_edit_pane_class_init (GtdEditPaneClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdEditPane, notes_textview);
   gtk_widget_class_bind_template_child (widget_class, GtdEditPane, priority_combo);
 
-  gtk_widget_class_bind_template_callback (widget_class, date_selected_cb);
-  gtk_widget_class_bind_template_callback (widget_class, gtd_edit_pane__delete_button_clicked);
-  gtk_widget_class_bind_template_callback (widget_class, gtd_edit_pane__no_date_button_clicked);
-  gtk_widget_class_bind_template_callback (widget_class, today_button_clicked);
-  gtk_widget_class_bind_template_callback (widget_class, tomorrow_button_clicked);
-  gtk_widget_class_bind_template_callback (widget_class, trap_textview_clicks_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_date_selected_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_delete_button_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_no_date_button_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_priority_changed_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_text_buffer_changed_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_today_button_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_tomorrow_button_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_trap_textview_clicks_cb);
 
   gtk_widget_class_set_css_name (widget_class, "editpane");
 }
@@ -358,23 +399,22 @@ gtd_edit_pane_set_task (GtdEditPane *self,
 {
   g_return_if_fail (GTD_IS_EDIT_PANE (self));
 
-  if (self->task == task)
+  if (!g_set_object (&self->task, task))
     return;
-
-  self->task = task;
 
   if (task)
     {
       GtkTextBuffer *buffer;
 
       /* due date */
-      gtd_edit_pane_update_date (self);
+      update_date_widgets (self);
 
       /* description */
       buffer = gtk_text_view_get_buffer (self->notes_textview);
       gtk_text_buffer_set_text (buffer,
                                 gtd_task_get_description (task),
                                 -1);
+
       self->notes_binding = g_object_bind_property (buffer,
                                                     "text",
                                                     task,

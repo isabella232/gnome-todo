@@ -169,6 +169,7 @@
                   <object class="GtdEditPane" id="edit_panel">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <signal name="changed" handler="on_task_changed_cb" object="GtdTaskRow" swapped="no" />
                     <signal name="remove-task" handler="on_remove_task_cb" object="GtdTaskRow" swapped="no" />
                   </object>
                 </child>

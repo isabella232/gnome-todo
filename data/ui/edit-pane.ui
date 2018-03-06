@@ -67,8 +67,9 @@
                     <property name="right-margin">6</property>
                     <property name="pixels-above-lines">6</property>
                     <property name="wrap-mode">word-char</property>
-                    <signal name="button-press-event" handler="trap_textview_clicks_cb" swapped="no" after="yes" />
-                    <signal name="button-release-event" handler="trap_textview_clicks_cb" swapped="no" after="yes" />
+                    <property name="buffer">text_buffer</property>
+                    <signal name="button-press-event" handler="on_trap_textview_clicks_cb" swapped="no" after="yes" />
+                    <signal name="button-release-event" handler="on_trap_textview_clicks_cb" swapped="no" after="yes" />
                   </object>
                 </child>
               </object>
@@ -112,7 +113,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <signal name="clicked" handler="today_button_clicked" object="GtdEditPane" swapped="no" />
+                    <signal name="clicked" handler="on_today_button_clicked_cb" object="GtdEditPane" swapped="no" />
                   </object>
                 </child>
                 <child>
@@ -122,7 +123,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <signal name="clicked" handler="tomorrow_button_clicked" object="GtdEditPane" swapped="no"/>
+                    <signal name="clicked" handler="on_tomorrow_button_clicked_cb" object="GtdEditPane" swapped="no"/>
                   </object>
                 </child>
                 <child>
@@ -181,6 +182,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="active">0</property>
+                <signal name="changed" handler="on_priority_changed_cb" object="GtdEditPane" swapped="no" />
                 <items>
                   <item translatable="yes" context="taskpriority">None</item>
                   <item translatable="yes">Low</item>
@@ -202,7 +204,7 @@
                 <property name="valign">end</property>
                 <property name="halign">end</property>
                 <property name="margin-top">12</property>
-                <signal name="clicked" handler="gtd_edit_pane__delete_button_clicked" object="GtdEditPane" swapped="no" />
+                <signal name="clicked" handler="on_delete_button_clicked_cb" object="GtdEditPane" swapped="no" />
                 <style>
                   <class name="destructive-action"/>
                 </style>
@@ -219,6 +221,11 @@
       </object>
     </child>
   </template>
+
+  <object class="GtkTextBuffer" id="text_buffer">
+    <signal name="changed" handler="on_text_buffer_changed_cb" object="GtdEditPane" swapped="no" />
+  </object>
+
   <object class="GtkPopover" id="date_popover">
     <property name="can_focus">False</property>
     <property name="border_width">12</property>
@@ -234,7 +241,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="show_week_numbers">True</property>
-            <signal name="day-selected" handler="date_selected_cb" object="GtdEditPane" swapped="no"/>
+            <signal name="day-selected" handler="on_date_selected_cb" object="GtdEditPane" swapped="no"/>
           </object>
         </child>
         <child>
@@ -243,7 +250,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">False</property>
-            <signal name="clicked" handler="gtd_edit_pane__no_date_button_clicked" object="GtdEditPane" swapped="no"/>
+            <signal name="clicked" handler="on_no_date_button_clicked_cb" object="GtdEditPane" swapped="no"/>
           </object>
         </child>
       </object>
