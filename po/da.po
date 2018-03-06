@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-02-26 14:13+0000\n"
-"PO-Revision-Date: 2018-03-03 21:11+0100\n"
+"POT-Creation-Date: 2018-03-05 15:25+0000\n"
+"PO-Revision-Date: 2018-03-05 19:40+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -24,7 +24,7 @@ msgstr ""
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
 #: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
-#: src/gtd-window.c:954 src/gtd-window.c:989 src/main.c:35
+#: src/gtd-window.c:787 src/gtd-window.c:818 src/main.c:35
 msgid "To Do"
 msgstr "To Do"
 
@@ -237,11 +237,11 @@ msgstr "Navnet på opgavelisten"
 msgid "_New List"
 msgstr "_Ny liste"
 
-#: data/ui/list-view.ui:113
+#: data/ui/list-view.ui:112
 msgid "Show or hide completed tasks"
 msgstr "Vis eller skjul færdiggjorte opgaver"
 
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:378
+#: data/ui/list-view.ui:139 src/gtd-task-list-view.c:379
 msgid "Done"
 msgstr "Færdig"
 
@@ -347,27 +347,27 @@ msgstr "Vis en opstartsmeddelelse, når To Do kører"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Fejl ved indlæsning af GNOME Onlinekonti"
 
-#: plugins/eds/gtd-provider-eds.c:145
+#: plugins/eds/gtd-provider-eds.c:139
 msgid "Failed to connect to task list"
 msgstr "Kunne ikke forbinde til opgaveliste"
 
-#: plugins/eds/gtd-provider-eds.c:442
+#: plugins/eds/gtd-provider-eds.c:351
 msgid "An error occurred while creating a task"
 msgstr "Der opstod en fejl ved oprettelse af en opgave"
 
-#: plugins/eds/gtd-provider-eds.c:477
+#: plugins/eds/gtd-provider-eds.c:383
 msgid "An error occurred while modifying a task"
 msgstr "Der opstod en fejl ved ændring af en opgave"
 
-#: plugins/eds/gtd-provider-eds.c:498
+#: plugins/eds/gtd-provider-eds.c:404
 msgid "An error occurred while removing a task"
 msgstr "Der opstod en fejl ved fjernelse af en opgave"
 
-#: plugins/eds/gtd-provider-eds.c:516
+#: plugins/eds/gtd-provider-eds.c:422
 msgid "An error occurred while creating a task list"
 msgstr "Der opstod en fejl ved oprettelse af en opgaveliste"
 
-#: plugins/eds/gtd-provider-eds.c:537 plugins/eds/gtd-provider-eds.c:561
+#: plugins/eds/gtd-provider-eds.c:444 plugins/eds/gtd-provider-eds.c:467
 msgid "An error occurred while modifying a task list"
 msgstr "Der opstod en fejl ved ændring af en opgaveliste"
 
@@ -379,8 +379,8 @@ msgstr "Lokal"
 msgid "On This Computer"
 msgstr "På denne computer"
 
-#: plugins/eds/gtd-task-list-eds.c:245 plugins/eds/gtd-task-list-eds.c:275
-#: plugins/eds/gtd-task-list-eds.c:297
+#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:307
+#: plugins/eds/gtd-task-list-eds.c:331
 msgid "Error fetching tasks from list"
 msgstr "Fejl ved hentning af opgaver fra liste"
 
@@ -426,51 +426,55 @@ msgstr "Ryd færdiggjorte opgaver …"
 msgid "No task completed today"
 msgstr "Ingen opgave fuldført i dag"
 
-#: plugins/todoist/gtd-provider-todoist.c:205
+#: plugins/todoist/gtd-provider-todoist.c:212
 msgid "Error fetching Todoist account key"
 msgstr "Fejl i forsøget på at hente nøglen til Todoist-kontoen"
 
-#: plugins/todoist/gtd-provider-todoist.c:206
+#: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Sørg venligst for at Todoist-kontoen er korrekt konfigureret."
 
-#: plugins/todoist/gtd-provider-todoist.c:571
+#: plugins/todoist/gtd-provider-todoist.c:557
 #, c-format
 msgid ""
-"GNOME To Do doesn't have the necessary permissions to perform this action: %s"
+"GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr ""
 "GNOME To Do har ikke de nødvendige rettigheder til at gennemføre denne "
 "handling: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:579
+#: plugins/todoist/gtd-provider-todoist.c:565
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
 msgstr ""
 "Ugyldigt svar modtaget fra Todoist-servere. Genindlæs venligst GNOME To Do."
 
-#: plugins/todoist/gtd-provider-todoist.c:831
+#: plugins/todoist/gtd-provider-todoist.c:865
+msgid "An error occurred while updating a Todoist task"
+msgstr "Der skete en fejl, da en Todoist-opgave skulle opdateres"
+
+#: plugins/todoist/gtd-provider-todoist.c:982
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Der skete en fejl, da Todoist-data skulle hentes"
 
-#: plugins/todoist/gtd-provider-todoist.c:897
+#: plugins/todoist/gtd-provider-todoist.c:1057
 msgid "An error occurred while updating Todoist"
 msgstr "Der skete en fejl, da Todoist skulle opdateres"
 
-#: plugins/todoist/gtd-provider-todoist.c:951
+#: plugins/todoist/gtd-provider-todoist.c:1117
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1242
+#: plugins/todoist/gtd-provider-todoist.c:1426
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
 
-#: plugins/todoist/ui/preferences.ui:80
+#: plugins/todoist/ui/preferences.ui:81
 msgid "No Todoist accounts found"
 msgstr "Fandt ingen Todoist-konti"
 
-#: plugins/todoist/ui/preferences.ui:89
+#: plugins/todoist/ui/preferences.ui:90
 msgid "Add a Todoist account"
 msgstr "Tilføj en Todoist-konto"
 
@@ -610,50 +614,54 @@ msgstr "Fejl ved start af plugin"
 msgid "Error unloading plugin"
 msgstr "Fejl ved stop af plugin"
 
-#: src/gtd-task-list-view.c:298
+#: src/gtd-task-list-view.c:293
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Fjernelse af denne opgave vil også fjerne dens underopgaver. Fjern alligevel?"
 
-#: src/gtd-task-list-view.c:301
+#: src/gtd-task-list-view.c:296
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Når opgaverne er fjernet, kan de ikke gendannes."
 
-#: src/gtd-task-list-view.c:304 src/views/gtd-list-selector-panel.c:388
+#: src/gtd-task-list-view.c:299 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "Annullér"
 
-#: src/gtd-task-list-view.c:306
+#: src/gtd-task-list-view.c:301
 msgid "Remove"
 msgstr "Fjern"
 
-#: src/gtd-task-list-view.c:380
+#: src/gtd-task-list-view.c:381
 #, c-format
 msgid "Done (%d)"
 msgstr "Færdig (%d)"
 
-#: src/gtd-task-list-view.c:649
+#: src/gtd-task-list-view.c:657
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Opgaven <b>%s</b> fjernet"
 
-#: src/gtd-task-list-view.c:673
+#: src/gtd-task-list-view.c:681
 msgid "Undo"
 msgstr "Fortryd"
 
-#: src/gtd-window.c:548
+#: src/gtd-window.c:464
 msgid "Details"
 msgstr "Detaljer"
 
-#: src/gtd-window.c:822
+#: src/gtd-window.c:677
 msgid "Loading your task lists…"
 msgstr "Indlæser dine opgavelister …"
 
-#: src/gtd-window.c:948
+#: src/gtd-window.c:781
 msgid "Click a task list to select"
 msgstr "Klik på en opgaveliste for at markere"
 
-#: src/views/gtd-list-selector-grid-item.c:252
+#.
+#. * If there's no task available, draw a "No tasks" string at
+#. * the middle of the list thumbnail.
+#.
+#: src/views/gtd-list-selector-grid-item.c:250
 msgid "No tasks"
 msgstr "Ingen opgaver"
 
