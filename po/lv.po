@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-02-20 22:47+0000\n"
-"PO-Revision-Date: 2018-02-24 21:13+0200\n"
+"POT-Creation-Date: 2018-03-03 03:14+0000\n"
+"PO-Revision-Date: 2018-03-06 19:13+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -203,7 +203,6 @@ msgid "Log in to online accounts to access your tasks"
 msgstr "Ierakstieties tiešsaistes kontos, lai piekļūtu saviem uzdevumiem"
 
 #: data/ui/initial-setup.ui:67
-#| msgid "To Do"
 msgid "To Do Setup"
 msgstr "Darāmo darbu iestatīšana"
 
@@ -220,7 +219,7 @@ msgstr "_Gatavs"
 msgid "_Rename"
 msgstr "Pā_rdēvēt"
 
-#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:473
+#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:469
 msgid "Lists"
 msgstr "Saraksti"
 
@@ -236,12 +235,11 @@ msgstr "Uzdevumu saraksta nosaukums"
 msgid "_New List"
 msgstr "Jau_ns saraksts"
 
-#: data/ui/list-view.ui:113
+#: data/ui/list-view.ui:112
 msgid "Show or hide completed tasks"
 msgstr "Rādīt vai slēpt izpildītos uzdevumus"
 
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:756
-#: src/gtd-task-list-view.c:761
+#: data/ui/list-view.ui:139 src/gtd-task-list-view.c:379
 msgid "Done"
 msgstr "Pabeigts"
 
@@ -349,13 +347,33 @@ msgstr "Palaižot “Darāmos darbus”, rādīt palaišanās paziņojumus"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Kļūda, ielādējot GNOME tiešsaistes kontus"
 
-#: plugins/eds/gtd-provider-eds.c:153
-msgid "Error fetching tasks from list"
-msgstr "Kļūda, saņemot uzdevumus no saraksta"
-
-#: plugins/eds/gtd-provider-eds.c:201
+#: plugins/eds/gtd-provider-eds.c:145
 msgid "Failed to connect to task list"
 msgstr "Neizdevās savienoties ar uzdevumu sarakstu"
+
+#: plugins/eds/gtd-provider-eds.c:443
+#| msgid "Error while creating a Todo.txt list"
+msgid "An error occurred while creating a task"
+msgstr "Radās kļūda, veidojot uzdevumu"
+
+#: plugins/eds/gtd-provider-eds.c:475
+msgid "An error occurred while modifying a task"
+msgstr "Radās kļūda, veidojot modificējot uzdevumu"
+
+#: plugins/eds/gtd-provider-eds.c:496
+#| msgid "Error removing task"
+msgid "An error occurred while removing a task"
+msgstr "Radās kļūda, veidojot izņemot uzdevumu"
+
+#: plugins/eds/gtd-provider-eds.c:514
+#| msgid "Error while creating a Todo.txt list"
+msgid "An error occurred while creating a task list"
+msgstr "Radās kļūda, veidojot uzdevumu sarakstu"
+
+#: plugins/eds/gtd-provider-eds.c:535 plugins/eds/gtd-provider-eds.c:558
+#| msgid "Error removing task list"
+msgid "An error occurred while modifying a task list"
+msgstr "Radās kļūda, veidojot modificējot uzdevumu sarakstu"
 
 #: plugins/eds/gtd-provider-local.c:50
 msgid "Local"
@@ -365,11 +383,12 @@ msgstr "Lokāls"
 msgid "On This Computer"
 msgstr "Šajā datorā"
 
-#: plugins/eds/gtd-provider-local.c:95
-msgid "Error creating new task list"
-msgstr "Kļūda, izveidojot jaunu uzdevumu sarakstu"
+#: plugins/eds/gtd-task-list-eds.c:276 plugins/eds/gtd-task-list-eds.c:306
+#: plugins/eds/gtd-task-list-eds.c:328
+msgid "Error fetching tasks from list"
+msgstr "Kļūda, saņemot uzdevumus no saraksta"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:161
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:162
 msgid "No date set"
 msgstr "Nav iestatīts datums"
 
@@ -404,7 +423,7 @@ msgstr "Ieplānots"
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:503
 #: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
-#: src/views/gtd-list-selector-panel.c:714
+#: src/views/gtd-list-selector-panel.c:710
 msgid "Clear completed tasks…"
 msgstr "Attīrīt pabeigtos uzdevumus…"
 
@@ -412,19 +431,49 @@ msgstr "Attīrīt pabeigtos uzdevumus…"
 msgid "No task completed today"
 msgstr "Šodien nav pabeigtu uzdevumu"
 
-#: plugins/todoist/gtd-provider-todoist.c:198
+#: plugins/todoist/gtd-provider-todoist.c:212
 msgid "Error fetching Todoist account key"
 msgstr "Kļūda, saņemot Todoist konta atslēgu"
 
-#: plugins/todoist/gtd-provider-todoist.c:199
+#: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Lūdzu, pārliecinieties, ka Todoist konts ir pareizi konfigurēts."
 
-#: plugins/todoist/gtd-provider-todoist.c:856
+#: plugins/todoist/gtd-provider-todoist.c:557
+#, c-format
+msgid ""
+"GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
+msgstr ""
+"GNOME “Darāmiem darbiem” nav pietiekošu atļauju, lai veiktu šo darbību: %s"
+
+#: plugins/todoist/gtd-provider-todoist.c:565
+#, c-format
+msgid ""
+"Invalid response received from Todoist servers. Please reload GNOME To Do."
+msgstr ""
+"No Todoist serveriem ir saņemta nederīga atbilde. Lūdzu, pālādējiet GNOME"
+" “Darāmos darbus”."
+
+#: plugins/todoist/gtd-provider-todoist.c:836
+#| msgid "Error while creating a Todo.txt list"
+msgid "An error occurred while updating a Todoist task"
+msgstr "Radās kļūda, veidojot atjauninot Todoist uzdevumu"
+
+#: plugins/todoist/gtd-provider-todoist.c:945
+#| msgid "Error while creating a Todo.txt list"
+msgid "An error occurred while retrieving Todoist data"
+msgstr "Gadījās kļūda, saņemot Todoist datus"
+
+#: plugins/todoist/gtd-provider-todoist.c:1018
+#| msgid "Error while creating a Todo.txt list"
+msgid "An error occurred while updating Todoist"
+msgstr "Radās kļūda, veidojot atjauninot Todoist"
+
+#: plugins/todoist/gtd-provider-todoist.c:1077
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1161
+#: plugins/todoist/gtd-provider-todoist.c:1385
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -471,19 +520,18 @@ msgid "Source of the Todo.txt file"
 msgstr "Todo.txt datnes avots"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:40
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:102
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:103
 msgid "Unscheduled"
 msgstr "Neieplānots"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:105
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:106
 #, python-format
 msgid "Unscheduled (%d)"
 msgstr "Neieplānots (%d)"
 
 #: src/gtd-application.c:72
-#| msgid "First run of GNOME To Do"
 msgid "Quit GNOME To Do"
 msgstr "Iziet no GNOME “darāmiem darbiem”"
 
@@ -493,13 +541,11 @@ msgstr "Ieslēgt atkļūdošanas ziņojumus"
 
 #: src/gtd-application.c:146
 #, c-format
-#| msgid "Copyright © %d The To Do authors"
 msgid "Copyright © %1$d The To Do authors"
 msgstr "Autortiesības © %1$d “darāmo darbu” autori"
 
 #: src/gtd-application.c:151
 #, c-format
-#| msgid "Copyright © %d–%d The To Do authors"
 msgid "Copyright © %1$d–%2$d The To Do authors"
 msgstr "Autortiesības © %1$d–%2$d “darāmo darbu” autori"
 
@@ -559,28 +605,34 @@ msgstr "Kļūda, ielādējot spraudni"
 msgid "Error unloading plugin"
 msgstr "Kļūda, noņemot spraudni"
 
-#: src/gtd-task-list-view.c:616
+#: src/gtd-task-list-view.c:293
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr "Izņemot uzdevumu, tiks izņemti arī tā apakšuzdevumi. Tomēr izņemt?"
 
-#: src/gtd-task-list-view.c:619
+#: src/gtd-task-list-view.c:296
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Ja tiks izņemts, uzdevumu vairs nevarēs atgūt."
 
-#: src/gtd-task-list-view.c:622 src/views/gtd-list-selector-panel.c:394
+#: src/gtd-task-list-view.c:299 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "Atcelt"
 
-#: src/gtd-task-list-view.c:624
+#: src/gtd-task-list-view.c:301
 msgid "Remove"
 msgstr "Izņemt"
 
-#: src/gtd-task-list-view.c:672
+#: src/gtd-task-list-view.c:381
+#, c-format
+#| msgid "Done"
+msgid "Done (%d)"
+msgstr "Pabeigts (%d)"
+
+#: src/gtd-task-list-view.c:648
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Uzdevums <b>%s</b> ir izņemts"
 
-#: src/gtd-task-list-view.c:696
+#: src/gtd-task-list-view.c:672
 msgid "Undo"
 msgstr "Atsaukt"
 
@@ -596,21 +648,28 @@ msgstr "Ielādē jūsu darbu sarakstus…"
 msgid "Click a task list to select"
 msgstr "Spiediet uz uzdevumu, lai to izvēlētos"
 
-#: src/views/gtd-list-selector-grid-item.c:252
+#.
+#. * If there's no task available, draw a "No tasks" string at
+#. * the middle of the list thumbnail.
+#.
+#: src/views/gtd-list-selector-grid-item.c:250
 msgid "No tasks"
 msgstr "Nav uzdevumu"
 
-#: src/views/gtd-list-selector-panel.c:387
+#: src/views/gtd-list-selector-panel.c:381
 msgid "Remove the selected task lists?"
 msgstr "Izņemt izvēlēto uzdevumu sarakstu?"
 
-#: src/views/gtd-list-selector-panel.c:390
+#: src/views/gtd-list-selector-panel.c:384
 msgid "Once removed, the task lists cannot be recovered."
 msgstr "Ja tiks izņemts, uzdevumu sarakstu vairs nevarēs atgūt."
 
-#: src/views/gtd-list-selector-panel.c:402
+#: src/views/gtd-list-selector-panel.c:396
 msgid "Remove task lists"
 msgstr "Izņemt uzdevumu sarakstus"
+
+#~ msgid "Error creating new task list"
+#~ msgstr "Kļūda, izveidojot jaunu uzdevumu sarakstu"
 
 #~ msgid "New List…"
 #~ msgstr "Jauns saraksts…"
@@ -654,14 +713,8 @@ msgstr "Izņemt uzdevumu sarakstus"
 #~ msgid "Error updating task"
 #~ msgstr "Kļūda, atjauninot uzdevumu"
 
-#~ msgid "Error removing task"
-#~ msgstr "Kļūda, noņemot uzdevumu"
-
 #~ msgid "Error creating task list"
 #~ msgstr "Kļūda, izveidojot uzdevumu sarakstu"
-
-#~ msgid "Error removing task list"
-#~ msgstr "Kļūda, noņemot uzdevumu sarakstu"
 
 #~ msgid "Error saving task list"
 #~ msgstr "Kļūda, saglabājot uzdevumu sarakstu"
@@ -725,10 +778,6 @@ msgstr "Izņemt uzdevumu sarakstus"
 #~| msgid "Error fetching tasks from list"
 #~ msgid "Error while reading tasks from Todo.txt"
 #~ msgstr "Kļūda, lasot uzdevumus no Todo.txt"
-
-#~| msgid "Error creating task list"
-#~ msgid "Error while creating a Todo.txt list"
-#~ msgstr "Kļūda, izveidojot Todo.txt sarakstu"
 
 #~| msgid "Error creating task list"
 #~ msgid "Error while reading task lists from Todo.txt"
