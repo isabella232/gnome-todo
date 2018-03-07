@@ -119,7 +119,7 @@ get_string_for_date (GDateTime *dt,
     }
   else if (days_diff >= 7 && years_diff == 0)
     {
-      str = g_date_time_format (dt, "%B"); // Full month name
+      str = g_date_time_format (dt, "%OB"); // Full month name
     }
   else
     {
