@@ -872,9 +872,9 @@ compare_dnd_rows (GtkListBoxRow *row1,
 }
 
 static gint
-gtd_task_list_view__listbox_sort_func (GtkListBoxRow *row1,
-                                       GtkListBoxRow *row2,
-                                       gpointer       user_data)
+default_sort_func (GtkListBoxRow *row1,
+                   GtkListBoxRow *row2,
+                   gpointer       user_data)
 {
   /* Automagically manage the DnD row */
   if (GTD_IS_DND_ROW (row1) || GTD_IS_DND_ROW (row2))
@@ -886,6 +886,7 @@ gtd_task_list_view__listbox_sort_func (GtkListBoxRow *row1,
 /*
  * Custom sorting functions
  */
+
 static void
 internal_header_func (GtkListBoxRow   *row,
                       GtkListBoxRow   *before,
@@ -971,9 +972,9 @@ internal_compare_dnd_rows (GtdTaskListView *self,
 }
 
 static gint
-internal_sort_func (GtkListBoxRow   *a,
-                    GtkListBoxRow   *b,
-                    GtdTaskListView *view)
+custom_sort_func (GtkListBoxRow   *a,
+                  GtkListBoxRow   *b,
+                  GtdTaskListView *view)
 {
   if (!view->priv->sort_func)
     return 0;
@@ -1037,8 +1038,6 @@ on_task_completed_cb (GtdTask         *task,
 
       iterate_subtasks (self, task, func);
     }
-
-  gtk_list_box_invalidate_sort (priv->listbox);
 
   update_empty_state (self);
   update_done_label (self);
@@ -1404,9 +1403,8 @@ gtd_task_list_view_constructed (GObject *object)
                                   GTK_STYLE_PROVIDER (self->priv->color_provider),
                                   GTK_STYLE_PROVIDER_PRIORITY_APPLICATION + 2);
 
-  /* show a nifty separator between lines */
   gtk_list_box_set_sort_func (self->priv->listbox,
-                              (GtkListBoxSortFunc) gtd_task_list_view__listbox_sort_func,
+                              (GtkListBoxSortFunc) default_sort_func,
                               NULL,
                               NULL);
 }
@@ -2079,7 +2077,7 @@ gtd_task_list_view_set_sort_func (GtdTaskListView         *view,
       priv->header_user_data = user_data;
 
       gtk_list_box_set_sort_func (priv->listbox,
-                                  (GtkListBoxSortFunc) internal_sort_func,
+                                  (GtkListBoxSortFunc) custom_sort_func,
                                   view,
                                   NULL);
     }
@@ -2089,7 +2087,7 @@ gtd_task_list_view_set_sort_func (GtdTaskListView         *view,
       priv->sort_user_data = NULL;
 
       gtk_list_box_set_sort_func (priv->listbox,
-                                  (GtkListBoxSortFunc) gtd_task_list_view__listbox_sort_func,
+                                  (GtkListBoxSortFunc) default_sort_func,
                                   NULL,
                                   NULL);
     }
