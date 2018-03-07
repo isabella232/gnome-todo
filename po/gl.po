@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-toto 3.18\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-03 03:14+0000\n"
-"PO-Revision-Date: 2018-03-03 14:20+0200\n"
+"POT-Creation-Date: 2018-03-07 22:13+0000\n"
+"PO-Revision-Date: 2018-03-07 23:47+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician\n"
 "Language: gl\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
 #: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
-#: src/gtd-window.c:954 src/gtd-window.c:989 src/main.c:35
+#: src/gtd-window.c:787 src/gtd-window.c:818 src/main.c:35
 msgid "To Do"
 msgstr "Tarefas"
 
@@ -151,44 +151,44 @@ msgstr "O selector de lista actual. Pode ser «grid» ou «list»."
 msgid "_Notes"
 msgstr "_Notas"
 
-#: data/ui/edit-pane.ui:92
+#: data/ui/edit-pane.ui:93
 msgid "D_ue Date"
 msgstr "Data de _vencemento"
 
-#: data/ui/edit-pane.ui:110
+#: data/ui/edit-pane.ui:111
 msgid "_Today"
 msgstr "_Hoxe"
 
-#: data/ui/edit-pane.ui:120
+#: data/ui/edit-pane.ui:121
 msgid "To_morrow"
 msgstr "M_añá"
 
-#: data/ui/edit-pane.ui:168
+#: data/ui/edit-pane.ui:169
 msgid "_Priority"
 msgstr "_Prioridade"
 
-#: data/ui/edit-pane.ui:185
+#: data/ui/edit-pane.ui:187
 msgctxt "taskpriority"
 msgid "None"
 msgstr "Ningunha"
 
-#: data/ui/edit-pane.ui:186
+#: data/ui/edit-pane.ui:188
 msgid "Low"
 msgstr "Baixa"
 
-#: data/ui/edit-pane.ui:187
+#: data/ui/edit-pane.ui:189
 msgid "Medium"
 msgstr "Media"
 
-#: data/ui/edit-pane.ui:188
+#: data/ui/edit-pane.ui:190
 msgid "High"
 msgstr "Alta"
 
-#: data/ui/edit-pane.ui:196 data/ui/list-selector-panel.ui:93
+#: data/ui/edit-pane.ui:198 data/ui/list-selector-panel.ui:93
 msgid "_Delete"
 msgstr "_Eliminar"
 
-#: data/ui/edit-pane.ui:242
+#: data/ui/edit-pane.ui:249
 msgctxt "taskdate"
 msgid "None"
 msgstr "Ningunha"
@@ -234,11 +234,11 @@ msgstr "Nome da lista de tarefas"
 msgid "_New List"
 msgstr "Nova _lista"
 
-#: data/ui/list-view.ui:112
+#: data/ui/list-view.ui:113
 msgid "Show or hide completed tasks"
 msgstr "Mostrar ou ocultar as tarefas completadas"
 
-#: data/ui/list-view.ui:139 src/gtd-task-list-view.c:379
+#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:379
 msgid "Done"
 msgstr "Feito"
 
@@ -344,27 +344,27 @@ msgstr "Cando se executa Tarefas, mostrar unha notificació de arrinque"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Produciuse un erro ao cargar as contas en liña de GNOME"
 
-#: plugins/eds/gtd-provider-eds.c:145
+#: plugins/eds/gtd-provider-eds.c:139
 msgid "Failed to connect to task list"
 msgstr "Produciuse un fallo ao conectarse á lista de tarefas"
 
-#: plugins/eds/gtd-provider-eds.c:443
+#: plugins/eds/gtd-provider-eds.c:351
 msgid "An error occurred while creating a task"
 msgstr "Produciuse un erro ao crear unha tarefa"
 
-#: plugins/eds/gtd-provider-eds.c:475
+#: plugins/eds/gtd-provider-eds.c:383
 msgid "An error occurred while modifying a task"
 msgstr "Produciuse un erro ao modificar unha tarefa"
 
-#: plugins/eds/gtd-provider-eds.c:496
+#: plugins/eds/gtd-provider-eds.c:404
 msgid "An error occurred while removing a task"
 msgstr "Produciuse un erro ao eliminar unha tarefa"
 
-#: plugins/eds/gtd-provider-eds.c:514
+#: plugins/eds/gtd-provider-eds.c:422
 msgid "An error occurred while creating a task list"
 msgstr "Produciuse un erro ao crear unha lista de tarefas"
 
-#: plugins/eds/gtd-provider-eds.c:535 plugins/eds/gtd-provider-eds.c:558
+#: plugins/eds/gtd-provider-eds.c:444 plugins/eds/gtd-provider-eds.c:467
 msgid "An error occurred while modifying a task list"
 msgstr "Produciuse un erro ao modificar unha lista de tarefas"
 
@@ -376,43 +376,54 @@ msgstr "Local"
 msgid "On This Computer"
 msgstr "Neste computador"
 
-#: plugins/eds/gtd-task-list-eds.c:276 plugins/eds/gtd-task-list-eds.c:306
-#: plugins/eds/gtd-task-list-eds.c:328
+#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:307
+#: plugins/eds/gtd-task-list-eds.c:331
 msgid "Error fetching tasks from list"
 msgstr "Produciuse un erro ao obter as tarefas da lista"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:162
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:110
 msgid "No date set"
 msgstr "Non se estabeleceu unha data"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-task-row.c:148
+#. Translators: This message will never be used with '1 day ago'
+#. * but the singular form is required because some languages do not
+#. * have plurals, some languages reuse the singular form for numbers
+#. * like 21, 31, 41, etc.
+#.
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:102
 #, c-format
-msgid "Yesterday"
+msgid "%d day ago"
 msgid_plural "%d days ago"
-msgstr[0] "Onte"
-msgstr[1] "Hai %d días"
+msgstr[0] "hai %d día"
+msgstr[1] "hai %d días"
+
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:149
+#| msgid "Yesterday"
+#| msgid_plural "%d days ago"
+msgid "Yesterday"
+msgstr "Onte"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:101
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
 #: plugins/score/score/__init__.py:101
 #: plugins/today-panel/gtd-panel-today.c:134
 #: plugins/today-panel/gtd-panel-today.c:139
-#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:140
+#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:141
 msgid "Today"
 msgstr "Hoxe"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:105 src/gtd-task-row.c:144
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:145
 msgid "Tomorrow"
 msgstr "Mañán"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:356
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:361
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:498
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:365
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:370
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:507
 msgid "Scheduled"
 msgstr "Programadas"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:503
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:512
 #: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
 #: src/views/gtd-list-selector-panel.c:710
@@ -447,33 +458,32 @@ msgstr ""
 "Recibiuse unha resposta non válida desde os servidores de Todoist. Regargue "
 "Taregas de GNOME."
 
-#: plugins/todoist/gtd-provider-todoist.c:836
-#| msgid "An error occurred while updating Todoist"
+#: plugins/todoist/gtd-provider-todoist.c:865
 msgid "An error occurred while updating a Todoist task"
 msgstr "Produciuse un erro ao actualizar a tarefa de Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:945
+#: plugins/todoist/gtd-provider-todoist.c:982
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Produciuse un erro ao obter os datos de Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1018
+#: plugins/todoist/gtd-provider-todoist.c:1057
 msgid "An error occurred while updating Todoist"
 msgstr "Produciuse un erro ao actualizar a Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1077
+#: plugins/todoist/gtd-provider-todoist.c:1117
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1385
+#: plugins/todoist/gtd-provider-todoist.c:1426
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
 
-#: plugins/todoist/ui/preferences.ui:80
+#: plugins/todoist/ui/preferences.ui:81
 msgid "No Todoist accounts found"
 msgstr "Non se atoparon contas de Todoist"
 
-#: plugins/todoist/ui/preferences.ui:89
+#: plugins/todoist/ui/preferences.ui:90
 msgid "Add a Todoist account"
 msgstr "Engadir unha conta de Todoist"
 
@@ -621,24 +631,24 @@ msgstr "Eliminar"
 msgid "Done (%d)"
 msgstr "Feito (%d)"
 
-#: src/gtd-task-list-view.c:648
+#: src/gtd-task-list-view.c:657
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Tarefa <b>%s</b> eliminada"
 
-#: src/gtd-task-list-view.c:672
+#: src/gtd-task-list-view.c:681
 msgid "Undo"
 msgstr "Desfacer"
 
-#: src/gtd-window.c:548
+#: src/gtd-window.c:464
 msgid "Details"
 msgstr "Detalles"
 
-#: src/gtd-window.c:822
+#: src/gtd-window.c:677
 msgid "Loading your task lists…"
 msgstr "Cargando a lista de tarefas…"
 
-#: src/gtd-window.c:948
+#: src/gtd-window.c:781
 msgid "Click a task list to select"
 msgstr "Prema unha lista de tarefas para seleccionala"
 
