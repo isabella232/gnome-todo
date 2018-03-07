@@ -534,31 +534,6 @@ add_task (GtdTaskListView *view,
  * Callbacks
  */
 
-static void
-on_clear_completed_tasks_activated_cb (GSimpleAction *simple,
-                                       GVariant      *parameter,
-                                       gpointer       user_data)
-{
-  GtdTaskListView *view;
-  GList *tasks;
-  GList *l;
-
-  view = GTD_TASK_LIST_VIEW (user_data);
-  tasks = gtd_task_list_view_get_list (view);
-
-  for (l = tasks; l != NULL; l = l->next)
-    {
-      GtdTask *task = l->data;
-
-      if (gtd_task_get_complete (task))
-        gtd_provider_remove_task (gtd_task_get_provider (task), task);
-    }
-
-  update_done_label (view);
-
-  g_list_free (tasks);
-}
-
 static gboolean
 undo_remove_task_cb (GtdTaskListView *self,
                      GtdTask         *task)
@@ -577,6 +552,35 @@ real_remove_task_cb (GtdTaskListView *self,
 {
   gtd_provider_remove_task (gtd_task_get_provider (task), task);
   return TRUE;
+}
+
+static void
+on_clear_completed_tasks_activated_cb (GSimpleAction *simple,
+                                       GVariant      *parameter,
+                                       gpointer       user_data)
+{
+  GtdTaskListView *view;
+  g_autoptr (GList) tasks = NULL;
+  g_autoptr (GList) l = NULL;
+
+  view = GTD_TASK_LIST_VIEW (user_data);
+  tasks = gtd_task_list_view_get_list (view);
+
+  for (l = tasks; l; l = l->next)
+    {
+      GtdTask *task = l->data;
+
+      if (!gtd_task_get_complete (task))
+        continue;
+
+      if (gtd_task_get_parent (task))
+        gtd_task_remove_subtask (gtd_task_get_parent (task), task);
+
+      /* Remove the subtasks recursively */
+      iterate_subtasks (view, task, real_remove_task_cb);
+    }
+
+  update_done_label (view);
 }
 
 static void
