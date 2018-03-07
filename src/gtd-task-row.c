@@ -62,7 +62,6 @@ struct _GtdTaskRow
   /* data */
   GtdTask            *task;
 
-  gint                destroy_row_timeout_id;
   gint                update_title_timeout_id;
   gboolean            active;
   gboolean            changed;
@@ -481,52 +480,15 @@ on_complete_changed_cb (GtdTaskRow *self,
 }
 
 static void
-on_toggle_complete_cb (GtkRevealer *revealer,
-                       GParamSpec  *pspec,
-                       GtdTaskRow  *self)
-{
-  GtdTask *task;
-
-  g_signal_handlers_disconnect_by_func (revealer, on_toggle_complete_cb, self);
-
-  task = self->task;
-
-  gtd_task_set_complete (task, !gtd_task_get_complete (task));
-  gtd_provider_update_task (gtd_task_get_provider (task), task);
-}
-
-static void
 on_complete_check_toggled_cb (GtkToggleButton *button,
                               GtdTaskRow      *self)
 {
-  GtdTaskListView *listview;
-
   GTD_ENTRY;
 
-  listview = GTD_TASK_LIST_VIEW (gtk_widget_get_ancestor (GTK_WIDGET (self), GTD_TYPE_TASK_LIST_VIEW));
+  g_assert (GTD_IS_TASK (self->task));
 
-  /*
-   * If the parent list view is showing completed tasks, we
-   * don't have to hide the row. Simply toggle the 'complete'
-   * property of the task.
-   */
-  if (!gtd_task_list_view_get_show_completed (listview))
-    {
-      gtk_revealer_set_reveal_child (GTK_REVEALER (self->revealer),
-                                     !gtk_toggle_button_get_active (button));
-
-      g_signal_connect (self->revealer,
-                        "notify::child-revealed",
-                        G_CALLBACK (on_toggle_complete_cb),
-                        self);
-    }
-  else
-    {
-      GtdTask *task = self->task;
-
-      gtd_task_set_complete (task, !gtd_task_get_complete (task));
-      gtd_provider_update_task (gtd_task_get_provider (task), task);
-    }
+  gtd_task_set_complete (self->task, gtk_toggle_button_get_active (button));
+  gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
 
   GTD_EXIT;
 }
@@ -538,14 +500,6 @@ on_depth_changed_cb (GtdTaskRow *self,
 {
   gtk_widget_set_margin_start (GTK_WIDGET (self),
                                self->handle_subtasks ? 32 * gtd_task_get_depth (task) + 3: 3);
-}
-
-static gboolean
-on_destroy_cb (GtkWidget *row)
-{
-  gtk_widget_destroy (row);
-
-  return G_SOURCE_REMOVE;
 }
 
 static gboolean
@@ -920,21 +874,8 @@ gtd_task_row_destroy (GtdTaskRow *self)
 {
   g_return_if_fail (GTD_IS_TASK_ROW (self));
 
-  if (!gtk_revealer_get_child_revealed (self->revealer))
-    {
-      gtk_widget_destroy (GTK_WIDGET (self));
-    }
-  else if (self->destroy_row_timeout_id == 0)
-    {
-      guint duration;
-
-      duration = gtk_revealer_get_transition_duration (self->revealer);
-
-      gtk_revealer_set_reveal_child (self->revealer, FALSE);
-      self->destroy_row_timeout_id = g_timeout_add (duration,
-                                                    (GSourceFunc) on_destroy_cb,
-                                                    self);
-    }
+  gtk_revealer_set_reveal_child (self->revealer, FALSE);
+  g_signal_connect_swapped (self->revealer, "notify::child-revealed", G_CALLBACK (gtk_widget_destroy), self);
 }
 
 gboolean
