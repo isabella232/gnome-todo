@@ -300,14 +300,22 @@ load_geometry (GtdWindow *self)
   size = g_variant_get_fixed_array (size_variant, &n_elements, sizeof (gint32));
 
   if (n_elements == 2)
-    gtk_window_set_default_size (GTK_WINDOW (self), size[0], size[1]);
+    {
+      gtk_window_set_default_size (GTK_WINDOW (self),
+                                   CLAMP (size[0], 1, G_MAXINT),
+                                   CLAMP (size[1], 1, G_MAXINT));
+    }
 
   /* load window settings: position */
   position_variant = g_settings_get_value (settings, "window-position");
   position = g_variant_get_fixed_array (position_variant, &n_elements, sizeof (gint32));
 
   if (n_elements == 2)
-    gtk_window_move (GTK_WINDOW (self), position[0], position[1]);
+    {
+      gtk_window_move (GTK_WINDOW (self),
+                       CLAMP (position[0], 0, G_MAXINT),
+                       CLAMP (position[1], 0, G_MAXINT));
+    }
 
   /* load window settings: state */
   maximized = g_settings_get_boolean (settings, "window-maximized");
@@ -349,12 +357,16 @@ save_geometry (gpointer user_data)
 
   /* save window's size */
   gtk_window_get_size (window, (gint*) &size[0], (gint*) &size[1]);
+  size[0] = CLAMP (size[0], 1, G_MAXINT);
+  size[1] = CLAMP (size[1], 1, G_MAXINT);
 
   variant = g_variant_new_fixed_array (G_VARIANT_TYPE_INT32, size, 2, sizeof (size[0]));
   g_settings_set_value (settings, "window-size", variant);
 
   /* save windows's position */
   gtk_window_get_position (window, (gint *) &position[0], (gint *) &position[1]);
+  position[0] = CLAMP (position[0], 0, G_MAXINT);
+  position[1] = CLAMP (position[1], 0, G_MAXINT);
 
   variant = g_variant_new_fixed_array (G_VARIANT_TYPE_INT32, position, 2, sizeof (position[0]));
   g_settings_set_value (settings, "window-position", variant);
