@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-toto 3.18\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-07 22:13+0000\n"
-"PO-Revision-Date: 2018-03-07 23:47+0200\n"
+"POT-Creation-Date: 2018-03-08 03:27+0000\n"
+"PO-Revision-Date: 2018-03-08 11:34+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician\n"
 "Language: gl\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
 #: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
-#: src/gtd-window.c:787 src/gtd-window.c:818 src/main.c:35
+#: src/gtd-window.c:799 src/gtd-window.c:830 src/main.c:35
 msgid "To Do"
 msgstr "Tarefas"
 
@@ -397,9 +397,7 @@ msgid_plural "%d days ago"
 msgstr[0] "hai %d día"
 msgstr[1] "hai %d días"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:149
-#| msgid "Yesterday"
-#| msgid_plural "%d days ago"
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:148
 msgid "Yesterday"
 msgstr "Onte"
 
@@ -408,11 +406,11 @@ msgstr "Onte"
 #: plugins/score/score/__init__.py:101
 #: plugins/today-panel/gtd-panel-today.c:134
 #: plugins/today-panel/gtd-panel-today.c:139
-#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:141
+#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:140
 msgid "Today"
 msgstr "Hoxe"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:145
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:144
 msgid "Tomorrow"
 msgstr "Mañán"
 
@@ -487,18 +485,34 @@ msgstr "Non se atoparon contas de Todoist"
 msgid "Add a Todoist account"
 msgstr "Engadir unha conta de Todoist"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:84
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:121
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:87
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:124
 msgid "Cannot create Todo.txt file"
 msgstr "Non foi posíbel crear o ficheiro Todo.txt"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:312
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:161
 msgid "Select a Todo.txt-formatted file:"
 msgstr "Seleccione un ficheiro con formato Todo.txt:"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:313
+#. Filechooser
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:165
 msgid "Select a file"
 msgstr "Seleccione un ficheiro"
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:191
+#| msgid "Error while opening Todo.txt"
+msgid "Error opening Todo.txt file"
+msgstr "Produciuse un erro ao abrir o ficheiro de Todo.txt"
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:201
+msgid ""
+"<b>Warning!</b> Todo.txt support is experimental and unstable. You may "
+"experience instability, errors and eventually data loss. It is not "
+"recommended to use Todo.txt integration on production systems."
+msgstr ""
+"<b>Aviso!</b> A compatibilidade con Todo.txt é experimental e inestábel. "
+"Pode experimentar inestabilidde, errros e eventualmente perda de datos. Non "
+"recomendamos o uso da integración de Todo.txt en sistemas de producción."
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:319
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
@@ -601,11 +615,13 @@ msgid "You can add tasks using the <b>+</b> above"
 msgstr "Pode engadir tarefas usando o <b>+</b> de arriba"
 
 #: src/gtd-plugin-dialog-row.c:97
-msgid "Error loading plugin"
-msgstr "Produciuse un erro ao cargar o engadido"
+#| msgid "Error loading plugin"
+msgid "Error loading extension"
+msgstr "Produciuse un erro ao cargar a extensión"
 
 #: src/gtd-plugin-dialog-row.c:97
-msgid "Error unloading plugin"
+#| msgid "Error unloading plugin"
+msgid "Error unloading extension"
 msgstr "Produciuse un erro ao descargar o engadido"
 
 #: src/gtd-task-list-view.c:293
@@ -631,24 +647,24 @@ msgstr "Eliminar"
 msgid "Done (%d)"
 msgstr "Feito (%d)"
 
-#: src/gtd-task-list-view.c:657
+#: src/gtd-task-list-view.c:661
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Tarefa <b>%s</b> eliminada"
 
-#: src/gtd-task-list-view.c:681
+#: src/gtd-task-list-view.c:685
 msgid "Undo"
 msgstr "Desfacer"
 
-#: src/gtd-window.c:464
+#: src/gtd-window.c:476
 msgid "Details"
 msgstr "Detalles"
 
-#: src/gtd-window.c:677
+#: src/gtd-window.c:689
 msgid "Loading your task lists…"
 msgstr "Cargando a lista de tarefas…"
 
-#: src/gtd-window.c:781
+#: src/gtd-window.c:793
 msgid "Click a task list to select"
 msgstr "Prema unha lista de tarefas para seleccionala"
 
@@ -708,9 +724,6 @@ msgstr "Eliminar as listas de tarefas"
 #~ msgid "Bad status code (%d) received. Please check your connection."
 #~ msgstr ""
 #~ "Recibiuse código de estado incorrecto (%d). Comprobe a súa conexión."
-
-#~ msgid "Error while opening Todo.txt"
-#~ msgstr "Produciuse un erro ao abrir o Todo.txt"
 
 #~ msgid "Error while reading a line from Todo.txt"
 #~ msgstr "Produciuse un erro ao ler unha liña desde o Todo.txt"
