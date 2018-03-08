@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-07 22:13+0000\n"
-"PO-Revision-Date: 2018-03-07 23:50+0100\n"
+"POT-Creation-Date: 2018-03-08 00:18+0000\n"
+"PO-Revision-Date: 2018-03-08 02:01+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
 #: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
-#: src/gtd-window.c:787 src/gtd-window.c:818 src/main.c:35
+#: src/gtd-window.c:799 src/gtd-window.c:830 src/main.c:35
 msgid "To Do"
 msgstr "Zadania"
 
@@ -400,7 +400,7 @@ msgstr[0] "%d dzień temu"
 msgstr[1] "%d dni temu"
 msgstr[2] "%d dni temu"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:149
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:148
 msgid "Yesterday"
 msgstr "Wczoraj"
 
@@ -409,11 +409,11 @@ msgstr "Wczoraj"
 #: plugins/score/score/__init__.py:101
 #: plugins/today-panel/gtd-panel-today.c:134
 #: plugins/today-panel/gtd-panel-today.c:139
-#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:141
+#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:140
 msgid "Today"
 msgstr "Dzisiaj"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:145
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:144
 msgid "Tomorrow"
 msgstr "Jutro"
 
@@ -603,12 +603,12 @@ msgid "You can add tasks using the <b>+</b> above"
 msgstr "Można dodawać zadania za pomocą przycisku <b>+</b> powyżej"
 
 #: src/gtd-plugin-dialog-row.c:97
-msgid "Error loading plugin"
-msgstr "Błąd podczas wczytywania wtyczki"
+msgid "Error loading extension"
+msgstr "Błąd podczas wczytywania rozszerzenia"
 
 #: src/gtd-plugin-dialog-row.c:97
-msgid "Error unloading plugin"
-msgstr "Błąd podczas usuwania wtyczki"
+msgid "Error unloading extension"
+msgstr "Błąd podczas wyłączania rozszerzenia"
 
 #: src/gtd-task-list-view.c:293
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
@@ -631,24 +631,24 @@ msgstr "Usuń"
 msgid "Done (%d)"
 msgstr "Ukończone (%d)"
 
-#: src/gtd-task-list-view.c:657
+#: src/gtd-task-list-view.c:661
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Usunięto zadanie <b>%s</b>"
 
-#: src/gtd-task-list-view.c:681
+#: src/gtd-task-list-view.c:685
 msgid "Undo"
 msgstr "Cofnij"
 
-#: src/gtd-window.c:464
+#: src/gtd-window.c:476
 msgid "Details"
 msgstr "Szczegóły"
 
-#: src/gtd-window.c:677
+#: src/gtd-window.c:689
 msgid "Loading your task lists…"
 msgstr "Wczytywanie list zadań…"
 
-#: src/gtd-window.c:781
+#: src/gtd-window.c:793
 msgid "Click a task list to select"
 msgstr "Kliknięcie listy zadań zaznacza ją"
 
