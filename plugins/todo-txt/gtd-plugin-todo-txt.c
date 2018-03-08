@@ -138,6 +138,7 @@ setup_preferences_panel (GtdPluginTodoTxt *self)
   GtdProviderTodoTxt *provider;
   g_autofree gchar *path = NULL;
   GtkWidget *label;
+  GtkWidget *box;
   gboolean set;
 
   set = setup_source (self);
@@ -150,17 +151,23 @@ setup_preferences_panel (GtdPluginTodoTxt *self)
     }
 
   /* Preferences */
-  self->preferences_box = g_object_new (GTK_TYPE_BOX,
-                                        "margin", 18,
-                                        "spacing", 12,
-                                        "expand", TRUE,
-                                        "orientation", GTK_ORIENTATION_VERTICAL,
-                                        NULL);
+  box = g_object_new (GTK_TYPE_BOX,
+                      "margin", 18,
+                      "spacing", 12,
+                      "expand", TRUE,
+                      "orientation", GTK_ORIENTATION_VERTICAL,
+                      NULL);
+
   label = gtk_label_new (_("Select a Todo.txt-formatted file:"));
+  gtk_container_add (GTK_CONTAINER (box), label);
 
   /* Filechooser */
   self->preferences = gtk_file_chooser_button_new (_("Select a file"), GTK_FILE_CHOOSER_ACTION_OPEN);
-  gtk_widget_set_size_request (GTK_WIDGET (self->preferences_box), 300, 0);
+  gtk_widget_set_size_request (GTK_WIDGET (box), 300, 0);
+  gtk_widget_set_halign (GTK_WIDGET (box), GTK_ALIGN_CENTER);
+  gtk_widget_set_valign (GTK_WIDGET (box), GTK_ALIGN_CENTER);
+
+  gtk_container_add (GTK_CONTAINER (box), self->preferences);
 
   /* If there's a file set, select it */
   path = g_settings_get_string (self->settings, "file");
@@ -188,12 +195,24 @@ setup_preferences_panel (GtdPluginTodoTxt *self)
         }
     }
 
-  gtk_container_add (GTK_CONTAINER (self->preferences_box), label);
-  gtk_container_add (GTK_CONTAINER (self->preferences_box), self->preferences);
+  /* Big warning label reminding the user that this is experimental */
+  label = gtk_label_new ("");
+  gtk_label_set_markup (GTK_LABEL (label),
+                        _("<b>Warning!</b> Todo.txt support is experimental and unstable. "
+                          "You may experience instability, errors and eventually data loss. "
+                          "It is not recommended to use Todo.txt integration on production systems."));
+  gtk_label_set_max_width_chars (GTK_LABEL (label), 60);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_label_set_lines (GTK_LABEL (label), 3);
+  gtk_widget_set_margin_top (label, 18);
 
-  gtk_widget_set_halign (GTK_WIDGET (self->preferences_box), GTK_ALIGN_CENTER);
-  gtk_widget_set_valign (GTK_WIDGET (self->preferences_box), GTK_ALIGN_CENTER);
-  gtk_widget_show_all (self->preferences_box);
+  gtk_container_add (GTK_CONTAINER (box), label);
+
+  gtk_widget_show_all (box);
+
+  /* Store the box, and report it as the preferences panel itself */
+  self->preferences_box = box;
 
   g_signal_connect (self->preferences, "file-set", G_CALLBACK (on_source_changed_cb), self);
 }
