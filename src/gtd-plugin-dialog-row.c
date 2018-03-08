@@ -94,7 +94,7 @@ loaded_switch_changed (GtdPluginDialogRow *row)
   if (!success)
     {
       gtk_widget_set_tooltip_text (row->error_image,
-                                   switch_active ? _("Error loading plugin") : _("Error unloading plugin"));
+                                   switch_active ? _("Error loading extension") : _("Error unloading extension"));
 
       /* Return the switch to it's original state, without
        * hearing the notify::active signal.
