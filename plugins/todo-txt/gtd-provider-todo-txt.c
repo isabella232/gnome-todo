@@ -83,18 +83,13 @@ print_task (GString *output,
 {
   GtdTaskList *list;
   GDateTime *dt;
-  const gchar *list_name;
-  const gchar *title;
   gint priority;
   gboolean is_complete;
 
   is_complete = gtd_task_get_complete (task);
-  title = gtd_task_get_title (task);
   priority = gtd_task_get_priority (task);
   dt = gtd_task_get_due_date (task);
   list = gtd_task_get_list (task);
-
-  list_name = gtd_task_list_get_name (list);
 
   if (is_complete)
     g_string_append (output, "x ");
@@ -109,7 +104,10 @@ print_task (GString *output,
         g_string_append (output, "(A) ");
     }
 
-  g_string_append_printf (output, "%s @%s", title, list_name);
+  g_string_append_printf (output,
+                          "%s @%s",
+                          gtd_task_get_title (task),
+                          gtd_task_list_get_name (list));
 
   if (dt)
     {
@@ -133,27 +131,36 @@ update_source (GtdProviderTodoTxt *self)
 
   contents = g_string_new ("");
 
+  /* Save the tasks first */
+  for (i = 0; i < self->cache->len; i++)
+    {
+      g_autoptr (GList) tasks = NULL;
+      g_autoptr (GList) l = NULL;
+
+      list = g_ptr_array_index (self->cache, i);
+      tasks = gtd_task_list_get_tasks (list);
+
+      /* And now each task */
+      for (l = tasks; l; l = l->next)
+        print_task (contents, l->data);
+    }
+
+  /* Then the task lists */
   for (i = 0; i < self->cache->len; i++)
     {
       g_autofree gchar *color_str = NULL;
       g_autoptr (GdkRGBA) color = NULL;
-      GList *tasks, *l;
 
       list = g_ptr_array_index (self->cache, i);
-
-      tasks = gtd_task_list_get_tasks (list);
 
       /* Print the list as the first line */
       color = gtd_task_list_get_color (list);
       color_str = gdk_rgba_to_string (color);
 
-      g_string_append_printf (contents, "@%s color:%s\n",
+      g_string_append_printf (contents,
+                              "@%s color:%s\n",
                               gtd_task_list_get_name (list),
                               color_str);
-
-      /* And now each task */
-      for (l = tasks; l != NULL; l = l->next)
-        print_task (contents, l->data);
     }
 
   output_path = g_file_get_path (self->source_file);
@@ -441,6 +448,8 @@ static void
 gtd_provider_todo_txt_remove_task (GtdProvider *provider,
                                    GtdTask     *task)
 {
+  gtd_task_list_remove_task (gtd_task_get_list (task), task);
+
   update_source (GTD_PROVIDER_TODO_TXT (provider));
 }
 
@@ -664,7 +673,7 @@ gtd_provider_todo_txt_generate_task (GtdProviderTodoTxt *self)
   g_autofree gchar *uid = NULL;
 
   g_return_val_if_fail (GTD_IS_PROVIDER_TODO_TXT (self), NULL);
-  uid = g_strdup_printf ("%ld", self->task_counter);
+  uid = g_uuid_string_random ();
 
   return g_object_new (GTD_TYPE_TASK, "uid", uid, NULL);
 }
