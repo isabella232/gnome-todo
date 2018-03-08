@@ -52,6 +52,9 @@ enum
   LAST_PROP
 };
 
+static void          on_source_changed_cb                        (GtkWidget          *preference_panel,
+                                                                  GtdPluginTodoTxt   *self);
+
 static void          gtd_activatable_iface_init                  (GtdActivatableInterface  *iface);
 
 G_DEFINE_DYNAMIC_TYPE_EXTENDED (GtdPluginTodoTxt, gtd_plugin_todo_txt, PEAS_TYPE_EXTENSION_BASE, 0,
@@ -127,6 +130,72 @@ setup_source (GtdPluginTodoTxt *self)
     }
 
   GTD_RETURN (TRUE);
+}
+
+static void
+setup_preferences_panel (GtdPluginTodoTxt *self)
+{
+  GtdProviderTodoTxt *provider;
+  g_autofree gchar *path = NULL;
+  GtkWidget *label;
+  gboolean set;
+
+  set = setup_source (self);
+  self->providers = NULL;
+
+  if (set)
+    {
+      provider = gtd_provider_todo_txt_new (self->source_file);
+      self->providers = g_list_append (self->providers, provider);
+    }
+
+  /* Preferences */
+  self->preferences_box = g_object_new (GTK_TYPE_BOX,
+                                        "margin", 18,
+                                        "spacing", 12,
+                                        "expand", TRUE,
+                                        "orientation", GTK_ORIENTATION_VERTICAL,
+                                        NULL);
+  label = gtk_label_new (_("Select a Todo.txt-formatted file:"));
+
+  /* Filechooser */
+  self->preferences = gtk_file_chooser_button_new (_("Select a file"), GTK_FILE_CHOOSER_ACTION_OPEN);
+  gtk_widget_set_size_request (GTK_WIDGET (self->preferences_box), 300, 0);
+
+  /* If there's a file set, select it */
+  path = g_settings_get_string (self->settings, "file");
+
+  if (path && *path)
+    {
+      g_autoptr (GError) error = NULL;
+      g_autoptr (GFile) file = NULL;
+
+      g_debug ("Selecting Todo.txt file %s", path);
+
+      file = g_file_new_for_path (path);
+
+      gtk_file_chooser_set_file (GTK_FILE_CHOOSER (self->preferences), file, &error);
+
+      if (error)
+        {
+          g_warning ("Error selecting Todo.txt file (%s): %s", path, error->message);
+
+          gtd_manager_emit_error_message (gtd_manager_get_default (),
+                                          _("Error opening Todo.txt file"),
+                                          error->message,
+                                          NULL,
+                                          NULL);
+        }
+    }
+
+  gtk_container_add (GTK_CONTAINER (self->preferences_box), label);
+  gtk_container_add (GTK_CONTAINER (self->preferences_box), self->preferences);
+
+  gtk_widget_set_halign (GTK_WIDGET (self->preferences_box), GTK_ALIGN_CENTER);
+  gtk_widget_set_valign (GTK_WIDGET (self->preferences_box), GTK_ALIGN_CENTER);
+  gtk_widget_show_all (self->preferences_box);
+
+  g_signal_connect (self->preferences, "file-set", G_CALLBACK (on_source_changed_cb), self);
 }
 
 
@@ -288,41 +357,9 @@ gtd_plugin_todo_txt_class_init (GtdPluginTodoTxtClass *klass)
 static void
 gtd_plugin_todo_txt_init (GtdPluginTodoTxt *self)
 {
-  GtdProviderTodoTxt *provider;
-  GtkWidget *label;
-  gboolean   set;
-
   self->settings = g_settings_new ("org.gnome.todo.plugins.todo-txt");
-  set = setup_source (self);
-  self->providers = NULL;
 
-  if (set)
-    {
-      provider = gtd_provider_todo_txt_new (self->source_file);
-      self->providers = g_list_append (self->providers, provider);
-    }
-
-  /* Preferences */
-  self->preferences_box = g_object_new (GTK_TYPE_BOX,
-                                        "margin", 18,
-                                        "spacing", 12,
-                                        "expand", TRUE,
-                                        "orientation", GTK_ORIENTATION_VERTICAL,
-                                        NULL);
-  label = gtk_label_new (_("Select a Todo.txt-formatted file:"));
-  self->preferences = gtk_file_chooser_button_new (_("Select a file"), GTK_FILE_CHOOSER_ACTION_OPEN);
-
-  gtk_widget_set_size_request (GTK_WIDGET (self->preferences_box), 300, 0);
-
-  gtk_container_add (GTK_CONTAINER (self->preferences_box), label);
-  gtk_container_add (GTK_CONTAINER (self->preferences_box), self->preferences);
-
-  gtk_widget_set_halign (GTK_WIDGET (self->preferences_box), GTK_ALIGN_CENTER);
-  gtk_widget_set_valign (GTK_WIDGET (self->preferences_box), GTK_ALIGN_CENTER);
-
-  gtk_widget_show_all (self->preferences_box);
-
-  g_signal_connect (self->preferences, "file-set", G_CALLBACK (on_source_changed_cb), self);
+  setup_preferences_panel (self);
 }
 
 static void
