@@ -261,13 +261,11 @@ on_source_changed_cb (GtkWidget        *preference_panel,
 static void
 gtd_plugin_todo_txt_activate (GtdActivatable *activatable)
 {
-  ;
 }
 
 static void
 gtd_plugin_todo_txt_deactivate (GtdActivatable *activatable)
 {
-  ;
 }
 
 static GList*
