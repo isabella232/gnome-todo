@@ -1,7 +1,7 @@
 [Plugin]
 Name = Todoist
 Module = todoist
-Description = Todoist integration for GNOME To Do
+Description = Todoist integration for GNOME To Do (Experimental)
 Version = @VERSION@
 Authors = Rohit Kaushik <kaushikrohit325@gmail.com>
 Copyright = Copyleft © The To Do maintainers

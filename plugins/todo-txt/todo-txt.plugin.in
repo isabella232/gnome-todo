@@ -1,7 +1,7 @@
 [Plugin]
 Name = Todo.Txt
 Module = todo-txt
-Description = Todo.txt plugin for GNOME To Do
+Description = Todo.txt plugin for GNOME To Do (Experimental)
 Version = @VERSION@
 Authors = Rohit Kaushik <kaushikrohit325@gmail.com>
 Copyright = Copyleft © The To Do maintainers
