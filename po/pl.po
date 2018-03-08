@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-08 00:18+0000\n"
-"PO-Revision-Date: 2018-03-08 02:01+0100\n"
+"POT-Creation-Date: 2018-03-08 03:27+0000\n"
+"PO-Revision-Date: 2018-03-08 05:24+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -488,18 +488,33 @@ msgstr "Nie odnaleziono kont Todoist"
 msgid "Add a Todoist account"
 msgstr "Dodaj konto Todoist"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:84
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:121
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:87
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:124
 msgid "Cannot create Todo.txt file"
 msgstr "Nie można utworzyć pliku Todo.txt"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:312
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:161
 msgid "Select a Todo.txt-formatted file:"
 msgstr "Proszę wybrać plik sformatowany jako Todo.txt:"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:313
+#. Filechooser
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:165
 msgid "Select a file"
 msgstr "Wybierz plik"
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:191
+msgid "Error opening Todo.txt file"
+msgstr "Błąd podczas otwierania pliku Todo.txt"
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:201
+msgid ""
+"<b>Warning!</b> Todo.txt support is experimental and unstable. You may "
+"experience instability, errors and eventually data loss. It is not "
+"recommended to use Todo.txt integration on production systems."
+msgstr ""
+"<b>Ostrzeżenie!</b> Obsługa pliku Todo.txt jest eksperymentalna "
+"i niestabilna. Mogą występować błędy i można utracić dane. Używanie "
+"integracji z plikiem Todo.txt w systemach produkcyjnych jest niezalecane."
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:319
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
