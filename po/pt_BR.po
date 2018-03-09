@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-08 00:18+0000\n"
-"PO-Revision-Date: 2018-03-07 21:45-0200\n"
+"POT-Creation-Date: 2018-03-09 04:17+0000\n"
+"PO-Revision-Date: 2018-03-09 01:24-0200\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -243,7 +243,7 @@ msgstr "_Nova lista"
 msgid "Show or hide completed tasks"
 msgstr "Mostrar ou ocultar tarefas completadas"
 
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:379
+#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
 msgid "Done"
 msgstr "Concluído"
 
@@ -397,15 +397,12 @@ msgstr "Nenhuma data definida"
 #.
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:102
 #, c-format
-#| msgid "%d days ago"
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] "%d dia atrás"
 msgstr[1] "%d dias atrás"
 
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:148
-#| msgid "Yesterday"
-#| msgid_plural "%d days ago"
 msgid "Yesterday"
 msgstr "Ontem"
 
@@ -432,7 +429,6 @@ msgstr "Agendada"
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:512
 #: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
-#: src/views/gtd-list-selector-panel.c:710
 msgid "Clear completed tasks…"
 msgstr "Limpar tarefas completadas…"
 
@@ -493,28 +489,43 @@ msgstr "Nenhuma conta do Todoist encontrada"
 msgid "Add a Todoist account"
 msgstr "Adicionar uma conta Todoist"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:84
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:121
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:87
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:124
 msgid "Cannot create Todo.txt file"
 msgstr "Não foi possível criar o arquivo Tarefas.txt"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:312
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:161
 msgid "Select a Todo.txt-formatted file:"
 msgstr "Selecione um arquivo formatado como Tarefas.txt:"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:313
+#. Filechooser
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:165
 msgid "Select a file"
 msgstr "Selecionar um arquivo"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:319
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:191
+msgid "Error opening Todo.txt file"
+msgstr "Erro ao abrir o arquivo Tarefas.txt"
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:201
+msgid ""
+"<b>Warning!</b> Todo.txt support is experimental and unstable. You may "
+"experience instability, errors and eventually data loss. It is not "
+"recommended to use Todo.txt integration on production systems."
+msgstr ""
+"<b>Aviso!</b> Suporte a Tarefas.txt é experimental e instável. Você pode "
+"presenciar instabilidade, erros e eventualmente perda de dados. Não é "
+"recumendado usar integração do Tarefas.txt em sistemas de produção."
+
+#: plugins/todo-txt/gtd-provider-todo-txt.c:326
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr "Erro ao abrir o monitor de arquivo. Tarefas.txt não será monitorado"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:388
+#: plugins/todo-txt/gtd-provider-todo-txt.c:395
 msgid "Todo.txt"
 msgstr "Tarefas.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:394
+#: plugins/todo-txt/gtd-provider-todo-txt.c:401
 msgid "On the Todo.txt file"
 msgstr "No arquivo Tarefas.txt"
 
@@ -610,44 +621,42 @@ msgid "You can add tasks using the <b>+</b> above"
 msgstr "Você pode adicionar tarefas usando o <b>+</b> acima"
 
 #: src/gtd-plugin-dialog-row.c:97
-#| msgid "Error loading plugin"
 msgid "Error loading extension"
 msgstr "Erro ao carregar a extensão"
 
 #: src/gtd-plugin-dialog-row.c:97
-#| msgid "Error unloading plugin"
 msgid "Error unloading extension"
 msgstr "Erro ao descarregar a extensão"
 
-#: src/gtd-task-list-view.c:293
+#: src/gtd-task-list-view.c:292
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Ao remover esta tarefa também será removido suas subtarefas. Remover mesmo "
 "assim?"
 
-#: src/gtd-task-list-view.c:296
+#: src/gtd-task-list-view.c:295
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Uma vez removidas, as tarefas não podem ser recuperadas."
 
-#: src/gtd-task-list-view.c:299 src/views/gtd-list-selector-panel.c:388
+#: src/gtd-task-list-view.c:298 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/gtd-task-list-view.c:301
+#: src/gtd-task-list-view.c:300
 msgid "Remove"
 msgstr "Remover"
 
-#: src/gtd-task-list-view.c:381
+#: src/gtd-task-list-view.c:390
 #, c-format
 msgid "Done (%d)"
 msgstr "Concluído (%d)"
 
-#: src/gtd-task-list-view.c:661
+#: src/gtd-task-list-view.c:660
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Tarefa <b>%s</b> removida"
 
-#: src/gtd-task-list-view.c:685
+#: src/gtd-task-list-view.c:684
 msgid "Undo"
 msgstr "Desfazer"
 
@@ -683,6 +692,11 @@ msgstr "Uma vez removido, as listas de tarefa não podem ser recuperadas."
 msgid "Remove task lists"
 msgstr "Remover lista de tarefas"
 
+#: src/views/gtd-list-selector-panel.c:709
+#| msgid "Clear completed tasks…"
+msgid "Clear completed tasks"
+msgstr "Limpar tarefas completadas"
+
 #~ msgid "Error creating new task list"
 #~ msgstr "Erro ao criar nova lista de tarefas"
 
@@ -692,9 +706,6 @@ msgstr "Remover lista de tarefas"
 #~ msgid "Bad status code (%d) received. Please check your connection."
 #~ msgstr ""
 #~ "Código inválido de status (%d) recebido. Por favor verifique sua conexão."
-
-#~ msgid "Error while opening Todo.txt"
-#~ msgstr "Erro ao abrir o Tarefas.txt"
 
 #~ msgid "Error while reading a line from Todo.txt"
 #~ msgstr "Erro ao ler uma linha do Tarefas.txt"
