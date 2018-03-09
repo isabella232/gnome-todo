@@ -686,7 +686,7 @@ on_remove_task_row_cb (GtdTaskRow      *row,
   gtd_dnd_row_set_row_above (GTD_DND_ROW (priv->dnd_row), NULL);
 
   /* Notify about the removal */
-  notification = gtd_notification_new (text, 7500.0);
+  notification = gtd_notification_new (text, 5000.0);
 
   gtd_notification_set_primary_action (notification,
                                        (GtdNotificationActionFunc) on_remove_task_action_cb,
