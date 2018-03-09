@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-02-18 15:47+0000\n"
-"PO-Revision-Date: 2018-02-18 17:37+0100\n"
-"Last-Translator: Marko M. Kostić <marko.m.kostic@gmail.com>\n"
+"POT-Creation-Date: 2018-03-09 03:42+0000\n"
+"PO-Revision-Date: 2018-03-09 15:24+0100\n"
+"Last-Translator: Miloš Popović <gpopac@gmail.com>\n"
 "Language-Team: srpski <gnome-sr@googlegroups.org>\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
@@ -21,11 +21,11 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Project-Style: gnome\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
 #: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
-#: src/gtd-window.c:954 src/gtd-window.c:989 src/main.c:35
+#: src/gtd-window.c:799 src/gtd-window.c:830 src/main.c:35
 msgid "To Do"
 msgstr "Rokovnik"
 
@@ -157,44 +157,44 @@ msgstr "Izbirač tekućeg spiska. Može biti „grid“ (mreža) ili „list“ 
 msgid "_Notes"
 msgstr "Be_leške"
 
-#: data/ui/edit-pane.ui:92
+#: data/ui/edit-pane.ui:93
 msgid "D_ue Date"
 msgstr "Krajnji _rok"
 
-#: data/ui/edit-pane.ui:110
+#: data/ui/edit-pane.ui:111
 msgid "_Today"
 msgstr "_Danas"
 
-#: data/ui/edit-pane.ui:120
+#: data/ui/edit-pane.ui:121
 msgid "To_morrow"
 msgstr "S_utra"
 
-#: data/ui/edit-pane.ui:168
+#: data/ui/edit-pane.ui:169
 msgid "_Priority"
 msgstr "_Važnost"
 
-#: data/ui/edit-pane.ui:185
+#: data/ui/edit-pane.ui:187
 msgctxt "taskpriority"
 msgid "None"
 msgstr "Ništa"
 
-#: data/ui/edit-pane.ui:186
+#: data/ui/edit-pane.ui:188
 msgid "Low"
 msgstr "Mala"
 
-#: data/ui/edit-pane.ui:187
+#: data/ui/edit-pane.ui:189
 msgid "Medium"
 msgstr "Srednja"
 
-#: data/ui/edit-pane.ui:188
+#: data/ui/edit-pane.ui:190
 msgid "High"
 msgstr "Velika"
 
-#: data/ui/edit-pane.ui:196 data/ui/list-selector-panel.ui:93
+#: data/ui/edit-pane.ui:198 data/ui/list-selector-panel.ui:93
 msgid "_Delete"
 msgstr "O_briši"
 
-#: data/ui/edit-pane.ui:242
+#: data/ui/edit-pane.ui:249
 msgctxt "taskdate"
 msgid "None"
 msgstr "Ništa"
@@ -224,7 +224,7 @@ msgstr "_Gotovo"
 msgid "_Rename"
 msgstr "Pre_imenuj"
 
-#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:473
+#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:469
 msgid "Lists"
 msgstr "Spiskovi"
 
@@ -244,8 +244,7 @@ msgstr "_Novi spisak"
 msgid "Show or hide completed tasks"
 msgstr "Prikaži ili sakrij završene zadatke"
 
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:756
-#: src/gtd-task-list-view.c:761
+#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
 msgid "Done"
 msgstr "Gotovo"
 
@@ -355,13 +354,29 @@ msgstr "Kada radi Rokovnik, pokazaće obaveštenje pri pokretanju"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Greška prilikom učitavanja Gnomovih naloga na mreži"
 
-#: plugins/eds/gtd-provider-eds.c:153
-msgid "Error fetching tasks from list"
-msgstr "Greška prilikom dobavljanja zadataka iz spiska"
-
-#: plugins/eds/gtd-provider-eds.c:201
+#: plugins/eds/gtd-provider-eds.c:139
 msgid "Failed to connect to task list"
 msgstr "Neuspeh povezivanja sa spiskom zadataka"
+
+#: plugins/eds/gtd-provider-eds.c:351
+msgid "An error occurred while creating a task"
+msgstr "Javila se greška prilikom pravljenja zadatka"
+
+#: plugins/eds/gtd-provider-eds.c:383
+msgid "An error occurred while modifying a task"
+msgstr "Javila se greška prilikom izmene zadatka"
+
+#: plugins/eds/gtd-provider-eds.c:404
+msgid "An error occurred while removing a task"
+msgstr "Javila se greška prilikom uklanjanja zadatka"
+
+#: plugins/eds/gtd-provider-eds.c:422
+msgid "An error occurred while creating a task list"
+msgstr "Javila se greška prilikom pravljenja spiska zadataka"
+
+#: plugins/eds/gtd-provider-eds.c:444 plugins/eds/gtd-provider-eds.c:467
+msgid "An error occurred while modifying a task list"
+msgstr "Javila se greška prilikom izmene spiska zadataka"
 
 #: plugins/eds/gtd-provider-local.c:50
 msgid "Local"
@@ -371,25 +386,35 @@ msgstr "Lokalno"
 msgid "On This Computer"
 msgstr "Na ovom računaru"
 
-#: plugins/eds/gtd-provider-local.c:95
-msgid "Error creating new task list"
-msgstr "Greška prilikom pravljenja novog spiska sa zadacima"
+#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:307
+#: plugins/eds/gtd-task-list-eds.c:331
+msgid "Error fetching tasks from list"
+msgstr "Greška prilikom preuzimanja zadataka iz spiska"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:161
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:110
 msgid "No date set"
 msgstr "Nije postavljen datum"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-task-row.c:148
+#. Translators: This message will never be used with '1 day ago'
+#. * but the singular form is required because some languages do not
+#. * have plurals, some languages reuse the singular form for numbers
+#. * like 21, 31, 41, etc.
+#.
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:102
 #, c-format
-msgid "Yesterday"
+msgid "%d day ago"
 msgid_plural "%d days ago"
-msgstr[0] "Pre %d dana"
-msgstr[1] "Pre %d dana"
-msgstr[2] "Pre %d dana"
-msgstr[3] "Pre jednog dana"
+msgstr[0] "pre %d dan"
+msgstr[1] "pre %d dana"
+msgstr[2] "pre %d dana"
+msgstr[3] "juče"
+
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:148
+msgid "Yesterday"
+msgstr "Juče"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:101
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
 #: plugins/score/score/__init__.py:101
 #: plugins/today-panel/gtd-panel-today.c:134
 #: plugins/today-panel/gtd-panel-today.c:139
@@ -397,21 +422,20 @@ msgstr[3] "Pre jednog dana"
 msgid "Today"
 msgstr "Danas"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:105 src/gtd-task-row.c:144
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:144
 msgid "Tomorrow"
 msgstr "Sutra"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:356
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:361
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:498
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:365
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:370
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:507
 msgid "Scheduled"
 msgstr "Zakazano"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:503
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:512
 #: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
-#: src/views/gtd-list-selector-panel.c:714
 msgid "Clear completed tasks…"
 msgstr "Očisti završene zadatke…"
 
@@ -419,53 +443,95 @@ msgstr "Očisti završene zadatke…"
 msgid "No task completed today"
 msgstr "Nijedan zadatak nije završen danas"
 
-#: plugins/todoist/gtd-provider-todoist.c:198
+#: plugins/todoist/gtd-provider-todoist.c:212
 msgid "Error fetching Todoist account key"
 msgstr "Greška dobavljanja ključa naloga Rokovnika"
 
-#: plugins/todoist/gtd-provider-todoist.c:199
+#: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Proverite da li je nalog Rokovnika ispravno podešen."
 
-#: plugins/todoist/gtd-provider-todoist.c:856
+#: plugins/todoist/gtd-provider-todoist.c:557
+#, c-format
+msgid ""
+"GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
+msgstr "Gnomov Rokovnik nema potrebna ovlašćenja za izvršavanje ove radnje: %s"
+
+#: plugins/todoist/gtd-provider-todoist.c:565
+#, c-format
+msgid ""
+"Invalid response received from Todoist servers. Please reload GNOME To Do."
+msgstr ""
+"Dobijen je neispravan odgovor sa servera Rokovnika. Ponovo učitajte Gnomov "
+"Rokovnik."
+
+#: plugins/todoist/gtd-provider-todoist.c:865
+msgid "An error occurred while updating a Todoist task"
+msgstr "Javila se greška prilikom ažuriranja spiska na serveru Rokovnika"
+
+#: plugins/todoist/gtd-provider-todoist.c:982
+msgid "An error occurred while retrieving Todoist data"
+msgstr "Javila se greška prilikom dobavljanja podataka sa servera Rokovnika"
+
+#: plugins/todoist/gtd-provider-todoist.c:1057
+msgid "An error occurred while updating Todoist"
+msgstr "Javila se greška prilikom ažuriranja podataka na serveru Rokovnika"
+
+#: plugins/todoist/gtd-provider-todoist.c:1117
 msgid "Todoist"
 msgstr "Rokovnik"
 
-#: plugins/todoist/gtd-provider-todoist.c:1161
+#: plugins/todoist/gtd-provider-todoist.c:1426
 #, c-format
 msgid "Todoist: %s"
 msgstr "Rokovnik: %s"
 
-#: plugins/todoist/ui/preferences.ui:80
+#: plugins/todoist/ui/preferences.ui:81
 msgid "No Todoist accounts found"
 msgstr "Nisam našao naloge Rokovnika"
 
-#: plugins/todoist/ui/preferences.ui:89
+#: plugins/todoist/ui/preferences.ui:90
 msgid "Add a Todoist account"
 msgstr "Dodajte nalog Rokovnika"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:84
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:121
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:87
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:124
 msgid "Cannot create Todo.txt file"
 msgstr "Ne mogu da napravim datoteku Rokovnika"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:312
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:161
 msgid "Select a Todo.txt-formatted file:"
 msgstr "Izaberite datoteku oblikovanu kao „Rokovnik.txt“:"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:313
+#. Filechooser
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:165
 msgid "Select a file"
 msgstr "Izaberite datoteku"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:319
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:191
+msgid "Error opening Todo.txt file"
+msgstr "Greška pri otvaranju Todo.txt datoteke"
+
+# Izgleda da je u pitanju format. https://github.com/todotxt/todo.txt/blob/master/README.md
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:201
+msgid ""
+"<b>Warning!</b> Todo.txt support is experimental and unstable. You may "
+"experience instability, errors and eventually data loss. It is not "
+"recommended to use Todo.txt integration on production systems."
+msgstr ""
+"<b>Upozorenje!</b> Podrška za Todo.txt je u probnoj fazi i može biti "
+"nestabilna. Moguće su greške i gubitak podataka. Ne preporučujemo korišćenje "
+"Todo.txt podrške na produkcionim sistemima."
+
+#: plugins/todo-txt/gtd-provider-todo-txt.c:326
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr "Greška otvaranja pratioca datoteka. Datoteka Rokovnika se neće pratiti"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:388
+#: plugins/todo-txt/gtd-provider-todo-txt.c:395
 msgid "Todo.txt"
 msgstr "Rokovnik.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:394
+#: plugins/todo-txt/gtd-provider-todo-txt.c:401
 msgid "On the Todo.txt file"
 msgstr "Na datoteci Rokovnika"
 
@@ -478,13 +544,13 @@ msgid "Source of the Todo.txt file"
 msgstr "Izvor datoteke Rokovnika"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:40
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:102
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:103
 msgid "Unscheduled"
 msgstr "Nezakazano"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:105
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:106
 #, python-format
 msgid "Unscheduled (%d)"
 msgstr "Nezakazano (%d"
@@ -561,66 +627,82 @@ msgid "You can add tasks using the <b>+</b> above"
 msgstr "Možete dodati zadatke koristeći znak <b>+</b>"
 
 #: src/gtd-plugin-dialog-row.c:97
-msgid "Error loading plugin"
-msgstr "Ne mogu da učitam priključak"
+msgid "Error loading extension"
+msgstr "Ne mogu da učitam proširenje"
 
 #: src/gtd-plugin-dialog-row.c:97
-msgid "Error unloading plugin"
-msgstr "Ne mogu da isključim priključakdž"
+msgid "Error unloading extension"
+msgstr "Ne mogu da isključim proširenje"
 
-#: src/gtd-task-list-view.c:616
+#: src/gtd-task-list-view.c:292
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Uklanjanje ovog zadatka ukloniće i sve njegove podzadatke. Da uklonim ipak?"
 
-#: src/gtd-task-list-view.c:619
+#: src/gtd-task-list-view.c:295
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Nakon uklanjanja, zadatak ne može da se povrati."
 
-#: src/gtd-task-list-view.c:622 src/views/gtd-list-selector-panel.c:394
+#: src/gtd-task-list-view.c:298 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "Otkaži"
 
-#: src/gtd-task-list-view.c:624
+#: src/gtd-task-list-view.c:300
 msgid "Remove"
 msgstr "Ukloni"
 
-#: src/gtd-task-list-view.c:672
+#: src/gtd-task-list-view.c:390
+#, c-format
+msgid "Done (%d)"
+msgstr "Gotovo (%d)"
+
+#: src/gtd-task-list-view.c:660
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Zadatak <b>%s</b> uklonjen"
 
-#: src/gtd-task-list-view.c:696
+#: src/gtd-task-list-view.c:684
 msgid "Undo"
 msgstr "Opozovi"
 
-#: src/gtd-window.c:548
+#: src/gtd-window.c:476
 msgid "Details"
 msgstr "Pojedinosti"
 
-#: src/gtd-window.c:822
+#: src/gtd-window.c:689
 msgid "Loading your task lists…"
 msgstr "Učitavam vaše spiskove sa zadacima…"
 
-#: src/gtd-window.c:948
+#: src/gtd-window.c:793
 msgid "Click a task list to select"
 msgstr "Kliknite na spisak sa zadacima da biste ga izabrali"
 
-#: src/views/gtd-list-selector-grid-item.c:252
+#.
+#. * If there's no task available, draw a "No tasks" string at
+#. * the middle of the list thumbnail.
+#.
+#: src/views/gtd-list-selector-grid-item.c:250
 msgid "No tasks"
 msgstr "Nema zadataka"
 
-#: src/views/gtd-list-selector-panel.c:387
+#: src/views/gtd-list-selector-panel.c:381
 msgid "Remove the selected task lists?"
 msgstr "Da uklonim izabrane spiskove sa zadacima?"
 
-#: src/views/gtd-list-selector-panel.c:390
+#: src/views/gtd-list-selector-panel.c:384
 msgid "Once removed, the task lists cannot be recovered."
 msgstr "Nakon uklanjanja, spisak sa zadacima ne može da se povrati."
 
-#: src/views/gtd-list-selector-panel.c:402
+#: src/views/gtd-list-selector-panel.c:396
 msgid "Remove task lists"
 msgstr "Ukloni spiskove sa zadacima"
+
+#: src/views/gtd-list-selector-panel.c:709
+msgid "Clear completed tasks"
+msgstr "Očisti završene zadatke"
+
+#~ msgid "Error creating new task list"
+#~ msgstr "Greška prilikom pravljenja novog spiska sa zadacima"
 
 #~ msgid "New List…"
 #~ msgstr "Novi spisak…"
@@ -661,14 +743,8 @@ msgstr "Ukloni spiskove sa zadacima"
 #~ msgid "Error updating task"
 #~ msgstr "Greška prilikom ažuriranja zadatka"
 
-#~ msgid "Error removing task"
-#~ msgstr "Greška prilikom uklanjanja zadatka"
-
 #~ msgid "Error creating task list"
 #~ msgstr "Greška prilikom pravljenja spiska sa zadacima"
-
-#~ msgid "Error removing task list"
-#~ msgstr "Greška prilikom uklanjanja spiska sa zadacima"
 
 #~ msgid "Error saving task list"
 #~ msgstr "Greška prilikom čuvanja spiska sa zadacima"
@@ -678,9 +754,6 @@ msgstr "Ukloni spiskove sa zadacima"
 
 #~ msgid "Bad status code (%d) received. Please check your connection."
 #~ msgstr "Primih loš kod stanja (%d). Proverite vašu vezu."
-
-#~ msgid "Error while opening Todo.txt"
-#~ msgstr "Greška otvaranja datoteke Rokovnika"
 
 #~ msgid "Error while reading a line from Todo.txt"
 #~ msgstr "Greška čitanja reda iz datoteke Rokovnika"
@@ -732,9 +805,6 @@ msgstr "Ukloni spiskove sa zadacima"
 
 #~ msgid "Error while reading tasks from Todo.txt"
 #~ msgstr "Greška čitanja zadatka iz datoteke Rokovnika"
-
-#~ msgid "Error while creating a Todo.txt list"
-#~ msgstr "Greška pravljenja spiska datoteke Rokovnika"
 
 #~ msgid "Error while reading task lists from Todo.txt"
 #~ msgstr "Greška čitanja spiska zadataka iz datoteke Rokovnika"
