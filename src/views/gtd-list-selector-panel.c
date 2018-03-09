@@ -706,9 +706,7 @@ gtd_list_selector_panel_init (GtdListSelectorPanel *self)
 
   /* Menu */
   self->menu = g_menu_new ();
-  g_menu_append (self->menu,
-                 _("Clear completed tasks…"),
-                 "list.clear-completed-tasks");
+  g_menu_append (self->menu, _("Clear completed tasks"), "list.clear-completed-tasks");
 }
 
 GtkWidget*
