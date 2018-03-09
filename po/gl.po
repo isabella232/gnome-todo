@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-toto 3.18\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-08 03:27+0000\n"
-"PO-Revision-Date: 2018-03-08 11:34+0200\n"
+"POT-Creation-Date: 2018-03-09 02:49+0000\n"
+"PO-Revision-Date: 2018-03-09 15:02+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician\n"
 "Language: gl\n"
@@ -424,7 +424,6 @@ msgstr "Programadas"
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:512
 #: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
-#: src/views/gtd-list-selector-panel.c:710
 msgid "Clear completed tasks…"
 msgstr "Limpar as tarefas completas…"
 
@@ -500,7 +499,6 @@ msgid "Select a file"
 msgstr "Seleccione un ficheiro"
 
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:191
-#| msgid "Error while opening Todo.txt"
 msgid "Error opening Todo.txt file"
 msgstr "Produciuse un erro ao abrir o ficheiro de Todo.txt"
 
@@ -514,17 +512,17 @@ msgstr ""
 "Pode experimentar inestabilidde, errros e eventualmente perda de datos. Non "
 "recomendamos o uso da integración de Todo.txt en sistemas de producción."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:319
+#: plugins/todo-txt/gtd-provider-todo-txt.c:326
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr ""
 "Produciuse un erro ao abrir o monitor de ficheiros. Todo.txt non será "
 "monitorizado"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:388
+#: plugins/todo-txt/gtd-provider-todo-txt.c:395
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:394
+#: plugins/todo-txt/gtd-provider-todo-txt.c:401
 msgid "On the Todo.txt file"
 msgstr "No ficheiro Todo.txt"
 
@@ -615,12 +613,10 @@ msgid "You can add tasks using the <b>+</b> above"
 msgstr "Pode engadir tarefas usando o <b>+</b> de arriba"
 
 #: src/gtd-plugin-dialog-row.c:97
-#| msgid "Error loading plugin"
 msgid "Error loading extension"
 msgstr "Produciuse un erro ao cargar a extensión"
 
 #: src/gtd-plugin-dialog-row.c:97
-#| msgid "Error unloading plugin"
 msgid "Error unloading extension"
 msgstr "Produciuse un erro ao descargar o engadido"
 
@@ -687,6 +683,11 @@ msgstr "Logo de eliminalas, as listas de tarefas non se poden recuperar."
 #: src/views/gtd-list-selector-panel.c:396
 msgid "Remove task lists"
 msgstr "Eliminar as listas de tarefas"
+
+#: src/views/gtd-list-selector-panel.c:709
+#| msgid "Clear completed tasks…"
+msgid "Clear completed tasks"
+msgstr "Limpar as tarefas completadas"
 
 #~ msgid "Notes"
 #~ msgstr "Notas"
