@@ -388,16 +388,14 @@ update_empty_state (GtdTaskListView *view)
 {
   GtdTaskListViewPrivate *priv;
   gboolean is_empty;
-  GList *tasks;
   GList *l;
 
   g_assert (GTD_IS_TASK_LIST_VIEW (view));
 
   priv = view->priv;
   is_empty = TRUE;
-  tasks = gtd_task_list_view_get_list (view);
 
-  for (l = tasks; l != NULL; l = l->next)
+  for (l = priv->list; l; l = l->next)
     {
       if (priv->show_completed || !gtd_task_get_complete (l->data))
         {
@@ -407,16 +405,13 @@ update_empty_state (GtdTaskListView *view)
     }
 
   gtk_widget_set_visible (priv->empty_box, is_empty);
-  gtd_empty_list_widget_set_is_empty (GTD_EMPTY_LIST_WIDGET (priv->empty_box),
-                                      priv->complete_tasks == 0);
+  gtd_empty_list_widget_set_is_empty (GTD_EMPTY_LIST_WIDGET (priv->empty_box), priv->complete_tasks == 0);
 
   /*
    * If there are visible tasks, we visually separate the New Task row by
    * increasing the top margin to 12px.
    */
   gtk_widget_set_margin_top (GTK_WIDGET (priv->new_task_row), is_empty ? 3 : 12);
-
-  g_list_free (tasks);
 }
 
 static GtdTaskRow*
@@ -524,6 +519,7 @@ add_task (GtdTaskListView *view,
   add_task_row (view, task);
 
   /* Check if it should show the empty state */
+  update_done_label (view);
   update_empty_state (view);
 
   GTD_EXIT;
@@ -550,7 +546,15 @@ static inline gboolean
 real_remove_task_cb (GtdTaskListView *self,
                      GtdTask         *task)
 {
+  GtdTaskListViewPrivate *priv = gtd_task_list_view_get_instance_private (self);
+
   gtd_provider_remove_task (gtd_task_get_provider (task), task);
+
+  /* Remove from the internal list */
+  priv->list = g_list_remove (priv->list, task);
+
+  GTD_TRACE_MSG ("Removing task %p from list", task);
+
   return TRUE;
 }
 
@@ -618,11 +622,18 @@ static inline gboolean
 remove_task_rows_from_list_view_cb (GtdTaskListView *self,
                                     GtdTask         *task)
 {
+  GtdTaskListViewPrivate *priv = gtd_task_list_view_get_instance_private (self);
+
   /* Task is in loading state until it's either readded, or effectively removed */
   gtd_object_push_loading (GTD_OBJECT (task));
 
   /* Remove from the view, but not from the list */
   on_task_list_task_removed_cb (self, task);
+
+  /* Remove from the internal list */
+  priv->list = g_list_remove (priv->list, task);
+
+  GTD_TRACE_MSG ("Removing task %p from list", task);
 
   return TRUE;
 }
@@ -690,6 +701,9 @@ on_remove_task_row_cb (GtdTaskRow      *row,
 
   /* Clear the active row */
   set_active_row (self, NULL);
+
+  update_done_label (self);
+  update_empty_state (self);
 
   g_clear_pointer (&text, g_free);
 
@@ -794,16 +808,17 @@ on_task_list_task_added_cb (GtdTaskList     *list,
 
   GTD_ENTRY;
 
-  /* Add the new task to the list */
   add_task (self, task);
-
-  /* Update the "Done" label */
-  update_done_label (self);
 
   /* Also add to the list of current tasks */
   priv->list = g_list_prepend (priv->list, task);
 
   g_signal_connect (task, "notify::complete", G_CALLBACK (on_task_completed_cb), self);
+
+  GTD_TRACE_MSG ("Adding task %p to list", task);
+
+  update_done_label (self);
+  update_empty_state (self);
 
   GTD_EXIT;
 }
