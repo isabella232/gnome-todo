@@ -31,6 +31,7 @@ G_DEFINE_QUARK (GtdTodoTxtParserError, gtd_todo_txt_parser_error)
 typedef enum
 {
   TOKEN_START,
+  TOKEN_HIDDEN,
   TOKEN_COMPLETE,
   TOKEN_PRIORITY,
   TOKEN_DATE,
@@ -105,8 +106,11 @@ parse_token_id (const gchar *token,
 
   token_length = strlen (token);
 
-  if (!g_strcmp0 (token, "x"))
+  if (g_strcmp0 (token, "x") == 0)
     return TOKEN_COMPLETE;
+
+  if (g_strcmp0 (token, "h:1") == 0)
+    return TOKEN_HIDDEN;
 
   if (token_length == 3 && token[0] == '(' && token[2] == ')')
     return TOKEN_PRIORITY;
@@ -158,12 +162,12 @@ gtd_todo_txt_parser_parse_task (GtdProvider  *provider,
                                 const gchar  *line,
                                 gchar       **out_list_name)
 {
+  g_autoptr (GString) parent_task_name = NULL;
+  g_autoptr (GString) list_name = NULL;
+  g_autoptr (GString) title = NULL;
   g_autoptr (GtdTask) task = NULL;
   g_auto (GStrv) tokens = NULL;
   GDateTime *dt;
-  GString *list_name;
-  GString *title;
-  GString *parent_task_name;
   Token last_token;
   Token token_id;
   guint i;
@@ -189,6 +193,9 @@ gtd_todo_txt_parser_parse_task (GtdProvider  *provider,
         case TOKEN_COMPLETE:
           gtd_task_set_complete (task, TRUE);
           break;
+
+        case TOKEN_HIDDEN:
+          return NULL;
 
         case TOKEN_PRIORITY:
           last_token = TOKEN_PRIORITY;
@@ -232,10 +239,6 @@ gtd_todo_txt_parser_parse_task (GtdProvider  *provider,
   if (out_list_name)
     *out_list_name = g_strdup (list_name->str + 1);
 
-  g_string_free (parent_task_name, TRUE);
-  g_string_free (list_name, TRUE);
-  g_string_free (title, TRUE);
-
   return g_steal_pointer (&task);
 }
 
@@ -253,10 +256,10 @@ GtdTaskList*
 gtd_todo_txt_parser_parse_task_list (GtdProvider *provider,
                                      const gchar *line)
 {
+  g_autoptr (GtdTaskList) new_list = NULL;
+  g_autoptr (GString) list_name = NULL;
   g_autofree gchar *color = NULL;
   g_auto (GStrv) tokens = NULL;
-  GtdTaskList *new_list;
-  GString *list_name;
   guint i;
 
   tokens = tokenize_line (line);
@@ -271,17 +274,23 @@ gtd_todo_txt_parser_parse_task_list (GtdProvider *provider,
       if (!token)
         break;
 
+      /* Color */
       if (g_str_has_prefix (token, "color:"))
-        color = g_strdup (token + strlen ("color:"));
-      else
-        g_string_append_printf (list_name, "%s ", token[0] == '@' ? token + 1 : token);
+        {
+          color = g_strdup (token + strlen ("color:"));
+          continue;
+        }
+
+      /* Hidden token */
+      if (g_str_has_prefix (token, "h:1"))
+        continue;
+
+      /* Title */
+      g_string_append_printf (list_name, "%s ", token[0] == '@' ? token + 1 : token);
     }
 
   if (list_name->len == 0)
-    {
-      g_string_free (list_name, TRUE);
-      return NULL;
-    }
+    return NULL;
 
   g_strstrip (list_name->str);
 
@@ -300,9 +309,7 @@ gtd_todo_txt_parser_parse_task_list (GtdProvider *provider,
       gtd_task_list_set_color (new_list, &rgba);
     }
 
-  g_string_free (list_name, TRUE);
-
-  return new_list;
+  return g_steal_pointer (&new_list);
 }
 
 /**
@@ -344,6 +351,9 @@ gtd_todo_txt_parser_get_line_type (const gchar  *line,
           if (last_read == TOKEN_START)
             line_type = GTD_TODO_TXT_LINE_TYPE_TASK;
           break;
+
+        case TOKEN_HIDDEN:
+          return GTD_TODO_TXT_LINE_TYPE_TASKLIST;
 
         case TOKEN_PRIORITY:
           if (last_read <= TOKEN_COMPLETE)
