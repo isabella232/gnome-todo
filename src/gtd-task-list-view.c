@@ -366,7 +366,7 @@ update_done_label (GtdTaskListView *view)
   g_autofree gchar *new_label = NULL;
   GList *l;
 
-  g_return_if_fail (GTD_IS_TASK_LIST_VIEW (view));
+  g_assert (GTD_IS_TASK_LIST_VIEW (view));
 
   /* Update the completed tasks counter */
   view->priv->complete_tasks = 0;
@@ -391,7 +391,7 @@ update_empty_state (GtdTaskListView *view)
   GList *tasks;
   GList *l;
 
-  g_return_if_fail (GTD_IS_TASK_LIST_VIEW (view));
+  g_assert (GTD_IS_TASK_LIST_VIEW (view));
 
   priv = view->priv;
   is_empty = TRUE;
@@ -812,13 +812,9 @@ static void
 on_task_list_task_removed_cb (GtdTaskListView *view,
                               GtdTask         *task)
 {
-  /* Remove the correspondent row */
   remove_task_row (view, task);
 
-  /* Update the "Done" label */
   update_done_label (view);
-
-  /* Check if it should show the empty state */
   update_empty_state (view);
 }
 
@@ -1043,8 +1039,8 @@ on_task_completed_cb (GtdTask         *task,
       iterate_subtasks (self, task, func);
     }
 
-  update_empty_state (self);
   update_done_label (self);
+  update_empty_state (self);
 }
 
 
