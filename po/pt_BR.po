@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-09 04:17+0000\n"
-"PO-Revision-Date: 2018-03-09 01:24-0200\n"
+"POT-Creation-Date: 2018-03-09 04:26+0000\n"
+"PO-Revision-Date: 2018-03-09 13:09-0200\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -492,11 +492,11 @@ msgstr "Adicionar uma conta Todoist"
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:87
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:124
 msgid "Cannot create Todo.txt file"
-msgstr "Não foi possível criar o arquivo Tarefas.txt"
+msgstr "Não foi possível criar o arquivo do Todo.txt"
 
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:161
 msgid "Select a Todo.txt-formatted file:"
-msgstr "Selecione um arquivo formatado como Tarefas.txt:"
+msgstr "Selecione um arquivo formatado como Todo.txt:"
 
 #. Filechooser
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:165
@@ -505,7 +505,7 @@ msgstr "Selecionar um arquivo"
 
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:191
 msgid "Error opening Todo.txt file"
-msgstr "Erro ao abrir o arquivo Tarefas.txt"
+msgstr "Erro ao abrir o arquivo do Todo.txt"
 
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:201
 msgid ""
@@ -513,13 +513,13 @@ msgid ""
 "experience instability, errors and eventually data loss. It is not "
 "recommended to use Todo.txt integration on production systems."
 msgstr ""
-"<b>Aviso!</b> Suporte a Tarefas.txt é experimental e instável. Você pode "
+"<b>Aviso!</b> Suporte ao Todo.txt é experimental e instável. Você pode "
 "presenciar instabilidade, erros e eventualmente perda de dados. Não é "
-"recumendado usar integração do Tarefas.txt em sistemas de produção."
+"recomendado usar integração do Todo.txt em sistemas de produção."
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:326
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
-msgstr "Erro ao abrir o monitor de arquivo. Tarefas.txt não será monitorado"
+msgstr "Erro ao abrir o monitor de arquivo. Todo.txt não será monitorado"
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:395
 msgid "Todo.txt"
@@ -527,15 +527,15 @@ msgstr "Tarefas.txt"
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:401
 msgid "On the Todo.txt file"
-msgstr "No arquivo Tarefas.txt"
+msgstr "No arquivo do Todo.txt"
 
 #: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:6
 msgid "Todo.txt File"
-msgstr "arquivo Tarefas.txt"
+msgstr "Arquivo do Todo.txt"
 
 #: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:7
 msgid "Source of the Todo.txt file"
-msgstr "Fonte do arquivo Tarefas.txt"
+msgstr "Fonte do arquivo do Todo.txt"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
@@ -693,7 +693,6 @@ msgid "Remove task lists"
 msgstr "Remover lista de tarefas"
 
 #: src/views/gtd-list-selector-panel.c:709
-#| msgid "Clear completed tasks…"
 msgid "Clear completed tasks"
 msgstr "Limpar tarefas completadas"
 
