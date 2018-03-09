@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-08 03:27+0000\n"
-"PO-Revision-Date: 2018-03-08 11:59+0100\n"
+"POT-Creation-Date: 2018-03-09 02:49+0000\n"
+"PO-Revision-Date: 2018-03-09 13:14+0100\n"
 "Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -433,7 +433,6 @@ msgstr "Geplant"
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:512
 #: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
-#: src/views/gtd-list-selector-panel.c:710
 msgid "Clear completed tasks…"
 msgstr "Abgeschlossene Aufgaben entfernen …"
 
@@ -527,15 +526,15 @@ msgstr ""
 "kommen. Es wird nicht empfohlen, Todo.txt in produktiven Systemen zu "
 "verwenden."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:319
+#: plugins/todo-txt/gtd-provider-todo-txt.c:326
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr "Fehler beim Öffnen der Dateiüberwachung. Todo.txt wird nicht überwacht"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:388
+#: plugins/todo-txt/gtd-provider-todo-txt.c:395
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:394
+#: plugins/todo-txt/gtd-provider-todo-txt.c:401
 msgid "On the Todo.txt file"
 msgstr "In der Datei Todo.txt"
 
@@ -703,3 +702,7 @@ msgstr "Gelöschte Aufgabenlisten können nicht wiederhergestellt werden."
 #: src/views/gtd-list-selector-panel.c:396
 msgid "Remove task lists"
 msgstr "Aufgabenlisten löschen"
+
+#: src/views/gtd-list-selector-panel.c:709
+msgid "Clear completed tasks"
+msgstr "Abgeschlossene Aufgaben entfernen"
