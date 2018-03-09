@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-08 03:27+0000\n"
-"PO-Revision-Date: 2018-03-08 18:18+0100\n"
+"POT-Creation-Date: 2018-03-09 02:49+0000\n"
+"PO-Revision-Date: 2018-03-09 18:54+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -427,7 +427,6 @@ msgstr "Planlagt"
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:512
 #: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
-#: src/views/gtd-list-selector-panel.c:710
 msgid "Clear completed tasks…"
 msgstr "Ryd færdiggjorte opgaver …"
 
@@ -515,16 +514,16 @@ msgstr ""
 "kan opleve ustabilitet, fejl og måske tab af data. Det anbefales ikke at "
 "bruge Todo.txt-integration i produktionssystemer."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:319
+#: plugins/todo-txt/gtd-provider-todo-txt.c:326
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr "Fejl ved åbning af filovervågning. Todo.txt vil ikke blive overvåget"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:388
+#: plugins/todo-txt/gtd-provider-todo-txt.c:395
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
 # ????????????????????
-#: plugins/todo-txt/gtd-provider-todo-txt.c:394
+#: plugins/todo-txt/gtd-provider-todo-txt.c:401
 msgid "On the Todo.txt file"
 msgstr "På Todo.txt-filen"
 
@@ -700,6 +699,10 @@ msgstr "Når de er fjernet, kan de ikke gendannes."
 #: src/views/gtd-list-selector-panel.c:396
 msgid "Remove task lists"
 msgstr "Fjern opgavelister"
+
+#: src/views/gtd-list-selector-panel.c:709
+msgid "Clear completed tasks"
+msgstr "Ryd færdiggjorte opgaver"
 
 #~ msgid "New List…"
 #~ msgstr "Ny liste …"
