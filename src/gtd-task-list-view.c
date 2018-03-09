@@ -79,7 +79,6 @@ typedef struct
 
   /* internal */
   gboolean               can_toggle;
-  gint                   complete_tasks;
   gboolean               show_completed;
   gboolean               show_due_date;
   gboolean               show_list_name;
@@ -361,51 +360,42 @@ add_task_row (GtdTaskListView *self,
 }
 
 static void
-update_done_label (GtdTaskListView *view)
-{
-  g_autofree gchar *new_label = NULL;
-  GList *l;
-
-  g_assert (GTD_IS_TASK_LIST_VIEW (view));
-
-  /* Update the completed tasks counter */
-  view->priv->complete_tasks = 0;
-  for (l = view->priv->list; l; l = l->next)
-    view->priv->complete_tasks += gtd_task_get_complete (l->data);
-
-  gtk_revealer_set_reveal_child (GTK_REVEALER (view->priv->revealer), view->priv->complete_tasks > 0);
-
-  if (view->priv->complete_tasks == 0)
-    new_label = g_strdup_printf ("%s", _("Done"));
-  else
-    new_label = g_strdup_printf (_("Done (%d)"), view->priv->complete_tasks);
-
-  gtk_label_set_label (view->priv->done_label, new_label);
-}
-
-static void
-update_empty_state (GtdTaskListView *view)
+update_state (GtdTaskListView *self)
 {
   GtdTaskListViewPrivate *priv;
-  gboolean is_empty;
+  g_autofree gchar *new_label = NULL;
   GList *l;
+  gboolean is_empty;
+  gint complete_tasks;
 
-  g_assert (GTD_IS_TASK_LIST_VIEW (view));
+  g_assert (GTD_IS_TASK_LIST_VIEW (self));
 
-  priv = view->priv;
+  priv = gtd_task_list_view_get_instance_private (self);
+
+  /* Update the completed tasks counter */
+  complete_tasks = 0;
   is_empty = TRUE;
 
   for (l = priv->list; l; l = l->next)
     {
+      complete_tasks += gtd_task_get_complete (l->data);
+
       if (priv->show_completed || !gtd_task_get_complete (l->data))
-        {
-          is_empty = FALSE;
-          break;
-        }
+        is_empty = FALSE;
     }
 
+  if (complete_tasks == 0)
+    new_label = g_strdup_printf ("%s", _("Done"));
+  else
+    new_label = g_strdup_printf (_("Done (%d)"), complete_tasks);
+
+  /* Set the new counter */
+  gtk_label_set_label (priv->done_label, new_label);
+  gtk_revealer_set_reveal_child (GTK_REVEALER (priv->revealer), complete_tasks > 0);
+
+  /* And the empty widgets */
   gtk_widget_set_visible (priv->empty_box, is_empty);
-  gtd_empty_list_widget_set_is_empty (GTD_EMPTY_LIST_WIDGET (priv->empty_box), priv->complete_tasks == 0);
+  gtd_empty_list_widget_set_is_empty (GTD_EMPTY_LIST_WIDGET (priv->empty_box), complete_tasks == 0);
 
   /*
    * If there are visible tasks, we visually separate the New Task row by
@@ -518,9 +508,7 @@ add_task (GtdTaskListView *view,
 
   add_task_row (view, task);
 
-  /* Check if it should show the empty state */
-  update_done_label (view);
-  update_empty_state (view);
+  update_state (view);
 
   GTD_EXIT;
 }
@@ -584,7 +572,7 @@ on_clear_completed_tasks_activated_cb (GSimpleAction *simple,
       iterate_subtasks (view, task, real_remove_task_cb);
     }
 
-  update_done_label (view);
+  update_state (view);
 }
 
 static void
@@ -702,8 +690,7 @@ on_remove_task_row_cb (GtdTaskRow      *row,
   /* Clear the active row */
   set_active_row (self, NULL);
 
-  update_done_label (self);
-  update_empty_state (self);
+  update_state (self);
 
   g_clear_pointer (&text, g_free);
 
@@ -817,8 +804,7 @@ on_task_list_task_added_cb (GtdTaskList     *list,
 
   GTD_TRACE_MSG ("Adding task %p to list", task);
 
-  update_done_label (self);
-  update_empty_state (self);
+  update_state (self);
 
   GTD_EXIT;
 }
@@ -829,8 +815,7 @@ on_task_list_task_removed_cb (GtdTaskListView *view,
 {
   remove_task_row (view, task);
 
-  update_done_label (view);
-  update_empty_state (view);
+  update_state (view);
 }
 
 
@@ -1054,8 +1039,7 @@ on_task_completed_cb (GtdTask         *task,
       iterate_subtasks (self, task, func);
     }
 
-  update_done_label (self);
-  update_empty_state (self);
+  update_state (self);
 }
 
 
@@ -1681,8 +1665,7 @@ gtd_task_list_view_set_list (GtdTaskListView *view,
   priv->list = g_list_copy (list);
 
   /* Check if it should show the empty state */
-  update_done_label (view);
-  update_empty_state (view);
+  update_state (view);
 }
 
 /**
@@ -2015,7 +1998,7 @@ gtd_task_list_view_set_show_completed (GtdTaskListView *view,
         }
 
       /* Check if it should show the empty state */
-      update_empty_state (view);
+      update_state (view);
 
       g_object_notify (G_OBJECT (view), "show-completed");
     }
