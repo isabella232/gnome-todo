@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-08 18:31+0000\n"
-"PO-Revision-Date: 2018-03-09 07:00+0700\n"
+"POT-Creation-Date: 2018-03-09 22:33+0000\n"
+"PO-Revision-Date: 2018-03-10 15:12+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
 "Language: vi\n"
@@ -239,7 +239,7 @@ msgstr "Danh sách _mới"
 msgid "Show or hide completed tasks"
 msgstr "Hiện hay ẩn các nhiệm vụ đã hoàn thành"
 
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:379
+#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
 msgid "Done"
 msgstr "Xong"
 
@@ -422,7 +422,6 @@ msgstr "Lịch trình"
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:512
 #: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
-#: src/views/gtd-list-selector-panel.c:710
 msgid "Clear completed tasks…"
 msgstr "Xóa các nhiệm vụ đã hoàn tất…"
 
@@ -618,35 +617,35 @@ msgstr "Gặp lỗi khi đang tải phần mở rộng"
 msgid "Error unloading extension"
 msgstr "Có lỗi xảy ra khi thôi tải phần bổ sung"
 
-#: src/gtd-task-list-view.c:293
+#: src/gtd-task-list-view.c:292
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Việc xóa bỏ nhiệm vụ này cũng sẽ đồng thời xóa bỏ các nhiệm vụ con. Vẫn tiếp "
 "tục chứ?"
 
-#: src/gtd-task-list-view.c:296
+#: src/gtd-task-list-view.c:295
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Một khi đã xóa, nhiệm vụ sẽ không thể phục hồi được."
 
-#: src/gtd-task-list-view.c:299 src/views/gtd-list-selector-panel.c:388
+#: src/gtd-task-list-view.c:298 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "Thôi"
 
-#: src/gtd-task-list-view.c:301
+#: src/gtd-task-list-view.c:300
 msgid "Remove"
 msgstr "Xóa bỏ"
 
-#: src/gtd-task-list-view.c:381
+#: src/gtd-task-list-view.c:390
 #, c-format
 msgid "Done (%d)"
 msgstr "Xong (%d)"
 
-#: src/gtd-task-list-view.c:661
+#: src/gtd-task-list-view.c:660
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Nhiệm vụ <b>%s</b> đã bị xóa bỏ"
 
-#: src/gtd-task-list-view.c:685
+#: src/gtd-task-list-view.c:684
 msgid "Undo"
 msgstr "Hoàn lại"
 
@@ -681,6 +680,10 @@ msgstr "Một khi đã xóa, danh sách nhiệm vụ sẽ không thể phục h�
 #: src/views/gtd-list-selector-panel.c:396
 msgid "Remove task lists"
 msgstr "Xóa bỏ danh sách nhiệm vụ"
+
+#: src/views/gtd-list-selector-panel.c:709
+msgid "Clear completed tasks"
+msgstr "Xóa các nhiệm vụ đã hoàn tất"
 
 #~ msgid "New List…"
 #~ msgstr "Danh sách mới…"
