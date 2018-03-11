@@ -62,7 +62,6 @@ struct _GtdTaskRow
   /* data */
   GtdTask            *task;
 
-  gint                update_title_timeout_id;
   gboolean            active;
   gboolean            changed;
 };
@@ -84,7 +83,7 @@ static void          on_priority_changed_cb                      (GtdTaskRow    
                                                                   GParamSpec         *spec,
                                                                   GObject            *object);
 
-static void          on_task_title_changed_cb                    (GtdTaskRow         *self);
+static void          on_task_changed_cb                          (GtdTaskRow         *self);
 
 static void          on_toggle_active_cb                         (GtkWidget          *button,
                                                                   GtdTaskRow         *self);
@@ -225,7 +224,7 @@ gtd_task_row_set_task (GtdTaskRow *row,
     {
       gtk_label_set_label (row->task_list_label, gtd_task_list_get_name (gtd_task_get_list (task)));
 
-      g_signal_handlers_block_by_func (row->title_entry, on_task_title_changed_cb, row);
+      g_signal_handlers_block_by_func (row->title_entry, on_task_changed_cb, row);
       g_signal_handlers_block_by_func (row->done_check, on_complete_check_toggled_cb, row);
 
       g_object_bind_property (task,
@@ -273,7 +272,7 @@ gtd_task_row_set_task (GtdTaskRow *row,
                                 row);
 
       g_signal_handlers_unblock_by_func (row->done_check, on_complete_check_toggled_cb, row);
-      g_signal_handlers_block_by_func (row->title_entry, on_task_title_changed_cb, row);
+      g_signal_handlers_unblock_by_func (row->title_entry, on_task_changed_cb, row);
 
       gtd_edit_pane_set_task (GTD_EDIT_PANE (row->edit_panel), task);
     }
@@ -502,42 +501,12 @@ on_depth_changed_cb (GtdTaskRow *self,
                                self->handle_subtasks ? 32 * gtd_task_get_depth (task) + 3: 3);
 }
 
-static gboolean
-on_update_title_timeout_cb (gpointer data)
-{
-  GtdTaskRow *self = data;
-
-  GTD_ENTRY;
-
-  if (self->changed)
-    {
-      gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
-      self->changed = FALSE;
-    }
-
-  self->update_title_timeout_id = 0;
-
-  GTD_RETURN (G_SOURCE_REMOVE);
-}
-
 static void
-on_task_changed_cb (GtdEditPane *panel,
-                    GtdTaskRow  *self)
+on_task_changed_cb (GtdTaskRow  *self)
 {
+  g_debug ("Task changed");
+
   self->changed = TRUE;
-}
-
-static void
-on_task_title_changed_cb (GtdTaskRow *self)
-{
-  GTD_ENTRY;
-
-  if (self->update_title_timeout_id > 0)
-    g_source_remove (self->update_title_timeout_id);
-
-  self->update_title_timeout_id = g_timeout_add_seconds (2, on_update_title_timeout_cb, self);
-
-  GTD_EXIT;
 }
 
 
@@ -571,11 +540,11 @@ gtd_task_row_finalize (GObject *object)
 {
   GtdTaskRow *self = GTD_TASK_ROW (object);
 
-  if (self->update_title_timeout_id > 0)
+  if (self->changed)
     {
       if (self->task)
         gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
-      self->update_title_timeout_id = 0;
+      self->changed = FALSE;
     }
 
   g_clear_object (&self->task);
@@ -763,7 +732,6 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, on_mouse_over_dnd_event_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_remove_task_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_task_changed_cb);
-  gtk_widget_class_bind_template_callback (widget_class, on_task_title_changed_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_toggle_active_cb);
 
   gtk_widget_class_set_css_name (widget_class, "taskrow");

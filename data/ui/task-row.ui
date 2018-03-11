@@ -98,8 +98,8 @@
                             <property name="halign">start</property>
                             <property name="width-chars">5</property>
                             <property name="propagate-natural-width">True</property>
-                            <signal name="activate" handler="on_task_title_changed_cb" object="GtdTaskRow" swapped="yes" />
-                            <signal name="notify::text" handler="on_task_title_changed_cb" object="GtdTaskRow" swapped="yes" />
+                            <signal name="activate" handler="on_task_changed_cb" object="GtdTaskRow" swapped="yes" />
+                            <signal name="notify::text" handler="on_task_changed_cb" object="GtdTaskRow" swapped="yes" />
                             <style>
                               <class name="title" />
                             </style>
@@ -169,7 +169,7 @@
                   <object class="GtdEditPane" id="edit_panel">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <signal name="changed" handler="on_task_changed_cb" object="GtdTaskRow" swapped="no" />
+                    <signal name="changed" handler="on_task_changed_cb" object="GtdTaskRow" swapped="yes" />
                     <signal name="remove-task" handler="on_remove_task_cb" object="GtdTaskRow" swapped="no" />
                   </object>
                 </child>
