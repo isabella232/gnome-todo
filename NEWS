@@ -1,3 +1,24 @@
+==============
+Version 3.28.0
+==============
+
+Project:
+	* Minor UI fixups and polishing
+	* Many translation updates
+
+Todoist:
+	* Todoist commands are now compressed, which allows up to 5.000 commands per minute. It
+	  is very unlikely that users will ever reach Todoist limits now
+	* Tasks appear in GNOME To Do exactly how they appear in Todoist now
+
+EDS:
+	* GNOME To Do now reacts to changes made by other applications such as Evolution
+	* The backend received more stability and fixes
+
+Todo.txt:
+	* Hide internal data with 'h:1' (Kainaat Singh)
+	* Minor fixups
+
 ===============
 Version 3.27.90
 ===============
