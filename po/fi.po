@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-09 02:49+0000\n"
-"PO-Revision-Date: 2018-03-09 09:23+0200\n"
+"POT-Creation-Date: 2018-03-12 15:27+0000\n"
+"PO-Revision-Date: 2018-03-19 12:27+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -246,7 +246,7 @@ msgstr "Uusi _lista"
 msgid "Show or hide completed tasks"
 msgstr "Näytä tai piilota valmistuneet tehtävät"
 
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:379
+#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
 msgid "Done"
 msgstr "Valmis"
 
@@ -407,7 +407,7 @@ msgid_plural "%d days ago"
 msgstr[0] "%d päivä sitten"
 msgstr[1] "%d päivää sitten"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:148
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:147
 msgid "Yesterday"
 msgstr "Eilen"
 
@@ -416,11 +416,11 @@ msgstr "Eilen"
 #: plugins/score/score/__init__.py:101
 #: plugins/today-panel/gtd-panel-today.c:134
 #: plugins/today-panel/gtd-panel-today.c:139
-#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:140
+#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:139
 msgid "Today"
 msgstr "Tänään"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:144
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:143
 msgid "Tomorrow"
 msgstr "Huomenna"
 
@@ -462,24 +462,20 @@ msgstr ""
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
 msgstr ""
+"Virheellinen vastaus Todoist-palvelimilta. Lataa uudelleen Gnomen "
+"tehtäväsovellus."
 
 #: plugins/todoist/gtd-provider-todoist.c:865
-#, fuzzy
-#| msgid "Error while creating a Todo.txt list"
 msgid "An error occurred while updating a Todoist task"
-msgstr "Virhe luotaessa Tehtävät.txt-luetteloa"
+msgstr "Virhe päivittäessä Todoist-tehtävää"
 
 #: plugins/todoist/gtd-provider-todoist.c:982
-#, fuzzy
-#| msgid "Error while creating a Todo.txt list"
 msgid "An error occurred while retrieving Todoist data"
-msgstr "Virhe luotaessa Tehtävät.txt-luetteloa"
+msgstr "Virhe haettaessa Todoist-tietoja"
 
 #: plugins/todoist/gtd-provider-todoist.c:1057
-#, fuzzy
-#| msgid "Error while creating a Todo.txt list"
 msgid "An error occurred while updating Todoist"
-msgstr "Virhe luotaessa Tehtävät.txt-luetteloa"
+msgstr "Virhe päivittäessä Todoistia"
 
 #: plugins/todoist/gtd-provider-todoist.c:1117
 msgid "Todoist"
@@ -501,11 +497,11 @@ msgstr "Lisää Todoist-tili"
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:87
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:124
 msgid "Cannot create Todo.txt file"
-msgstr "Tehtävät.txt-tiedostoa ei voi luoda"
+msgstr "Todo.txt-tiedostoa ei voi luoda"
 
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:161
 msgid "Select a Todo.txt-formatted file:"
-msgstr "Valitse Tehtävät.txt-muotoiltu tiedosto:"
+msgstr "Valitse Todo.txt-muotoiltu tiedosto:"
 
 #. Filechooser
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:165
@@ -513,10 +509,8 @@ msgid "Select a file"
 msgstr "Valitse tiedosto"
 
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:191
-#, fuzzy
-#| msgid "Error while opening Todo.txt"
 msgid "Error opening Todo.txt file"
-msgstr "Virhe avattaessa Tehtävät.txt-tiedostoa"
+msgstr "Virhe avattaessa Todo.txt-tiedostoa"
 
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:201
 msgid ""
@@ -524,26 +518,29 @@ msgid ""
 "experience instability, errors and eventually data loss. It is not "
 "recommended to use Todo.txt integration on production systems."
 msgstr ""
+"<b>Varoitus!</b> Todo.txt-tuki on kokeellinen ja epävakaa. Saatat kohdata "
+"epävakautta, virheitä ja pahimmillaan tietoja saattaa kadota. Todo.txt-"
+"integraatiota ei suositella käytettäväksi tuotantojärjestelmissä."
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:326
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
-msgstr "Virhe avatessa tiedostovalvontaa. Tehtävät.txt-tiedostoa ei valvota"
+msgstr "Virhe avatessa tiedostovalvontaa. Todo.txt-tiedostoa ei valvota"
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:395
 msgid "Todo.txt"
-msgstr "Tehtävät.txt"
+msgstr "Todo.txt"
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:401
 msgid "On the Todo.txt file"
-msgstr "Tehtävät.txt-tiedostossa"
+msgstr "Todo.txt-tiedostossa"
 
 #: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:6
 msgid "Todo.txt File"
-msgstr "Tehtävät.txt-tiedosto"
+msgstr "Todo.txt-tiedosto"
 
 #: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:7
 msgid "Source of the Todo.txt file"
-msgstr "Tehtävät.txt-tiedoston lähde"
+msgstr "Todo.txt-tiedoston lähde"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
@@ -631,34 +628,34 @@ msgstr "Virhe laajennusta ladatessa"
 msgid "Error unloading extension"
 msgstr "Virhe poistaessa laajennusta käytöstä"
 
-#: src/gtd-task-list-view.c:293
+#: src/gtd-task-list-view.c:292
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Tämän tehtävän poistaminen poistaa myös sen alitehtävät. Poistetaanko silti?"
 
-#: src/gtd-task-list-view.c:296
+#: src/gtd-task-list-view.c:295
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Poistamisen jälkeen tehtäviä ei voi palattaa."
 
-#: src/gtd-task-list-view.c:299 src/views/gtd-list-selector-panel.c:388
+#: src/gtd-task-list-view.c:298 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "Peru"
 
-#: src/gtd-task-list-view.c:301
+#: src/gtd-task-list-view.c:300
 msgid "Remove"
 msgstr "Poista"
 
-#: src/gtd-task-list-view.c:381
+#: src/gtd-task-list-view.c:390
 #, c-format
 msgid "Done (%d)"
 msgstr "Valmis (%d)"
 
-#: src/gtd-task-list-view.c:661
+#: src/gtd-task-list-view.c:660
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Tehtävä <b>%s<b> poistettu"
 
-#: src/gtd-task-list-view.c:685
+#: src/gtd-task-list-view.c:684
 msgid "Undo"
 msgstr "Kumoa"
 
