@@ -7,20 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-02-26 17:44+0000\n"
-"PO-Revision-Date: 2018-02-28 23:38+0800\n"
+"POT-Creation-Date: 2018-03-12 15:27+0000\n"
+"PO-Revision-Date: 2018-03-26 17:44+0800\n"
 "Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) <chinese-l10n@googlegroups.com>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
 #: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
-#: src/gtd-window.c:954 src/gtd-window.c:989 src/main.c:35
+#: src/gtd-window.c:799 src/gtd-window.c:830 src/main.c:35
 msgid "To Do"
 msgstr "待辦事項"
 
@@ -147,44 +147,44 @@ msgstr "目前的列表選擇器。可以是「grid」或「list」。"
 msgid "_Notes"
 msgstr "備註(_N)"
 
-#: data/ui/edit-pane.ui:92
+#: data/ui/edit-pane.ui:93
 msgid "D_ue Date"
 msgstr "到期日(_U)"
 
-#: data/ui/edit-pane.ui:110
+#: data/ui/edit-pane.ui:111
 msgid "_Today"
 msgstr "今天(_T)"
 
-#: data/ui/edit-pane.ui:120
+#: data/ui/edit-pane.ui:121
 msgid "To_morrow"
 msgstr "明天(_M)"
 
-#: data/ui/edit-pane.ui:168
+#: data/ui/edit-pane.ui:169
 msgid "_Priority"
 msgstr "優先等級(_P)"
 
-#: data/ui/edit-pane.ui:185
+#: data/ui/edit-pane.ui:187
 msgctxt "taskpriority"
 msgid "None"
 msgstr "無"
 
-#: data/ui/edit-pane.ui:186
+#: data/ui/edit-pane.ui:188
 msgid "Low"
 msgstr "低"
 
-#: data/ui/edit-pane.ui:187
+#: data/ui/edit-pane.ui:189
 msgid "Medium"
 msgstr "中"
 
-#: data/ui/edit-pane.ui:188
+#: data/ui/edit-pane.ui:190
 msgid "High"
 msgstr "高"
 
-#: data/ui/edit-pane.ui:196 data/ui/list-selector-panel.ui:93
+#: data/ui/edit-pane.ui:198 data/ui/list-selector-panel.ui:93
 msgid "_Delete"
 msgstr "刪除(_D)"
 
-#: data/ui/edit-pane.ui:242
+#: data/ui/edit-pane.ui:249
 msgctxt "taskdate"
 msgid "None"
 msgstr "無"
@@ -234,7 +234,7 @@ msgstr "新增列表(_N)"
 msgid "Show or hide completed tasks"
 msgstr "顯示或隱藏已完成的事項"
 
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:378
+#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
 msgid "Done"
 msgstr "完成"
 
@@ -338,27 +338,27 @@ msgstr "當待辦事項執行時，顯示初始啟動通知"
 msgid "Error loading GNOME Online Accounts"
 msgstr "載入 GNOME Online Accounts 時發生錯誤"
 
-#: plugins/eds/gtd-provider-eds.c:145
+#: plugins/eds/gtd-provider-eds.c:139
 msgid "Failed to connect to task list"
 msgstr "無法連線至事項列表"
 
-#: plugins/eds/gtd-provider-eds.c:442
+#: plugins/eds/gtd-provider-eds.c:351
 msgid "An error occurred while creating a task"
 msgstr "建立事項遭遇錯誤"
 
-#: plugins/eds/gtd-provider-eds.c:477
+#: plugins/eds/gtd-provider-eds.c:383
 msgid "An error occurred while modifying a task"
 msgstr "修改事項時遭遇錯誤"
 
-#: plugins/eds/gtd-provider-eds.c:498
+#: plugins/eds/gtd-provider-eds.c:404
 msgid "An error occurred while removing a task"
 msgstr "移除事項時遭遇錯誤"
 
-#: plugins/eds/gtd-provider-eds.c:516
+#: plugins/eds/gtd-provider-eds.c:422
 msgid "An error occurred while creating a task list"
 msgstr "建立事項列表時遭遇錯誤"
 
-#: plugins/eds/gtd-provider-eds.c:537 plugins/eds/gtd-provider-eds.c:561
+#: plugins/eds/gtd-provider-eds.c:444 plugins/eds/gtd-provider-eds.c:467
 msgid "An error occurred while modifying a task list"
 msgstr "修改事項列表時遭遇錯誤"
 
@@ -370,45 +370,53 @@ msgstr "本地端"
 msgid "On This Computer"
 msgstr "在這臺電腦"
 
-#: plugins/eds/gtd-task-list-eds.c:245 plugins/eds/gtd-task-list-eds.c:275
-#: plugins/eds/gtd-task-list-eds.c:297
+#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:307
+#: plugins/eds/gtd-task-list-eds.c:331
 msgid "Error fetching tasks from list"
 msgstr "從列表取得事項時發生錯誤"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:162
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:110
 msgid "No date set"
 msgstr "尚未設定日期"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-task-row.c:148
+#. Translators: This message will never be used with '1 day ago'
+#. * but the singular form is required because some languages do not
+#. * have plurals, some languages reuse the singular form for numbers
+#. * like 21, 31, 41, etc.
+#.
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:102
 #, c-format
-msgid "Yesterday"
+msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] "%d 天前"
 
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:147
+msgid "Yesterday"
+msgstr "昨天"
+
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:101
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
 #: plugins/score/score/__init__.py:101
 #: plugins/today-panel/gtd-panel-today.c:134
 #: plugins/today-panel/gtd-panel-today.c:139
-#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:140
+#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:139
 msgid "Today"
 msgstr "今天"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:105 src/gtd-task-row.c:144
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:143
 msgid "Tomorrow"
 msgstr "明天"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:356
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:361
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:498
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:365
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:370
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:507
 msgid "Scheduled"
 msgstr "已有行程"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:503
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:512
 #: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
-#: src/views/gtd-list-selector-panel.c:710
 msgid "Clear completed tasks…"
 msgstr "清除完成的事項…"
 
@@ -416,73 +424,91 @@ msgstr "清除完成的事項…"
 msgid "No task completed today"
 msgstr "今天沒有完成的事項"
 
-#: plugins/todoist/gtd-provider-todoist.c:205
+#: plugins/todoist/gtd-provider-todoist.c:212
 msgid "Error fetching Todoist account key"
 msgstr "擷取待辦列表帳號金鑰時發生錯誤"
 
-#: plugins/todoist/gtd-provider-todoist.c:206
+#: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "請確認待辦列表帳號已正確設定。"
 
-#: plugins/todoist/gtd-provider-todoist.c:571
+#: plugins/todoist/gtd-provider-todoist.c:557
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr "GNOME 待辦事項沒有得到此動作的執行許可：%s"
 
-#: plugins/todoist/gtd-provider-todoist.c:579
+#: plugins/todoist/gtd-provider-todoist.c:565
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
 msgstr "從 Todoist 伺服器接收到的是無效回應。請重新載入 GNOME 待辦事項。"
 
-#: plugins/todoist/gtd-provider-todoist.c:831
+#: plugins/todoist/gtd-provider-todoist.c:865
+msgid "An error occurred while updating a Todoist task"
+msgstr "更新 Todoist 事項時遭遇錯誤"
+
+#: plugins/todoist/gtd-provider-todoist.c:982
 msgid "An error occurred while retrieving Todoist data"
 msgstr "擷取 Todoist 資料時遭遇錯誤"
 
-#: plugins/todoist/gtd-provider-todoist.c:897
+#: plugins/todoist/gtd-provider-todoist.c:1057
 msgid "An error occurred while updating Todoist"
-msgstr "更新 Todoist 時遭遇錯誤"
+msgstr "上傳 Todoist 時遭遇錯誤"
 
-#: plugins/todoist/gtd-provider-todoist.c:951
+#: plugins/todoist/gtd-provider-todoist.c:1117
 msgid "Todoist"
 msgstr "待辦列表"
 
-#: plugins/todoist/gtd-provider-todoist.c:1242
+#: plugins/todoist/gtd-provider-todoist.c:1426
 #, c-format
 msgid "Todoist: %s"
 msgstr "待辦列表：%s"
 
-#: plugins/todoist/ui/preferences.ui:80
+#: plugins/todoist/ui/preferences.ui:81
 msgid "No Todoist accounts found"
 msgstr "找不到待辦列表帳號"
 
-#: plugins/todoist/ui/preferences.ui:89
+#: plugins/todoist/ui/preferences.ui:90
 msgid "Add a Todoist account"
 msgstr "加入待辦列表帳號"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:84
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:121
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:87
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:124
 msgid "Cannot create Todo.txt file"
 msgstr "無法建立 Todo.txt 檔案"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:312
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:161
 msgid "Select a Todo.txt-formatted file:"
 msgstr "選擇一個 Todo.txt 格式檔案："
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:313
+#. Filechooser
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:165
 msgid "Select a file"
 msgstr "選取檔案"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:319
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:191
+msgid "Error opening Todo.txt file"
+msgstr "開啟 Todo.txt 檔時發生錯誤"
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:201
+msgid ""
+"<b>Warning!</b> Todo.txt support is experimental and unstable. You may "
+"experience instability, errors and eventually data loss. It is not "
+"recommended to use Todo.txt integration on production systems."
+msgstr ""
+"<b>警告！</b> Todo.txt 支援還處於實驗階段，尚未穩定。您可能會遇到程式不穩定的"
+"狀況、錯誤、甚至資料喪失等。不建議您在生產系統上使用 Todo.txt 整合。"
+
+#: plugins/todo-txt/gtd-provider-todo-txt.c:326
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr "開啟檔案監控時發生錯誤。Todo.txt 將不會被監控"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:388
+#: plugins/todo-txt/gtd-provider-todo-txt.c:395
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:394
+#: plugins/todo-txt/gtd-provider-todo-txt.c:401
 msgid "On the Todo.txt file"
 msgstr "於 Todo.txt 檔案"
 
@@ -526,7 +552,9 @@ msgstr "著作權所有 © %1$d–%2$d To Do 作者群"
 
 #: src/gtd-application.c:163
 msgid "translator-credits"
-msgstr "Chao-Hsiung Liao  <j_h_liau@yahoo.com.tw>, 2015"
+msgstr ""
+"Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>, 2015;\n"
+"Cheng-Chia Tseng <zerngjia@gmail.com>, 2017."
 
 #: src/gtd-empty-list-widget.c:51
 msgid "No more tasks left"
@@ -573,56 +601,60 @@ msgid "You can add tasks using the <b>+</b> above"
 msgstr "您可以使用上面的<b>+</b>加入事項"
 
 #: src/gtd-plugin-dialog-row.c:97
-msgid "Error loading plugin"
-msgstr "載入外掛程式時發生錯誤"
+msgid "Error loading extension"
+msgstr "載入擴充套件時發生錯誤"
 
 #: src/gtd-plugin-dialog-row.c:97
-msgid "Error unloading plugin"
-msgstr "卸載外掛程式時發生錯誤"
+msgid "Error unloading extension"
+msgstr "卸載擴充套件時發生錯誤"
 
-#: src/gtd-task-list-view.c:298
+#: src/gtd-task-list-view.c:292
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr "刪除此事項也將刪除它的子事項。無論如何都要移除嗎？"
 
-#: src/gtd-task-list-view.c:301
+#: src/gtd-task-list-view.c:295
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "一旦移除，這些事項便無法再還原。"
 
-#: src/gtd-task-list-view.c:304 src/views/gtd-list-selector-panel.c:388
+#: src/gtd-task-list-view.c:298 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "取消"
 
-#: src/gtd-task-list-view.c:306
+#: src/gtd-task-list-view.c:300
 msgid "Remove"
 msgstr "移除"
 
-#: src/gtd-task-list-view.c:380
+#: src/gtd-task-list-view.c:390
 #, c-format
 msgid "Done (%d)"
 msgstr "完成 (%d)"
 
-#: src/gtd-task-list-view.c:649
+#: src/gtd-task-list-view.c:660
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "事項 <b>%s</b> 已被移除"
 
-#: src/gtd-task-list-view.c:673
+#: src/gtd-task-list-view.c:684
 msgid "Undo"
 msgstr "復原"
 
-#: src/gtd-window.c:548
+#: src/gtd-window.c:476
 msgid "Details"
 msgstr "詳細資料"
 
-#: src/gtd-window.c:822
+#: src/gtd-window.c:689
 msgid "Loading your task lists…"
 msgstr "載入您的事項列表…"
 
-#: src/gtd-window.c:948
+#: src/gtd-window.c:793
 msgid "Click a task list to select"
 msgstr "點選事項列表來選取"
 
-#: src/views/gtd-list-selector-grid-item.c:252
+#.
+#. * If there's no task available, draw a "No tasks" string at
+#. * the middle of the list thumbnail.
+#.
+#: src/views/gtd-list-selector-grid-item.c:250
 msgid "No tasks"
 msgstr "沒有事項"
 
@@ -637,6 +669,10 @@ msgstr "一旦移除，這些事項列表便無法再還原。"
 #: src/views/gtd-list-selector-panel.c:396
 msgid "Remove task lists"
 msgstr "移除事項列表"
+
+#: src/views/gtd-list-selector-panel.c:709
+msgid "Clear completed tasks"
+msgstr "清除完成的事項"
 
 #~ msgid "Error creating new task list"
 #~ msgstr "建立新事項列表時發生錯誤"
@@ -694,9 +730,6 @@ msgstr "移除事項列表"
 
 #~ msgid "Bad status code (%d) received. Please check your connection."
 #~ msgstr "接收到不良狀態代碼 (%d)。請檢查您的連線。"
-
-#~ msgid "Error while opening Todo.txt"
-#~ msgstr "開啟 Todo.txt 時發生錯誤"
 
 #~ msgid "Error while reading a line from Todo.txt"
 #~ msgstr "從 Todo.txt 讀取列時發生錯誤"
@@ -767,9 +800,6 @@ msgstr "移除事項列表"
 
 #~ msgid "Default storage location"
 #~ msgstr "預設儲存區位置"
-
-#~ msgid "%d days ago"
-#~ msgstr "%d 天前"
 
 #~ msgid "Skipping already loaded task list "
 #~ msgstr "略過已載入的工作列表"
