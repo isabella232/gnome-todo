@@ -2236,3 +2236,22 @@ gtd_task_list_view_set_handle_subtasks (GtdTaskListView *self,
 
   g_object_notify (G_OBJECT (self), "handle-subtasks");
 }
+
+/**
+ * gtd_task_list_view_invalidate:
+ * @self: a #GtdTaskListView
+ *
+ * Invalidates the sorting and headers of @self.
+ */
+void
+gtd_task_list_view_invalidate (GtdTaskListView *self)
+{
+  GtdTaskListViewPrivate *priv;
+
+  g_return_if_fail (GTD_IS_TASK_LIST_VIEW (self));
+
+  priv = gtd_task_list_view_get_instance_private (self);
+
+  gtk_list_box_invalidate_sort (priv->listbox);
+  gtk_list_box_invalidate_headers (priv->listbox);
+}
