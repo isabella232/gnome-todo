@@ -116,6 +116,8 @@ gboolean                  gtd_task_list_view_get_handle_subtasks (GtdTaskListVie
 void                      gtd_task_list_view_set_handle_subtasks (GtdTaskListView       *self,
                                                                   gboolean               handle_subtasks);
 
+void                      gtd_task_list_view_invalidate          (GtdTaskListView       *self);
+
 G_END_DECLS
 
 #endif /* GTD_TASK_LIST_VIEW_H */
