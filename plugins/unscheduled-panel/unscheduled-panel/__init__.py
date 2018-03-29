@@ -103,7 +103,7 @@ class UnscheduledPanel(Gtk.Box, Gtd.Panel):
             return _("Unscheduled")
         else:
             # Translators: 'Unscheduled' as in 'Unscheduled tasks'
-            return _("Unscheduled (%d)" % self.task_counter)
+            return _("Unscheduled (%d)") % self.task_counter
 
 
 class UnscheduledPanelPlugin(GObject.Object, Gtd.Activatable):
