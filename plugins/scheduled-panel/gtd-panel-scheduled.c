@@ -188,22 +188,12 @@ gtd_panel_scheduled_header_func (GtkListBoxRow     *row,
                                  GtdPanelScheduled *panel)
 {
   g_autoptr (GDateTime) dt = NULL;
-  gchar *text;
+  g_autofree gchar *text = NULL;
   gint span;
 
   dt = gtd_task_get_due_date (row_task);
 
-  if (!before)
-    {
-      text = get_string_for_date (dt, &span);
-
-      gtk_list_box_row_set_header (row, create_label (text,
-                                                      span,
-                                                      TRUE));
-
-      g_free (text);
-    }
-  else
+  if (before)
     {
       g_autoptr (GDateTime) before_dt = NULL;
       gint diff;
@@ -212,18 +202,14 @@ gtd_panel_scheduled_header_func (GtkListBoxRow     *row,
       diff = compare_by_date (before_dt, dt);
 
       if (diff != 0)
-        {
-          text = get_string_for_date (dt, &span);
-
-          gtk_list_box_row_set_header (row, create_label (text, span, FALSE));
-
-          g_free (text);
-        }
-      else
-        {
-          gtk_list_box_row_set_header (row, NULL);
-        }
+        text = get_string_for_date (dt, &span);
     }
+  else
+    {
+      text = get_string_for_date (dt, &span);
+    }
+
+  gtk_list_box_row_set_header (row, text ? create_label (text, span, !before) : NULL);
 }
 
 static gint
@@ -336,13 +322,13 @@ gtd_panel_scheduled_count_tasks (GtdPanelScheduled *panel)
 
       for (t = tasks; t != NULL; t = t->next)
         {
-          GDateTime *task_dt;
+          g_autoptr (GDateTime) task_dt = NULL;
 
           task_dt = gtd_task_get_due_date (t->data);
 
           /*
            * GtdTaskListView automagically updates the list
-           * whever a task is added/removed/changed.
+           * whenever a task is added/removed/changed.
            */
           if (task_dt)
             {
@@ -351,8 +337,6 @@ gtd_panel_scheduled_count_tasks (GtdPanelScheduled *panel)
               if (!gtd_task_get_complete (t->data))
                 number_of_tasks++;
             }
-
-          g_clear_pointer (&task_dt, g_date_time_unref);
         }
 
       g_list_free (tasks);
@@ -369,15 +353,9 @@ gtd_panel_scheduled_count_tasks (GtdPanelScheduled *panel)
       /* Update title */
       g_clear_pointer (&panel->title, g_free);
       if (number_of_tasks == 0)
-        {
-          panel->title = g_strdup (_("Scheduled"));
-        }
+        panel->title = g_strdup (_("Scheduled"));
       else
-        {
-          panel->title = g_strdup_printf ("%s (%d)",
-                                          _("Scheduled"),
-                                          panel->number_of_tasks);
-        }
+        panel->title = g_strdup_printf ("%s (%d)", _("Scheduled"), panel->number_of_tasks);
 
       g_object_notify (G_OBJECT (panel), "title");
     }
