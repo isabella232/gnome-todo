@@ -59,21 +59,29 @@ get_date_offset (GDateTime *dt,
                  gint      *days_diff,
                  gint      *years_diff)
 {
-  g_autoptr (GDateTime) now, utc;
+  g_autoptr (GDateTime) now = NULL;
+  GDate now_date, dt_date;
+
+  g_date_clear (&dt_date, 1);
+  g_date_set_dmy (&dt_date,
+                  g_date_time_get_day_of_month (dt),
+                  g_date_time_get_month (dt),
+                  g_date_time_get_year (dt));
 
   now = g_date_time_new_now_local ();
-  utc = g_date_time_new_utc (g_date_time_get_year (now),
-                             g_date_time_get_month (now),
-                             g_date_time_get_day_of_month (now),
-                             g_date_time_get_hour (now),
-                             g_date_time_get_minute (now),
-                             g_date_time_get_seconds (now));
+
+  g_date_clear (&now_date, 1);
+  g_date_set_dmy (&now_date,
+                  g_date_time_get_day_of_month (now),
+                  g_date_time_get_month (now),
+                  g_date_time_get_year (now));
+
 
   if (days_diff)
-    *days_diff = ceil ((gdouble) g_date_time_difference (dt, utc) / (gdouble) G_TIME_SPAN_DAY);
+    *days_diff = g_date_days_between (&now_date, &dt_date);
 
   if (years_diff)
-    *years_diff = g_date_time_get_year (dt) - g_date_time_get_year (utc);
+    *years_diff = g_date_time_get_year (dt) - g_date_time_get_year (now);
 }
 
 static gchar*
