@@ -374,6 +374,8 @@ gtd_panel_scheduled_count_tasks (GtdPanelScheduled *panel)
       g_object_notify (G_OBJECT (panel), "title");
     }
 
+  gtd_task_list_view_invalidate (GTD_TASK_LIST_VIEW (panel->view));
+
   g_list_free (tasklists);
 }
 
