@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-10 16:15+0000\n"
-"PO-Revision-Date: 2018-03-22 21:00+0100\n"
+"POT-Creation-Date: 2018-04-13 11:26+0000\n"
+"PO-Revision-Date: 2018-04-23 20:40+0200\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -152,44 +152,44 @@ msgstr "Trenutni izbirnik seznama je lahko »mrežni»« ali »seznamski«."
 msgid "_Notes"
 msgstr "_Opombe"
 
-#: data/ui/edit-pane.ui:93
+#: data/ui/edit-pane.ui:95
 msgid "D_ue Date"
 msgstr "Datum _zapadlosti"
 
-#: data/ui/edit-pane.ui:111
+#: data/ui/edit-pane.ui:113
 msgid "_Today"
 msgstr "_Danes"
 
-#: data/ui/edit-pane.ui:121
+#: data/ui/edit-pane.ui:123
 msgid "To_morrow"
 msgstr "_Jutri"
 
-#: data/ui/edit-pane.ui:169
+#: data/ui/edit-pane.ui:171
 msgid "_Priority"
 msgstr "_Prednost"
 
-#: data/ui/edit-pane.ui:187
+#: data/ui/edit-pane.ui:189
 msgctxt "taskpriority"
 msgid "None"
 msgstr "Brez"
 
-#: data/ui/edit-pane.ui:188
+#: data/ui/edit-pane.ui:190
 msgid "Low"
 msgstr "Nizka"
 
-#: data/ui/edit-pane.ui:189
+#: data/ui/edit-pane.ui:191
 msgid "Medium"
 msgstr "Srednja"
 
-#: data/ui/edit-pane.ui:190
+#: data/ui/edit-pane.ui:192
 msgid "High"
 msgstr "Visoka"
 
-#: data/ui/edit-pane.ui:198 data/ui/list-selector-panel.ui:93
+#: data/ui/edit-pane.ui:200 data/ui/list-selector-panel.ui:93
 msgid "_Delete"
 msgstr "_Izbriši"
 
-#: data/ui/edit-pane.ui:249
+#: data/ui/edit-pane.ui:251
 msgctxt "taskdate"
 msgid "None"
 msgstr "Izbriši datum"
@@ -239,7 +239,7 @@ msgstr "_Nov seznam"
 msgid "Show or hide completed tasks"
 msgstr "Skrij/Pokaži opravljene naloge"
 
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
+#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:392
 msgid "Done"
 msgstr "Končano"
 
@@ -386,7 +386,7 @@ msgstr "Na tem računalniku"
 msgid "Error fetching tasks from list"
 msgstr "Napaka pridobivanja nalog iz seznama"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:110
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-edit-pane.c:111
 msgid "No date set"
 msgstr "Datum ..."
 
@@ -395,40 +395,40 @@ msgstr "Datum ..."
 #. * have plurals, some languages reuse the singular form for numbers
 #. * like 21, 31, 41, etc.
 #.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:102
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
 #, c-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "pred %d dnevi"
+msgstr[1] "pred %d dnem"
+msgstr[2] "pred %d dnevoma"
+msgstr[3] "pred %d dnevi"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:148
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:151
 msgid "Yesterday"
 msgstr "Včeraj"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:118
 #: plugins/score/score/__init__.py:101
 #: plugins/today-panel/gtd-panel-today.c:134
 #: plugins/today-panel/gtd-panel-today.c:139
-#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:140
+#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:143
 msgid "Today"
 msgstr "Danes"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:144
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:122 src/gtd-task-row.c:147
 msgid "Tomorrow"
 msgstr "Jutri"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:365
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:370
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:507
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:356
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:358
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:495
 msgid "Scheduled"
 msgstr "Na urniku"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:512
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:500
 #: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
 msgid "Clear completed tasks…"
@@ -624,35 +624,35 @@ msgstr "Napaka nalaganja vstavka"
 msgid "Error unloading extension"
 msgstr "Napaka zaustavljanja vstavka"
 
-#: src/gtd-task-list-view.c:292
+#: src/gtd-task-list-view.c:296
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Z odstranjevanjem glavne naloge bodo odstranjene tudi vse podrejene. Ali "
 "želite naloge odstraniti?"
 
-#: src/gtd-task-list-view.c:295
+#: src/gtd-task-list-view.c:299
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Odstranjenih nalog ni mogoče več povrniti."
 
-#: src/gtd-task-list-view.c:298 src/views/gtd-list-selector-panel.c:388
+#: src/gtd-task-list-view.c:302 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: src/gtd-task-list-view.c:300
+#: src/gtd-task-list-view.c:304
 msgid "Remove"
 msgstr "Odstrani"
 
-#: src/gtd-task-list-view.c:390
+#: src/gtd-task-list-view.c:394
 #, c-format
 msgid "Done (%d)"
 msgstr "Končano (%d)"
 
-#: src/gtd-task-list-view.c:660
+#: src/gtd-task-list-view.c:664
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Naloga <b>%s</b> je odstranjena."
 
-#: src/gtd-task-list-view.c:684
+#: src/gtd-task-list-view.c:688
 msgid "Undo"
 msgstr "Razveljavi"
 
