@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-04-13 11:26+0000\n"
-"PO-Revision-Date: 2018-04-23 20:40+0200\n"
+"POT-Creation-Date: 2018-05-26 14:30+0000\n"
+"PO-Revision-Date: 2018-05-30 19:24+0200\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -22,8 +22,8 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
-#: src/gtd-window.c:799 src/gtd-window.c:830 src/main.c:35
+#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:157
+#: src/gtd-window.c:788 src/gtd-window.c:819 src/main.c:35
 msgid "To Do"
 msgstr "To Do"
 
@@ -185,7 +185,7 @@ msgstr "Srednja"
 msgid "High"
 msgstr "Visoka"
 
-#: data/ui/edit-pane.ui:200 data/ui/list-selector-panel.ui:93
+#: data/ui/edit-pane.ui:200
 msgid "_Delete"
 msgstr "_Izbriši"
 
@@ -207,7 +207,7 @@ msgid "To Do Setup"
 msgstr "Nastavitve"
 
 #: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
-#: data/ui/window.ui:74
+#: data/ui/window.ui:123
 msgid "_Cancel"
 msgstr "_Prekliči"
 
@@ -215,35 +215,7 @@ msgstr "_Prekliči"
 msgid "_Done"
 msgstr "_Končano"
 
-#: data/ui/list-selector-panel.ui:79 data/ui/list-selector-panel.ui:173
-msgid "_Rename"
-msgstr "_Preimenuj"
-
-#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:469
-msgid "Lists"
-msgstr "Seznami"
-
-#: data/ui/list-selector-panel.ui:129
-msgid "Tasks"
-msgstr "Naloge"
-
-#: data/ui/list-selector-panel.ui:147
-msgid "Name of the task list"
-msgstr "Ime seznama naloge"
-
-#: data/ui/list-selector-panel.ui:263
-msgid "_New List"
-msgstr "_Nov seznam"
-
-#: data/ui/list-view.ui:113
-msgid "Show or hide completed tasks"
-msgstr "Skrij/Pokaži opravljene naloge"
-
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:392
-msgid "Done"
-msgstr "Končano"
-
-#: data/ui/new-task-row.ui:29
+#: data/ui/new-task-row.ui:31
 msgid "New task…"
 msgstr "Nova naloga …"
 
@@ -294,6 +266,18 @@ msgstr "Microsoft Exchange"
 #: data/ui/provider-selector.ui:154
 msgid "Or you can just store your tasks on this computer"
 msgstr "Ali pa shranite naloge na disku računalnika."
+
+#: data/ui/sidebar-list-row.ui:54
+msgid "Delete"
+msgstr "Izbriši"
+
+#: data/ui/sidebar-provider-row.ui:96
+msgid "Loading…"
+msgstr "Poteka nalaganje ..."
+
+#: data/ui/window.ui:78
+msgid "_New List"
+msgstr "_Nov seznam"
 
 #: plugins/background/gtd-plugin-background.c:150
 #, c-format
@@ -349,53 +333,76 @@ msgstr "Ob zagonu programa pokaže obvestilo o delovanju"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Napaka nalaganja programa Spletni računi GNOME"
 
-#: plugins/eds/gtd-provider-eds.c:139
+#: plugins/eds/gtd-provider-eds.c:140
 msgid "Failed to connect to task list"
 msgstr "Nalaganje seznama nalog je spodletelo."
 
-#: plugins/eds/gtd-provider-eds.c:351
+#: plugins/eds/gtd-provider-eds.c:361
 msgid "An error occurred while creating a task"
 msgstr "Med ustvarjanjem naloge je prišlo do napake."
 
-#: plugins/eds/gtd-provider-eds.c:383
+#: plugins/eds/gtd-provider-eds.c:393
 msgid "An error occurred while modifying a task"
 msgstr "Med spreminjanjem naloge je prišlo do napake."
 
-#: plugins/eds/gtd-provider-eds.c:404
+#: plugins/eds/gtd-provider-eds.c:414
 msgid "An error occurred while removing a task"
 msgstr "Med odstranjevanjem naloge je prišlo do napake."
 
-#: plugins/eds/gtd-provider-eds.c:422
+#: plugins/eds/gtd-provider-eds.c:432
 msgid "An error occurred while creating a task list"
 msgstr "Med ustvarjanjem seznama nalog je prišlo do napake."
 
-#: plugins/eds/gtd-provider-eds.c:444 plugins/eds/gtd-provider-eds.c:467
+#: plugins/eds/gtd-provider-eds.c:454 plugins/eds/gtd-provider-eds.c:477
 msgid "An error occurred while modifying a task list"
 msgstr "Med odstranjevanjem nalog je prišlo do napake."
 
 #: plugins/eds/gtd-provider-local.c:50
-msgid "Local"
-msgstr "Krajevno"
-
-#: plugins/eds/gtd-provider-local.c:56
 msgid "On This Computer"
 msgstr "Na tem računalniku"
 
-#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:307
-#: plugins/eds/gtd-task-list-eds.c:331
+#: plugins/eds/gtd-provider-local.c:62
+msgid "Local"
+msgstr "Krajevno"
+
+#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:310
+#: plugins/eds/gtd-task-list-eds.c:334
 msgid "Error fetching tasks from list"
 msgstr "Napaka pridobivanja nalog iz seznama"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-edit-pane.c:111
+#: plugins/next-week-panel/gtd-next-week-panel.c:107
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:102 src/gtd-edit-pane.c:112
 msgid "No date set"
 msgstr "Datum ..."
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:115
+#: plugins/today-panel/gtd-panel-today.c:201
+msgid "Overdue"
+msgstr "Prekoračeno"
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:119
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:123
+#: plugins/score/score/__init__.py:101
+#: plugins/today-panel/gtd-panel-today.c:210
+#: plugins/today-panel/gtd-panel-today.c:276 src/gtd-task-row.c:144
+msgid "Today"
+msgstr "Danes"
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:123
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:127 src/gtd-task-row.c:148
+msgid "Tomorrow"
+msgstr "Jutri"
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:372
+msgid "Next 7 Days"
+msgstr "Naslednjih 7 dni"
 
 #. Translators: This message will never be used with '1 day ago'
 #. * but the singular form is required because some languages do not
 #. * have plurals, some languages reuse the singular form for numbers
 #. * like 21, 31, 41, etc.
 #.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:115
 #, c-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
@@ -404,32 +411,16 @@ msgstr[1] "pred %d dnem"
 msgstr[2] "pred %d dnevoma"
 msgstr[3] "pred %d dnevi"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:151
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:119 src/gtd-task-row.c:152
 msgid "Yesterday"
 msgstr "Včeraj"
 
-#. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:118
-#: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:134
-#: plugins/today-panel/gtd-panel-today.c:139
-#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:143
-msgid "Today"
-msgstr "Danes"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:122 src/gtd-task-row.c:147
-msgid "Tomorrow"
-msgstr "Jutri"
-
-#. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:356
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:358
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:495
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:378
 msgid "Scheduled"
 msgstr "Na urniku"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:500
-#: plugins/today-panel/gtd-panel-today.c:278
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:535
+#: plugins/today-panel/gtd-panel-today.c:432
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
 msgid "Clear completed tasks…"
 msgstr "Počisti končane naloge …"
@@ -438,21 +429,21 @@ msgstr "Počisti končane naloge …"
 msgid "No task completed today"
 msgstr "Danes ni nobene končane naloge."
 
-#: plugins/todoist/gtd-provider-todoist.c:212
+#: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Error fetching Todoist account key"
 msgstr "Napaka pridobivanja ključa računa Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:213
+#: plugins/todoist/gtd-provider-todoist.c:214
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Prepričajte se, da je račun Todoist pravilno nastavljen."
 
-#: plugins/todoist/gtd-provider-todoist.c:557
+#: plugins/todoist/gtd-provider-todoist.c:558
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr "Ni ustreznih dovoljenj za izvajanje dejavnosti: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:565
+#: plugins/todoist/gtd-provider-todoist.c:566
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
@@ -460,23 +451,23 @@ msgstr ""
 "Prejet je neveljaven odziv s strežnikov Todoist. Ponovno je treba zagnati "
 "program."
 
-#: plugins/todoist/gtd-provider-todoist.c:865
+#: plugins/todoist/gtd-provider-todoist.c:866
 msgid "An error occurred while updating a Todoist task"
 msgstr "Prišlo je do napake med posodabljanjem nalog Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:982
+#: plugins/todoist/gtd-provider-todoist.c:983
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Prišlo je do napake med pridobivanjem podatkov Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1057
+#: plugins/todoist/gtd-provider-todoist.c:1058
 msgid "An error occurred while updating Todoist"
 msgstr "Prišlo je do napake med posodabljanjem podatkov Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1117
+#: plugins/todoist/gtd-provider-todoist.c:1118
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1426
+#: plugins/todoist/gtd-provider-todoist.c:1433
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -517,16 +508,16 @@ msgstr ""
 "stabilno. Pričakujete lahko napake in posledično tudi izgubo podatkov. "
 "Možnosti ni priporočljivo uporabljati za pomembno delo."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:326
+#: plugins/todo-txt/gtd-provider-todo-txt.c:335
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr ""
 "Napaka odpiranja nadzornika datotek. Datoteka ToDo.txt ne bo nadzorovana."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:395
+#: plugins/todo-txt/gtd-provider-todo-txt.c:404
 msgid "Todo.txt"
 msgstr "ToDo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:401
+#: plugins/todo-txt/gtd-provider-todo-txt.c:416
 msgid "On the Todo.txt file"
 msgstr "Na datoteki ToDo.txt"
 
@@ -550,25 +541,25 @@ msgstr "Nedoločeno"
 msgid "Unscheduled (%d)"
 msgstr "Nedoločeno (%d)"
 
-#: src/gtd-application.c:72
+#: src/gtd-application.c:73
 msgid "Quit GNOME To Do"
 msgstr "Končaj GNOME ToDo"
 
-#: src/gtd-application.c:73
+#: src/gtd-application.c:74
 msgid "Enable debug messages"
 msgstr "Omogoči sporočila za razhroščevanje"
 
-#: src/gtd-application.c:146
+#: src/gtd-application.c:147
 #, c-format
 msgid "Copyright © %1$d The To Do authors"
 msgstr "Avtorske pravice © %1$d Avtorji programa To Do"
 
-#: src/gtd-application.c:151
+#: src/gtd-application.c:152
 #, c-format
 msgid "Copyright © %1$d–%2$d The To Do authors"
 msgstr "Avtorske pravice © %1$d–%2$d Avtorji programa To Do"
 
-#: src/gtd-application.c:163
+#: src/gtd-application.c:164
 msgid "translator-credits"
 msgstr "Matej Urbančič <mateju@svn.gnome.org>"
 
@@ -624,73 +615,92 @@ msgstr "Napaka nalaganja vstavka"
 msgid "Error unloading extension"
 msgstr "Napaka zaustavljanja vstavka"
 
-#: src/gtd-task-list-view.c:296
+#: src/gtd-task-list-view.c:352
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Z odstranjevanjem glavne naloge bodo odstranjene tudi vse podrejene. Ali "
 "želite naloge odstraniti?"
 
-#: src/gtd-task-list-view.c:299
+#: src/gtd-task-list-view.c:355
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Odstranjenih nalog ni mogoče več povrniti."
 
-#: src/gtd-task-list-view.c:302 src/views/gtd-list-selector-panel.c:388
+#: src/gtd-task-list-view.c:358
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: src/gtd-task-list-view.c:304
+#: src/gtd-task-list-view.c:360
 msgid "Remove"
 msgstr "Odstrani"
 
-#: src/gtd-task-list-view.c:394
-#, c-format
-msgid "Done (%d)"
-msgstr "Končano (%d)"
-
-#: src/gtd-task-list-view.c:664
+#: src/gtd-task-list-view.c:802
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Naloga <b>%s</b> je odstranjena."
 
-#: src/gtd-task-list-view.c:688
+#: src/gtd-task-list-view.c:826 src/sidebar/gtd-sidebar-list-row.c:256
 msgid "Undo"
 msgstr "Razveljavi"
 
-#: src/gtd-window.c:476
+#: src/gtd-window.c:110
+msgid ""
+"This is a development build of To Do. You may experience errors, wrong "
+"behaviors, and data loss."
+msgstr ""
+"Uporabljate razvojno različico programa. Lahko se pojavijo napake, nenavadno "
+"delovanje, pride pa lahko celo do izgube podatkov."
+
+#: src/gtd-window.c:471
 msgid "Details"
 msgstr "Podrobnosti"
 
-#: src/gtd-window.c:689
-msgid "Loading your task lists…"
-msgstr "Poteka nalaganje seznama nalog …"
-
-#: src/gtd-window.c:793
+#: src/gtd-window.c:783
 msgid "Click a task list to select"
 msgstr "S klikom je mogoče izbrati seznam nalog."
 
-#.
-#. * If there's no task available, draw a "No tasks" string at
-#. * the middle of the list thumbnail.
-#.
-#: src/views/gtd-list-selector-grid-item.c:250
-msgid "No tasks"
-msgstr "Ni nalog"
+#: src/sidebar/gtd-sidebar-list-row.c:253
+#, c-format
+msgid "Task list <b>%s</b> removed"
+msgstr "Seznam nalog <b>%s</b> je odstranjen."
 
-#: src/views/gtd-list-selector-panel.c:381
-msgid "Remove the selected task lists?"
-msgstr "Ali res želite odstraniti seznam nalog?"
+#~ msgid "_Rename"
+#~ msgstr "_Preimenuj"
 
-#: src/views/gtd-list-selector-panel.c:384
-msgid "Once removed, the task lists cannot be recovered."
-msgstr "Odstranjenih seznamov nalog ni mogoče več povrniti."
+#~ msgid "Lists"
+#~ msgstr "Seznami"
 
-#: src/views/gtd-list-selector-panel.c:396
-msgid "Remove task lists"
-msgstr "Odstrani seznam nalog"
+#~ msgid "Tasks"
+#~ msgstr "Naloge"
 
-#: src/views/gtd-list-selector-panel.c:709
-msgid "Clear completed tasks"
-msgstr "Počisti končane naloge"
+#~ msgid "Name of the task list"
+#~ msgstr "Ime seznama naloge"
+
+#~ msgid "Show or hide completed tasks"
+#~ msgstr "Skrij/Pokaži opravljene naloge"
+
+#~ msgid "Done"
+#~ msgstr "Končano"
+
+#~ msgid "Done (%d)"
+#~ msgstr "Končano (%d)"
+
+#~ msgid "Loading your task lists…"
+#~ msgstr "Poteka nalaganje seznama nalog …"
+
+#~ msgid "No tasks"
+#~ msgstr "Ni nalog"
+
+#~ msgid "Remove the selected task lists?"
+#~ msgstr "Ali res želite odstraniti seznam nalog?"
+
+#~ msgid "Once removed, the task lists cannot be recovered."
+#~ msgstr "Odstranjenih seznamov nalog ni mogoče več povrniti."
+
+#~ msgid "Remove task lists"
+#~ msgstr "Odstrani seznam nalog"
+
+#~ msgid "Clear completed tasks"
+#~ msgstr "Počisti končane naloge"
 
 #~ msgid "New List…"
 #~ msgstr "Nov seznam ..."
@@ -703,9 +713,6 @@ msgstr "Počisti končane naloge"
 
 #~ msgid "Priority"
 #~ msgstr "Prednost"
-
-#~ msgid "Delete"
-#~ msgstr "Izbriši"
 
 #~ msgid "Error loading Evolution-Data-Server backend"
 #~ msgstr "Napaka nalaganja ozadja evolution-data-server"
