@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-06-13 03:09+0000\n"
-"PO-Revision-Date: 2018-06-21 09:46+0200\n"
+"POT-Creation-Date: 2018-07-22 16:54+0000\n"
+"PO-Revision-Date: 2018-07-23 12:27+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -30,10 +30,6 @@ msgid "Task manager for GNOME"
 msgstr "Gestor de tareas para GNOME"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:11
-#| msgid ""
-#| "GNOME To Do is a task management application designed to integrate with "
-#| "GNOME. It is extensible through plugins and supports custom task "
-#| "providers."
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
 "GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
@@ -275,7 +271,6 @@ msgid "Or you can just store your tasks on this computer"
 msgstr "O simplemente puede guardar las tareas en este equipo"
 
 #: data/ui/sidebar-list-row.ui:96 data/ui/sidebar-list-row.ui:115
-#| msgid "_Rename"
 msgid "Rename"
 msgstr "Renombrar"
 
@@ -437,6 +432,18 @@ msgstr "Limpiar las tareas completadas…"
 msgid "No task completed today"
 msgstr "Hoy no se ha completado ninguna tarea"
 
+#: plugins/todoist/gtd-plugin-todoist.c:109
+msgid "GNOME To Do cannot connect to Todoist due to network issue"
+msgstr ""
+"Tareas pendientes de GNOME no se puede conectar a Todoist debido a un "
+"problema de red"
+
+#: plugins/todoist/gtd-plugin-todoist.c:110
+msgid ""
+"Not able to communicate with Todoist. Please check your internet "
+"connectivity."
+msgstr "No se puede comunicar con Todoist. Compruebe su conexión a Internet."
+
 #: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Error fetching Todoist account key"
 msgstr "Error al obtener la clave de la cuenta de Todoist"
@@ -518,16 +525,16 @@ msgstr ""
 "posible que experimente inestabilidad, errores y posibles pérdidas de datos. "
 "No se recomienda usar la integración de Todo.txt en sistemas en producción."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:336
+#: plugins/todo-txt/gtd-provider-todo-txt.c:591
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr ""
 "Error al abrir el archivo de monitorización. Todo.txt no se monitorizará"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:405
+#: plugins/todo-txt/gtd-provider-todo-txt.c:660
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:417
+#: plugins/todo-txt/gtd-provider-todo-txt.c:672
 msgid "On the Todo.txt file"
 msgstr "En el archivo Todo.txt"
 
@@ -669,13 +676,11 @@ msgstr "Pulse sobre una tarea para seleccionarla"
 
 #: src/sidebar/gtd-sidebar-list-row.c:278
 #, c-format
-#| msgid "Task <b>%s</b> removed"
 msgid "Task list <b>%s</b> removed"
 msgstr "Lista de tareas <b>%s</b> eliminada"
 
 #: src/sidebar/gtd-sidebar-list-row.c:307
 #, c-format
-#| msgid "_Rename"
 msgid "Rename %s"
 msgstr "Renombrar %s"
 
