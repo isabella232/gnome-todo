@@ -3,26 +3,26 @@
 # This file is distributed under the same license as the gnome-todo package.
 #
 # Justin van Steijn <jvs@fsfe.org>, 2015, 2016, 2017.
-# Hannie Dumoleyn <hannie@ubuntu-nl.org>, 2015, 2016, 2017.
+# Hannie Dumoleyn <hannie@ubuntu-nl.org>, 2015, 2016, 2017, 2018.
 # Nathan Follens <nthn@unseen.is>, 2016, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-09 03:42+0000\n"
-"PO-Revision-Date: 2018-03-10 16:41+0100\n"
-"Last-Translator: Justin van Steijn <jvs@fsfe.org>\n"
+"POT-Creation-Date: 2018-07-22 16:54+0000\n"
+"PO-Revision-Date: 2018-07-28 13:05+0100\n"
+"Last-Translator: Hannie Dumoleyn <hannie@ubuntu-nl.org>\n"
 "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Lokalize 2.0\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
-#: src/gtd-window.c:799 src/gtd-window.c:830 src/main.c:35
+#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:157
+#: src/gtd-window.c:788 src/gtd-window.c:819 src/main.c:35
 msgid "To Do"
 msgstr "Taken"
 
@@ -32,34 +32,42 @@ msgstr "Taakbeheer voor Gnome"
 
 # Providers: diensten of aanbieders?
 #: data/appdata/org.gnome.Todo.appdata.xml.in:11
+#| msgid ""
+#| "GNOME To Do is a task management application designed to integrate with "
+#| "GNOME. It is extensible through plugins and supports custom task "
+#| "providers."
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
-"GNOME. It is extensible through plugins and supports custom task providers."
+"GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
+"todos on your computer or sync them with cloud providers. Customize your "
+"experience with plugins."
 msgstr ""
-"Gnome Taken is een taakbeheerprogramma ontworpen om te integreren in Gnome. "
-"Het is uitbreidbaar via plug-ins en ondersteunt aangepaste taakdiensten."
+"Gnome Taken is een taakbeheerprogramma ontworpen om te integreren in Gnome. U"
+" kunt uw taken opslaan en rangschikken, meerdere takenlijsten beheren en uw"
+" taken op uw computer bewaren of synchroniseren met cloudaanbieders. Het is"
+" uitbreidbaar via plug-ins."
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:24
+#: data/appdata/org.gnome.Todo.appdata.xml.in:25
 msgid "GNOME To Do with the dark theme variant"
 msgstr "Gnome Taken met de donker thema-variant"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:28
+#: data/appdata/org.gnome.Todo.appdata.xml.in:29
 msgid "Editing a tasklist with GNOME To Do"
 msgstr "Een takenlijst bewerken met Gnome Taken"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:32
+#: data/appdata/org.gnome.Todo.appdata.xml.in:33
 msgid "Task lists displayed on grid mode"
 msgstr "Takenlijst weergegeven in rastermodus"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:36
+#: data/appdata/org.gnome.Todo.appdata.xml.in:37
 msgid "Task lists displayed on list mode"
 msgstr "Takenlijst weergegeven in lijstmodus"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:40
+#: data/appdata/org.gnome.Todo.appdata.xml.in:41
 msgid "Available plugins for GNOME To Do"
 msgstr "Beschikbare plug-ins voor Gnome Taken"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:44
+#: data/appdata/org.gnome.Todo.appdata.xml.in:45
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr ""
 "Taken voor vandaag zichtbaar maken in het paneel Vandaag van Gnome Taken"
@@ -154,44 +162,44 @@ msgstr "De huidige lijstkiezer. Kan ‘grid’ (raster) of ‘list’ (lijst) zi
 msgid "_Notes"
 msgstr "_Notities"
 
-#: data/ui/edit-pane.ui:93
+#: data/ui/edit-pane.ui:95
 msgid "D_ue Date"
 msgstr "Verloopdat_um"
 
-#: data/ui/edit-pane.ui:111
+#: data/ui/edit-pane.ui:113
 msgid "_Today"
 msgstr "_Vandaag"
 
-#: data/ui/edit-pane.ui:121
+#: data/ui/edit-pane.ui:123
 msgid "To_morrow"
 msgstr "_Morgen"
 
-#: data/ui/edit-pane.ui:169
+#: data/ui/edit-pane.ui:171
 msgid "_Priority"
 msgstr "_Prioriteit"
 
-#: data/ui/edit-pane.ui:187
+#: data/ui/edit-pane.ui:189
 msgctxt "taskpriority"
 msgid "None"
 msgstr "Geen"
 
-#: data/ui/edit-pane.ui:188
+#: data/ui/edit-pane.ui:190
 msgid "Low"
 msgstr "Laag"
 
-#: data/ui/edit-pane.ui:189
+#: data/ui/edit-pane.ui:191
 msgid "Medium"
 msgstr "Gemiddeld"
 
-#: data/ui/edit-pane.ui:190
+#: data/ui/edit-pane.ui:192
 msgid "High"
 msgstr "Hoog"
 
-#: data/ui/edit-pane.ui:198 data/ui/list-selector-panel.ui:93
+#: data/ui/edit-pane.ui:200
 msgid "_Delete"
 msgstr "Verwij_deren"
 
-#: data/ui/edit-pane.ui:249
+#: data/ui/edit-pane.ui:251
 msgctxt "taskdate"
 msgid "None"
 msgstr "Geen"
@@ -209,7 +217,7 @@ msgid "To Do Setup"
 msgstr "Instellen van Taken"
 
 #: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
-#: data/ui/window.ui:74
+#: data/ui/window.ui:123
 msgid "_Cancel"
 msgstr "_Annuleren"
 
@@ -217,35 +225,7 @@ msgstr "_Annuleren"
 msgid "_Done"
 msgstr "_Klaar"
 
-#: data/ui/list-selector-panel.ui:79 data/ui/list-selector-panel.ui:173
-msgid "_Rename"
-msgstr "He_rnoemen"
-
-#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:469
-msgid "Lists"
-msgstr "Lijsten"
-
-#: data/ui/list-selector-panel.ui:129
-msgid "Tasks"
-msgstr "Taken"
-
-#: data/ui/list-selector-panel.ui:147
-msgid "Name of the task list"
-msgstr "Naam van de takenlijst"
-
-#: data/ui/list-selector-panel.ui:263
-msgid "_New List"
-msgstr "_Nieuwe lijst"
-
-#: data/ui/list-view.ui:113
-msgid "Show or hide completed tasks"
-msgstr "Voltooide taken weergeven of verbergen"
-
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
-msgid "Done"
-msgstr "Gereed"
-
-#: data/ui/new-task-row.ui:29
+#: data/ui/new-task-row.ui:31
 msgid "New task…"
 msgstr "Nieuwe taak…"
 
@@ -297,6 +277,23 @@ msgstr "Microsoft Exchange"
 msgid "Or you can just store your tasks on this computer"
 msgstr "Of u kunt taken gewoon opslaan op deze computer"
 
+#: data/ui/sidebar-list-row.ui:96 data/ui/sidebar-list-row.ui:115
+#| msgid "_Rename"
+msgid "Rename"
+msgstr "Hernoemen"
+
+#: data/ui/sidebar-list-row.ui:119
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: data/ui/sidebar-provider-row.ui:96
+msgid "Loading…"
+msgstr "Laden…"
+
+#: data/ui/window.ui:78
+msgid "_New List"
+msgstr "_Nieuwe lijst"
+
 #: plugins/background/gtd-plugin-background.c:150
 #, c-format
 msgid "%1$s and one more task"
@@ -347,85 +344,92 @@ msgstr "Een opstartmelding tonen wanneer Taken wordt uitgevoerd"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Fout bij laden van Gnome Online-accounts"
 
-#: plugins/eds/gtd-provider-eds.c:139
+#: plugins/eds/gtd-provider-eds.c:140
 msgid "Failed to connect to task list"
 msgstr "Verbinden met takenlijst mislukt"
 
-#: plugins/eds/gtd-provider-eds.c:351
+#: plugins/eds/gtd-provider-eds.c:361
 msgid "An error occurred while creating a task"
 msgstr "Er is een fout opgetreden bij het maken van een taak"
 
-#: plugins/eds/gtd-provider-eds.c:383
+#: plugins/eds/gtd-provider-eds.c:393
 msgid "An error occurred while modifying a task"
 msgstr "Er is een fout opgetreden bij het wijzigen van een taak"
 
-#: plugins/eds/gtd-provider-eds.c:404
+#: plugins/eds/gtd-provider-eds.c:414
 msgid "An error occurred while removing a task"
 msgstr "Er is een fout opgetreden bij het verwijderen van een taak"
 
-#: plugins/eds/gtd-provider-eds.c:422
+#: plugins/eds/gtd-provider-eds.c:432
 msgid "An error occurred while creating a task list"
 msgstr "Er is een fout opgetreden bij het maken van een takenlijst"
 
-#: plugins/eds/gtd-provider-eds.c:444 plugins/eds/gtd-provider-eds.c:467
+#: plugins/eds/gtd-provider-eds.c:454 plugins/eds/gtd-provider-eds.c:477
 msgid "An error occurred while modifying a task list"
 msgstr "Er is een fout opgetreden bij het wijzigen van een takenlijst"
 
 #: plugins/eds/gtd-provider-local.c:50
-msgid "Local"
-msgstr "Lokaal"
-
-#: plugins/eds/gtd-provider-local.c:56
 msgid "On This Computer"
 msgstr "Op deze computer"
 
-#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:307
-#: plugins/eds/gtd-task-list-eds.c:331
+#: plugins/eds/gtd-provider-local.c:62
+msgid "Local"
+msgstr "Lokaal"
+
+#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:310
+#: plugins/eds/gtd-task-list-eds.c:334
 msgid "Error fetching tasks from list"
 msgstr "Ophalen taken van lijst mislukt"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:110
+#: plugins/next-week-panel/gtd-next-week-panel.c:107
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:102 src/gtd-edit-pane.c:112
 msgid "No date set"
 msgstr "Geen datum ingesteld"
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:115
+#: plugins/today-panel/gtd-panel-today.c:201
+msgid "Overdue"
+msgstr "Verlopen"
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:119
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:123
+#: plugins/score/score/__init__.py:101
+#: plugins/today-panel/gtd-panel-today.c:210
+#: plugins/today-panel/gtd-panel-today.c:276 src/gtd-task-row.c:144
+msgid "Today"
+msgstr "Vandaag"
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:123
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:127 src/gtd-task-row.c:148
+msgid "Tomorrow"
+msgstr "Morgen"
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:372
+msgid "Next 7 Days"
+msgstr "De komende 7dagen"
 
 #. Translators: This message will never be used with '1 day ago'
 #. * but the singular form is required because some languages do not
 #. * have plurals, some languages reuse the singular form for numbers
 #. * like 21, 31, 41, etc.
 #.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:102
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:115
 #, c-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] "% dag geleden"
 msgstr[1] "%d dagen geleden"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:148
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:119 src/gtd-task-row.c:152
 msgid "Yesterday"
 msgstr "Gisteren"
 
-#. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
-#: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:134
-#: plugins/today-panel/gtd-panel-today.c:139
-#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:140
-msgid "Today"
-msgstr "Vandaag"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:144
-msgid "Tomorrow"
-msgstr "Morgen"
-
-#. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:365
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:370
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:507
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:378
 msgid "Scheduled"
 msgstr "Gepland"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:512
-#: plugins/today-panel/gtd-panel-today.c:278
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:535
+#: plugins/today-panel/gtd-panel-today.c:432
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
 msgid "Clear completed tasks…"
 msgstr "Voltooide taken wissen…"
@@ -434,15 +438,28 @@ msgstr "Voltooide taken wissen…"
 msgid "No task completed today"
 msgstr "Vandaag geen taken voltooid"
 
-#: plugins/todoist/gtd-provider-todoist.c:212
+#: plugins/todoist/gtd-plugin-todoist.c:109
+msgid "GNOME To Do cannot connect to Todoist due to network issue"
+msgstr ""
+"Gnome Taken kan geen verbinding maken met Todoist vanwege een netwerkprobleem"
+
+#: plugins/todoist/gtd-plugin-todoist.c:110
+msgid ""
+"Not able to communicate with Todoist. Please check your internet "
+"connectivity."
+msgstr ""
+"Communicatie met Todoist is niet mogelijk. Gelieve uw internetverbinding te"
+" controleren."
+
+#: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Error fetching Todoist account key"
 msgstr "Ophalen van sleutel van Todoist-account mislukt"
 
-#: plugins/todoist/gtd-provider-todoist.c:213
+#: plugins/todoist/gtd-provider-todoist.c:214
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Zorg ervoor dat Todoist-account correct is geconfigureerd."
 
-#: plugins/todoist/gtd-provider-todoist.c:557
+#: plugins/todoist/gtd-provider-todoist.c:558
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
@@ -450,7 +467,7 @@ msgstr ""
 "Gnome Taken heeft niet de vereiste toestemmingen om deze opdracht uit te "
 "voeren: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:565
+#: plugins/todoist/gtd-provider-todoist.c:566
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
@@ -458,23 +475,23 @@ msgstr ""
 "Ongeldig antwoord ontvangen van Todoist-servers. Start Gnome Taken opnieuw "
 "op."
 
-#: plugins/todoist/gtd-provider-todoist.c:865
+#: plugins/todoist/gtd-provider-todoist.c:866
 msgid "An error occurred while updating a Todoist task"
 msgstr "Fout bij het bijwerken van een Todoist-taak"
 
-#: plugins/todoist/gtd-provider-todoist.c:982
+#: plugins/todoist/gtd-provider-todoist.c:983
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Fout bij het ophalen van Todoist-gegevens"
 
-#: plugins/todoist/gtd-provider-todoist.c:1057
+#: plugins/todoist/gtd-provider-todoist.c:1058
 msgid "An error occurred while updating Todoist"
 msgstr "Fout bij het bijwerken van Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1117
+#: plugins/todoist/gtd-provider-todoist.c:1118
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1426
+#: plugins/todoist/gtd-provider-todoist.c:1433
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -516,16 +533,16 @@ msgstr ""
 "ondervindt. Het wordt ontraden Todo.txt-integratie op productiesystemen te "
 "gebruiken."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:326
+#: plugins/todo-txt/gtd-provider-todo-txt.c:591
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr ""
 "Fout bij openen van de bestandsmonitor. Todo.txt zal niet gemonitord worden"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:395
+#: plugins/todo-txt/gtd-provider-todo-txt.c:660
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:401
+#: plugins/todo-txt/gtd-provider-todo-txt.c:672
 msgid "On the Todo.txt file"
 msgstr "Op het bestand Todo.txt"
 
@@ -549,25 +566,25 @@ msgstr "Niet gepland"
 msgid "Unscheduled (%d)"
 msgstr "Niet gepland (%d)"
 
-#: src/gtd-application.c:72
+#: src/gtd-application.c:73
 msgid "Quit GNOME To Do"
 msgstr "Gnome Taken afsluiten"
 
-#: src/gtd-application.c:73
+#: src/gtd-application.c:74
 msgid "Enable debug messages"
 msgstr "Debug-berichten inschakelen"
 
-#: src/gtd-application.c:146
+#: src/gtd-application.c:147
 #, c-format
 msgid "Copyright © %1$d The To Do authors"
 msgstr "Copyright © %1$d De auteurs van Taken"
 
-#: src/gtd-application.c:151
+#: src/gtd-application.c:152
 #, c-format
 msgid "Copyright © %1$d–%2$d The To Do authors"
 msgstr "Copyright © %1$d–%2$d De auteurs van Taken"
 
-#: src/gtd-application.c:163
+#: src/gtd-application.c:164
 msgid "translator-credits"
 msgstr ""
 "Justin van Steijn\n"
@@ -629,73 +646,97 @@ msgstr "Fout bij laden van uitbreiding"
 msgid "Error unloading extension"
 msgstr "Fout bij lossen van uitbreiding"
 
-#: src/gtd-task-list-view.c:292
+#: src/gtd-task-list-view.c:352
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Door deze taak te verwijderen, verwijdert u ook de onderliggende taken. Toch "
 "verwijderen?"
 
-#: src/gtd-task-list-view.c:295
+#: src/gtd-task-list-view.c:355
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Eenmaal verwijderd, kunnen de taken niet worden teruggehaald."
 
-#: src/gtd-task-list-view.c:298 src/views/gtd-list-selector-panel.c:388
+#: src/gtd-task-list-view.c:358
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: src/gtd-task-list-view.c:300
+#: src/gtd-task-list-view.c:360
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: src/gtd-task-list-view.c:390
-#, c-format
-msgid "Done (%d)"
-msgstr "Gereed (%d)"
-
-#: src/gtd-task-list-view.c:660
+#: src/gtd-task-list-view.c:802
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Taak <b>%s</b> verwijderd"
 
-#: src/gtd-task-list-view.c:684
+#: src/gtd-task-list-view.c:826 src/sidebar/gtd-sidebar-list-row.c:281
 msgid "Undo"
 msgstr "Ongedaan maken"
 
-#: src/gtd-window.c:476
+#: src/gtd-window.c:110
+msgid ""
+"This is a development build of To Do. You may experience errors, wrong "
+"behaviors, and data loss."
+msgstr ""
+"Dit is een ontwikkelversie van Taken. Het kan zijn dat u stuit op fouten,"
+" verkeerd gedrag en verlies van gegevens."
+
+#: src/gtd-window.c:471
 msgid "Details"
 msgstr "Details"
 
-#: src/gtd-window.c:689
-msgid "Loading your task lists…"
-msgstr "Uw takenlijsten worden geladen…"
-
-#: src/gtd-window.c:793
+#: src/gtd-window.c:783
 msgid "Click a task list to select"
 msgstr "Klik op een takenlijst om te selecteren"
 
-#.
-#. * If there's no task available, draw a "No tasks" string at
-#. * the middle of the list thumbnail.
-#.
-#: src/views/gtd-list-selector-grid-item.c:250
-msgid "No tasks"
-msgstr "Geen taken"
+#: src/sidebar/gtd-sidebar-list-row.c:278
+#, c-format
+#| msgid "Task <b>%s</b> removed"
+msgid "Task list <b>%s</b> removed"
+msgstr "Takenlijst <b>%s</b> verwijderd"
 
-#: src/views/gtd-list-selector-panel.c:381
-msgid "Remove the selected task lists?"
-msgstr "Geselecteerde takenlijsten verwijderen?"
+#: src/sidebar/gtd-sidebar-list-row.c:307
+#, c-format
+#| msgid "_Rename"
+msgid "Rename %s"
+msgstr "%s hernoemen"
 
-#: src/views/gtd-list-selector-panel.c:384
-msgid "Once removed, the task lists cannot be recovered."
-msgstr "Eenmaal verwijderd, kunnen de takenlijsten niet worden teruggehaald."
+#~ msgid "Lists"
+#~ msgstr "Lijsten"
 
-#: src/views/gtd-list-selector-panel.c:396
-msgid "Remove task lists"
-msgstr "Takenlijsten verwijderen"
+#~ msgid "Tasks"
+#~ msgstr "Taken"
 
-#: src/views/gtd-list-selector-panel.c:709
-msgid "Clear completed tasks"
-msgstr "Voltooide taken wissen"
+#~ msgid "Name of the task list"
+#~ msgstr "Naam van de takenlijst"
+
+#~ msgid "Show or hide completed tasks"
+#~ msgstr "Voltooide taken weergeven of verbergen"
+
+#~ msgid "Done"
+#~ msgstr "Gereed"
+
+#~ msgid "Done (%d)"
+#~ msgstr "Gereed (%d)"
+
+#~ msgid "Loading your task lists…"
+#~ msgstr "Uw takenlijsten worden geladen…"
+
+#~ msgid "No tasks"
+#~ msgstr "Geen taken"
+
+#~ msgid "Remove the selected task lists?"
+#~ msgstr "Geselecteerde takenlijsten verwijderen?"
+
+#~ msgid "Once removed, the task lists cannot be recovered."
+#~ msgstr ""
+#~ "Eenmaal verwijderd, kunnen de takenlijsten niet worden teruggehaald."
+
+#~ msgid "Remove task lists"
+#~ msgstr "Takenlijsten verwijderen"
+
+#~ msgid "Clear completed tasks"
+#~ msgstr "Voltooide taken wissen"
 
 #~ msgid "Error creating new task list"
 #~ msgstr "Maken van nieuwe takenlijst mislukt"
@@ -711,9 +752,6 @@ msgstr "Voltooide taken wissen"
 
 #~ msgid "Priority"
 #~ msgstr "Prioriteit"
-
-#~ msgid "Delete"
-#~ msgstr "Verwijderen"
 
 #~ msgid "Error loading Evolution-Data-Server backend"
 #~ msgstr "Fout bij laden van Evolution-Data-Server-backend"
