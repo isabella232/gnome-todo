@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-12 15:27+0000\n"
-"PO-Revision-Date: 2018-03-12 22:52+0200\n"
+"POT-Creation-Date: 2018-07-22 16:54+0000\n"
+"PO-Revision-Date: 2018-07-28 16:26+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -20,8 +20,8 @@ msgstr ""
 "X-Generator: Gtranslator 2.91.7\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
-#: src/gtd-window.c:799 src/gtd-window.c:830 src/main.c:35
+#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:157
+#: src/gtd-window.c:788 src/gtd-window.c:819 src/main.c:35
 msgid "To Do"
 msgstr "Darbai"
 
@@ -30,35 +30,42 @@ msgid "Task manager for GNOME"
 msgstr "Užduočių programa GNOME aplinkai"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:11
+#| msgid ""
+#| "GNOME To Do is a task management application designed to integrate with "
+#| "GNOME. It is extensible through plugins and supports custom task "
+#| "providers."
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
-"GNOME. It is extensible through plugins and supports custom task providers."
+"GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
+"todos on your computer or sync them with cloud providers. Customize your "
+"experience with plugins."
 msgstr ""
 "GNOME Darbai yra paprasta užduočių tvarkymo programa, sukurta integracijai "
-"su GNOME aplinka. Ji yra plečiama įskiepių pagalba bei palaiko įvairius "
-"užduočių tiekėjus."
+"su GNOME aplinka. Įrašykite ir rikiuokite savo darbus. Tvarkykite daugelį "
+"darbų sąrašų. Saugokite savo darbus kompiuteryje arba sinchronizuokite juos "
+"su debesų tiekėjais. Prisitaikykite programą sau su įskiepiais."
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:24
+#: data/appdata/org.gnome.Todo.appdata.xml.in:25
 msgid "GNOME To Do with the dark theme variant"
 msgstr "GNOME Darbai su tamsiu temos variantu"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:28
+#: data/appdata/org.gnome.Todo.appdata.xml.in:29
 msgid "Editing a tasklist with GNOME To Do"
 msgstr "Užduočių sąrašo redagavimas naudojant GNOME Darbus"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:32
+#: data/appdata/org.gnome.Todo.appdata.xml.in:33
 msgid "Task lists displayed on grid mode"
 msgstr "Užduočių sąrašai yra rodomi tinklelio veiksena"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:36
+#: data/appdata/org.gnome.Todo.appdata.xml.in:37
 msgid "Task lists displayed on list mode"
 msgstr "Užduočių sąrašai yra rodomi sąrašo veiksena"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:40
+#: data/appdata/org.gnome.Todo.appdata.xml.in:41
 msgid "Available plugins for GNOME To Do"
 msgstr "Galimi GNOME Darbų įskiepiai"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:44
+#: data/appdata/org.gnome.Todo.appdata.xml.in:45
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr "Pateikiamos šiandienos užduotys GNOME Darbų šiandienos skydelyje"
 
@@ -150,44 +157,44 @@ msgstr "Esamas sąrašo parinkiklis. Gali būti „grid“ arba „list“."
 msgid "_Notes"
 msgstr "_Pastabos"
 
-#: data/ui/edit-pane.ui:93
+#: data/ui/edit-pane.ui:95
 msgid "D_ue Date"
 msgstr "At_likimo data"
 
-#: data/ui/edit-pane.ui:111
+#: data/ui/edit-pane.ui:113
 msgid "_Today"
 msgstr "Š_iandien"
 
-#: data/ui/edit-pane.ui:121
+#: data/ui/edit-pane.ui:123
 msgid "To_morrow"
 msgstr "R_ytoj"
 
-#: data/ui/edit-pane.ui:169
+#: data/ui/edit-pane.ui:171
 msgid "_Priority"
 msgstr "_Prioritetas"
 
-#: data/ui/edit-pane.ui:187
+#: data/ui/edit-pane.ui:189
 msgctxt "taskpriority"
 msgid "None"
 msgstr "Nėra"
 
-#: data/ui/edit-pane.ui:188
+#: data/ui/edit-pane.ui:190
 msgid "Low"
 msgstr "Žemas"
 
-#: data/ui/edit-pane.ui:189
+#: data/ui/edit-pane.ui:191
 msgid "Medium"
 msgstr "Vidutinis"
 
-#: data/ui/edit-pane.ui:190
+#: data/ui/edit-pane.ui:192
 msgid "High"
 msgstr "Aukštas"
 
-#: data/ui/edit-pane.ui:198 data/ui/list-selector-panel.ui:93
+#: data/ui/edit-pane.ui:200
 msgid "_Delete"
 msgstr "_Ištrinti"
 
-#: data/ui/edit-pane.ui:249
+#: data/ui/edit-pane.ui:251
 msgctxt "taskdate"
 msgid "None"
 msgstr "Nėra"
@@ -205,7 +212,7 @@ msgid "To Do Setup"
 msgstr "Darbų nustatymas"
 
 #: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
-#: data/ui/window.ui:74
+#: data/ui/window.ui:123
 msgid "_Cancel"
 msgstr "_Atsisakyti"
 
@@ -213,35 +220,7 @@ msgstr "_Atsisakyti"
 msgid "_Done"
 msgstr "Atli_kta"
 
-#: data/ui/list-selector-panel.ui:79 data/ui/list-selector-panel.ui:173
-msgid "_Rename"
-msgstr "Pe_rvadinti"
-
-#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:469
-msgid "Lists"
-msgstr "Sąrašai"
-
-#: data/ui/list-selector-panel.ui:129
-msgid "Tasks"
-msgstr "Užduotys"
-
-#: data/ui/list-selector-panel.ui:147
-msgid "Name of the task list"
-msgstr "Naujo užduočių sąrašo pavadinimas"
-
-#: data/ui/list-selector-panel.ui:263
-msgid "_New List"
-msgstr "_Naujas sąrašas"
-
-#: data/ui/list-view.ui:113
-msgid "Show or hide completed tasks"
-msgstr "Rodyti ar slėpti užbaigtas užduotis"
-
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
-msgid "Done"
-msgstr "Atlikta"
-
-#: data/ui/new-task-row.ui:29
+#: data/ui/new-task-row.ui:31
 msgid "New task…"
 msgstr "Naujas užduotis…"
 
@@ -292,6 +271,23 @@ msgstr "Microsoft Exchange"
 #: data/ui/provider-selector.ui:154
 msgid "Or you can just store your tasks on this computer"
 msgstr "Arba galite tiesiog saugoti užduotis šiame kompiuteryje"
+
+#: data/ui/sidebar-list-row.ui:96 data/ui/sidebar-list-row.ui:115
+#| msgid "_Rename"
+msgid "Rename"
+msgstr "Pervadinti"
+
+#: data/ui/sidebar-list-row.ui:119
+msgid "Delete"
+msgstr "Ištrinti"
+
+#: data/ui/sidebar-provider-row.ui:96
+msgid "Loading…"
+msgstr "Įkeliama…"
+
+#: data/ui/window.ui:78
+msgid "_New List"
+msgstr "_Naujas sąrašas"
 
 #: plugins/background/gtd-plugin-background.c:150
 #, c-format
@@ -345,53 +341,76 @@ msgstr "Paleidžiant Darbus rodyti pradžios pranešimą"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Klaida įkeliant GNOME internetines paskyras"
 
-#: plugins/eds/gtd-provider-eds.c:139
+#: plugins/eds/gtd-provider-eds.c:140
 msgid "Failed to connect to task list"
 msgstr "Nepavyko prisijungti prie užduočių sąrašo šaltinio"
 
-#: plugins/eds/gtd-provider-eds.c:351
+#: plugins/eds/gtd-provider-eds.c:361
 msgid "An error occurred while creating a task"
 msgstr "Kilo klaida kuriant užduotį"
 
-#: plugins/eds/gtd-provider-eds.c:383
+#: plugins/eds/gtd-provider-eds.c:393
 msgid "An error occurred while modifying a task"
 msgstr "Kilo klaida keičiant užduotį"
 
-#: plugins/eds/gtd-provider-eds.c:404
+#: plugins/eds/gtd-provider-eds.c:414
 msgid "An error occurred while removing a task"
 msgstr "Kilo klaida šalinant užduotį"
 
-#: plugins/eds/gtd-provider-eds.c:422
+#: plugins/eds/gtd-provider-eds.c:432
 msgid "An error occurred while creating a task list"
 msgstr "Kilo klaida kuriant užduočių sąrašą"
 
-#: plugins/eds/gtd-provider-eds.c:444 plugins/eds/gtd-provider-eds.c:467
+#: plugins/eds/gtd-provider-eds.c:454 plugins/eds/gtd-provider-eds.c:477
 msgid "An error occurred while modifying a task list"
 msgstr "Kilo klaida keičiant užduočių sąrašą"
 
 #: plugins/eds/gtd-provider-local.c:50
-msgid "Local"
-msgstr "Vietinė"
-
-#: plugins/eds/gtd-provider-local.c:56
 msgid "On This Computer"
 msgstr "Šiame kompiuteryje"
 
-#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:307
-#: plugins/eds/gtd-task-list-eds.c:331
+#: plugins/eds/gtd-provider-local.c:62
+msgid "Local"
+msgstr "Vietinė"
+
+#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:310
+#: plugins/eds/gtd-task-list-eds.c:334
 msgid "Error fetching tasks from list"
 msgstr "Klaida gaunant užduotis iš sąrašo"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:110
+#: plugins/next-week-panel/gtd-next-week-panel.c:107
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:102 src/gtd-edit-pane.c:112
 msgid "No date set"
 msgstr "Data nenustatyta"
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:115
+#: plugins/today-panel/gtd-panel-today.c:201
+msgid "Overdue"
+msgstr "Vėluoja"
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:119
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:123
+#: plugins/score/score/__init__.py:101
+#: plugins/today-panel/gtd-panel-today.c:210
+#: plugins/today-panel/gtd-panel-today.c:276 src/gtd-task-row.c:144
+msgid "Today"
+msgstr "Šiandien"
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:123
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:127 src/gtd-task-row.c:148
+msgid "Tomorrow"
+msgstr "Rytoj"
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:372
+msgid "Next 7 Days"
+msgstr "Kitos 7 dienos"
 
 #. Translators: This message will never be used with '1 day ago'
 #. * but the singular form is required because some languages do not
 #. * have plurals, some languages reuse the singular form for numbers
 #. * like 21, 31, 41, etc.
 #.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:102
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:115
 #, c-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
@@ -399,34 +418,16 @@ msgstr[0] "Prieš %d dieną"
 msgstr[1] "Prieš %d dienas"
 msgstr[2] "Prieš %d dienų"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:147
-#| msgid "Yesterday"
-#| msgid_plural "%d days ago"
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:119 src/gtd-task-row.c:152
 msgid "Yesterday"
 msgstr "Vakar"
 
-#. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
-#: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:134
-#: plugins/today-panel/gtd-panel-today.c:139
-#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:139
-msgid "Today"
-msgstr "Šiandien"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:143
-msgid "Tomorrow"
-msgstr "Rytoj"
-
-#. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:365
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:370
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:507
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:378
 msgid "Scheduled"
 msgstr "Suplanuota"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:512
-#: plugins/today-panel/gtd-panel-today.c:278
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:535
+#: plugins/today-panel/gtd-panel-today.c:432
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
 msgid "Clear completed tasks…"
 msgstr "Slėpti užbaigtas užduotis…"
@@ -435,21 +436,31 @@ msgstr "Slėpti užbaigtas užduotis…"
 msgid "No task completed today"
 msgstr "Nėra šiandien baigtų užduočių"
 
-#: plugins/todoist/gtd-provider-todoist.c:212
+#: plugins/todoist/gtd-plugin-todoist.c:109
+msgid "GNOME To Do cannot connect to Todoist due to network issue"
+msgstr "GNOME Darbai negali prisijungti prie Todoist dėl tinklo problemų"
+
+#: plugins/todoist/gtd-plugin-todoist.c:110
+msgid ""
+"Not able to communicate with Todoist. Please check your internet "
+"connectivity."
+msgstr "Nepavyksta komunikuosi su Todoist. Patikrinkite savo interneto ryšį."
+
+#: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Error fetching Todoist account key"
 msgstr "Klaida gaunant Todoist paskyros raktą"
 
-#: plugins/todoist/gtd-provider-todoist.c:213
+#: plugins/todoist/gtd-provider-todoist.c:214
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Įsitikinkite, kad Todoist paskyra yra teisingai sukonfigūruota."
 
-#: plugins/todoist/gtd-provider-todoist.c:557
+#: plugins/todoist/gtd-provider-todoist.c:558
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr "GNOME Darbai neturi reikiamų teisių šiam veiksmui atlikti: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:565
+#: plugins/todoist/gtd-provider-todoist.c:566
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
@@ -457,23 +468,23 @@ msgstr ""
 "Netinkamas atsakas gautas iš Todoist serverių. Iš naujo paleiskite GNOME "
 "Darbus."
 
-#: plugins/todoist/gtd-provider-todoist.c:865
+#: plugins/todoist/gtd-provider-todoist.c:866
 msgid "An error occurred while updating a Todoist task"
 msgstr "Kilo klaida atnaujinant Todoist užduotį"
 
-#: plugins/todoist/gtd-provider-todoist.c:982
+#: plugins/todoist/gtd-provider-todoist.c:983
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Kilo klaida gaunant Todoist duomenis"
 
-#: plugins/todoist/gtd-provider-todoist.c:1057
+#: plugins/todoist/gtd-provider-todoist.c:1058
 msgid "An error occurred while updating Todoist"
 msgstr "Kilo klaida atnaujinant Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1117
+#: plugins/todoist/gtd-provider-todoist.c:1118
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1426
+#: plugins/todoist/gtd-provider-todoist.c:1433
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -501,7 +512,6 @@ msgid "Select a file"
 msgstr "Pasirinkite failą"
 
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:191
-#| msgid "Error while opening Todo.txt"
 msgid "Error opening Todo.txt file"
 msgstr "Klaida atveriant Todo.txt failą"
 
@@ -516,15 +526,15 @@ msgstr ""
 "Nerekomenduojama naudoti Todo.txt integracijose praktiniuose sistemos "
 "naudojimuose."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:326
+#: plugins/todo-txt/gtd-provider-todo-txt.c:591
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr "Klaida atveriant failų stebyklę. Todo.txt nebus stebimas"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:395
+#: plugins/todo-txt/gtd-provider-todo-txt.c:660
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:401
+#: plugins/todo-txt/gtd-provider-todo-txt.c:672
 msgid "On the Todo.txt file"
 msgstr "Todo.txt faile"
 
@@ -548,25 +558,25 @@ msgstr "Nesuplanuota"
 msgid "Unscheduled (%d)"
 msgstr "Nesuplanuota (%d)"
 
-#: src/gtd-application.c:72
+#: src/gtd-application.c:73
 msgid "Quit GNOME To Do"
 msgstr "Išeiti iš GNOME Darbų"
 
-#: src/gtd-application.c:73
+#: src/gtd-application.c:74
 msgid "Enable debug messages"
 msgstr "Įjungti derinimo pranešimus"
 
-#: src/gtd-application.c:146
+#: src/gtd-application.c:147
 #, c-format
 msgid "Copyright © %1$d The To Do authors"
 msgstr "Autorių teisės © priklauso %1$d Darbų autoriams"
 
-#: src/gtd-application.c:151
+#: src/gtd-application.c:152
 #, c-format
 msgid "Copyright © %1$d–%2$d The To Do authors"
 msgstr "Autorinės teisės © priklauso %1$d–%2$d Darbų autoriams"
 
-#: src/gtd-application.c:163
+#: src/gtd-application.c:164
 msgid "translator-credits"
 msgstr ""
 "Išvertė:\n"
@@ -617,83 +627,104 @@ msgid "You can add tasks using the <b>+</b> above"
 msgstr "Galite pridėti užduotis naudodami <b>+</b> aukščiau"
 
 #: src/gtd-plugin-dialog-row.c:97
-#| msgid "Error loading plugin"
 msgid "Error loading extension"
 msgstr "Klaida įkeliant plėtinį"
 
 #: src/gtd-plugin-dialog-row.c:97
-#| msgid "Error unloading plugin"
 msgid "Error unloading extension"
 msgstr "Klaida iškeliant plėtinį"
 
-#: src/gtd-task-list-view.c:292
+#: src/gtd-task-list-view.c:352
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Šios užduoties pašalinimas taip pat pašalins jos po-užduotis. Vis tiek "
 "pašalinti?"
 
-#: src/gtd-task-list-view.c:295
+#: src/gtd-task-list-view.c:355
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Pašalinus, užduočių nebebus galima atgauti."
 
-#: src/gtd-task-list-view.c:298 src/views/gtd-list-selector-panel.c:388
+#: src/gtd-task-list-view.c:358
 msgid "Cancel"
 msgstr "Atsisakyti"
 
-#: src/gtd-task-list-view.c:300
+#: src/gtd-task-list-view.c:360
 msgid "Remove"
 msgstr "Pašalinti"
 
-#: src/gtd-task-list-view.c:390
-#, c-format
-msgid "Done (%d)"
-msgstr "Atlikta (%d)"
-
-#: src/gtd-task-list-view.c:660
+#: src/gtd-task-list-view.c:802
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Užduotis <b>%s</b> pašalinta"
 
-#: src/gtd-task-list-view.c:684
+#: src/gtd-task-list-view.c:826 src/sidebar/gtd-sidebar-list-row.c:281
 msgid "Undo"
 msgstr "Atšaukti"
 
-#: src/gtd-window.c:476
+#: src/gtd-window.c:110
+msgid ""
+"This is a development build of To Do. You may experience errors, wrong "
+"behaviors, and data loss."
+msgstr ""
+"Tai yra kuriama Darbų versija. Gali kilti klaidų, neteisingo veikimo ar "
+"duomenų praradimų."
+
+#: src/gtd-window.c:471
 msgid "Details"
 msgstr "Detali informacija"
 
-#: src/gtd-window.c:689
-msgid "Loading your task lists…"
-msgstr "Įkeliami jūsų užduočių sąrašai…"
-
-#: src/gtd-window.c:793
+#: src/gtd-window.c:783
 msgid "Click a task list to select"
 msgstr "Spauskite ant užduoties jai pažymėti"
 
-#.
-#. * If there's no task available, draw a "No tasks" string at
-#. * the middle of the list thumbnail.
-#.
-#: src/views/gtd-list-selector-grid-item.c:250
-msgid "No tasks"
-msgstr "Nėra užduočių"
+#: src/sidebar/gtd-sidebar-list-row.c:278
+#, c-format
+#| msgid "Task <b>%s</b> removed"
+msgid "Task list <b>%s</b> removed"
+msgstr "Užduočių sąrašas <b>%s</b> pašalintas"
 
-#: src/views/gtd-list-selector-panel.c:381
-msgid "Remove the selected task lists?"
-msgstr "Pašalinti pažymėtus užduočių sąrašus?"
+#: src/sidebar/gtd-sidebar-list-row.c:307
+#, c-format
+#| msgid "_Rename"
+msgid "Rename %s"
+msgstr "Pervadinti %s"
 
-#: src/views/gtd-list-selector-panel.c:384
-msgid "Once removed, the task lists cannot be recovered."
-msgstr "Pašalinus, užduočių sąrašų nebebus galima atgauti."
+#~ msgid "Lists"
+#~ msgstr "Sąrašai"
 
-#: src/views/gtd-list-selector-panel.c:396
-msgid "Remove task lists"
-msgstr "Pašalinti užduočių sąrašus"
+#~ msgid "Tasks"
+#~ msgstr "Užduotys"
 
-#: src/views/gtd-list-selector-panel.c:709
-#| msgid "Clear completed tasks…"
-msgid "Clear completed tasks"
-msgstr "Išvalyti užbaigtas užduotis"
+#~ msgid "Name of the task list"
+#~ msgstr "Naujo užduočių sąrašo pavadinimas"
+
+#~ msgid "Show or hide completed tasks"
+#~ msgstr "Rodyti ar slėpti užbaigtas užduotis"
+
+#~ msgid "Done"
+#~ msgstr "Atlikta"
+
+#~ msgid "Done (%d)"
+#~ msgstr "Atlikta (%d)"
+
+#~ msgid "Loading your task lists…"
+#~ msgstr "Įkeliami jūsų užduočių sąrašai…"
+
+#~ msgid "No tasks"
+#~ msgstr "Nėra užduočių"
+
+#~ msgid "Remove the selected task lists?"
+#~ msgstr "Pašalinti pažymėtus užduočių sąrašus?"
+
+#~ msgid "Once removed, the task lists cannot be recovered."
+#~ msgstr "Pašalinus, užduočių sąrašų nebebus galima atgauti."
+
+#~ msgid "Remove task lists"
+#~ msgstr "Pašalinti užduočių sąrašus"
+
+#~| msgid "Clear completed tasks…"
+#~ msgid "Clear completed tasks"
+#~ msgstr "Išvalyti užbaigtas užduotis"
 
 #~ msgid "New List…"
 #~ msgstr "Naujas sąrašas…"
@@ -709,9 +740,6 @@ msgstr "Išvalyti užbaigtas užduotis"
 
 #~ msgid "Priority"
 #~ msgstr "Prioritetas"
-
-#~ msgid "Delete"
-#~ msgstr "Ištrinti"
 
 #~ msgid "Error loading Evolution-Data-Server backend"
 #~ msgstr "Klaida įkeliant Evolution-Data-Server vidinę pusę"
