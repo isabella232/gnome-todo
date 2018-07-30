@@ -39,6 +39,10 @@ class UnscheduledPanel(Gtk.Box, Gtd.Panel):
     menu = GObject.Property(type=Gio.Menu, default=None)
     name = GObject.Property(type=str, default="unscheduled-panel")
     title = GObject.Property(type=str, default=_("Unscheduled"))
+    subtitle = GObject.Property(type=str, default=None)
+    priority = GObject.Property(type=int, default=0)
+    icon = GObject.Property(type=Gio.ThemedIcon, default=None)
+
 
     def __init__(self):
         Gtk.Box.__init__(self)
@@ -57,6 +61,8 @@ class UnscheduledPanel(Gtk.Box, Gtd.Panel):
         self.menu = Gio.Menu()
         self.menu.append(_("Clear completed tasks…"),
                          "list.clear-completed-tasks")
+
+        self.icon = Gio.ThemedIcon.new("appointment-missed-symbolic")
 
         self.add(self.view)
         self.show_all()
@@ -93,6 +99,9 @@ class UnscheduledPanel(Gtk.Box, Gtd.Panel):
 
     def do_get_menu(self):
         return self.menu
+
+    def do_get_priority(self):
+        return self.priority
 
     def do_get_panel_name(self):
         return "unscheduled-panel"
