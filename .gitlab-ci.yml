@@ -10,6 +10,10 @@ variables:
 stages:
    - flatpak
    - build
+   - review
+
+variables:
+    DEVELOPMENT_FLATPAK_ID: "TodoDevel"
 
 
 ##################
@@ -61,8 +65,6 @@ ubuntu:devel:
 flatpak:master:
     image: registry.gitlab.gnome.org/gnome/gnome-runtime-images/gnome:3.28
     stage: flatpak
-    variables:
-      DEVELOPMENT_FLATPAK_ID: "TodoDevel"
 
     script:
     # Print debug information
@@ -82,3 +84,27 @@ flatpak:master:
     cache:
         paths:
         - .flatpak-builder/cache
+
+review:
+    stage: review
+    dependencies:
+        - flatpak:master
+    script:
+        - echo "Generating flatpak deployment"
+    artifacts:
+        paths:
+            - org.gnome.$DEVELOPMENT_FLATPAK_ID.flatpak
+        expire_in: 30 days
+    environment:
+        name: review/$CI_COMMIT_REF_NAME
+        url: https://gitlab.gnome.org/$CI_PROJECT_PATH/-/jobs/$CI_JOB_ID/artifacts/raw/${BUNDLE}
+        on_stop: stop_review
+
+stop_review:
+    stage: review
+    script:
+        - echo "Stopping flatpak deployment"
+    when: manual
+    environment:
+        name: review/$CI_COMMIT_REF_NAME
+        action: stop
