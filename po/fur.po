@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-06-13 03:09+0000\n"
-"PO-Revision-Date: 2018-06-23 09:32+0200\n"
+"POT-Creation-Date: 2018-07-22 16:54+0000\n"
+"PO-Revision-Date: 2018-08-02 07:18+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
@@ -430,6 +430,16 @@ msgstr "Plate ativitâts completadis..."
 msgid "No task completed today"
 msgstr "Nissune ativitât completade vuê"
 
+#: plugins/todoist/gtd-plugin-todoist.c:109
+msgid "GNOME To Do cannot connect to Todoist due to network issue"
+msgstr "GNOME Di fâ nol pues conetisi a Todoist par vie di problemis di rêt"
+
+#: plugins/todoist/gtd-plugin-todoist.c:110
+msgid ""
+"Not able to communicate with Todoist. Please check your internet "
+"connectivity."
+msgstr "No si rive a comunicâ cun Todoist. Controle la conession a internet."
+
 #: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Error fetching Todoist account key"
 msgstr "Erôr tal recuperâ la clâf dal account Todoist"
@@ -510,15 +520,15 @@ msgstr ""
 "podarès cjatâ instabilitât, erôrs e forsit pierditis di dâts. Nol è conseât "
 "doprâ la integrazion di Todo.txt su sistemis di produzion."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:336
+#: plugins/todo-txt/gtd-provider-todo-txt.c:591
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr "Erôr tal vierzi il monitorâ dal file. Todo.txt nol sarà monitorât"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:405
+#: plugins/todo-txt/gtd-provider-todo-txt.c:660
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:417
+#: plugins/todo-txt/gtd-provider-todo-txt.c:672
 msgid "On the Todo.txt file"
 msgstr "Sul file Todo.txt"
 
