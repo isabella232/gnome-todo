@@ -4,27 +4,30 @@
 # Adriannho <raziel_theripper@yahoo.com>, 2015.
 # johan <schulz@k.dk>, 2015.
 # Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>, 2017, 2018.
+# Florentina Mușat  <florentina.musat.28 [at] gmail [dot] com>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo gnome-3-18\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-06-13 03:09+0000\n"
-"PO-Revision-Date: 2018-06-17 22:09+0300\n"
-"Last-Translator: Florentina Mușat <florentina.musat.28 [at] gmail [dot] "
+"POT-Creation-Date: 2018-07-22 16:54+0000\n"
+"PO-Revision-Date: 2018-08-03 15:14+0300\n"
+"Last-Translator: Florentina Mușat  <florentina.musat.28 [at] gmail [dot] "
 "com>\n"
-"Language-Team: Gnome Romanian Translation Team\n"
+"com>\n"
+"Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);\n"
-"X-Generator: Poedit 2.0.8\n"
+"20)) ? 1 : 2);\n"
+"X-Generator: Vé 0.1.4\n"
 "X-Project-Style: gnome\n"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:157
-#: src/gtd-window.c:788 src/gtd-window.c:819 src/main.c:35
+#: data/appdata/org.gnome.Todo.appdata.xml.in:7 data/org.gnome.Todo.desktop.in:3
+#: src/gtd-application.c:157 src/gtd-window.c:788 src/gtd-window.c:819
+#: src/main.c:35
 msgid "To Do"
 msgstr "To Do"
 
@@ -390,8 +393,7 @@ msgstr "Întârziat"
 
 #: plugins/next-week-panel/gtd-next-week-panel.c:119
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:123
-#: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:210
+#: plugins/score/score/__init__.py:101 plugins/today-panel/gtd-panel-today.c:210
 #: plugins/today-panel/gtd-panel-today.c:276 src/gtd-task-row.c:144
 msgid "Today"
 msgstr "Astăzi"
@@ -409,7 +411,6 @@ msgstr "Următoarele 7 zile"
 #. * but the singular form is required because some languages do not
 #. * have plurals, some languages reuse the singular form for numbers
 #. * like 21, 31, 41, etc.
-#.
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:115
 #, c-format
 msgid "%d day ago"
@@ -436,6 +437,18 @@ msgstr "Golește sarcinile efectuate…"
 msgid "No task completed today"
 msgstr "Nicio sarcină efectuată astăzi"
 
+#: plugins/todoist/gtd-plugin-todoist.c:109
+msgid "GNOME To Do cannot connect to Todoist due to network issue"
+msgstr ""
+"To Do GNOME nu se poate conecta la Todoist din cauza unei probleme de rețea"
+
+#: plugins/todoist/gtd-plugin-todoist.c:110
+msgid ""
+"Not able to communicate with Todoist. Please check your internet "
+"connectivity."
+msgstr "Nu se poate comunica cu Todoist. Verificați conexiunea"
+"la internet."
+
 #: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Error fetching Todoist account key"
 msgstr "Eroare la preluarea cheii contului Todoist"
@@ -448,15 +461,12 @@ msgstr "Asigurați-vă că contul Todoist este corect configurat."
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
-msgstr ""
-"To Do GNOME nu are permisiunile necesare să execute această acțiune: %s"
+msgstr "To Do GNOME nu are permisiunile necesare să execute această acțiune: %s"
 
 #: plugins/todoist/gtd-provider-todoist.c:566
 #, c-format
-msgid ""
-"Invalid response received from Todoist servers. Please reload GNOME To Do."
-msgstr ""
-"Răspuns nevalid primit de la serverele Todoist. Reîncărcați To Do GNOME."
+msgid "Invalid response received from Todoist servers. Please reload GNOME To Do."
+msgstr "Răspuns nevalid primit de la serverele Todoist. Reîncărcați To Do GNOME."
 
 #: plugins/todoist/gtd-provider-todoist.c:866
 msgid "An error occurred while updating a Todoist task"
@@ -516,16 +526,16 @@ msgstr ""
 "Nu este recomandat să utilizați integrarea Todo.txt pe sistemele de "
 "producție."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:336
+#: plugins/todo-txt/gtd-provider-todo-txt.c:591
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr ""
 "Eroare la deschiderea monitorului de fișiere. Todo.txt nu va fi monitorizat"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:405
+#: plugins/todo-txt/gtd-provider-todo-txt.c:660
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:417
+#: plugins/todo-txt/gtd-provider-todo-txt.c:672
 msgid "On the Todo.txt file"
 msgstr "În fișierul Todo.txt"
 
@@ -633,8 +643,7 @@ msgstr ""
 
 #: src/gtd-task-list-view.c:355
 msgid "Once removed, the tasks cannot be recovered."
-msgstr ""
-"Odată ce a fost eliminată, lista cu sarcini nu mai poate fi recuperată."
+msgstr "Odată ce a fost eliminată, lista cu sarcini nu mai poate fi recuperată."
 
 #: src/gtd-task-list-view.c:358
 msgid "Cancel"
