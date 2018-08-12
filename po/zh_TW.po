@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-06-13 03:09+0000\n"
-"PO-Revision-Date: 2018-06-13 16:48+0800\n"
+"POT-Creation-Date: 2018-07-22 16:54+0000\n"
+"PO-Revision-Date: 2018-08-12 16:41+0800\n"
 "Last-Translator: pan93412 <pan93412@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) <chinese-l10n@googlegroups.com>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 1.8.4\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
@@ -422,6 +422,16 @@ msgstr "清除完成的事項…"
 msgid "No task completed today"
 msgstr "今天沒有完成的事項"
 
+#: plugins/todoist/gtd-plugin-todoist.c:109
+msgid "GNOME To Do cannot connect to Todoist due to network issue"
+msgstr "《GNOME 待辦事項》因為網路問題而無法連線到 Todoist"
+
+#: plugins/todoist/gtd-plugin-todoist.c:110
+msgid ""
+"Not able to communicate with Todoist. Please check your internet "
+"connectivity."
+msgstr "無法與 Todoist 通信。請檢查您的網路連線能力。"
+
 #: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Error fetching Todoist account key"
 msgstr "擷取待辦列表帳號金鑰時發生錯誤"
@@ -498,15 +508,15 @@ msgstr ""
 "<b>警告！</b> Todo.txt 支援還處於實驗階段，尚未穩定。您可能會遇到程式不穩定的"
 "狀況、錯誤、甚至資料喪失等。不建議您在生產系統上使用 Todo.txt 整合。"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:336
+#: plugins/todo-txt/gtd-provider-todo-txt.c:591
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr "開啟檔案監控時發生錯誤。Todo.txt 將不會被監控"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:405
+#: plugins/todo-txt/gtd-provider-todo-txt.c:660
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:417
+#: plugins/todo-txt/gtd-provider-todo-txt.c:672
 msgid "On the Todo.txt file"
 msgstr "於 Todo.txt 檔案"
 
