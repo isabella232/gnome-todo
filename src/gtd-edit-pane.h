@@ -28,7 +28,7 @@ G_BEGIN_DECLS
 
 #define GTD_TYPE_EDIT_PANE (gtd_edit_pane_get_type())
 
-G_DECLARE_FINAL_TYPE (GtdEditPane, gtd_edit_pane, GTD, EDIT_PANE, GtkGrid)
+G_DECLARE_FINAL_TYPE (GtdEditPane, gtd_edit_pane, GTD, EDIT_PANE, GtkBox)
 
 GtkWidget*           gtd_edit_pane_new                           (void);
 

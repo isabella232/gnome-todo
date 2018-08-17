@@ -29,7 +29,7 @@
 
 struct _GtdEditPane
 {
-  GtkGrid            parent;
+  GtkBox             parent;
 
   GtkCalendar       *calendar;
   GtkLabel          *date_label;
@@ -43,7 +43,7 @@ struct _GtdEditPane
   GtdTask           *task;
 };
 
-G_DEFINE_TYPE (GtdEditPane, gtd_edit_pane, GTK_TYPE_GRID)
+G_DEFINE_TYPE (GtdEditPane, gtd_edit_pane, GTK_TYPE_BOX)
 
 enum
 {
