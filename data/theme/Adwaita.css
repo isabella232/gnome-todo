@@ -65,6 +65,7 @@ taskrow { transition: all 150ms cubic-bezier(0.25, 0.46, 0.45, 0.94); }
 taskrow:hover { transition: none; }
 taskrow:backdrop { transition: 200ms ease-out; }
 taskrow.activatable:hover { background-color: alpha(@theme_fg_color, 0.07); }
+taskrow.activatable.active { background-color: alpha(@theme_fg_color, 0.07); }
 taskrow.activatable:active { box-shadow: inset 0 2px 2px -2px alpha(black, 0.8); }
 taskrow.activatable:backdrop:hover { background-color: transparent; }
 

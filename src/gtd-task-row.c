@@ -922,6 +922,11 @@ gtd_task_row_set_active (GtdTaskRow *self,
       self->changed = FALSE;
     }
 
+  if (active)
+    gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (self)), "active");
+  else
+    gtk_style_context_remove_class (gtk_widget_get_style_context (GTK_WIDGET (self)), "active");
+
   g_signal_emit (self, active ? signals[ENTER] : signals[EXIT], 0);
 }
 
