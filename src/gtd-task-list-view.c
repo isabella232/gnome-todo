@@ -1281,14 +1281,14 @@ gtd_task_list_view_set_model (GtdTaskListView *view,
 
   schedule_scroll_to_bottom (view);
 
+  gtd_new_task_row_set_show_list_selector (GTD_NEW_TASK_ROW (priv->new_task_row), !GTD_IS_TASK_LIST (model));
+
   if (!GTD_IS_TASK_LIST (model))
     return;
 
   list = GTD_TASK_LIST (model);
 
   g_debug ("%p: Setting task list to '%s'", view, gtd_task_list_get_name (list));
-
-  gtd_new_task_row_set_show_list_selector (GTD_NEW_TASK_ROW (priv->new_task_row), list == NULL);
 
   /* Add the color to provider */
   color = gtd_task_list_get_color (list);
