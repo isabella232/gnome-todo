@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-06-13 03:09+0000\n"
-"PO-Revision-Date: 2018-08-19 16:42+0300\n"
+"POT-Creation-Date: 2018-08-19 13:45+0000\n"
+"PO-Revision-Date: 2018-08-19 16:58+0300\n"
 "Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
 "Language-Team: Greek, Modern (1453-) <opensuse-translation-el@opensuse.org>\n"
 "Language: el\n"
@@ -429,13 +429,25 @@ msgstr "Προγραμματισμένο"
 
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:535
 #: plugins/today-panel/gtd-panel-today.c:432
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
 msgid "Clear completed tasks…"
 msgstr "Εκκαθάριση ολοκληρωμένων εργασιών…"
 
 #: plugins/score/score/__init__.py:90
 msgid "No task completed today"
 msgstr "Δεν ολοκληρώθηκε καμία εργασία σήμερα"
+
+#: plugins/todoist/gtd-plugin-todoist.c:109
+msgid "GNOME To Do cannot connect to Todoist due to network issue"
+msgstr ""
+"Η εφαρμογή Εργασίες του GNOME δεν μπορεί να συνδεθεί με το Todoist λόγω "
+"προβλήματος δικτύου"
+
+#: plugins/todoist/gtd-plugin-todoist.c:110
+msgid ""
+"Not able to communicate with Todoist. Please check your internet "
+"connectivity."
+msgstr "Αδυναμία επικοινωνίας με το Todoist. Ελέγξτε τη σύνδεση στο διαδίκτυο."
 
 #: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Error fetching Todoist account key"
@@ -518,17 +530,17 @@ msgstr ""
 "Μπορεί να αντιμετωπίσετε αστάθεια, σφάλματα και ενδεχομένως απώλεια "
 "δεδομένων. Δεν συνιστάται η ενσωμάτωση του Todo.txt στα παραγωγικά συστήματα."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:336
+#: plugins/todo-txt/gtd-provider-todo-txt.c:591
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr ""
 "Σφάλμα κατά το άνοιγμα της παρακολούθησης αρχείων. Το αρχείο Todo.txt δεν θα "
 "παρακολουθείται"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:405
+#: plugins/todo-txt/gtd-provider-todo-txt.c:660
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:417
+#: plugins/todo-txt/gtd-provider-todo-txt.c:672
 msgid "On the Todo.txt file"
 msgstr "Στο αρχείο Todo.txt"
 
@@ -542,12 +554,12 @@ msgstr "Η προέλευση του αρχείου Todo.txt"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:103
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:112
 msgid "Unscheduled"
 msgstr "Μη προγραμματισμένο"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:106
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
 #, python-format
 msgid "Unscheduled (%d)"
 msgstr "Μη προγραμματισμένο (%d)"
