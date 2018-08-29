@@ -27,6 +27,7 @@
 #include "gtd-task-list-view.h"
 #include "gtd-utils.h"
 
+#include <glib/gi18n.h>
 #include <math.h>
 
 struct _GtdNewTaskRow
@@ -34,9 +35,6 @@ struct _GtdNewTaskRow
   GtkBin              parent;
 
   GtkEntry           *entry;
-  GtkImage           *list_color_icon;
-  GtkLabel           *list_name_label;
-  GtkWidget          *list_selector_button;
   GtkSizeGroup       *sizegroup;
   GtkListBox         *tasklist_list;
   GtkPopover         *tasklist_popover;
@@ -44,6 +42,8 @@ struct _GtdNewTaskRow
   GtdTaskList        *selected_tasklist;
 
   GtdManager         *manager;
+
+  gboolean            show_list_selector;
 };
 
 G_DEFINE_TYPE (GtdNewTaskRow, gtd_new_task_row, GTK_TYPE_BIN)
@@ -81,11 +81,37 @@ gtd_new_task_row_event (GtkWidget *widget,
 }
 
 static void
-set_selected_tasklist (GtdNewTaskRow *self,
-                       GtdTaskList   *list)
+update_secondary_icon (GtdNewTaskRow *self)
 {
   g_autoptr (GdkPaintable) paintable = NULL;
   g_autoptr (GdkRGBA) color = NULL;
+  g_autofree gchar *tooltip = NULL;
+
+  if (!self->show_list_selector)
+    {
+      gtk_entry_set_icon_from_paintable (self->entry, GTK_ENTRY_ICON_SECONDARY, NULL);
+      return;
+    }
+
+  if (!self->selected_tasklist)
+    return;
+
+  color = gtd_task_list_get_color (self->selected_tasklist);
+  paintable = gtd_create_circular_paintable (color, 12);
+
+  gtk_entry_set_icon_from_paintable (self->entry, GTK_ENTRY_ICON_SECONDARY, paintable);
+
+  /* Translators: %1$s is the task list name, %2$s is the provider name */
+  tooltip = g_strdup_printf (_("%1$s \t <small>%2$s</small>"),
+                             gtd_task_list_get_name (self->selected_tasklist),
+                             gtd_provider_get_description (gtd_task_list_get_provider (self->selected_tasklist)));
+  gtk_entry_set_icon_tooltip_markup (self->entry, GTK_ENTRY_ICON_SECONDARY, tooltip);
+}
+
+static void
+set_selected_tasklist (GtdNewTaskRow *self,
+                       GtdTaskList   *list)
+{
   GtdManager *manager;
 
   manager = gtd_manager_get_default ();
@@ -94,14 +120,18 @@ set_selected_tasklist (GtdNewTaskRow *self,
   if (!list)
     list = gtd_manager_get_default_task_list (manager);
 
-  if (!g_set_object (&self->selected_tasklist, list))
-    return;
+  if (g_set_object (&self->selected_tasklist, list))
+    update_secondary_icon (self);
+}
 
-  color = gtd_task_list_get_color (list);
-  paintable = gtd_create_circular_paintable (color, 12);
+static void
+show_task_list_selector_popover (GtdNewTaskRow *self)
+{
+  GdkRectangle rect;
 
-  gtk_image_set_from_paintable (self->list_color_icon, paintable);
-  gtk_label_set_label (self->list_name_label, gtd_task_list_get_name (list));
+  gtk_entry_get_icon_area (self->entry, GTK_ENTRY_ICON_SECONDARY, &rect);
+  gtk_popover_set_pointing_to (self->tasklist_popover, &rect);
+  gtk_popover_popup (self->tasklist_popover);
 }
 
 /*
@@ -171,6 +201,23 @@ tasklist_selected_cb (GtkListBox    *listbox,
 
   gtk_popover_popdown (self->tasklist_popover);
   gtk_entry_grab_focus_without_selecting (self->entry);
+}
+
+static void
+on_entry_icon_released_cb (GtkEntry             *entry,
+                           GtkEntryIconPosition  position,
+                           GtdNewTaskRow        *self)
+{
+  switch (position)
+    {
+    case GTK_ENTRY_ICON_PRIMARY:
+      entry_activated_cb (self);
+      break;
+
+    case GTK_ENTRY_ICON_SECONDARY:
+      show_task_list_selector_popover (self);
+      break;
+    }
 }
 
 static void
@@ -322,17 +369,15 @@ gtd_new_task_row_class_init (GtdNewTaskRowClass *klass)
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/new-task-row.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdNewTaskRow, entry);
-  gtk_widget_class_bind_template_child (widget_class, GtdNewTaskRow, list_color_icon);
-  gtk_widget_class_bind_template_child (widget_class, GtdNewTaskRow, list_name_label);
-  gtk_widget_class_bind_template_child (widget_class, GtdNewTaskRow, list_selector_button);
   gtk_widget_class_bind_template_child (widget_class, GtdNewTaskRow, sizegroup);
   gtk_widget_class_bind_template_child (widget_class, GtdNewTaskRow, tasklist_list);
   gtk_widget_class_bind_template_child (widget_class, GtdNewTaskRow, tasklist_popover);
 
   gtk_widget_class_bind_template_callback (widget_class, entry_activated_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_entry_icon_released_cb);
   gtk_widget_class_bind_template_callback (widget_class, tasklist_selected_cb);
 
-  gtk_widget_class_set_css_name (widget_class, "taskrow");
+  gtk_widget_class_set_css_name (widget_class, "newtaskrow");
 }
 
 static void
@@ -400,5 +445,9 @@ gtd_new_task_row_set_show_list_selector (GtdNewTaskRow *self,
 {
   g_return_if_fail (GTD_IS_NEW_TASK_ROW (self));
 
-  gtk_widget_set_visible (self->list_selector_button, show_list_selector);
+  if (self->show_list_selector == show_list_selector)
+    return;
+
+  self->show_list_selector = show_list_selector;
+  update_secondary_icon (self);
 }

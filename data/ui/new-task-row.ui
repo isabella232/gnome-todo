@@ -6,77 +6,25 @@
     <property name="margin-top">12</property>
     <property name="height-request">42</property>
     <property name="halign">center</property>
-    <style>
-      <class name="new-task-row" />
-    </style>
+    <property name="css-name">newtaskrow</property>
 
     <child>
-      <object class="GtkBox">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <style>
-          <class name="linked" />
-        </style>
-
-        <child>
-          <object class="GtkEntry" id="entry">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="hexpand">True</property>
-            <property name="placeholder-text" translatable="yes">New task…</property>
-            <property name="primary-icon-name">list-add-symbolic</property>
-            <signal name="activate" handler="entry_activated_cb" object="GtdNewTaskRow" swapped="yes" />
-            <style>
-              <class name="flat" />
-            </style>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkMenuButton" id="list_selector_button">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="popover">tasklist_popover</property>
-            <style>
-              <class name="flat" />
-            </style>
-            <child>
-              <object class="GtkBox">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="spacing">6</property>
-                <property name="margin-end">6</property>
-                <child>
-                  <object class="GtkImage" id="list_color_icon">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="width-request">12</property>
-                    <property name="height-request">12</property>
-                    <property name="halign">center</property>
-                    <property name="valign">center</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="list_name_label">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="max_width_chars">20</property>
-                    <property name="ellipsize">end</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-          </object>
-        </child>
+      <object class="GtkEntry" id="entry">
+        <property name="can_focus">True</property>
+        <property name="hexpand">True</property>
+        <property name="placeholder-text" translatable="yes">New task…</property>
+        <property name="primary-icon-name">list-add-symbolic</property>
+        <signal name="activate" handler="entry_activated_cb" object="GtdNewTaskRow" swapped="yes" />
+        <signal name="icon-release" handler="on_entry_icon_released_cb" object="GtdNewTaskRow" swapped="no" />
       </object>
     </child>
   </template>
 
   <object class="GtkPopover" id="tasklist_popover">
     <property name="can_focus">False</property>
+    <property name="relative-to">entry</property>
     <child>
       <object class="GtkListBox" id="tasklist_list">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="margin">12</property>
         <property name="selection_mode">none</property>
