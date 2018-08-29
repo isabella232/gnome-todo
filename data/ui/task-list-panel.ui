@@ -38,7 +38,7 @@
 
         <child>
           <object class="GtkModelButton">
-            <property name="label" translatable="yes">Clear completed tasks</property>
+            <property name="label" translatable="yes">Clear completed tasks…</property>
             <property name="action-name">list.clear-completed-tasks</property>
           </object>
         </child>
