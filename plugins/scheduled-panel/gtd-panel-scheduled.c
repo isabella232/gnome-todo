@@ -156,7 +156,7 @@ create_label (const gchar *text,
 
   label = g_object_new (GTK_TYPE_LABEL,
                         "label", text,
-                        "margin-left", 12,
+                        "margin-start", 12,
                         "margin-bottom", 6,
                         "margin-top", first_header ? 6 : 18,
                         "xalign", 0.0,
@@ -324,17 +324,12 @@ gtd_panel_scheduled_count_tasks (GtdPanelScheduled *panel)
           task = g_list_model_get_item (l->data, i);
           task_dt = gtd_task_get_due_date (task);
 
-          /*
-           * GtdTaskListView automagically updates the list
-           * whenever a task is added/removed/changed.
-           */
-          if (!task_dt)
+          if (gtd_task_get_complete (task) || !task_dt)
             continue;
 
           g_list_store_insert_sorted (panel->model, task, sort_func, NULL);
 
-          if (!gtd_task_get_complete (task))
-            number_of_tasks++;
+          number_of_tasks++;
         }
     }
 
