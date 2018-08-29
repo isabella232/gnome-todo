@@ -30,7 +30,7 @@
 
 
 #define GTD_NEXT_WEEK_PANEL_NAME     "next-week-panel"
-#define GTD_NEXT_WEEK_PANEL_PRIORITY 300
+#define GTD_NEXT_WEEK_PANEL_PRIORITY 700
 
 struct _GtdNextWeekPanel
 {
