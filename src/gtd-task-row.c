@@ -53,6 +53,7 @@ struct _GtdTaskRow
 
   /* dnd widgets */
   GtkWidget          *dnd_box;
+  GtkWidget          *dnd_frame;
   GtkWidget          *dnd_icon;
   gint                clicked_x;
   gint                clicked_y;
@@ -353,6 +354,8 @@ on_drag_end_cb (GtkWidget  *event_box,
 {
   GTD_ENTRY;
 
+  gtd_task_row_unset_drag_offset (self);
+
   gtk_widget_set_cursor_from_name (GTK_WIDGET (self), NULL);
   gtk_widget_show (GTK_WIDGET (self));
 
@@ -366,6 +369,8 @@ on_drag_failed_cb (GtkWidget     *widget,
                    GtdTaskRow    *self)
 {
   GTD_ENTRY;
+
+  gtd_task_row_unset_drag_offset (self);
 
   gtk_widget_set_cursor_from_name (GTK_WIDGET (self), NULL);
   gtk_widget_show (GTK_WIDGET (self));
@@ -692,6 +697,7 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/task-row.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, dnd_box);
+  gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, dnd_frame);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, dnd_icon);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, done_check);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, edit_panel_revealer);
@@ -945,7 +951,63 @@ gtd_task_row_get_x_offset (GtdTaskRow *self)
   g_return_val_if_fail (GTD_IS_TASK_ROW (self), -1);
 
   if (gtk_widget_get_direction (GTK_WIDGET (self)) == GTK_TEXT_DIR_RTL)
-    return gtk_widget_get_allocated_width (GTK_WIDGET (self)) - self->clicked_x;
+    return gtk_widget_get_width (GTK_WIDGET (self)) - self->clicked_x;
   else
     return self->clicked_x;
+}
+
+void
+gtd_task_row_set_drag_offset (GtdTaskRow *self,
+                              GdkDrag    *drag,
+                              gint        x_offset)
+{
+  GtkWidget *source_widget;
+  GtkWidget *source_row;
+  gint current_task_depth;
+  gint depth;
+
+  g_return_if_fail (GTD_IS_TASK_ROW (self));
+
+  /* Negative values are discarded */
+  x_offset = MAX (x_offset, 0);
+
+  /* Make the DnD frame match the height of the dragged row */
+  source_widget = gtk_drag_get_source_widget (drag);
+  source_row = gtk_widget_get_ancestor (source_widget, GTK_TYPE_LIST_BOX_ROW);
+  gtk_widget_set_size_request (self->dnd_frame, -1, gtk_widget_get_height (source_row));
+
+  current_task_depth = gtd_task_get_depth (self->task);
+  depth = CLAMP (x_offset / 32, current_task_depth, current_task_depth + 1);
+  gtk_widget_set_margin_start (self->dnd_frame, depth * 32 + 12);
+
+  gtk_widget_show (self->dnd_frame);
+}
+
+void
+gtd_task_row_unset_drag_offset (GtdTaskRow *self)
+{
+  g_return_if_fail (GTD_IS_TASK_ROW (self));
+
+  gtk_widget_hide (self->dnd_frame);
+}
+
+GtdTask*
+gtd_task_row_get_dnd_drop_task (GtdTaskRow *self)
+{
+  GtdTask *task;
+  gint task_depth;
+  gint depth;
+  gint i;
+
+  g_return_val_if_fail (GTD_IS_TASK_ROW (self), NULL);
+
+  task = self->task;
+  task_depth = gtd_task_get_depth (task);
+  depth = (gtk_widget_get_margin_start (self->dnd_frame) - 12) / 32;
+
+  /* Find the real parent */
+  for (i = task_depth - depth; i >= 0; i--)
+    task = gtd_task_get_parent (task);
+
+  return task;
 }

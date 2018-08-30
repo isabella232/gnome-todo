@@ -56,13 +56,6 @@
                         <signal name="exit" handler="on_task_row_exited_cb" object="GtdTaskListView" swapped="yes" />
                       </object>
                     </child>
-
-                    <child>
-                      <object class="GtdDndRow" id="dnd_row">
-                        <property name="visible">False</property>
-                        <signal name="notify::row-above" handler="gtk_list_box_invalidate_sort" object="listbox" swapped="yes" />
-                      </object>
-                    </child>
                   </object>
                   <packing>
                     <property name="name">listbox</property>

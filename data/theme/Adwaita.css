@@ -88,11 +88,11 @@ taskrow.complete > * { opacity: 0.5; }
 taskrow.complete entry.title { text-decoration-line: line-through; }
 
 /* dnd row */
-dndrow frame { border: solid 2px; }
-tasklistview { background-color: @theme_base_color; }
+taskrow box.dnd {
+    background: alpha(@theme_fg_color, 0.1);
+}
 
-tasklistview.dark  dndrow frame { background: alpha(white, 0.25); border-color: alpha(white, 0.5);}
-tasklistview.light dndrow frame { background: alpha(black, 0.25); border-color: alpha(black, 0.5);}
+tasklistview { background-color: @theme_base_color; }
 
 /* new task row */
 newtaskrow entry { padding: 0 16px; }
