@@ -56,7 +56,7 @@ config_h.set('NDEBUG', not gnome_todo_debug)
 # package
 set_defines = [
   ['PACKAGE', meson.project_name()],
-  ['PACKAGE_BUGREPORT', 'http://bugzilla.gnome.org/enter_bug.cgi?product=' + meson.project_name()],
+  ['PACKAGE_BUGREPORT', 'https://gitlab.gnome.org/GNOME/' + meson.project_name() + '/issues/new'],
   ['PACKAGE_NAME', meson.project_name()],
   ['PACKAGE_STRING', '@0@ @1@'.format(meson.project_name(), gnome_todo_version)],
   ['PACKAGE_TARNAME', meson.project_name()],
