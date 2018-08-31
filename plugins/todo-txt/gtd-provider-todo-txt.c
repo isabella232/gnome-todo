@@ -91,12 +91,10 @@ print_task (GString *output,
   GDateTime *completion_dt;
   GDateTime *creation_dt;
   const gchar *description;
-  gint priority;
   gint depth;
   gboolean is_complete;
 
   is_complete = gtd_task_get_complete (task);
-  priority = gtd_task_get_priority (task);
   dt = gtd_task_get_due_date (task);
   list = gtd_task_get_list (task);
   description = gtd_task_get_description (task);
@@ -110,16 +108,6 @@ print_task (GString *output,
 
   if (is_complete)
     g_string_append (output, "x ");
-
-  if (priority)
-    {
-      if (priority == 1)
-        g_string_append (output, "(C) ");
-      else if (priority == 2)
-        g_string_append (output, "(B) ");
-      else if (priority == 3)
-        g_string_append (output, "(A) ");
-    }
 
   if (is_complete && completion_dt)
     {

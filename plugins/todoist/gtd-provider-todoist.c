@@ -348,7 +348,6 @@ parse_tasks (GtdProviderTodoist *self,
       gint64 position;
       gint64 indent;
       gint64 id;
-      gint priority;
 
       object = json_node_get_object (l->data);
 
@@ -357,7 +356,6 @@ parse_tasks (GtdProviderTodoist *self,
         continue;
 
       title = json_object_get_string_member (object, "content");
-      priority = json_object_get_int_member (object, "priority");
       id = json_object_get_int_member (object, "id");
       project = json_object_get_int_member (object, "project_id");
       complete = json_object_get_int_member (object, "checked");
@@ -372,7 +370,6 @@ parse_tasks (GtdProviderTodoist *self,
       task = gtd_task_new ();
       gtd_object_set_uid (GTD_OBJECT (task), uid);
       gtd_task_set_title (task, title);
-      gtd_task_set_priority (task, priority - 1);
       gtd_task_set_complete (task, complete != 0);
       gtd_task_set_position (task, position);
 
@@ -1248,7 +1245,6 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
                              "        \"id\": %s,              \n"
                              "        \"indent\": %d,          \n"
                              "        \"item_order\": %ld,     \n"
-                             "        \"priority\": %d,        \n"
                              "    }                            \n"
                              "}",
                              command_uid,
@@ -1257,8 +1253,7 @@ gtd_provider_todoist_update_task (GtdProvider *provider,
                              due_dt,
                              gtd_object_get_uid (GTD_OBJECT (task)),
                              gtd_task_get_depth (task) + 1,
-                             gtd_task_get_position (task),
-                             gtd_task_get_priority (task) + 1);
+                             gtd_task_get_position (task));
 
   schedule_post_request (self, task, REQUEST_TASK_UPDATE, command_uid, command);
 

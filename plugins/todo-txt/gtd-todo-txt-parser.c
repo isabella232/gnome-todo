@@ -49,26 +49,6 @@ typedef struct
   gboolean            in_description;
 } GtdTodoTxtParserState;
 
-static gint
-parse_priority (const gchar *token)
-{
-  switch (token[1])
-    {
-    case 'A':
-      return 3;
-
-    case 'B':
-      return 2;
-
-    case 'C':
-      return 1;
-
-    default:
-      return 0;
-    }
-
-  return 0;
-}
 
 static GDateTime*
 parse_date (const gchar *token)
@@ -315,7 +295,6 @@ gtd_todo_txt_parser_parse_task (GtdProvider  *provider,
 
         case TOKEN_PRIORITY:
           state.last_token = TOKEN_PRIORITY;
-          gtd_task_set_priority (task, parse_priority (token));
           break;
 
         case TOKEN_CREATION_DATE:

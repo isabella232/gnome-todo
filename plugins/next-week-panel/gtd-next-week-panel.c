@@ -250,13 +250,7 @@ sort_func (gconstpointer a,
   if (retval != 0)
     return retval;
 
-  /* Third, compare by ::priority. Inversely to the  */
-  retval = gtd_task_get_priority (task1) - gtd_task_get_priority (task2);
-
-  if (retval != 0)
-    return retval;
-
-  /* Fourth, compare by ::creation-date. */
+  /* Third, compare by ::creation-date. */
   dt1 = gtd_task_get_creation_date (task1);
   dt2 = gtd_task_get_creation_date (task2);
 

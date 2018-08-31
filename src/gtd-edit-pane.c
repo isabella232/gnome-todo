@@ -34,11 +34,9 @@ struct _GtdEditPane
   GtkCalendar       *calendar;
   GtkLabel          *date_label;
   GtkTextView       *notes_textview;
-  GtkComboBoxText   *priority_combo;
 
   /* task bindings */
   GBinding          *notes_binding;
-  GBinding          *priority_binding;
 
   GtdTask           *task;
 };
@@ -482,7 +480,6 @@ gtd_edit_pane_class_init (GtdEditPaneClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdEditPane, calendar);
   gtk_widget_class_bind_template_child (widget_class, GtdEditPane, date_label);
   gtk_widget_class_bind_template_child (widget_class, GtdEditPane, notes_textview);
-  gtk_widget_class_bind_template_child (widget_class, GtdEditPane, priority_combo);
 
   gtk_widget_class_bind_template_callback (widget_class, on_date_selected_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_delete_button_clicked_cb);
@@ -548,7 +545,6 @@ gtd_edit_pane_set_task (GtdEditPane *self,
       buffer = gtk_text_view_get_buffer (self->notes_textview);
 
       g_signal_handlers_block_by_func (buffer, on_text_buffer_changed_cb, self);
-      g_signal_handlers_block_by_func (self->priority_combo, on_priority_changed_cb, self);
 
       /* due date */
       update_date_widgets (self);
@@ -562,16 +558,6 @@ gtd_edit_pane_set_task (GtdEditPane *self,
                                                     "description",
                                                     G_BINDING_BIDIRECTIONAL);
 
-      /* priority */
-      gtk_combo_box_set_active (GTK_COMBO_BOX (self->priority_combo),
-                                CLAMP (gtd_task_get_priority (task), 0, 3));
-      self->priority_binding = g_object_bind_property (task,
-                                                       "priority",
-                                                       self->priority_combo,
-                                                       "active",
-                                                       G_BINDING_BIDIRECTIONAL);
-
-      g_signal_handlers_unblock_by_func (self->priority_combo, on_priority_changed_cb, self);
       g_signal_handlers_unblock_by_func (buffer, on_text_buffer_changed_cb, self);
 
     }

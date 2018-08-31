@@ -66,7 +66,6 @@ enum
   PROP_LIST,
   PROP_PARENT,
   PROP_POSITION,
-  PROP_PRIORITY,
   PROP_TITLE,
   LAST_PROP
 };
@@ -399,23 +398,6 @@ gtd_task_real_set_position (GtdTask *self,
   priv->position = position;
 }
 
-static gint32
-gtd_task_real_get_priority (GtdTask *self)
-{
-  GtdTaskPrivate *priv = gtd_task_get_instance_private (self);
-
-  return priv->priority;
-}
-
-static void
-gtd_task_real_set_priority (GtdTask *self,
-                            gint32   priority)
-{
-  GtdTaskPrivate *priv = gtd_task_get_instance_private (self);
-
-  priv->priority = priority;
-}
-
 static const gchar*
 gtd_task_real_get_title (GtdTask *self)
 {
@@ -500,10 +482,6 @@ gtd_task_get_property (GObject    *object,
       g_value_set_int64 (value, gtd_task_get_position (self));
       break;
 
-    case PROP_PRIORITY:
-      g_value_set_int (value, gtd_task_get_priority (self));
-      break;
-
     case PROP_TITLE:
       g_value_set_string (value, gtd_task_get_title (self));
       break;
@@ -547,10 +525,6 @@ gtd_task_set_property (GObject      *object,
       gtd_task_set_position (self, g_value_get_int64 (value));
       break;
 
-    case PROP_PRIORITY:
-      gtd_task_set_priority (self, g_value_get_int (value));
-      break;
-
     case PROP_TITLE:
       gtd_task_set_title (self, g_value_get_string (value));
       break;
@@ -577,8 +551,6 @@ gtd_task_class_init (GtdTaskClass *klass)
   klass->set_due_date = gtd_task_real_set_due_date;
   klass->get_position = gtd_task_real_get_position;
   klass->set_position = gtd_task_real_set_position;
-  klass->get_priority = gtd_task_real_get_priority;
-  klass->set_priority = gtd_task_real_set_priority;
   klass->get_title = gtd_task_real_get_title;
   klass->set_title = gtd_task_real_set_title;
   klass->subtask_added = real_add_subtask;
@@ -689,22 +661,6 @@ gtd_task_class_init (GtdTaskClass *klass)
                               "The GtdTask that is parent of this task.",
                               GTD_TYPE_TASK,
                               G_PARAM_READABLE));
-
-  /**
-   * GtdTask::priority:
-   *
-   * Priority of the task, 0 if not set.
-   */
-  g_object_class_install_property (
-        object_class,
-        PROP_PRIORITY,
-        g_param_spec_int ("priority",
-                          "Priority of the task",
-                          "The priority of the task. 0 means no priority set, and tasks will be sorted alphabetically.",
-                          0,
-                          G_MAXINT,
-                          0,
-                          G_PARAM_READWRITE));
 
   /**
    * GtdTask::position:
@@ -1065,50 +1021,6 @@ gtd_task_set_position (GtdTask *self,
 }
 
 /**
- * gtd_task_get_priority:
- * @task: a #GtdTask
- *
- * Returns the priority of @task inside the parent #GtdTaskList,
- * or -1 if not set.
- *
- * Returns: the priority of the task, or 0
- */
-gint
-gtd_task_get_priority (GtdTask *task)
-{
-  g_assert (GTD_IS_TASK (task));
-
-  return GTD_TASK_CLASS (G_OBJECT_GET_CLASS (task))->get_priority (task);
-}
-
-/**
- * gtd_task_set_priority:
- * @task: a #GtdTask
- * @priority: the priority of @task, or -1
- *
- * Sets the @task priority inside the parent #GtdTaskList. It
- * is up to the interface to handle two or more #GtdTask with
- * the same priority value.
- */
-void
-gtd_task_set_priority (GtdTask *task,
-                       gint     priority)
-{
-  gint current;
-
-  g_assert (GTD_IS_TASK (task));
-  g_assert (priority >= -1);
-
-  current = gtd_task_get_priority (task);
-
-  if (priority != current)
-    {
-      GTD_TASK_CLASS (G_OBJECT_GET_CLASS (task))->set_priority (task, priority);
-      g_object_notify (G_OBJECT (task), "priority");
-    }
-}
-
-/**
  * gtd_task_get_title:
  * @task: a #GtdTask
  *
@@ -1172,8 +1084,6 @@ gtd_task_compare (GtdTask *t1,
   GDateTime *dt2;
   gchar *txt1;
   gchar *txt2;
-  gint p1;
-  gint p2;
   gint retval;
 
   if (!t1 && !t2)
@@ -1204,18 +1114,7 @@ gtd_task_compare (GtdTask *t1,
     }
 
   /*
-   * Second, compare by ::priority
-   */
-  p1 = gtd_task_get_priority (t1);
-  p2 = gtd_task_get_priority (t2);
-
-  retval = p2 - p1;
-
-  if (retval != 0)
-    return retval;
-
-  /*
-   * Third, compare by ::due-date.
+   * Second, compare by ::due-date.
    */
   dt1 = gtd_task_get_due_date (t1);
   dt2 = gtd_task_get_due_date (t2);

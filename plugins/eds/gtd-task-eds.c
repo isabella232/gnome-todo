@@ -397,37 +397,6 @@ gtd_task_eds_set_due_date (GtdTask   *task,
   g_clear_pointer (&current_dt, g_date_time_unref);
 }
 
-static gint32
-gtd_task_eds_get_priority (GtdTask *task)
-{
-  g_autofree gint *priority = NULL;
-  GtdTaskEds *self;
-
-  g_assert (GTD_IS_TASK_EDS (task));
-
-  self = GTD_TASK_EDS (task);
-
-  e_cal_component_get_priority (self->component, &priority);
-
-  if (!priority)
-    return -1;
-
-  return *priority;
-}
-
-static void
-gtd_task_eds_set_priority (GtdTask *task,
-                           gint32   priority)
-{
-  GtdTaskEds *self;
-
-  g_assert (GTD_IS_TASK_EDS (task));
-
-  self = GTD_TASK_EDS (task);
-
-  e_cal_component_set_priority (self->component, &priority);
-}
-
 static const gchar*
 gtd_task_eds_get_title (GtdTask *task)
 {
@@ -597,8 +566,6 @@ gtd_task_eds_class_init (GtdTaskEdsClass *klass)
   task_class->set_description = gtd_task_eds_set_description;
   task_class->get_due_date = gtd_task_eds_get_due_date;
   task_class->set_due_date = gtd_task_eds_set_due_date;
-  task_class->get_priority = gtd_task_eds_get_priority;
-  task_class->set_priority = gtd_task_eds_set_priority;
   task_class->get_title = gtd_task_eds_get_title;
   task_class->set_title = gtd_task_eds_set_title;
   task_class->subtask_added = gtd_task_eds_subtask_added;

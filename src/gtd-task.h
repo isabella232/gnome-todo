@@ -57,10 +57,6 @@ struct _GtdTaskClass
   void          (*set_position)                       (GtdTask              *task,
                                                        gint64                position);
 
-  gint32        (*get_priority)                       (GtdTask              *self);
-  void          (*set_priority)                       (GtdTask              *self,
-                                                       gint32                priority);
-
   const gchar*  (*get_title)                          (GtdTask              *self);
   void          (*set_title)                          (GtdTask              *self,
                                                        const gchar          *title);
@@ -109,11 +105,6 @@ gint64              gtd_task_get_position             (GtdTask              *sel
 
 void                gtd_task_set_position             (GtdTask              *self,
                                                        gint64                position);
-
-gint                gtd_task_get_priority             (GtdTask              *task);
-
-void                gtd_task_set_priority             (GtdTask              *task,
-                                                       gint                  priority);
 
 const gchar*        gtd_task_get_title                (GtdTask              *task);
 

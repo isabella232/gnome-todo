@@ -84,10 +84,6 @@ static void          on_depth_changed_cb                         (GtdTaskRow    
                                                                   GParamSpec         *pspec,
                                                                   GtdTask            *task);
 
-static void          on_priority_changed_cb                      (GtdTaskRow         *row,
-                                                                  GParamSpec         *spec,
-                                                                  GObject            *object);
-
 static void          on_task_changed_cb                          (GtdTaskRow         *self);
 
 
@@ -230,17 +226,6 @@ gtd_task_row_set_task (GtdTaskRow *row,
                                    row,
                                    NULL);
 
-      /*
-       * Here we generate a false callback call just to reuse the method to
-       * sync the initial state of the priority icon.
-       */
-      on_priority_changed_cb (row, NULL, G_OBJECT (task));
-      g_signal_connect_object (task,
-                               "notify::priority",
-                               G_CALLBACK (on_priority_changed_cb),
-                               row,
-                               G_CONNECT_SWAPPED);
-
       on_complete_changed_cb (row, NULL, task);
       g_signal_connect_object (task,
                                "notify::complete",
@@ -379,44 +364,6 @@ on_drag_failed_cb (GtkWidget     *widget,
 }
 
 static void
-on_priority_changed_cb (GtdTaskRow *row,
-                        GParamSpec *spec,
-                        GObject    *object)
-{
-  GtkStyleContext *context;
-  gint priority;
-
-  context = gtk_widget_get_style_context (GTK_WIDGET (row));
-  priority = gtd_task_get_priority (GTD_TASK (object));
-
-  /* remove all styles */
-  gtk_style_context_remove_class (context, "priority-low");
-  gtk_style_context_remove_class (context, "priority-medium");
-  gtk_style_context_remove_class (context, "priority-hight");
-
-  switch (priority)
-    {
-    case 1:
-      gtk_style_context_add_class (context, "priority-low");
-      break;
-
-    case 2:
-      gtk_style_context_add_class (context, "priority-medium");
-      break;
-
-    case 3:
-      gtk_style_context_add_class (context, "priority-hight");
-      break;
-
-    default:
-      break;
-    }
-
-  /* redraw background according to the new applied style */
-  gtk_widget_queue_draw (GTK_WIDGET (row));
-}
-
-static void
 on_complete_changed_cb (GtdTaskRow *self,
                         GParamSpec *pspec,
                         GtdTask    *task)
@@ -531,7 +478,6 @@ gtd_task_row_dispose (GObject *object)
     {
       g_signal_handlers_disconnect_by_func (task, on_depth_changed_cb, self);
       g_signal_handlers_disconnect_by_func (task, on_complete_changed_cb, self);
-      g_signal_handlers_disconnect_by_func (task, on_priority_changed_cb, self);
     }
 
   G_OBJECT_CLASS (gtd_task_row_parent_class)->dispose (object);
