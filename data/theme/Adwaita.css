@@ -97,7 +97,7 @@ taskrow box.dnd {
 tasklistview { background-color: @theme_base_color; }
 
 /* new task row */
-newtaskrow entry { padding: 0 14px 0 16px; }
+newtaskrow entry { padding: 0 16px 0 14px; }
 
 /* extension list */
 list.extension-list row {
