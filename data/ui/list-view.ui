@@ -32,6 +32,7 @@
                 <child>
                   <object class="GtkBox">
                     <property name="can_focus">false</property>
+                    <property name="margin-bottom">64</property>
                     <property name="orientation">vertical</property>
 
                     <child>
