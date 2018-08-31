@@ -28,6 +28,8 @@ main (gint  argc,
 {
   g_autoptr (GtdApplication) app;
 
+  g_setenv ("GDK_BACKEND", "x11", TRUE);
+
   bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   textdomain (GETTEXT_PACKAGE);
