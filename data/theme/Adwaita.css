@@ -58,6 +58,8 @@ label.main-title {
  * GtdTaskRow
  */
 
+taskrow { border-radius: 3px;}
+
 taskrow:dir(ltr) { padding-left: 6px;  }
 taskrow:dir(rtl) { padding-right: 6px; }
 
@@ -95,7 +97,7 @@ taskrow box.dnd {
 tasklistview { background-color: @theme_base_color; }
 
 /* new task row */
-newtaskrow entry { padding: 0 16px; }
+newtaskrow entry { padding: 0 14px 0 16px; }
 
 /* extension list */
 list.extension-list row {
