@@ -1,6 +1,5 @@
 # List of source files containing translatable strings.
 data/appdata/org.gnome.Todo.appdata.xml.in
-data/gtk/menus.ui
 data/org.gnome.Todo.desktop.in
 data/org.gnome.todo.gschema.xml
 data/ui/edit-pane.ui
@@ -14,8 +13,10 @@ data/ui/provider-row.ui
 data/ui/provider-selector.ui
 data/ui/sidebar-list-row.ui
 data/ui/sidebar-provider-row.ui
+data/ui/task-list-panel.ui
 data/ui/task-row.ui
 data/ui/window.ui
+plugins/all-tasks-panel/gtd-all-tasks-panel.c
 plugins/background/gtd-plugin-background.c
 plugins/background/org.gnome.todo.background.gschema.xml
 plugins/background/ui/preferences.ui
@@ -38,6 +39,7 @@ plugins/unscheduled-panel/unscheduled-panel/__init__.py
 src/gtd-application.c
 src/gtd-edit-pane.c
 src/gtd-empty-list-widget.c
+src/gtd-new-task-row.c
 src/gtd-plugin-dialog-row.c
 src/gtd-task-list-view.c
 src/gtd-task-row.c
