@@ -59,6 +59,7 @@ sources = files(
   'widgets/gtd-color-button.c',
   'widgets/gtd-done-button.c',
   'widgets/gtd-expandable-entry.c',
+  'widgets/gtd-row-header.c',
   'gtd-application.c',
   'gtd-dnd-row.c',
   'gtd-edit-pane.c',

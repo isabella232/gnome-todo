@@ -215,12 +215,10 @@ create_label (const gchar *text,
   return label;
 }
 
-static void
-custom_header_func (GtkListBoxRow *row,
-                    GtdTask       *task,
-                    GtkListBoxRow *previous_row,
-                    GtdTask       *previous_task,
-                    gpointer       user_data)
+static GtkWidget*
+header_func (GtdTask  *task,
+             GtdTask  *previous_task,
+             gpointer  user_data)
 {
   g_autoptr (GDateTime) now = NULL;
   g_autoptr (GDateTime) dt = NULL;
@@ -230,11 +228,11 @@ custom_header_func (GtkListBoxRow *row,
   dt = gtd_task_get_due_date (task);
 
   /* Only show a header if the we have overdue tasks */
-  if (!previous_row && is_overdue (now, dt))
+  if (!previous_task && is_overdue (now, dt))
     {
       header = create_label (_("Overdue"), TRUE);
     }
-  else if (previous_row)
+  else if (previous_task)
     {
       g_autoptr (GDateTime) previous_dt = NULL;
 
@@ -244,7 +242,7 @@ custom_header_func (GtkListBoxRow *row,
         header = create_label (_("Today"), FALSE);
     }
 
-  gtk_list_box_row_set_header (row, header);
+  return header;
 }
 
 
@@ -439,7 +437,7 @@ gtd_panel_today_init (GtdPanelToday *self)
   gtd_task_list_view_set_show_list_name (GTD_TASK_LIST_VIEW (self->view), TRUE);
   gtd_task_list_view_set_show_due_date (GTD_TASK_LIST_VIEW (self->view), FALSE);
   gtd_task_list_view_set_default_date (GTD_TASK_LIST_VIEW (self->view), now);
-  gtd_task_list_view_set_header_func (GTD_TASK_LIST_VIEW (self->view), custom_header_func, self);
+  gtd_task_list_view_set_header_func (GTD_TASK_LIST_VIEW (self->view), header_func, self);
 
   gtk_widget_set_hexpand (self->view, TRUE);
   gtk_widget_set_vexpand (self->view, TRUE);

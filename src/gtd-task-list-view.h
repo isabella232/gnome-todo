@@ -43,19 +43,17 @@ typedef gboolean (*GtdTaskListViewFilterFunc) (GtdTask              *task,
 
 /**
  * GtdTaskListViewHeaderFunc:
- * @row: the current #GtkListBoxRow
- * @row_task: the #GtdTask that @row represents
- * @before: the #GtkListBoxRow before @row
- * @before_task: the #GtdTask that @before represents
+ * @task: the #GtdTask that @row represents
+ * @previous_task: the #GtdTask that @before represents
  * @user_data: (closure): user data
  *
  * The header function called on every task.
+ *
+ * Returns: (transfer full)(nullable): a #GtkWidget, or %NULL.
  */
-typedef void (*GtdTaskListViewHeaderFunc) (GtkListBoxRow        *row,
-                                           GtdTask              *row_task,
-                                           GtkListBoxRow        *before,
-                                           GtdTask              *before_task,
-                                           gpointer              user_data);
+typedef GtkWidget* (*GtdTaskListViewHeaderFunc) (GtdTask              *task,
+                                                 GtdTask              *previous_task,
+                                                 gpointer              user_data);
 
 /**
  * GtdTaskListViewSortFunc:

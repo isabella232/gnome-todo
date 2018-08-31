@@ -29,6 +29,7 @@
 #include "gtd-new-task-row.h"
 #include "gtd-notification.h"
 #include "gtd-provider.h"
+#include "gtd-row-header.h"
 #include "gtd-task.h"
 #include "gtd-task-list.h"
 #include "gtd-task-row.h"
@@ -628,6 +629,7 @@ internal_header_func (GtkListBoxRow   *row,
                       GtkListBoxRow   *before,
                       GtdTaskListView *view)
 {
+  GtkWidget *header;
   GtdTask *row_task;
   GtdTask *before_task;
 
@@ -642,11 +644,17 @@ internal_header_func (GtkListBoxRow   *row,
   if (before && GTD_IS_TASK_ROW (before))
     before_task = gtd_task_row_get_task (GTD_TASK_ROW (before));
 
-  view->priv->header_func (GTK_LIST_BOX_ROW (row),
-                           row_task,
-                           GTK_LIST_BOX_ROW (before),
-                           before_task,
-                           view->priv->header_user_data);
+  header = view->priv->header_func (row_task, before_task, view->priv->header_user_data);
+
+  if (header)
+    {
+      GtkWidget *real_header = gtd_row_header_new ();
+      gtk_container_add (GTK_CONTAINER (real_header), header);
+
+      header = real_header;
+    }
+
+  gtk_list_box_row_set_header (row, header);
 }
 
 

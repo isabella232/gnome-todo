@@ -196,25 +196,23 @@ compare_by_date (GDateTime *d1,
   return g_date_time_get_day_of_year (d1) - g_date_time_get_day_of_year (d2);
 }
 
-static void
-header_func (GtkListBoxRow    *row,
-             GtdTask          *row_task,
-             GtkListBoxRow    *before,
-             GtdTask          *before_task,
+static GtkWidget*
+header_func (GtdTask          *task,
+             GtdTask          *previous_task,
              GtdAllTasksPanel *self)
 {
   g_autoptr (GDateTime) dt = NULL;
   g_autofree gchar *text = NULL;
   gint span;
 
-  dt = gtd_task_get_due_date (row_task);
+  dt = gtd_task_get_due_date (task);
 
-  if (before)
+  if (previous_task)
     {
       g_autoptr (GDateTime) before_dt = NULL;
       gint diff;
 
-      before_dt = gtd_task_get_due_date (before_task);
+      before_dt = gtd_task_get_due_date (previous_task);
       diff = compare_by_date (before_dt, dt);
 
       if (diff != 0)
@@ -225,7 +223,7 @@ header_func (GtkListBoxRow    *row,
       text = get_string_for_date (dt, &span);
     }
 
-  gtk_list_box_row_set_header (row, text ? create_label (text, span, !before) : NULL);
+  return text ? create_label (text, span, !previous_task) : NULL;
 }
 
 static gint

@@ -183,25 +183,23 @@ compare_by_date (GDateTime *d1,
   return g_date_time_get_day_of_year (d1) - g_date_time_get_day_of_year (d2);
 }
 
-static void
-gtd_panel_scheduled_header_func (GtkListBoxRow     *row,
-                                 GtdTask           *row_task,
-                                 GtkListBoxRow     *before,
-                                 GtdTask           *before_task,
-                                 GtdPanelScheduled *panel)
+static GtkWidget*
+header_func (GtdTask           *task,
+             GtdTask           *previous_task,
+             GtdPanelScheduled *panel)
 {
   g_autoptr (GDateTime) dt = NULL;
   g_autofree gchar *text = NULL;
   gint span;
 
-  dt = gtd_task_get_due_date (row_task);
+  dt = gtd_task_get_due_date (task);
 
-  if (before)
+  if (previous_task)
     {
       g_autoptr (GDateTime) before_dt = NULL;
       gint diff;
 
-      before_dt = gtd_task_get_due_date (before_task);
+      before_dt = gtd_task_get_due_date (previous_task);
       diff = compare_by_date (before_dt, dt);
 
       if (diff != 0)
@@ -212,7 +210,7 @@ gtd_panel_scheduled_header_func (GtkListBoxRow     *row,
       text = get_string_for_date (dt, &span);
     }
 
-  gtk_list_box_row_set_header (row, text ? create_label (text, span, !before) : NULL);
+  return text ? create_label (text, span, !previous_task) : NULL;
 }
 
 static gint
@@ -530,7 +528,7 @@ gtd_panel_scheduled_init (GtdPanelScheduled *self)
   gtk_container_add (GTK_CONTAINER (self), self->view);
 
   gtd_task_list_view_set_header_func (GTD_TASK_LIST_VIEW (self->view),
-                                      (GtdTaskListViewHeaderFunc) gtd_panel_scheduled_header_func,
+                                      (GtdTaskListViewHeaderFunc) header_func,
                                       self);
 }
 
