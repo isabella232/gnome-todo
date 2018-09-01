@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-06-03 06:05+0000\n"
-"PO-Revision-Date: 2018-06-04 16:40+0300\n"
+"POT-Creation-Date: 2018-07-22 16:54+0000\n"
+"PO-Revision-Date: 2018-08-29 00:46+0300\n"
 "Last-Translator: Liivia Lilleväli <liivia.l10n@gmail.com>\n"
 "Language-Team: Estonian <gnome-et-list@gnome.org>\n"
 "Language: et\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
 #: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:157
@@ -31,33 +31,37 @@ msgstr "Ülesandehaldur GNOME’ile"
 #: data/appdata/org.gnome.Todo.appdata.xml.in:11
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
-"GNOME. It is extensible through plugins and supports custom task providers."
+"GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
+"todos on your computer or sync them with cloud providers. Customize your "
+"experience with plugins."
 msgstr ""
 "GNOME Ülesanded on rakendus täitmist vajavate ülesannete haldamiseks, mis "
-"ühildub sujuvalt GNOME’iga. Seda saab laiendada pluginate abil ning see "
-"toetab ka väliseid ülesandehaldureid."
+"ühildub sujuvalt GNOME’iga. Sellega saad salvestada ja korrastada oma "
+"ülesandeid ning hallata mitut ülesandeloendit korraga. Oma ülesandeid võid "
+"hoida kohalikus arvutis või sünkroniseerida neid pilveteenuse osutajatega. "
+"Samuti on rakendus laiendatav pluginate abil."
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:24
+#: data/appdata/org.gnome.Todo.appdata.xml.in:25
 msgid "GNOME To Do with the dark theme variant"
 msgstr "GNOME Ülesanded teema tumeda variandiga"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:28
+#: data/appdata/org.gnome.Todo.appdata.xml.in:29
 msgid "Editing a tasklist with GNOME To Do"
 msgstr "Ülesandeloendi muutmine rakenduses GNOME Ülesanded"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:32
+#: data/appdata/org.gnome.Todo.appdata.xml.in:33
 msgid "Task lists displayed on grid mode"
 msgstr "Ülesandeloendid ruudustikvaates"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:36
+#: data/appdata/org.gnome.Todo.appdata.xml.in:37
 msgid "Task lists displayed on list mode"
 msgstr "Ülesandeloendid loendvaates"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:40
+#: data/appdata/org.gnome.Todo.appdata.xml.in:41
 msgid "Available plugins for GNOME To Do"
 msgstr "Saadaolevad pluginad rakendusele GNOME Ülesanded"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:44
+#: data/appdata/org.gnome.Todo.appdata.xml.in:45
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr "Käesoleva päeva ülesannete vaade rakenduses GNOME Ülesanded"
 
@@ -265,7 +269,11 @@ msgstr "Microsoft Exchange"
 msgid "Or you can just store your tasks on this computer"
 msgstr "Samuti võid oma ülesanded lihtsalt siia arvutisse talletada"
 
-#: data/ui/sidebar-list-row.ui:54
+#: data/ui/sidebar-list-row.ui:96 data/ui/sidebar-list-row.ui:115
+msgid "Rename"
+msgstr "Muuda nime"
+
+#: data/ui/sidebar-list-row.ui:119
 msgid "Delete"
 msgstr "Kustuta"
 
@@ -421,6 +429,18 @@ msgstr "Kustuta täidetud ülesanded…"
 msgid "No task completed today"
 msgstr "Täna pole ühtki ülesannet täidetud"
 
+#: plugins/todoist/gtd-plugin-todoist.c:109
+msgid "GNOME To Do cannot connect to Todoist due to network issue"
+msgstr "GNOME Ülesanded ei suuda Todoistiga ühenduda võrguprobleemi tõttu"
+
+#: plugins/todoist/gtd-plugin-todoist.c:110
+msgid ""
+"Not able to communicate with Todoist. Please check your internet "
+"connectivity."
+msgstr ""
+"Todoistiga pole võimalik suhelda. Palun veendu, et sul on toimiv "
+"internetiühendus."
+
 #: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Error fetching Todoist account key"
 msgstr "Viga Todoisti konto võtme hankimisel"
@@ -501,15 +521,15 @@ msgstr ""
 "esineda ebastabiilsust, vigu ja ka andmekadu. Todo.txt-i integratsiooni ei "
 "ole soovitatav kasutada süsteemides, mille töökindlus on oluline."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:335
+#: plugins/todo-txt/gtd-provider-todo-txt.c:591
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr "Viga failimonitori avamisel. Todo.txt-i ei monitoorita"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:404
+#: plugins/todo-txt/gtd-provider-todo-txt.c:660
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:416
+#: plugins/todo-txt/gtd-provider-todo-txt.c:672
 msgid "On the Todo.txt file"
 msgstr "Todo.txt failis"
 
@@ -630,7 +650,7 @@ msgstr "Eemalda"
 msgid "Task <b>%s</b> removed"
 msgstr "Ülesanne <b>%s</b> eemaldati"
 
-#: src/gtd-task-list-view.c:826 src/sidebar/gtd-sidebar-list-row.c:256
+#: src/gtd-task-list-view.c:826 src/sidebar/gtd-sidebar-list-row.c:281
 msgid "Undo"
 msgstr "Võta tagasi"
 
@@ -650,13 +670,15 @@ msgstr "Üksikasjad"
 msgid "Click a task list to select"
 msgstr "Ülesandeloendi valimiseks klõpsa sellel"
 
-#: src/sidebar/gtd-sidebar-list-row.c:253
+#: src/sidebar/gtd-sidebar-list-row.c:278
 #, c-format
 msgid "Task list <b>%s</b> removed"
 msgstr "Ülesandeloend <b>%s</b> eemaldati"
 
-#~ msgid "_Rename"
-#~ msgstr "Muuda _nime"
+#: src/sidebar/gtd-sidebar-list-row.c:307
+#, c-format
+msgid "Rename %s"
+msgstr "Muuda %s nime"
 
 #~ msgid "Lists"
 #~ msgstr "Loendid"
