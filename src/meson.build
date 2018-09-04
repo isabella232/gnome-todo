@@ -52,7 +52,6 @@ sources = files(
   'task-list-view/gtd-task-list-view.c',
   'task-list-view/gtd-task-row.c',
   'widgets/gtd-color-button.c',
-  'widgets/gtd-done-button.c',
   'widgets/gtd-expandable-entry.c',
   'widgets/gtd-row-header.c',
   'gtd-application.c',
