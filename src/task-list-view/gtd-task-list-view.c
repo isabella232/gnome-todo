@@ -507,7 +507,6 @@ static void
 on_remove_task_row_cb (GtdTaskRow      *row,
                        GtdTaskListView *self)
 {
-  GtdTaskListViewPrivate *priv;
   g_autofree gchar *text = NULL;
   GtdNotification *notification;
   RemoveTaskData *data;
@@ -516,7 +515,6 @@ on_remove_task_row_cb (GtdTaskRow      *row,
 
   task = gtd_task_row_get_task (row);
 
-  priv = self->priv;
   text = g_strdup_printf (_("Task <b>%s</b> removed"), gtd_task_get_title (task));
   window = GTD_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (self)));
 
@@ -844,7 +842,6 @@ listbox_drag_motion (GtkListBox      *listbox,
 {
   GtdTaskListViewPrivate *priv;
   GtkListBoxRow *highlighted_row;
-  GtkListBoxRow *hovered_row;
   GtkListBoxRow *source_row;
   GtkWidget *source_widget;
   GdkDrag *drag;
@@ -863,7 +860,6 @@ listbox_drag_motion (GtkListBox      *listbox,
 
   source_widget = gtk_drag_get_source_widget (drag);
   source_row = GTK_LIST_BOX_ROW (gtk_widget_get_ancestor (source_widget, GTK_TYPE_LIST_BOX_ROW));
-  hovered_row = gtk_list_box_get_row_at_y (listbox, y);
 
   /* Update the x value according to the current offset */
   if (gtk_widget_get_direction (GTK_WIDGET (self)) == GTK_TEXT_DIR_RTL)
