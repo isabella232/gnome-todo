@@ -624,7 +624,6 @@ gtd_task_eds_set_component (GtdTaskEds    *self,
   g_object_notify (object, "creation-date");
   g_object_notify (object, "description");
   g_object_notify (object, "due-date");
-  g_object_notify (object, "priority");
   g_object_notify (object, "title");
   g_object_notify_by_pspec (object, properties[PROP_COMPONENT]);
 }
