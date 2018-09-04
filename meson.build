@@ -161,7 +161,14 @@ i18n = import('i18n')
 pkg = import('pkgconfig')
 
 top_inc = include_directories('.')
-src_inc = include_directories('src', 'src/engine', 'src/interfaces', 'src/notification', 'src/widgets')
+src_inc = include_directories(
+  'src',
+  'src/engine',
+  'src/interfaces',
+  'src/notification',
+  'src/task-list-view',
+  'src/widgets',
+)
 
 data_dir = join_paths(meson.source_root(), 'data')
 po_dir = join_paths(meson.source_root(), 'po')
