@@ -37,7 +37,7 @@
 
 struct _GtdTaskRow
 {
-  GtkListBoxRow       parent;
+  GtkBin              parent;
 
   /*<private>*/
   GtkRevealer        *revealer;
@@ -87,7 +87,7 @@ static void          on_depth_changed_cb                         (GtdTaskRow    
 static void          on_task_changed_cb                          (GtdTaskRow         *self);
 
 
-G_DEFINE_TYPE (GtdTaskRow, gtd_task_row, GTK_TYPE_LIST_BOX_ROW)
+G_DEFINE_TYPE (GtdTaskRow, gtd_task_row, GTK_TYPE_BIN)
 
 enum
 {
