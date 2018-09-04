@@ -18,6 +18,7 @@
 
 #define G_LOG_DOMAIN "GtdNewTaskRow"
 
+#include "gtd-debug.h"
 #include "gtd-manager.h"
 #include "gtd-new-task-row.h"
 #include "gtd-provider.h"
@@ -66,19 +67,6 @@ static guint          signals [NUM_SIGNALS] = { 0, };
 /*
  * Auxiliary methods
  */
-
-static gboolean
-gtd_new_task_row_event (GtkWidget *widget,
-                        GdkEvent  *event)
-{
-  GtdNewTaskRow *self = GTD_NEW_TASK_ROW (widget);
-  gboolean focus_in;
-
-  if (gdk_event_get_focus_in (event, &focus_in) && focus_in)
-    gtd_new_task_row_set_active (self, TRUE);
-
-  return GDK_EVENT_PROPAGATE;
-}
 
 static void
 update_secondary_icon (GtdNewTaskRow *self)
@@ -221,13 +209,29 @@ on_entry_icon_released_cb (GtkEntry             *entry,
 }
 
 static void
+on_focus_in_cb (GtkEventControllerKey *event_controller,
+                GtdNewTaskRow         *self)
+{
+  GTD_ENTRY;
+
+  gtd_new_task_row_set_active (self, TRUE);
+
+  GTD_EXIT;
+}
+
+static void
+destroy_widget_cb (GtkWidget *widget,
+                   gpointer   user_data)
+{
+  gtk_widget_destroy (widget);
+}
+
+static void
 update_tasklists_cb (GtdNewTaskRow *self)
 {
   GList *tasklists, *l;
 
-  gtk_container_foreach (GTK_CONTAINER (self->tasklist_list),
-                         (GtkCallback) gtk_widget_destroy,
-                         NULL);
+  gtk_container_foreach (GTK_CONTAINER (self->tasklist_list), destroy_widget_cb, NULL);
 
   tasklists = gtd_manager_get_task_lists (self->manager);
 
@@ -333,7 +337,6 @@ gtd_new_task_row_class_init (GtdNewTaskRowClass *klass)
   object_class->get_property = gtd_new_task_row_get_property;
   object_class->set_property = gtd_new_task_row_set_property;
 
-  widget_class->event = gtd_new_task_row_event;
   widget_class->measure = gtd_row_measure_with_max;
 
   /**
@@ -375,6 +378,7 @@ gtd_new_task_row_class_init (GtdNewTaskRowClass *klass)
 
   gtk_widget_class_bind_template_callback (widget_class, entry_activated_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_entry_icon_released_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_focus_in_cb);
   gtk_widget_class_bind_template_callback (widget_class, tasklist_selected_cb);
 
   gtk_widget_class_set_css_name (widget_class, "newtaskrow");

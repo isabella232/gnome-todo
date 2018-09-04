@@ -16,6 +16,13 @@
         <property name="primary-icon-name">list-add-symbolic</property>
         <signal name="activate" handler="entry_activated_cb" object="GtdNewTaskRow" swapped="yes" />
         <signal name="icon-release" handler="on_entry_icon_released_cb" object="GtdNewTaskRow" swapped="no" />
+
+        <child>
+          <object class="GtkEventControllerKey">
+            <signal name="focus-in" handler="on_focus_in_cb" object="GtdNewTaskRow" swapped="no" />
+          </object>
+        </child>
+
       </object>
     </child>
   </template>
