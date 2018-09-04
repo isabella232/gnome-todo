@@ -156,7 +156,7 @@ create_label (const gchar *text,
 
   label = g_object_new (GTK_TYPE_LABEL,
                         "label", text,
-                        "margin-start", 12,
+                        "margin-start", 6,
                         "margin-bottom", 6,
                         "margin-top", first_header ? 6 : 18,
                         "xalign", 0.0,
