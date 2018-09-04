@@ -197,6 +197,12 @@ typedef gboolean     (*IterateSubtaskFunc)                       (GtdTaskListVie
  * Auxiliary methods
  */
 
+static inline GtdTaskRow*
+task_row_from_row (GtkListBoxRow *row)
+{
+  return GTD_TASK_ROW (gtk_bin_get_child (GTK_BIN (row)));
+}
+
 static void
 set_active_row (GtdTaskListView *self,
                 GtdTaskRow      *row)
@@ -357,6 +363,8 @@ create_row_for_task_cb (gpointer item,
   listbox_row = gtk_list_box_row_new ();
   gtk_widget_set_halign (listbox_row, GTK_ALIGN_CENTER);
   gtk_container_add (GTK_CONTAINER (listbox_row), row);
+
+  g_object_bind_property (row, "visible", listbox_row, "visible", G_BINDING_BIDIRECTIONAL);
 
   return listbox_row;
 }
@@ -615,7 +623,7 @@ on_listbox_row_activated_cb (GtkListBox      *listbox,
 
   GTD_ENTRY;
 
-  task_row = GTD_TASK_ROW (gtk_bin_get_child (GTK_BIN (row)));
+  task_row = task_row_from_row (row);
 
   /* Toggle the row */
   if (gtd_task_row_get_active (task_row))
@@ -646,16 +654,10 @@ internal_header_func (GtkListBoxRow   *row,
   row_task = before_task = NULL;
 
   if (row)
-    {
-      GtdTaskRow *aux = GTD_TASK_ROW (gtk_bin_get_child (GTK_BIN (row)));
-      row_task = gtd_task_row_get_task (aux);
-    }
+    row_task = gtd_task_row_get_task (task_row_from_row (row));
 
   if (before)
-    {
-      GtdTaskRow *aux = GTD_TASK_ROW (gtk_bin_get_child (GTK_BIN (before)));
-      before_task = gtd_task_row_get_task (aux);
-    }
+      before_task = gtd_task_row_get_task (task_row_from_row (before));
 
   header = view->priv->header_func (row_task, before_task, view->priv->header_user_data);
 
@@ -755,7 +757,7 @@ unset_previously_highlighted_row (GtdTaskListView *self)
   GtdTaskListViewPrivate *priv = gtd_task_list_view_get_instance_private (self);
   if (priv->highlighted_row)
     {
-      gtd_task_row_unset_drag_offset (GTD_TASK_ROW (priv->highlighted_row));
+      gtd_task_row_unset_drag_offset (task_row_from_row (priv->highlighted_row));
       priv->highlighted_row = NULL;
     }
 }
@@ -843,6 +845,8 @@ listbox_drag_motion (GtkListBox      *listbox,
   GtdTaskListViewPrivate *priv;
   GtkListBoxRow *highlighted_row;
   GtkListBoxRow *source_row;
+  GtdTaskRow *highlighted_task_row;
+  GtdTaskRow *source_task_row;
   GtkWidget *source_widget;
   GdkDrag *drag;
   gint x_offset;
@@ -860,12 +864,13 @@ listbox_drag_motion (GtkListBox      *listbox,
 
   source_widget = gtk_drag_get_source_widget (drag);
   source_row = GTK_LIST_BOX_ROW (gtk_widget_get_ancestor (source_widget, GTK_TYPE_LIST_BOX_ROW));
+  source_task_row = task_row_from_row (source_row);
 
   /* Update the x value according to the current offset */
   if (gtk_widget_get_direction (GTK_WIDGET (self)) == GTK_TEXT_DIR_RTL)
-    x += gtd_task_row_get_x_offset (GTD_TASK_ROW (source_row));
+    x += gtd_task_row_get_x_offset (source_task_row);
   else
-    x -= gtd_task_row_get_x_offset (GTD_TASK_ROW (source_row));
+    x -= gtd_task_row_get_x_offset (source_task_row);
 
   unset_previously_highlighted_row (self);
 
@@ -873,18 +878,20 @@ listbox_drag_motion (GtkListBox      *listbox,
   if (!highlighted_row)
     GTD_GOTO (success);
 
+  highlighted_task_row = task_row_from_row (highlighted_row);
+
   /* Forbid dropping a row over a subtask row */
-  if (row_is_subtask_of (GTD_TASK_ROW (source_row), GTD_TASK_ROW (highlighted_row)))
+  if (row_is_subtask_of (source_task_row, highlighted_task_row))
     GTD_GOTO (fail);
 
   gtk_widget_translate_coordinates (GTK_WIDGET (listbox),
-                                    GTK_WIDGET (highlighted_row),
+                                    GTK_WIDGET (highlighted_task_row),
                                     x,
                                     0,
                                     &x_offset,
                                     NULL);
 
-  gtd_task_row_set_drag_offset (GTD_TASK_ROW (highlighted_row), drag, x_offset);
+  gtd_task_row_set_drag_offset (highlighted_task_row, drag, x_offset);
   priv->highlighted_row = highlighted_row;
 
 success:
@@ -921,7 +928,7 @@ listbox_drag_drop (GtkWidget       *widget,
   if (!source_widget)
     {
       gdk_drop_finish (drop, 0);
-      return FALSE;
+      GTD_RETURN (FALSE);
     }
 
   /*
@@ -932,10 +939,11 @@ listbox_drag_drop (GtkWidget       *widget,
   gtk_widget_show (row);
 
   drop_row = get_drop_row_at_y (self, y);
-  new_parent_task = gtd_task_row_get_dnd_drop_task (GTD_TASK_ROW (drop_row));
+  new_parent_task = gtd_task_row_get_dnd_drop_task (task_row_from_row (drop_row));
   source_task = gtd_task_row_get_task (GTD_TASK_ROW (row));
 
   g_assert (source_task != NULL);
+  g_assert (source_task != new_parent_task);
 
   if (new_parent_task)
     {
