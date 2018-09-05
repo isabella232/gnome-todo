@@ -18,6 +18,7 @@
     <file compressed="true" preprocess="xml-stripblanks">ui/provider-row.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/provider-selector.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/task-list-panel.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/task-list-popover.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/task-row.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/window.ui</file>
     <file compressed="true">theme/Adwaita.css</file>

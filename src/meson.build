@@ -49,6 +49,7 @@ sources = files(
   'task-list-view/gtd-dnd-row.c',
   'task-list-view/gtd-markdown-renderer.c',
   'task-list-view/gtd-new-task-row.c',
+  'task-list-view/gtd-task-list-popover.c',
   'task-list-view/gtd-task-list-view.c',
   'task-list-view/gtd-task-row.c',
   'widgets/gtd-color-button.c',

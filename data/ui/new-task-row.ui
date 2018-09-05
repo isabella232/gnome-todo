@@ -27,22 +27,10 @@
     </child>
   </template>
 
-  <object class="GtkPopover" id="tasklist_popover">
+  <object class="GtdTaskListPopover" id="tasklist_popover">
     <property name="can_focus">False</property>
     <property name="relative-to">entry</property>
-    <child>
-      <object class="GtkListBox" id="tasklist_list">
-        <property name="can_focus">False</property>
-        <property name="margin">12</property>
-        <property name="selection_mode">none</property>
-        <signal name="row-activated" handler="tasklist_selected_cb" object="GtdNewTaskRow" swapped="no" />
-        <style>
-          <class name="background" />
-        </style>
-      </object>
-    </child>
-  </object>
-  <object class="GtkSizeGroup" id="sizegroup">
-    <property name="mode">horizontal</property>
+    <signal name="notify::task-list" handler="on_tasklist_popover_changed_cb" object="GtdNewTaskRow" swapped="no" />
+    <signal name="closed" handler="on_tasklist_popover_closed_cb" object="GtdNewTaskRow" swapped="no" after="yes" />
   </object>
 </interface>
