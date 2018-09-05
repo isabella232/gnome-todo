@@ -28,6 +28,7 @@
 #include "gtd-task.h"
 #include "gtd-task-list.h"
 #include "gtd-timer.h"
+#include "gtd-utils.h"
 
 #include <glib/gi18n.h>
 
@@ -52,6 +53,9 @@ struct _GtdManager
 
   GSettings          *settings;
   GtdPluginManager   *plugin_manager;
+
+  GHashTable         *list_to_index;
+  GListModel         *lists_model;
 
   GList              *tasklists;
   GList              *providers;
@@ -115,6 +119,22 @@ check_provider_is_default (GtdManager  *self,
  * Callbacks
  */
 
+static gint
+compare_lists_cb (GtdTaskList *list_a,
+                  GtdTaskList *list_b,
+                  gpointer     user_data)
+{
+  gint result;
+
+  /* First, compare by their providers */
+  result = gtd_provider_compare (gtd_task_list_get_provider (list_a), gtd_task_list_get_provider (list_b));
+
+  if (result != 0)
+    return result;
+
+  return gtd_collate_compare_strings (gtd_task_list_get_name (list_a), gtd_task_list_get_name (list_b));
+}
+
 static void
 on_default_list_changed_cb (GtdProvider *provider,
                             GParamSpec  *pspec,
@@ -156,7 +176,15 @@ on_list_added_cb (GtdProvider *provider,
                   GtdTaskList *list,
                   GtdManager  *self)
 {
+  guint position;
+
   self->tasklists = g_list_append (self->tasklists, list);
+
+  position = g_list_store_insert_sorted (G_LIST_STORE (self->lists_model),
+                                         list,
+                                         (GCompareDataFunc) compare_lists_cb,
+                                         self);
+  g_hash_table_insert (self->list_to_index, list, GUINT_TO_POINTER (position));
 
   g_signal_connect (list,
                     "task-added",
@@ -181,6 +209,17 @@ on_list_changed_cb (GtdProvider *provider,
                     GtdTaskList *list,
                     GtdManager  *self)
 {
+  guint position;
+
+  position = GPOINTER_TO_UINT (g_hash_table_lookup (self->list_to_index, list));
+  g_list_store_remove (G_LIST_STORE (self->lists_model), position);
+
+  position = g_list_store_insert_sorted (G_LIST_STORE (self->lists_model),
+                                         list,
+                                         (GCompareDataFunc) compare_lists_cb,
+                                         self);
+  g_hash_table_insert (self->list_to_index, list, GUINT_TO_POINTER (position));
+
   g_signal_emit (self, signals[LIST_CHANGED], 0, list);
 }
 
@@ -189,10 +228,15 @@ on_list_removed_cb (GtdProvider *provider,
                     GtdTaskList *list,
                     GtdManager  *self)
 {
+  guint position;
+
   if (!list)
       return;
 
   self->tasklists = g_list_remove (self->tasklists, list);
+
+  position = GPOINTER_TO_UINT (g_hash_table_lookup (self->list_to_index, list));
+  g_list_store_remove (G_LIST_STORE (self->lists_model), position);
 
   g_signal_handlers_disconnect_by_func (list,
                                         on_task_list_modified_cb,
@@ -277,6 +321,9 @@ gtd_manager_finalize (GObject *object)
   g_clear_object (&self->plugin_manager);
   g_clear_object (&self->settings);
   g_clear_object (&self->timer);
+  g_clear_object (&self->lists_model);
+
+  g_clear_pointer (&self->list_to_index, g_hash_table_destroy);
 
   G_OBJECT_CLASS (gtd_manager_parent_class)->finalize (object);
 }
@@ -586,6 +633,8 @@ gtd_manager_init (GtdManager *self)
   self->plugin_manager = gtd_plugin_manager_new ();
   self->timer = gtd_timer_new ();
   self->cancellable = g_cancellable_new ();
+  self->lists_model = (GListModel*) g_list_store_new (GTD_TYPE_TASK_LIST);
+  self->list_to_index = g_hash_table_new (g_direct_hash, g_direct_equal);
 }
 
 /**
@@ -876,6 +925,26 @@ gtd_manager_get_timer (GtdManager *self)
   g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
   return self->timer;
+}
+
+/**
+ * gtd_manager_get_task_lists_model:
+ * @self: a #GtdManager
+ *
+ * Retrieves the #GListModel containing #GtdTaskLists from
+ * @self. You can use the this model to bind to GtkListBox
+ * or other widgets.
+ *
+ * The model is sorted.
+ *
+ * Returns: (transfer none): a #GtdTimer
+ */
+GListModel*
+gtd_manager_get_task_lists_model (GtdManager *self)
+{
+  g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
+
+  return self->lists_model;
 }
 
 void

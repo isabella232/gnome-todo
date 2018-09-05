@@ -74,4 +74,6 @@ void                 gtd_manager_send_notification               (GtdManager    
 
 GtdTimer*            gtd_manager_get_timer                       (GtdManager         *self);
 
+GListModel*          gtd_manager_get_task_lists_model            (GtdManager         *self);
+
 G_END_DECLS
