@@ -309,11 +309,12 @@ error_message_notification_secondary_action (GtdNotification *notification,
 static void
 load_geometry (GtdWindow *self)
 {
-  GtkWindow *window = GTK_WINDOW (self);
-  GSettings *settings;
   GdkRectangle geometry;
+  GSettings *settings;
+  GtkWindow *window;
   gboolean maximized;
 
+  window = GTK_WINDOW (self);
   settings = gtd_manager_get_settings (gtd_manager_get_default ());
 
   maximized = g_settings_get_boolean (settings, "window-maximized");
@@ -451,13 +452,15 @@ on_show_notification_cb (GtdManager      *manager,
 static void
 gtd_window_unmap (GtkWidget *widget)
 {
-  GtkWindow *window = (GtkWindow *)widget;
-  GSettings *settings;
   GdkRectangle geometry;
+  GSettings *settings;
+  GtkWindow *window;
   gboolean maximized;
 
+  window = GTK_WINDOW (widget);
   settings = gtd_manager_get_settings (gtd_manager_get_default ());
   maximized = gtk_window_is_maximized (window);
+
   g_settings_set_boolean (settings, "window-maximized", maximized);
 
   if (maximized)
