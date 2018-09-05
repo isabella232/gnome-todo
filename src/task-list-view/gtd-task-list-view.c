@@ -358,8 +358,6 @@ create_row_for_task_cb (gpointer item,
 
   g_signal_connect (row, "remove-task", G_CALLBACK (on_remove_task_row_cb), self);
 
-  gtd_task_row_reveal (GTD_TASK_ROW (row), FALSE);
-
   listbox_row = gtk_list_box_row_new ();
   gtk_widget_set_halign (listbox_row, GTK_ALIGN_CENTER);
   gtk_container_add (GTK_CONTAINER (listbox_row), row);

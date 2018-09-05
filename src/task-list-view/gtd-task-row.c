@@ -40,7 +40,8 @@ struct _GtdTaskRow
   GtkBin              parent;
 
   /*<private>*/
-  GtkRevealer        *revealer;
+  GtkWidget          *content_box;
+  GtkWidget          *main_box;
 
   GtkWidget          *done_check;
   GtkWidget          *edit_panel_revealer;
@@ -176,8 +177,6 @@ create_transient_row (GtdTaskRow *self)
   GtdTaskRow *new_row;
 
   new_row = GTD_TASK_ROW (gtd_task_row_new (self->task, self->renderer));
-  gtk_revealer_set_transition_duration (new_row->revealer, 0);
-  gtk_revealer_set_reveal_child (new_row->revealer, TRUE);
 
   gtk_widget_set_size_request (GTK_WIDGET (new_row),
                                gtk_widget_get_allocated_width (GTK_WIDGET (self)),
@@ -308,10 +307,7 @@ on_drag_begin_cb (GtkWidget  *event_box,
    */
   new_row = create_transient_row (self);
 
-  if (gtk_widget_get_direction (GTK_WIDGET (self)) == GTK_TEXT_DIR_RTL)
-    x_offset = gtk_widget_get_margin_end (GTK_WIDGET (self->revealer));
-  else
-    x_offset = gtk_widget_get_margin_start (GTK_WIDGET (self->revealer));
+  x_offset = gtk_widget_get_margin_start (self->content_box);
 
   gtk_drag_set_icon_widget (drag,
                             new_row,
@@ -413,7 +409,7 @@ on_depth_changed_cb (GtdTaskRow *self,
   if (self->handle_subtasks)
     margin = 32 * gtd_task_get_depth (task);
 
-  gtk_widget_set_margin_start (GTK_WIDGET (self->revealer), margin);
+  gtk_widget_set_margin_start (self->content_box, margin);
 }
 
 static gboolean
@@ -642,13 +638,14 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/task-row.ui");
 
+  gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, content_box);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, dnd_box);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, dnd_frame);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, dnd_icon);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, done_check);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, edit_panel_revealer);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, header_event_box);
-  gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, revealer);
+  gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, main_box);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, task_date_label);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, task_list_label);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, title_entry);
@@ -748,24 +745,6 @@ gtd_task_row_set_due_date_visible (GtdTaskRow *row,
   g_return_if_fail (GTD_IS_TASK_ROW (row));
 
   gtk_widget_set_visible (GTK_WIDGET (row->task_date_label), show_due_date);
-}
-
-/**
- * gtd_task_row_reveal:
- * @row: a #GtdTaskRow
- *
- * Runs a nifty animation to reveal @row.
- */
-void
-gtd_task_row_reveal (GtdTaskRow *row,
-                     gboolean    animated)
-{
-  g_return_if_fail (GTD_IS_TASK_ROW (row));
-
-  if (!animated)
-    gtk_revealer_set_transition_duration (row->revealer, 0);
-
-  gtk_revealer_set_reveal_child (row->revealer, TRUE);
 }
 
 /**
