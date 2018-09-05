@@ -214,8 +214,12 @@ static void
 update_panel_menu (GtdWindow *self)
 {
   GtkPopover *popover;
+  const GMenu *menu;
 
   popover = gtd_panel_get_popover (self->active_panel);
+  menu = gtd_panel_get_menu (self->active_panel);
+
+  gtk_widget_set_visible (self->gear_menu_button, popover || menu);
 
   if (popover)
     {
@@ -223,10 +227,6 @@ update_panel_menu (GtdWindow *self)
     }
   else
     {
-      const GMenu *menu;
-
-      menu = gtd_panel_get_menu (self->active_panel);
-
       gtk_menu_button_set_popover (GTK_MENU_BUTTON (self->gear_menu_button), NULL);
       gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->gear_menu_button), G_MENU_MODEL (menu));
     }
