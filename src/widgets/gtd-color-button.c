@@ -59,7 +59,13 @@ gtd_color_button_measure (GtkWidget      *widget,
                           gint           *minimum_baseline,
                           gint           *natural_baseline)
 {
-  GtdColorButton *self = GTD_COLOR_BUTTON (widget);
+  GtdColorButton *self;
+  gint height_request;
+  gint width_request;
+
+  self = GTD_COLOR_BUTTON (widget);
+
+  gtk_widget_get_size_request (widget, &width_request, &height_request);
 
   gtk_widget_measure (self->selected_icon,
                       orientation,
@@ -68,6 +74,17 @@ gtd_color_button_measure (GtkWidget      *widget,
                       natural,
                       NULL,
                       NULL);
+
+  if (orientation == GTK_ORIENTATION_VERTICAL)
+    {
+      *minimum = MAX (*minimum, height_request);
+      *natural = MAX (*natural, height_request);
+    }
+  else
+    {
+      *minimum = MAX (*minimum, width_request);
+      *natural = MAX (*natural, width_request);
+    }
 }
 
 static void

@@ -93,6 +93,7 @@ populate_color_grid (GtdTaskListPanel *self)
       gdk_rgba_parse (&color, colors[i]);
 
       button = gtd_color_button_new (&color);
+      gtk_widget_set_size_request (button, -1, 24);
 
       gtk_container_add (GTK_CONTAINER (self->colors_flowbox), button);
     }
