@@ -309,91 +309,24 @@ error_message_notification_secondary_action (GtdNotification *notification,
 static void
 load_geometry (GtdWindow *self)
 {
-  g_autoptr (GVariant) position_variant = NULL;
-  g_autoptr (GVariant) size_variant = NULL;
+  GtkWindow *window = GTK_WINDOW (self);
   GSettings *settings;
+  GdkRectangle geometry;
   gboolean maximized;
-  const gint32 *position;
-  const gint32 *size;
-  gsize n_elements;
 
   settings = gtd_manager_get_settings (gtd_manager_get_default ());
 
-  /* load window settings: size */
-  size_variant = g_settings_get_value (settings, "window-size");
-  size = g_variant_get_fixed_array (size_variant, &n_elements, sizeof (gint32));
-
-  if (n_elements == 2)
-    {
-      gtk_window_set_default_size (GTK_WINDOW (self),
-                                   CLAMP (size[0], 1, G_MAXINT),
-                                   CLAMP (size[1], 1, G_MAXINT));
-    }
-
-  /* load window settings: position */
-  position_variant = g_settings_get_value (settings, "window-position");
-  position = g_variant_get_fixed_array (position_variant, &n_elements, sizeof (gint32));
-
-  if (n_elements == 2)
-    {
-      gtk_window_move (GTK_WINDOW (self),
-                       CLAMP (position[0], 0, G_MAXINT),
-                       CLAMP (position[1], 0, G_MAXINT));
-    }
-
-  /* load window settings: state */
   maximized = g_settings_get_boolean (settings, "window-maximized");
+  g_settings_get (settings, "window-size", "(ii)", &geometry.width, &geometry.height);
+  g_settings_get (settings, "window-position", "(ii)", &geometry.x, &geometry.y);
+
+  gtk_window_set_default_size (window, geometry.width, geometry.height);
+
+  if (geometry.y > -1)
+    gtk_window_move (window, geometry.x, geometry.y);
 
   if (maximized)
-    gtk_window_maximize (GTK_WINDOW (self));
-}
-
-static gboolean
-save_geometry (gpointer user_data)
-{
-  GtdWindow *self;
-  GtkWindow *window;
-  GSettings *settings;
-  gboolean maximized;
-  GVariant *variant;
-  gint32 size[2];
-  gint32 position[2];
-
-  self = GTD_WINDOW (user_data);
-  window = GTK_WINDOW (user_data);
-
-  settings = gtd_manager_get_settings (gtd_manager_get_default ());
-
-  /* save window's state */
-  maximized = gtk_window_is_maximized (window);
-
-  g_settings_set_boolean (settings, "window-maximized", maximized);
-
-  if (maximized)
-    {
-      self->save_geometry_timeout_id = 0;
-      return FALSE;
-    }
-
-  /* save window's size */
-  gtk_window_get_size (window, (gint*) &size[0], (gint*) &size[1]);
-  size[0] = CLAMP (size[0], 1, G_MAXINT);
-  size[1] = CLAMP (size[1], 1, G_MAXINT);
-
-  variant = g_variant_new_fixed_array (G_VARIANT_TYPE_INT32, size, 2, sizeof (size[0]));
-  g_settings_set_value (settings, "window-size", variant);
-
-  /* save windows's position */
-  gtk_window_get_position (window, (gint *) &position[0], (gint *) &position[1]);
-  position[0] = CLAMP (position[0], 0, G_MAXINT);
-  position[1] = CLAMP (position[1], 0, G_MAXINT);
-
-  variant = g_variant_new_fixed_array (G_VARIANT_TYPE_INT32, position, 2, sizeof (position[0]));
-  g_settings_set_value (settings, "window-position", variant);
-
-  self->save_geometry_timeout_id = 0;
-
-  return FALSE;
+    gtk_window_maximize (window);
 }
 
 static void
@@ -515,26 +448,28 @@ on_show_notification_cb (GtdManager      *manager,
  * GtkWindow overrides
  */
 
-static gboolean
-gtd_window_event (GtkWidget *widget,
-                  GdkEvent  *event)
+static void
+gtd_window_unmap (GtkWidget *widget)
 {
-  if (gdk_event_get_event_type (event) == GDK_CONFIGURE)
-    {
-      GtdWindow *self = GTD_WINDOW (widget);
+  GtkWindow *window = (GtkWindow *)widget;
+  GSettings *settings;
+  GdkRectangle geometry;
+  gboolean maximized;
 
-      if (self->save_geometry_timeout_id != 0)
-        {
-          g_source_remove (self->save_geometry_timeout_id);
-          self->save_geometry_timeout_id = 0;
-        }
+  settings = gtd_manager_get_settings (gtd_manager_get_default ());
+  maximized = gtk_window_is_maximized (window);
+  g_settings_set_boolean (settings, "window-maximized", maximized);
 
-      self->save_geometry_timeout_id = g_timeout_add (SAVE_GEOMETRY_ID_TIMEOUT, save_geometry, self);
-    }
+  if (maximized)
+    return;
 
-  return GDK_EVENT_PROPAGATE;
+  gtk_window_get_size (window, &geometry.width, &geometry.height);
+  gtk_window_get_position (window, &geometry.x, &geometry.y);
+  g_settings_set (settings, "window-size", "(ii)", geometry.width, geometry.height);
+  g_settings_set (settings, "window-position", "(ii)", geometry.x, geometry.y);
+
+  GTK_WIDGET_CLASS (gtd_window_parent_class)->unmap (widget);
 }
-
 
 /*
  * GObject overrides
@@ -634,7 +569,7 @@ gtd_window_class_init (GtdWindowClass *klass)
   object_class->get_property = gtd_window_get_property;
   object_class->set_property = gtd_window_set_property;
 
-  widget_class->event = gtd_window_event;
+  widget_class->unmap = gtd_window_unmap;
 
   /**
    * GtdWindow::mode:
