@@ -28,7 +28,7 @@
  *
  * Macros used for tracing and debugging code. These
  * are only valid when To Do is compiled with tracing
- * suppoer (pass `--enable-tracing` to the configure
+ * support (pass `--enable-tracing` to the configure
  * script to do that).
  */
 
