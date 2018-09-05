@@ -29,7 +29,6 @@ struct _GtdPanelScheduled
 {
   GtkBox              parent;
 
-  GMenu              *menu;
   GIcon              *icon;
 
   guint               number_of_tasks;
@@ -361,7 +360,7 @@ gtd_panel_scheduled_get_header_widgets (GtdPanel *panel)
 static const GMenu*
 gtd_panel_scheduled_get_menu (GtdPanel *panel)
 {
-  return GTD_PANEL_SCHEDULED (panel)->menu;
+  return NULL;
 }
 
 static GIcon*
@@ -402,7 +401,6 @@ gtd_panel_scheduled_finalize (GObject *object)
   GtdPanelScheduled *self = (GtdPanelScheduled *)object;
 
   g_clear_object (&self->icon);
-  g_clear_object (&self->menu);
   g_clear_object (&self->model);
 
   G_OBJECT_CLASS (gtd_panel_scheduled_parent_class)->finalize (object);
@@ -503,12 +501,6 @@ gtd_panel_scheduled_init (GtdPanelScheduled *self)
                             "update",
                             G_CALLBACK (gtd_panel_scheduled_count_tasks),
                             self);
-
-  /* Menu */
-  self->menu = g_menu_new ();
-  g_menu_append (self->menu,
-                 _("Clear completed tasks…"),
-                 "list.clear-completed-tasks");
 
   /* The main view */
   self->view = gtd_task_list_view_new ();

@@ -28,7 +28,6 @@ struct _GtdPanelToday
   GtkBox              parent;
 
   GtkWidget          *view;
-  GMenu              *menu;
   GIcon              *icon;
 
   GListStore         *model;
@@ -281,7 +280,7 @@ gtd_panel_today_get_header_widgets (GtdPanel *panel)
 static const GMenu*
 gtd_panel_today_get_menu (GtdPanel *panel)
 {
-  return GTD_PANEL_TODAY (panel)->menu;
+  return NULL;
 }
 
 static GIcon*
@@ -322,7 +321,6 @@ gtd_panel_today_finalize (GObject *object)
   GtdPanelToday *self = (GtdPanelToday *)object;
 
   g_clear_object (&self->icon);
-  g_clear_object (&self->menu);
   g_clear_object (&self->model);
 
   G_OBJECT_CLASS (gtd_panel_today_parent_class)->finalize (object);
@@ -423,12 +421,6 @@ gtd_panel_today_init (GtdPanelToday *self)
                            G_CALLBACK (on_manager_task_list_changed_cb),
                            self,
                            G_CONNECT_SWAPPED);
-
-  /* Menu */
-  self->menu = g_menu_new ();
-  g_menu_append (self->menu,
-                 _("Clear completed tasks…"),
-                 "list.clear-completed-tasks");
 
   /* The main view */
   self->view = gtd_task_list_view_new ();
