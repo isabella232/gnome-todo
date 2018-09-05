@@ -37,12 +37,12 @@ plugins/todo-txt/gtd-todo-txt-parser.c
 plugins/todo-txt/org.gnome.todo.txt.gschema.xml
 plugins/unscheduled-panel/unscheduled-panel/__init__.py
 src/gtd-application.c
-src/gtd-edit-pane.c
 src/gtd-empty-list-widget.c
-src/gtd-new-task-row.c
 src/gtd-plugin-dialog-row.c
-src/gtd-task-list-view.c
-src/gtd-task-row.c
 src/gtd-window.c
 src/main.c
 src/sidebar/gtd-sidebar-list-row.c
+src/task-list-view/gtd-edit-pane.c
+src/task-list-view/gtd-new-task-row.c
+src/task-list-view/gtd-task-list-view.c
+src/task-list-view/gtd-task-row.c
