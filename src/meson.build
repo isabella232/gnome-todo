@@ -230,7 +230,7 @@ if get_option('introspection')
   typelib_dir = join_paths(gnome_todo_libdir, '@0@-@1@'.format('girepository', gnome_todo_gir_version))
 
   gnome.generate_gir(
-             gnome_todo,
+                 libgtd,
                 sources: gir_sources,
               namespace: gnome_todo_gir_namespace,
               nsversion: gnome_todo_gir_version,
