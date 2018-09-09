@@ -20,6 +20,8 @@
 
 #define G_LOG_DOMAIN "GtdTaskListPopover"
 
+#include "contrib/gtd-list-model-filter.h"
+#include "gtd-debug.h"
 #include "gtd-manager.h"
 #include "gtd-provider.h"
 #include "gtd-task-list.h"
@@ -30,8 +32,11 @@ struct _GtdTaskListPopover
 {
   GtkPopover          parent;
 
+  GtdListModelFilter *filter_model;
+
   GtkSizeGroup       *sizegroup;
   GtkListBox         *listbox;
+  GtkEntry           *search_entry;
 
   GtdTaskList        *selected_list;
   GtdManager         *manager;
@@ -72,6 +77,24 @@ set_selected_tasklist (GtdTaskListPopover *self,
 /*
  * Callbacks
  */
+
+static gboolean
+filter_listbox_cb (GObject  *object,
+                   gpointer  user_data)
+{
+  GtdTaskListPopover *self;
+  g_autofree gchar *normalized_list_name = NULL;
+  g_autofree gchar *normalized_search_query = NULL;
+  GtdTaskList *list;
+
+  self = (GtdTaskListPopover*) user_data;
+  list = (GtdTaskList*) object;
+
+  normalized_search_query = gtd_normalize_casefold_and_unaccent (gtk_entry_get_text (self->search_entry));
+  normalized_list_name = gtd_normalize_casefold_and_unaccent (gtd_task_list_get_name (list));
+
+  return g_strrstr (normalized_list_name, normalized_search_query) != NULL;
+}
 
 static GtkWidget*
 create_list_row_cb (gpointer item,
@@ -145,6 +168,32 @@ on_listbox_row_activated_cb (GtkListBox         *listbox,
 
   set_selected_tasklist (self, list);
   gtk_popover_popdown (GTK_POPOVER (self));
+  gtk_entry_set_text (self->search_entry, "");
+}
+
+static void
+on_popover_closed_cb (GtkPopover         *popover,
+                      GtdTaskListPopover *self)
+{
+  gtk_entry_set_text (self->search_entry, "");
+}
+
+static void
+on_search_entry_activated_cb (GtkEntry           *entry,
+                              GtdTaskListPopover *self)
+{
+  g_autoptr (GtdTaskList) list = g_list_model_get_item (G_LIST_MODEL (self->filter_model), 0);
+
+  set_selected_tasklist (self, list);
+  gtk_popover_popdown (GTK_POPOVER (self));
+  gtk_entry_set_text (self->search_entry, "");
+}
+
+static void
+on_search_entry_search_changed_cb (GtkEntry           *search_entry,
+                                   GtdTaskListPopover *self)
+{
+  gtd_list_model_filter_invalidate (self->filter_model);
 }
 
 
@@ -179,9 +228,13 @@ gtd_task_list_popover_class_init (GtdTaskListPopoverClass *klass)
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/task-list-popover.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPopover, listbox);
+  gtk_widget_class_bind_template_child (widget_class, GtdTaskListPopover, search_entry);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPopover, sizegroup);
 
   gtk_widget_class_bind_template_callback (widget_class, on_listbox_row_activated_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_popover_closed_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_search_entry_activated_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_search_entry_search_changed_cb);
 }
 
 static void
@@ -189,10 +242,16 @@ gtd_task_list_popover_init (GtdTaskListPopover *self)
 {
   GtdManager *manager = gtd_manager_get_default ();
 
+  self->filter_model = gtd_list_model_filter_new (gtd_manager_get_task_lists_model (manager));
+  gtd_list_model_filter_set_filter_func (self->filter_model,
+                                         filter_listbox_cb,
+                                         self,
+                                         NULL);
+
   gtk_widget_init_template (GTK_WIDGET (self));
 
   gtk_list_box_bind_model (self->listbox,
-                           gtd_manager_get_task_lists_model (manager),
+                           G_LIST_MODEL (self->filter_model),
                            create_list_row_cb,
                            self,
                            NULL);

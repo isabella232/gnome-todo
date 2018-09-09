@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <template class="GtdTaskListPopover" parent="GtkPopover">
+    <signal name="closed" handler="on_popover_closed_cb" object="GtdTaskListPopover" swapped="no" />
     <child>
       <object class="GtkBox">
         <property name="margin">18</property>
@@ -10,7 +11,8 @@
         <!-- Search entry -->
         <child>
           <object class="GtkSearchEntry" id="search_entry">
-            <property name="visible">false</property>
+            <signal name="activate" handler="on_search_entry_activated_cb" object="GtdTaskListPopover" swapped="no" />
+            <signal name="search-changed" handler="on_search_entry_search_changed_cb" object="GtdTaskListPopover" swapped="no" />
           </object>
         </child>
 

@@ -24,6 +24,8 @@
 
 G_BEGIN_DECLS
 
+gchar*               gtd_normalize_casefold_and_unaccent         (const gchar        *str);
+
 gchar*               gtd_str_replace                             (const gchar        *source,
                                                                   const gchar        *search,
                                                                   const gchar        *replacement);
