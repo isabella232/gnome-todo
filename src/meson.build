@@ -30,6 +30,7 @@ install_headers(headers, subdir: meson.project_name())
 ################
 
 sources = files(
+  'contrib/gtd-list-model-filter.c',
   'contrib/gtd-list-store.c',
   'engine/gtd-manager.c',
   'engine/gtd-plugin-manager.c',
