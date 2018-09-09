@@ -18,6 +18,7 @@
 
 #define G_LOG_DOMAIN "GtdManager"
 
+#include "contrib/gtd-list-store.h"
 #include "interfaces/gtd-provider.h"
 #include "interfaces/gtd-panel.h"
 #include "notification/gtd-notification.h"
@@ -54,7 +55,6 @@ struct _GtdManager
   GSettings          *settings;
   GtdPluginManager   *plugin_manager;
 
-  GHashTable         *list_to_index;
   GListModel         *lists_model;
 
   GList              *tasklists;
@@ -176,15 +176,12 @@ on_list_added_cb (GtdProvider *provider,
                   GtdTaskList *list,
                   GtdManager  *self)
 {
-  guint position;
-
   self->tasklists = g_list_append (self->tasklists, list);
 
-  position = g_list_store_insert_sorted (G_LIST_STORE (self->lists_model),
-                                         list,
-                                         (GCompareDataFunc) compare_lists_cb,
-                                         self);
-  g_hash_table_insert (self->list_to_index, list, GUINT_TO_POINTER (position));
+  gtd_list_store_insert_sorted (GTD_LIST_STORE (self->lists_model),
+                                list,
+                                (GCompareDataFunc) compare_lists_cb,
+                                self);
 
   g_signal_connect (list,
                     "task-added",
@@ -209,16 +206,9 @@ on_list_changed_cb (GtdProvider *provider,
                     GtdTaskList *list,
                     GtdManager  *self)
 {
-  guint position;
-
-  position = GPOINTER_TO_UINT (g_hash_table_lookup (self->list_to_index, list));
-  g_list_store_remove (G_LIST_STORE (self->lists_model), position);
-
-  position = g_list_store_insert_sorted (G_LIST_STORE (self->lists_model),
-                                         list,
-                                         (GCompareDataFunc) compare_lists_cb,
-                                         self);
-  g_hash_table_insert (self->list_to_index, list, GUINT_TO_POINTER (position));
+  gtd_list_store_sort (GTD_LIST_STORE (self->lists_model),
+                       (GCompareDataFunc) compare_lists_cb,
+                       self);
 
   g_signal_emit (self, signals[LIST_CHANGED], 0, list);
 }
@@ -228,15 +218,12 @@ on_list_removed_cb (GtdProvider *provider,
                     GtdTaskList *list,
                     GtdManager  *self)
 {
-  guint position;
-
   if (!list)
       return;
 
   self->tasklists = g_list_remove (self->tasklists, list);
 
-  position = GPOINTER_TO_UINT (g_hash_table_lookup (self->list_to_index, list));
-  g_list_store_remove (G_LIST_STORE (self->lists_model), position);
+  gtd_list_store_remove (GTD_LIST_STORE (self->lists_model), list);
 
   g_signal_handlers_disconnect_by_func (list,
                                         on_task_list_modified_cb,
@@ -322,8 +309,6 @@ gtd_manager_finalize (GObject *object)
   g_clear_object (&self->settings);
   g_clear_object (&self->timer);
   g_clear_object (&self->lists_model);
-
-  g_clear_pointer (&self->list_to_index, g_hash_table_destroy);
 
   G_OBJECT_CLASS (gtd_manager_parent_class)->finalize (object);
 }
@@ -633,8 +618,7 @@ gtd_manager_init (GtdManager *self)
   self->plugin_manager = gtd_plugin_manager_new ();
   self->timer = gtd_timer_new ();
   self->cancellable = g_cancellable_new ();
-  self->lists_model = (GListModel*) g_list_store_new (GTD_TYPE_TASK_LIST);
-  self->list_to_index = g_hash_table_new (g_direct_hash, g_direct_equal);
+  self->lists_model = (GListModel*) gtd_list_store_new (GTD_TYPE_TASK_LIST);
 }
 
 /**
