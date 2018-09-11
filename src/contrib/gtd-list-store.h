@@ -60,4 +60,7 @@ void                 gtd_list_store_splice                       (GtdListStore  
                                                                   gpointer           *additions,
                                                                   guint               n_additions);
 
+guint                gtd_list_store_get_item_position            (GtdListStore       *store,
+                                                                  gpointer            item);
+
 G_END_DECLS

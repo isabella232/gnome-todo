@@ -534,3 +534,27 @@ gtd_list_store_splice (GtdListStore *store,
 
   gtd_list_store_items_changed (store, position, n_removals, n_additions);
 }
+
+/**
+ * gtd_list_store_get_item_position:
+ * @store: a #GtdListStore
+ * @item: the item to retrieve the position
+ *
+ * Retrieves the position of @items inside @store. It is a programming
+ * error to pass an @item that is not contained in @store.
+ *
+ * Returns: the position of @item in @store.
+ */
+guint
+gtd_list_store_get_item_position (GtdListStore *store,
+                                  gpointer      item)
+{
+  GSequenceIter *iter;
+
+  g_return_val_if_fail (GTD_IS_LIST_STORE (store), 0);
+
+  iter = g_hash_table_lookup (store->item_to_iter, item);
+  g_assert (iter != NULL);
+
+  return g_sequence_iter_get_position (iter);
+}
