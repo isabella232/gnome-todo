@@ -19,6 +19,7 @@
 #define G_LOG_DOMAIN "GtdManager"
 
 #include "contrib/gtd-list-store.h"
+#include "contrib/gtd-task-model-private.h"
 #include "interfaces/gtd-provider.h"
 #include "interfaces/gtd-panel.h"
 #include "notification/gtd-notification.h"
@@ -56,6 +57,7 @@ struct _GtdManager
   GtdPluginManager   *plugin_manager;
 
   GListModel         *lists_model;
+  GListModel         *tasks_model;
 
   GList              *tasklists;
   GList              *providers;
@@ -619,6 +621,7 @@ gtd_manager_init (GtdManager *self)
   self->timer = gtd_timer_new ();
   self->cancellable = g_cancellable_new ();
   self->lists_model = (GListModel*) gtd_list_store_new (GTD_TYPE_TASK_LIST);
+  self->tasks_model = (GListModel*) _gtd_task_model_new (self);
 }
 
 /**
@@ -921,7 +924,7 @@ gtd_manager_get_timer (GtdManager *self)
  *
  * The model is sorted.
  *
- * Returns: (transfer none): a #GtdTimer
+ * Returns: (transfer none): a #GListModel
  */
 GListModel*
 gtd_manager_get_task_lists_model (GtdManager *self)
@@ -929,6 +932,26 @@ gtd_manager_get_task_lists_model (GtdManager *self)
   g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
   return self->lists_model;
+}
+
+/**
+ * gtd_manager_get_tasks_model:
+ * @self: a #GtdManager
+ *
+ * Retrieves the #GListModel containing #GtdTasks from
+ * @self. You can use the this model to bind to GtkListBox
+ * or other widgets.
+ *
+ * The model is sorted.
+ *
+ * Returns: (transfer none): a #GListModel
+ */
+GListModel*
+gtd_manager_get_tasks_model (GtdManager *self)
+{
+  g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
+
+  return self->tasks_model;
 }
 
 void
