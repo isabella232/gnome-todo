@@ -166,8 +166,6 @@ gtd_list_store_class_init (GtdListStoreClass *klass)
    *
    * The type of items contained in this list store. Items must be
    * subclasses of #GObject.
-   *
-   * Since: 2.44
    **/
   g_object_class_install_property (object_class, PROP_ITEM_TYPE,
     g_param_spec_gtype ("item-type", "", "", G_TYPE_OBJECT,
@@ -243,7 +241,6 @@ gtd_list_store_init (GtdListStore *store)
  * must be a subclass of #GObject.
  *
  * Returns: a new #GtdListStore
- * Since: 2.44
  */
 GtdListStore *
 gtd_list_store_new (GType item_type)
@@ -272,8 +269,6 @@ gtd_list_store_new (GType item_type)
  *
  * Use gtd_list_store_splice() to insert multiple items at the same time
  * efficiently.
- *
- * Since: 2.44
  */
 void
 gtd_list_store_insert (GtdListStore *store,
@@ -312,8 +307,6 @@ gtd_list_store_insert (GtdListStore *store,
  * This function takes a ref on @item.
  *
  * Returns: the position at which @item was inserted
- *
- * Since: 2.44
  */
 guint
 gtd_list_store_insert_sorted (GtdListStore     *store,
@@ -345,8 +338,6 @@ gtd_list_store_insert_sorted (GtdListStore     *store,
  * @user_data: (closure): user data for @compare_func
  *
  * Sort the items in @store according to @compare_func.
- *
- * Since: 2.46
  */
 void
 gtd_list_store_sort (GtdListStore     *store,
@@ -375,8 +366,6 @@ gtd_list_store_sort (GtdListStore     *store,
  *
  * Use gtd_list_store_splice() to append multiple items at the same time
  * efficiently.
- *
- * Since: 2.44
  */
 void
 gtd_list_store_append (GtdListStore *store,
@@ -405,8 +394,6 @@ gtd_list_store_append (GtdListStore *store,
  *
  * Use gtd_list_store_splice() to remove multiple items at the same time
  * efficiently.
- *
- * Since: 2.44
  */
 void
 gtd_list_store_remove (GtdListStore *store,
@@ -437,8 +424,6 @@ gtd_list_store_remove (GtdListStore *store,
  *
  * Use gtd_list_store_splice() to remove multiple items at the same time
  * efficiently.
- *
- * Since: 2.44
  */
 void
 gtd_list_store_remove_at_position (GtdListStore *store,
@@ -461,8 +446,6 @@ gtd_list_store_remove_at_position (GtdListStore *store,
  * @store: a #GtdListStore
  *
  * Removes all items from @store.
- *
- * Since: 2.44
  */
 void
 gtd_list_store_remove_all (GtdListStore *store)
@@ -500,8 +483,6 @@ gtd_list_store_remove_all (GtdListStore *store)
  * The parameters @position and @n_removals must be correct (ie:
  * @position + @n_removals must be less than or equal to the length of
  * the list at the time this function is called).
- *
- * Since: 2.44
  */
 void
 gtd_list_store_splice (GtdListStore *store,
