@@ -16,8 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GTD_MANAGER_PROTECTED_H
-#define GTD_MANAGER_PROTECTED_H
+#pragma once
 
 #include "gtd-types.h"
 
@@ -29,4 +28,4 @@ GtdPluginManager*    gtd_manager_get_plugin_manager              (GtdManager    
 
 G_END_DECLS
 
-#endif /* GTD_MANAGER_PROTECTED_H */
+G_END_DECLS
