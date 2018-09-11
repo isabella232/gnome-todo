@@ -648,11 +648,9 @@ gtd_task_list_remove_task (GtdTaskList *list,
 
   g_assert (GTD_IS_TASK_LIST (list));
   g_assert (GTD_IS_TASK (task));
+  g_assert (gtd_task_list_contains (list, task));
 
   priv = gtd_task_list_get_instance_private (list);
-
-  if (!gtd_task_list_contains (list, task))
-    return;
 
   g_signal_handlers_disconnect_by_func (task, task_changed_cb, list);
 
