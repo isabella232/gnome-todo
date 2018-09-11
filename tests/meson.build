@@ -50,6 +50,7 @@ static_test_link_args = ['-fPIC']
 
 static_tests = [
   'test-model-filter',
+  'test-task-model',
 ]
 
 foreach static_test : static_tests
@@ -77,6 +78,7 @@ endforeach
 
 interactive_tests = [
   'test-colorbutton',
+  'test-task-model',
 ]
 
 foreach interactive_test : interactive_tests
