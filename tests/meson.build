@@ -1,3 +1,32 @@
+#################
+# Tests Library #
+#################
+
+sources = files(
+  'dummy-provider.c',
+)
+
+tests_incs = [
+  src_inc,
+  include_directories('.'),
+]
+
+libgtd_tests = static_library(
+           'gtd_tests',
+              sources : sources,
+              version : libversion,
+            soversion : soversion,
+  include_directories : tests_incs,
+         dependencies : gnome_todo_deps,
+               c_args : cflags,
+)
+
+tests_libs = [
+  libgtd,
+  libgtd_tests,
+]
+
+
 ################
 # Static tests #
 ################
@@ -33,8 +62,8 @@ foreach static_test : static_tests
                   c_args : static_test_cflags,
                link_args : static_test_link_args,
             dependencies : gnome_todo_deps,
-               link_with : libgtd,
-     include_directories : [ src_inc ],
+               link_with : tests_libs,
+     include_directories : tests_incs,
   )
 
   test(static_test, static_test_program, env: static_test_env)
@@ -59,9 +88,9 @@ foreach interactive_test : interactive_tests
   executable(
   interactive_test_name,
                  source,
-   include_directories: src_inc,
+   include_directories: tests_incs,
           dependencies: gnome_todo_deps,
                 c_args: cflags,
-             link_with: [ libgtd ],
+             link_with: tests_libs,
 )
 endforeach
