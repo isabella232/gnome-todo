@@ -26,6 +26,7 @@ void                 gtd_manager_load_plugins                    (GtdManager    
 
 GtdPluginManager*    gtd_manager_get_plugin_manager              (GtdManager         *manager);
 
-G_END_DECLS
+void                 _gtd_manager_inject_provider                (GtdManager         *self,
+                                                                  GtdProvider        *provider);
 
 G_END_DECLS

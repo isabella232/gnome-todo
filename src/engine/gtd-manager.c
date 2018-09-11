@@ -968,3 +968,14 @@ gtd_manager_get_plugin_manager (GtdManager *self)
 
   return self->plugin_manager;
 }
+
+void
+_gtd_manager_inject_provider (GtdManager  *self,
+                              GtdProvider *provider)
+{
+  g_return_if_fail (GTD_IS_MANAGER (self));
+
+  g_debug ("Injecting provider '%s'", gtd_provider_get_name (provider));
+
+  on_provider_added_cb (NULL, provider, self);
+}
