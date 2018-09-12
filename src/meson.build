@@ -6,6 +6,8 @@
 enum_headers = files('gtd-enums.h')
 
 headers = enum_headers + files(
+  'contrib/gtd-list-model-filter.h',
+  'contrib/gtd-list-store.h',
   'engine/gtd-manager.h',
   'interfaces/gtd-activatable.h',
   'interfaces/gtd-panel.h',
@@ -31,6 +33,7 @@ install_headers(headers, subdir: meson.project_name())
 
 sources = files(
   'contrib/gtd-list-model-filter.c',
+  'contrib/gtd-list-model-sort.c',
   'contrib/gtd-list-store.c',
   'contrib/gtd-task-model.c',
   'engine/gtd-manager.c',
@@ -195,6 +198,10 @@ pkg.generate(
 
 if get_option('introspection')
   gir_sources = files(
+    'contrib/gtd-list-model-filter.c',
+    'contrib/gtd-list-model-filter.h',
+    'contrib/gtd-list-store.c',
+    'contrib/gtd-list-store.h',
     'engine/gtd-manager.c',
     'engine/gtd-manager.h',
     'interfaces/gtd-activatable.c',

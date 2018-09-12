@@ -163,6 +163,7 @@ pkg = import('pkgconfig')
 top_inc = include_directories('.')
 src_inc = include_directories(
   'src',
+  'src/contrib',
   'src/engine',
   'src/interfaces',
   'src/notification',

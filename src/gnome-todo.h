@@ -21,6 +21,9 @@
 
 #include "gtd-activatable.h"
 #include "gtd-enums.h"
+#include "gtd-list-model-filter.h"
+#include "gtd-list-model-sort.h"
+#include "gtd-list-store.h"
 #include "gtd-manager.h"
 #include "gtd-notification.h"
 #include "gtd-object.h"

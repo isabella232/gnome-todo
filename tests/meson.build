@@ -50,6 +50,7 @@ static_test_link_args = ['-fPIC']
 
 static_tests = [
   'test-model-filter',
+  'test-model-sort',
   'test-task-model',
 ]
 
@@ -78,6 +79,7 @@ endforeach
 
 interactive_tests = [
   'test-colorbutton',
+  'test-filter-sort',
   'test-task-model',
 ]
 
