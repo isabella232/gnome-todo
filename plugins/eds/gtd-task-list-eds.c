@@ -389,6 +389,7 @@ save_task_list (GtdTaskListEds *list)
                       list);
     }
 }
+
 static gboolean
 color_to_string (GBinding     *binding,
                  const GValue *from_value,
@@ -428,6 +429,7 @@ string_to_color (GBinding     *binding,
 /*
  * GtdTaskList overrides
  */
+
 static void
 gtd_task_list_eds_task_added (GtdTaskList *list,
                               GtdTask     *task)
