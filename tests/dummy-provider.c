@@ -372,7 +372,7 @@ dummy_provider_generate_task_lists (DummyProvider *self)
           uuid = g_uuid_string_random ();
           gtd_object_set_uid (GTD_OBJECT (task), uuid);
 
-          gtd_task_list_save_task (new_list, task);
+          gtd_task_list_add_task (new_list, task);
         }
     }
 

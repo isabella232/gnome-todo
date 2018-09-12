@@ -301,6 +301,8 @@ on_task_modified_cb (ECalClient   *client,
 
   e_cal_client_modify_object_finish (client, result, &error);
 
+  gtd_task_list_update_task (gtd_task_get_list (task), task);
+
   REPORT_ERROR (_("An error occurred while modifying a task"), error);
 
   GTD_EXIT;
@@ -479,7 +481,7 @@ gtd_provider_eds_create_task (GtdProvider *provider,
   gtd_task_set_due_date (new_task, due_date);
   gtd_task_set_list (new_task, list);
 
-  gtd_task_list_save_task (list, new_task);
+  gtd_task_list_add_task (list, new_task);
 
   /* The task is not ready until we finish the operation */
   gtd_object_push_loading (GTD_OBJECT (self));

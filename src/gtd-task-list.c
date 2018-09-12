@@ -585,49 +585,74 @@ gtd_task_list_set_provider (GtdTaskList *self,
 }
 
 /**
- * gtd_task_list_save_task:
+ * gtd_task_list_add_task:
  * @list: a #GtdTaskList
  * @task: a #GtdTask
  *
- * Adds or updates @task to @list if it's not already present.
+ * Adds @task to @list.
  */
 void
-gtd_task_list_save_task (GtdTaskList *list,
-                         GtdTask     *task)
+gtd_task_list_add_task (GtdTaskList *self,
+                        GtdTask     *task)
 {
   GtdTaskListPrivate *priv;
+  GSequenceIter *iter;
+  const gchar *uid;
 
-  g_assert (GTD_IS_TASK_LIST (list));
-  g_assert (GTD_IS_TASK (task));
+  g_return_if_fail (GTD_IS_TASK_LIST (self));
+  g_return_if_fail (GTD_IS_TASK (task));
 
-  priv = gtd_task_list_get_instance_private (list);
+  priv = gtd_task_list_get_instance_private (self);
 
-  if (gtd_task_list_contains (list, task))
-    {
-      g_signal_emit (list, signals[TASK_UPDATED], 0, task);
-    }
-  else
-    {
-      GSequenceIter *iter;
-      const gchar *uid;
+  g_return_if_fail (!gtd_task_list_contains (self, task));
 
-      uid = gtd_object_get_uid (GTD_OBJECT (task));
-      iter = g_sequence_insert_sorted (priv->sorted_tasks,
-                                       g_object_ref (task),
-                                       compare_tasks_cb,
-                                       NULL);
+  uid = gtd_object_get_uid (GTD_OBJECT (task));
+  iter = g_sequence_insert_sorted (priv->sorted_tasks,
+                                   g_object_ref (task),
+                                   compare_tasks_cb,
+                                   NULL);
 
-      g_hash_table_insert (priv->tasks, g_strdup (uid), iter);
+  g_hash_table_insert (priv->tasks, g_strdup (uid), iter);
 
-      g_signal_connect (task, "notify", G_CALLBACK (task_changed_cb), list);
+  g_signal_connect (task, "notify", G_CALLBACK (task_changed_cb), self);
 
-      g_list_model_items_changed (G_LIST_MODEL (list),
-                                  g_sequence_iter_get_position (iter),
-                                  0,
-                                  1);
+  g_list_model_items_changed (G_LIST_MODEL (self),
+                              g_sequence_iter_get_position (iter),
+                              0,
+                              1);
 
-      g_signal_emit (list, signals[TASK_ADDED], 0, task);
-    }
+  g_signal_emit (self, signals[TASK_ADDED], 0, task);
+}
+
+/**
+ * gtd_task_list_update_task:
+ * @list: a #GtdTaskList
+ * @task: a #GtdTask
+ *
+ * Updates @task at @list.
+ */
+void
+gtd_task_list_update_task (GtdTaskList *self,
+                           GtdTask     *task)
+{
+  GtdTaskListPrivate *priv;
+  GSequenceIter *iter;
+
+  g_return_if_fail (GTD_IS_TASK_LIST (self));
+  g_return_if_fail (GTD_IS_TASK (task));
+
+  priv = gtd_task_list_get_instance_private (self);
+
+  g_return_if_fail (gtd_task_list_contains (self, task));
+
+  iter = g_hash_table_lookup (priv->tasks, gtd_object_get_uid (GTD_OBJECT (task)));
+
+  g_list_model_items_changed (G_LIST_MODEL (self),
+                              g_sequence_iter_get_position (iter),
+                              1,
+                              1);
+
+  g_signal_emit (self, signals[TASK_UPDATED], 0, task);
 }
 
 /**

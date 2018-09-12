@@ -445,7 +445,7 @@ parse_tasks (GtdProviderTodoist *self,
             gtd_task_add_subtask (parent_task, task);
 
           gtd_task_set_list (task, list);
-          gtd_task_list_save_task (list, task);
+          gtd_task_list_add_task (list, task);
 
           g_queue_push_head (&tasks_stack, task);
 
@@ -1185,7 +1185,7 @@ gtd_provider_todoist_create_task (GtdProvider *provider,
   gtd_task_set_creation_date (new_task, creation_date);
   gtd_object_set_uid (GTD_OBJECT (new_task), temp_id);
 
-  gtd_task_list_save_task (list, new_task);
+  gtd_task_list_add_task (list, new_task);
 
   command = g_strdup_printf ("{                              \n"
                              "    \"type\": \"item_add\",    \n"

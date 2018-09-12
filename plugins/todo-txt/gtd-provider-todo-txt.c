@@ -323,7 +323,7 @@ parse_task (GtdProviderTodoTxt  *self,
   g_ptr_array_add (tasks, task);
 
   gtd_task_set_list (task, list);
-  gtd_task_list_save_task (list, task);
+  gtd_task_list_add_task (list, task);
 
   g_hash_table_insert (self->tasks, (gpointer) gtd_object_get_uid (GTD_OBJECT (task)), task);
   self->task_counter++;
@@ -415,7 +415,7 @@ resolve_subtasks (GtdProviderTodoTxt *self,
             gtd_task_add_subtask (parent_task, task);
 
           gtd_task_set_list (task, list);
-          gtd_task_list_save_task (list, task);
+          gtd_task_list_add_task (list, task);
 
           g_queue_push_head (&tasks_stack, task);
 
@@ -687,7 +687,7 @@ gtd_provider_todo_txt_create_task (GtdProvider *provider,
   gtd_task_set_title (new_task, title);
   gtd_task_set_creation_date (new_task, g_date_time_new_now_local ());
 
-  gtd_task_list_save_task (list, new_task);
+  gtd_task_list_add_task (list, new_task);
 
   update_source (GTD_PROVIDER_TODO_TXT (provider));
 }

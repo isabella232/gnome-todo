@@ -171,6 +171,8 @@ on_view_objects_added_cb (ECalClientView *view,
         {
           gtd_task_eds_set_component (GTD_TASK_EDS (task), component);
 
+          gtd_task_list_update_task (self, task);
+
           GTD_TRACE_MSG ("Updated task '%s' to tasklist '%s'",
                          gtd_task_get_title (task),
                          gtd_task_list_get_name (self));
@@ -182,7 +184,7 @@ on_view_objects_added_cb (ECalClientView *view,
       task = gtd_task_eds_new (component);
       gtd_task_set_list (task, self);
 
-      gtd_task_list_save_task (self, task);
+      gtd_task_list_add_task (self, task);
 
       GTD_TRACE_MSG ("Added task '%s' (%s) to tasklist '%s'",
                      gtd_task_get_title (task),
