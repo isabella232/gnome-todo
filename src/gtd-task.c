@@ -18,6 +18,7 @@
 
 #define G_LOG_DOMAIN "GtdTask"
 
+#include "gtd-debug.h"
 #include "gtd-task.h"
 #include "gtd-task-list.h"
 
@@ -140,6 +141,66 @@ get_root_task (GtdTask *self)
   return aux;
 }
 
+static void
+append_subtask (GtdTask *self,
+                GtdTask *subtask)
+{
+  GtdTaskPrivate *priv, *subtask_priv;
+
+  priv = gtd_task_get_instance_private (self);
+  subtask_priv = gtd_task_get_instance_private (subtask);
+
+  subtask_priv->previous_sibling = priv->last_subtask;
+
+  if (priv->last_subtask)
+    {
+      GtdTaskPrivate *last_subtask_priv = gtd_task_get_instance_private (priv->last_subtask);
+      last_subtask_priv->next_sibling = subtask;
+    }
+
+  priv->last_subtask = subtask;
+
+  if (!priv->first_subtask)
+    priv->first_subtask = subtask;
+}
+
+static void
+remove_subtask (GtdTask *self,
+                GtdTask *subtask)
+{
+  GtdTaskPrivate *priv, *subtask_priv;
+
+  priv = gtd_task_get_instance_private (self);
+  subtask_priv = gtd_task_get_instance_private (subtask);
+
+  if (subtask_priv->previous_sibling)
+    {
+      GtdTaskPrivate *previous_subtask_sibling_priv = gtd_task_get_instance_private (subtask_priv->previous_sibling);
+      previous_subtask_sibling_priv->next_sibling = subtask_priv->next_sibling;
+    }
+  else
+    {
+      /*
+       * This is the first subtask, so advance the parent's first subtask
+       * to the next one (which might be NULL).
+       */
+      priv->first_subtask = subtask_priv->next_sibling;
+    }
+
+  if (subtask_priv->next_sibling)
+    {
+      GtdTaskPrivate *next_subtask_sibling_priv = gtd_task_get_instance_private (subtask_priv->next_sibling);
+      next_subtask_sibling_priv->previous_sibling = subtask_priv->previous_sibling;
+    }
+  else
+    {
+      /*
+       * This is the last subtask, so rewind the parent's last subtask to
+       * the previous one (which might be NULL).
+       */
+      priv->last_subtask = subtask_priv->previous_sibling;
+    }
+}
 
 static gint
 compare_by_subtasks (GtdTask **t1,
@@ -240,6 +301,8 @@ real_add_subtask (GtdTask *self,
 {
   GtdTaskPrivate *priv, *subtask_priv;
 
+  GTD_ENTRY;
+
   g_assert (!gtd_task_is_subtask (self, subtask));
 
   priv = gtd_task_get_instance_private (self);
@@ -250,30 +313,24 @@ real_add_subtask (GtdTask *self,
     gtd_task_remove_subtask (subtask_priv->parent_task, subtask);
 
   /* Append to this task's list of subtasks */
-  subtask_priv->previous_sibling = priv->last_subtask;
-
-  if (priv->last_subtask)
-    {
-      GtdTaskPrivate *last_subtask_priv = gtd_task_get_instance_private (priv->last_subtask);
-      last_subtask_priv->next_sibling = subtask;
-    }
-
-  priv->last_subtask = subtask;
-
-  if (!priv->first_subtask)
-    priv->first_subtask = subtask;
+  append_subtask (self, subtask);
 
   /* Update counters */
   priv->n_direct_subtasks += 1;
   priv->n_total_subtasks += subtask_priv->n_total_subtasks + 1;
 
+  GTD_TRACE_MSG ("Task %p is now subtask of %p", subtask, self);
+
   /* Update the subtask's parent property */
   subtask_priv->next_sibling = NULL;
   subtask_priv->parent_task = self;
+
   g_object_notify (G_OBJECT (subtask), "parent");
 
   /* And also the task's depth */
   set_depth (subtask, priv->depth + 1);
+
+  GTD_EXIT;
 }
 
 static void
@@ -287,37 +344,14 @@ real_remove_subtask (GtdTask *self,
   priv = gtd_task_get_instance_private (self);
   subtask_priv = gtd_task_get_instance_private (subtask);
 
-  if (subtask_priv->previous_sibling)
-    {
-      GtdTaskPrivate *previous_subtask_sibling_priv = gtd_task_get_instance_private (subtask_priv->previous_sibling);
-      previous_subtask_sibling_priv->next_sibling = subtask_priv->next_sibling;
-    }
-  else
-    {
-      /*
-       * This is the first subtask, so advance the parent's first subtask
-       * to the next one (which might be NULL).
-       */
-      priv->first_subtask = subtask_priv->next_sibling;
-    }
-
-  if (subtask_priv->next_sibling)
-    {
-      GtdTaskPrivate *next_subtask_sibling_priv = gtd_task_get_instance_private (subtask_priv->next_sibling);
-      next_subtask_sibling_priv->previous_sibling = subtask_priv->previous_sibling;
-    }
-  else
-    {
-      /*
-       * This is the last subtask, so rewind the parent's last subtask to
-       * the previous one (which might be NULL).
-       */
-      priv->last_subtask = subtask_priv->previous_sibling;
-    }
+  /* Detach subtask from the linked list of subtasks */
+  remove_subtask (self, subtask);
 
   /* Update counters */
   priv->n_direct_subtasks -= 1;
   priv->n_total_subtasks -= subtask_priv->n_total_subtasks + 1;
+
+  GTD_TRACE_MSG ("Task %p was detached from %p", subtask, self);
 
   /* Update the subtask's parent and siblings */
   subtask_priv->previous_sibling = NULL;
