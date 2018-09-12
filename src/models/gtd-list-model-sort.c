@@ -136,8 +136,8 @@ child_model_items_changed (GtdListModelSort *self,
   if (n_removed > 0)
     {
       GSequenceIter *iter;
-      gint64 previous_sort_position = -1u;
-      gint64 first_position = -1u;
+      gint64 previous_sort_position = -1;
+      gint64 first_position = -1;
       gint64 counter = 0;
 
       /* Small shortcut when all items are removed */
@@ -184,7 +184,7 @@ child_model_items_changed (GtdListModelSort *self,
            */
           if (previous_sort_position != -1 && sort_position != previous_sort_position + 1)
             {
-              emit_items_changed (self, first_position, 0, counter);
+              emit_items_changed (self, first_position, counter, 0);
 
               first_position = sort_position;
               counter = 0;
