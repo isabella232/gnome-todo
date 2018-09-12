@@ -41,8 +41,8 @@ struct _GtdListModelSort
   gboolean            supress_items_changed : 1;
 
   /* cache */
-  guint               length;
-  guint               last_position;
+  gint64              length;
+  gint64              last_position;
   GSequenceIter      *last_iter;
 };
 
@@ -93,7 +93,7 @@ invalidate_cache (GtdListModelSort *self)
   GTD_TRACE_MSG ("Invalidating cache");
 
   self->last_iter = NULL;
-  self->last_position = -1u;
+  self->last_position = -1;
 }
 
 static void
@@ -105,8 +105,8 @@ emit_items_changed (GtdListModelSort *self,
   if (position <= self->last_position)
     invalidate_cache (self);
 
-  self->length += n_added;
   self->length -= n_removed;
+  self->length += n_added;
 
   GTD_TRACE_MSG ("Emitting items-changed(%u, %u, %u)", position, n_removed, n_added);
 
@@ -133,16 +133,12 @@ child_model_items_changed (GtdListModelSort *self,
 
   GTD_TRACE_MSG ("Received items-changed(%u, %u, %u)", position, n_removed, n_added);
 
-  /* check if the iter cache may have been invalidated */
-  if (position <= self->last_position)
-    invalidate_cache (self);
-
   if (n_removed > 0)
     {
       GSequenceIter *iter;
-      guint previous_sort_position = -1u;
-      guint first_position = -1u;
-      guint counter = 0;
+      gint64 previous_sort_position = -1u;
+      gint64 first_position = -1u;
+      gint64 counter = 0;
 
       /* Small shortcut when all items are removed */
       if (n_removed == (guint)g_sequence_get_length (self->child_seq))
@@ -177,7 +173,7 @@ child_model_items_changed (GtdListModelSort *self,
           /* Cascades into also removing from sort_seq. */
           g_sequence_remove (to_remove);
 
-          if (first_position == -1u)
+          if (first_position == -1)
             first_position = sort_position;
 
           /*
@@ -186,7 +182,7 @@ child_model_items_changed (GtdListModelSort *self,
            * items-changed() signals as possible, but we can't do that when the
            * order doesn't match.
            */
-          if (previous_sort_position != -1u && sort_position != previous_sort_position + 1)
+          if (previous_sort_position != -1 && sort_position != previous_sort_position + 1)
             {
               emit_items_changed (self, first_position, 0, counter);
 
@@ -211,9 +207,9 @@ add_new_items:
   if (n_added > 0)
     {
       GSequenceIter *iter = g_sequence_get_iter_at_pos (self->child_seq, position);
-      guint previous_sort_position = -1u;
-      guint first_position = -1u;
-      guint counter = 0;
+      gint64 previous_sort_position = -1;
+      gint64 first_position = -1;
+      gint64 counter = 0;
 
       for (i = 0; i < n_added; i++)
         {
@@ -235,7 +231,7 @@ add_new_items:
           iter = g_sequence_insert_before (iter, sort_iter);
           iter = g_sequence_iter_next (iter);
 
-          if (first_position == -1u)
+          if (first_position == -1)
             first_position = new_sort_position;
 
           /*
@@ -244,7 +240,7 @@ add_new_items:
            * items-changed() signals as possible, but we can't do that when the
            * order doesn't match.
            */
-          if (previous_sort_position != -1u && new_sort_position != previous_sort_position + 1)
+          if (previous_sort_position != -1 && new_sort_position != previous_sort_position + 1)
             {
               emit_items_changed (self, first_position, 0, counter);
 
@@ -309,7 +305,7 @@ gtd_list_model_sort_get_item (GListModel *model,
   self = (GtdListModelSort*) model;
   iter = NULL;
 
-  if (self->last_position != -1u)
+  if (self->last_position != -1)
     {
       if (self->last_position == position + 1)
         iter = g_sequence_iter_prev (self->last_iter);
@@ -408,7 +404,7 @@ gtd_list_model_sort_init (GtdListModelSort *self)
   self->compare_func = default_compare_func;
   self->child_seq = g_sequence_new (gtd_list_model_sort_item_free);
   self->sort_seq = g_sequence_new (g_object_unref);
-  self->last_position = -1u;
+  self->last_position = -1;
 }
 
 GtdListModelSort *

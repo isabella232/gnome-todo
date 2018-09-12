@@ -51,8 +51,8 @@ typedef struct
   GDestroyNotify      filter_func_data_destroy;
 
   /* cache */
-  guint               length;
-  guint               last_position;
+  gint64              length;
+  gint64              last_position;
   GSequenceIter      *last_iter;
 
   /*
@@ -157,8 +157,8 @@ emit_items_changed (GtdListModelFilter *self,
   if (position <= priv->last_position)
     invalidate_cache (self);
 
-  priv->length += n_added;
   priv->length -= n_removed;
+  priv->length += n_added;
 
   GTD_TRACE_MSG ("Emitting items-changed(%u, %u, %u)", position, n_removed, n_added);
 
@@ -192,7 +192,7 @@ child_model_items_changed (GtdListModelFilter *self,
   if (n_removed > 0)
     {
       GSequenceIter *iter = g_sequence_get_iter_at_pos (priv->child_seq, position);
-      gint first_position = -1u;
+      gint64 first_position = -1;
       guint count = 0;
 
       g_assert (!g_sequence_iter_is_end (iter));
@@ -362,7 +362,7 @@ gtd_list_model_filter_init (GtdListModelFilter *self)
   priv->filter_func = gtd_list_model_filter_default_filter_func;
   priv->child_seq = g_sequence_new (gtd_list_model_filter_item_free);
   priv->filter_seq = g_sequence_new (NULL);
-  priv->last_position = -1u;
+  priv->last_position = -1;
 }
 
 static GType
@@ -402,7 +402,7 @@ gtd_list_model_filter_get_item (GListModel *model,
 
   iter = NULL;
 
-  if (priv->last_position != -1u)
+  if (priv->last_position != -1)
     {
       if (priv->last_position == position + 1)
         iter = g_sequence_iter_prev (priv->last_iter);
