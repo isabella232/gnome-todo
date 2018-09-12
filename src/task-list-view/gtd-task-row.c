@@ -370,8 +370,6 @@ on_complete_changed_cb (GtdTaskRow *self,
   GtkStyleContext *context;
   gboolean complete;
 
-  GTD_ENTRY;
-
   complete = gtd_task_get_complete (task);
   context = gtk_widget_get_style_context (GTK_WIDGET (self));
 
@@ -384,8 +382,6 @@ on_complete_changed_cb (GtdTaskRow *self,
   g_signal_handlers_block_by_func (self->done_check, on_complete_check_toggled_cb, self);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->done_check), complete);
   g_signal_handlers_unblock_by_func (self->done_check, on_complete_check_toggled_cb, self);
-
-  GTD_EXIT;
 }
 
 static void
