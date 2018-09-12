@@ -142,8 +142,8 @@ on_manager_items_changed_cb (GListModel   *model,
 
       g_list_model_items_changed (G_LIST_MODEL (self),
                                   offset,
-                                  0,
-                                  n_removed_tasks);
+                                  n_removed_tasks,
+                                  0);
 
       GTD_TRACE_MSG ("Removed %u items at %u", n_removed_tasks, offset);
     }
