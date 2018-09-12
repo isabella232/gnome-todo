@@ -46,8 +46,10 @@ typedef struct
   GtdProvider         *provider;
   GdkRGBA             *color;
 
+  GHashTable          *task_to_uid;
   GHashTable          *tasks;
   GSequence           *sorted_tasks;
+  guint                n_tasks;
 
   gchar               *name;
   gboolean             removable;
@@ -100,26 +102,25 @@ update_task_uid (GtdTaskList *self,
                  GtdTask     *task)
 {
   GtdTaskListPrivate *priv;
-  GHashTableIter iter;
-  gpointer sequence_iter;
-  gpointer uid;
+  GSequenceIter *iter;
+  const gchar *old_uid;
+  gchar *new_uid;
 
   priv = gtd_task_list_get_instance_private (self);
 
   g_debug ("Updating uid of task '%s'", gtd_task_get_title (task));
 
-  /* Iterate until we find the current task */
-  g_hash_table_iter_init (&iter, priv->tasks);
-  while (g_hash_table_iter_next (&iter, &uid, &sequence_iter))
-    {
-      if (g_sequence_get (sequence_iter) == task)
-        break;
-    }
+  new_uid = g_strdup (gtd_object_get_uid (GTD_OBJECT (task)));
 
-  g_assert (g_sequence_get (sequence_iter) == task);
+  old_uid = g_hash_table_lookup (priv->task_to_uid, task);
+  iter = g_hash_table_lookup (priv->tasks, old_uid);
 
-  g_hash_table_remove (priv->tasks, uid);
-  g_hash_table_insert (priv->tasks, g_strdup (gtd_object_get_uid (GTD_OBJECT (task))), sequence_iter);
+  g_assert (g_sequence_get (iter) == task);
+
+  g_hash_table_remove (priv->tasks, old_uid);
+
+  g_hash_table_insert (priv->task_to_uid, task, new_uid);
+  g_hash_table_insert (priv->tasks, new_uid, iter);
 }
 
 static guint
@@ -128,19 +129,22 @@ add_task (GtdTaskList *self,
 {
   GtdTaskListPrivate *priv;
   GSequenceIter *iter;
-  const gchar *uid;
+  gchar *uid;
 
   priv = gtd_task_list_get_instance_private (self);
 
-  uid = gtd_object_get_uid (GTD_OBJECT (task));
+  uid = g_strdup (gtd_object_get_uid (GTD_OBJECT (task)));
   iter = g_sequence_insert_sorted (priv->sorted_tasks,
                                    g_object_ref (task),
                                    compare_tasks_cb,
                                    NULL);
 
-  g_hash_table_insert (priv->tasks, g_strdup (uid), iter);
+  g_hash_table_insert (priv->task_to_uid, task, uid);
+  g_hash_table_insert (priv->tasks, uid, iter);
 
   g_signal_connect (task, "notify", G_CALLBACK (task_changed_cb), self);
+
+  priv->n_tasks++;
 
   g_signal_emit (self, signals[TASK_ADDED], 0, task);
 
@@ -180,8 +184,12 @@ remove_task (GtdTaskList *self,
   iter = g_hash_table_lookup (priv->tasks, uid);
   position = g_sequence_iter_get_position (iter);
 
-  g_sequence_remove (iter);
+  g_hash_table_remove (priv->task_to_uid, task);
   g_hash_table_remove (priv->tasks, uid);
+
+  g_sequence_remove (iter);
+
+  priv->n_tasks--;
 
   g_signal_emit (self, signals[TASK_REMOVED], 0, task);
 
@@ -272,7 +280,7 @@ static guint
 gtd_list_model_get_n_items (GListModel *model)
 {
   GtdTaskListPrivate *priv = gtd_task_list_get_instance_private (GTD_TASK_LIST (model));
-  return g_hash_table_size (priv->tasks);
+  return priv->n_tasks;
 }
 
 static gpointer
@@ -315,6 +323,7 @@ gtd_task_list_finalize (GObject *object)
   g_clear_pointer (&priv->name, g_free);
   g_clear_pointer (&priv->sorted_tasks, g_sequence_free);
   g_clear_pointer (&priv->tasks, g_hash_table_destroy);
+  g_clear_pointer (&priv->task_to_uid, g_hash_table_destroy);
 
   G_OBJECT_CLASS (gtd_task_list_parent_class)->finalize (object);
 }
@@ -504,6 +513,7 @@ gtd_task_list_init (GtdTaskList *self)
 {
   GtdTaskListPrivate *priv = gtd_task_list_get_instance_private (self);
 
+  priv->task_to_uid = g_hash_table_new (g_str_hash, g_str_equal);
   priv->tasks = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
   priv->sorted_tasks = g_sequence_new (g_object_unref);
 }
