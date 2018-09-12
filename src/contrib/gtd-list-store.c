@@ -54,7 +54,8 @@ struct _GtdListStore
   GHashTable         *item_to_iter;
 
   /* cache */
-  guint               last_position;
+  gint64              length;
+  gint64              last_position;
   GSequenceIter      *last_iter;
 };
 
@@ -94,8 +95,11 @@ gtd_list_store_items_changed (GtdListStore *store,
   if (position <= store->last_position)
     {
       store->last_iter = NULL;
-      store->last_position = -1u;
+      store->last_position = -1;
     }
+
+  store->length -= removed;
+  store->length += added;
 
   g_list_model_items_changed (G_LIST_MODEL (store), position, removed, added);
 }
@@ -185,7 +189,7 @@ gtd_list_store_get_n_items (GListModel *list)
 {
   GtdListStore *store = GTD_LIST_STORE (list);
 
-  return g_sequence_get_length (store->items);
+  return store->length;
 }
 
 static gpointer
@@ -195,7 +199,7 @@ gtd_list_store_get_item (GListModel *list,
   GtdListStore *store = GTD_LIST_STORE (list);
   GSequenceIter *it = NULL;
 
-  if (store->last_position != -1u)
+  if (store->last_position != -1)
     {
       if (store->last_position == position + 1)
         it = g_sequence_iter_prev (store->last_iter);
@@ -230,7 +234,7 @@ gtd_list_store_init (GtdListStore *store)
 {
   store->item_to_iter = g_hash_table_new (g_direct_hash, g_direct_equal);
   store->items = g_sequence_new (g_object_unref);
-  store->last_position = -1u;
+  store->last_position = -1;
 }
 
 /**
