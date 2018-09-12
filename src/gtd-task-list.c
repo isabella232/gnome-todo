@@ -58,6 +58,10 @@ static gint          compare_tasks_cb                            (gconstpointer 
                                                                   gconstpointer      b,
                                                                   gpointer           user_data);
 
+static void          task_changed_cb                             (GtdTask            *task,
+                                                                  GParamSpec         *pspec,
+                                                                  GtdTaskList        *self);
+
 static void          g_list_model_iface_init                     (GListModelInterface *iface);
 
 
@@ -116,6 +120,56 @@ update_task_uid (GtdTaskList *self,
 
   g_hash_table_remove (priv->tasks, uid);
   g_hash_table_insert (priv->tasks, g_strdup (gtd_object_get_uid (GTD_OBJECT (task))), sequence_iter);
+}
+
+static guint
+add_task (GtdTaskList *self,
+          GtdTask     *task)
+{
+  GtdTaskListPrivate *priv;
+  GSequenceIter *iter;
+  const gchar *uid;
+
+  priv = gtd_task_list_get_instance_private (self);
+
+  uid = gtd_object_get_uid (GTD_OBJECT (task));
+  iter = g_sequence_insert_sorted (priv->sorted_tasks,
+                                   g_object_ref (task),
+                                   compare_tasks_cb,
+                                   NULL);
+
+  g_hash_table_insert (priv->tasks, g_strdup (uid), iter);
+
+  g_signal_connect (task, "notify", G_CALLBACK (task_changed_cb), self);
+
+  g_signal_emit (self, signals[TASK_ADDED], 0, task);
+
+  return g_sequence_iter_get_position (iter);
+}
+
+static guint
+remove_task (GtdTaskList *self,
+             GtdTask     *task)
+{
+  GtdTaskListPrivate *priv;
+  GSequenceIter *iter;
+  const gchar *uid;
+  guint position;
+
+  priv = gtd_task_list_get_instance_private (self);
+
+  g_signal_handlers_disconnect_by_func (task, task_changed_cb, self);
+
+  uid = gtd_object_get_uid (GTD_OBJECT (task));
+  iter = g_hash_table_lookup (priv->tasks, uid);
+  position = g_sequence_iter_get_position (iter);
+
+  g_sequence_remove (iter);
+  g_hash_table_remove (priv->tasks, uid);
+
+  g_signal_emit (self, signals[TASK_REMOVED], 0, task);
+
+  return position;
 }
 
 
@@ -595,33 +649,39 @@ void
 gtd_task_list_add_task (GtdTaskList *self,
                         GtdTask     *task)
 {
-  GtdTaskListPrivate *priv;
-  GSequenceIter *iter;
-  const gchar *uid;
+  GtdTask *aux;
+  gint64 n_added;
+  guint position;
 
-  g_return_if_fail (GTD_IS_TASK_LIST (self));
-  g_return_if_fail (GTD_IS_TASK (task));
+  g_assert (GTD_IS_TASK_LIST (self));
+  g_assert (GTD_IS_TASK (task));
+  g_assert (!gtd_task_list_contains (self, task));
 
-  priv = gtd_task_list_get_instance_private (self);
+  n_added = gtd_task_get_n_total_subtasks (task) + 1;
+  position = add_task (self, task);
 
-  g_return_if_fail (!gtd_task_list_contains (self, task));
+  /* Also remove subtasks */
+  for (aux = gtd_task_get_first_subtask (task);
+       aux;
+       aux = gtd_task_get_next_sibling (aux))
+    {
+      guint subtask_position;
 
-  uid = gtd_object_get_uid (GTD_OBJECT (task));
-  iter = g_sequence_insert_sorted (priv->sorted_tasks,
-                                   g_object_ref (task),
-                                   compare_tasks_cb,
-                                   NULL);
+      subtask_position = add_task (self, aux);
 
-  g_hash_table_insert (priv->tasks, g_strdup (uid), iter);
+      /*
+       * Subtasks should never have a position bigger than
+       * their parent tasks.
+       */
+      g_assert (subtask_position > position);
+    }
 
-  g_signal_connect (task, "notify", G_CALLBACK (task_changed_cb), self);
+  GTD_TRACE_MSG ("Adding %ld tasks at %u", n_added, position);
 
   g_list_model_items_changed (G_LIST_MODEL (self),
-                              g_sequence_iter_get_position (iter),
+                              position,
                               0,
-                              1);
-
-  g_signal_emit (self, signals[TASK_ADDED], 0, task);
+                              n_added);
 }
 
 /**
@@ -666,32 +726,31 @@ void
 gtd_task_list_remove_task (GtdTaskList *list,
                            GtdTask     *task)
 {
-  GtdTaskListPrivate *priv;
-  GSequenceIter *iter;
-  const gchar *uid;
+  GtdTask *aux;
+  gint64 n_removed;
   guint position;
 
   g_assert (GTD_IS_TASK_LIST (list));
   g_assert (GTD_IS_TASK (task));
   g_assert (gtd_task_list_contains (list, task));
 
-  priv = gtd_task_list_get_instance_private (list);
+  n_removed = gtd_task_get_n_total_subtasks (task) + 1;
+  position = remove_task (list, task);
 
-  g_signal_handlers_disconnect_by_func (task, task_changed_cb, list);
+  /* Also remove subtasks */
+  for (aux = gtd_task_get_first_subtask (task);
+       aux;
+       aux = gtd_task_get_next_sibling (aux))
+    {
+      remove_task (list, aux);
+    }
 
-  uid = gtd_object_get_uid (GTD_OBJECT (task));
-  iter = g_hash_table_lookup (priv->tasks, uid);
-  position = g_sequence_iter_get_position (iter);
-
-  g_sequence_remove (iter);
-  g_hash_table_remove (priv->tasks, uid);
+  GTD_TRACE_MSG ("Removing %ld tasks at %u", n_removed, position);
 
   g_list_model_items_changed (G_LIST_MODEL (list),
                               position,
-                              1,
+                              n_removed,
                               0);
-
-  g_signal_emit (list, signals[TASK_REMOVED], 0, task);
 }
 
 /**
