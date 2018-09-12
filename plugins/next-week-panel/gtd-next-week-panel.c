@@ -41,7 +41,8 @@ struct _GtdNextWeekPanel
   guint               number_of_tasks;
   GtdTaskListView    *view;
 
-  GListStore         *model;
+  GtdListModelFilter *filter_model;
+  GtdListModelSort   *sort_model;
 };
 
 static void          gtd_panel_iface_init                        (GtdPanelInterface  *iface);
@@ -66,7 +67,7 @@ enum
  * Auxiliary methods
  */
 
-static void
+static gboolean
 get_date_offset (GDateTime *dt,
                  gint      *days_diff,
                  gint      *years_diff)
@@ -94,6 +95,8 @@ get_date_offset (GDateTime *dt,
 
   if (years_diff)
     *years_diff = g_date_time_get_year (dt) - g_date_time_get_year (now);
+
+  return TRUE;
 }
 
 static gchar*
@@ -216,9 +219,9 @@ header_func (GtdTask          *task,
 }
 
 static gint
-sort_func (gconstpointer a,
-           gconstpointer b,
-           gpointer      user_data)
+sort_func (GObject  *a,
+           GObject  *b,
+           gpointer  user_data)
 {
   GDateTime *dt1;
   GDateTime *dt2;
@@ -283,58 +286,47 @@ sort_func (gconstpointer a,
   return retval;
 }
 
+static gboolean
+filter_func (GObject  *object,
+             gpointer  user_data)
+{
+  g_autoptr (GDateTime) task_dt = NULL;
+  GtdTask *task;
+  gint days_offset;
+
+  task = (GtdTask*) object;
+  task_dt = gtd_task_get_due_date (task);
+
+  return !gtd_task_get_complete (task) &&
+         task_dt != NULL &&
+         get_date_offset (task_dt, &days_offset, NULL) &&
+         days_offset < 7;
+}
+
 static void
-update_tasks (GtdNextWeekPanel *self)
+on_model_items_changed_cb (GListModel       *model,
+                           guint             position,
+                           guint             n_removed,
+                           guint             n_added,
+                           GtdNextWeekPanel *self)
+{
+  if (self->number_of_tasks == g_list_model_get_n_items (model))
+    return;
+
+  self->number_of_tasks = g_list_model_get_n_items (model);
+  g_object_notify (G_OBJECT (self), "subtitle");
+}
+
+static void
+on_timer_updated_cb (GtdTimer         *timer,
+                     GtdNextWeekPanel *self)
 {
   g_autoptr (GDateTime) now = NULL;
-  g_autoptr (GList) tasklists = NULL;
-  GtdManager *manager;
-  GList *l;
 
   now = g_date_time_new_now_local ();
-  manager = gtd_manager_get_default ();
-  tasklists = gtd_manager_get_task_lists (manager);
-
-  g_list_store_remove_all (self->model);
-
-  /* Recount tasks */
-  for (l = tasklists; l != NULL; l = l->next)
-    {
-      guint i;
-
-      for (i = 0; i < g_list_model_get_n_items (l->data); i++)
-        {
-          g_autoptr (GDateTime) task_dt = NULL;
-          GtdTask *task;
-          gint days_offset;
-
-          task = g_list_model_get_item (l->data, i);
-
-          if (gtd_task_get_complete (task))
-            continue;
-
-          task_dt = gtd_task_get_due_date (task);
-
-          if (!task_dt)
-              continue;
-
-          get_date_offset (task_dt, &days_offset, NULL);
-
-          if (days_offset >= 7)
-            continue;
-
-          g_list_store_insert_sorted (self->model, task, sort_func, self);
-        }
-    }
-
-  /* Add the tasks to the view */
   gtd_task_list_view_set_default_date (self->view, now);
 
-  if (self->number_of_tasks != g_list_model_get_n_items (G_LIST_MODEL (self->model)))
-    {
-      self->number_of_tasks = g_list_model_get_n_items (G_LIST_MODEL (self->model));
-      g_object_notify (G_OBJECT (self), "subtitle");
-    }
+  gtd_list_model_filter_invalidate (self->filter_model);
 }
 
 /*
@@ -408,7 +400,8 @@ gtd_next_week_panel_finalize (GObject *object)
   GtdNextWeekPanel *self = (GtdNextWeekPanel *)object;
 
   g_clear_object (&self->icon);
-  g_clear_object (&self->model);
+  g_clear_object (&self->filter_model);
+  g_clear_object (&self->sort_model);
 
   G_OBJECT_CLASS (gtd_next_week_panel_parent_class)->finalize (object);
 }
@@ -481,14 +474,19 @@ gtd_next_week_panel_class_init (GtdNextWeekPanelClass *klass)
 static void
 gtd_next_week_panel_init (GtdNextWeekPanel *self)
 {
-  GtdManager *manager;
+  GtdManager *manager = gtd_manager_get_default ();
 
   self->icon = g_themed_icon_new ("view-tasks-week-symbolic");
-  self->model = g_list_store_new (GTD_TYPE_TASK);
+
+  self->filter_model = gtd_list_model_filter_new (gtd_manager_get_tasks_model (manager));
+  gtd_list_model_filter_set_filter_func (self->filter_model, filter_func, self, NULL);
+
+  self->sort_model = gtd_list_model_sort_new (G_LIST_MODEL (self->filter_model));
+  gtd_list_model_sort_set_sort_func (self->sort_model, sort_func, self, NULL);
 
   /* The main view */
   self->view = GTD_TASK_LIST_VIEW (gtd_task_list_view_new ());
-  gtd_task_list_view_set_model (GTD_TASK_LIST_VIEW (self->view), G_LIST_MODEL (self->model));
+  gtd_task_list_view_set_model (GTD_TASK_LIST_VIEW (self->view), G_LIST_MODEL (self->sort_model));
   gtd_task_list_view_set_handle_subtasks (GTD_TASK_LIST_VIEW (self->view), FALSE);
   gtd_task_list_view_set_show_list_name (GTD_TASK_LIST_VIEW (self->view), TRUE);
   gtd_task_list_view_set_show_due_date (GTD_TASK_LIST_VIEW (self->view), FALSE);
@@ -501,18 +499,15 @@ gtd_next_week_panel_init (GtdNextWeekPanel *self)
                                       (GtdTaskListViewHeaderFunc) header_func,
                                       self);
 
-  /* Connect to GtdManager::list-* signals to update the title */
-  manager = gtd_manager_get_default ();
-
-  update_tasks (self);
-
-  g_signal_connect_object (manager, "list-added", G_CALLBACK (update_tasks), self, G_CONNECT_SWAPPED);
-  g_signal_connect_object (manager, "list-removed", G_CALLBACK (update_tasks), self, G_CONNECT_SWAPPED);
-  g_signal_connect_object (manager, "list-changed", G_CALLBACK (update_tasks), self, G_CONNECT_SWAPPED);
+  g_signal_connect_object (self->sort_model,
+                           "items-changed",
+                           G_CALLBACK (on_model_items_changed_cb),
+                           self,
+                           0);
 
   g_signal_connect_object (gtd_manager_get_timer (manager),
                            "update",
-                           G_CALLBACK (update_tasks),
+                           G_CALLBACK (on_timer_updated_cb),
                            self,
                            G_CONNECT_SWAPPED);
 }

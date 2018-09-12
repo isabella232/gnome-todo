@@ -27,14 +27,15 @@ struct _GtdPanelToday
 {
   GtkBox              parent;
 
-  GtkWidget          *view;
   GIcon              *icon;
-
-  GListStore         *model;
 
   gint                day_change_callback_id;
 
   guint               number_of_tasks;
+  GtdTaskListView    *view;
+
+  GtdListModelFilter *filter_model;
+  GtdListModelSort   *sort_model;
 };
 
 static void          gtd_panel_iface_init                        (GtdPanelInterface  *iface);
@@ -105,9 +106,9 @@ should_be_added (GDateTime *today,
 }
 
 static gint
-sort_func (gconstpointer a,
-           gconstpointer b,
-           gpointer      user_data)
+sort_func (GObject  *a,
+           GObject  *b,
+           gpointer  user_data)
 {
   g_autoptr (GDateTime) dt1 = NULL;
   g_autoptr (GDateTime) dt2 = NULL;
@@ -140,56 +141,6 @@ sort_func (gconstpointer a,
     return result;
 
   return gtd_task_compare (task1, task2);
-}
-
-static void
-update_tasks (GtdPanelToday *panel)
-{
-  g_autoptr (GDateTime) now = NULL;
-  g_autoptr (GList) tasklists = NULL;
-  GtdManager *manager;
-  GList *l;
-  guint number_of_tasks;
-
-  now = g_date_time_new_now_local ();
-  manager = gtd_manager_get_default ();
-  tasklists = gtd_manager_get_task_lists (manager);
-  number_of_tasks = 0;
-
-  g_list_store_remove_all (panel->model);
-
-  /* Recount tasks */
-  for (l = tasklists; l != NULL; l = l->next)
-    {
-      guint i;
-
-      for (i = 0; i < g_list_model_get_n_items (l->data); i++)
-        {
-          g_autoptr (GDateTime) task_dt = NULL;
-          GtdTask *task;
-
-          task = g_list_model_get_item (l->data, i);
-          task_dt = gtd_task_get_due_date (task);
-
-          /* Ignore completed tasks, and tasks in the future */
-          if (gtd_task_get_complete (task) || !should_be_added (now, task_dt))
-            continue;
-
-          g_list_store_insert_sorted (panel->model, task, sort_func, NULL);
-
-          if (!gtd_task_get_complete (task))
-            number_of_tasks++;
-        }
-    }
-
-  /* Add the tasks to the view */
-  gtd_task_list_view_set_default_date (GTD_TASK_LIST_VIEW (panel->view), now);
-
-  if (number_of_tasks != panel->number_of_tasks)
-    {
-      panel->number_of_tasks = number_of_tasks;
-      g_object_notify (G_OBJECT (panel), "subtitle");
-    }
 }
 
 static GtkWidget*
@@ -249,11 +200,47 @@ header_func (GtdTask  *task,
  * Callbacks
  */
 
-static void
-on_manager_task_list_changed_cb (GtdPanelToday *self)
+static gboolean
+filter_func (GObject  *object,
+             gpointer  user_data)
 {
-  update_tasks (self);
+  g_autoptr (GDateTime) task_dt = NULL;
+  g_autoptr (GDateTime) now = NULL;
+  GtdTask *task;
+
+  task = (GtdTask*) object;
+  now = g_date_time_new_now_local ();
+  task_dt = gtd_task_get_due_date (task);
+
+  return !gtd_task_get_complete (task) && should_be_added (now, task_dt);
 }
+
+static void
+on_model_items_changed_cb (GListModel    *model,
+                           guint          position,
+                           guint          n_removed,
+                           guint          n_added,
+                           GtdPanelToday *self)
+{
+  if (self->number_of_tasks == g_list_model_get_n_items (model))
+    return;
+
+  self->number_of_tasks = g_list_model_get_n_items (model);
+  g_object_notify (G_OBJECT (self), "subtitle");
+}
+
+static void
+on_timer_updated_cb (GtdTimer      *timer,
+                     GtdPanelToday *self)
+{
+  g_autoptr (GDateTime) now = NULL;
+
+  now = g_date_time_new_now_local ();
+  gtd_task_list_view_set_default_date (self->view, now);
+
+  gtd_list_model_filter_invalidate (self->filter_model);
+}
+
 
 /*
  * GtdPanel iface
@@ -321,7 +308,8 @@ gtd_panel_today_finalize (GObject *object)
   GtdPanelToday *self = (GtdPanelToday *)object;
 
   g_clear_object (&self->icon);
-  g_clear_object (&self->model);
+  g_clear_object (&self->filter_model);
+  g_clear_object (&self->sort_model);
 
   G_OBJECT_CLASS (gtd_panel_today_parent_class)->finalize (object);
 }
@@ -397,48 +385,43 @@ gtd_panel_today_init (GtdPanelToday *self)
   g_autoptr (GDateTime) now = NULL;
   GtdManager *manager;
 
+  manager = gtd_manager_get_default ();
+
   self->icon = g_themed_icon_new ("view-tasks-today-symbolic");
-  self->model = g_list_store_new (GTD_TYPE_TASK);
+
+  self->filter_model = gtd_list_model_filter_new (gtd_manager_get_tasks_model (manager));
+  gtd_list_model_filter_set_filter_func (self->filter_model, filter_func, self, NULL);
+
+  self->sort_model = gtd_list_model_sort_new (G_LIST_MODEL (self->filter_model));
+  gtd_list_model_sort_set_sort_func (self->sort_model, sort_func, self, NULL);
 
   /* Connect to GtdManager::list-* signals to update the title */
   manager = gtd_manager_get_default ();
   now = g_date_time_new_now_local ();
 
-  g_signal_connect_object (manager,
-                           "list-added",
-                           G_CALLBACK (on_manager_task_list_changed_cb),
-                           self,
-                           G_CONNECT_SWAPPED);
-
-  g_signal_connect_object (manager,
-                           "list-removed",
-                           G_CALLBACK (on_manager_task_list_changed_cb),
-                           self,
-                           G_CONNECT_SWAPPED);
-
-  g_signal_connect_object (manager,
-                           "list-changed",
-                           G_CALLBACK (on_manager_task_list_changed_cb),
-                           self,
-                           G_CONNECT_SWAPPED);
-
   /* The main view */
-  self->view = gtd_task_list_view_new ();
-  gtd_task_list_view_set_model (GTD_TASK_LIST_VIEW (self->view), G_LIST_MODEL (self->model));
-  gtd_task_list_view_set_handle_subtasks (GTD_TASK_LIST_VIEW (self->view), FALSE);
-  gtd_task_list_view_set_show_list_name (GTD_TASK_LIST_VIEW (self->view), TRUE);
-  gtd_task_list_view_set_show_due_date (GTD_TASK_LIST_VIEW (self->view), FALSE);
-  gtd_task_list_view_set_default_date (GTD_TASK_LIST_VIEW (self->view), now);
-  gtd_task_list_view_set_header_func (GTD_TASK_LIST_VIEW (self->view), header_func, self);
+  self->view = GTD_TASK_LIST_VIEW (gtd_task_list_view_new ());
+  gtd_task_list_view_set_model (self->view, G_LIST_MODEL (self->sort_model));
+  gtd_task_list_view_set_handle_subtasks (self->view, FALSE);
+  gtd_task_list_view_set_show_list_name (self->view, TRUE);
+  gtd_task_list_view_set_show_due_date (self->view, FALSE);
+  gtd_task_list_view_set_default_date (self->view, FALSE);
 
-  gtk_widget_set_hexpand (self->view, TRUE);
-  gtk_widget_set_vexpand (self->view, TRUE);
-  gtk_container_add (GTK_CONTAINER (self), self->view);
+  gtk_widget_set_hexpand (GTK_WIDGET (self->view), TRUE);
+  gtk_widget_set_vexpand (GTK_WIDGET (self->view), TRUE);
+  gtk_container_add (GTK_CONTAINER (self), GTK_WIDGET (self->view));
 
-  /* Start timer */
+  gtd_task_list_view_set_header_func (self->view, header_func, self);
+
+  g_signal_connect_object (self->sort_model,
+                           "items-changed",
+                           G_CALLBACK (on_model_items_changed_cb),
+                           self,
+                           0);
+
   g_signal_connect_object (gtd_manager_get_timer (manager),
                            "update",
-                           G_CALLBACK (on_manager_task_list_changed_cb),
+                           G_CALLBACK (on_timer_updated_cb),
                            self,
                            G_CONNECT_SWAPPED);
 }
