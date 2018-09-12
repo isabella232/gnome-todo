@@ -100,6 +100,10 @@ setup_parent_task (GtdTaskListEds *self,
   parent_uid = icalproperty_get_relatedto (property);
   parent_task = gtd_task_list_get_task_by_id (GTD_TASK_LIST (self), parent_uid);
 
+  /* Nothing to do, parent task is already set */
+  if (gtd_task_get_parent (task) == parent_task)
+    return;
+
   if (parent_task)
     {
       gtd_task_add_subtask (parent_task, task);
