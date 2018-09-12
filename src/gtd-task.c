@@ -296,6 +296,23 @@ set_depth (GtdTask *self,
 }
 
 static void
+update_total_subtasks_counters (GtdTask *self,
+                                gint64   total_difference)
+{
+  GtdTask *aux;
+
+  aux = self;
+  while (aux)
+    {
+      GtdTaskPrivate *aux_priv = gtd_task_get_instance_private (aux);
+
+      aux_priv->n_total_subtasks += total_difference;
+
+      aux = aux_priv->parent_task;
+    }
+}
+
+static void
 real_add_subtask (GtdTask *self,
                   GtdTask *subtask)
 {
@@ -317,7 +334,7 @@ real_add_subtask (GtdTask *self,
 
   /* Update counters */
   priv->n_direct_subtasks += 1;
-  priv->n_total_subtasks += subtask_priv->n_total_subtasks + 1;
+  update_total_subtasks_counters (self, subtask_priv->n_total_subtasks + 1);
 
   GTD_TRACE_MSG ("Task %p is now subtask of %p", subtask, self);
 
@@ -339,7 +356,7 @@ real_remove_subtask (GtdTask *self,
 {
   GtdTaskPrivate *priv, *subtask_priv;
 
-  g_assert (!gtd_task_is_subtask (self, subtask));
+  g_assert (gtd_task_is_subtask (self, subtask));
 
   priv = gtd_task_get_instance_private (self);
   subtask_priv = gtd_task_get_instance_private (subtask);
@@ -349,7 +366,7 @@ real_remove_subtask (GtdTask *self,
 
   /* Update counters */
   priv->n_direct_subtasks -= 1;
-  priv->n_total_subtasks -= subtask_priv->n_total_subtasks + 1;
+  update_total_subtasks_counters (self, -subtask_priv->n_total_subtasks - 1);
 
   GTD_TRACE_MSG ("Task %p was detached from %p", subtask, self);
 
