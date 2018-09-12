@@ -86,14 +86,6 @@ typedef struct
 
   GHashTable            *task_to_row;
 
-  /*
-   * Tasks that are marked for removal, but the notification
-   * wasn't dismissed yet.
-   *
-   * GtdTask* → NULL
-   */
-  GHashTable            *removed_tasks;
-
   /* Markup renderer*/
   GtdMarkdownRenderer   *renderer;
 
@@ -361,47 +353,11 @@ scroll_to_bottom_cb (gpointer data)
   return G_SOURCE_REMOVE;
 }
 
-static gboolean
-undo_remove_task_cb (GtdTaskListView *self,
-                     GtdTask         *task)
-{
-  GtdTaskListViewPrivate *priv;
-  GtkWidget *row;
-
-  priv = gtd_task_list_view_get_instance_private (self);
-
-  g_assert (g_hash_table_contains (priv->task_to_row, task));
-  g_assert (g_hash_table_contains (priv->removed_tasks, task));
-
-  g_hash_table_remove (priv->removed_tasks, task);
-
-  row = g_hash_table_lookup (priv->task_to_row, task);
-  gtk_widget_show (row);
-
-  /* Tasks are not loading anymore */
-  gtd_object_pop_loading (GTD_OBJECT (task));
-
-  return TRUE;
-}
-
 static inline gboolean
 remove_task_cb (GtdTaskListView *self,
                 GtdTask         *task)
 {
-  GtdTaskListViewPrivate *priv;
-
-  priv = gtd_task_list_view_get_instance_private (self);
-
-  g_assert (g_hash_table_contains (priv->task_to_row, task));
-  g_assert (g_hash_table_contains (priv->removed_tasks, task));
-
-  g_hash_table_remove (priv->removed_tasks, task);
-  g_hash_table_remove (priv->task_to_row, task);
-
   gtd_provider_remove_task (gtd_task_get_provider (task), task);
-
-  GTD_TRACE_MSG ("Removing task %p from list", task);
-
   return TRUE;
 }
 
@@ -455,37 +411,19 @@ static void
 on_undo_remove_task_action_cb (GtdNotification *notification,
                                gpointer         user_data)
 {
-  RemoveTaskData *data = user_data;
+  RemoveTaskData *data;
+  GtdTaskList *list;
 
-  /* Save the subtasks recursively */
-  iterate_subtasks (data->view, data->task, undo_remove_task_cb);
+  data = user_data;
+
+  /*
+   * Readd task to the list. This will emit GListModel:items-changed (since
+   * GtdTaskList implements GListModel) and the row will be added back.
+   */
+  list = gtd_task_get_list (data->task);
+  gtd_task_list_add_task (list, data->task);
 
   g_free (data);
-}
-
-static inline gboolean
-remove_task_rows_from_list_view_cb (GtdTaskListView *self,
-                                    GtdTask         *task)
-{
-  GtdTaskListViewPrivate *priv;
-  GtkWidget *row;
-
-  priv = gtd_task_list_view_get_instance_private (self);
-
-  g_assert (g_hash_table_contains (priv->task_to_row, task));
-  g_assert (!g_hash_table_contains (priv->removed_tasks, task));
-
-  /* Task is in loading state until it's either readded, or effectively removed */
-  gtd_object_push_loading (GTD_OBJECT (task));
-
-  g_hash_table_add (priv->removed_tasks, task);
-
-  row = g_hash_table_lookup (priv->task_to_row, task);
-  gtk_widget_hide (row);
-
-  GTD_TRACE_MSG ("Removing task %p from list", task);
-
-  return TRUE;
 }
 
 static void
@@ -495,6 +433,7 @@ on_remove_task_row_cb (GtdTaskRow      *row,
   g_autofree gchar *text = NULL;
   GtdNotification *notification;
   RemoveTaskData *data;
+  GtdTaskList *list;
   GtdWindow *window;
   GtdTask *task;
 
@@ -508,7 +447,8 @@ on_remove_task_row_cb (GtdTaskRow      *row,
   data->task = task;
 
   /* Remove tasks and subtasks from the list */
-  iterate_subtasks (self, task, remove_task_rows_from_list_view_cb);
+  list = gtd_task_get_list (task);
+  gtd_task_list_remove_task (list, task);
 
   /* Notify about the removal */
   notification = gtd_notification_new (text, 5000.0);
@@ -961,7 +901,6 @@ gtd_task_list_view_finalize (GObject *object)
   GtdTaskListViewPrivate *priv = GTD_TASK_LIST_VIEW (object)->priv;
 
   g_clear_handle_id (&priv->scroll_to_bottom_handler_id, g_source_remove);
-  g_clear_pointer (&priv->removed_tasks, g_hash_table_destroy);
   g_clear_pointer (&priv->task_to_row, g_hash_table_destroy);
   g_clear_pointer (&priv->default_date, g_date_time_unref);
   g_clear_object (&priv->renderer);
@@ -1208,7 +1147,6 @@ gtd_task_list_view_init (GtdTaskListView *self)
 
   self->priv = priv;
 
-  priv->removed_tasks = g_hash_table_new (g_direct_hash, g_direct_equal);
   priv->task_to_row = g_hash_table_new (g_direct_hash, g_direct_equal);
 
   priv->can_toggle = TRUE;
