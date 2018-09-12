@@ -147,6 +147,22 @@ add_task (GtdTaskList *self,
   return g_sequence_iter_get_position (iter);
 }
 
+static void
+recursively_add_subtasks (GtdTaskList *self,
+                          GtdTask     *task)
+{
+  GtdTask *aux;
+
+  for (aux = gtd_task_get_first_subtask (task);
+       aux;
+       aux = gtd_task_get_next_sibling (aux))
+    {
+      add_task (self, aux);
+
+      recursively_add_subtasks (self, aux);
+    }
+}
+
 static guint
 remove_task (GtdTaskList *self,
              GtdTask     *task)
@@ -170,6 +186,22 @@ remove_task (GtdTaskList *self,
   g_signal_emit (self, signals[TASK_REMOVED], 0, task);
 
   return position;
+}
+
+static void
+recursively_remove_subtasks (GtdTaskList *self,
+                             GtdTask     *task)
+{
+  GtdTask *aux;
+
+  for (aux = gtd_task_get_first_subtask (task);
+       aux;
+       aux = gtd_task_get_next_sibling (aux))
+    {
+      remove_task (self, aux);
+
+      recursively_remove_subtasks (self, aux);
+    }
 }
 
 
@@ -649,7 +681,6 @@ void
 gtd_task_list_add_task (GtdTaskList *self,
                         GtdTask     *task)
 {
-  GtdTask *aux;
   gint64 n_added;
   guint position;
 
@@ -661,20 +692,7 @@ gtd_task_list_add_task (GtdTaskList *self,
   position = add_task (self, task);
 
   /* Also remove subtasks */
-  for (aux = gtd_task_get_first_subtask (task);
-       aux;
-       aux = gtd_task_get_next_sibling (aux))
-    {
-      guint subtask_position;
-
-      subtask_position = add_task (self, aux);
-
-      /*
-       * Subtasks should never have a position bigger than
-       * their parent tasks.
-       */
-      g_assert (subtask_position > position);
-    }
+  recursively_add_subtasks (self, task);
 
   GTD_TRACE_MSG ("Adding %ld tasks at %u", n_added, position);
 
@@ -726,7 +744,6 @@ void
 gtd_task_list_remove_task (GtdTaskList *list,
                            GtdTask     *task)
 {
-  GtdTask *aux;
   gint64 n_removed;
   guint position;
 
@@ -738,12 +755,7 @@ gtd_task_list_remove_task (GtdTaskList *list,
   position = remove_task (list, task);
 
   /* Also remove subtasks */
-  for (aux = gtd_task_get_first_subtask (task);
-       aux;
-       aux = gtd_task_get_next_sibling (aux))
-    {
-      remove_task (list, aux);
-    }
+  recursively_remove_subtasks (list, task);
 
   GTD_TRACE_MSG ("Removing %ld tasks at %u", n_removed, position);
 
