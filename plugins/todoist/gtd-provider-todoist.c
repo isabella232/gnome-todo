@@ -634,24 +634,11 @@ parse_request (GtdProviderTodoist *self,
       break;
 
     case REQUEST_TASK_REMOVE:
-        {
-          g_autoptr (GList) subtasks = NULL;
-          g_autoptr (GList) l = NULL;
+      /* Removing the task will remove its subtasks as well */
+      gtd_task_list_remove_task (gtd_task_get_list (object), object);
 
-          g_assert (GTD_IS_TASK (object));
-
-          subtasks = gtd_task_get_subtasks (object);
-          subtasks = g_list_prepend (subtasks, object);
-
-          for (l = subtasks; l; l = l->next)
-            {
-              g_hash_table_remove (self->tasks, gtd_object_get_uid (object));
-              gtd_task_list_remove_task (gtd_task_get_list (object), object);
-            }
-
-          /* Ensure we have the most updated positions */
-          update_task_position (self, GTD_TASK (object), FALSE);
-        }
+      /* Ensure we have the most updated positions */
+      update_task_position (self, GTD_TASK (object), FALSE);
       break;
 
     case REQUEST_TASK_UPDATE:

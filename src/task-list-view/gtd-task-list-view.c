@@ -223,40 +223,25 @@ set_active_row (GtdTaskListView *self,
     }
 }
 
-static void
+static gboolean
 iterate_subtasks (GtdTaskListView    *self,
                   GtdTask            *task,
                   IterateSubtaskFunc  func)
 {
   GtdTask *aux;
-  GQueue queue;
 
-  aux = task;
+  if (!func (self, task))
+    return FALSE;
 
-  g_queue_init (&queue);
-
-  do
+  for (aux = gtd_task_get_first_subtask (task);
+       aux;
+       aux = gtd_task_get_next_sibling (aux))
     {
-      GList *subtasks, *l;
-      gboolean should_continue;
-
-      subtasks = gtd_task_get_subtasks (aux);
-
-      /* Call the passed function */
-      should_continue = func (self, aux);
-
-      if (!should_continue)
-        break;
-
-      /* Add the subtasks to the queue so we can keep iterating */
-      for (l = subtasks; l != NULL; l = l->next)
-        g_queue_push_tail (&queue, l->data);
-
-      g_clear_pointer (&subtasks, g_list_free);
-
-      aux = g_queue_pop_head (&queue);
+      if (!iterate_subtasks (self, aux, func))
+        return FALSE;
     }
-  while (aux);
+
+  return TRUE;
 }
 
 static void

@@ -116,8 +116,6 @@ gint                gtd_task_compare                  (GtdTask              *t1,
 
 GtdTask*            gtd_task_get_parent               (GtdTask              *self);
 
-GList*              gtd_task_get_subtasks             (GtdTask              *self);
-
 void                gtd_task_add_subtask              (GtdTask              *self,
                                                        GtdTask              *subtask);
 
@@ -128,6 +126,16 @@ gboolean            gtd_task_is_subtask               (GtdTask              *sel
                                                        GtdTask              *subtask);
 
 gint                gtd_task_get_depth                (GtdTask              *self);
+
+GtdTask*            gtd_task_get_first_subtask        (GtdTask              *self);
+
+GtdTask*            gtd_task_get_previous_sibling     (GtdTask              *self);
+
+GtdTask*            gtd_task_get_next_sibling         (GtdTask              *self);
+
+guint64             gtd_task_get_n_direct_subtasks    (GtdTask              *self);
+
+guint64             gtd_task_get_n_total_subtasks     (GtdTask              *self);
 
 GtdProvider*        gtd_task_get_provider             (GtdTask              *self);
 

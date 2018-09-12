@@ -435,7 +435,6 @@ static void
 gtd_task_eds_subtask_added (GtdTask *task,
                             GtdTask *subtask)
 {
-  g_autoptr (GList) subtasks = NULL;
   ECalComponentId *id;
   ECalComponent *comp;
   icalcomponent *ical_comp;
@@ -445,7 +444,6 @@ gtd_task_eds_subtask_added (GtdTask *task,
 
   self = GTD_TASK_EDS (task);
   subtask_self = GTD_TASK_EDS (subtask);
-  subtasks = gtd_task_get_subtasks (task);
 
   /* Hook with parent's :subtask_added */
   GTD_TASK_CLASS (gtd_task_eds_parent_class)->subtask_added (task, subtask);
@@ -467,13 +465,11 @@ static void
 gtd_task_eds_subtask_removed (GtdTask *task,
                               GtdTask *subtask)
 {
-  g_autoptr (GList) subtasks = NULL;
   icalcomponent *ical_comp;
   icalproperty *property;
   GtdTaskEds *subtask_self;
 
   subtask_self = GTD_TASK_EDS (subtask);
-  subtasks = gtd_task_get_subtasks (task);
 
   /* Hook with parent's :subtask_removed */
   GTD_TASK_CLASS (gtd_task_eds_parent_class)->subtask_removed (task, subtask);
