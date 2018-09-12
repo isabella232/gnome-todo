@@ -47,15 +47,20 @@ typedef struct
    * Called for child items to determine visibility state.
    */
   GtdListModelFilterFunc filter_func;
-  gpointer           filter_func_data;
-  GDestroyNotify     filter_func_data_destroy;
+  gpointer            filter_func_data;
+  GDestroyNotify      filter_func_data_destroy;
+
+  /* cache */
+  guint               length;
+  guint               last_position;
+  GSequenceIter      *last_iter;
 
   /*
    * If set, we will not emit items-changed. This is useful during
    * invalidation so that we can do a single emission for all items
    * that have changed.
    */
-  guint              supress_items_changed : 1;
+  gboolean            supress_items_changed : 1;
 } GtdListModelFilterPrivate;
 
 struct _GtdListModelFilter
@@ -70,7 +75,8 @@ G_DEFINE_TYPE_EXTENDED (GtdListModelFilter, gtd_list_model_filter, G_TYPE_OBJECT
                         G_IMPLEMENT_INTERFACE (G_TYPE_LIST_MODEL,
                                                list_model_iface_init))
 
-enum {
+enum
+{
   PROP_0,
   PROP_CHILD_MODEL,
   N_PROPS
@@ -130,6 +136,36 @@ find_next_visible_filter_iter (GtdListModelFilter *self,
 }
 
 static void
+invalidate_cache (GtdListModelFilter *self)
+{
+  GtdListModelFilterPrivate *priv = gtd_list_model_filter_get_instance_private (self);
+
+  GTD_TRACE_MSG ("Invalidating cache");
+
+  priv->last_iter = NULL;
+  priv->last_position = -1u;
+}
+
+static void
+emit_items_changed (GtdListModelFilter *self,
+                    guint               position,
+                    guint               n_removed,
+                    guint               n_added)
+{
+  GtdListModelFilterPrivate *priv = gtd_list_model_filter_get_instance_private (self);
+
+  if (position <= priv->last_position)
+    invalidate_cache (self);
+
+  priv->length += n_added;
+  priv->length -= n_removed;
+
+  GTD_TRACE_MSG ("Emitting items-changed(%u, %u, %u)", position, n_removed, n_added);
+
+  g_list_model_items_changed (G_LIST_MODEL (self), position, n_removed, n_added);
+}
+
+static void
 child_model_items_changed (GtdListModelFilter *self,
                            guint               position,
                            guint               n_removed,
@@ -140,6 +176,8 @@ child_model_items_changed (GtdListModelFilter *self,
   gboolean unblocked;
   guint i;
 
+  GTD_ENTRY;
+
   g_assert (GTD_IS_LIST_MODEL_FILTER (self));
   g_assert (G_IS_LIST_MODEL (child_model));
   g_assert (priv->child_model == child_model);
@@ -147,12 +185,14 @@ child_model_items_changed (GtdListModelFilter *self,
   g_assert ((g_sequence_get_length (priv->child_seq) - n_removed + n_added) ==
             g_list_model_get_n_items (child_model));
 
+  GTD_TRACE_MSG ("Received items-changed(%u, %u, %u)", position, n_removed, n_added);
+
   unblocked = !priv->supress_items_changed;
 
   if (n_removed > 0)
     {
       GSequenceIter *iter = g_sequence_get_iter_at_pos (priv->child_seq, position);
-      gint first_position = -1;
+      gint first_position = -1u;
       guint count = 0;
 
       g_assert (!g_sequence_iter_is_end (iter));
@@ -164,7 +204,13 @@ child_model_items_changed (GtdListModelFilter *self,
                                    g_sequence_get_end_iter (priv->child_seq));
           g_assert (g_sequence_is_empty (priv->child_seq));
           g_assert (g_sequence_is_empty (priv->filter_seq));
-          goto add_new_items;
+
+          if (unblocked)
+            emit_items_changed (self, 0, priv->length, 0);
+
+          GTD_TRACE_MSG ("Removed all items");
+
+          GTD_GOTO (add_new_items);
         }
 
       for (i = 0; i < n_removed; i++)
@@ -193,8 +239,10 @@ child_model_items_changed (GtdListModelFilter *self,
           g_sequence_remove (to_remove);
         }
 
+      GTD_TRACE_MSG ("Removed %u items", count);
+
       if (unblocked && first_position >= 0)
-        g_list_model_items_changed (G_LIST_MODEL (self), first_position, count, 0);
+        emit_items_changed (self, first_position, count, 0);
     }
 
 add_new_items:
@@ -236,12 +284,15 @@ add_new_items:
           iter = item->child_iter;
         }
 
+      GTD_TRACE_MSG ("Added %u items (%u were filtered)", count, n_added - count);
+
       if (unblocked && count)
-        g_list_model_items_changed (G_LIST_MODEL (self), filter_position, 0, count);
+        emit_items_changed (self, filter_position, 0, count);
     }
 
-  g_assert ((guint)g_sequence_get_length (priv->child_seq) ==
-            g_list_model_get_n_items (child_model));
+  g_assert ((guint)g_sequence_get_length (priv->child_seq) == g_list_model_get_n_items (child_model));
+
+  GTD_EXIT;
 }
 
 static void
@@ -311,6 +362,7 @@ gtd_list_model_filter_init (GtdListModelFilter *self)
   priv->filter_func = gtd_list_model_filter_default_filter_func;
   priv->child_seq = g_sequence_new (gtd_list_model_filter_item_free);
   priv->filter_seq = g_sequence_new (NULL);
+  priv->last_position = -1u;
 }
 
 static GType
@@ -333,7 +385,7 @@ gtd_list_model_filter_get_n_items (GListModel *model)
   g_assert (GTD_IS_LIST_MODEL_FILTER (self));
   g_assert (priv->filter_seq != NULL);
 
-  return g_sequence_get_length (priv->filter_seq);
+  return priv->length;
 }
 
 static gpointer
@@ -348,7 +400,21 @@ gtd_list_model_filter_get_item (GListModel *model,
 
   g_assert (GTD_IS_LIST_MODEL_FILTER (self));
 
-  iter = g_sequence_get_iter_at_pos (priv->filter_seq, position);
+  iter = NULL;
+
+  if (priv->last_position != -1u)
+    {
+      if (priv->last_position == position + 1)
+        iter = g_sequence_iter_prev (priv->last_iter);
+      else if (priv->last_position == position - 1)
+        iter = g_sequence_iter_next (priv->last_iter);
+      else if (priv->last_position == position)
+        iter = priv->last_iter;
+    }
+
+  if (!iter)
+    iter = g_sequence_get_iter_at_pos (priv->filter_seq, position);
+
   if (g_sequence_iter_is_end (iter))
     return NULL;
 
@@ -418,6 +484,8 @@ gtd_list_model_filter_invalidate (GtdListModelFilter *self)
   GtdListModelFilterPrivate *priv = gtd_list_model_filter_get_instance_private (self);
   guint n_items;
 
+  GTD_ENTRY;
+
   g_return_if_fail (GTD_IS_LIST_MODEL_FILTER (self));
 
   /* We block emission while in invalidate so that we can use
@@ -465,10 +533,9 @@ gtd_list_model_filter_invalidate (GtdListModelFilter *self)
    * as a single series of updates to the consumers.
    */
   if (n_items > 0 || !g_sequence_is_empty (priv->filter_seq))
-    g_list_model_items_changed (G_LIST_MODEL (self),
-                                0,
-                                n_items,
-                                g_sequence_get_length (priv->filter_seq));
+    emit_items_changed (self, 0, n_items, g_sequence_get_length (priv->filter_seq));
+
+  GTD_EXIT;
 }
 
 void
