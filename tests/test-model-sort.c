@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-#include "contrib/gtd-list-model-sort.h"
+#include "models/gtd-list-model-sort.h"
 
 #include <math.h>
 #include <string.h>
@@ -137,7 +137,7 @@ main (gint argc,
 {
   g_test_init (&argc, &argv, NULL);
 
-  g_test_add_func ("/contrib/model-sort/basic", test_basic);
+  g_test_add_func ("/models/model-sort/basic", test_basic);
 
   return g_test_run ();
 }

@@ -6,12 +6,12 @@
 enum_headers = files('gtd-enums.h')
 
 headers = enum_headers + files(
-  'contrib/gtd-list-model-filter.h',
-  'contrib/gtd-list-store.h',
   'engine/gtd-manager.h',
   'interfaces/gtd-activatable.h',
   'interfaces/gtd-panel.h',
   'interfaces/gtd-provider.h',
+  'models/gtd-list-model-filter.h',
+  'models/gtd-list-store.h',
   'notification/gtd-notification.h',
   'task-list-view/gtd-task-list-view.h',
   'gtd-object.h',
@@ -32,16 +32,16 @@ install_headers(headers, subdir: meson.project_name())
 ################
 
 sources = files(
-  'contrib/gtd-list-model-filter.c',
-  'contrib/gtd-list-model-sort.c',
-  'contrib/gtd-list-store.c',
-  'contrib/gtd-task-model.c',
   'engine/gtd-manager.c',
   'engine/gtd-plugin-manager.c',
   'interfaces/gtd-activatable.c',
   'interfaces/gtd-panel.c',
   'interfaces/gtd-provider.c',
   'logging/gtd-log.c',
+  'models/gtd-list-model-filter.c',
+  'models/gtd-list-model-sort.c',
+  'models/gtd-list-store.c',
+  'models/gtd-task-model.c',
   'notification/gtd-notification.c',
   'notification/gtd-notification-widget.c',
   'provider/gtd-provider-popover.c',
@@ -198,10 +198,6 @@ pkg.generate(
 
 if get_option('introspection')
   gir_sources = files(
-    'contrib/gtd-list-model-filter.c',
-    'contrib/gtd-list-model-filter.h',
-    'contrib/gtd-list-store.c',
-    'contrib/gtd-list-store.h',
     'engine/gtd-manager.c',
     'engine/gtd-manager.h',
     'interfaces/gtd-activatable.c',
@@ -210,6 +206,10 @@ if get_option('introspection')
     'interfaces/gtd-panel.h',
     'interfaces/gtd-provider.c',
     'interfaces/gtd-provider.h',
+    'models/gtd-list-model-filter.c',
+    'models/gtd-list-model-filter.h',
+    'models/gtd-list-store.c',
+    'models/gtd-list-store.h',
     'notification/gtd-notification.c',
     'notification/gtd-notification.h',
     'task-list-view/gtd-task-list-view.c',

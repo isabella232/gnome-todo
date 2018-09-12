@@ -20,8 +20,8 @@
 
 #include <gtk/gtk.h>
 
-#include "contrib/gtd-task-model.h"
-#include "contrib/gtd-task-model-private.h"
+#include "models/gtd-task-model.h"
+#include "models/gtd-task-model-private.h"
 #include "logging/gtd-log.h"
 #include "dummy-provider.h"
 #include "gtd-manager.h"

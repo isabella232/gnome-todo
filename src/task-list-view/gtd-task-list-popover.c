@@ -20,7 +20,7 @@
 
 #define G_LOG_DOMAIN "GtdTaskListPopover"
 
-#include "contrib/gtd-list-model-filter.h"
+#include "models/gtd-list-model-filter.h"
 #include "gtd-debug.h"
 #include "gtd-manager.h"
 #include "gtd-provider.h"

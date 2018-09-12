@@ -1,4 +1,4 @@
-#include "contrib/gtd-list-model-filter.h"
+#include "models/gtd-list-model-filter.h"
 #include <math.h>
 #include <string.h>
 
@@ -202,7 +202,7 @@ main (gint argc,
       gchar *argv[])
 {
   g_test_init (&argc, &argv, NULL);
-  g_test_add_func ("/contrib/model-filter/basic", test_basic);
-  g_test_add_func ("/contrib/model-filter/items-changed", test_items_changed);
+  g_test_add_func ("/models/model-filter/basic", test_basic);
+  g_test_add_func ("/models/model-filter/items-changed", test_items_changed);
   return g_test_run ();
 }

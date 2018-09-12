@@ -20,8 +20,8 @@
 
 #include "gnome-todo.h"
 
-#include "contrib/gtd-task-model.h"
-#include "contrib/gtd-task-model-private.h"
+#include "models/gtd-task-model.h"
+#include "models/gtd-task-model-private.h"
 #include "logging/gtd-log.h"
 #include "gtd-manager-protected.h"
 #include "dummy-provider.h"
@@ -61,7 +61,7 @@ main (gint argc,
   if (g_getenv ("G_MESSAGES_DEBUG"))
     gtd_log_init ();
 
-  g_test_add_func ("/contrib/task-model/basic", test_basic);
+  g_test_add_func ("/models/task-model/basic", test_basic);
 
   return g_test_run ();
 }

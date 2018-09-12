@@ -18,8 +18,8 @@
 
 #define G_LOG_DOMAIN "GtdManager"
 
-#include "contrib/gtd-list-store.h"
-#include "contrib/gtd-task-model-private.h"
+#include "models/gtd-list-store.h"
+#include "models/gtd-task-model-private.h"
 #include "interfaces/gtd-provider.h"
 #include "interfaces/gtd-panel.h"
 #include "notification/gtd-notification.h"
