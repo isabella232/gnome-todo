@@ -420,10 +420,11 @@ gtd_sidebar_constructed (GObject *object)
 {
   g_autoptr (GList) providers = NULL;
   g_autoptr (GList) panels = NULL;
-  g_autoptr (GList) lists = NULL;
+  GListModel *lists;
   GtdManager *manager;
   GtdSidebar *self;
   GList *l;
+  guint i;
 
   self = (GtdSidebar *)object;
   manager = gtd_manager_get_default ();
@@ -449,10 +450,14 @@ gtd_sidebar_constructed (GObject *object)
   g_signal_connect (manager, "provider-removed", G_CALLBACK (on_provider_removed_cb), self);
 
   /* Add task lists */
-  lists = gtd_manager_get_task_lists (manager);
+  lists = gtd_manager_get_task_lists_model (manager);
 
-  for (l = lists; l; l = l->next)
-    add_task_list (self, l->data);
+  for (i = 0; i < g_list_model_get_n_items (lists); i++)
+    {
+      g_autoptr (GtdTaskList) list = g_list_model_get_item (lists, i);
+
+      add_task_list (self, list);
+    }
 
   g_signal_connect (manager, "list-added", G_CALLBACK (on_task_list_added_cb), self);
   g_signal_connect (manager, "list-removed", G_CALLBACK (on_task_list_removed_cb), self);

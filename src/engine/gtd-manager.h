@@ -40,8 +40,6 @@ GtdManager*          gtd_manager_new                             (void);
 
 GtdManager*          gtd_manager_get_default                     (void);
 
-GList*               gtd_manager_get_task_lists                  (GtdManager         *manager);
-
 GList*               gtd_manager_get_providers                   (GtdManager         *manager);
 
 GList*               gtd_manager_get_panels                      (GtdManager         *manager);

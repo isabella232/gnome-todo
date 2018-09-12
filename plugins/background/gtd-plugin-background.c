@@ -178,27 +178,31 @@ static GList*
 get_tasks_for_today (guint *n_events)
 {
   g_autoptr (GDateTime) now;
+  GListModel *lists;
   GtdManager *manager;
-  GList *task_lists, *l;
   GList *result;
   guint n_tasks;
+  guint i;
 
   now = g_date_time_new_now_local ();
   result = NULL;
   n_tasks = 0;
   manager = gtd_manager_get_default ();
-  task_lists = gtd_manager_get_task_lists (manager);
+  lists = gtd_manager_get_task_lists_model (manager);
 
-  for (l = task_lists; l != NULL; l = l->next)
+  for (i = 0; i < g_list_model_get_n_items (lists); i++)
     {
-      guint i;
+      g_autoptr (GListModel) list = NULL;
+      guint j;
 
-      for (i = 0; i < g_list_model_get_n_items (l->data); i++)
+      list = g_list_model_get_item (lists, i);
+
+      for (j = 0; j < g_list_model_get_n_items (list); j++)
         {
           GDateTime *due_date;
           GtdTask *task;
 
-          task = g_list_model_get_item (l->data, i);
+          task = g_list_model_get_item (list, j);
 
           due_date = gtd_task_get_due_date (task);
 

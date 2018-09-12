@@ -59,7 +59,6 @@ struct _GtdManager
   GListModel         *lists_model;
   GListModel         *tasks_model;
 
-  GList              *tasklists;
   GList              *providers;
   GList              *panels;
   GtdProvider        *default_provider;
@@ -178,8 +177,6 @@ on_list_added_cb (GtdProvider *provider,
                   GtdTaskList *list,
                   GtdManager  *self)
 {
-  self->tasklists = g_list_append (self->tasklists, list);
-
   gtd_list_store_insert_sorted (GTD_LIST_STORE (self->lists_model),
                                 list,
                                 (GCompareDataFunc) compare_lists_cb,
@@ -222,8 +219,6 @@ on_list_removed_cb (GtdProvider *provider,
 {
   if (!list)
       return;
-
-  self->tasklists = g_list_remove (self->tasklists, list);
 
   gtd_list_store_remove (GTD_LIST_STORE (self->lists_model), list);
 
@@ -645,22 +640,6 @@ GtdManager*
 gtd_manager_new (void)
 {
   return g_object_new (GTD_TYPE_MANAGER, NULL);
-}
-
-/**
- * gtd_manager_get_task_lists:
- * @manager: a #GtdManager
- *
- * Retrieves the list of #GtdTaskList already loaded.
- *
- * Returns: (transfer container) (element-type Gtd.TaskList): a newly allocated list of #GtdTaskList, or %NULL if none.
- */
-GList*
-gtd_manager_get_task_lists (GtdManager *self)
-{
-  g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
-
-  return g_list_copy (self->tasklists);
 }
 
 /**
