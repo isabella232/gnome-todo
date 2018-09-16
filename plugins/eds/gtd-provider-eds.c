@@ -281,6 +281,9 @@ on_task_created_cb (ECalClient   *client,
   if (new_uid)
     gtd_object_set_uid (GTD_OBJECT (task), new_uid);
 
+  /* Effectively apply the updated component */
+  gtd_task_eds_apply (GTD_TASK_EDS (task));
+
   GTD_EXIT;
 }
 
@@ -301,7 +304,15 @@ on_task_modified_cb (ECalClient   *client,
 
   e_cal_client_modify_object_finish (client, result, &error);
 
-  gtd_task_list_update_task (gtd_task_get_list (task), task);
+  if (!error)
+    {
+      gtd_task_eds_apply (GTD_TASK_EDS (task));
+      gtd_task_list_update_task (gtd_task_get_list (task), task);
+    }
+  else
+    {
+      gtd_task_eds_revert (GTD_TASK_EDS (task));
+    }
 
   REPORT_ERROR (_("An error occurred while modifying a task"), error);
 
@@ -458,9 +469,10 @@ gtd_provider_eds_create_task (GtdProvider *provider,
                               const gchar *title,
                               GDateTime   *due_date)
 {
+  g_autoptr (ECalComponent) component = NULL;
+  ECalComponent *updated_component;
   GtdTaskListEds *tasklist;
   GtdProviderEds *self;
-  ECalComponent *component;
   ECalClient *client;
   GtdTask *new_task;
 
@@ -481,6 +493,9 @@ gtd_provider_eds_create_task (GtdProvider *provider,
   gtd_task_set_due_date (new_task, due_date);
   gtd_task_set_list (new_task, list);
 
+  /* Use the component with the changes we've just done */
+  updated_component = gtd_task_eds_get_component (GTD_TASK_EDS (new_task));
+
   gtd_task_list_add_task (list, new_task);
 
   /* The task is not ready until we finish the operation */
@@ -488,7 +503,7 @@ gtd_provider_eds_create_task (GtdProvider *provider,
   gtd_object_push_loading (GTD_OBJECT (new_task));
 
   e_cal_client_create_object (client,
-                              e_cal_component_get_icalcomponent (component),
+                              e_cal_component_get_icalcomponent (updated_component),
                               NULL,
                               (GAsyncReadyCallback) on_task_created_cb,
                               new_task);
