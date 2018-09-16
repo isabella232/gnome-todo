@@ -397,6 +397,65 @@ gtd_task_eds_set_due_date (GtdTask   *task,
   g_clear_pointer (&current_dt, g_date_time_unref);
 }
 
+static gint64
+gtd_task_eds_get_position (GtdTask *task)
+{
+  icalcomponent *ical_comp;
+  icalproperty *property;
+  GtdTaskEds *self;
+
+  self = GTD_TASK_EDS (task);
+  ical_comp = e_cal_component_get_icalcomponent (self->component);
+
+  for (property = icalcomponent_get_first_property (ical_comp, ICAL_X_PROPERTY);
+       property;
+       property = icalcomponent_get_next_property (ical_comp, ICAL_X_PROPERTY))
+    {
+      const gchar *name = icalproperty_get_x_name (property);
+
+      if (g_strcmp0 (name, "X-GNOME-TODO-POSITION") == 0)
+        return g_ascii_strtoll (icalproperty_get_x (property), NULL, 10);
+    }
+
+  return -1;
+}
+
+void
+gtd_task_eds_set_position (GtdTask *task,
+                           gint64   position)
+{
+  g_autofree gchar *value = NULL;
+  icalcomponent *ical_comp;
+  icalproperty *property;
+  GtdTaskEds *self;
+
+  self = GTD_TASK_EDS (task);
+  value = g_strdup_printf ("%ld", position);
+  ical_comp = e_cal_component_get_icalcomponent (self->component);
+
+  for (property = icalcomponent_get_first_property (ical_comp, ICAL_X_PROPERTY);
+       property;
+       property = icalcomponent_get_next_property (ical_comp, ICAL_X_PROPERTY))
+    {
+      const gchar *name = icalproperty_get_x_name (property);
+
+      if (g_strcmp0 (name, "X-GNOME-TODO-POSITION") == 0)
+        break;
+    }
+
+  if (!property)
+    {
+      property = icalproperty_new_x (value);
+      icalproperty_set_x_name (property, "X-GNOME-TODO-POSITION");
+
+      icalcomponent_add_property (ical_comp, property);
+    }
+  else
+    {
+      icalproperty_set_x (property, value);
+    }
+}
+
 static const gchar*
 gtd_task_eds_get_title (GtdTask *task)
 {
@@ -562,6 +621,8 @@ gtd_task_eds_class_init (GtdTaskEdsClass *klass)
   task_class->set_description = gtd_task_eds_set_description;
   task_class->get_due_date = gtd_task_eds_get_due_date;
   task_class->set_due_date = gtd_task_eds_set_due_date;
+  task_class->get_position = gtd_task_eds_get_position;
+  task_class->set_position = gtd_task_eds_set_position;
   task_class->get_title = gtd_task_eds_get_title;
   task_class->set_title = gtd_task_eds_set_title;
   task_class->subtask_added = gtd_task_eds_subtask_added;
