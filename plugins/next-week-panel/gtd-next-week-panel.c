@@ -474,6 +474,7 @@ gtd_next_week_panel_class_init (GtdNextWeekPanelClass *klass)
 static void
 gtd_next_week_panel_init (GtdNextWeekPanel *self)
 {
+  g_autoptr (GDateTime) now = g_date_time_new_now_local ();
   GtdManager *manager = gtd_manager_get_default ();
 
   self->icon = g_themed_icon_new ("view-tasks-week-symbolic");
@@ -487,6 +488,7 @@ gtd_next_week_panel_init (GtdNextWeekPanel *self)
   gtd_task_list_view_set_handle_subtasks (GTD_TASK_LIST_VIEW (self->view), FALSE);
   gtd_task_list_view_set_show_list_name (GTD_TASK_LIST_VIEW (self->view), TRUE);
   gtd_task_list_view_set_show_due_date (GTD_TASK_LIST_VIEW (self->view), FALSE);
+  gtd_task_list_view_set_default_date (self->view, now);
 
   gtk_widget_set_hexpand (GTK_WIDGET (self->view), TRUE);
   gtk_widget_set_vexpand (GTK_WIDGET (self->view), TRUE);

@@ -402,7 +402,7 @@ gtd_panel_today_init (GtdPanelToday *self)
   gtd_task_list_view_set_handle_subtasks (self->view, FALSE);
   gtd_task_list_view_set_show_list_name (self->view, TRUE);
   gtd_task_list_view_set_show_due_date (self->view, FALSE);
-  gtd_task_list_view_set_default_date (self->view, FALSE);
+  gtd_task_list_view_set_default_date (self->view, now);
 
   gtk_widget_set_hexpand (GTK_WIDGET (self->view), TRUE);
   gtk_widget_set_vexpand (GTK_WIDGET (self->view), TRUE);

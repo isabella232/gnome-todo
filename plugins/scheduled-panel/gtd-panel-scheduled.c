@@ -467,6 +467,7 @@ gtd_panel_scheduled_class_init (GtdPanelScheduledClass *klass)
 static void
 gtd_panel_scheduled_init (GtdPanelScheduled *self)
 {
+  g_autoptr (GDateTime) now = g_date_time_new_now_local ();
   GtdManager *manager = gtd_manager_get_default ();
 
   self->icon = g_themed_icon_new ("alarm-symbolic");
@@ -480,6 +481,7 @@ gtd_panel_scheduled_init (GtdPanelScheduled *self)
   gtd_task_list_view_set_handle_subtasks (self->view, FALSE);
   gtd_task_list_view_set_show_list_name (self->view, TRUE);
   gtd_task_list_view_set_show_due_date (self->view, FALSE);
+  gtd_task_list_view_set_default_date (self->view, now);
 
   gtk_widget_set_hexpand (GTK_WIDGET (self->view), TRUE);
   gtk_widget_set_vexpand (GTK_WIDGET (self->view), TRUE);
