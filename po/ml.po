@@ -1,0 +1,641 @@
+# Malayalam translation for gnome-todo.
+# Copyright (C) 2018 gnome-todo's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-todo package.
+# Sumithran V Babu <sumithran@india.com>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-todo master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
+"POT-Creation-Date: 2018-10-11 11:03+0000\n"
+"PO-Revision-Date: 2018-10-25 22:34+0800\n"
+"Last-Translator: Sumithran <sumithranvaikom@gmail.com>\n"
+"Language-Team: Malayalam <l10n@lists.smc.org.in>\n"
+"Language: ml\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in:7
+#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:141
+#: src/gtd-window.c:717 src/gtd-window.c:748 src/main.c:37
+msgid "To Do"
+msgstr "ചെയ്യാനുള്ളവ"
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in:8
+msgid "Task manager for GNOME"
+msgstr "ഗ്നോമിനുള്ള ടാസ്ക് മാനേജർ"
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in:11
+msgid ""
+"GNOME To Do is a task management application designed to integrate with "
+"GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
+"todos on your computer or sync them with cloud providers. Customize your "
+"experience with plugins."
+msgstr ""
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in:25
+msgid "GNOME To Do with the dark theme variant"
+msgstr ""
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in:29
+msgid "Editing a tasklist with GNOME To Do"
+msgstr ""
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in:33
+msgid "Task lists displayed on grid mode"
+msgstr ""
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in:37
+msgid "Task lists displayed on list mode"
+msgstr ""
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in:41
+msgid "Available plugins for GNOME To Do"
+msgstr ""
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in:45
+msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
+msgstr ""
+
+#: data/org.gnome.Todo.desktop.in:4
+msgid "Manage your personal tasks"
+msgstr ""
+
+#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+#: data/org.gnome.Todo.desktop.in:7
+msgid "org.gnome.Todo"
+msgstr ""
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Todo.desktop.in:13
+msgid "Task;Productivity;Todo;"
+msgstr ""
+
+#: data/org.gnome.todo.gschema.xml:6
+msgid "Window maximized"
+msgstr ""
+
+#: data/org.gnome.todo.gschema.xml:7
+msgid "Window maximized state"
+msgstr ""
+
+#: data/org.gnome.todo.gschema.xml:11
+msgid "Window size"
+msgstr "ജാലകത്തിന്റെ വലുപ്പം"
+
+#: data/org.gnome.todo.gschema.xml:12
+msgid "Window size (width and height)."
+msgstr "ജാലകത്തിന്റെ വലുപ്പം (വീതിയും ഉയരവും)."
+
+#: data/org.gnome.todo.gschema.xml:16
+msgid "Window position"
+msgstr "ജാലകത്തിന്റെ സ്ഥാനം"
+
+#: data/org.gnome.todo.gschema.xml:17
+msgid "Window position (x and y)."
+msgstr "ജാലകത്തിന്റെ സ്ഥാനം (x ഉം y)."
+
+#: data/org.gnome.todo.gschema.xml:21
+msgid "First run of GNOME To Do"
+msgstr ""
+
+#: data/org.gnome.todo.gschema.xml:22
+msgid ""
+"Whether it’s the first run of GNOME To Do (to run the initial setup) or not"
+msgstr ""
+
+#: data/org.gnome.todo.gschema.xml:26
+msgid "Default provider to add new lists to"
+msgstr ""
+
+#: data/org.gnome.todo.gschema.xml:27
+msgid "The identifier of the default provider to add new lists to"
+msgstr ""
+
+#: data/org.gnome.todo.gschema.xml:31
+msgid "List of active extensions"
+msgstr "സജീവമായ വിപുലീകരണങ്ങളുടെ ലിസ്റ്റ്"
+
+#: data/org.gnome.todo.gschema.xml:32
+msgid "The list of active extensions"
+msgstr ""
+
+#: data/org.gnome.todo.gschema.xml:36
+msgid "The current list selector"
+msgstr ""
+
+#: data/org.gnome.todo.gschema.xml:37
+msgid "The current list selector. Can be “grid” or “list”."
+msgstr ""
+
+#: data/ui/edit-pane.ui:26
+msgid "D_ue Date"
+msgstr ""
+
+#: data/ui/edit-pane.ui:45
+msgid "_Today"
+msgstr "ഇന്ന് (_T)"
+
+#: data/ui/edit-pane.ui:55
+msgid "To_morrow"
+msgstr ""
+
+#: data/ui/edit-pane.ui:101
+msgid "_Notes"
+msgstr ""
+
+#: data/ui/edit-pane.ui:150
+msgid "_Delete"
+msgstr ""
+
+#: data/ui/edit-pane.ui:192
+msgctxt "taskdate"
+msgid "None"
+msgstr ""
+
+#: data/ui/initial-setup.ui:25
+msgid "Welcome"
+msgstr "സ്വാഗതം"
+
+#: data/ui/initial-setup.ui:40
+msgid "Log in to online accounts to access your tasks"
+msgstr ""
+
+#: data/ui/initial-setup.ui:67
+msgid "To Do Setup"
+msgstr ""
+
+#: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
+#: data/ui/window.ui:134
+msgid "_Cancel"
+msgstr ""
+
+#: data/ui/initial-setup.ui:80
+msgid "_Done"
+msgstr ""
+
+#: data/ui/new-task-row.ui:15
+msgid "New task…"
+msgstr ""
+
+#: data/ui/plugin-dialog.ui:67 data/ui/window.ui:208
+msgid "Extensions"
+msgstr "വിപുലീകരണങ്ങൾ"
+
+#: data/ui/plugin-dialog.ui:110
+msgid "No extensions found"
+msgstr "വിപുലീകരണങ്ങളൊന്നും കണ്ടെത്തിയില്ല"
+
+#: data/ui/provider-popover.ui:25
+msgid "Create _List"
+msgstr ""
+
+#: data/ui/provider-popover.ui:59
+msgid "List Name"
+msgstr ""
+
+#: data/ui/provider-popover.ui:145
+msgid "Select a storage location"
+msgstr "സംഭരണ സ്ഥലം തിരഞ്ഞെടുക്കുക"
+
+#: data/ui/provider-row.ui:70
+msgid "Off"
+msgstr "ഓഫ്"
+
+#: data/ui/provider-selector.ui:27
+msgid "Click to add a new Google account"
+msgstr "ഒരു പുതിയ ഗൂഗിൾ അക്കൗണ്ട് ചേർക്കാൻ ക്ലിക്കുചെയ്യുക"
+
+#: data/ui/provider-selector.ui:46
+msgid "Google"
+msgstr "ഗൂഗിൾ"
+
+#: data/ui/provider-selector.ui:57
+msgid "Click to add a new ownCloud account"
+msgstr ""
+
+#: data/ui/provider-selector.ui:76
+msgid "ownCloud"
+msgstr ""
+
+#: data/ui/provider-selector.ui:87
+msgid "Click to add a new Microsoft Exchange account"
+msgstr "ഒരു പുതിയ മൈക്രോസോഫ്ട് എക്സ്ചേഞ്ച് അക്കൗണ്ട് ചേർക്കാൻ ക്ലിക്കുചെയ്യുക"
+
+#: data/ui/provider-selector.ui:106
+msgid "Microsoft Exchange"
+msgstr "മൈക്രോസോഫ്ട് എക്സ്ചേഞ്ച്"
+
+#: data/ui/provider-selector.ui:119
+msgid "Or you can just store your tasks on this computer"
+msgstr ""
+
+#: data/ui/sidebar-list-row.ui:118 data/ui/sidebar-list-row.ui:137
+msgid "Rename"
+msgstr "പേരുമാറ്റുക"
+
+#: data/ui/sidebar-list-row.ui:141
+msgid "Delete"
+msgstr "ഇല്ലാതാക്കുക"
+
+#: data/ui/sidebar-provider-row.ui:96
+msgid "Loading…"
+msgstr ""
+
+#: data/ui/task-list-panel.ui:41
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
+msgid "Clear completed tasks…"
+msgstr ""
+
+#: data/ui/window.ui:78
+msgid "_New List"
+msgstr "പുതിയ പട്ടിക (_N)"
+
+#: data/ui/window.ui:214
+msgid "_About"
+msgstr "ടുഡുനെക്കുറിച്ച് (_A)"
+
+#: data/ui/window.ui:218
+msgid "_Quit"
+msgstr "അടയ്ക്കുക (_Q)"
+
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
+#: plugins/next-week-panel/gtd-next-week-panel.c:112
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:103
+#: src/task-list-view/gtd-edit-pane.c:110
+msgid "No date set"
+msgstr "തീയതി സജ്ജീകരിച്ചിട്ടില്ല"
+
+#. Translators: This message will never be used with '1 day ago'
+#. * but the singular form is required because some languages do not
+#. * have plurals, some languages reuse the singular form for numbers
+#. * like 21, 31, 41, etc.
+#.
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:125
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:116
+#, c-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:120
+#: src/task-list-view/gtd-task-row.c:147
+msgid "Yesterday"
+msgstr "ഇന്നലെ"
+
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
+#: plugins/next-week-panel/gtd-next-week-panel.c:124
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:124
+#: plugins/score/score/__init__.py:101
+#: plugins/today-panel/gtd-panel-today.c:154
+#: plugins/today-panel/gtd-panel-today.c:258
+#: src/task-list-view/gtd-task-row.c:139
+msgid "Today"
+msgstr "ഇന്ന്"
+
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
+#: plugins/next-week-panel/gtd-next-week-panel.c:128
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:128
+#: src/task-list-view/gtd-task-row.c:143
+msgid "Tomorrow"
+msgstr "നാളെ"
+
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:297
+msgid "All"
+msgstr "എല്ലാം"
+
+#: plugins/background/gtd-plugin-background.c:151
+#, c-format
+msgid "%1$s and one more task"
+msgid_plural "%1$s and %2$d other tasks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: plugins/background/gtd-plugin-background.c:255
+#, c-format
+msgid "You have %d task for today"
+msgid_plural "You have %d tasks for today"
+msgstr[0] ""
+msgstr[1] ""
+
+#: plugins/background/org.gnome.todo.background.gschema.xml:6
+msgid "Run To Do on startup"
+msgstr ""
+
+#: plugins/background/org.gnome.todo.background.gschema.xml:7
+msgid "Whether GNOME To Do should run on startup"
+msgstr ""
+
+#: plugins/background/org.gnome.todo.background.gschema.xml:11
+msgid "Show notifications on startup"
+msgstr ""
+
+#: plugins/background/org.gnome.todo.background.gschema.xml:12
+msgid "Whether GNOME To Do should show notifications or not"
+msgstr ""
+
+#: plugins/background/ui/preferences.ui:53
+msgid "Run on Startup"
+msgstr ""
+
+#: plugins/background/ui/preferences.ui:66
+msgid "Run To Do automatically when you log in"
+msgstr ""
+
+#: plugins/background/ui/preferences.ui:122
+msgid "Show Notifications"
+msgstr "അറിയിപ്പുകൾ കാണിക്കുക"
+
+#: plugins/background/ui/preferences.ui:135
+msgid "When To Do runs, show a startup notification"
+msgstr ""
+
+#: plugins/eds/gtd-plugin-eds.c:201
+msgid "Error loading GNOME Online Accounts"
+msgstr "ഗ്നോം ഓൺലൈൻ അക്കൗണ്ടുകൾ ലോഡുചെയ്യുന്നതിൽ പിശക്"
+
+#: plugins/eds/gtd-provider-eds.c:139
+msgid "Failed to connect to task list"
+msgstr ""
+
+#: plugins/eds/gtd-provider-eds.c:272
+msgid "An error occurred while creating a task"
+msgstr "ടാസ്ക് സൃഷ്ടിക്കുന്നതിൽ പിശക് സംഭവിച്ചു"
+
+#: plugins/eds/gtd-provider-eds.c:306
+msgid "An error occurred while modifying a task"
+msgstr ""
+
+#: plugins/eds/gtd-provider-eds.c:327
+msgid "An error occurred while removing a task"
+msgstr ""
+
+#: plugins/eds/gtd-provider-eds.c:345
+msgid "An error occurred while creating a task list"
+msgstr "ടാസ്ക് ലിസ്റ്റ് സൃഷ്ടിക്കുന്നതിൽ പിശക് സംഭവിച്ചു"
+
+#: plugins/eds/gtd-provider-eds.c:367 plugins/eds/gtd-provider-eds.c:390
+msgid "An error occurred while modifying a task list"
+msgstr ""
+
+#: plugins/eds/gtd-provider-local.c:50
+msgid "On This Computer"
+msgstr "ഈ കമ്പ്യൂട്ടറിൽ"
+
+#: plugins/eds/gtd-provider-local.c:62
+msgid "Local"
+msgstr ""
+
+#: plugins/eds/gtd-task-list-eds.c:283 plugins/eds/gtd-task-list-eds.c:316
+#: plugins/eds/gtd-task-list-eds.c:340
+msgid "Error fetching tasks from list"
+msgstr ""
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:120
+#: plugins/today-panel/gtd-panel-today.c:145
+msgid "Overdue"
+msgstr "സമയപരിധി കഴിഞ്ഞു"
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:345
+msgid "Next 7 Days"
+msgstr "അടുത്ത 7 ദിവസം"
+
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:343
+#, fuzzy
+msgid "Scheduled"
+msgstr "പട്ടികപ്പെടുത്തിയത്"
+
+#: plugins/score/score/__init__.py:90
+msgid "No task completed today"
+msgstr ""
+
+#: plugins/todoist/gtd-plugin-todoist.c:109
+msgid "GNOME To Do cannot connect to Todoist due to network issue"
+msgstr ""
+
+#: plugins/todoist/gtd-plugin-todoist.c:110
+msgid ""
+"Not able to communicate with Todoist. Please check your internet "
+"connectivity."
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:213
+msgid "Error fetching Todoist account key"
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:214
+msgid "Please ensure that Todoist account is correctly configured."
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:555
+#, c-format
+msgid ""
+"GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:563
+#, c-format
+msgid ""
+"Invalid response received from Todoist servers. Please reload GNOME To Do."
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:850
+msgid "An error occurred while updating a Todoist task"
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:965
+msgid "An error occurred while retrieving Todoist data"
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:1040
+msgid "An error occurred while updating Todoist"
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:1100
+msgid "Todoist"
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:1411
+#, c-format
+msgid "Todoist: %s"
+msgstr ""
+
+#: plugins/todoist/ui/preferences.ui:81
+msgid "No Todoist accounts found"
+msgstr ""
+
+#: plugins/todoist/ui/preferences.ui:90
+msgid "Add a Todoist account"
+msgstr ""
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:87
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:124
+msgid "Cannot create Todo.txt file"
+msgstr "Todo.txt ഫയൽ സൃഷ്ടിക്കാൻ കഴിയില്ല"
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:161
+msgid "Select a Todo.txt-formatted file:"
+msgstr ""
+
+#. Filechooser
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:165
+msgid "Select a file"
+msgstr "ഒരു ഫയൽ തിരഞ്ഞെടുക്കുക"
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:191
+msgid "Error opening Todo.txt file"
+msgstr "Todo.txt ഫയൽ തുറക്കുന്നതിൽ പിശക്"
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:201
+msgid ""
+"<b>Warning!</b> Todo.txt support is experimental and unstable. You may "
+"experience instability, errors and eventually data loss. It is not "
+"recommended to use Todo.txt integration on production systems."
+msgstr ""
+
+#: plugins/todo-txt/gtd-provider-todo-txt.c:574
+msgid "Error while opening the file monitor. Todo.txt will not be monitored"
+msgstr "ഫയൽ മോണിറ്റർ തുറക്കുമ്പോൾ പിശകുണ്ടായി. Todo.txt നിരീക്ഷിക്കപ്പെടില്ല"
+
+#: plugins/todo-txt/gtd-provider-todo-txt.c:643
+msgid "Todo.txt"
+msgstr "Todo.txt"
+
+#: plugins/todo-txt/gtd-provider-todo-txt.c:655
+msgid "On the Todo.txt file"
+msgstr "Todo.txt ഫയലിൽ"
+
+#: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:6
+msgid "Todo.txt File"
+msgstr "Todo.txt ഫയൽ"
+
+#: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:7
+msgid "Source of the Todo.txt file"
+msgstr "Todo.txt ഫയലിന്റെ ഉറവിടം"
+
+#. Translators: 'Unscheduled' as in 'Unscheduled tasks'
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:112
+msgid "Unscheduled"
+msgstr "സമയ പട്ടികയില്‍ പ്പെടുത്താത്തത്"
+
+#. Translators: 'Unscheduled' as in 'Unscheduled tasks'
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
+#, python-format
+msgid "Unscheduled (%d)"
+msgstr "സമയ പട്ടികയില്‍ പെടുത്താത്തത് (%d)"
+
+#: src/gtd-application.c:72
+msgid "Quit GNOME To Do"
+msgstr "ഗ്നോം ടുഡു അടയ്ക്കുക"
+
+#: src/gtd-application.c:73
+msgid "Enable debug messages"
+msgstr "ഡീബഗ് സന്ദേശങ്ങൾ പ്രാപ്തമാക്കുക"
+
+#: src/gtd-application.c:143
+msgid "Copyright © 2015–2018 The To Do authors"
+msgstr "പകര്‍പ്പവകാശം © 2015–2018 ടുഡു എഴുത്തുകാര്‍"
+
+#: src/gtd-application.c:148
+msgid "translator-credits"
+msgstr ""
+"Sumithran V Babu <sumithran@india.com>\n"
+"Anish Sheela <aneesh.nl@gmail.com>"
+
+#: src/gtd-empty-list-widget.c:51
+msgid "No more tasks left"
+msgstr "ടാസ്ക്കുകൾ ഒന്നുംതന്നെ ഇല്ല"
+
+#: src/gtd-empty-list-widget.c:52
+msgid "Nothing else to do here"
+msgstr "ഇവിടെ ചെയ്യാൻ മറ്റൊന്നും ഇല്ല"
+
+#: src/gtd-empty-list-widget.c:53
+msgid "You made it!"
+msgstr "നിങ്ങള്‍ അത് ചെയ്തു!"
+
+#: src/gtd-empty-list-widget.c:54
+msgid "Looks like there’s nothing else left here"
+msgstr "ഇവിടെ വേറെയൊന്നും കാണുന്നില്ല"
+
+#: src/gtd-empty-list-widget.c:59
+msgid "Get some rest now"
+msgstr "ഇപ്പോൾ വിശ്രമിക്കൂ"
+
+#: src/gtd-empty-list-widget.c:60
+msgid "Enjoy the rest of your day"
+msgstr "ബാക്കിയുള്ള ദിവസം അടിച്ച് പൊളിക്കു"
+
+#: src/gtd-empty-list-widget.c:61
+msgid "Good job!"
+msgstr "നല്ല ജോലി!"
+
+#: src/gtd-empty-list-widget.c:62
+msgid "Meanwhile, spread the love"
+msgstr "സ്നേഹം കൊണ്ട് ലോകം കീഴടക്കുക"
+
+#: src/gtd-empty-list-widget.c:63
+msgid "Working hard is always rewarded"
+msgstr "കഠിനാധ്വാനത്തിന് എല്ലായ്പ്പോഴും പ്രതിഫലം ലഭിക്കുന്നു"
+
+#: src/gtd-empty-list-widget.c:74
+msgid "No tasks found"
+msgstr "ടാസ്ക്കുകളൊന്നും കണ്ടെത്തിയില്ല"
+
+#: src/gtd-empty-list-widget.c:75
+msgid "You can add tasks using the <b>+</b> above"
+msgstr "<b>+</b> വെച്ച് കൂടുതല്‍ ടാസ്കുകള്‍ ചേര്‍ക്കാം"
+
+#: src/gtd-plugin-dialog-row.c:97
+msgid "Error loading extension"
+msgstr "വിപുലീകരണം ലോഡുചെയ്യുന്നതിൽ പിശക്"
+
+#: src/gtd-plugin-dialog-row.c:97
+msgid "Error unloading extension"
+msgstr "വിപുലീകരണം അൺലോഡുചെയ്യുന്നതിൽ പിശക്"
+
+#: src/gtd-window.c:107
+msgid ""
+"This is a development build of To Do. You may experience errors, wrong "
+"behaviors, and data loss."
+msgstr ""
+
+#: src/gtd-window.c:421
+msgid "Details"
+msgstr "വിശദാംശങ്ങൾ"
+
+#: src/gtd-window.c:712
+msgid "Click a task list to select"
+msgstr ""
+
+#: src/sidebar/gtd-sidebar-list-row.c:259
+#, c-format
+msgid "Task list <b>%s</b> removed"
+msgstr ""
+
+#: src/sidebar/gtd-sidebar-list-row.c:262
+#: src/task-list-view/gtd-task-list-view.c:461
+msgid "Undo"
+msgstr "പൂർവാവസ്ഥയിലാക്കുക"
+
+#: src/sidebar/gtd-sidebar-list-row.c:290
+#, c-format
+msgid "Rename %s"
+msgstr "പേരുമാറ്റുക %s"
+
+#. Translators: %1$s is the task list name, %2$s is the provider name
+#: src/task-list-view/gtd-new-task-row.c:91
+#, c-format
+msgid "%1$s \t <small>%2$s</small>"
+msgstr ""
+
+#: src/task-list-view/gtd-task-list-view.c:442
+#, c-format
+msgid "Task <b>%s</b> removed"
+msgstr ""
