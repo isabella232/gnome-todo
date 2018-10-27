@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
 "POT-Creation-Date: 2018-03-12 15:27+0000\n"
-"PO-Revision-Date: 2018-10-18 15:29+0200\n"
+"PO-Revision-Date: 2018-10-26 11:45+0200\n"
 "Last-Translator: Carmen Bianca BAKKER <carmen@carmenbianca.eu>\n"
 "Language-Team: Esperanto <gnome-eo-list@gnome.org>\n"
 "Language: eo\n"
@@ -26,7 +26,7 @@ msgstr ""
 #: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
 #: src/gtd-window.c:799 src/gtd-window.c:830 src/main.c:35
 msgid "To Do"
-msgstr "Endaĵoj"
+msgstr "Taskoj"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:8
 msgid "Task manager for GNOME"
@@ -37,16 +37,16 @@ msgid ""
 "GNOME To Do is a task management application designed to integrate with "
 "GNOME. It is extensible through plugins and supports custom task providers."
 msgstr ""
-"GNOME-Endaĵoj estas taskmastrumilo kiu integras en GNOME. Ĝi estas etendebla "
+"GNOME Taskoj estas taskmastrumilo kiu integras en GNOME. Ĝi estas etendebla "
 "tra kromprogramoj kaj subtenas proprajn provizantojn de taskoj."
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:24
 msgid "GNOME To Do with the dark theme variant"
-msgstr "GNOME-Endaĵoj kun malhela etoso"
+msgstr "GNOME Taskoj kun malhela etoso"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:28
 msgid "Editing a tasklist with GNOME To Do"
-msgstr "Redaktado de taskolisto kun GNOME-Endaĵoj"
+msgstr "Redaktado de taskolisto kun GNOME Taskoj"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:32
 msgid "Task lists displayed on grid mode"
@@ -58,15 +58,15 @@ msgstr "Taskolistoj montritaj per lista reĝimo"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:40
 msgid "Available plugins for GNOME To Do"
-msgstr "Disponeblaj kromprogramoj por GNOME-Endaĵoj"
+msgstr "Disponeblaj kromprogramoj por GNOME Taskoj"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:44
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
-msgstr "Bildigado de hodiaŭaj taskoj en la Hodiaŭ panelo de GNOME-Endaĵoj"
+msgstr "Bildigado de hodiaŭaj taskoj en la Hodiaŭ panelo de GNOME Taskoj"
 
 #: data/gtk/menus.ui:15 data/ui/plugin-dialog.ui:75
 msgid "Extensions"
-msgstr "Etendaĵoj"
+msgstr "Ettaskoj"
 
 #: data/gtk/menus.ui:22
 msgid "_About"
@@ -116,13 +116,13 @@ msgstr "Fenestra pozicio (x kaj y)."
 
 #: data/org.gnome.todo.gschema.xml:21
 msgid "First run of GNOME To Do"
-msgstr "Unua starto de GNOME-Endaĵoj"
+msgstr "Unua starto de GNOME Taskoj"
 
 #: data/org.gnome.todo.gschema.xml:22
 msgid ""
 "Whether it’s the first run of GNOME To Do (to run the initial setup) or not"
 msgstr ""
-"Ĉu estas la unua lanĉo de GNOME-Endaĵoj (por fari la komencan agordon) aŭ ne"
+"Ĉu estas la unua lanĉo de GNOME Taskoj (por fari la komencan agordon) aŭ ne"
 
 #: data/org.gnome.todo.gschema.xml:26
 msgid "Default provider to add new lists to"
@@ -205,7 +205,7 @@ msgstr "Saluti en retajn kontojn por atingi viajn taskojn"
 
 #: data/ui/initial-setup.ui:67
 msgid "To Do Setup"
-msgstr "Agordo de Endaĵoj"
+msgstr "Agordo de Taskoj"
 
 #: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
 #: data/ui/window.ui:74
@@ -312,11 +312,11 @@ msgstr[1] "Vi havas %d taskojn por hodiaŭ"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:6
 msgid "Run To Do on startup"
-msgstr "Lanĉi Endaĵojn dum startigo"
+msgstr "Lanĉi Taskojn dum startigo"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:7
 msgid "Whether GNOME To Do should run on startup"
-msgstr "Ĉu GNOME-Endaĵoj devus lanĉi dum startigo"
+msgstr "Ĉu GNOME Taskoj devus lanĉi dum startigo"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:11
 msgid "Show notifications on startup"
@@ -324,7 +324,7 @@ msgstr "Montri sciigojn dum startigo"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:12
 msgid "Whether GNOME To Do should show notifications or not"
-msgstr "Ĉu GNOME-Endaĵoj devus montri sciigojn dum startigo"
+msgstr "Ĉu GNOME Taskoj devus montri sciigojn dum startigo"
 
 #: plugins/background/ui/preferences.ui:53
 msgid "Run on Startup"
@@ -332,7 +332,7 @@ msgstr "Lanĉi dum startigo"
 
 #: plugins/background/ui/preferences.ui:66
 msgid "Run To Do automatically when you log in"
-msgstr "Lanĉi Endaĵojn aŭtomate kiam vi salutas"
+msgstr "Lanĉi Taskojn aŭtomate kiam vi salutas"
 
 #: plugins/background/ui/preferences.ui:122
 msgid "Show Notifications"
@@ -340,7 +340,7 @@ msgstr "Montri sciigojn"
 
 #: plugins/background/ui/preferences.ui:135
 msgid "When To Do runs, show a startup notification"
-msgstr "Kiam Endaĵoj rulas, montri startigan sciigon"
+msgstr "Kiam Taskoj rulas, montri startigan sciigon"
 
 #: plugins/eds/gtd-plugin-eds.c:201
 msgid "Error loading GNOME Online Accounts"
@@ -445,15 +445,15 @@ msgstr "Bonvolu certigi ke Todoist konto estas ĝuste agordita."
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
-msgstr "GNOME-Endaĵoj ne havas la necesajn permesojn por fari ĉi tiun agon: %s"
+msgstr "GNOME Taskoj ne havas la necesajn permesojn por fari ĉi tiun agon: %s"
 
 #: plugins/todoist/gtd-provider-todoist.c:565
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
 msgstr ""
-"Ricevis nevalidan respondon de Todoist serviloj. Bonvolu reŝargi GNOME-"
-"Endaĵojn."
+"Ricevis nevalidan respondon de Todoist serviloj. Bonvolu reŝargi GNOME "
+"Taskojn."
 
 #: plugins/todoist/gtd-provider-todoist.c:865
 msgid "An error occurred while updating a Todoist task"
@@ -546,7 +546,7 @@ msgstr "Neplanitaj (%d)"
 
 #: src/gtd-application.c:72
 msgid "Quit GNOME To Do"
-msgstr "Ĉesigi GNOME-Endaĵojn"
+msgstr "Ĉesigi GNOME Taskojn"
 
 #: src/gtd-application.c:73
 msgid "Enable debug messages"
@@ -555,12 +555,12 @@ msgstr "Ŝalti sencimigajn mesaĝojn"
 #: src/gtd-application.c:146
 #, c-format
 msgid "Copyright © %1$d The To Do authors"
-msgstr "Kopirajto © %1$d La aŭtoroj de Endaĵoj"
+msgstr "Kopirajto © %1$d La aŭtoroj de Taskoj"
 
 #: src/gtd-application.c:151
 #, c-format
 msgid "Copyright © %1$d–%2$d The To Do authors"
-msgstr "Kopirajto © %1$d–%2$d La aŭtoroj de Endaĵoj"
+msgstr "Kopirajto © %1$d–%2$d La aŭtoroj de Taskoj"
 
 #: src/gtd-application.c:163
 msgid "translator-credits"
