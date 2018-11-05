@@ -262,32 +262,35 @@ on_remove_task_cb (GtdEditPane *edit_panel,
   g_signal_emit (self, signals[REMOVE_TASK], 0);
 }
 
-static gboolean
-on_button_press_event_cb (GtkWidget  *widget,
-                          GdkEvent   *event,
-                          GtdTaskRow *self)
+static void
+on_button_press_event_cb (GtkGestureMultiPress *gesture,
+                          gint                  n_press,
+                          gdouble               x,
+                          gdouble               y,
+                          GtdTaskRow           *self)
 {
-  gdouble event_x;
-  gdouble event_y;
+  GtkWidget *widget;
   gint real_x;
   gint real_y;
 
-  if (gdk_event_get_event_type (event) != GDK_BUTTON_PRESS)
-    return GDK_EVENT_PROPAGATE;
-
-  gdk_event_get_coords (event, &event_x, &event_y);
+  widget = gtk_event_controller_get_widget (GTK_EVENT_CONTROLLER (gesture));
 
   gtk_widget_translate_coordinates (widget,
                                     GTK_WIDGET (self),
-                                    event_x,
-                                    event_y,
+                                    x,
+                                    y,
                                     &real_x,
                                     &real_y);
 
   self->clicked_x = real_x;
   self->clicked_y = real_y;
 
-  return GDK_EVENT_PROPAGATE;
+  GTD_TRACE_MSG ("GtkGestureMultiPress:pressed received from a %s at %.1f,%.1f (%d,%d)",
+                 G_OBJECT_TYPE_NAME (widget),
+                 x,
+                 y,
+                 real_x,
+                 real_y);
 }
 
 static void

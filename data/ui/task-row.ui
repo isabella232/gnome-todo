@@ -51,7 +51,13 @@
                     <signal name="drag-end" handler="on_drag_end_cb" object="GtdTaskRow" swapped="no" />
                     <signal name="drag-data-get" handler="on_drag_data_get_cb" object="GtdTaskRow" swapped="no" />
                     <signal name="drag-failed" handler="on_drag_failed_cb" object="GtdTaskRow" swapped="no" />
-                    <signal name="event" handler="on_button_press_event_cb" object="GtdTaskRow" swapped="no" />
+
+                    <child>
+                      <object class="GtkGestureMultiPress">
+                        <property name="propagation-phase">capture</property>
+                        <signal name="pressed" handler="on_button_press_event_cb" object="GtdTaskRow" swapped="no" />
+                      </object>
+                    </child>
                     <style>
                       <class name="dim-label" />
                     </style>
@@ -80,7 +86,13 @@
                     <signal name="drag-begin" handler="on_drag_begin_cb" object="GtdTaskRow" swapped="no" />
                     <signal name="drag-end" handler="on_drag_end_cb" object="GtdTaskRow" swapped="no" />
                     <signal name="drag-failed" handler="on_drag_failed_cb" object="GtdTaskRow" swapped="no" />
-                    <signal name="event" handler="on_button_press_event_cb" object="GtdTaskRow" swapped="no" />
+
+                    <child>
+                      <object class="GtkGestureMultiPress">
+                        <property name="propagation-phase">capture</property>
+                        <signal name="pressed" handler="on_button_press_event_cb" object="GtdTaskRow" swapped="no" />
+                      </object>
+                    </child>
 
                     <!-- Task title entry -->
                     <child>
