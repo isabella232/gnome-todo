@@ -20,7 +20,7 @@
 
 #define G_LOG_DOMAIN "GtdColorButton"
 
-#include "gtd-color-button.h"
+#include "widgets/gtd-color-button.h"
 #include "gtd-utils.h"
 
 #define INTENSITY(r, g, b) ((r) * 0.30 + (g) * 0.59 + (b) * 0.11)
@@ -88,13 +88,20 @@ gtd_color_button_measure (GtkWidget      *widget,
 }
 
 static void
-gtd_color_button_size_allocate (GtkWidget           *widget,
-                                const GtkAllocation *allocation,
-                                gint                 baseline)
+gtd_color_button_size_allocate (GtkWidget *widget,
+                                gint       width,
+                                gint       height,
+                                gint       baseline)
 {
   GtdColorButton *self = GTD_COLOR_BUTTON (widget);
 
-  gtk_widget_size_allocate (self->selected_icon, allocation, baseline);
+  gtk_widget_size_allocate (self->selected_icon,
+                            &(GtkAllocation)
+                              {
+                                0, 0,
+                                width, height,
+                              },
+                            baseline);
 }
 
 static void
