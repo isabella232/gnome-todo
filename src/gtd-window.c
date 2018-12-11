@@ -587,7 +587,7 @@ gtd_window_class_init (GtdWindowClass *klass)
   g_type_ensure (GTD_TYPE_NOTIFICATION_WIDGET);
   g_type_ensure (GTD_TYPE_SIDEBAR);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/window.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-window.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, cancel_selection_button);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, gear_menu_button);

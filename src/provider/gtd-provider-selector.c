@@ -491,7 +491,7 @@ gtd_provider_selector_class_init (GtdProviderSelectorClass *klass)
                               FALSE,
                               G_PARAM_READWRITE));
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/provider-selector.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/provider/gtd-provider-selector.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdProviderSelector, exchange_stub_row);
   gtk_widget_class_bind_template_child (widget_class, GtdProviderSelector, google_stub_row);

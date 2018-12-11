@@ -1,5 +1,14 @@
 
 ################
+# Dependencies #
+################
+
+gtd_deps = gnome_todo_deps + [
+  plugins_dep,
+]
+
+
+################
 # Header files #
 ################
 
@@ -59,10 +68,10 @@ sources = files(
   'task-list-view/gtd-task-list-view.c',
   'task-list-view/gtd-task-row.c',
   'widgets/gtd-color-button.c',
+  'widgets/gtd-empty-list-widget.c',
   'widgets/gtd-expandable-entry.c',
   'widgets/gtd-row-header.c',
   'gtd-application.c',
-  'gtd-empty-list-widget.c',
   'gtd-initial-setup-window.c',
   'gtd-object.c',
   'gtd-plugin-dialog.c',
@@ -77,13 +86,33 @@ sources = files(
   'main.c'
 )
 
+
+#############
+# Resources #
+#############
+
 sources += gnome.compile_resources(
   'gtd-resources',
-  join_paths(data_dir, 'todo.gresource.xml'),
-    source_dir: [ data_dir, join_paths(meson.build_root(), 'plugins') ],
-        c_name: 'todo',
+  'todo.gresource.xml',
+  c_name: 'todo',
+  export: true,
+)
+
+sources += gnome.compile_resources(
+  'gtd-plugin-resources',
+  join_paths(plugins_dir, 'plugins.gresource.xml'),
+    source_dir: [ plugins_dir, join_paths(meson.build_root(), 'plugins') ],
+        c_name: 'todo_plugins',
   dependencies: plugins_confs,
-        export: true
+        export: true,
+)
+
+sources += gnome.compile_resources(
+  'gtd-icon-resources',
+  join_paths(icons_dir, 'icons.gresource.xml'),
+    source_dir: [ icons_dir ],
+        c_name: 'todo_icons',
+        export: true,
 )
 
 enum = 'gtd-enum-types'
@@ -117,7 +146,7 @@ cflags = [
   '-DUI_DATA_DIR="@0@"'.format(join_paths(gnome_todo_pkgdatadir, 'style'))
 ]
 
-ldflags = [ '-Wl,--export-dynamic' ] + plugins_ldflags
+ldflags = [ '-Wl,--export-dynamic' ]
 
 
 #########
@@ -146,9 +175,8 @@ gnome_todo = executable(
   meson.project_name(),
                sources,
   include_directories: incs,
-         dependencies: gnome_todo_deps,
+         dependencies: gtd_deps,
                c_args: cflags,
-            link_with: plugins_libs,
             link_args: ldflags,
               install: true,
           install_dir: gnome_todo_bindir
@@ -165,14 +193,14 @@ libgtd = shared_library(
               version: libversion,
             soversion: soversion,
   include_directories: incs,
-         dependencies: gnome_todo_deps,
+         dependencies: gtd_deps,
                c_args: cflags
 )
 
 libgtd_dep = declare_dependency(
             link_with: libgtd,
   include_directories: src_inc,
-         dependencies: gnome_todo_deps
+         dependencies: gtd_deps
 )
 
 

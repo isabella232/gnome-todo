@@ -140,7 +140,7 @@ gtd_dnd_row_class_init (GtdDndRowClass *klass)
 
   g_object_class_install_properties (object_class, N_PROPS, properties);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/dnd-row.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/task-list-view/gtd-dnd-row.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdDndRow, box);
   gtk_widget_class_bind_template_child (widget_class, GtdDndRow, frame);

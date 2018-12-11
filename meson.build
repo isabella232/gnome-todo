@@ -130,6 +130,11 @@ endif
 
 add_project_arguments(common_flags + compiler_flags, language: 'c')
 
+
+#######################
+# Shared dependencies #
+#######################
+
 glib_dep = dependency('glib-2.0', version: '>= 2.58.0')
 gtk_dep = dependency('gtk+-4.0', version: '>= 3.92.0')
 
@@ -142,6 +147,11 @@ gnome_todo_deps = [
   dependency('libpeas-1.0', version: '>= 1.17'),
   cc.find_library('m', required: true)
 ]
+
+
+#######
+# VCS #
+#######
 
 vcs_identifier_h = vcs_tag(
   input: configure_file(
@@ -172,7 +182,9 @@ src_inc = include_directories(
 )
 
 data_dir = join_paths(meson.source_root(), 'data')
+icons_dir = join_paths(data_dir, 'icons')
 po_dir = join_paths(meson.source_root(), 'po')
+plugins_dir = join_paths(meson.source_root(), 'plugins')
 
 subdir('build-aux')
 subdir('plugins')

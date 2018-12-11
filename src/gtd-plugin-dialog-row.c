@@ -222,7 +222,7 @@ gtd_plugin_dialog_row_class_init (GtdPluginDialogRowClass *klass)
                                             PEAS_TYPE_PLUGIN_INFO,
                                             GTD_TYPE_ACTIVATABLE);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/plugin-row.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-plugin-dialog-row.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdPluginDialogRow, description_label);
   gtk_widget_class_bind_template_child (widget_class, GtdPluginDialogRow, error_image);

@@ -326,7 +326,7 @@ gtd_task_list_panel_class_init (GtdTaskListPanelClass *klass)
   g_object_class_override_property (object_class, PROP_SUBTITLE, "subtitle");
   g_object_class_override_property (object_class, PROP_TITLE, "title");
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/task-list-panel.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-task-list-panel.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, colors_flowbox);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, popover);

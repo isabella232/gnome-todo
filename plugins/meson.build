@@ -31,3 +31,8 @@ endif
 if get_option('todoist_plugin')
   subdir('todoist')
 endif
+
+plugins_dep = declare_dependency(
+  link_with: plugins_libs,
+  link_args: plugins_ldflags,
+)

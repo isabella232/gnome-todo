@@ -203,7 +203,7 @@ gtd_notification_widget_class_init (GtdNotificationWidgetClass *klass)
 
   object_class->finalize = gtd_notification_widget_finalize;
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/notification.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/notification/gtd-notification-widget.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdNotificationWidget, secondary_button);
   gtk_widget_class_bind_template_child (widget_class, GtdNotificationWidget, spinner);

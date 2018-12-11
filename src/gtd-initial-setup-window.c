@@ -217,7 +217,7 @@ gtd_initial_setup_window_class_init (GtdInitialSetupWindowClass *klass)
                              GTD_TYPE_MANAGER,
                              G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/initial-setup.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-initial-setup.ui");
 
   gtk_widget_class_bind_template_child_private (widget_class, GtdInitialSetupWindow, cancel_button);
   gtk_widget_class_bind_template_child_private (widget_class, GtdInitialSetupWindow, done_button);
