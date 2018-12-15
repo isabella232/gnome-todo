@@ -74,46 +74,6 @@ static GParamSpec *properties [N_PROPS];
  */
 
 static void
-activate_row_below (GtdSidebarListRow *self)
-{
-  g_autoptr (GList) children = NULL;
-  GtkWidget *next_row;
-  GtkWidget *listbox;
-  GList *l;
-  gboolean after_deleted;
-
-  listbox = gtk_widget_get_parent (GTK_WIDGET (self));
-  children = gtk_container_get_children (GTK_CONTAINER (listbox));
-  after_deleted = FALSE;
-  next_row = NULL;
-
-  for (l = children; l; l = l->next)
-    {
-      GtkWidget *row = l->data;
-
-      if (row == (GtkWidget*) self)
-        {
-          after_deleted = TRUE;
-          continue;
-        }
-
-      if (!gtk_widget_get_visible (row) ||
-          !gtk_list_box_row_get_activatable (GTK_LIST_BOX_ROW (row)))
-        {
-          continue;
-        }
-
-      next_row = row;
-
-      if (after_deleted)
-        break;
-    }
-
-  if (next_row)
-    g_signal_emit_by_name (next_row, "activate");
-}
-
-static void
 update_color_icon (GtdSidebarListRow *self)
 {
   g_autoptr (GdkPaintable) paintable = NULL;
@@ -221,57 +181,6 @@ popup_menu (GtdSidebarListRow *self)
 /*
  * Callbacks
  */
-
-static void
-delete_list_cb (GtdNotification *notification,
-                gpointer         user_data)
-{
-  GtdTaskList *list;
-  GtdProvider *provider;
-
-  list = GTD_TASK_LIST (user_data);
-  provider = gtd_task_list_get_provider (list);
-
-  g_assert (provider != NULL);
-  g_assert (gtd_task_list_is_removable (list));
-
-  gtd_provider_remove_task_list (provider, list);
-}
-
-static void
-undo_delete_list_cb (GtdNotification *notification,
-                     gpointer         user_data)
-{
-  gtk_widget_show (GTK_WIDGET (user_data));
-}
-
-static void
-on_delete_action_activated_cb (GSimpleAction *action,
-                               GVariant      *parameters,
-                               gpointer       user_data)
-{
-  GtdSidebarListRow *self;
-  GtdNotification *notification;
-  g_autofree gchar *title = NULL;
-
-  self = GTD_SIDEBAR_LIST_ROW (user_data);
-
-  title = g_strdup_printf (_("Task list <b>%s</b> removed"), gtd_task_list_get_name (self->list));
-  notification = gtd_notification_new (title, 6000.0);
-  gtd_notification_set_primary_action (notification, delete_list_cb, self->list);
-  gtd_notification_set_secondary_action (notification, _("Undo"), undo_delete_list_cb, self);
-
-  gtd_manager_send_notification (gtd_manager_get_default (), notification);
-
-  /*
-   * If the deleted list is selected, go to the next one (or previous, if
-   * there are no other task list after this one).
-   */
-  if (gtk_list_box_row_is_selected (GTK_LIST_BOX_ROW (self)))
-    activate_row_below (self);
-
-  gtk_widget_hide (GTK_WIDGET (self));
-}
 
 static void
 on_rename_action_activated_cb (GSimpleAction *action,
@@ -466,7 +375,6 @@ gtd_sidebar_list_row_init (GtdSidebarListRow *self)
 {
   const GActionEntry entries[] =
   {
-    { "delete", on_delete_action_activated_cb },
     { "rename", on_rename_action_activated_cb },
   };
 

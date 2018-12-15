@@ -32,14 +32,21 @@
         </child>
 
         <child>
+          <object class="GtkModelButton">
+            <property name="label" translatable="yes">Clear completed tasks…</property>
+            <property name="action-name">list.clear-completed-tasks</property>
+          </object>
+        </child>
+
+        <child>
           <object class="GtkSeparator">
           </object>
         </child>
 
         <child>
           <object class="GtkModelButton">
-            <property name="label" translatable="yes">Clear completed tasks…</property>
-            <property name="action-name">list.clear-completed-tasks</property>
+            <property name="label" translatable="yes">Delete</property>
+            <signal name="clicked" handler="on_delete_button_clicked_cb" object="GtdTaskListPanel" swapped="no" />
           </object>
         </child>
       </object>

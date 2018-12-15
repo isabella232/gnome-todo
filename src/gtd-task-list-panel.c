@@ -21,6 +21,7 @@
 #define G_LOG_DOMAIN "GtdTaskListPanel"
 
 #include "gtd-color-button.h"
+#include "gtd-debug.h"
 #include "gtd-panel.h"
 #include "gtd-provider.h"
 #include "gtd-task-list.h"
@@ -62,6 +63,13 @@ enum
   N_PROPS
 };
 
+enum
+{
+  LIST_DELETED,
+  N_SIGNALS
+};
+
+static guint signals[N_SIGNALS] = { 0, };
 
 /*
  * Auxilary methods
@@ -173,6 +181,20 @@ on_colors_flowbox_child_activated_cb (GtkFlowBox       *colors_flowbox,
   gtd_provider_update_task_list (gtd_task_list_get_provider (list), list);
 
   self->previous_color_button = color_button;
+}
+
+static void
+on_delete_button_clicked_cb (GtkModelButton   *button,
+                             GtdTaskListPanel *self)
+{
+  GtdTaskList *list;
+
+  list = GTD_TASK_LIST (gtd_task_list_view_get_model (self->task_list_view));
+  g_assert (list != NULL);
+
+  GTD_TRACE_MSG ("Emitting GtdTaskListPanel:list-deleted");
+
+  g_signal_emit (self, signals[LIST_DELETED], 0, list);
 }
 
 
@@ -326,6 +348,17 @@ gtd_task_list_panel_class_init (GtdTaskListPanelClass *klass)
   g_object_class_override_property (object_class, PROP_SUBTITLE, "subtitle");
   g_object_class_override_property (object_class, PROP_TITLE, "title");
 
+  signals[LIST_DELETED] = g_signal_new ("list-deleted",
+                                        GTD_TYPE_TASK_LIST_PANEL,
+                                        G_SIGNAL_RUN_LAST,
+                                        0,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        G_TYPE_NONE,
+                                        1,
+                                        GTD_TYPE_TASK_LIST);
+
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-task-list-panel.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, colors_flowbox);
@@ -333,6 +366,7 @@ gtd_task_list_panel_class_init (GtdTaskListPanelClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, task_list_view);
 
   gtk_widget_class_bind_template_callback (widget_class, on_colors_flowbox_child_activated_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_delete_button_clicked_cb);
 }
 
 static void

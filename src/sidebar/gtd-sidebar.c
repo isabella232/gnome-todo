@@ -31,6 +31,9 @@
 #include "gtd-task-list.h"
 #include "gtd-task-list-panel.h"
 #include "gtd-utils.h"
+#include "notification/gtd-notification.h"
+
+#include <glib/gi18n.h>
 
 struct _GtdSidebar
 {
@@ -56,6 +59,45 @@ enum
 /*
  * Auxiliary methods
  */
+
+static void
+activate_row_below (GtdSidebar        *self,
+                    GtdSidebarListRow *current_row)
+{
+  g_autoptr (GList) children = NULL;
+  GtkWidget *next_row;
+  GList *l;
+  gboolean after_deleted;
+
+  children = gtk_container_get_children (GTK_CONTAINER (self->listbox));
+  after_deleted = FALSE;
+  next_row = NULL;
+
+  for (l = children; l; l = l->next)
+    {
+      GtkWidget *row = l->data;
+
+      if (row == (GtkWidget*) current_row)
+        {
+          after_deleted = TRUE;
+          continue;
+        }
+
+      if (!gtk_widget_get_visible (row) ||
+          !gtk_list_box_row_get_activatable (GTK_LIST_BOX_ROW (row)))
+        {
+          continue;
+        }
+
+      next_row = row;
+
+      if (after_deleted)
+        break;
+    }
+
+  if (next_row)
+    g_signal_emit_by_name (next_row, "activate");
+}
 
 static void
 add_task_list (GtdSidebar  *self,
@@ -218,6 +260,62 @@ on_panel_removed_cb (GtdManager *manager,
 
   if (row)
     gtk_widget_destroy (GTK_WIDGET (row));
+}
+
+static void
+delete_list_cb (GtdNotification *notification,
+                gpointer         user_data)
+{
+  GtdTaskList *list;
+  GtdProvider *provider;
+
+  list = GTD_TASK_LIST (user_data);
+  provider = gtd_task_list_get_provider (list);
+
+  g_assert (provider != NULL);
+  g_assert (gtd_task_list_is_removable (list));
+
+  gtd_provider_remove_task_list (provider, list);
+}
+
+static void
+undo_delete_list_cb (GtdNotification *notification,
+                     gpointer         user_data)
+{
+  g_assert (GTD_IS_SIDEBAR_LIST_ROW (user_data));
+
+  gtk_widget_show (GTK_WIDGET (user_data));
+}
+
+static void
+on_task_list_panel_list_deleted_cb (GtdTaskListPanel *panel,
+                                    GtdTaskList      *list,
+                                    GtdSidebar       *self)
+{
+  GtdSidebarListRow *row;
+  GtdNotification *notification;
+  g_autofree gchar *title = NULL;
+
+  row = (GtdSidebarListRow*) get_row_for_task_list (self, list);
+  g_assert (row != NULL && GTD_IS_SIDEBAR_LIST_ROW (row));
+
+  GTD_TRACE_MSG ("Removing task list row from sidebar");
+
+  title = g_strdup_printf (_("Task list <b>%s</b> removed"), gtd_task_list_get_name (list));
+  notification = gtd_notification_new (title, 6000.0);
+  gtd_notification_set_primary_action (notification, delete_list_cb, list);
+  gtd_notification_set_secondary_action (notification, _("Undo"), undo_delete_list_cb, row);
+
+  gtd_manager_send_notification (gtd_manager_get_default (), notification);
+
+  /*
+   * If the deleted list is selected, go to the next one (or previous, if
+   * there are no other task list after this one).
+   */
+  if (gtk_list_box_row_is_selected (GTK_LIST_BOX_ROW (row)))
+    activate_row_below (self, row);
+
+  gtk_widget_hide (GTK_WIDGET (row));
 }
 
 static void
@@ -560,6 +658,11 @@ gtd_sidebar_set_task_list_panel (GtdSidebar *self,
   g_assert (self->task_list_panel == NULL);
 
   self->task_list_panel = g_object_ref (task_list_panel);
+  g_signal_connect_object (self->task_list_panel,
+                           "list-deleted",
+                           G_CALLBACK (on_task_list_panel_list_deleted_cb),
+                           self,
+                           0);
 }
 
 void
