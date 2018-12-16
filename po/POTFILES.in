@@ -24,8 +24,8 @@ plugins/todo-txt/org.gnome.todo.txt.gschema.xml
 plugins/unscheduled-panel/unscheduled-panel/__init__.py
 src/gtd-application.c
 src/gtd-initial-setup-window.ui
-src/gtd-plugin-dialog.ui
 src/gtd-plugin-dialog-row.c
+src/gtd-plugin-dialog.ui
 src/gtd-task-list-panel.ui
 src/gtd-window.c
 src/gtd-window.ui
@@ -33,6 +33,7 @@ src/main.c
 src/provider/gtd-provider-popover.ui
 src/provider/gtd-provider-row.ui
 src/provider/gtd-provider-selector.ui
+src/sidebar/gtd-sidebar.c
 src/sidebar/gtd-sidebar-list-row.c
 src/sidebar/gtd-sidebar-list-row.ui
 src/sidebar/gtd-sidebar-provider-row.ui
