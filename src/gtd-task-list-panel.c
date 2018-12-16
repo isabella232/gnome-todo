@@ -35,6 +35,8 @@ struct _GtdTaskListPanel
 
   GtkFlowBox         *colors_flowbox;
   GtkPopover         *popover;
+  GtkWidget          *rename_button;
+  GtkEntry           *rename_entry;
   GtdTaskListView    *task_list_view;
 
   GtkWidget          *previous_color_button;
@@ -145,6 +147,38 @@ update_selected_color (GtdTaskListPanel *self)
     }
 }
 
+static void
+rename_list (GtdTaskListPanel *self)
+{
+  g_autofree gchar *new_name = NULL;
+  GtdTaskList *list;
+
+  g_assert (gtk_widget_get_visible (GTK_WIDGET (self->popover)));
+  g_assert (g_utf8_validate (gtk_entry_get_text (self->rename_entry), -1, NULL));
+
+  list = GTD_TASK_LIST (gtd_task_list_view_get_model (self->task_list_view));
+  g_assert (list != NULL);
+
+  new_name = g_strdup (gtk_entry_get_text (self->rename_entry));
+  new_name = g_strstrip (new_name);
+
+  /*
+   * Even though the Rename button is insensitive, we may still reach here
+   * by activating the entry.
+   */
+  if (!new_name || new_name[0] == '\0')
+    return;
+
+  if (g_strcmp0 (gtk_entry_get_text (self->rename_entry), gtd_task_list_get_name (list)) != 0)
+    {
+      gtd_task_list_set_name (list, gtk_entry_get_text (self->rename_entry));
+      gtd_provider_update_task_list (gtd_task_list_get_provider (list), list);
+    }
+
+  gtk_popover_popdown (self->popover);
+  gtk_entry_set_text (self->rename_entry, "");
+}
+
 
 /*
  * Callbacks
@@ -195,6 +229,44 @@ on_delete_button_clicked_cb (GtkModelButton   *button,
   GTD_TRACE_MSG ("Emitting GtdTaskListPanel:list-deleted");
 
   g_signal_emit (self, signals[LIST_DELETED], 0, list);
+}
+
+static void
+on_popover_hidden_cb (GtkPopover       *popover,
+                      GtdTaskListPanel *self)
+{
+  gtk_entry_set_text (self->rename_entry, "");
+}
+
+static void
+on_rename_button_clicked_cb (GtkButton        *button,
+                             GtdTaskListPanel *self)
+{
+  rename_list (self);
+}
+
+static void
+on_rename_entry_activated_cb (GtkEntry         *entry,
+                              GtdTaskListPanel *self)
+{
+  rename_list (self);
+}
+
+static void
+on_rename_entry_text_changed_cb (GtkEntry         *entry,
+                                 GParamSpec       *pspec,
+                                 GtdTaskListPanel *self)
+{
+
+  g_autofree gchar *new_name = NULL;
+  gboolean valid;
+
+  new_name = g_strdup (gtk_entry_get_text (self->rename_entry));
+  new_name = g_strstrip (new_name);
+
+  valid = new_name && new_name[0] != '\0';
+
+  gtk_widget_set_sensitive (self->rename_button, valid);
 }
 
 
@@ -363,10 +435,16 @@ gtd_task_list_panel_class_init (GtdTaskListPanelClass *klass)
 
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, colors_flowbox);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, popover);
+  gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, rename_button);
+  gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, rename_entry);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, task_list_view);
 
   gtk_widget_class_bind_template_callback (widget_class, on_colors_flowbox_child_activated_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_delete_button_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_popover_hidden_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_rename_button_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_rename_entry_activated_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_rename_entry_text_changed_cb);
 }
 
 static void
