@@ -9,20 +9,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-11 09:17+0000\n"
-"PO-Revision-Date: 2018-03-12 00:55+0100\n"
-"Last-Translator: Josef Andersson <josef.andersson@fripost.org>\n"
+"POT-Creation-Date: 2018-12-16 11:07+0000\n"
+"PO-Revision-Date: 2018-12-29 22:39+0100\n"
+"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
-#: src/gtd-window.c:799 src/gtd-window.c:830 src/main.c:35
+#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:141
+#: src/gtd-window.c:717 src/gtd-window.c:748 src/main.c:35
 msgid "To Do"
 msgstr "Uppgifter"
 
@@ -33,47 +33,38 @@ msgstr "Uppgiftshanterare för GNOME"
 #: data/appdata/org.gnome.Todo.appdata.xml.in:11
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
-"GNOME. It is extensible through plugins and supports custom task providers."
+"GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
+"todos on your computer or sync them with cloud providers. Customize your "
+"experience with plugins."
 msgstr ""
 "GNOME Uppgifter är ett uppgiftshanteringsprogram som är designat att "
-"integrera med GNOME. Det är utökningsbart genom insticksmoduler och stöder "
-"anpassade uppgiftsleverantörer."
+"integrera med GNOME. Spara och sortera vad du vill göra. Hantera flera "
+"uppgiftslistor. Behåll dina uppgifter på din dator eller synkronisera dem "
+"med molnleverantörer. Anpassa din upplevelse med insticksmoduler."
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:24
+#: data/appdata/org.gnome.Todo.appdata.xml.in:25
 msgid "GNOME To Do with the dark theme variant"
 msgstr "GNOME Uppgifter med den mörka temavarianten"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:28
+#: data/appdata/org.gnome.Todo.appdata.xml.in:29
 msgid "Editing a tasklist with GNOME To Do"
 msgstr "Redigera en uppgiftslista med GNOME Uppgifter"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:32
+#: data/appdata/org.gnome.Todo.appdata.xml.in:33
 msgid "Task lists displayed on grid mode"
 msgstr "Uppgiftslistor visade i rutnätsläge"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:36
+#: data/appdata/org.gnome.Todo.appdata.xml.in:37
 msgid "Task lists displayed on list mode"
 msgstr "Uppgiftslistor visade i listläge"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:40
+#: data/appdata/org.gnome.Todo.appdata.xml.in:41
 msgid "Available plugins for GNOME To Do"
 msgstr "Tillgängliga insticksmoduler för GNOME Uppgifter"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:44
+#: data/appdata/org.gnome.Todo.appdata.xml.in:45
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr "Visualiserar dagens uppgifter i GNOME Uppgifters Idag-panel"
-
-#: data/gtk/menus.ui:15 data/ui/plugin-dialog.ui:75
-msgid "Extensions"
-msgstr "Tillägg"
-
-#: data/gtk/menus.ui:22
-msgid "_About"
-msgstr "_Om"
-
-#: data/gtk/menus.ui:26
-msgid "_Quit"
-msgstr "_Avsluta"
 
 # Ändrat ordval eftersom "personliga uppgifter" låter integritetsrelaterat på svenska.
 #: data/org.gnome.Todo.desktop.in:4
@@ -150,162 +141,61 @@ msgid "The current list selector. Can be “grid” or “list”."
 msgstr ""
 "Den aktuella listväljaren. Kan vara ”grid” (rutnät) eller ”list” (lista)."
 
-#: data/ui/edit-pane.ui:43
-msgid "_Notes"
-msgstr "_Anteckningar"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
+#: plugins/next-week-panel/gtd-next-week-panel.c:112
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:103
+#: src/task-list-view/gtd-edit-pane.c:110
+msgid "No date set"
+msgstr "Inget datum angivet"
 
-#: data/ui/edit-pane.ui:93
-msgid "D_ue Date"
-msgstr "Sl_utdatum"
+#. Translators: This message will never be used with '1 day ago'
+#. * but the singular form is required because some languages do not
+#. * have plurals, some languages reuse the singular form for numbers
+#. * like 21, 31, 41, etc.
+#.
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:125
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:116
+#, c-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "%d dag sedan"
+msgstr[1] "%d dagar sedan"
 
-#: data/ui/edit-pane.ui:111
-msgid "_Today"
-msgstr "_Idag"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:120
+#: src/task-list-view/gtd-task-row.c:147
+msgid "Yesterday"
+msgstr "Igår"
 
-#: data/ui/edit-pane.ui:121
-msgid "To_morrow"
-msgstr "I_morgon"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
+#: plugins/next-week-panel/gtd-next-week-panel.c:124
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:124
+#: plugins/score/score/__init__.py:101
+#: plugins/today-panel/gtd-panel-today.c:154
+#: plugins/today-panel/gtd-panel-today.c:258
+#: src/task-list-view/gtd-task-row.c:139
+msgid "Today"
+msgstr "Idag"
 
-#: data/ui/edit-pane.ui:169
-msgid "_Priority"
-msgstr "_Prioritet"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
+#: plugins/next-week-panel/gtd-next-week-panel.c:128
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:128
+#: src/task-list-view/gtd-task-row.c:143
+msgid "Tomorrow"
+msgstr "Imorgon"
 
-#: data/ui/edit-pane.ui:187
-msgctxt "taskpriority"
-msgid "None"
-msgstr "Ingen"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:297
+msgid "All"
+msgstr "Alla"
 
-#: data/ui/edit-pane.ui:188
-msgid "Low"
-msgstr "Låg"
-
-#: data/ui/edit-pane.ui:189
-msgid "Medium"
-msgstr "Mellan"
-
-#: data/ui/edit-pane.ui:190
-msgid "High"
-msgstr "Hög"
-
-#: data/ui/edit-pane.ui:198 data/ui/list-selector-panel.ui:93
-msgid "_Delete"
-msgstr "_Ta bort"
-
-#: data/ui/edit-pane.ui:249
-msgctxt "taskdate"
-msgid "None"
-msgstr "Inget"
-
-#: data/ui/initial-setup.ui:25
-msgid "Welcome"
-msgstr "Välkommen"
-
-# Nätkonto (direkt från Empathy)
-#: data/ui/initial-setup.ui:40
-msgid "Log in to online accounts to access your tasks"
-msgstr "Logga in på nätkonton för att komma åt dina uppgifter"
-
-#: data/ui/initial-setup.ui:67
-msgid "To Do Setup"
-msgstr "Konfiguration av Uppgifter"
-
-#: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
-#: data/ui/window.ui:74
-msgid "_Cancel"
-msgstr "A_vbryt"
-
-#: data/ui/initial-setup.ui:80
-msgid "_Done"
-msgstr "_Färdig"
-
-#: data/ui/list-selector-panel.ui:79 data/ui/list-selector-panel.ui:173
-msgid "_Rename"
-msgstr "_Byt namn"
-
-#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:469
-msgid "Lists"
-msgstr "Listor"
-
-#: data/ui/list-selector-panel.ui:129
-msgid "Tasks"
-msgstr "Uppgifter"
-
-#: data/ui/list-selector-panel.ui:147
-msgid "Name of the task list"
-msgstr "Namn på uppgiftslistan"
-
-#: data/ui/list-selector-panel.ui:263
-msgid "_New List"
-msgstr "_Ny lista"
-
-#: data/ui/list-view.ui:113
-msgid "Show or hide completed tasks"
-msgstr "Visa eller dölj utförda uppgifter"
-
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
-msgid "Done"
-msgstr "Färdig"
-
-#: data/ui/new-task-row.ui:29
-msgid "New task…"
-msgstr "Ny uppgift…"
-
-#: data/ui/plugin-dialog.ui:118
-msgid "No extensions found"
-msgstr "Inga tillägg funna"
-
-#: data/ui/provider-popover.ui:25
-msgid "Create _List"
-msgstr "Skapa _lista"
-
-#: data/ui/provider-popover.ui:59
-msgid "List Name"
-msgstr "Listnamn"
-
-#: data/ui/provider-popover.ui:155
-msgid "Select a storage location"
-msgstr "Välj en lagringsplats"
-
-#: data/ui/provider-row.ui:70
-msgid "Off"
-msgstr "Av"
-
-#: data/ui/provider-selector.ui:27
-msgid "Click to add a new Google account"
-msgstr "Klicka för att lägga till ett nytt Google-konto"
-
-#: data/ui/provider-selector.ui:51
-msgid "Google"
-msgstr "Google"
-
-#: data/ui/provider-selector.ui:67
-msgid "Click to add a new ownCloud account"
-msgstr "Klicka för att lägga till ett nytt ownCloud-konto"
-
-#: data/ui/provider-selector.ui:91
-msgid "ownCloud"
-msgstr "ownCloud"
-
-#: data/ui/provider-selector.ui:107
-msgid "Click to add a new Microsoft Exchange account"
-msgstr "Klicka för att lägga till ett nytt Microsoft Exchange-konto"
-
-#: data/ui/provider-selector.ui:131
-msgid "Microsoft Exchange"
-msgstr "Microsoft Exchange"
-
-#: data/ui/provider-selector.ui:154
-msgid "Or you can just store your tasks on this computer"
-msgstr "Eller spara dina uppgifter på den här datorn"
-
-#: plugins/background/gtd-plugin-background.c:150
+#: plugins/background/gtd-plugin-background.c:151
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
 msgstr[0] "%1$s och en till uppgift"
 msgstr[1] "%1$s och %2$d till uppgifter"
 
-#: plugins/background/gtd-plugin-background.c:249
+#: plugins/background/gtd-plugin-background.c:255
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
@@ -352,98 +242,77 @@ msgstr "Fel vid inläsning av GNOME Nätkonton"
 msgid "Failed to connect to task list"
 msgstr "Misslyckades med att ansluta till uppgiftslista"
 
-#: plugins/eds/gtd-provider-eds.c:351
+#: plugins/eds/gtd-provider-eds.c:272
 msgid "An error occurred while creating a task"
 msgstr "Ett fel uppstod vid skapande av en uppgift"
 
-#: plugins/eds/gtd-provider-eds.c:383
+#: plugins/eds/gtd-provider-eds.c:306
 msgid "An error occurred while modifying a task"
 msgstr "Ett fel uppstod vid ändring av en uppgift"
 
-#: plugins/eds/gtd-provider-eds.c:404
+#: plugins/eds/gtd-provider-eds.c:327
 msgid "An error occurred while removing a task"
 msgstr "Ett fel uppstod vid borttagning av en uppgift"
 
-#: plugins/eds/gtd-provider-eds.c:422
+#: plugins/eds/gtd-provider-eds.c:345
 msgid "An error occurred while creating a task list"
 msgstr "Ett fel uppstod vid skapande av en uppgiftslista"
 
-#: plugins/eds/gtd-provider-eds.c:444 plugins/eds/gtd-provider-eds.c:467
+#: plugins/eds/gtd-provider-eds.c:367 plugins/eds/gtd-provider-eds.c:390
 msgid "An error occurred while modifying a task list"
 msgstr "Ett fel uppstod vid ändring av en uppgiftslista"
 
 #: plugins/eds/gtd-provider-local.c:50
-msgid "Local"
-msgstr "Lokal"
-
-#: plugins/eds/gtd-provider-local.c:56
 msgid "On This Computer"
 msgstr "På den här datorn"
 
-#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:307
-#: plugins/eds/gtd-task-list-eds.c:331
+#: plugins/eds/gtd-provider-local.c:62
+msgid "Local"
+msgstr "Lokal"
+
+#: plugins/eds/gtd-task-list-eds.c:283 plugins/eds/gtd-task-list-eds.c:316
+#: plugins/eds/gtd-task-list-eds.c:340
 msgid "Error fetching tasks from list"
 msgstr "Fel vid hämtning av uppgifter från lista"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:110
-msgid "No date set"
-msgstr "Inget datum angivet"
+#: plugins/next-week-panel/gtd-next-week-panel.c:120
+#: plugins/today-panel/gtd-panel-today.c:145
+msgid "Overdue"
+msgstr "Försenade"
 
-#. Translators: This message will never be used with '1 day ago'
-#. * but the singular form is required because some languages do not
-#. * have plurals, some languages reuse the singular form for numbers
-#. * like 21, 31, 41, etc.
-#.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:102
-#, c-format
-msgid "%d day ago"
-msgid_plural "%d days ago"
-msgstr[0] "%d dag sedan"
-msgstr[1] "%d dagar sedan"
+#: plugins/next-week-panel/gtd-next-week-panel.c:345
+msgid "Next 7 Days"
+msgstr "De närmaste 7 dagarna"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:147
-msgid "Yesterday"
-msgstr "Igår"
-
-#. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
-#: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:134
-#: plugins/today-panel/gtd-panel-today.c:139
-#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:139
-msgid "Today"
-msgstr "Idag"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:143
-msgid "Tomorrow"
-msgstr "Imorgon"
-
-#. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:365
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:370
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:507
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:343
 msgid "Scheduled"
 msgstr "Schemalagd"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:512
-#: plugins/today-panel/gtd-panel-today.c:278
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
-msgid "Clear completed tasks…"
-msgstr "Rensa utförda uppgifter…"
 
 #: plugins/score/score/__init__.py:90
 msgid "No task completed today"
 msgstr "Ingen uppgift utförd idag"
 
-#: plugins/todoist/gtd-provider-todoist.c:212
+#: plugins/todoist/gtd-plugin-todoist.c:109
+msgid "GNOME To Do cannot connect to Todoist due to network issue"
+msgstr ""
+"GNOME Uppgifter kan inte ansluta till Todoist på grund av nätverksproblem"
+
+#: plugins/todoist/gtd-plugin-todoist.c:110
+msgid ""
+"Not able to communicate with Todoist. Please check your internet "
+"connectivity."
+msgstr ""
+"Kunde inte kommunicera med Todoist. Kontrollera din internetanslutning."
+
+#: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Error fetching Todoist account key"
 msgstr "Fel vid hämtande av Todoist-kontonyckel"
 
-#: plugins/todoist/gtd-provider-todoist.c:213
+#: plugins/todoist/gtd-provider-todoist.c:214
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Säkerställ att Todoist-kontot är korrekt konfigurerat."
 
-#: plugins/todoist/gtd-provider-todoist.c:557
+#: plugins/todoist/gtd-provider-todoist.c:555
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
@@ -451,29 +320,29 @@ msgstr ""
 "GNOME Uppgifter har inte de nödvändiga rättigheterna för att utföra denna "
 "åtgärd: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:565
+#: plugins/todoist/gtd-provider-todoist.c:563
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
 msgstr "Ogiltigt svar erhölls från Todoist-servrar. Starta om GNOME Uppgifter."
 
-#: plugins/todoist/gtd-provider-todoist.c:865
+#: plugins/todoist/gtd-provider-todoist.c:850
 msgid "An error occurred while updating a Todoist task"
 msgstr "Ett fel uppstod vid uppdatering av en Todoist-uppgift"
 
-#: plugins/todoist/gtd-provider-todoist.c:982
+#: plugins/todoist/gtd-provider-todoist.c:965
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Ett fel uppstod vid hämtning av Todoist-data"
 
-#: plugins/todoist/gtd-provider-todoist.c:1057
+#: plugins/todoist/gtd-provider-todoist.c:1040
 msgid "An error occurred while updating Todoist"
 msgstr "Ett fel uppstod vid uppdatering av Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1117
+#: plugins/todoist/gtd-provider-todoist.c:1100
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1426
+#: plugins/todoist/gtd-provider-todoist.c:1411
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -514,16 +383,16 @@ msgstr ""
 "uppleva instabilitet, fel och eventuellt dataförlust. Användning av Todo.txt-"
 "integration i produktionssystem rekommenderas inte."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:326
+#: plugins/todo-txt/gtd-provider-todo-txt.c:574
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr "Fel vid öppnande av filövervakaren. Todo.txt kommer inte att övervakas"
 
 # Vi behandlar Todo.txt som ett namn. https://github.com/ginatrapani/todo.txt-cli/wiki/The-Todo.txt-Format
-#: plugins/todo-txt/gtd-provider-todo-txt.c:395
+#: plugins/todo-txt/gtd-provider-todo-txt.c:643
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:401
+#: plugins/todo-txt/gtd-provider-todo-txt.c:655
 msgid "On the Todo.txt file"
 msgstr "På Todo.txt-filen"
 
@@ -537,12 +406,17 @@ msgstr "Källa för Todo.txt-filen"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:103
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:112
 msgid "Unscheduled"
 msgstr "Ej schemalagd"
 
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
+#: src/gtd-task-list-panel.ui:45
+msgid "Clear completed tasks…"
+msgstr "Rensa utförda uppgifter…"
+
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:106
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
 #, python-format
 msgid "Unscheduled (%d)"
 msgstr "Ej schemalagd (%d)"
@@ -555,17 +429,11 @@ msgstr "Avsluta GNOME Uppgifter"
 msgid "Enable debug messages"
 msgstr "Aktivera felsökningsmeddelanden"
 
-#: src/gtd-application.c:146
-#, c-format
-msgid "Copyright © %1$d The To Do authors"
-msgstr "Copyright © %1$d Uppgifter-upphovsmännen"
+#: src/gtd-application.c:143
+msgid "Copyright © 2015–2018 The To Do authors"
+msgstr "Copyright © 2015–2018 Uppgifter-upphovsmännen"
 
-#: src/gtd-application.c:151
-#, c-format
-msgid "Copyright © %1$d–%2$d The To Do authors"
-msgstr "Copyright © %1$d–%2$d Uppgifter-upphovsmännen"
-
-#: src/gtd-application.c:163
+#: src/gtd-application.c:148
 msgid "translator-credits"
 msgstr ""
 "Marcus Gisslén <marcus.gisslen@gmail.com>\n"
@@ -574,49 +442,27 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>."
 
-#: src/gtd-empty-list-widget.c:51
-msgid "No more tasks left"
-msgstr "Inga fler uppgifter kvar"
+#: src/gtd-initial-setup-window.ui:23
+msgid "Welcome"
+msgstr "Välkommen"
 
-#: src/gtd-empty-list-widget.c:52
-msgid "Nothing else to do here"
-msgstr "Ingenting mer att göra här"
+# Nätkonto (direkt från Empathy)
+#: src/gtd-initial-setup-window.ui:37
+msgid "Log in to online accounts to access your tasks"
+msgstr "Logga in på nätkonton för att komma åt dina uppgifter"
 
-#: src/gtd-empty-list-widget.c:53
-msgid "You made it!"
-msgstr "Du klarade det!"
+#: src/gtd-initial-setup-window.ui:62
+msgid "To Do Setup"
+msgstr "Konfiguration av Uppgifter"
 
-#: src/gtd-empty-list-widget.c:54
-msgid "Looks like there’s nothing else left here"
-msgstr "Ser ut som att det inte finns något mer här"
+#: src/gtd-initial-setup-window.ui:65 src/gtd-window.ui:116
+#: src/provider/gtd-provider-popover.ui:40
+msgid "_Cancel"
+msgstr "A_vbryt"
 
-#: src/gtd-empty-list-widget.c:59
-msgid "Get some rest now"
-msgstr "Du kan vila nu"
-
-#: src/gtd-empty-list-widget.c:60
-msgid "Enjoy the rest of your day"
-msgstr "Ha det så trevligt i dag"
-
-#: src/gtd-empty-list-widget.c:61
-msgid "Good job!"
-msgstr "Bra jobbat!"
-
-#: src/gtd-empty-list-widget.c:62
-msgid "Meanwhile, spread the love"
-msgstr "Under tiden, sprid kärleken"
-
-#: src/gtd-empty-list-widget.c:63
-msgid "Working hard is always rewarded"
-msgstr "Hårt arbete belönas alltid"
-
-#: src/gtd-empty-list-widget.c:74
-msgid "No tasks found"
-msgstr "Inga uppgifter funna"
-
-#: src/gtd-empty-list-widget.c:75
-msgid "You can add tasks using the <b>+</b> above"
-msgstr "Du kan lägga till uppgifter med <b>+</b> ovan"
+#: src/gtd-initial-setup-window.ui:74
+msgid "_Done"
+msgstr "_Färdig"
 
 #: src/gtd-plugin-dialog-row.c:97
 msgid "Error loading extension"
@@ -626,73 +472,263 @@ msgstr "Fel vid inläsning av tillägg"
 msgid "Error unloading extension"
 msgstr "Fel vid inaktivering av tillägg"
 
-#: src/gtd-task-list-view.c:292
-msgid "Removing this task will also remove its subtasks. Remove anyway?"
-msgstr ""
-"Att ta bort denna uppgift kommer också att ta bort dess underuppgifter. Ta "
-"bort i alla fall?"
+#: src/gtd-plugin-dialog.ui:62 src/gtd-window.ui:179
+msgid "Extensions"
+msgstr "Tillägg"
 
-#: src/gtd-task-list-view.c:295
-msgid "Once removed, the tasks cannot be recovered."
-msgstr "Då de väl tagits bort kan uppgifterna inte återfås."
+#: src/gtd-plugin-dialog.ui:96
+msgid "No extensions found"
+msgstr "Inga tillägg funna"
 
-#: src/gtd-task-list-view.c:298 src/views/gtd-list-selector-panel.c:388
-msgid "Cancel"
-msgstr "Ångra"
+#: src/gtd-task-list-panel.ui:38 src/gtd-task-list-panel.ui:74
+#: src/gtd-task-list-panel.ui:98 src/sidebar/gtd-sidebar-list-row.ui:67
+msgid "Rename"
+msgstr "Byt namn"
 
-#: src/gtd-task-list-view.c:300
-msgid "Remove"
+#: src/gtd-task-list-panel.ui:57 src/sidebar/gtd-sidebar-list-row.ui:71
+msgid "Delete"
 msgstr "Ta bort"
 
-#: src/gtd-task-list-view.c:390
-#, c-format
-msgid "Done (%d)"
-msgstr "Färdig (%d)"
+#: src/gtd-window.c:107
+msgid ""
+"This is a development build of To Do. You may experience errors, wrong "
+"behaviors, and data loss."
+msgstr ""
+"Detta är ett utvecklingsbygge av Uppgifter. Du kan uppleva fel, felaktigt "
+"beteende samt dataförlust."
 
-#: src/gtd-task-list-view.c:660
+#: src/gtd-window.c:421
+msgid "Details"
+msgstr "Detaljer"
+
+#: src/gtd-window.c:712
+msgid "Click a task list to select"
+msgstr "Klicka på en uppgiftslista för att markera"
+
+#: src/gtd-window.ui:63
+msgid "_New List"
+msgstr "_Ny lista"
+
+#: src/gtd-window.ui:185
+msgid "_About"
+msgstr "_Om"
+
+#: src/gtd-window.ui:189
+msgid "_Quit"
+msgstr "_Avsluta"
+
+#: src/provider/gtd-provider-popover.ui:23
+msgid "Create _List"
+msgstr "Skapa _lista"
+
+#: src/provider/gtd-provider-popover.ui:54
+msgid "List Name"
+msgstr "Listnamn"
+
+#: src/provider/gtd-provider-popover.ui:132
+msgid "Select a storage location"
+msgstr "Välj en lagringsplats"
+
+#: src/provider/gtd-provider-row.ui:64
+msgid "Off"
+msgstr "Av"
+
+#: src/provider/gtd-provider-selector.ui:23
+msgid "Click to add a new Google account"
+msgstr "Klicka för att lägga till ett nytt Google-konto"
+
+#: src/provider/gtd-provider-selector.ui:39
+msgid "Google"
+msgstr "Google"
+
+#: src/provider/gtd-provider-selector.ui:49
+msgid "Click to add a new ownCloud account"
+msgstr "Klicka för att lägga till ett nytt ownCloud-konto"
+
+#: src/provider/gtd-provider-selector.ui:65
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: src/provider/gtd-provider-selector.ui:75
+msgid "Click to add a new Microsoft Exchange account"
+msgstr "Klicka för att lägga till ett nytt Microsoft Exchange-konto"
+
+#: src/provider/gtd-provider-selector.ui:91
+msgid "Microsoft Exchange"
+msgstr "Microsoft Exchange"
+
+#: src/provider/gtd-provider-selector.ui:104
+msgid "Or you can just store your tasks on this computer"
+msgstr "Eller spara dina uppgifter på den här datorn"
+
+#: src/sidebar/gtd-sidebar.c:304
+#, c-format
+msgid "Task list <b>%s</b> removed"
+msgstr "Uppgiftslistan <b>%s</b> togs bort"
+
+#: src/sidebar/gtd-sidebar.c:307 src/task-list-view/gtd-task-list-view.c:461
+msgid "Undo"
+msgstr "Ångra"
+
+#: src/sidebar/gtd-sidebar-provider-row.ui:88
+msgid "Loading…"
+msgstr "Läser in…"
+
+#: src/task-list-view/gtd-edit-pane.ui:24
+msgid "D_ue Date"
+msgstr "Sl_utdatum"
+
+#: src/task-list-view/gtd-edit-pane.ui:41
+msgid "_Today"
+msgstr "_Idag"
+
+#: src/task-list-view/gtd-edit-pane.ui:50
+msgid "To_morrow"
+msgstr "I_morgon"
+
+#: src/task-list-view/gtd-edit-pane.ui:91
+msgid "_Notes"
+msgstr "_Anteckningar"
+
+#: src/task-list-view/gtd-edit-pane.ui:137
+msgid "_Delete"
+msgstr "_Ta bort"
+
+#: src/task-list-view/gtd-edit-pane.ui:176
+msgctxt "taskdate"
+msgid "None"
+msgstr "Inget"
+
+#. Translators: %1$s is the task list name, %2$s is the provider name
+#: src/task-list-view/gtd-new-task-row.c:91
+#, c-format
+msgid "%1$s \t <small>%2$s</small>"
+msgstr "%1$s \t <small>%2$s</small>"
+
+#: src/task-list-view/gtd-new-task-row.ui:15
+msgid "New task…"
+msgstr "Ny uppgift…"
+
+#: src/task-list-view/gtd-task-list-view.c:442
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Uppgiften <b>%s</b> togs bort"
 
-#: src/gtd-task-list-view.c:684
-msgid "Undo"
-msgstr "Ångra"
+#: src/widgets/gtd-empty-list-widget.c:51
+msgid "No more tasks left"
+msgstr "Inga fler uppgifter kvar"
 
-#: src/gtd-window.c:476
-msgid "Details"
-msgstr "Detaljer"
+#: src/widgets/gtd-empty-list-widget.c:52
+msgid "Nothing else to do here"
+msgstr "Ingenting mer att göra här"
 
-#: src/gtd-window.c:689
-msgid "Loading your task lists…"
-msgstr "Läser in dina uppgiftslistor…"
+#: src/widgets/gtd-empty-list-widget.c:53
+msgid "You made it!"
+msgstr "Du klarade det!"
 
-#: src/gtd-window.c:793
-msgid "Click a task list to select"
-msgstr "Klicka på en uppgiftslista för att markera"
+#: src/widgets/gtd-empty-list-widget.c:54
+msgid "Looks like there’s nothing else left here"
+msgstr "Ser ut som att det inte finns något mer här"
 
-#.
-#. * If there's no task available, draw a "No tasks" string at
-#. * the middle of the list thumbnail.
-#.
-#: src/views/gtd-list-selector-grid-item.c:250
-msgid "No tasks"
-msgstr "Inga uppgifter"
+#: src/widgets/gtd-empty-list-widget.c:59
+msgid "Get some rest now"
+msgstr "Du kan vila nu"
 
-#: src/views/gtd-list-selector-panel.c:381
-msgid "Remove the selected task lists?"
-msgstr "Ta bort de markerade uppgiftslistorna?"
+#: src/widgets/gtd-empty-list-widget.c:60
+msgid "Enjoy the rest of your day"
+msgstr "Ha det så trevligt i dag"
 
-#: src/views/gtd-list-selector-panel.c:384
-msgid "Once removed, the task lists cannot be recovered."
-msgstr "Då de väl tagits bort kan uppgiftslistorna inte återfås."
+#: src/widgets/gtd-empty-list-widget.c:61
+msgid "Good job!"
+msgstr "Bra jobbat!"
 
-#: src/views/gtd-list-selector-panel.c:396
-msgid "Remove task lists"
-msgstr "Ta bort uppgiftslistor"
+#: src/widgets/gtd-empty-list-widget.c:62
+msgid "Meanwhile, spread the love"
+msgstr "Under tiden, sprid kärleken"
 
-#: src/views/gtd-list-selector-panel.c:709
-msgid "Clear completed tasks"
-msgstr "Rensa utförda uppgifter"
+#: src/widgets/gtd-empty-list-widget.c:63
+msgid "Working hard is always rewarded"
+msgstr "Hårt arbete belönas alltid"
+
+#: src/widgets/gtd-empty-list-widget.c:74
+msgid "No tasks found"
+msgstr "Inga uppgifter funna"
+
+#: src/widgets/gtd-empty-list-widget.c:75
+msgid "You can add tasks using the <b>+</b> above"
+msgstr "Du kan lägga till uppgifter med <b>+</b> ovan"
+
+#~ msgid "_Priority"
+#~ msgstr "_Prioritet"
+
+#~ msgctxt "taskpriority"
+#~ msgid "None"
+#~ msgstr "Ingen"
+
+#~ msgid "Low"
+#~ msgstr "Låg"
+
+#~ msgid "Medium"
+#~ msgstr "Mellan"
+
+#~ msgid "High"
+#~ msgstr "Hög"
+
+#~ msgid "Copyright © %1$d The To Do authors"
+#~ msgstr "Copyright © %1$d Uppgifter-upphovsmännen"
+
+#~ msgid "Removing this task will also remove its subtasks. Remove anyway?"
+#~ msgstr ""
+#~ "Att ta bort denna uppgift kommer också att ta bort dess underuppgifter. "
+#~ "Ta bort i alla fall?"
+
+#~ msgid "Once removed, the tasks cannot be recovered."
+#~ msgstr "Då de väl tagits bort kan uppgifterna inte återfås."
+
+#~ msgid "Cancel"
+#~ msgstr "Ångra"
+
+#~ msgid "Remove"
+#~ msgstr "Ta bort"
+
+#~ msgid "Rename %s"
+#~ msgstr "Byt namn på %s"
+
+#~ msgid "Lists"
+#~ msgstr "Listor"
+
+#~ msgid "Tasks"
+#~ msgstr "Uppgifter"
+
+#~ msgid "Name of the task list"
+#~ msgstr "Namn på uppgiftslistan"
+
+#~ msgid "Show or hide completed tasks"
+#~ msgstr "Visa eller dölj utförda uppgifter"
+
+#~ msgid "Done"
+#~ msgstr "Färdig"
+
+#~ msgid "Done (%d)"
+#~ msgstr "Färdig (%d)"
+
+#~ msgid "Loading your task lists…"
+#~ msgstr "Läser in dina uppgiftslistor…"
+
+#~ msgid "No tasks"
+#~ msgstr "Inga uppgifter"
+
+#~ msgid "Remove the selected task lists?"
+#~ msgstr "Ta bort de markerade uppgiftslistorna?"
+
+#~ msgid "Once removed, the task lists cannot be recovered."
+#~ msgstr "Då de väl tagits bort kan uppgiftslistorna inte återfås."
+
+#~ msgid "Remove task lists"
+#~ msgstr "Ta bort uppgiftslistor"
+
+#~ msgid "Clear completed tasks"
+#~ msgstr "Rensa utförda uppgifter"
 
 #~ msgid "Error creating new task list"
 #~ msgstr "Fel vid skapandet av en ny uppgiftslista"
@@ -744,9 +780,6 @@ msgstr "Rensa utförda uppgifter"
 
 #~ msgid "Priority"
 #~ msgstr "Prioritet"
-
-#~ msgid "Delete"
-#~ msgstr "Ta bort"
 
 #~ msgid "Error loading Evolution-Data-Server backend"
 #~ msgstr "Fel vid inläsning av Evolution-Data-Server-bakände"
