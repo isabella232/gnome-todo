@@ -13,20 +13,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-07-22 16:54+0000\n"
-"PO-Revision-Date: 2018-08-08 18:37+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2018-12-16 11:07+0000\n"
+"PO-Revision-Date: 2019-01-02 01:16+0200\n"
+"Last-Translator: sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:157
-#: src/gtd-window.c:788 src/gtd-window.c:819 src/main.c:35
+#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:141
+#: src/gtd-window.c:717 src/gtd-window.c:748 src/main.c:35
 msgid "To Do"
 msgstr "Yapılacaklar"
 
@@ -35,10 +35,6 @@ msgid "Task manager for GNOME"
 msgstr "GNOME için görev yöneticisi"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:11
-#| msgid ""
-#| "GNOME To Do is a task management application designed to integrate with "
-#| "GNOME. It is extensible through plugins and supports custom task "
-#| "providers."
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
 "GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
@@ -74,18 +70,6 @@ msgstr "GNOME Yapılacaklar için kullanılabilir eklentiler"
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr ""
 "GNOME Yapılacaklarʼın Bugün panelinde bugünün görevlerini görselleştirme"
-
-#: data/gtk/menus.ui:15 data/ui/plugin-dialog.ui:75
-msgid "Extensions"
-msgstr "Uzantılar"
-
-#: data/gtk/menus.ui:22
-msgid "_About"
-msgstr "_Hakkında"
-
-#: data/gtk/menus.ui:26
-msgid "_Quit"
-msgstr "_Çık"
 
 #: data/org.gnome.Todo.desktop.in:4
 msgid "Manage your personal tasks"
@@ -160,149 +144,59 @@ msgstr "Geçerli liste seçici"
 msgid "The current list selector. Can be “grid” or “list”."
 msgstr "Geçerli liste seçici. “grid” (ızgara) ya da “list” (liste) olabilir."
 
-#: data/ui/edit-pane.ui:43
-msgid "_Notes"
-msgstr "_Notlar"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
+#: plugins/next-week-panel/gtd-next-week-panel.c:112
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:103
+#: src/task-list-view/gtd-edit-pane.c:110
+msgid "No date set"
+msgstr "Tarih ayarlanmadı"
 
-#: data/ui/edit-pane.ui:95
-msgid "D_ue Date"
-msgstr "Bitiş _Tarihi"
+#. Translators: This message will never be used with '1 day ago'
+#. * but the singular form is required because some languages do not
+#. * have plurals, some languages reuse the singular form for numbers
+#. * like 21, 31, 41, etc.
+#.
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:125
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:116
+#, c-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "%d gün önce"
 
-#: data/ui/edit-pane.ui:113
-msgid "_Today"
-msgstr "_Bugün"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:120
+#: src/task-list-view/gtd-task-row.c:147
+msgid "Yesterday"
+msgstr "Dün"
 
-#: data/ui/edit-pane.ui:123
-msgid "To_morrow"
-msgstr "_Yarın"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
+#: plugins/next-week-panel/gtd-next-week-panel.c:124
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:124
+#: plugins/score/score/__init__.py:101
+#: plugins/today-panel/gtd-panel-today.c:154
+#: plugins/today-panel/gtd-panel-today.c:258
+#: src/task-list-view/gtd-task-row.c:139
+msgid "Today"
+msgstr "Bugün"
 
-#: data/ui/edit-pane.ui:171
-msgid "_Priority"
-msgstr "_Öncelik"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
+#: plugins/next-week-panel/gtd-next-week-panel.c:128
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:128
+#: src/task-list-view/gtd-task-row.c:143
+msgid "Tomorrow"
+msgstr "Yarın"
 
-#: data/ui/edit-pane.ui:189
-msgctxt "taskpriority"
-msgid "None"
-msgstr "Hiçbiri"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:297
+msgid "All"
+msgstr "Tümü"
 
-#: data/ui/edit-pane.ui:190
-msgid "Low"
-msgstr "Düşük"
-
-#: data/ui/edit-pane.ui:191
-msgid "Medium"
-msgstr "Orta"
-
-#: data/ui/edit-pane.ui:192
-msgid "High"
-msgstr "Yüksek"
-
-#: data/ui/edit-pane.ui:200
-msgid "_Delete"
-msgstr "_Sil"
-
-#: data/ui/edit-pane.ui:251
-msgctxt "taskdate"
-msgid "None"
-msgstr "Yok"
-
-#: data/ui/initial-setup.ui:25
-msgid "Welcome"
-msgstr "Hoş Geldiniz"
-
-#: data/ui/initial-setup.ui:40
-msgid "Log in to online accounts to access your tasks"
-msgstr "Görevlerinize erişmek için çevrim içi hesaplarda oturum açın"
-
-#: data/ui/initial-setup.ui:67
-msgid "To Do Setup"
-msgstr "Yapılacaklar Kurulumu"
-
-#: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
-#: data/ui/window.ui:123
-msgid "_Cancel"
-msgstr "_İptal"
-
-#: data/ui/initial-setup.ui:80
-msgid "_Done"
-msgstr "_Tamamlandı"
-
-#: data/ui/new-task-row.ui:31
-msgid "New task…"
-msgstr "Yeni görev…"
-
-#: data/ui/plugin-dialog.ui:118
-msgid "No extensions found"
-msgstr "Hiçbir uzantı bulunamadı"
-
-#: data/ui/provider-popover.ui:25
-msgid "Create _List"
-msgstr "Liste _Oluştur"
-
-#: data/ui/provider-popover.ui:59
-msgid "List Name"
-msgstr "Liste Adı"
-
-#: data/ui/provider-popover.ui:155
-msgid "Select a storage location"
-msgstr "Depolama konumu seç"
-
-#: data/ui/provider-row.ui:70
-msgid "Off"
-msgstr "Kapalı"
-
-#: data/ui/provider-selector.ui:27
-msgid "Click to add a new Google account"
-msgstr "Yeni Google hesabı eklemek için tıkla"
-
-#: data/ui/provider-selector.ui:51
-msgid "Google"
-msgstr "Google"
-
-#: data/ui/provider-selector.ui:67
-msgid "Click to add a new ownCloud account"
-msgstr "Yeni ownCloud hesabı eklemek için tıkla"
-
-#: data/ui/provider-selector.ui:91
-msgid "ownCloud"
-msgstr "ownCloud"
-
-#: data/ui/provider-selector.ui:107
-msgid "Click to add a new Microsoft Exchange account"
-msgstr "Yeni Microsoft Exchange hesabı eklemek için tıkla"
-
-#: data/ui/provider-selector.ui:131
-msgid "Microsoft Exchange"
-msgstr "Microsoft Exchange"
-
-#: data/ui/provider-selector.ui:154
-msgid "Or you can just store your tasks on this computer"
-msgstr "Ya da görevlerinizi yalnızca bu bilgisayarda depolayabilirsiniz"
-
-#: data/ui/sidebar-list-row.ui:96 data/ui/sidebar-list-row.ui:115
-#| msgid "_Rename"
-msgid "Rename"
-msgstr "Yeniden Adlandır"
-
-#: data/ui/sidebar-list-row.ui:119
-msgid "Delete"
-msgstr "Sil"
-
-#: data/ui/sidebar-provider-row.ui:96
-msgid "Loading…"
-msgstr "Yükleniyor…"
-
-#: data/ui/window.ui:78
-msgid "_New List"
-msgstr "Yeni _Liste"
-
-#: plugins/background/gtd-plugin-background.c:150
+#: plugins/background/gtd-plugin-background.c:151
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
 msgstr[0] "%1$s ve %2$d diğer görev"
 
-#: plugins/background/gtd-plugin-background.c:249
+#: plugins/background/gtd-plugin-background.c:255
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
@@ -344,27 +238,27 @@ msgstr "Yapılacaklar çalıştırıldığında başlangıç bildirimini göster
 msgid "Error loading GNOME Online Accounts"
 msgstr "GNOME Çevrim İçi Hesaplarʼı yüklerken hata"
 
-#: plugins/eds/gtd-provider-eds.c:140
+#: plugins/eds/gtd-provider-eds.c:139
 msgid "Failed to connect to task list"
 msgstr "Görev listesine bağlanma başarısız oldu"
 
-#: plugins/eds/gtd-provider-eds.c:361
+#: plugins/eds/gtd-provider-eds.c:272
 msgid "An error occurred while creating a task"
 msgstr "Görev oluşturulurken hata oluştu"
 
-#: plugins/eds/gtd-provider-eds.c:393
+#: plugins/eds/gtd-provider-eds.c:306
 msgid "An error occurred while modifying a task"
 msgstr "Görev düzenlenirken hata oluştu"
 
-#: plugins/eds/gtd-provider-eds.c:414
+#: plugins/eds/gtd-provider-eds.c:327
 msgid "An error occurred while removing a task"
 msgstr "Görev kaldırılırken hata oluştu"
 
-#: plugins/eds/gtd-provider-eds.c:432
+#: plugins/eds/gtd-provider-eds.c:345
 msgid "An error occurred while creating a task list"
 msgstr "Görev listesi oluşturulurken hata oluştu"
 
-#: plugins/eds/gtd-provider-eds.c:454 plugins/eds/gtd-provider-eds.c:477
+#: plugins/eds/gtd-provider-eds.c:367 plugins/eds/gtd-provider-eds.c:390
 msgid "An error occurred while modifying a task list"
 msgstr "Görev listesi düzenlenirken hata oluştu"
 
@@ -376,62 +270,23 @@ msgstr "Bu Bilgisayarda"
 msgid "Local"
 msgstr "Yerel"
 
-#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:310
-#: plugins/eds/gtd-task-list-eds.c:334
+#: plugins/eds/gtd-task-list-eds.c:283 plugins/eds/gtd-task-list-eds.c:316
+#: plugins/eds/gtd-task-list-eds.c:340
 msgid "Error fetching tasks from list"
 msgstr "Listeden görevleri getirirken hata"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:107
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:102 src/gtd-edit-pane.c:112
-msgid "No date set"
-msgstr "Tarih ayarlanmadı"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:115
-#: plugins/today-panel/gtd-panel-today.c:201
+#: plugins/next-week-panel/gtd-next-week-panel.c:120
+#: plugins/today-panel/gtd-panel-today.c:145
 msgid "Overdue"
 msgstr "Gecikmiş"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:119
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:123
-#: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:210
-#: plugins/today-panel/gtd-panel-today.c:276 src/gtd-task-row.c:144
-msgid "Today"
-msgstr "Bugün"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:123
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:127 src/gtd-task-row.c:148
-msgid "Tomorrow"
-msgstr "Yarın"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:372
+#: plugins/next-week-panel/gtd-next-week-panel.c:345
 msgid "Next 7 Days"
 msgstr "Sonraki 7 Gün"
 
-#. Translators: This message will never be used with '1 day ago'
-#. * but the singular form is required because some languages do not
-#. * have plurals, some languages reuse the singular form for numbers
-#. * like 21, 31, 41, etc.
-#.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:115
-#, c-format
-msgid "%d day ago"
-msgid_plural "%d days ago"
-msgstr[0] "%d gün önce"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:119 src/gtd-task-row.c:152
-msgid "Yesterday"
-msgstr "Dün"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:378
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:343
 msgid "Scheduled"
 msgstr "Zamanlanmış"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:535
-#: plugins/today-panel/gtd-panel-today.c:432
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
-msgid "Clear completed tasks…"
-msgstr "Tamamlanan görevleri temizle…"
 
 #: plugins/score/score/__init__.py:90
 msgid "No task completed today"
@@ -457,14 +312,14 @@ msgstr "Todoist hesap anahtarı alınırken hata"
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Lütfen Todoist hesabının doğru yapılandırıldığından emin olun."
 
-#: plugins/todoist/gtd-provider-todoist.c:558
+#: plugins/todoist/gtd-provider-todoist.c:555
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr ""
 "Şu işlemi gerçekleştirmek için GNOME Yapılacaklarʼın yeterli izni yok: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:566
+#: plugins/todoist/gtd-provider-todoist.c:563
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
@@ -472,23 +327,23 @@ msgstr ""
 "Todoist sunucularından geçersiz yanıt alındı. Lütfen GNOME Yapılacaklarʼı "
 "yeniden yükleyin."
 
-#: plugins/todoist/gtd-provider-todoist.c:866
+#: plugins/todoist/gtd-provider-todoist.c:850
 msgid "An error occurred while updating a Todoist task"
 msgstr "Todoist görevi güncellenirken hata oluştu"
 
-#: plugins/todoist/gtd-provider-todoist.c:983
+#: plugins/todoist/gtd-provider-todoist.c:965
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Todoist verisi alınırken hata oluştu"
 
-#: plugins/todoist/gtd-provider-todoist.c:1058
+#: plugins/todoist/gtd-provider-todoist.c:1040
 msgid "An error occurred while updating Todoist"
 msgstr "Todoist güncellenirken hata oluştu"
 
-#: plugins/todoist/gtd-provider-todoist.c:1118
+#: plugins/todoist/gtd-provider-todoist.c:1100
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1433
+#: plugins/todoist/gtd-provider-todoist.c:1411
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -529,15 +384,15 @@ msgstr ""
 "sonunda veri kaybı yaşayabilirsiniz. Todo.txt tümleşmesinin üretim "
 "sistemlerinde kullanılması önerilmez."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:591
+#: plugins/todo-txt/gtd-provider-todo-txt.c:574
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr "Dosya görüntüleyici açılırken hata. Todo.txt görüntülenmeyecek"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:660
+#: plugins/todo-txt/gtd-provider-todo-txt.c:643
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:672
+#: plugins/todo-txt/gtd-provider-todo-txt.c:655
 msgid "On the Todo.txt file"
 msgstr "Todo.txt dosyasında"
 
@@ -551,35 +406,34 @@ msgstr "Todo.txt dosyasının kaynağı"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:103
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:112
 msgid "Unscheduled"
 msgstr "Zamanlanmamış"
 
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
+#: src/gtd-task-list-panel.ui:45
+msgid "Clear completed tasks…"
+msgstr "Tamamlanan görevleri temizle…"
+
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:106
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
 #, python-format
 msgid "Unscheduled (%d)"
 msgstr "Zamanlanmamış (%d)"
 
-#: src/gtd-application.c:73
+#: src/gtd-application.c:72
 msgid "Quit GNOME To Do"
 msgstr "GNOME Yapılacaklarʼdan Çık"
 
-#: src/gtd-application.c:74
+#: src/gtd-application.c:73
 msgid "Enable debug messages"
 msgstr "Hata ayıklama iletilerini etkinleştir"
 
-#: src/gtd-application.c:147
-#, c-format
-msgid "Copyright © %1$d The To Do authors"
-msgstr "Telif Hakları © %1$d Yapılacaklar yazarları"
+#: src/gtd-application.c:143
+msgid "Copyright © 2015–2018 The To Do authors"
+msgstr "Telif Hakları © 2015–2019 Yapılacaklar yazarları"
 
-#: src/gtd-application.c:152
-#, c-format
-msgid "Copyright © %1$d–%2$d The To Do authors"
-msgstr "Telif Hakları © %1$d–%2$d Yapılacaklar yazarları"
-
-#: src/gtd-application.c:164
+#: src/gtd-application.c:148
 msgid "translator-credits"
 msgstr ""
 "Gökhan Gurbetoğlu <ggurbet@gmail.com>\n"
@@ -587,49 +441,26 @@ msgstr ""
 "Çağatay Yiğit Şahin <cyigitsahin@outlook.com>\n"
 "Emin Tufan Çetin <etcetin@gmail.com>"
 
-#: src/gtd-empty-list-widget.c:51
-msgid "No more tasks left"
-msgstr "Görev kalmadı"
+#: src/gtd-initial-setup-window.ui:23
+msgid "Welcome"
+msgstr "Hoş Geldiniz"
 
-#: src/gtd-empty-list-widget.c:52
-msgid "Nothing else to do here"
-msgstr "Burada yapılacak bir şey yok"
+#: src/gtd-initial-setup-window.ui:37
+msgid "Log in to online accounts to access your tasks"
+msgstr "Görevlerinize erişmek için çevrim içi hesaplarda oturum açın"
 
-#: src/gtd-empty-list-widget.c:53
-msgid "You made it!"
-msgstr "Başardın!"
+#: src/gtd-initial-setup-window.ui:62
+msgid "To Do Setup"
+msgstr "Yapılacaklar Kurulumu"
 
-#: src/gtd-empty-list-widget.c:54
-msgid "Looks like there’s nothing else left here"
-msgstr "Görünüşe bakılırsa burada kalan başka bir şey yok"
+#: src/gtd-initial-setup-window.ui:65 src/gtd-window.ui:116
+#: src/provider/gtd-provider-popover.ui:40
+msgid "_Cancel"
+msgstr "_İptal"
 
-#: src/gtd-empty-list-widget.c:59
-msgid "Get some rest now"
-msgstr "Şimdi biraz dinlenin"
-
-#: src/gtd-empty-list-widget.c:60
-msgid "Enjoy the rest of your day"
-msgstr "Gününün geri kalanının tadını çıkar"
-
-#: src/gtd-empty-list-widget.c:61
-msgid "Good job!"
-msgstr "Aferin!"
-
-#: src/gtd-empty-list-widget.c:62
-msgid "Meanwhile, spread the love"
-msgstr "Bu arada, sevgiyi yay"
-
-#: src/gtd-empty-list-widget.c:63
-msgid "Working hard is always rewarded"
-msgstr "Sıkı çalışma her zaman ödüllendirilir"
-
-#: src/gtd-empty-list-widget.c:74
-msgid "No tasks found"
-msgstr "Hiçbir görev bulunamadı"
-
-#: src/gtd-empty-list-widget.c:75
-msgid "You can add tasks using the <b>+</b> above"
-msgstr "Yukarıdan <b>+</b>ʼi kullanarak görev ekleyebilirsiniz"
+#: src/gtd-initial-setup-window.ui:74
+msgid "_Done"
+msgstr "_Tamamlandı"
 
 #: src/gtd-plugin-dialog-row.c:97
 msgid "Error loading extension"
@@ -639,33 +470,24 @@ msgstr "Eklenti yüklenirken hata"
 msgid "Error unloading extension"
 msgstr "Eklenti kaldırılırken hata"
 
-#: src/gtd-task-list-view.c:352
-msgid "Removing this task will also remove its subtasks. Remove anyway?"
-msgstr ""
-"Görevi kaldırmak alt görevlerini de kaldıracak. Yine de kaldırılsın mı?"
+#: src/gtd-plugin-dialog.ui:62 src/gtd-window.ui:179
+msgid "Extensions"
+msgstr "Uzantılar"
 
-#: src/gtd-task-list-view.c:355
-msgid "Once removed, the tasks cannot be recovered."
-msgstr "Görevler bir kez kaldırıldığında geri getirilemez."
+#: src/gtd-plugin-dialog.ui:96
+msgid "No extensions found"
+msgstr "Hiçbir uzantı bulunamadı"
 
-#: src/gtd-task-list-view.c:358
-msgid "Cancel"
-msgstr "İptal"
+#: src/gtd-task-list-panel.ui:38 src/gtd-task-list-panel.ui:74
+#: src/gtd-task-list-panel.ui:98 src/sidebar/gtd-sidebar-list-row.ui:67
+msgid "Rename"
+msgstr "Yeniden Adlandır"
 
-#: src/gtd-task-list-view.c:360
-msgid "Remove"
-msgstr "Kaldır"
+#: src/gtd-task-list-panel.ui:57 src/sidebar/gtd-sidebar-list-row.ui:71
+msgid "Delete"
+msgstr "Sil"
 
-#: src/gtd-task-list-view.c:802
-#, c-format
-msgid "Task <b>%s</b> removed"
-msgstr "<b>%s</b> görevi kaldırıldı"
-
-#: src/gtd-task-list-view.c:826 src/sidebar/gtd-sidebar-list-row.c:281
-msgid "Undo"
-msgstr "Geri Al"
-
-#: src/gtd-window.c:110
+#: src/gtd-window.c:107
 msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
@@ -673,25 +495,202 @@ msgstr ""
 "Bu, Yapılacaklarʼın geliştirme inşasıdır. Hatalar, yanlış davranışlar ve "
 "veri kaybı yaşayabilirsiniz."
 
-#: src/gtd-window.c:471
+#: src/gtd-window.c:421
 msgid "Details"
 msgstr "Ayrıntılar"
 
-#: src/gtd-window.c:783
+#: src/gtd-window.c:712
 msgid "Click a task list to select"
 msgstr "Seçmek için görev listesine tıkla"
 
-#: src/sidebar/gtd-sidebar-list-row.c:278
+#: src/gtd-window.ui:63
+msgid "_New List"
+msgstr "Yeni _Liste"
+
+#: src/gtd-window.ui:185
+msgid "_About"
+msgstr "_Hakkında"
+
+#: src/gtd-window.ui:189
+msgid "_Quit"
+msgstr "_Çık"
+
+#: src/provider/gtd-provider-popover.ui:23
+msgid "Create _List"
+msgstr "Liste _Oluştur"
+
+#: src/provider/gtd-provider-popover.ui:54
+msgid "List Name"
+msgstr "Liste Adı"
+
+#: src/provider/gtd-provider-popover.ui:132
+msgid "Select a storage location"
+msgstr "Depolama konumu seç"
+
+#: src/provider/gtd-provider-row.ui:64
+msgid "Off"
+msgstr "Kapalı"
+
+#: src/provider/gtd-provider-selector.ui:23
+msgid "Click to add a new Google account"
+msgstr "Yeni Google hesabı eklemek için tıkla"
+
+#: src/provider/gtd-provider-selector.ui:39
+msgid "Google"
+msgstr "Google"
+
+#: src/provider/gtd-provider-selector.ui:49
+msgid "Click to add a new ownCloud account"
+msgstr "Yeni ownCloud hesabı eklemek için tıkla"
+
+#: src/provider/gtd-provider-selector.ui:65
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: src/provider/gtd-provider-selector.ui:75
+msgid "Click to add a new Microsoft Exchange account"
+msgstr "Yeni Microsoft Exchange hesabı eklemek için tıkla"
+
+#: src/provider/gtd-provider-selector.ui:91
+msgid "Microsoft Exchange"
+msgstr "Microsoft Exchange"
+
+#: src/provider/gtd-provider-selector.ui:104
+msgid "Or you can just store your tasks on this computer"
+msgstr "Ya da görevlerinizi yalnızca bu bilgisayarda depolayabilirsiniz"
+
+#: src/sidebar/gtd-sidebar.c:304
 #, c-format
-#| msgid "Task <b>%s</b> removed"
 msgid "Task list <b>%s</b> removed"
 msgstr "<b>%s</b> görev listesi kaldırıldı"
 
-#: src/sidebar/gtd-sidebar-list-row.c:307
+#: src/sidebar/gtd-sidebar.c:307 src/task-list-view/gtd-task-list-view.c:461
+msgid "Undo"
+msgstr "Geri Al"
+
+#: src/sidebar/gtd-sidebar-provider-row.ui:88
+msgid "Loading…"
+msgstr "Yükleniyor…"
+
+#: src/task-list-view/gtd-edit-pane.ui:24
+msgid "D_ue Date"
+msgstr "Bitiş _Tarihi"
+
+#: src/task-list-view/gtd-edit-pane.ui:41
+msgid "_Today"
+msgstr "_Bugün"
+
+#: src/task-list-view/gtd-edit-pane.ui:50
+msgid "To_morrow"
+msgstr "_Yarın"
+
+#: src/task-list-view/gtd-edit-pane.ui:91
+msgid "_Notes"
+msgstr "_Notlar"
+
+#: src/task-list-view/gtd-edit-pane.ui:137
+msgid "_Delete"
+msgstr "_Sil"
+
+#: src/task-list-view/gtd-edit-pane.ui:176
+msgctxt "taskdate"
+msgid "None"
+msgstr "Yok"
+
+#. Translators: %1$s is the task list name, %2$s is the provider name
+#: src/task-list-view/gtd-new-task-row.c:91
 #, c-format
-#| msgid "_Rename"
-msgid "Rename %s"
-msgstr "%s’i yeniden adlandır"
+msgid "%1$s \t <small>%2$s</small>"
+msgstr "%1$s \t <small>%2$s</small>"
+
+#: src/task-list-view/gtd-new-task-row.ui:15
+msgid "New task…"
+msgstr "Yeni görev…"
+
+#: src/task-list-view/gtd-task-list-view.c:442
+#, c-format
+msgid "Task <b>%s</b> removed"
+msgstr "<b>%s</b> görevi kaldırıldı"
+
+#: src/widgets/gtd-empty-list-widget.c:51
+msgid "No more tasks left"
+msgstr "Görev kalmadı"
+
+#: src/widgets/gtd-empty-list-widget.c:52
+msgid "Nothing else to do here"
+msgstr "Burada yapılacak bir şey yok"
+
+#: src/widgets/gtd-empty-list-widget.c:53
+msgid "You made it!"
+msgstr "Başardın!"
+
+#: src/widgets/gtd-empty-list-widget.c:54
+msgid "Looks like there’s nothing else left here"
+msgstr "Görünüşe bakılırsa burada kalan başka bir şey yok"
+
+#: src/widgets/gtd-empty-list-widget.c:59
+msgid "Get some rest now"
+msgstr "Şimdi biraz dinlenin"
+
+#: src/widgets/gtd-empty-list-widget.c:60
+msgid "Enjoy the rest of your day"
+msgstr "Gününün geri kalanının tadını çıkar"
+
+#: src/widgets/gtd-empty-list-widget.c:61
+msgid "Good job!"
+msgstr "Aferin!"
+
+#: src/widgets/gtd-empty-list-widget.c:62
+msgid "Meanwhile, spread the love"
+msgstr "Bu arada, sevgiyi yay"
+
+#: src/widgets/gtd-empty-list-widget.c:63
+msgid "Working hard is always rewarded"
+msgstr "Sıkı çalışma her zaman ödüllendirilir"
+
+#: src/widgets/gtd-empty-list-widget.c:74
+msgid "No tasks found"
+msgstr "Hiçbir görev bulunamadı"
+
+#: src/widgets/gtd-empty-list-widget.c:75
+msgid "You can add tasks using the <b>+</b> above"
+msgstr "Yukarıdan <b>+</b>ʼi kullanarak görev ekleyebilirsiniz"
+
+#~ msgid "_Priority"
+#~ msgstr "_Öncelik"
+
+#~ msgctxt "taskpriority"
+#~ msgid "None"
+#~ msgstr "Hiçbiri"
+
+#~ msgid "Low"
+#~ msgstr "Düşük"
+
+#~ msgid "Medium"
+#~ msgstr "Orta"
+
+#~ msgid "High"
+#~ msgstr "Yüksek"
+
+#~ msgid "Copyright © %1$d The To Do authors"
+#~ msgstr "Telif Hakları © %1$d Yapılacaklar yazarları"
+
+#~ msgid "Removing this task will also remove its subtasks. Remove anyway?"
+#~ msgstr ""
+#~ "Görevi kaldırmak alt görevlerini de kaldıracak. Yine de kaldırılsın mı?"
+
+#~ msgid "Once removed, the tasks cannot be recovered."
+#~ msgstr "Görevler bir kez kaldırıldığında geri getirilemez."
+
+#~ msgid "Cancel"
+#~ msgstr "İptal"
+
+#~ msgid "Remove"
+#~ msgstr "Kaldır"
+
+#~| msgid "_Rename"
+#~ msgid "Rename %s"
+#~ msgstr "%s’i yeniden adlandır"
 
 #~ msgid "Lists"
 #~ msgstr "Listeler"
