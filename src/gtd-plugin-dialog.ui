@@ -9,7 +9,7 @@
     <property name="width_request">600</property>
     <property name="height_request">450</property>
     <property name="hide-on-close">True</property>
-    <child internal-child="vbox">
+    <child internal-child="content_area">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
