@@ -135,7 +135,7 @@ add_widgets (GtdWindow *self,
       switch (gtk_widget_get_halign (l->data))
         {
         case GTK_ALIGN_START:
-          gtk_box_pack_start (GTK_BOX (container_start), l->data);
+          gtk_container_add (GTK_CONTAINER (container_start), l->data);
           break;
 
         case GTK_ALIGN_CENTER:
@@ -143,13 +143,13 @@ add_widgets (GtdWindow *self,
           break;
 
         case GTK_ALIGN_END:
-          gtk_box_pack_end (GTK_BOX (container_end), l->data);
+          gtk_container_add (GTK_CONTAINER (container_end), l->data);
           break;
 
         case GTK_ALIGN_BASELINE:
         case GTK_ALIGN_FILL:
         default:
-          gtk_box_pack_start (GTK_BOX (container_start), l->data);
+          gtk_container_add (GTK_CONTAINER (container_start), l->data);
           break;
         }
     }
