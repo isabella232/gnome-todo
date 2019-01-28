@@ -1,26 +1,27 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Fran Dieguez <frandieguez@gnome.org>, 2015, 2016, 2017, 2018.
+# Fran Dieguez <frandieguez@gnome.org>, 2015-2019.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-toto 3.18\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-07-22 16:54+0000\n"
-"PO-Revision-Date: 2018-08-30 01:13+0200\n"
+"POT-Creation-Date: 2018-12-16 11:07+0000\n"
+"PO-Revision-Date: 2019-01-28 23:23+0100\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
-"Language-Team: Proxecto Trasno <proxecto@trasno.gal>\n"
+"Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Generator: Gtranslator 3.30.0\n"
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:157
-#: src/gtd-window.c:788 src/gtd-window.c:819 src/main.c:35
+#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:141
+#: src/gtd-window.c:717 src/gtd-window.c:748 src/main.c:35
 msgid "To Do"
 msgstr "Tarefas"
 
@@ -29,10 +30,6 @@ msgid "Task manager for GNOME"
 msgstr "Xestor de tarefas para GNOME"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:11
-#| msgid ""
-#| "GNOME To Do is a task management application designed to integrate with "
-#| "GNOME. It is extensible through plugins and supports custom task "
-#| "providers."
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
 "GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
@@ -68,18 +65,6 @@ msgstr "Engadidos dispoñíbeis para Tarefas de GNOME"
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr ""
 "Visualizar as tarefas de hoxe no panel Hoxe de Lista de tarefas de GNOME"
-
-#: data/gtk/menus.ui:15 data/ui/plugin-dialog.ui:75
-msgid "Extensions"
-msgstr "Extensións"
-
-#: data/gtk/menus.ui:22
-msgid "_About"
-msgstr "_Sobre"
-
-#: data/gtk/menus.ui:26
-msgid "_Quit"
-msgstr "_Saír"
 
 #: data/org.gnome.Todo.desktop.in:4
 msgid "Manage your personal tasks"
@@ -154,150 +139,61 @@ msgstr "O selector de lista actual"
 msgid "The current list selector. Can be “grid” or “list”."
 msgstr "O selector de lista actual. Pode ser «grid» ou «list»."
 
-#: data/ui/edit-pane.ui:43
-msgid "_Notes"
-msgstr "_Notas"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
+#: plugins/next-week-panel/gtd-next-week-panel.c:112
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:103
+#: src/task-list-view/gtd-edit-pane.c:110
+msgid "No date set"
+msgstr "Non se estabeleceu unha data"
 
-#: data/ui/edit-pane.ui:95
-msgid "D_ue Date"
-msgstr "Data de _vencemento"
+#. Translators: This message will never be used with '1 day ago'
+#. * but the singular form is required because some languages do not
+#. * have plurals, some languages reuse the singular form for numbers
+#. * like 21, 31, 41, etc.
+#.
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:125
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:116
+#, c-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "hai %d día"
+msgstr[1] "hai %d días"
 
-#: data/ui/edit-pane.ui:113
-msgid "_Today"
-msgstr "_Hoxe"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:120
+#: src/task-list-view/gtd-task-row.c:147
+msgid "Yesterday"
+msgstr "Onte"
 
-#: data/ui/edit-pane.ui:123
-msgid "To_morrow"
-msgstr "M_añá"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
+#: plugins/next-week-panel/gtd-next-week-panel.c:124
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:124
+#: plugins/score/score/__init__.py:101
+#: plugins/today-panel/gtd-panel-today.c:154
+#: plugins/today-panel/gtd-panel-today.c:258
+#: src/task-list-view/gtd-task-row.c:139
+msgid "Today"
+msgstr "Hoxe"
 
-#: data/ui/edit-pane.ui:171
-msgid "_Priority"
-msgstr "_Prioridade"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
+#: plugins/next-week-panel/gtd-next-week-panel.c:128
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:128
+#: src/task-list-view/gtd-task-row.c:143
+msgid "Tomorrow"
+msgstr "Mañán"
 
-#: data/ui/edit-pane.ui:189
-msgctxt "taskpriority"
-msgid "None"
-msgstr "Ningunha"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:297
+msgid "All"
+msgstr "Todo"
 
-#: data/ui/edit-pane.ui:190
-msgid "Low"
-msgstr "Baixa"
-
-#: data/ui/edit-pane.ui:191
-msgid "Medium"
-msgstr "Media"
-
-#: data/ui/edit-pane.ui:192
-msgid "High"
-msgstr "Alta"
-
-#: data/ui/edit-pane.ui:200
-msgid "_Delete"
-msgstr "_Eliminar"
-
-#: data/ui/edit-pane.ui:251
-msgctxt "taskdate"
-msgid "None"
-msgstr "Ningunha"
-
-#: data/ui/initial-setup.ui:25
-msgid "Welcome"
-msgstr "Benvido/a"
-
-#: data/ui/initial-setup.ui:40
-msgid "Log in to online accounts to access your tasks"
-msgstr "Inicie sesión en contas en liña para acceder ás súas tarefas"
-
-#: data/ui/initial-setup.ui:67
-msgid "To Do Setup"
-msgstr "Configurar Lista de Tarefas"
-
-#: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
-#: data/ui/window.ui:123
-msgid "_Cancel"
-msgstr "_Cancelar"
-
-#: data/ui/initial-setup.ui:80
-msgid "_Done"
-msgstr "_Feito"
-
-#: data/ui/new-task-row.ui:31
-msgid "New task…"
-msgstr "Novas tarefas…"
-
-#: data/ui/plugin-dialog.ui:118
-msgid "No extensions found"
-msgstr "Non se atoparon extensións"
-
-#: data/ui/provider-popover.ui:25
-msgid "Create _List"
-msgstr "Crear _lista"
-
-#: data/ui/provider-popover.ui:59
-msgid "List Name"
-msgstr "Nome da lista"
-
-#: data/ui/provider-popover.ui:155
-msgid "Select a storage location"
-msgstr "Seleccione a localización do almacenamento"
-
-#: data/ui/provider-row.ui:70
-msgid "Off"
-msgstr "Desactivado"
-
-#: data/ui/provider-selector.ui:27
-msgid "Click to add a new Google account"
-msgstr "Prema para engadir unha conta de Google"
-
-#: data/ui/provider-selector.ui:51
-msgid "Google"
-msgstr "Google"
-
-#: data/ui/provider-selector.ui:67
-msgid "Click to add a new ownCloud account"
-msgstr "Prema para engadir unha conta de ownCloud"
-
-#: data/ui/provider-selector.ui:91
-msgid "ownCloud"
-msgstr "ownCloud"
-
-#: data/ui/provider-selector.ui:107
-msgid "Click to add a new Microsoft Exchange account"
-msgstr "Prema para engadir unha conta de Microsoft Exchange"
-
-#: data/ui/provider-selector.ui:131
-msgid "Microsoft Exchange"
-msgstr "Microsoft Exchange"
-
-#: data/ui/provider-selector.ui:154
-msgid "Or you can just store your tasks on this computer"
-msgstr "Ou tamén pode almacenar as súas tarefas neste computador"
-
-#: data/ui/sidebar-list-row.ui:96 data/ui/sidebar-list-row.ui:115
-#| msgid "_Rename"
-msgid "Rename"
-msgstr "Renomear"
-
-#: data/ui/sidebar-list-row.ui:119
-msgid "Delete"
-msgstr "Eliminar"
-
-#: data/ui/sidebar-provider-row.ui:96
-msgid "Loading…"
-msgstr "Cargando…"
-
-#: data/ui/window.ui:78
-msgid "_New List"
-msgstr "Nova _lista"
-
-#: plugins/background/gtd-plugin-background.c:150
+#: plugins/background/gtd-plugin-background.c:151
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
 msgstr[0] "%1$s e unha tarefa máis"
 msgstr[1] "%1$s e %2$d tarefas máis"
 
-#: plugins/background/gtd-plugin-background.c:249
+#: plugins/background/gtd-plugin-background.c:255
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
@@ -340,27 +236,27 @@ msgstr "Cando se executa Tarefas, mostrar unha notificació de arrinque"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Produciuse un erro ao cargar as contas en liña de GNOME"
 
-#: plugins/eds/gtd-provider-eds.c:140
+#: plugins/eds/gtd-provider-eds.c:139
 msgid "Failed to connect to task list"
 msgstr "Produciuse un fallo ao conectarse á lista de tarefas"
 
-#: plugins/eds/gtd-provider-eds.c:361
+#: plugins/eds/gtd-provider-eds.c:272
 msgid "An error occurred while creating a task"
 msgstr "Produciuse un erro ao crear unha tarefa"
 
-#: plugins/eds/gtd-provider-eds.c:393
+#: plugins/eds/gtd-provider-eds.c:306
 msgid "An error occurred while modifying a task"
 msgstr "Produciuse un erro ao modificar unha tarefa"
 
-#: plugins/eds/gtd-provider-eds.c:414
+#: plugins/eds/gtd-provider-eds.c:327
 msgid "An error occurred while removing a task"
 msgstr "Produciuse un erro ao eliminar unha tarefa"
 
-#: plugins/eds/gtd-provider-eds.c:432
+#: plugins/eds/gtd-provider-eds.c:345
 msgid "An error occurred while creating a task list"
 msgstr "Produciuse un erro ao crear unha lista de tarefas"
 
-#: plugins/eds/gtd-provider-eds.c:454 plugins/eds/gtd-provider-eds.c:477
+#: plugins/eds/gtd-provider-eds.c:367 plugins/eds/gtd-provider-eds.c:390
 msgid "An error occurred while modifying a task list"
 msgstr "Produciuse un erro ao modificar unha lista de tarefas"
 
@@ -372,63 +268,23 @@ msgstr "Neste computador"
 msgid "Local"
 msgstr "Local"
 
-#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:310
-#: plugins/eds/gtd-task-list-eds.c:334
+#: plugins/eds/gtd-task-list-eds.c:283 plugins/eds/gtd-task-list-eds.c:316
+#: plugins/eds/gtd-task-list-eds.c:340
 msgid "Error fetching tasks from list"
 msgstr "Produciuse un erro ao obter as tarefas da lista"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:107
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:102 src/gtd-edit-pane.c:112
-msgid "No date set"
-msgstr "Non se estabeleceu unha data"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:115
-#: plugins/today-panel/gtd-panel-today.c:201
+#: plugins/next-week-panel/gtd-next-week-panel.c:120
+#: plugins/today-panel/gtd-panel-today.c:145
 msgid "Overdue"
 msgstr "Fóra de prazo"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:119
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:123
-#: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:210
-#: plugins/today-panel/gtd-panel-today.c:276 src/gtd-task-row.c:144
-msgid "Today"
-msgstr "Hoxe"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:123
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:127 src/gtd-task-row.c:148
-msgid "Tomorrow"
-msgstr "Mañán"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:372
+#: plugins/next-week-panel/gtd-next-week-panel.c:345
 msgid "Next 7 Days"
 msgstr "Nos seguintes 7 días"
 
-#. Translators: This message will never be used with '1 day ago'
-#. * but the singular form is required because some languages do not
-#. * have plurals, some languages reuse the singular form for numbers
-#. * like 21, 31, 41, etc.
-#.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:115
-#, c-format
-msgid "%d day ago"
-msgid_plural "%d days ago"
-msgstr[0] "hai %d día"
-msgstr[1] "hai %d días"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:119 src/gtd-task-row.c:152
-msgid "Yesterday"
-msgstr "Onte"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:378
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:343
 msgid "Scheduled"
 msgstr "Programadas"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:535
-#: plugins/today-panel/gtd-panel-today.c:432
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
-msgid "Clear completed tasks…"
-msgstr "Limpar as tarefas completas…"
 
 #: plugins/score/score/__init__.py:90
 msgid "No task completed today"
@@ -454,7 +310,7 @@ msgstr "Produciuse un erro ao obter a chave da conta de Todoist"
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Asegúrese de que a data en Todoist está configurada correctamente."
 
-#: plugins/todoist/gtd-provider-todoist.c:558
+#: plugins/todoist/gtd-provider-todoist.c:555
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
@@ -462,7 +318,7 @@ msgstr ""
 "Tarefas de GNOME non ten os permisos necesarios para levar a cabo esta "
 "acción: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:566
+#: plugins/todoist/gtd-provider-todoist.c:563
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
@@ -470,23 +326,23 @@ msgstr ""
 "Recibiuse unha resposta non válida desde os servidores de Todoist. Regargue "
 "Taregas de GNOME."
 
-#: plugins/todoist/gtd-provider-todoist.c:866
+#: plugins/todoist/gtd-provider-todoist.c:850
 msgid "An error occurred while updating a Todoist task"
 msgstr "Produciuse un erro ao actualizar a tarefa de Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:983
+#: plugins/todoist/gtd-provider-todoist.c:965
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Produciuse un erro ao obter os datos de Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1058
+#: plugins/todoist/gtd-provider-todoist.c:1040
 msgid "An error occurred while updating Todoist"
 msgstr "Produciuse un erro ao actualizar a Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1118
+#: plugins/todoist/gtd-provider-todoist.c:1100
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1433
+#: plugins/todoist/gtd-provider-todoist.c:1411
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -527,17 +383,17 @@ msgstr ""
 "Pode experimentar inestabilidde, errros e eventualmente perda de datos. Non "
 "recomendamos o uso da integración de Todo.txt en sistemas de producción."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:591
+#: plugins/todo-txt/gtd-provider-todo-txt.c:574
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr ""
 "Produciuse un erro ao abrir o monitor de ficheiros. Todo.txt non será "
 "monitorizado"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:660
+#: plugins/todo-txt/gtd-provider-todo-txt.c:643
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:672
+#: plugins/todo-txt/gtd-provider-todo-txt.c:655
 msgid "On the Todo.txt file"
 msgstr "No ficheiro Todo.txt"
 
@@ -551,81 +407,58 @@ msgstr "Orixe do ficheiro Todo.txt"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:103
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:112
 msgid "Unscheduled"
 msgstr "Sen programar"
 
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
+#: src/gtd-task-list-panel.ui:45
+msgid "Clear completed tasks…"
+msgstr "Limpar as tarefas completas…"
+
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:106
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
 #, python-format
 msgid "Unscheduled (%d)"
 msgstr "Sen programar (%d)"
 
-#: src/gtd-application.c:73
+#: src/gtd-application.c:72
 msgid "Quit GNOME To Do"
 msgstr "Saír do GNOME To Do"
 
-#: src/gtd-application.c:74
+#: src/gtd-application.c:73
 msgid "Enable debug messages"
 msgstr "Activar mensaxes de depuración"
 
-#: src/gtd-application.c:147
-#, c-format
-msgid "Copyright © %1$d The To Do authors"
-msgstr "Dereitos de autor © %1$d Os autores do To Do"
+#: src/gtd-application.c:143
+#| msgid "Copyright © %1$d–%2$d The To Do authors"
+msgid "Copyright © 2015–2018 The To Do authors"
+msgstr "Copyright © 2015–2018 Os autores da Lista de Tarefas"
 
-#: src/gtd-application.c:152
-#, c-format
-msgid "Copyright © %1$d–%2$d The To Do authors"
-msgstr "Dereitos de autor © %1$d–%2$d Os autores da Lista de Tarefas"
-
-#: src/gtd-application.c:164
+#: src/gtd-application.c:148
 msgid "translator-credits"
 msgstr "Fran Diéguez <frandieguez@gnome.org>, 2015."
 
-#: src/gtd-empty-list-widget.c:51
-msgid "No more tasks left"
-msgstr "Non hai máis tarefas para facer"
+#: src/gtd-initial-setup-window.ui:23
+msgid "Welcome"
+msgstr "Benvido/a"
 
-#: src/gtd-empty-list-widget.c:52
-msgid "Nothing else to do here"
-msgstr "No hai nada máis para facer aquí"
+#: src/gtd-initial-setup-window.ui:37
+msgid "Log in to online accounts to access your tasks"
+msgstr "Inicie sesión en contas en liña para acceder ás súas tarefas"
 
-#: src/gtd-empty-list-widget.c:53
-msgid "You made it!"
-msgstr "Conseguíuno!"
+#: src/gtd-initial-setup-window.ui:62
+msgid "To Do Setup"
+msgstr "Configurar Lista de Tarefas"
 
-#: src/gtd-empty-list-widget.c:54
-msgid "Looks like there’s nothing else left here"
-msgstr "Semella que non hai nada máis que facer aquí"
+#: src/gtd-initial-setup-window.ui:65 src/gtd-window.ui:116
+#: src/provider/gtd-provider-popover.ui:40
+msgid "_Cancel"
+msgstr "_Cancelar"
 
-#: src/gtd-empty-list-widget.c:59
-msgid "Get some rest now"
-msgstr "Agora pode descansar"
-
-#: src/gtd-empty-list-widget.c:60
-msgid "Enjoy the rest of your day"
-msgstr "Goce do resto do día"
-
-#: src/gtd-empty-list-widget.c:61
-msgid "Good job!"
-msgstr "Bo traballo!"
-
-#: src/gtd-empty-list-widget.c:62
-msgid "Meanwhile, spread the love"
-msgstr "Namentres, difunda o amor"
-
-#: src/gtd-empty-list-widget.c:63
-msgid "Working hard is always rewarded"
-msgstr "O traballo duro sempre é recompensado"
-
-#: src/gtd-empty-list-widget.c:74
-msgid "No tasks found"
-msgstr "Non se atoparon tarefas"
-
-#: src/gtd-empty-list-widget.c:75
-msgid "You can add tasks using the <b>+</b> above"
-msgstr "Pode engadir tarefas usando o <b>+</b> de arriba"
+#: src/gtd-initial-setup-window.ui:74
+msgid "_Done"
+msgstr "_Feito"
 
 #: src/gtd-plugin-dialog-row.c:97
 msgid "Error loading extension"
@@ -635,34 +468,24 @@ msgstr "Produciuse un erro ao cargar a extensión"
 msgid "Error unloading extension"
 msgstr "Produciuse un erro ao descargar o engadido"
 
-#: src/gtd-task-list-view.c:352
-msgid "Removing this task will also remove its subtasks. Remove anyway?"
-msgstr ""
-"Ao eliminar esta tarefa tamén se eliminarán as súas subtarefas. Desexa "
-"eliminala igualmente?"
+#: src/gtd-plugin-dialog.ui:62 src/gtd-window.ui:179
+msgid "Extensions"
+msgstr "Extensións"
 
-#: src/gtd-task-list-view.c:355
-msgid "Once removed, the tasks cannot be recovered."
-msgstr "Logo de eliminalas, as tarefas non se poden recuperar."
+#: src/gtd-plugin-dialog.ui:96
+msgid "No extensions found"
+msgstr "Non se atoparon extensións"
 
-#: src/gtd-task-list-view.c:358
-msgid "Cancel"
-msgstr "Cancelar"
+#: src/gtd-task-list-panel.ui:38 src/gtd-task-list-panel.ui:74
+#: src/gtd-task-list-panel.ui:98 src/sidebar/gtd-sidebar-list-row.ui:67
+msgid "Rename"
+msgstr "Renomear"
 
-#: src/gtd-task-list-view.c:360
-msgid "Remove"
+#: src/gtd-task-list-panel.ui:57 src/sidebar/gtd-sidebar-list-row.ui:71
+msgid "Delete"
 msgstr "Eliminar"
 
-#: src/gtd-task-list-view.c:802
-#, c-format
-msgid "Task <b>%s</b> removed"
-msgstr "Tarefa <b>%s</b> eliminada"
-
-#: src/gtd-task-list-view.c:826 src/sidebar/gtd-sidebar-list-row.c:281
-msgid "Undo"
-msgstr "Desfacer"
-
-#: src/gtd-window.c:110
+#: src/gtd-window.c:107
 msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
@@ -670,25 +493,203 @@ msgstr ""
 "Esta é unha construción de desenvolvemento de Tarefas. Pode experimentar "
 "erros, comportamento incorrecto e perda de datos."
 
-#: src/gtd-window.c:471
+#: src/gtd-window.c:421
 msgid "Details"
 msgstr "Detalles"
 
-#: src/gtd-window.c:783
+#: src/gtd-window.c:712
 msgid "Click a task list to select"
 msgstr "Prema unha lista de tarefas para seleccionala"
 
-#: src/sidebar/gtd-sidebar-list-row.c:278
+#: src/gtd-window.ui:63
+msgid "_New List"
+msgstr "Nova _lista"
+
+#: src/gtd-window.ui:185
+msgid "_About"
+msgstr "_Sobre"
+
+#: src/gtd-window.ui:189
+msgid "_Quit"
+msgstr "_Saír"
+
+#: src/provider/gtd-provider-popover.ui:23
+msgid "Create _List"
+msgstr "Crear _lista"
+
+#: src/provider/gtd-provider-popover.ui:54
+msgid "List Name"
+msgstr "Nome da lista"
+
+#: src/provider/gtd-provider-popover.ui:132
+msgid "Select a storage location"
+msgstr "Seleccione a localización do almacenamento"
+
+#: src/provider/gtd-provider-row.ui:64
+msgid "Off"
+msgstr "Desactivado"
+
+#: src/provider/gtd-provider-selector.ui:23
+msgid "Click to add a new Google account"
+msgstr "Prema para engadir unha conta de Google"
+
+#: src/provider/gtd-provider-selector.ui:39
+msgid "Google"
+msgstr "Google"
+
+#: src/provider/gtd-provider-selector.ui:49
+msgid "Click to add a new ownCloud account"
+msgstr "Prema para engadir unha conta de ownCloud"
+
+#: src/provider/gtd-provider-selector.ui:65
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: src/provider/gtd-provider-selector.ui:75
+msgid "Click to add a new Microsoft Exchange account"
+msgstr "Prema para engadir unha conta de Microsoft Exchange"
+
+#: src/provider/gtd-provider-selector.ui:91
+msgid "Microsoft Exchange"
+msgstr "Microsoft Exchange"
+
+#: src/provider/gtd-provider-selector.ui:104
+msgid "Or you can just store your tasks on this computer"
+msgstr "Ou tamén pode almacenar as súas tarefas neste computador"
+
+#: src/sidebar/gtd-sidebar.c:304
 #, c-format
-#| msgid "Task <b>%s</b> removed"
 msgid "Task list <b>%s</b> removed"
 msgstr "Lista de tarefas <b>%s</b> eliminada"
 
-#: src/sidebar/gtd-sidebar-list-row.c:307
+#: src/sidebar/gtd-sidebar.c:307 src/task-list-view/gtd-task-list-view.c:461
+msgid "Undo"
+msgstr "Desfacer"
+
+#: src/sidebar/gtd-sidebar-provider-row.ui:88
+msgid "Loading…"
+msgstr "Cargando…"
+
+#: src/task-list-view/gtd-edit-pane.ui:24
+msgid "D_ue Date"
+msgstr "Data de _vencemento"
+
+#: src/task-list-view/gtd-edit-pane.ui:41
+msgid "_Today"
+msgstr "_Hoxe"
+
+#: src/task-list-view/gtd-edit-pane.ui:50
+msgid "To_morrow"
+msgstr "M_añá"
+
+#: src/task-list-view/gtd-edit-pane.ui:91
+msgid "_Notes"
+msgstr "_Notas"
+
+#: src/task-list-view/gtd-edit-pane.ui:137
+msgid "_Delete"
+msgstr "_Eliminar"
+
+#: src/task-list-view/gtd-edit-pane.ui:176
+msgctxt "taskdate"
+msgid "None"
+msgstr "Ningunha"
+
+#. Translators: %1$s is the task list name, %2$s is the provider name
+#: src/task-list-view/gtd-new-task-row.c:91
 #, c-format
-#| msgid "_Rename"
-msgid "Rename %s"
-msgstr "Renomear %s"
+msgid "%1$s \t <small>%2$s</small>"
+msgstr "%1$s \t <small>%2$s</small>"
+
+#: src/task-list-view/gtd-new-task-row.ui:15
+msgid "New task…"
+msgstr "Novas tarefas…"
+
+#: src/task-list-view/gtd-task-list-view.c:442
+#, c-format
+msgid "Task <b>%s</b> removed"
+msgstr "Tarefa <b>%s</b> eliminada"
+
+#: src/widgets/gtd-empty-list-widget.c:51
+msgid "No more tasks left"
+msgstr "Non hai máis tarefas para facer"
+
+#: src/widgets/gtd-empty-list-widget.c:52
+msgid "Nothing else to do here"
+msgstr "No hai nada máis para facer aquí"
+
+#: src/widgets/gtd-empty-list-widget.c:53
+msgid "You made it!"
+msgstr "Conseguíuno!"
+
+#: src/widgets/gtd-empty-list-widget.c:54
+msgid "Looks like there’s nothing else left here"
+msgstr "Semella que non hai nada máis que facer aquí"
+
+#: src/widgets/gtd-empty-list-widget.c:59
+msgid "Get some rest now"
+msgstr "Agora pode descansar"
+
+#: src/widgets/gtd-empty-list-widget.c:60
+msgid "Enjoy the rest of your day"
+msgstr "Goce do resto do día"
+
+#: src/widgets/gtd-empty-list-widget.c:61
+msgid "Good job!"
+msgstr "Bo traballo!"
+
+#: src/widgets/gtd-empty-list-widget.c:62
+msgid "Meanwhile, spread the love"
+msgstr "Namentres, difunda o amor"
+
+#: src/widgets/gtd-empty-list-widget.c:63
+msgid "Working hard is always rewarded"
+msgstr "O traballo duro sempre é recompensado"
+
+#: src/widgets/gtd-empty-list-widget.c:74
+msgid "No tasks found"
+msgstr "Non se atoparon tarefas"
+
+#: src/widgets/gtd-empty-list-widget.c:75
+msgid "You can add tasks using the <b>+</b> above"
+msgstr "Pode engadir tarefas usando o <b>+</b> de arriba"
+
+#~ msgid "_Priority"
+#~ msgstr "_Prioridade"
+
+#~ msgctxt "taskpriority"
+#~ msgid "None"
+#~ msgstr "Ningunha"
+
+#~ msgid "Low"
+#~ msgstr "Baixa"
+
+#~ msgid "Medium"
+#~ msgstr "Media"
+
+#~ msgid "High"
+#~ msgstr "Alta"
+
+#~ msgid "Copyright © %1$d The To Do authors"
+#~ msgstr "Dereitos de autor © %1$d Os autores do To Do"
+
+#~ msgid "Removing this task will also remove its subtasks. Remove anyway?"
+#~ msgstr ""
+#~ "Ao eliminar esta tarefa tamén se eliminarán as súas subtarefas. Desexa "
+#~ "eliminala igualmente?"
+
+#~ msgid "Once removed, the tasks cannot be recovered."
+#~ msgstr "Logo de eliminalas, as tarefas non se poden recuperar."
+
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
+
+#~ msgid "Remove"
+#~ msgstr "Eliminar"
+
+#~| msgid "_Rename"
+#~ msgid "Rename %s"
+#~ msgstr "Renomear %s"
 
 #~ msgid "Lists"
 #~ msgstr "Listas"
