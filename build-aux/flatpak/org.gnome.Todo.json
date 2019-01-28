@@ -104,7 +104,7 @@
                 {
                     "type" : "git",
                     "url" : "https://gitlab.gnome.org/GNOME/evolution-data-server.git",
-                    "tag" : "3.30.2"
+                    "tag" : "3.31.4"
                 }
             ]
         },
