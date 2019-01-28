@@ -103,8 +103,7 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/evolution-data-server.git",
-                    "tag" : "3.30.2"
+                    "url" : "https://gitlab.gnome.org/GNOME/evolution-data-server.git"
                 }
             ]
         },
