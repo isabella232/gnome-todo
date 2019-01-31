@@ -9,10 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo gnome-3-18\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-07-22 16:54+0000\n"
-"PO-Revision-Date: 2018-08-03 15:14+0300\n"
-"Last-Translator: Florentina Mușat  <florentina.musat.28 [at] gmail [dot] "
-"com>\n"
+"POT-Creation-Date: 2018-12-16 11:07+0000\n"
+"PO-Revision-Date: 2019-01-27 01:44+0200\n"
+"Last-Translator: Florentina Mușat <florentina.musat.28 [at] gmail [dot] "
 "com>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -21,13 +20,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);\n"
-"20)) ? 1 : 2);\n"
-"X-Generator: Vé 0.1.4\n"
+"20)) ? 1: 2);\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Project-Style: gnome\n"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:7 data/org.gnome.Todo.desktop.in:3
-#: src/gtd-application.c:157 src/gtd-window.c:788 src/gtd-window.c:819
-#: src/main.c:35
+#: data/appdata/org.gnome.Todo.appdata.xml.in:7
+#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:141
+#: src/gtd-window.c:717 src/gtd-window.c:748 src/main.c:35
 msgid "To Do"
 msgstr "To Do"
 
@@ -70,18 +69,6 @@ msgstr "Extensii disponibile pentru To Do GNOME"
 #: data/appdata/org.gnome.Todo.appdata.xml.in:45
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr "Vizualizarea sarcinilor de astăzi pe panoul astăzi al To Do GNOME"
-
-#: data/gtk/menus.ui:15 data/ui/plugin-dialog.ui:75
-msgid "Extensions"
-msgstr "Extensii"
-
-#: data/gtk/menus.ui:22
-msgid "_About"
-msgstr "_Despre"
-
-#: data/gtk/menus.ui:26
-msgid "_Quit"
-msgstr "_Ieșire"
 
 #: data/org.gnome.Todo.desktop.in:4
 msgid "Manage your personal tasks"
@@ -156,143 +143,55 @@ msgstr "Selectorul listei curente"
 msgid "The current list selector. Can be “grid” or “list”."
 msgstr "Selectorul listei curente. Poate fi „grilă” sau „listă”."
 
-#: data/ui/edit-pane.ui:43
-msgid "_Notes"
-msgstr "_Note"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
+#: plugins/next-week-panel/gtd-next-week-panel.c:112
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:103
+#: src/task-list-view/gtd-edit-pane.c:110
+msgid "No date set"
+msgstr "Nu a fost configurată data"
 
-#: data/ui/edit-pane.ui:95
-msgid "D_ue Date"
-msgstr "D_ată scadentă"
+#. Translators: This message will never be used with '1 day ago'
+#. * but the singular form is required because some languages do not
+#. * have plurals, some languages reuse the singular form for numbers
+#. * like 21, 31, 41, etc.
+#.
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:125
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:116
+#, c-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "Acum %d zi"
+msgstr[1] "Acum %d zile"
+msgstr[2] "Acum %d de zile"
 
-#: data/ui/edit-pane.ui:113
-msgid "_Today"
-msgstr "As_tăzi"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:120
+#: src/task-list-view/gtd-task-row.c:147
+msgid "Yesterday"
+msgstr "Ieri"
 
-#: data/ui/edit-pane.ui:123
-msgid "To_morrow"
-msgstr "Mâi_ne"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
+#: plugins/next-week-panel/gtd-next-week-panel.c:124
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:124
+#: plugins/score/score/__init__.py:101
+#: plugins/today-panel/gtd-panel-today.c:154
+#: plugins/today-panel/gtd-panel-today.c:258
+#: src/task-list-view/gtd-task-row.c:139
+msgid "Today"
+msgstr "Astăzi"
 
-#: data/ui/edit-pane.ui:171
-msgid "_Priority"
-msgstr "_Prioritate"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
+#: plugins/next-week-panel/gtd-next-week-panel.c:128
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:128
+#: src/task-list-view/gtd-task-row.c:143
+msgid "Tomorrow"
+msgstr "Mâine"
 
-#: data/ui/edit-pane.ui:189
-msgctxt "taskpriority"
-msgid "None"
-msgstr "Nespecificată"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:297
+msgid "All"
+msgstr "Toate"
 
-#: data/ui/edit-pane.ui:190
-msgid "Low"
-msgstr "Scăzut"
-
-#: data/ui/edit-pane.ui:191
-msgid "Medium"
-msgstr "Mediu"
-
-#: data/ui/edit-pane.ui:192
-msgid "High"
-msgstr "Ridicat"
-
-#: data/ui/edit-pane.ui:200
-msgid "_Delete"
-msgstr "Ș_terge"
-
-#: data/ui/edit-pane.ui:251
-msgctxt "taskdate"
-msgid "None"
-msgstr "Nespecificat"
-
-#: data/ui/initial-setup.ui:25
-msgid "Welcome"
-msgstr "Bine ați venit"
-
-#: data/ui/initial-setup.ui:40
-msgid "Log in to online accounts to access your tasks"
-msgstr "Autentificați-vă la conturile online pentru a vă accesa sarcinile"
-
-#: data/ui/initial-setup.ui:67
-msgid "To Do Setup"
-msgstr "Configurare To Do"
-
-#: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
-#: data/ui/window.ui:123
-msgid "_Cancel"
-msgstr "_Anulează"
-
-#: data/ui/initial-setup.ui:80
-msgid "_Done"
-msgstr "_Terminat"
-
-#: data/ui/new-task-row.ui:31
-msgid "New task…"
-msgstr "Sarcină nouă…"
-
-#: data/ui/plugin-dialog.ui:118
-msgid "No extensions found"
-msgstr "Nu au fost găsite extensii"
-
-#: data/ui/provider-popover.ui:25
-msgid "Create _List"
-msgstr "Creează _listă"
-
-#: data/ui/provider-popover.ui:59
-msgid "List Name"
-msgstr "Nume listă"
-
-#: data/ui/provider-popover.ui:155
-msgid "Select a storage location"
-msgstr "Selectează o locație de stocare"
-
-#: data/ui/provider-row.ui:70
-msgid "Off"
-msgstr "Oprit"
-
-#: data/ui/provider-selector.ui:27
-msgid "Click to add a new Google account"
-msgstr "Clic pentru a adăuga un nou cont Google"
-
-#: data/ui/provider-selector.ui:51
-msgid "Google"
-msgstr "Google"
-
-#: data/ui/provider-selector.ui:67
-msgid "Click to add a new ownCloud account"
-msgstr "Faceți clic pentru a adăuga un nou cont ownCloud"
-
-#: data/ui/provider-selector.ui:91
-msgid "ownCloud"
-msgstr "ownCloud"
-
-#: data/ui/provider-selector.ui:107
-msgid "Click to add a new Microsoft Exchange account"
-msgstr "Apăsați clic pentru a adăuga un nou cont Microsoft Exchange"
-
-#: data/ui/provider-selector.ui:131
-msgid "Microsoft Exchange"
-msgstr "Microsoft Exchange"
-
-#: data/ui/provider-selector.ui:154
-msgid "Or you can just store your tasks on this computer"
-msgstr ""
-"Sau puteți stoca pur și simplu sarcinile dumneavoastră pe acest calculator"
-
-#: data/ui/sidebar-list-row.ui:96 data/ui/sidebar-list-row.ui:115
-msgid "Rename"
-msgstr "Redenumește"
-
-#: data/ui/sidebar-list-row.ui:119
-msgid "Delete"
-msgstr "Șterge"
-
-#: data/ui/sidebar-provider-row.ui:96
-msgid "Loading…"
-msgstr "Se încarcă…"
-
-#: data/ui/window.ui:78
-msgid "_New List"
-msgstr "Listă _nouă"
-
-#: plugins/background/gtd-plugin-background.c:150
+#: plugins/background/gtd-plugin-background.c:151
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
@@ -300,7 +199,7 @@ msgstr[0] "%1$s și încă o sarcină"
 msgstr[1] "%1$s și încă %2$d sarcini"
 msgstr[2] "%1$s și încă %2$d de sarcini"
 
-#: plugins/background/gtd-plugin-background.c:249
+#: plugins/background/gtd-plugin-background.c:255
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
@@ -344,27 +243,27 @@ msgstr "Când To Do rulează, arată o notificare de pornire"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Eroare la încărcarea conturilor online GNOME"
 
-#: plugins/eds/gtd-provider-eds.c:140
+#: plugins/eds/gtd-provider-eds.c:139
 msgid "Failed to connect to task list"
 msgstr "Eșec la conectarea la lista cu sarcini"
 
-#: plugins/eds/gtd-provider-eds.c:361
+#: plugins/eds/gtd-provider-eds.c:272
 msgid "An error occurred while creating a task"
 msgstr "A apărut o eroare în timpul creării unei sarcini"
 
-#: plugins/eds/gtd-provider-eds.c:393
+#: plugins/eds/gtd-provider-eds.c:306
 msgid "An error occurred while modifying a task"
 msgstr "A apărut o eroare în timpul modificării unei sarcini"
 
-#: plugins/eds/gtd-provider-eds.c:414
+#: plugins/eds/gtd-provider-eds.c:327
 msgid "An error occurred while removing a task"
 msgstr "A apărut o eroare în timpul eliminării unei sarcini"
 
-#: plugins/eds/gtd-provider-eds.c:432
+#: plugins/eds/gtd-provider-eds.c:345
 msgid "An error occurred while creating a task list"
 msgstr "A apărut o eroare în timpul creării unei liste de sarcini"
 
-#: plugins/eds/gtd-provider-eds.c:454 plugins/eds/gtd-provider-eds.c:477
+#: plugins/eds/gtd-provider-eds.c:367 plugins/eds/gtd-provider-eds.c:390
 msgid "An error occurred while modifying a task list"
 msgstr "A apărut o eroare în timpul modificării unei liste de sarcini"
 
@@ -376,62 +275,23 @@ msgstr "Pe acest calculator"
 msgid "Local"
 msgstr "Local"
 
-#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:310
-#: plugins/eds/gtd-task-list-eds.c:334
+#: plugins/eds/gtd-task-list-eds.c:283 plugins/eds/gtd-task-list-eds.c:316
+#: plugins/eds/gtd-task-list-eds.c:340
 msgid "Error fetching tasks from list"
 msgstr "Eroare la obținerea sarcinilor din listă"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:107
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:102 src/gtd-edit-pane.c:112
-msgid "No date set"
-msgstr "Nu a fost configurată data"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:115
-#: plugins/today-panel/gtd-panel-today.c:201
+#: plugins/next-week-panel/gtd-next-week-panel.c:120
+#: plugins/today-panel/gtd-panel-today.c:145
 msgid "Overdue"
 msgstr "Întârziat"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:119
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:123
-#: plugins/score/score/__init__.py:101 plugins/today-panel/gtd-panel-today.c:210
-#: plugins/today-panel/gtd-panel-today.c:276 src/gtd-task-row.c:144
-msgid "Today"
-msgstr "Astăzi"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:123
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:127 src/gtd-task-row.c:148
-msgid "Tomorrow"
-msgstr "Mâine"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:372
+#: plugins/next-week-panel/gtd-next-week-panel.c:345
 msgid "Next 7 Days"
 msgstr "Următoarele 7 zile"
 
-#. Translators: This message will never be used with '1 day ago'
-#. * but the singular form is required because some languages do not
-#. * have plurals, some languages reuse the singular form for numbers
-#. * like 21, 31, 41, etc.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:115
-#, c-format
-msgid "%d day ago"
-msgid_plural "%d days ago"
-msgstr[0] "Acum %d zi"
-msgstr[1] "Acum %d zile"
-msgstr[2] "Acum %d de zile"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:119 src/gtd-task-row.c:152
-msgid "Yesterday"
-msgstr "Ieri"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:378
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:343
 msgid "Scheduled"
 msgstr "Programate"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:535
-#: plugins/today-panel/gtd-panel-today.c:432
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
-msgid "Clear completed tasks…"
-msgstr "Golește sarcinile efectuate…"
 
 #: plugins/score/score/__init__.py:90
 msgid "No task completed today"
@@ -446,8 +306,7 @@ msgstr ""
 msgid ""
 "Not able to communicate with Todoist. Please check your internet "
 "connectivity."
-msgstr "Nu se poate comunica cu Todoist. Verificați conexiunea"
-"la internet."
+msgstr "Nu se poate comunica cu Todoist. Verificați conexiuneala internet."
 
 #: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Error fetching Todoist account key"
@@ -457,34 +316,37 @@ msgstr "Eroare la preluarea cheii contului Todoist"
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Asigurați-vă că contul Todoist este corect configurat."
 
-#: plugins/todoist/gtd-provider-todoist.c:558
+#: plugins/todoist/gtd-provider-todoist.c:555
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
-msgstr "To Do GNOME nu are permisiunile necesare să execute această acțiune: %s"
+msgstr ""
+"To Do GNOME nu are permisiunile necesare să execute această acțiune: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:566
+#: plugins/todoist/gtd-provider-todoist.c:563
 #, c-format
-msgid "Invalid response received from Todoist servers. Please reload GNOME To Do."
-msgstr "Răspuns nevalid primit de la serverele Todoist. Reîncărcați To Do GNOME."
+msgid ""
+"Invalid response received from Todoist servers. Please reload GNOME To Do."
+msgstr ""
+"Răspuns nevalid primit de la serverele Todoist. Reîncărcați To Do GNOME."
 
-#: plugins/todoist/gtd-provider-todoist.c:866
+#: plugins/todoist/gtd-provider-todoist.c:850
 msgid "An error occurred while updating a Todoist task"
 msgstr "A apărut o eroare în timpul actualizării unei sarcini Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:983
+#: plugins/todoist/gtd-provider-todoist.c:965
 msgid "An error occurred while retrieving Todoist data"
 msgstr "A apărut o eroare în timpul descărcării de date Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1058
+#: plugins/todoist/gtd-provider-todoist.c:1040
 msgid "An error occurred while updating Todoist"
 msgstr "A apărut o eroare în timpul actualizării Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1118
+#: plugins/todoist/gtd-provider-todoist.c:1100
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1433
+#: plugins/todoist/gtd-provider-todoist.c:1411
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -526,16 +388,16 @@ msgstr ""
 "Nu este recomandat să utilizați integrarea Todo.txt pe sistemele de "
 "producție."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:591
+#: plugins/todo-txt/gtd-provider-todo-txt.c:574
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr ""
 "Eroare la deschiderea monitorului de fișiere. Todo.txt nu va fi monitorizat"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:660
+#: plugins/todo-txt/gtd-provider-todo-txt.c:643
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:672
+#: plugins/todo-txt/gtd-provider-todo-txt.c:655
 msgid "On the Todo.txt file"
 msgstr "În fișierul Todo.txt"
 
@@ -549,83 +411,59 @@ msgstr "Sursa fișierului Todo.txt"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:103
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:112
 msgid "Unscheduled"
 msgstr "Neprogramate"
 
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
+#: src/gtd-task-list-panel.ui:45
+msgid "Clear completed tasks…"
+msgstr "Golește sarcinile efectuate…"
+
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:106
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
 #, python-format
 msgid "Unscheduled (%d)"
 msgstr "Neprogramate (%d)"
 
-#: src/gtd-application.c:73
+#: src/gtd-application.c:72
 msgid "Quit GNOME To Do"
 msgstr "Ieșire din To Do GNOME"
 
-#: src/gtd-application.c:74
+#: src/gtd-application.c:73
 msgid "Enable debug messages"
 msgstr "Activează mesajele de depanare"
 
-#: src/gtd-application.c:147
-#, c-format
-msgid "Copyright © %1$d The To Do authors"
-msgstr "Drepturi de autor © %1$d autorii To Do GNOME"
+#: src/gtd-application.c:143
+msgid "Copyright © 2015–2018 The To Do authors"
+msgstr "Drepturi de autor © 2015–2018 autorii To Do"
 
-#: src/gtd-application.c:152
-#, c-format
-msgid "Copyright © %1$d–%2$d The To Do authors"
-msgstr "Drepturi de autor © %1$d–%2$d autorii To Do"
-
-#: src/gtd-application.c:164
+#: src/gtd-application.c:148
 msgid "translator-credits"
 msgstr ""
 "Adrian Gabor <raziel_theripper [at] yahoo [dot] com>\n"
-"Florentina Mușat <florentina.musat.28 [at] gmail [dot] com>, 2018"
+"Florentina Mușat <florentina.musat.28 [at] gmail [dot] com>, 2019"
 
-#: src/gtd-empty-list-widget.c:51
-msgid "No more tasks left"
-msgstr "Nu au mai rămas sarcini"
+#: src/gtd-initial-setup-window.ui:23
+msgid "Welcome"
+msgstr "Bine ați venit"
 
-#: src/gtd-empty-list-widget.c:52
-msgid "Nothing else to do here"
-msgstr "Nimic altceva de făcut aici"
+#: src/gtd-initial-setup-window.ui:37
+msgid "Log in to online accounts to access your tasks"
+msgstr "Autentificați-vă la conturile online pentru a vă accesa sarcinile"
 
-#: src/gtd-empty-list-widget.c:53
-msgid "You made it!"
-msgstr "Ați terminat!"
+#: src/gtd-initial-setup-window.ui:62
+msgid "To Do Setup"
+msgstr "Configurare To Do"
 
-#: src/gtd-empty-list-widget.c:54
-msgid "Looks like there’s nothing else left here"
-msgstr "Se pare că nu mai rămas nimic de făcut aici"
+#: src/gtd-initial-setup-window.ui:65 src/gtd-window.ui:116
+#: src/provider/gtd-provider-popover.ui:40
+msgid "_Cancel"
+msgstr "_Anulează"
 
-#: src/gtd-empty-list-widget.c:59
-msgid "Get some rest now"
-msgstr "Odihniți-vă acum"
-
-#: src/gtd-empty-list-widget.c:60
-msgid "Enjoy the rest of your day"
-msgstr "Bucurăți-vă de restul zilei"
-
-#: src/gtd-empty-list-widget.c:61
-msgid "Good job!"
-msgstr "Bună treabă!"
-
-#: src/gtd-empty-list-widget.c:62
-msgid "Meanwhile, spread the love"
-msgstr "Între timp, răspândiți dragostea"
-
-#: src/gtd-empty-list-widget.c:63
-msgid "Working hard is always rewarded"
-msgstr "Munca grea este întotdeauna recompensată"
-
-#: src/gtd-empty-list-widget.c:74
-msgid "No tasks found"
-msgstr "Nu au fost găsite sarcini"
-
-#: src/gtd-empty-list-widget.c:75
-msgid "You can add tasks using the <b>+</b> above"
-msgstr "Puteți adăuga sarcini folosind <b>+</b> de mai sus"
+#: src/gtd-initial-setup-window.ui:74
+msgid "_Done"
+msgstr "_Terminat"
 
 #: src/gtd-plugin-dialog-row.c:97
 msgid "Error loading extension"
@@ -635,34 +473,24 @@ msgstr "Eroare la încărcarea extensiei"
 msgid "Error unloading extension"
 msgstr "Eroare la descărcarea extensiei"
 
-#: src/gtd-task-list-view.c:352
-msgid "Removing this task will also remove its subtasks. Remove anyway?"
-msgstr ""
-"Eliminarea acestei sarcini va elimina, de asemenea, subsarcinile sale. "
-"Eliminați oricum?"
+#: src/gtd-plugin-dialog.ui:62 src/gtd-window.ui:179
+msgid "Extensions"
+msgstr "Extensii"
 
-#: src/gtd-task-list-view.c:355
-msgid "Once removed, the tasks cannot be recovered."
-msgstr "Odată ce a fost eliminată, lista cu sarcini nu mai poate fi recuperată."
+#: src/gtd-plugin-dialog.ui:96
+msgid "No extensions found"
+msgstr "Nu au fost găsite extensii"
 
-#: src/gtd-task-list-view.c:358
-msgid "Cancel"
-msgstr "Anulează"
+#: src/gtd-task-list-panel.ui:38 src/gtd-task-list-panel.ui:74
+#: src/gtd-task-list-panel.ui:98 src/sidebar/gtd-sidebar-list-row.ui:67
+msgid "Rename"
+msgstr "Redenumește"
 
-#: src/gtd-task-list-view.c:360
-msgid "Remove"
-msgstr "Elimină"
+#: src/gtd-task-list-panel.ui:57 src/sidebar/gtd-sidebar-list-row.ui:71
+msgid "Delete"
+msgstr "Șterge"
 
-#: src/gtd-task-list-view.c:802
-#, c-format
-msgid "Task <b>%s</b> removed"
-msgstr "Sarcina <b>%s</b> ștearsă"
-
-#: src/gtd-task-list-view.c:826 src/sidebar/gtd-sidebar-list-row.c:281
-msgid "Undo"
-msgstr "Anulează"
-
-#: src/gtd-window.c:110
+#: src/gtd-window.c:107
 msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
@@ -670,23 +498,204 @@ msgstr ""
 "Aceasta este o versiune de dezvoltare a To Do. Este posibil să experimentați "
 "erori, comportamente eronate, și pierderi de date."
 
-#: src/gtd-window.c:471
+#: src/gtd-window.c:421
 msgid "Details"
 msgstr "Detalii"
 
-#: src/gtd-window.c:783
+#: src/gtd-window.c:712
 msgid "Click a task list to select"
 msgstr "Apăsați clic pe o listă cu sarcini pentru a o selecta"
 
-#: src/sidebar/gtd-sidebar-list-row.c:278
+#: src/gtd-window.ui:63
+msgid "_New List"
+msgstr "Listă _nouă"
+
+#: src/gtd-window.ui:185
+msgid "_About"
+msgstr "_Despre"
+
+#: src/gtd-window.ui:189
+msgid "_Quit"
+msgstr "_Ieșire"
+
+#: src/provider/gtd-provider-popover.ui:23
+msgid "Create _List"
+msgstr "Creează _listă"
+
+#: src/provider/gtd-provider-popover.ui:54
+msgid "List Name"
+msgstr "Nume listă"
+
+#: src/provider/gtd-provider-popover.ui:132
+msgid "Select a storage location"
+msgstr "Selectează o locație de stocare"
+
+#: src/provider/gtd-provider-row.ui:64
+msgid "Off"
+msgstr "Oprit"
+
+#: src/provider/gtd-provider-selector.ui:23
+msgid "Click to add a new Google account"
+msgstr "Clic pentru a adăuga un nou cont Google"
+
+#: src/provider/gtd-provider-selector.ui:39
+msgid "Google"
+msgstr "Google"
+
+#: src/provider/gtd-provider-selector.ui:49
+msgid "Click to add a new ownCloud account"
+msgstr "Faceți clic pentru a adăuga un nou cont ownCloud"
+
+#: src/provider/gtd-provider-selector.ui:65
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: src/provider/gtd-provider-selector.ui:75
+msgid "Click to add a new Microsoft Exchange account"
+msgstr "Apăsați clic pentru a adăuga un nou cont Microsoft Exchange"
+
+#: src/provider/gtd-provider-selector.ui:91
+msgid "Microsoft Exchange"
+msgstr "Microsoft Exchange"
+
+#: src/provider/gtd-provider-selector.ui:104
+msgid "Or you can just store your tasks on this computer"
+msgstr ""
+"Sau puteți stoca pur și simplu sarcinile dumneavoastră pe acest calculator"
+
+#: src/sidebar/gtd-sidebar.c:304
 #, c-format
 msgid "Task list <b>%s</b> removed"
 msgstr "Lista de sarcini <b>%s</b> ștearsă"
 
-#: src/sidebar/gtd-sidebar-list-row.c:307
+#: src/sidebar/gtd-sidebar.c:307 src/task-list-view/gtd-task-list-view.c:461
+msgid "Undo"
+msgstr "Anulează"
+
+#: src/sidebar/gtd-sidebar-provider-row.ui:88
+msgid "Loading…"
+msgstr "Se încarcă…"
+
+#: src/task-list-view/gtd-edit-pane.ui:24
+msgid "D_ue Date"
+msgstr "D_ată scadentă"
+
+#: src/task-list-view/gtd-edit-pane.ui:41
+msgid "_Today"
+msgstr "As_tăzi"
+
+#: src/task-list-view/gtd-edit-pane.ui:50
+msgid "To_morrow"
+msgstr "Mâi_ne"
+
+#: src/task-list-view/gtd-edit-pane.ui:91
+msgid "_Notes"
+msgstr "_Note"
+
+#: src/task-list-view/gtd-edit-pane.ui:137
+msgid "_Delete"
+msgstr "Ș_terge"
+
+#: src/task-list-view/gtd-edit-pane.ui:176
+msgctxt "taskdate"
+msgid "None"
+msgstr "Nespecificat"
+
+#. Translators: %1$s is the task list name, %2$s is the provider name
+#: src/task-list-view/gtd-new-task-row.c:91
 #, c-format
-msgid "Rename %s"
-msgstr "Redenumește %s"
+msgid "%1$s \t <small>%2$s</small>"
+msgstr "%1$s \t <small>%2$s</small>"
+
+#: src/task-list-view/gtd-new-task-row.ui:15
+msgid "New task…"
+msgstr "Sarcină nouă…"
+
+#: src/task-list-view/gtd-task-list-view.c:442
+#, c-format
+msgid "Task <b>%s</b> removed"
+msgstr "Sarcina <b>%s</b> ștearsă"
+
+#: src/widgets/gtd-empty-list-widget.c:51
+msgid "No more tasks left"
+msgstr "Nu au mai rămas sarcini"
+
+#: src/widgets/gtd-empty-list-widget.c:52
+msgid "Nothing else to do here"
+msgstr "Nimic altceva de făcut aici"
+
+#: src/widgets/gtd-empty-list-widget.c:53
+msgid "You made it!"
+msgstr "Ați terminat!"
+
+#: src/widgets/gtd-empty-list-widget.c:54
+msgid "Looks like there’s nothing else left here"
+msgstr "Se pare că nu mai rămas nimic de făcut aici"
+
+#: src/widgets/gtd-empty-list-widget.c:59
+msgid "Get some rest now"
+msgstr "Odihniți-vă acum"
+
+#: src/widgets/gtd-empty-list-widget.c:60
+msgid "Enjoy the rest of your day"
+msgstr "Bucurăți-vă de restul zilei"
+
+#: src/widgets/gtd-empty-list-widget.c:61
+msgid "Good job!"
+msgstr "Bună treabă!"
+
+#: src/widgets/gtd-empty-list-widget.c:62
+msgid "Meanwhile, spread the love"
+msgstr "Între timp, răspândiți dragostea"
+
+#: src/widgets/gtd-empty-list-widget.c:63
+msgid "Working hard is always rewarded"
+msgstr "Munca grea este întotdeauna recompensată"
+
+#: src/widgets/gtd-empty-list-widget.c:74
+msgid "No tasks found"
+msgstr "Nu au fost găsite sarcini"
+
+#: src/widgets/gtd-empty-list-widget.c:75
+msgid "You can add tasks using the <b>+</b> above"
+msgstr "Puteți adăuga sarcini folosind <b>+</b> de mai sus"
+
+#~ msgid "_Priority"
+#~ msgstr "_Prioritate"
+
+#~ msgctxt "taskpriority"
+#~ msgid "None"
+#~ msgstr "Nespecificată"
+
+#~ msgid "Low"
+#~ msgstr "Scăzut"
+
+#~ msgid "Medium"
+#~ msgstr "Mediu"
+
+#~ msgid "High"
+#~ msgstr "Ridicat"
+
+#~ msgid "Copyright © %1$d The To Do authors"
+#~ msgstr "Drepturi de autor © %1$d autorii To Do GNOME"
+
+#~ msgid "Removing this task will also remove its subtasks. Remove anyway?"
+#~ msgstr ""
+#~ "Eliminarea acestei sarcini va elimina, de asemenea, subsarcinile sale. "
+#~ "Eliminați oricum?"
+
+#~ msgid "Once removed, the tasks cannot be recovered."
+#~ msgstr ""
+#~ "Odată ce a fost eliminată, lista cu sarcini nu mai poate fi recuperată."
+
+#~ msgid "Cancel"
+#~ msgstr "Anulează"
+
+#~ msgid "Remove"
+#~ msgstr "Elimină"
+
+#~ msgid "Rename %s"
+#~ msgstr "Redenumește %s"
 
 #~ msgid "Lists"
 #~ msgstr "Liste"
