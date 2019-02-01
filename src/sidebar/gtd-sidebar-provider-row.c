@@ -128,6 +128,12 @@ set_provider (GtdSidebarProviderRow *self,
 
   self->provider = g_object_ref (provider);
 
+  g_object_bind_property (provider,
+                          "enabled",
+                          self,
+                          "visible",
+                          G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+
   /* Setup the title label */
   manager = gtd_manager_get_default ();
 

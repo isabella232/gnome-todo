@@ -111,6 +111,12 @@ set_list (GtdSidebarListRow *self,
                           "label",
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
+  g_object_bind_property (gtd_task_list_get_provider (list),
+                          "enabled",
+                          self,
+                          "visible",
+                          G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+
   /* Always keep the counter label updated */
   g_signal_connect_object (list, "task-added", G_CALLBACK (on_list_changed_cb), self, G_CONNECT_SWAPPED);
   g_signal_connect_object (list, "task-updated", G_CALLBACK (on_list_changed_cb), self, G_CONNECT_SWAPPED);
