@@ -105,7 +105,7 @@
                 "/share/dbus-1/services"
             ],
             "config-opts" : [
-                "-DDBUS_SERVICES_PREFIX=org.gnome.Todo",
+                "-DDBUS_SERVICES_PREFIX=org.gnome.TodoDevel",
                 "-DENABLE_DOT_LOCKING=OFF",
                 "-DENABLE_FILE_LOCKING=fcntl",
                 "-DENABLE_GTK=OFF",
