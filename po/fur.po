@@ -7,20 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-07-22 16:54+0000\n"
-"PO-Revision-Date: 2018-08-02 07:18+0200\n"
+"POT-Creation-Date: 2018-12-16 11:07+0000\n"
+"PO-Revision-Date: 2019-02-01 08:33+0100\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:157
-#: src/gtd-window.c:788 src/gtd-window.c:819 src/main.c:35
+#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:141
+#: src/gtd-window.c:717 src/gtd-window.c:748 src/main.c:35
 msgid "To Do"
 msgstr "Di fâ"
 
@@ -64,18 +64,6 @@ msgstr "Plugin disponibii par GNOME Di fâ"
 #: data/appdata/org.gnome.Todo.appdata.xml.in:45
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr "Daûr a visualizâ lis ativitâts par vuê sul panel GNOME Di fâ"
-
-#: data/gtk/menus.ui:15 data/ui/plugin-dialog.ui:75
-msgid "Extensions"
-msgstr "Estensions"
-
-#: data/gtk/menus.ui:22
-msgid "_About"
-msgstr "_Informazions"
-
-#: data/gtk/menus.ui:26
-msgid "_Quit"
-msgstr "_Jes"
 
 #: data/org.gnome.Todo.desktop.in:4
 msgid "Manage your personal tasks"
@@ -150,149 +138,61 @@ msgstr "Il seletôr de liste atuâl"
 msgid "The current list selector. Can be “grid” or “list”."
 msgstr "Il seletôr de liste atuâl. Al pues jessi 'grid' o 'list'."
 
-#: data/ui/edit-pane.ui:43
-msgid "_Notes"
-msgstr "_Notis"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
+#: plugins/next-week-panel/gtd-next-week-panel.c:112
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:103
+#: src/task-list-view/gtd-edit-pane.c:110
+msgid "No date set"
+msgstr "Nissune date impuestade"
 
-#: data/ui/edit-pane.ui:95
-msgid "D_ue Date"
-msgstr "Date di sc_jadence"
+#. Translators: This message will never be used with '1 day ago'
+#. * but the singular form is required because some languages do not
+#. * have plurals, some languages reuse the singular form for numbers
+#. * like 21, 31, 41, etc.
+#.
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:125
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:116
+#, c-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "%d zornade indaûr"
+msgstr[1] "%d zornadis indaûr"
 
-#: data/ui/edit-pane.ui:113
-msgid "_Today"
-msgstr "_Vuê"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:120
+#: src/task-list-view/gtd-task-row.c:147
+msgid "Yesterday"
+msgstr "Îr"
 
-#: data/ui/edit-pane.ui:123
-msgid "To_morrow"
-msgstr "Do_man"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
+#: plugins/next-week-panel/gtd-next-week-panel.c:124
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:124
+#: plugins/score/score/__init__.py:101
+#: plugins/today-panel/gtd-panel-today.c:154
+#: plugins/today-panel/gtd-panel-today.c:258
+#: src/task-list-view/gtd-task-row.c:139
+msgid "Today"
+msgstr "Vuê"
 
-#: data/ui/edit-pane.ui:171
-msgid "_Priority"
-msgstr "_Prioritât"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
+#: plugins/next-week-panel/gtd-next-week-panel.c:128
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:128
+#: src/task-list-view/gtd-task-row.c:143
+msgid "Tomorrow"
+msgstr "Doman"
 
-#: data/ui/edit-pane.ui:189
-msgctxt "taskpriority"
-msgid "None"
-msgstr "Nissune"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:297
+msgid "All"
+msgstr "Ducj"
 
-#: data/ui/edit-pane.ui:190
-msgid "Low"
-msgstr "Basse"
-
-#: data/ui/edit-pane.ui:191
-msgid "Medium"
-msgstr "Medie"
-
-#: data/ui/edit-pane.ui:192
-msgid "High"
-msgstr "Alte"
-
-#: data/ui/edit-pane.ui:200
-msgid "_Delete"
-msgstr "_Elimine"
-
-#: data/ui/edit-pane.ui:251
-msgctxt "taskdate"
-msgid "None"
-msgstr "Nissune"
-
-#: data/ui/initial-setup.ui:25
-msgid "Welcome"
-msgstr "Benvignût"
-
-#: data/ui/initial-setup.ui:40
-msgid "Log in to online accounts to access your tasks"
-msgstr "Eseguìs l'acès ai account online par ministrâ lis tôs ativitâts"
-
-#: data/ui/initial-setup.ui:67
-msgid "To Do Setup"
-msgstr "Configurazion di Di fâ"
-
-#: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
-#: data/ui/window.ui:123
-msgid "_Cancel"
-msgstr "_Anule"
-
-#: data/ui/initial-setup.ui:80
-msgid "_Done"
-msgstr "_Fat"
-
-#: data/ui/new-task-row.ui:31
-msgid "New task…"
-msgstr "Gnove ativitât..."
-
-#: data/ui/plugin-dialog.ui:118
-msgid "No extensions found"
-msgstr "Nissune estension cjatade"
-
-#: data/ui/provider-popover.ui:25
-msgid "Create _List"
-msgstr "Cree _liste"
-
-#: data/ui/provider-popover.ui:59
-msgid "List Name"
-msgstr "Non liste"
-
-#: data/ui/provider-popover.ui:155
-msgid "Select a storage location"
-msgstr "Selezione une posizion di archiviazion"
-
-#: data/ui/provider-row.ui:70
-msgid "Off"
-msgstr "Off"
-
-#: data/ui/provider-selector.ui:27
-msgid "Click to add a new Google account"
-msgstr "Fâs clic par zontâ un gnûf account Google"
-
-#: data/ui/provider-selector.ui:51
-msgid "Google"
-msgstr "Google"
-
-#: data/ui/provider-selector.ui:67
-msgid "Click to add a new ownCloud account"
-msgstr "Fâs clic par zontâ un gnûf account ownCloud"
-
-#: data/ui/provider-selector.ui:91
-msgid "ownCloud"
-msgstr "ownCloud"
-
-#: data/ui/provider-selector.ui:107
-msgid "Click to add a new Microsoft Exchange account"
-msgstr "Fâs clic par zontâ un gnûf account Microsoft Exchange"
-
-#: data/ui/provider-selector.ui:131
-msgid "Microsoft Exchange"
-msgstr "Microsoft Exchange"
-
-#: data/ui/provider-selector.ui:154
-msgid "Or you can just store your tasks on this computer"
-msgstr "O archiviâ lis ativitâts su chest computer"
-
-#: data/ui/sidebar-list-row.ui:96 data/ui/sidebar-list-row.ui:115
-msgid "Rename"
-msgstr "Cambie non"
-
-#: data/ui/sidebar-list-row.ui:119
-msgid "Delete"
-msgstr "Elimine"
-
-#: data/ui/sidebar-provider-row.ui:96
-msgid "Loading…"
-msgstr "Daûr a cjariâ…"
-
-#: data/ui/window.ui:78
-msgid "_New List"
-msgstr "_Gnove liste"
-
-#: plugins/background/gtd-plugin-background.c:150
+#: plugins/background/gtd-plugin-background.c:151
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
 msgstr[0] "%1$s e une altre ativitât"
 msgstr[1] "%1$s e %2$d altris ativitâts"
 
-#: plugins/background/gtd-plugin-background.c:249
+#: plugins/background/gtd-plugin-background.c:255
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
@@ -335,27 +235,27 @@ msgstr "Cuant che Di fâ al è in esecuzion, mostre une notifiche di inviament"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Erôr tal cjariâ i account online GNOME"
 
-#: plugins/eds/gtd-provider-eds.c:140
+#: plugins/eds/gtd-provider-eds.c:139
 msgid "Failed to connect to task list"
 msgstr "Conession ae liste di ativitâts falide"
 
-#: plugins/eds/gtd-provider-eds.c:361
+#: plugins/eds/gtd-provider-eds.c:272
 msgid "An error occurred while creating a task"
 msgstr "Al è vignût fûr un erôr intant che si creave une ativitât"
 
-#: plugins/eds/gtd-provider-eds.c:393
+#: plugins/eds/gtd-provider-eds.c:306
 msgid "An error occurred while modifying a task"
 msgstr "Al è vignût fûr un erôr intant che si modificave une ativitât"
 
-#: plugins/eds/gtd-provider-eds.c:414
+#: plugins/eds/gtd-provider-eds.c:327
 msgid "An error occurred while removing a task"
 msgstr "Al è vignût fûr un erôr intant che si gjavave une ativitât"
 
-#: plugins/eds/gtd-provider-eds.c:432
+#: plugins/eds/gtd-provider-eds.c:345
 msgid "An error occurred while creating a task list"
 msgstr "Al è vignût fûr un erôr intant che si creave une liste di ativitâts"
 
-#: plugins/eds/gtd-provider-eds.c:454 plugins/eds/gtd-provider-eds.c:477
+#: plugins/eds/gtd-provider-eds.c:367 plugins/eds/gtd-provider-eds.c:390
 msgid "An error occurred while modifying a task list"
 msgstr ""
 "Al è vignût fûr un erôr intant che si modificave une liste di ativitâts"
@@ -368,63 +268,23 @@ msgstr "Su chest computer"
 msgid "Local"
 msgstr "Locâl"
 
-#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:310
-#: plugins/eds/gtd-task-list-eds.c:334
+#: plugins/eds/gtd-task-list-eds.c:283 plugins/eds/gtd-task-list-eds.c:316
+#: plugins/eds/gtd-task-list-eds.c:340
 msgid "Error fetching tasks from list"
 msgstr "Erôr tal recuperâ lis ativitâts de liste"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:107
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:102 src/gtd-edit-pane.c:112
-msgid "No date set"
-msgstr "Nissune date impuestade"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:115
-#: plugins/today-panel/gtd-panel-today.c:201
+#: plugins/next-week-panel/gtd-next-week-panel.c:120
+#: plugins/today-panel/gtd-panel-today.c:145
 msgid "Overdue"
 msgstr "In ritart"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:119
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:123
-#: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:210
-#: plugins/today-panel/gtd-panel-today.c:276 src/gtd-task-row.c:144
-msgid "Today"
-msgstr "Vuê"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:123
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:127 src/gtd-task-row.c:148
-msgid "Tomorrow"
-msgstr "Doman"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:372
+#: plugins/next-week-panel/gtd-next-week-panel.c:345
 msgid "Next 7 Days"
 msgstr "Prossims 7 dîs"
 
-#. Translators: This message will never be used with '1 day ago'
-#. * but the singular form is required because some languages do not
-#. * have plurals, some languages reuse the singular form for numbers
-#. * like 21, 31, 41, etc.
-#.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:115
-#, c-format
-msgid "%d day ago"
-msgid_plural "%d days ago"
-msgstr[0] "%d zornade indaûr"
-msgstr[1] "%d zornadis indaûr"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:119 src/gtd-task-row.c:152
-msgid "Yesterday"
-msgstr "Îr"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:378
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:343
 msgid "Scheduled"
 msgstr "Planificât"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:535
-#: plugins/today-panel/gtd-panel-today.c:432
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
-msgid "Clear completed tasks…"
-msgstr "Plate ativitâts completadis..."
 
 #: plugins/score/score/__init__.py:90
 msgid "No task completed today"
@@ -448,13 +308,13 @@ msgstr "Erôr tal recuperâ la clâf dal account Todoist"
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Controle che l'account Todo.txt al sedi configurât ben."
 
-#: plugins/todoist/gtd-provider-todoist.c:558
+#: plugins/todoist/gtd-provider-todoist.c:555
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr "GNOME Di Fâ nol à i permès par eseguî cheste azion: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:566
+#: plugins/todoist/gtd-provider-todoist.c:563
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
@@ -462,24 +322,24 @@ msgstr ""
 "Si à ricevût une rispueste no valide dai servidôrs di Todois. Par plasê "
 "torne cjarie GNOME Di Fâ."
 
-#: plugins/todoist/gtd-provider-todoist.c:866
+#: plugins/todoist/gtd-provider-todoist.c:850
 msgid "An error occurred while updating a Todoist task"
 msgstr ""
 "Al è vignût fûr un erôr intant che si inzornave une ativitât di Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:983
+#: plugins/todoist/gtd-provider-todoist.c:965
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Al è vignût fûr un erôr intant che si recuperave dâts di Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1058
+#: plugins/todoist/gtd-provider-todoist.c:1040
 msgid "An error occurred while updating Todoist"
 msgstr "Al è vignût fûr un erôr intant che si inzornave Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1118
+#: plugins/todoist/gtd-provider-todoist.c:1100
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1433
+#: plugins/todoist/gtd-provider-todoist.c:1411
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -520,15 +380,15 @@ msgstr ""
 "podarès cjatâ instabilitât, erôrs e forsit pierditis di dâts. Nol è conseât "
 "doprâ la integrazion di Todo.txt su sistemis di produzion."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:591
+#: plugins/todo-txt/gtd-provider-todo-txt.c:574
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr "Erôr tal vierzi il monitorâ dal file. Todo.txt nol sarà monitorât"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:660
+#: plugins/todo-txt/gtd-provider-todo-txt.c:643
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:672
+#: plugins/todo-txt/gtd-provider-todo-txt.c:655
 msgid "On the Todo.txt file"
 msgstr "Sul file Todo.txt"
 
@@ -542,82 +402,58 @@ msgstr "Sorzint dal file Todo.txt"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:103
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:112
 msgid "Unscheduled"
 msgstr "No programâts"
 
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
+#: src/gtd-task-list-panel.ui:45
+msgid "Clear completed tasks…"
+msgstr "Plate ativitâts completadis..."
+
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:106
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
 #, python-format
 msgid "Unscheduled (%d)"
 msgstr "No programâts (%d)"
 
-#: src/gtd-application.c:73
+#: src/gtd-application.c:72
 msgid "Quit GNOME To Do"
 msgstr "Jes di GNOME Di fâ"
 
-#: src/gtd-application.c:74
+#: src/gtd-application.c:73
 msgid "Enable debug messages"
 msgstr "Abilite messaçs di debug"
 
-#: src/gtd-application.c:147
-#, c-format
-msgid "Copyright © %1$d The To Do authors"
-msgstr "Copyright © %1$d i autôrs di Di fâ"
+#: src/gtd-application.c:143
+#| msgid "Copyright © %1$d–%2$d The To Do authors"
+msgid "Copyright © 2015–2018 The To Do authors"
+msgstr "Copyright © 2015–2018 i autôrs di Di fâ"
 
-#: src/gtd-application.c:152
-#, c-format
-msgid "Copyright © %1$d–%2$d The To Do authors"
-msgstr "Copyright © %1$d–%2$d i autôrs di Di fâ"
-
-#: src/gtd-application.c:164
+#: src/gtd-application.c:148
 msgid "translator-credits"
 msgstr "Fabio Tomat <f.t.public@gmail.com>"
 
-#: src/gtd-empty-list-widget.c:51
-msgid "No more tasks left"
-msgstr "Nissune altre ativitât restade"
+#: src/gtd-initial-setup-window.ui:23
+msgid "Welcome"
+msgstr "Benvignût"
 
-#: src/gtd-empty-list-widget.c:52
-msgid "Nothing else to do here"
-msgstr "Nie altri di fâ achì"
+#: src/gtd-initial-setup-window.ui:37
+msgid "Log in to online accounts to access your tasks"
+msgstr "Eseguìs l'acès ai account online par ministrâ lis tôs ativitâts"
 
-#: src/gtd-empty-list-widget.c:53
-msgid "You made it!"
-msgstr "Completade!"
+#: src/gtd-initial-setup-window.ui:62
+msgid "To Do Setup"
+msgstr "Configurazion di Di fâ"
 
-#: src/gtd-empty-list-widget.c:54
-msgid "Looks like there’s nothing else left here"
-msgstr "Al semee che nol sedi restât nie altri achì"
+#: src/gtd-initial-setup-window.ui:65 src/gtd-window.ui:116
+#: src/provider/gtd-provider-popover.ui:40
+msgid "_Cancel"
+msgstr "_Anule"
 
-#: src/gtd-empty-list-widget.c:59
-msgid "Get some rest now"
-msgstr "Polse cumò"
-
-#: src/gtd-empty-list-widget.c:60
-msgid "Enjoy the rest of your day"
-msgstr "Gjolditi il rest de zornade"
-
-#: src/gtd-empty-list-widget.c:61
-msgid "Good job!"
-msgstr "Biel lavôr!"
-
-#: src/gtd-empty-list-widget.c:62
-msgid "Meanwhile, spread the love"
-msgstr "Intant, pant amôr"
-
-# juste ma bisugnarès cjatâ alc di miôr
-#: src/gtd-empty-list-widget.c:63
-msgid "Working hard is always rewarded"
-msgstr "Lavorâ fuart al ven simpri premiât"
-
-#: src/gtd-empty-list-widget.c:74
-msgid "No tasks found"
-msgstr "Nissune ativitât cjatade"
-
-#: src/gtd-empty-list-widget.c:75
-msgid "You can add tasks using the <b>+</b> above"
-msgstr "Tu puedis zontâ ativitâts doprant il <b>+</b> parsore"
+#: src/gtd-initial-setup-window.ui:74
+msgid "_Done"
+msgstr "_Fat"
 
 #: src/gtd-plugin-dialog-row.c:97
 msgid "Error loading extension"
@@ -627,34 +463,24 @@ msgstr "Erôr tal cjariâ la estension"
 msgid "Error unloading extension"
 msgstr "Erôr tal discjariâ la estension"
 
-#: src/gtd-task-list-view.c:352
-msgid "Removing this task will also remove its subtasks. Remove anyway?"
-msgstr ""
-"Gjavant cheste ativitât tu gjavarâs ancje lis sôs sot-ativitâts. Gjavâ "
-"distès?"
+#: src/gtd-plugin-dialog.ui:62 src/gtd-window.ui:179
+msgid "Extensions"
+msgstr "Estensions"
 
-#: src/gtd-task-list-view.c:355
-msgid "Once removed, the tasks cannot be recovered."
-msgstr "Une volte gjavadis, lis ativitâts no podaran jessi plui recuperadis."
+#: src/gtd-plugin-dialog.ui:96
+msgid "No extensions found"
+msgstr "Nissune estension cjatade"
 
-#: src/gtd-task-list-view.c:358
-msgid "Cancel"
-msgstr "Anule"
+#: src/gtd-task-list-panel.ui:38 src/gtd-task-list-panel.ui:74
+#: src/gtd-task-list-panel.ui:98 src/sidebar/gtd-sidebar-list-row.ui:67
+msgid "Rename"
+msgstr "Cambie non"
 
-#: src/gtd-task-list-view.c:360
-msgid "Remove"
-msgstr "Gjave"
+#: src/gtd-task-list-panel.ui:57 src/sidebar/gtd-sidebar-list-row.ui:71
+msgid "Delete"
+msgstr "Elimine"
 
-#: src/gtd-task-list-view.c:802
-#, c-format
-msgid "Task <b>%s</b> removed"
-msgstr "Ativitât <b>%s</b> gjavade"
-
-#: src/gtd-task-list-view.c:826 src/sidebar/gtd-sidebar-list-row.c:281
-msgid "Undo"
-msgstr "Anule"
-
-#: src/gtd-window.c:110
+#: src/gtd-window.c:107
 msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
@@ -662,23 +488,204 @@ msgstr ""
 "Cheste e je une version di svilup di Di fâ. A podaressin capitâ erôrs, "
 "compuartaments sbaliâts e pierditis di dâts."
 
-#: src/gtd-window.c:471
+#: src/gtd-window.c:421
 msgid "Details"
 msgstr "Detais"
 
-#: src/gtd-window.c:783
+#: src/gtd-window.c:712
 msgid "Click a task list to select"
 msgstr "Fâs clic suntune liste di ativitâts par selezionâle"
 
-#: src/sidebar/gtd-sidebar-list-row.c:278
+#: src/gtd-window.ui:63
+msgid "_New List"
+msgstr "_Gnove liste"
+
+#: src/gtd-window.ui:185
+msgid "_About"
+msgstr "_Informazions"
+
+#: src/gtd-window.ui:189
+msgid "_Quit"
+msgstr "_Jes"
+
+#: src/provider/gtd-provider-popover.ui:23
+msgid "Create _List"
+msgstr "Cree _liste"
+
+#: src/provider/gtd-provider-popover.ui:54
+msgid "List Name"
+msgstr "Non liste"
+
+#: src/provider/gtd-provider-popover.ui:132
+msgid "Select a storage location"
+msgstr "Selezione une posizion di archiviazion"
+
+#: src/provider/gtd-provider-row.ui:64
+msgid "Off"
+msgstr "Off"
+
+#: src/provider/gtd-provider-selector.ui:23
+msgid "Click to add a new Google account"
+msgstr "Fâs clic par zontâ un gnûf account Google"
+
+#: src/provider/gtd-provider-selector.ui:39
+msgid "Google"
+msgstr "Google"
+
+#: src/provider/gtd-provider-selector.ui:49
+msgid "Click to add a new ownCloud account"
+msgstr "Fâs clic par zontâ un gnûf account ownCloud"
+
+#: src/provider/gtd-provider-selector.ui:65
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: src/provider/gtd-provider-selector.ui:75
+msgid "Click to add a new Microsoft Exchange account"
+msgstr "Fâs clic par zontâ un gnûf account Microsoft Exchange"
+
+#: src/provider/gtd-provider-selector.ui:91
+msgid "Microsoft Exchange"
+msgstr "Microsoft Exchange"
+
+#: src/provider/gtd-provider-selector.ui:104
+msgid "Or you can just store your tasks on this computer"
+msgstr "O archiviâ lis ativitâts su chest computer"
+
+#: src/sidebar/gtd-sidebar.c:304
 #, c-format
 msgid "Task list <b>%s</b> removed"
 msgstr "Liste ativitâts <b>%s</b> gjavade"
 
-#: src/sidebar/gtd-sidebar-list-row.c:307
+#: src/sidebar/gtd-sidebar.c:307 src/task-list-view/gtd-task-list-view.c:461
+msgid "Undo"
+msgstr "Anule"
+
+#: src/sidebar/gtd-sidebar-provider-row.ui:88
+msgid "Loading…"
+msgstr "Daûr a cjariâ…"
+
+#: src/task-list-view/gtd-edit-pane.ui:24
+msgid "D_ue Date"
+msgstr "Date di sc_jadence"
+
+#: src/task-list-view/gtd-edit-pane.ui:41
+msgid "_Today"
+msgstr "_Vuê"
+
+#: src/task-list-view/gtd-edit-pane.ui:50
+msgid "To_morrow"
+msgstr "Do_man"
+
+#: src/task-list-view/gtd-edit-pane.ui:91
+msgid "_Notes"
+msgstr "_Notis"
+
+#: src/task-list-view/gtd-edit-pane.ui:137
+msgid "_Delete"
+msgstr "_Elimine"
+
+#: src/task-list-view/gtd-edit-pane.ui:176
+msgctxt "taskdate"
+msgid "None"
+msgstr "Nissune"
+
+#. Translators: %1$s is the task list name, %2$s is the provider name
+#: src/task-list-view/gtd-new-task-row.c:91
 #, c-format
-msgid "Rename %s"
-msgstr "Cambie non a %s"
+msgid "%1$s \t <small>%2$s</small>"
+msgstr "%1$s \t <small>%2$s</small>"
+
+#: src/task-list-view/gtd-new-task-row.ui:15
+msgid "New task…"
+msgstr "Gnove ativitât..."
+
+#: src/task-list-view/gtd-task-list-view.c:442
+#, c-format
+msgid "Task <b>%s</b> removed"
+msgstr "Ativitât <b>%s</b> gjavade"
+
+#: src/widgets/gtd-empty-list-widget.c:51
+msgid "No more tasks left"
+msgstr "Nissune altre ativitât restade"
+
+#: src/widgets/gtd-empty-list-widget.c:52
+msgid "Nothing else to do here"
+msgstr "Nie altri di fâ achì"
+
+#: src/widgets/gtd-empty-list-widget.c:53
+msgid "You made it!"
+msgstr "Completade!"
+
+#: src/widgets/gtd-empty-list-widget.c:54
+msgid "Looks like there’s nothing else left here"
+msgstr "Al semee che nol sedi restât nie altri achì"
+
+#: src/widgets/gtd-empty-list-widget.c:59
+msgid "Get some rest now"
+msgstr "Polse cumò"
+
+#: src/widgets/gtd-empty-list-widget.c:60
+msgid "Enjoy the rest of your day"
+msgstr "Gjolditi il rest de zornade"
+
+#: src/widgets/gtd-empty-list-widget.c:61
+msgid "Good job!"
+msgstr "Biel lavôr!"
+
+#: src/widgets/gtd-empty-list-widget.c:62
+msgid "Meanwhile, spread the love"
+msgstr "Intant, pant amôr"
+
+# juste ma bisugnarès cjatâ alc di miôr
+#: src/widgets/gtd-empty-list-widget.c:63
+msgid "Working hard is always rewarded"
+msgstr "Lavorâ fuart al ven simpri premiât"
+
+#: src/widgets/gtd-empty-list-widget.c:74
+msgid "No tasks found"
+msgstr "Nissune ativitât cjatade"
+
+#: src/widgets/gtd-empty-list-widget.c:75
+msgid "You can add tasks using the <b>+</b> above"
+msgstr "Tu puedis zontâ ativitâts doprant il <b>+</b> parsore"
+
+#~ msgid "_Priority"
+#~ msgstr "_Prioritât"
+
+#~ msgctxt "taskpriority"
+#~ msgid "None"
+#~ msgstr "Nissune"
+
+#~ msgid "Low"
+#~ msgstr "Basse"
+
+#~ msgid "Medium"
+#~ msgstr "Medie"
+
+#~ msgid "High"
+#~ msgstr "Alte"
+
+#~ msgid "Copyright © %1$d The To Do authors"
+#~ msgstr "Copyright © %1$d i autôrs di Di fâ"
+
+#~ msgid "Removing this task will also remove its subtasks. Remove anyway?"
+#~ msgstr ""
+#~ "Gjavant cheste ativitât tu gjavarâs ancje lis sôs sot-ativitâts. Gjavâ "
+#~ "distès?"
+
+#~ msgid "Once removed, the tasks cannot be recovered."
+#~ msgstr ""
+#~ "Une volte gjavadis, lis ativitâts no podaran jessi plui recuperadis."
+
+#~ msgid "Cancel"
+#~ msgstr "Anule"
+
+#~ msgid "Remove"
+#~ msgstr "Gjave"
+
+#~ msgid "Rename %s"
+#~ msgstr "Cambie non a %s"
 
 #~ msgid "Lists"
 #~ msgstr "Listis"
