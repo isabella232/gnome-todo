@@ -3,7 +3,7 @@
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "master",
     "sdk" : "org.gnome.Sdk",
-    "command" : "gnome-todo",
+    "command" : "flatpak-wrapper.sh",
     "tags" : [
         "devel"
     ],
@@ -17,10 +17,6 @@
         "--system-talk-name=org.freedesktop.login1",
         "--talk-name=org.gnome.OnlineAccounts",
         "--talk-name=org.gnome.SettingsDaemon.Color",
-        "--talk-name=org.gnome.evolution.dataserver.AddressBook9",
-        "--talk-name=org.gnome.evolution.dataserver.Calendar7",
-        "--talk-name=org.gnome.evolution.dataserver.Sources5",
-        "--talk-name=org.gnome.evolution.dataserver.Subprocess.Backend.*",
         "--filesystem=host",
         "--filesystem=xdg-run/dconf",
         "--filesystem=~/.config/dconf:ro",
@@ -75,39 +71,6 @@
             ]
         },
         {
-            "name" : "evolution-data-server",
-            "cleanup" : [
-                "/lib/cmake",
-                "/lib/evolution-data-server/*-backends",
-                "/libexec",
-                "/share/dbus-1/services"
-            ],
-            "config-opts" : [
-                "-DENABLE_GTK=OFF",
-                "-DENABLE_GOOGLE_AUTH=OFF",
-                "-DENABLE_UOA=OFF",
-                "-DENABLE_GOOGLE=OFF",
-                "-DENABLE_VALA_BINDINGS=ON",
-                "-DENABLE_WEATHER=OFF",
-                "-DWITH_OPENLDAP=OFF",
-                "-DWITH_LIBDB=OFF",
-                "-DENABLE_INTROSPECTION=ON",
-                "-DENABLE_INSTALLED_TESTS=OFF",
-                "-DENABLE_GTK_DOC=OFF",
-                "-DENABLE_EXAMPLES=OFF",
-                "-DENABLE_VALA_BINDINGS=OFF",
-                "-DENABLE_INTROSPECTION=OFF",
-                "-DENABLE_OAUTH2=OFF"
-            ],
-            "buildsystem" : "cmake",
-            "sources" : [
-                {
-                    "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/evolution-data-server.git"
-                }
-            ]
-        },
-        {
             "name" : "libpeas",
             "cleanup" : [
                 "/bin/*",
@@ -134,6 +97,59 @@
             ]
         },
         {
+            "name" : "evolution-data-server",
+            "cleanup" : [
+                "/lib/cmake",
+                "/lib/evolution-data-server/*-backends",
+                "/libexec",
+                "/share/dbus-1/services"
+            ],
+            "config-opts" : [
+                "-DDBUS_SERVICES_PREFIX=org.gnome.Todo",
+                "-DENABLE_DOT_LOCKING=OFF",
+                "-DENABLE_FILE_LOCKING=fcntl",
+                "-DENABLE_GTK=OFF",
+                "-DENABLE_GOOGLE=OFF",
+                "-DENABLE_UOA=OFF",
+                "-DENABLE_VALA_BINDINGS=ON",
+                "-DENABLE_WEATHER=OFF",
+                "-DWITH_OPENLDAP=OFF",
+                "-DWITH_LIBDB=OFF",
+                "-DENABLE_INTROSPECTION=ON",
+                "-DENABLE_INSTALLED_TESTS=OFF",
+                "-DENABLE_GTK_DOC=OFF",
+                "-DENABLE_EXAMPLES=OFF",
+                "-DENABLE_VALA_BINDINGS=OFF",
+                "-DENABLE_INTROSPECTION=OFF",
+                "-DWITH_PHONENUMBER=OFF",
+                "-DWITH_SYSTEMDUSERUNITDIR=OFF",
+                "-DENABLE_OAUTH2=OFF"
+            ],
+            "buildsystem" : "cmake-ninja",
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://gitlab.gnome.org/GNOME/evolution-data-server.git"
+                }
+            ]
+        },
+        {
+            "name" : "flatpak-wrapper",
+            "buildsystem" : "simple",
+            "build-commands" : [
+            ],
+            "sources" : [
+                {
+                    "type" : "file",
+                    "path" : "flatpak-wrapper.sh"
+                }
+            ],
+            "post-install" : [
+                "mkdir -p /app/bin",
+                "install -C flatpak-wrapper.sh /app/bin/flatpak-wrapper.sh"
+            ]
+        },
+        {
             "name" : "gnome-todo",
             "buildsystem" : "meson",
             "config-opts" : [
@@ -146,5 +162,9 @@
                 }
             ]
         }
-    ]
+    ],
+    "build-options" : {
+        "env" : {
+        }
+    }
 }
