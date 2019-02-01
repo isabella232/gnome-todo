@@ -40,9 +40,6 @@ struct _GtdSidebarListRow
   GtkLabel           *name_label;
   GtkLabel           *tasks_counter_label;
 
-  GActionMap         *action_group;
-  GMenu              *menu;
-
   GtdTaskList        *list;
 };
 
@@ -103,8 +100,6 @@ static void
 set_list (GtdSidebarListRow *self,
           GtdTaskList       *list)
 {
-  GSimpleAction *delete_action;
-
   g_assert (list != NULL);
   g_assert (self->list == NULL);
 
@@ -127,56 +122,12 @@ set_list (GtdSidebarListRow *self,
   g_signal_connect_object (list, "notify::color", G_CALLBACK (on_list_color_changed_cb), self, 0);
 
   update_color_icon (self);
-
-  /* Disable the delete action if task is not writable */
-  delete_action = G_SIMPLE_ACTION (g_action_map_lookup_action (self->action_group, "delete"));
-
-  g_object_bind_property (list,
-                          "is-removable",
-                          delete_action,
-                          "enabled",
-                          G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
-}
-
-static void
-popup_menu (GtdSidebarListRow *self)
-{
-  GtkWidget *popover;
-
-  popover = gtk_popover_new_from_model (GTK_WIDGET (self), G_MENU_MODEL (self->menu));
-  gtk_widget_set_size_request (popover, 150, -1);
-
-  g_signal_connect (popover, "hide", G_CALLBACK (gtk_widget_destroy), NULL);
-
-  gtk_popover_popup (GTK_POPOVER (popover));
 }
 
 
 /*
  * Callbacks
  */
-
-static void
-on_gesture_multipress_released_cb (GtkGesture        *gesture,
-                                   guint              n_press,
-                                   gdouble            x,
-                                   gdouble            y,
-                                   GtdSidebarListRow *self)
-{
-  if (n_press > 1)
-    return;
-
-  popup_menu (self);
-}
-
-static void
-on_gesture_long_press_cb (GtkGesture        *gesture,
-                          gdouble            x,
-                          gdouble            y,
-                          GtdSidebarListRow *self)
-{
-  popup_menu (self);
-}
 
 static void
 on_list_changed_cb (GtdSidebarListRow *self)
@@ -215,7 +166,6 @@ gtd_sidebar_list_row_finalize (GObject *object)
   GtdSidebarListRow *self = (GtdSidebarListRow *)object;
 
   g_clear_object (&self->list);
-  g_clear_object (&self->action_group);
 
   G_OBJECT_CLASS (gtd_sidebar_list_row_parent_class)->finalize (object);
 }
@@ -279,26 +229,16 @@ gtd_sidebar_list_row_class_init (GtdSidebarListRowClass *klass)
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/sidebar/gtd-sidebar-list-row.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdSidebarListRow, color_icon);
-  gtk_widget_class_bind_template_child (widget_class, GtdSidebarListRow, menu);
   gtk_widget_class_bind_template_child (widget_class, GtdSidebarListRow, name_label);
   gtk_widget_class_bind_template_child (widget_class, GtdSidebarListRow, tasks_counter_label);
 
-  gtk_widget_class_bind_template_callback (widget_class, on_gesture_long_press_cb);
-  gtk_widget_class_bind_template_callback (widget_class, on_gesture_multipress_released_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_rename_popover_hidden_cb);
 }
 
 static void
 gtd_sidebar_list_row_init (GtdSidebarListRow *self)
 {
-  const GActionEntry entries[] = { };
-
   gtk_widget_init_template (GTK_WIDGET (self));
-
-  /* Actions */
-  self->action_group = G_ACTION_MAP (g_simple_action_group_new ());
-  g_action_map_add_action_entries (self->action_group, entries, G_N_ELEMENTS (entries), self);
-  gtk_widget_insert_action_group (GTK_WIDGET (self), "list-row", G_ACTION_GROUP (self->action_group));
 }
 
 GtkWidget*

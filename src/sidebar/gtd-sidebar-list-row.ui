@@ -4,23 +4,6 @@
   <template class="GtdSidebarListRow" parent="GtkListBoxRow">
     <property name="can_focus">True</property>
 
-    <!-- Gestures -->
-    <child>
-      <object class="GtkGestureLongPress">
-        <property name="propagation-phase">target</property>
-        <property name="touch-only">true</property>
-        <signal name="pressed" handler="on_gesture_long_press_cb" object="GtdSidebarListRow" swapped="no" />
-      </object>
-    </child>
-    <child>
-      <object class="GtkGestureMultiPress">
-        <property name="propagation-phase">bubble</property>
-        <property name="touch-only">false</property>
-        <property name="button">3</property>
-        <signal name="pressed" handler="on_gesture_multipress_released_cb" object="GtdSidebarListRow" swapped="no" />
-      </object>
-    </child>
-
     <child>
       <object class="GtkBox">
         <property name="can_focus">False</property>
@@ -59,19 +42,5 @@
       </object>
     </child>
   </template>
-
-  <!-- Right-click menu -->
-  <menu id="menu">
-    <section>
-      <item>
-        <attribute name="label" translatable="yes">Rename</attribute>
-        <attribute name="action">list-row.rename</attribute>
-      </item>
-      <item>
-        <attribute name="label" translatable="yes">Delete</attribute>
-        <attribute name="action">list-row.delete</attribute>
-      </item>
-    </section>
-  </menu>
 
 </interface>
