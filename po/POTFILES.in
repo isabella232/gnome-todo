@@ -1,6 +1,6 @@
 # List of source files containing translatable strings.
-data/appdata/org.gnome.Todo.appdata.xml.in
-data/org.gnome.Todo.desktop.in
+data/appdata/org.gnome.Todo.appdata.xml.in.in
+data/org.gnome.Todo.desktop.in.in
 data/org.gnome.todo.gschema.xml
 plugins/all-tasks-panel/gtd-all-tasks-panel.c
 plugins/background/gtd-plugin-background.c
