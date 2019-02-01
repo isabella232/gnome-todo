@@ -1,5 +1,6 @@
 desktop_conf = configuration_data()
 desktop_conf.set('icon', application_id)
+desktop_conf.set('application_id', application_id)
 desktop = i18n.merge_file(
   type: 'desktop',
   input: configure_file(
