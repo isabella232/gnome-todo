@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-12-16 11:07+0000\n"
-"PO-Revision-Date: 2019-01-27 15:04+0100\n"
+"POT-Creation-Date: 2019-02-01 18:18+0000\n"
+"PO-Revision-Date: 2019-02-02 08:48+0100\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -20,17 +20,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 1.2\n"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:141
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
+#: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
 #: src/gtd-window.c:717 src/gtd-window.c:748 src/main.c:35
 msgid "To Do"
 msgstr "Tennivalók"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:8
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:8
 msgid "Task manager for GNOME"
 msgstr "Tennivaló-kezelő a GNOME-hoz"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:11
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:11
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
 "GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
@@ -43,41 +43,41 @@ msgstr ""
 "szinkronizálja azokat felhőszolgáltatásokkal. Szabja testre az alkalmazást "
 "bővítményekkel."
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:25
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:25
 msgid "GNOME To Do with the dark theme variant"
 msgstr "GNOME Tennivalók sötét témaváltozattal"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:29
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:29
 msgid "Editing a tasklist with GNOME To Do"
 msgstr "Feladatlista szerkesztése a GNOME Tennivalókkal"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:33
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:33
 msgid "Task lists displayed on grid mode"
 msgstr "A feladatlisták rács módban jelennek meg"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:37
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:37
 msgid "Task lists displayed on list mode"
 msgstr "A feladatlisták lista módban jelennek meg"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:41
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:41
 msgid "Available plugins for GNOME To Do"
 msgstr "Elérhető bővítmények a GNOME Tennivalókhoz"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:45
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:45
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr "A mai feladatok látványos megjelenítése a GNOME Tennivalók Ma paneljén"
 
-#: data/org.gnome.Todo.desktop.in:4
+#: data/org.gnome.Todo.desktop.in.in:4
 msgid "Manage your personal tasks"
 msgstr "Személyes feladatok kezelése"
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Todo.desktop.in:7
-msgid "org.gnome.Todo"
-msgstr "org.gnome.Todo"
+#: data/org.gnome.Todo.desktop.in.in:7
+msgid "@icon@"
+msgstr "@icon@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Todo.desktop.in:13
+#: data/org.gnome.Todo.desktop.in.in:13
 msgid "Task;Productivity;Todo;"
 msgstr "Feladat;Teendő;Tennivaló;"
 
@@ -188,14 +188,14 @@ msgstr "Holnap"
 msgid "All"
 msgstr "Összes"
 
-#: plugins/background/gtd-plugin-background.c:151
+#: plugins/background/gtd-plugin-background.c:150
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
 msgstr[0] "%1$s és még egy feladat"
 msgstr[1] "%1$s és még %2$d feladat"
 
-#: plugins/background/gtd-plugin-background.c:255
+#: plugins/background/gtd-plugin-background.c:254
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
@@ -476,11 +476,11 @@ msgid "No extensions found"
 msgstr "Nem találhatók bővítmények"
 
 #: src/gtd-task-list-panel.ui:38 src/gtd-task-list-panel.ui:74
-#: src/gtd-task-list-panel.ui:98 src/sidebar/gtd-sidebar-list-row.ui:67
+#: src/gtd-task-list-panel.ui:98
 msgid "Rename"
 msgstr "Átnevezés"
 
-#: src/gtd-task-list-panel.ui:57 src/sidebar/gtd-sidebar-list-row.ui:71
+#: src/gtd-task-list-panel.ui:57
 msgid "Delete"
 msgstr "Törlés"
 
@@ -505,12 +505,8 @@ msgid "_New List"
 msgstr "Új list_a"
 
 #: src/gtd-window.ui:185
-msgid "_About"
-msgstr "_Névjegy"
-
-#: src/gtd-window.ui:189
-msgid "_Quit"
-msgstr "_Kilépés"
+msgid "_About To Do"
+msgstr "A Tennivalók _névjegye"
 
 #: src/provider/gtd-provider-popover.ui:23
 msgid "Create _List"
