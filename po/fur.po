@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-12-16 11:07+0000\n"
-"PO-Revision-Date: 2019-02-01 08:33+0100\n"
+"POT-Creation-Date: 2019-02-01 18:18+0000\n"
+"PO-Revision-Date: 2019-02-02 10:44+0100\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
@@ -18,18 +18,18 @@ msgstr ""
 "X-Generator: Poedit 2.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:141
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
+#: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
 #: src/gtd-window.c:717 src/gtd-window.c:748 src/main.c:35
 msgid "To Do"
 msgstr "Di fâ"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:8
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:8
 msgid "Task manager for GNOME"
 msgstr "Gjestôr des ativitâts par GNOME"
 
 # furnidôrs di ativitâts personalizâts?
-#: data/appdata/org.gnome.Todo.appdata.xml.in:11
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:11
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
 "GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
@@ -41,41 +41,41 @@ msgstr ""
 "di ativitâts. Ten lis tôs ativitâts sul computer o sincronizilis cui "
 "servizis vie cloud. Personalize la tô esperience cui plugin."
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:25
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:25
 msgid "GNOME To Do with the dark theme variant"
 msgstr "GNOME Di fâ cun la variant dal teme scûr"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:29
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:29
 msgid "Editing a tasklist with GNOME To Do"
 msgstr "Daûr a modificâ une liste di ativitâts cun GNOME Di fâ"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:33
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:33
 msgid "Task lists displayed on grid mode"
 msgstr "Listis des ativitâts mostradis te modalitât gridele"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:37
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:37
 msgid "Task lists displayed on list mode"
 msgstr "Listis des ativitâts mostradis te modalitât liste"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:41
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:41
 msgid "Available plugins for GNOME To Do"
 msgstr "Plugin disponibii par GNOME Di fâ"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:45
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:45
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr "Daûr a visualizâ lis ativitâts par vuê sul panel GNOME Di fâ"
 
-#: data/org.gnome.Todo.desktop.in:4
+#: data/org.gnome.Todo.desktop.in.in:4
 msgid "Manage your personal tasks"
 msgstr "Gjestion des propriis ativitâts"
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Todo.desktop.in:7
-msgid "org.gnome.Todo"
-msgstr "org.gnome.Todo"
+#: data/org.gnome.Todo.desktop.in.in:7
+msgid "@icon@"
+msgstr "@icon@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Todo.desktop.in:13
+#: data/org.gnome.Todo.desktop.in.in:13
 msgid "Task;Productivity;Todo;"
 msgstr "Ativitât;Produtivitât;Di fâ;"
 
@@ -185,14 +185,14 @@ msgstr "Doman"
 msgid "All"
 msgstr "Ducj"
 
-#: plugins/background/gtd-plugin-background.c:151
+#: plugins/background/gtd-plugin-background.c:150
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
 msgstr[0] "%1$s e une altre ativitât"
 msgstr[1] "%1$s e %2$d altris ativitâts"
 
-#: plugins/background/gtd-plugin-background.c:255
+#: plugins/background/gtd-plugin-background.c:254
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
@@ -426,7 +426,6 @@ msgid "Enable debug messages"
 msgstr "Abilite messaçs di debug"
 
 #: src/gtd-application.c:143
-#| msgid "Copyright © %1$d–%2$d The To Do authors"
 msgid "Copyright © 2015–2018 The To Do authors"
 msgstr "Copyright © 2015–2018 i autôrs di Di fâ"
 
@@ -472,11 +471,11 @@ msgid "No extensions found"
 msgstr "Nissune estension cjatade"
 
 #: src/gtd-task-list-panel.ui:38 src/gtd-task-list-panel.ui:74
-#: src/gtd-task-list-panel.ui:98 src/sidebar/gtd-sidebar-list-row.ui:67
+#: src/gtd-task-list-panel.ui:98
 msgid "Rename"
 msgstr "Cambie non"
 
-#: src/gtd-task-list-panel.ui:57 src/sidebar/gtd-sidebar-list-row.ui:71
+#: src/gtd-task-list-panel.ui:57
 msgid "Delete"
 msgstr "Elimine"
 
@@ -501,12 +500,8 @@ msgid "_New List"
 msgstr "_Gnove liste"
 
 #: src/gtd-window.ui:185
-msgid "_About"
-msgstr "_Informazions"
-
-#: src/gtd-window.ui:189
-msgid "_Quit"
-msgstr "_Jes"
+msgid "_About To Do"
+msgstr "_Informazions su Di fâ"
 
 #: src/provider/gtd-provider-popover.ui:23
 msgid "Create _List"
@@ -649,6 +644,12 @@ msgstr "Nissune ativitât cjatade"
 #: src/widgets/gtd-empty-list-widget.c:75
 msgid "You can add tasks using the <b>+</b> above"
 msgstr "Tu puedis zontâ ativitâts doprant il <b>+</b> parsore"
+
+#~ msgid "org.gnome.Todo"
+#~ msgstr "org.gnome.Todo"
+
+#~ msgid "_Quit"
+#~ msgstr "_Jes"
 
 #~ msgid "_Priority"
 #~ msgstr "_Prioritât"
