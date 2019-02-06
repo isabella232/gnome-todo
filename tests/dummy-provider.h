@@ -30,6 +30,8 @@ G_DECLARE_FINAL_TYPE (DummyProvider, dummy_provider, DUMMY, PROVIDER, GtdObject)
 
 DummyProvider*       dummy_provider_new                          (void);
 
+guint                dummy_provider_generate_task_list           (DummyProvider      *self);
+
 guint                dummy_provider_generate_task_lists          (DummyProvider      *self);
 
 void                 dummy_provider_schedule_remove_task         (DummyProvider      *self);
