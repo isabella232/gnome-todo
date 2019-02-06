@@ -2,34 +2,34 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2015-2018, 2018.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2015-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-12-02 17:07+0000\n"
-"PO-Revision-Date: 2018-12-04 15:55+0100\n"
+"POT-Creation-Date: 2019-02-01 18:18+0000\n"
+"PO-Revision-Date: 2019-02-06 11:32+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Gtranslator 3.31.90\n"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:141
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
+#: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
 #: src/gtd-window.c:717 src/gtd-window.c:748 src/main.c:35
 msgid "To Do"
 msgstr "Tareas pendientes"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:8
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:8
 msgid "Task manager for GNOME"
 msgstr "Gestor de tareas para GNOME"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:11
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:11
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
 "GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
@@ -41,41 +41,41 @@ msgstr ""
 "listas. Guarde sus tareas en su equipo o sincronícelas con proveedores en la "
 "nube. Personalice su experiencia con complementos."
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:25
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:25
 msgid "GNOME To Do with the dark theme variant"
 msgstr "Tareas pendientes de GNOME con la variante oscura del tema"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:29
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:29
 msgid "Editing a tasklist with GNOME To Do"
 msgstr "Editar una lista de tareas con Tareas pendientes de GNOME"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:33
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:33
 msgid "Task lists displayed on grid mode"
 msgstr "Listas de tareas mostradas en modo de rejilla"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:37
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:37
 msgid "Task lists displayed on list mode"
 msgstr "Listas de tareas mostradas en modo de lista"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:41
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:41
 msgid "Available plugins for GNOME To Do"
 msgstr "Complementos disponibles para Tareas pendientes de GNOME"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:45
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:45
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr "Viendo las tareas para hoy en el panel de tareas pendientes de GNOME"
 
-#: data/org.gnome.Todo.desktop.in:4
+#: data/org.gnome.Todo.desktop.in.in:4
 msgid "Manage your personal tasks"
 msgstr "Gestionar sus tareas personales"
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Todo.desktop.in:7
-msgid "org.gnome.Todo"
-msgstr "org.gnome.Todo"
+#: data/org.gnome.Todo.desktop.in.in:7
+msgid "@icon@"
+msgstr "@icon@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Todo.desktop.in:13
+#: data/org.gnome.Todo.desktop.in.in:13
 msgid "Task;Productivity;Todo;"
 msgstr "Tarea;Productividad;Pendiente;Hacer;"
 
@@ -139,137 +139,6 @@ msgstr "El selector de lista actual"
 msgid "The current list selector. Can be “grid” or “list”."
 msgstr "El selector de lista actual. Puede ser «rejilla» o «lista»."
 
-#: data/ui/edit-pane.ui:26
-msgid "D_ue Date"
-msgstr "F_echa límite"
-
-#: data/ui/edit-pane.ui:45
-msgid "_Today"
-msgstr "_Hoy"
-
-#: data/ui/edit-pane.ui:55
-msgid "To_morrow"
-msgstr "_Mañana"
-
-#: data/ui/edit-pane.ui:101
-msgid "_Notes"
-msgstr "_Notas"
-
-#: data/ui/edit-pane.ui:150
-msgid "_Delete"
-msgstr "_Eliminar"
-
-#: data/ui/edit-pane.ui:192
-msgctxt "taskdate"
-msgid "None"
-msgstr "Ninguna"
-
-#: data/ui/initial-setup.ui:25
-msgid "Welcome"
-msgstr "Bienvenido/a"
-
-#: data/ui/initial-setup.ui:40
-msgid "Log in to online accounts to access your tasks"
-msgstr "Inicie sesión en sus cuentas en línea para acceder a sus tareas"
-
-#: data/ui/initial-setup.ui:67
-msgid "To Do Setup"
-msgstr "Configuración de Tareas pendientes"
-
-#: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
-#: data/ui/window.ui:134
-msgid "_Cancel"
-msgstr "C_ancelar"
-
-#: data/ui/initial-setup.ui:80
-msgid "_Done"
-msgstr "_Hecho"
-
-#: data/ui/new-task-row.ui:15
-msgid "New task…"
-msgstr "Nueva tarea…"
-
-#: data/ui/plugin-dialog.ui:67 data/ui/window.ui:208
-msgid "Extensions"
-msgstr "Extensiones"
-
-#: data/ui/plugin-dialog.ui:110
-msgid "No extensions found"
-msgstr "No se han encontrado extensiones"
-
-#: data/ui/provider-popover.ui:25
-msgid "Create _List"
-msgstr "Crear _lista"
-
-#: data/ui/provider-popover.ui:59
-msgid "List Name"
-msgstr "Nombre de la lista"
-
-#: data/ui/provider-popover.ui:145
-msgid "Select a storage location"
-msgstr "Seleccionar una ubicación del almacenamiento"
-
-#: data/ui/provider-row.ui:70
-msgid "Off"
-msgstr "Apagado"
-
-#: data/ui/provider-selector.ui:27
-msgid "Click to add a new Google account"
-msgstr "Pulsar para añadir una cuenta de Google"
-
-#: data/ui/provider-selector.ui:46
-msgid "Google"
-msgstr "Google"
-
-#: data/ui/provider-selector.ui:57
-msgid "Click to add a new ownCloud account"
-msgstr "Pulsar para añadir una cuenta de ownCloud"
-
-#: data/ui/provider-selector.ui:76
-msgid "ownCloud"
-msgstr "ownCloud"
-
-#: data/ui/provider-selector.ui:87
-msgid "Click to add a new Microsoft Exchange account"
-msgstr "Pulsar para añadir una cuenta nueva de Microsoft Exchange"
-
-#: data/ui/provider-selector.ui:106
-msgid "Microsoft Exchange"
-msgstr "Microsoft Exchange"
-
-#: data/ui/provider-selector.ui:119
-msgid "Or you can just store your tasks on this computer"
-msgstr "O simplemente puede guardar las tareas en este equipo"
-
-#: data/ui/sidebar-list-row.ui:118 data/ui/sidebar-list-row.ui:137
-msgid "Rename"
-msgstr "Renombrar"
-
-#: data/ui/sidebar-list-row.ui:141
-msgid "Delete"
-msgstr "Eliminar"
-
-#: data/ui/sidebar-provider-row.ui:96
-msgid "Loading…"
-msgstr "Cargando…"
-
-#: data/ui/task-list-panel.ui:41
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
-msgid "Clear completed tasks…"
-msgstr "Limpiar las tareas completadas…"
-
-#: data/ui/window.ui:78
-msgid "_New List"
-msgstr "_Nueva lista"
-
-#: data/ui/window.ui:214
-msgid "_About"
-msgstr "_Acerca de"
-
-#: data/ui/window.ui:218
-msgid "_Quit"
-msgstr "_Salir"
-
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
 #: plugins/next-week-panel/gtd-next-week-panel.c:112
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:103
@@ -317,14 +186,14 @@ msgstr "Mañana"
 msgid "All"
 msgstr "Todas"
 
-#: plugins/background/gtd-plugin-background.c:151
+#: plugins/background/gtd-plugin-background.c:150
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
 msgstr[0] "%1$s y una tarea más"
 msgstr[1] "%1$s u %2$d tareas más"
 
-#: plugins/background/gtd-plugin-background.c:255
+#: plugins/background/gtd-plugin-background.c:254
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
@@ -543,6 +412,11 @@ msgstr "Fuente del archivo Todo.txt"
 msgid "Unscheduled"
 msgstr "No programadas"
 
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
+#: src/gtd-task-list-panel.ui:45
+msgid "Clear completed tasks…"
+msgstr "Limpiar las tareas completadas…"
+
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
 #, python-format
@@ -558,7 +432,6 @@ msgid "Enable debug messages"
 msgstr "Activar mensajes de depurado"
 
 #: src/gtd-application.c:143
-#| msgid "Copyright © %1$d–%2$d The To Do authors"
 msgid "Copyright © 2015–2018 The To Do authors"
 msgstr "Copyright © 2015–2018 los autores de Tareas pendientes"
 
@@ -566,49 +439,26 @@ msgstr "Copyright © 2015–2018 los autores de Tareas pendientes"
 msgid "translator-credits"
 msgstr "Daniel Mustieles <daniel.mustieles@gmail.com>, 2015"
 
-#: src/gtd-empty-list-widget.c:51
-msgid "No more tasks left"
-msgstr "No quedan más tareas"
+#: src/gtd-initial-setup-window.ui:23
+msgid "Welcome"
+msgstr "Bienvenido/a"
 
-#: src/gtd-empty-list-widget.c:52
-msgid "Nothing else to do here"
-msgstr "Aquí no hay nada más que hacer"
+#: src/gtd-initial-setup-window.ui:37
+msgid "Log in to online accounts to access your tasks"
+msgstr "Inicie sesión en sus cuentas en línea para acceder a sus tareas"
 
-#: src/gtd-empty-list-widget.c:53
-msgid "You made it!"
-msgstr "Conseguido"
+#: src/gtd-initial-setup-window.ui:62
+msgid "To Do Setup"
+msgstr "Configuración de Tareas pendientes"
 
-#: src/gtd-empty-list-widget.c:54
-msgid "Looks like there’s nothing else left here"
-msgstr "Parece que no hay nada pendiente por aquí"
+#: src/gtd-initial-setup-window.ui:65 src/gtd-window.ui:116
+#: src/provider/gtd-provider-popover.ui:40
+msgid "_Cancel"
+msgstr "C_ancelar"
 
-#: src/gtd-empty-list-widget.c:59
-msgid "Get some rest now"
-msgstr "Hacer un descanso ahora"
-
-#: src/gtd-empty-list-widget.c:60
-msgid "Enjoy the rest of your day"
-msgstr "Disfrute el resto del día"
-
-#: src/gtd-empty-list-widget.c:61
-msgid "Good job!"
-msgstr "Buen trabajo"
-
-#: src/gtd-empty-list-widget.c:62
-msgid "Meanwhile, spread the love"
-msgstr "Mientras tanto, difunda el amor"
-
-#: src/gtd-empty-list-widget.c:63
-msgid "Working hard is always rewarded"
-msgstr "El trabajo duro siempre se recompensa"
-
-#: src/gtd-empty-list-widget.c:74
-msgid "No tasks found"
-msgstr "No se han encontrado tareas"
-
-#: src/gtd-empty-list-widget.c:75
-msgid "You can add tasks using the <b>+</b> above"
-msgstr "Puede añadir tareas usando el <b>+</b> anterior"
+#: src/gtd-initial-setup-window.ui:74
+msgid "_Done"
+msgstr "_Hecho"
 
 #: src/gtd-plugin-dialog-row.c:97
 msgid "Error loading extension"
@@ -617,6 +467,23 @@ msgstr "Error al cargar la extensión"
 #: src/gtd-plugin-dialog-row.c:97
 msgid "Error unloading extension"
 msgstr "Error al descargar la extensión"
+
+#: src/gtd-plugin-dialog.ui:62 src/gtd-window.ui:179
+msgid "Extensions"
+msgstr "Extensiones"
+
+#: src/gtd-plugin-dialog.ui:96
+msgid "No extensions found"
+msgstr "No se han encontrado extensiones"
+
+#: src/gtd-task-list-panel.ui:38 src/gtd-task-list-panel.ui:74
+#: src/gtd-task-list-panel.ui:98
+msgid "Rename"
+msgstr "Renombrar"
+
+#: src/gtd-task-list-panel.ui:57
+msgid "Delete"
+msgstr "Eliminar"
 
 #: src/gtd-window.c:107
 msgid ""
@@ -634,20 +501,96 @@ msgstr "Detalles"
 msgid "Click a task list to select"
 msgstr "Pulse sobre una tarea para seleccionarla"
 
-#: src/sidebar/gtd-sidebar-list-row.c:259
+#: src/gtd-window.ui:63
+msgid "_New List"
+msgstr "_Nueva lista"
+
+#: src/gtd-window.ui:185
+#| msgid "_About"
+msgid "_About To Do"
+msgstr "_Acerca de Tareas pendientes"
+
+#: src/provider/gtd-provider-popover.ui:23
+msgid "Create _List"
+msgstr "Crear _lista"
+
+#: src/provider/gtd-provider-popover.ui:54
+msgid "List Name"
+msgstr "Nombre de la lista"
+
+#: src/provider/gtd-provider-popover.ui:132
+msgid "Select a storage location"
+msgstr "Seleccionar una ubicación del almacenamiento"
+
+#: src/provider/gtd-provider-row.ui:64
+msgid "Off"
+msgstr "Apagado"
+
+#: src/provider/gtd-provider-selector.ui:23
+msgid "Click to add a new Google account"
+msgstr "Pulsar para añadir una cuenta de Google"
+
+#: src/provider/gtd-provider-selector.ui:39
+msgid "Google"
+msgstr "Google"
+
+#: src/provider/gtd-provider-selector.ui:49
+msgid "Click to add a new ownCloud account"
+msgstr "Pulsar para añadir una cuenta de ownCloud"
+
+#: src/provider/gtd-provider-selector.ui:65
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: src/provider/gtd-provider-selector.ui:75
+msgid "Click to add a new Microsoft Exchange account"
+msgstr "Pulsar para añadir una cuenta nueva de Microsoft Exchange"
+
+#: src/provider/gtd-provider-selector.ui:91
+msgid "Microsoft Exchange"
+msgstr "Microsoft Exchange"
+
+#: src/provider/gtd-provider-selector.ui:104
+msgid "Or you can just store your tasks on this computer"
+msgstr "O simplemente puede guardar las tareas en este equipo"
+
+#: src/sidebar/gtd-sidebar.c:304
 #, c-format
 msgid "Task list <b>%s</b> removed"
 msgstr "Lista de tareas <b>%s</b> eliminada"
 
-#: src/sidebar/gtd-sidebar-list-row.c:262
-#: src/task-list-view/gtd-task-list-view.c:461
+#: src/sidebar/gtd-sidebar.c:307 src/task-list-view/gtd-task-list-view.c:461
 msgid "Undo"
 msgstr "Deshacer"
 
-#: src/sidebar/gtd-sidebar-list-row.c:290
-#, c-format
-msgid "Rename %s"
-msgstr "Renombrar %s"
+#: src/sidebar/gtd-sidebar-provider-row.ui:88
+msgid "Loading…"
+msgstr "Cargando…"
+
+#: src/task-list-view/gtd-edit-pane.ui:24
+msgid "D_ue Date"
+msgstr "F_echa límite"
+
+#: src/task-list-view/gtd-edit-pane.ui:41
+msgid "_Today"
+msgstr "_Hoy"
+
+#: src/task-list-view/gtd-edit-pane.ui:50
+msgid "To_morrow"
+msgstr "_Mañana"
+
+#: src/task-list-view/gtd-edit-pane.ui:91
+msgid "_Notes"
+msgstr "_Notas"
+
+#: src/task-list-view/gtd-edit-pane.ui:137
+msgid "_Delete"
+msgstr "_Eliminar"
+
+#: src/task-list-view/gtd-edit-pane.ui:176
+msgctxt "taskdate"
+msgid "None"
+msgstr "Ninguna"
 
 #. Translators: %1$s is the task list name, %2$s is the provider name
 #: src/task-list-view/gtd-new-task-row.c:91
@@ -655,10 +598,67 @@ msgstr "Renombrar %s"
 msgid "%1$s \t <small>%2$s</small>"
 msgstr "%1$s \t <small>%2$s</small>"
 
+#: src/task-list-view/gtd-new-task-row.ui:15
+msgid "New task…"
+msgstr "Nueva tarea…"
+
 #: src/task-list-view/gtd-task-list-view.c:442
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Tarea <b>%s</b> eliminada"
+
+#: src/widgets/gtd-empty-list-widget.c:51
+msgid "No more tasks left"
+msgstr "No quedan más tareas"
+
+#: src/widgets/gtd-empty-list-widget.c:52
+msgid "Nothing else to do here"
+msgstr "Aquí no hay nada más que hacer"
+
+#: src/widgets/gtd-empty-list-widget.c:53
+msgid "You made it!"
+msgstr "Conseguido"
+
+#: src/widgets/gtd-empty-list-widget.c:54
+msgid "Looks like there’s nothing else left here"
+msgstr "Parece que no hay nada pendiente por aquí"
+
+#: src/widgets/gtd-empty-list-widget.c:59
+msgid "Get some rest now"
+msgstr "Hacer un descanso ahora"
+
+#: src/widgets/gtd-empty-list-widget.c:60
+msgid "Enjoy the rest of your day"
+msgstr "Disfrute el resto del día"
+
+#: src/widgets/gtd-empty-list-widget.c:61
+msgid "Good job!"
+msgstr "Buen trabajo"
+
+#: src/widgets/gtd-empty-list-widget.c:62
+msgid "Meanwhile, spread the love"
+msgstr "Mientras tanto, difunda el amor"
+
+#: src/widgets/gtd-empty-list-widget.c:63
+msgid "Working hard is always rewarded"
+msgstr "El trabajo duro siempre se recompensa"
+
+#: src/widgets/gtd-empty-list-widget.c:74
+msgid "No tasks found"
+msgstr "No se han encontrado tareas"
+
+#: src/widgets/gtd-empty-list-widget.c:75
+msgid "You can add tasks using the <b>+</b> above"
+msgstr "Puede añadir tareas usando el <b>+</b> anterior"
+
+#~ msgid "org.gnome.Todo"
+#~ msgstr "org.gnome.Todo"
+
+#~ msgid "_Quit"
+#~ msgstr "_Salir"
+
+#~ msgid "Rename %s"
+#~ msgstr "Renombrar %s"
 
 #~ msgid "_Priority"
 #~ msgstr "_Prioridad"
