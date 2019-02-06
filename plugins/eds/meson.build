@@ -16,6 +16,7 @@ eds_plugin_deps = [
 eds_plugin_deps += gnome_todo_deps
 
 sources = files(
+  'e-source-gnome-todo.c',
   'gtd-plugin-' + plugin_name + '.c',
   'gtd-provider-' + plugin_name + '.c',
   'gtd-provider-goa.c',
