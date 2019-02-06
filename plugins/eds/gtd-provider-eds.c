@@ -492,6 +492,7 @@ gtd_provider_eds_create_task (GtdProvider *provider,
   gtd_task_set_title (new_task, title);
   gtd_task_set_due_date (new_task, due_date);
   gtd_task_set_list (new_task, list);
+  gtd_task_set_position (new_task, g_list_model_get_n_items (G_LIST_MODEL (list)));
 
   /* Use the component with the changes we've just done */
   updated_component = gtd_task_eds_get_component (GTD_TASK_EDS (new_task));
