@@ -18,6 +18,7 @@
 
 #define G_LOG_DOMAIN "GtdTaskListEds"
 
+#include "e-source-gnome-todo.h"
 #include "gtd-debug.h"
 #include "gtd-eds-autoptr.h"
 #include "gtd-provider-eds.h"
@@ -44,6 +45,10 @@ typedef struct
   GtdTask            *child;
   gchar              *parent_uid;
 } PendingSubtaskData;
+
+static void          on_client_objects_modified_for_migration_cb (GObject            *object,
+                                                                  GAsyncResult       *result,
+                                                                  gpointer            user_data);
 
 G_DEFINE_TYPE (GtdTaskListEds, gtd_task_list_eds, GTD_TYPE_TASK_LIST)
 
@@ -78,6 +83,144 @@ pending_subtask_data_free (PendingSubtaskData *data)
 {
   g_free (data->parent_uid);
   g_free (data);
+}
+
+static void
+update_changed_tasks (GtdTaskListEds *self,
+                      GHashTable     *changed_tasks)
+{
+  g_autoptr (GSList) components = NULL;
+  GHashTableIter iter;
+  GtdProvider *provider;
+  GtdTask *task;
+  guint n_changed_tasks;
+
+  GTD_ENTRY;
+
+  n_changed_tasks = g_hash_table_size (changed_tasks);
+  provider = gtd_task_list_get_provider (GTD_TASK_LIST (self));
+
+  /* Nothing changed, list is ready */
+  if (n_changed_tasks == 0)
+    {
+      gtd_object_pop_loading (GTD_OBJECT (provider));
+      g_signal_emit_by_name (provider, "list-added", self);
+      GTD_RETURN ();
+    }
+
+  GTD_TRACE_MSG ("%u task(s) changed", n_changed_tasks);
+
+  g_hash_table_iter_init (&iter, changed_tasks);
+  while (g_hash_table_iter_next (&iter, (gpointer *) &task, NULL))
+    {
+      icalcomponent *ical_comp;
+      ECalComponent *comp;
+
+      comp = gtd_task_eds_get_component (GTD_TASK_EDS (task));
+      ical_comp = e_cal_component_get_icalcomponent (comp);
+
+      components = g_slist_prepend (components, ical_comp);
+    }
+
+  e_cal_client_modify_objects (self->client,
+                               components,
+                               E_CAL_OBJ_MOD_THIS,
+                               self->cancellable,
+                               on_client_objects_modified_for_migration_cb,
+                               self);
+
+  GTD_EXIT;
+}
+
+static void
+migrate_to_v1 (GtdTaskListEds *self,
+               GHashTable     *changed_tasks)
+{
+  GListModel *model;
+  guint n_tasks;
+  guint i;
+
+  model = G_LIST_MODEL (self);
+  n_tasks = g_list_model_get_n_items (model);
+
+  for (i = 0; i < n_tasks; i++)
+    {
+      GtdTask *task;
+
+      task = g_list_model_get_item (model, i);
+
+      /* Don't notify to avoid carpet-bombing GtdTaskList */
+      g_object_freeze_notify (G_OBJECT (task));
+
+      gtd_task_set_position (task, i);
+
+      g_hash_table_add (changed_tasks, task);
+    }
+
+  for (i = 0; i < n_tasks; i++)
+    g_object_freeze_notify (g_list_model_get_item (model, i));
+}
+
+struct
+{
+  guint api_version;
+  void  (* migrate) (GtdTaskListEds *self,
+                     GHashTable     *changed_tasks);
+}
+migration_vtable[] =
+{
+  { 0, migrate_to_v1 },
+};
+
+static void
+maybe_migrate_todo_api_version (GtdTaskListEds *self)
+{
+  g_autoptr (GHashTable) changed_tasks = NULL;
+  ESourceGnomeTodo *gnome_todo_extension;
+  gboolean api_version_changed;
+  guint api_version;
+  guint i;
+
+  GTD_ENTRY;
+
+  /*
+   * Ensure the type so that it is available for introspection when
+   * calling e_source_get_extension().
+   */
+  g_type_ensure (E_TYPE_SOURCE_GNOME_TODO);
+
+  api_version_changed = FALSE;
+  gnome_todo_extension = e_source_get_extension (self->source, E_SOURCE_EXTENSION_GNOME_TODO);
+  api_version = e_source_gnome_todo_get_api_version (gnome_todo_extension);
+  changed_tasks = g_hash_table_new (g_direct_hash, g_direct_equal);
+
+  g_debug ("%s: GNOME To Do API version %u",
+           gtd_task_list_get_name (GTD_TASK_LIST (self)),
+           api_version);
+
+  for (i = 0; i < G_N_ELEMENTS (migration_vtable); i++)
+    {
+      guint new_api_version = i + 1;
+
+      if (api_version > migration_vtable[i].api_version)
+        continue;
+
+      g_debug ("  Migrating task list to GNOME To Do API v%u", new_api_version);
+
+      migration_vtable[i].migrate (self, changed_tasks);
+      api_version_changed = TRUE;
+    }
+
+  if (api_version_changed)
+    {
+      g_debug ("Saving new API version");
+
+      e_source_write (self->source, NULL, NULL, NULL);
+    }
+
+  update_changed_tasks (self, changed_tasks);
+
+  GTD_EXIT;
 }
 
 static void
@@ -146,6 +289,31 @@ process_pending_subtasks (GtdTaskListEds *self,
 /*
  * Callbacks
  */
+
+static void
+on_client_objects_modified_for_migration_cb (GObject      *object,
+                                             GAsyncResult *result,
+                                             gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+  GtdProvider *provider;
+  GtdTaskListEds *self;
+
+  GTD_ENTRY;
+
+  self = GTD_TASK_LIST_EDS (user_data);
+  provider = gtd_task_list_get_provider (GTD_TASK_LIST (self));
+
+  e_cal_client_modify_objects_finish (self->client, result, &error);
+
+  if (error && !g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+    g_warning ("Error migrating tasks to new API version: %s", error->message);
+
+  gtd_object_pop_loading (GTD_OBJECT (provider));
+  g_signal_emit_by_name (provider, "list-added", self);
+
+  GTD_EXIT;
+}
 
 static void
 on_view_objects_added_cb (ECalClientView *view,
@@ -270,8 +438,6 @@ on_view_completed_cb (ECalClientView *view,
                       const GError   *error,
                       GtdTaskList    *self)
 {
-  GtdProvider *provider;
-
   gtd_object_pop_loading (GTD_OBJECT (gtd_manager_get_default ()));
   gtd_object_pop_loading (GTD_OBJECT (self));
 
@@ -287,13 +453,7 @@ on_view_completed_cb (ECalClientView *view,
       return;
     }
 
-  provider = gtd_task_list_get_provider (self);
-
-  /* The provider is loading one less tasklist now */
-  gtd_object_pop_loading (GTD_OBJECT (provider));
-
-  /* Emit LIST_ADDED signal */
-  g_signal_emit_by_name (provider, "list-added", self);
+  maybe_migrate_todo_api_version (GTD_TASK_LIST_EDS (self));
 }
 
 static void

@@ -21,6 +21,8 @@
 #include "gtd-eds-autoptr.h"
 #include "gtd-task-eds.h"
 
+#define ICAL_X_GNOME_TODO_POSITION "X-GNOME-TODO-POSITION"
+
 struct _GtdTaskEds
 {
   GtdTask             parent;
@@ -490,7 +492,6 @@ gtd_task_eds_set_title (GtdTask     *task,
 
   e_cal_component_set_summary (self->new_component, &new_summary);
 }
-
 
 static void
 gtd_task_eds_subtask_added (GtdTask *task,
