@@ -49,6 +49,7 @@ static_test_link_args = ['-fPIC']
 static_tests = [
   'test-model-filter',
   'test-model-sort',
+  'test-task-list',
   'test-task-model',
 ]
 

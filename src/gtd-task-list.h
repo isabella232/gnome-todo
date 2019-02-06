@@ -84,6 +84,10 @@ gboolean                gtd_task_list_contains                  (GtdTaskList    
 GtdTask*                gtd_task_list_get_task_by_id            (GtdTaskList            *self,
                                                                  const gchar            *id);
 
+void                    gtd_task_list_move_task_to_position     (GtdTaskList            *self,
+                                                                 GtdTask                *task,
+                                                                 guint                   new_position);
+
 G_END_DECLS
 
 #endif /* GTD_TASK_LIST_H */

@@ -51,6 +51,8 @@ typedef struct
   GSequence           *sorted_tasks;
   guint                n_tasks;
 
+  guint                freeze_counter;
+
   gchar               *name;
   gboolean             removable;
 } GtdTaskListPrivate;
@@ -247,6 +249,10 @@ task_changed_cb (GtdTask     *task,
       update_task_uid (self, task);
       GTD_RETURN ();
     }
+
+  /* Don't update when the list is frozen */
+  if (priv->freeze_counter > 0)
+    GTD_RETURN ();
 
   iter = g_hash_table_lookup (priv->tasks, gtd_object_get_uid (GTD_OBJECT (task)));
 
@@ -868,4 +874,152 @@ gtd_task_list_get_task_by_id (GtdTaskList *self,
     return NULL;
 
   return g_sequence_get (iter);
+}
+
+/**
+ * gtd_task_list_move_task_to_position:
+ * @self: a #GtdTaskList
+ * @task: a #GtdTask
+ * @new_position: the new position of @task inside @self
+ *
+ * Moves @task and all its subtasks to @new_position, and repositions
+ * the elements in between as well.
+ *
+ * @task must belog to @self.
+ */
+void
+gtd_task_list_move_task_to_position (GtdTaskList *self,
+                                     GtdTask     *task,
+                                     guint        new_position)
+{
+  GtdTaskListPrivate *priv = gtd_task_list_get_instance_private (self);
+  GSequenceIter *block_start_iter;
+  GSequenceIter *block_end_iter;
+  GSequenceIter *new_position_iter;
+  gboolean moving_up;
+  guint64 n_subtasks;
+  guint block1_start;
+  guint block1_length;
+  guint block1_new_start;
+  guint block2_start;
+  guint block2_length;
+  guint block2_new_start;
+  guint i;
+
+  /*
+   * The algorithm divides it in 2 blocks:
+   *
+   *  * Block 1: [ @task position → @task position + n_subtasks ]
+   *  * Block 2: the tasks between Block 1 and @new_position
+   *
+   * And there are 2 cases we need to deal with:
+   *
+   *  * Case 1: moving @task to above (@new_position is above the
+   *            current position)
+   *  * Case 2: moving @task to below (@new_position is below the
+   *            current position)
+   */
+
+  g_return_if_fail (GTD_IS_TASK_LIST (self));
+  g_return_if_fail (GTD_IS_TASK (task));
+  g_return_if_fail (gtd_task_list_contains (self, task));
+  g_return_if_fail (g_list_model_get_n_items (G_LIST_MODEL (self)) >= new_position);
+
+  n_subtasks = gtd_task_get_n_total_subtasks (task);
+  block1_start = gtd_task_get_position (task);
+  block1_length = n_subtasks + 1;
+
+  g_return_if_fail (new_position < block1_start || new_position >= block1_start + block1_length);
+
+  moving_up = block1_start > new_position;
+
+  if (moving_up)
+    {
+      /*
+       * Case 1: Moving up
+       */
+      block2_start = new_position;
+      block2_length = block1_start - new_position;
+
+      block1_new_start = new_position;
+      block2_new_start = new_position + block1_length;
+    }
+  else
+    {
+      /*
+       * Case 2: Moving down
+       */
+      block2_start = block1_start + block1_length;
+      block2_length = new_position - block2_start;
+
+      block1_new_start = new_position - n_subtasks - 1;
+      block2_new_start = block2_start - block1_length;
+    }
+
+  GTD_TRACE_MSG ("Moving task and subtasks [%u, %u] to %u, and adjusting [%u, %u] to %u",
+                 block1_start,
+                 block1_start + block1_length - 1,
+                 block1_new_start,
+                 block2_start,
+                 block2_start + block2_length - 1,
+                 block2_new_start);
+
+  priv->freeze_counter++;
+
+  /* Update Block 1 */
+  for (i = 0; i < block1_length; i++)
+    {
+      g_autoptr (GtdTask) task_at_i = NULL;
+
+      task_at_i = g_list_model_get_item (G_LIST_MODEL (self), block1_start + i);
+
+      g_signal_handlers_block_by_func (task_at_i, task_changed_cb, self);
+      gtd_task_set_position (task_at_i, block1_new_start + i);
+      g_signal_handlers_unblock_by_func (task_at_i, task_changed_cb, self);
+    }
+
+  /* Update Block 2 */
+  for (i = 0; i < block2_length; i++)
+    {
+      g_autoptr (GtdTask) task_at_i = NULL;
+
+      task_at_i = g_list_model_get_item (G_LIST_MODEL (self), block2_start + i);
+
+      g_signal_handlers_block_by_func (task_at_i, task_changed_cb, self);
+      gtd_task_set_position (task_at_i, block2_new_start + i);
+      g_signal_handlers_unblock_by_func (task_at_i, task_changed_cb, self);
+    }
+
+  /*
+   * Update the GSequence and emit the signal using the smallest block, to
+   * avoid recreating as many widgets as possible.
+   */
+  if (block1_length < block2_length)
+    {
+      block_start_iter = g_sequence_get_iter_at_pos (priv->sorted_tasks, block1_start);
+      block_end_iter = g_sequence_get_iter_at_pos (priv->sorted_tasks, block1_start + block1_length);
+      new_position_iter = g_sequence_get_iter_at_pos (priv->sorted_tasks, new_position);
+
+      g_sequence_move_range (new_position_iter, block_start_iter, block_end_iter);
+
+      g_list_model_items_changed (G_LIST_MODEL (self), block1_start, block1_length, 0);
+      g_list_model_items_changed (G_LIST_MODEL (self), block1_new_start, 0, block1_length);
+    }
+  else
+    {
+      block_start_iter = g_sequence_get_iter_at_pos (priv->sorted_tasks, block2_start);
+      block_end_iter = g_sequence_get_iter_at_pos (priv->sorted_tasks, block2_start + block2_length);
+
+      if (moving_up)
+        new_position_iter = g_sequence_get_iter_at_pos (priv->sorted_tasks, block1_start + block1_length);
+      else
+        new_position_iter = g_sequence_get_iter_at_pos (priv->sorted_tasks, block1_start);
+
+      g_sequence_move_range (new_position_iter, block_start_iter, block_end_iter);
+
+      g_list_model_items_changed (G_LIST_MODEL (self), block2_start, block2_length, 0);
+      g_list_model_items_changed (G_LIST_MODEL (self), block2_new_start, 0, block2_length);
+    }
+
+  priv->freeze_counter--;
 }
