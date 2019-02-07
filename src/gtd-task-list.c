@@ -976,6 +976,8 @@ gtd_task_list_move_task_to_position (GtdTaskList *self,
       g_signal_handlers_block_by_func (task_at_i, task_changed_cb, self);
       gtd_task_set_position (task_at_i, block1_new_start + i);
       g_signal_handlers_unblock_by_func (task_at_i, task_changed_cb, self);
+
+      gtd_provider_update_task (priv->provider, task_at_i);
     }
 
   /* Update Block 2 */
@@ -988,6 +990,8 @@ gtd_task_list_move_task_to_position (GtdTaskList *self,
       g_signal_handlers_block_by_func (task_at_i, task_changed_cb, self);
       gtd_task_set_position (task_at_i, block2_new_start + i);
       g_signal_handlers_unblock_by_func (task_at_i, task_changed_cb, self);
+
+      gtd_provider_update_task (priv->provider, task_at_i);
     }
 
   /*
