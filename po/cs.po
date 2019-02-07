@@ -1,16 +1,17 @@
 # Czech translation for gnome-todo.
 # Copyright (C) 2015 gnome-todo's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-todo package.
+#
 # Zdeněk Hataš <zdenek.hatas@gmail.com>, 2015.
 # Petr Kovar <pknbe@volny.cz>, 2015.
-# Marek Černocký <marek@manet.cz>, 2015, 2016, 2017, 2018.
+# Marek Černocký <marek@manet.cz>, 2015, 2016, 2017, 2018, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-10-04 18:38+0000\n"
-"PO-Revision-Date: 2018-10-11 13:02+0200\n"
+"POT-Creation-Date: 2019-02-01 18:18+0000\n"
+"PO-Revision-Date: 2019-02-07 10:12+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -21,17 +22,17 @@ msgstr ""
 "X-Generator: Gtranslator 2.91.7\n"
 "X-Project-Style: gnome\n"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:141
-#: src/gtd-window.c:717 src/gtd-window.c:748 src/main.c:37
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
+#: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
+#: src/gtd-window.c:717 src/gtd-window.c:748 src/main.c:35
 msgid "To Do"
 msgstr "Úkoly"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:8
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:8
 msgid "Task manager for GNOME"
 msgstr "Správa úkolů pro GNOME"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:11
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:11
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
 "GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
@@ -43,41 +44,41 @@ msgstr ""
 "více seznamů. Uchovávejte si je na svém počítači nebo synchronizované s "
 "cloudovými službami. Využijte zásuvné moduly k přizpůsobení svým potřebám."
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:25
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:25
 msgid "GNOME To Do with the dark theme variant"
 msgstr "Úkoly GNOME ve verzi s tmavým motivem"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:29
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:29
 msgid "Editing a tasklist with GNOME To Do"
 msgstr "Úkoly GNOME ve verzi s tmavým motivem"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:33
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:33
 msgid "Task lists displayed on grid mode"
 msgstr "Seznam úkolů zobrazený v mřížce"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:37
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:37
 msgid "Task lists displayed on list mode"
 msgstr "Seznam úkolů zobrazený jako seznam"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:41
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:41
 msgid "Available plugins for GNOME To Do"
 msgstr "Dostupné zásuvné moduly pro Úkoly GNOME"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:45
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:45
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr "Zobrazení úkolů pro dnešní den v panelu Dnes v Úkolech GNOME"
 
-#: data/org.gnome.Todo.desktop.in:4
+#: data/org.gnome.Todo.desktop.in.in:4
 msgid "Manage your personal tasks"
 msgstr "Spravujte své osobní úkoly"
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Todo.desktop.in:7
-msgid "org.gnome.Todo"
-msgstr "org.gnome.Todo"
+#: data/org.gnome.Todo.desktop.in.in:7
+msgid "@icon@"
+msgstr "@icon@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Todo.desktop.in:13
+#: data/org.gnome.Todo.desktop.in.in:13
 msgid "Task;Productivity;Todo;"
 msgstr "úkoly;úkolníček;produktivita;todo;dodělat;dokončit;"
 
@@ -141,137 +142,6 @@ msgid "The current list selector. Can be “grid” or “list”."
 msgstr ""
 "Aktuálně vybraný typ seznamu. Může být „grid“ (mřížka) nebo „list“ (seznam)."
 
-#: data/ui/edit-pane.ui:26
-msgid "D_ue Date"
-msgstr "Dat_um splnění"
-
-#: data/ui/edit-pane.ui:45
-msgid "_Today"
-msgstr "Dne_s"
-
-#: data/ui/edit-pane.ui:55
-msgid "To_morrow"
-msgstr "_Zítra"
-
-#: data/ui/edit-pane.ui:101
-msgid "_Notes"
-msgstr "Poz_námky"
-
-#: data/ui/edit-pane.ui:150
-msgid "_Delete"
-msgstr "O_dstranit"
-
-#: data/ui/edit-pane.ui:192
-msgctxt "taskdate"
-msgid "None"
-msgstr "Žádné"
-
-#: data/ui/initial-setup.ui:25
-msgid "Welcome"
-msgstr "Vítejte"
-
-#: data/ui/initial-setup.ui:40
-msgid "Log in to online accounts to access your tasks"
-msgstr "Přihlášení k účtům on-line pro přístup k vašim úkolům"
-
-#: data/ui/initial-setup.ui:67
-msgid "To Do Setup"
-msgstr "Nastavení aplikace Úkoly"
-
-#: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
-#: data/ui/window.ui:134
-msgid "_Cancel"
-msgstr "_Zrušit"
-
-#: data/ui/initial-setup.ui:80
-msgid "_Done"
-msgstr "_Hotovo"
-
-#: data/ui/new-task-row.ui:15
-msgid "New task…"
-msgstr "Nový úkol…"
-
-#: data/ui/plugin-dialog.ui:67 data/ui/window.ui:208
-msgid "Extensions"
-msgstr "Rozšíření"
-
-#: data/ui/plugin-dialog.ui:110
-msgid "No extensions found"
-msgstr "Nebylo nalezeno žádné rozšíření"
-
-#: data/ui/provider-popover.ui:25
-msgid "Create _List"
-msgstr "Vytvořit _seznam"
-
-#: data/ui/provider-popover.ui:59
-msgid "List Name"
-msgstr "Název seznamu"
-
-#: data/ui/provider-popover.ui:145
-msgid "Select a storage location"
-msgstr "Vyberte místo uložení"
-
-#: data/ui/provider-row.ui:70
-msgid "Off"
-msgstr "Vypnuto"
-
-#: data/ui/provider-selector.ui:27
-msgid "Click to add a new Google account"
-msgstr "Kliknutím přidáte účet Google"
-
-#: data/ui/provider-selector.ui:46
-msgid "Google"
-msgstr "Google"
-
-#: data/ui/provider-selector.ui:57
-msgid "Click to add a new ownCloud account"
-msgstr "Kliknutím přidáte účet ownCloud"
-
-#: data/ui/provider-selector.ui:76
-msgid "ownCloud"
-msgstr "ownCloud"
-
-#: data/ui/provider-selector.ui:87
-msgid "Click to add a new Microsoft Exchange account"
-msgstr "Kliknutím přidáte účet Microsoft Exchange"
-
-#: data/ui/provider-selector.ui:106
-msgid "Microsoft Exchange"
-msgstr "Microsoft Exchange"
-
-#: data/ui/provider-selector.ui:119
-msgid "Or you can just store your tasks on this computer"
-msgstr "Nebo můžete své úkoly jednoduše ukládat na tomto počítači."
-
-#: data/ui/sidebar-list-row.ui:118 data/ui/sidebar-list-row.ui:137
-msgid "Rename"
-msgstr "Přejmenovat"
-
-#: data/ui/sidebar-list-row.ui:141
-msgid "Delete"
-msgstr "Odstranit"
-
-#: data/ui/sidebar-provider-row.ui:96
-msgid "Loading…"
-msgstr "Načítá se…"
-
-#: data/ui/task-list-panel.ui:41
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
-msgid "Clear completed tasks…"
-msgstr "Vymazat splněné úkoly…"
-
-#: data/ui/window.ui:78
-msgid "_New List"
-msgstr "_Nový seznam"
-
-#: data/ui/window.ui:214
-msgid "_About"
-msgstr "O _aplikaci"
-
-#: data/ui/window.ui:218
-msgid "_Quit"
-msgstr "U_končit"
-
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
 #: plugins/next-week-panel/gtd-next-week-panel.c:112
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:103
@@ -320,7 +190,7 @@ msgstr "Zítra"
 msgid "All"
 msgstr "Vše"
 
-#: plugins/background/gtd-plugin-background.c:151
+#: plugins/background/gtd-plugin-background.c:150
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
@@ -328,7 +198,7 @@ msgstr[0] "%1$s a jeden další úkol"
 msgstr[1] "%1$s a %2$d další úkoly"
 msgstr[2] "%1$s a %2$d další úkolů"
 
-#: plugins/background/gtd-plugin-background.c:255
+#: plugins/background/gtd-plugin-background.c:254
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
@@ -544,6 +414,11 @@ msgstr "Zdroj souboru Todo.txt"
 msgid "Unscheduled"
 msgstr "Neplánováno"
 
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
+#: src/gtd-task-list-panel.ui:45
+msgid "Clear completed tasks…"
+msgstr "Vymazat splněné úkoly…"
+
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
 #, python-format
@@ -568,49 +443,26 @@ msgstr ""
 "Zdeněk Hataš <zdenek.hatas@gmail.com>\n"
 "Marek Černocký <marek@manet.cz>"
 
-#: src/gtd-empty-list-widget.c:51
-msgid "No more tasks left"
-msgstr "Nezbývá žádný další úkol"
+#: src/gtd-initial-setup-window.ui:23
+msgid "Welcome"
+msgstr "Vítejte"
 
-#: src/gtd-empty-list-widget.c:52
-msgid "Nothing else to do here"
-msgstr "Zde již není potřeba nic dělat"
+#: src/gtd-initial-setup-window.ui:37
+msgid "Log in to online accounts to access your tasks"
+msgstr "Přihlášení k účtům on-line pro přístup k vašim úkolům"
 
-#: src/gtd-empty-list-widget.c:53
-msgid "You made it!"
-msgstr "Splnili jste to!"
+#: src/gtd-initial-setup-window.ui:62
+msgid "To Do Setup"
+msgstr "Nastavení aplikace Úkoly"
 
-#: src/gtd-empty-list-widget.c:54
-msgid "Looks like there’s nothing else left here"
-msgstr "Vypadá to, že zde již nic nezbývá"
+#: src/gtd-initial-setup-window.ui:65 src/gtd-window.ui:116
+#: src/provider/gtd-provider-popover.ui:40
+msgid "_Cancel"
+msgstr "_Zrušit"
 
-#: src/gtd-empty-list-widget.c:59
-msgid "Get some rest now"
-msgstr "Trochu si odpočiňte"
-
-#: src/gtd-empty-list-widget.c:60
-msgid "Enjoy the rest of your day"
-msgstr "Užívejte si zbytek dne"
-
-#: src/gtd-empty-list-widget.c:61
-msgid "Good job!"
-msgstr "Dobrá práce!"
-
-#: src/gtd-empty-list-widget.c:62
-msgid "Meanwhile, spread the love"
-msgstr "Mezi tím můžete šířit dobro a lásku"
-
-#: src/gtd-empty-list-widget.c:63
-msgid "Working hard is always rewarded"
-msgstr "Tvrdá práce se vždy vyplatí"
-
-#: src/gtd-empty-list-widget.c:74
-msgid "No tasks found"
-msgstr "Žádné úkoly nebyly nalezeny"
-
-#: src/gtd-empty-list-widget.c:75
-msgid "You can add tasks using the <b>+</b> above"
-msgstr "Úkoly můžete přidat pomocí <b>+</b> níže"
+#: src/gtd-initial-setup-window.ui:74
+msgid "_Done"
+msgstr "_Hotovo"
 
 #: src/gtd-plugin-dialog-row.c:97
 msgid "Error loading extension"
@@ -619,6 +471,23 @@ msgstr "Chyba při načítaní rozšíření"
 #: src/gtd-plugin-dialog-row.c:97
 msgid "Error unloading extension"
 msgstr "Chyba při uzavírání rozšíření"
+
+#: src/gtd-plugin-dialog.ui:62 src/gtd-window.ui:179
+msgid "Extensions"
+msgstr "Rozšíření"
+
+#: src/gtd-plugin-dialog.ui:96
+msgid "No extensions found"
+msgstr "Nebylo nalezeno žádné rozšíření"
+
+#: src/gtd-task-list-panel.ui:38 src/gtd-task-list-panel.ui:74
+#: src/gtd-task-list-panel.ui:98
+msgid "Rename"
+msgstr "Přejmenovat"
+
+#: src/gtd-task-list-panel.ui:57
+msgid "Delete"
+msgstr "Odstranit"
 
 #: src/gtd-window.c:107
 msgid ""
@@ -636,20 +505,95 @@ msgstr "Podrobnosti"
 msgid "Click a task list to select"
 msgstr "Kliknutím vyberte seznam úkolů"
 
-#: src/sidebar/gtd-sidebar-list-row.c:259
+#: src/gtd-window.ui:63
+msgid "_New List"
+msgstr "_Nový seznam"
+
+#: src/gtd-window.ui:185
+msgid "_About To Do"
+msgstr "O _aplikaci Úkoly"
+
+#: src/provider/gtd-provider-popover.ui:23
+msgid "Create _List"
+msgstr "Vytvořit _seznam"
+
+#: src/provider/gtd-provider-popover.ui:54
+msgid "List Name"
+msgstr "Název seznamu"
+
+#: src/provider/gtd-provider-popover.ui:132
+msgid "Select a storage location"
+msgstr "Vyberte místo uložení"
+
+#: src/provider/gtd-provider-row.ui:64
+msgid "Off"
+msgstr "Vypnuto"
+
+#: src/provider/gtd-provider-selector.ui:23
+msgid "Click to add a new Google account"
+msgstr "Kliknutím přidáte účet Google"
+
+#: src/provider/gtd-provider-selector.ui:39
+msgid "Google"
+msgstr "Google"
+
+#: src/provider/gtd-provider-selector.ui:49
+msgid "Click to add a new ownCloud account"
+msgstr "Kliknutím přidáte účet ownCloud"
+
+#: src/provider/gtd-provider-selector.ui:65
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: src/provider/gtd-provider-selector.ui:75
+msgid "Click to add a new Microsoft Exchange account"
+msgstr "Kliknutím přidáte účet Microsoft Exchange"
+
+#: src/provider/gtd-provider-selector.ui:91
+msgid "Microsoft Exchange"
+msgstr "Microsoft Exchange"
+
+#: src/provider/gtd-provider-selector.ui:104
+msgid "Or you can just store your tasks on this computer"
+msgstr "Nebo můžete své úkoly jednoduše ukládat na tomto počítači."
+
+#: src/sidebar/gtd-sidebar.c:304
 #, c-format
 msgid "Task list <b>%s</b> removed"
 msgstr "Seznam úkolů <b>%s</b> byl odstraněn"
 
-#: src/sidebar/gtd-sidebar-list-row.c:262
-#: src/task-list-view/gtd-task-list-view.c:461
+#: src/sidebar/gtd-sidebar.c:307 src/task-list-view/gtd-task-list-view.c:461
 msgid "Undo"
 msgstr "Zpět"
 
-#: src/sidebar/gtd-sidebar-list-row.c:290
-#, c-format
-msgid "Rename %s"
-msgstr "Přejmenovat %s"
+#: src/sidebar/gtd-sidebar-provider-row.ui:88
+msgid "Loading…"
+msgstr "Načítá se…"
+
+#: src/task-list-view/gtd-edit-pane.ui:24
+msgid "D_ue Date"
+msgstr "Dat_um splnění"
+
+#: src/task-list-view/gtd-edit-pane.ui:41
+msgid "_Today"
+msgstr "Dne_s"
+
+#: src/task-list-view/gtd-edit-pane.ui:50
+msgid "To_morrow"
+msgstr "_Zítra"
+
+#: src/task-list-view/gtd-edit-pane.ui:91
+msgid "_Notes"
+msgstr "Poz_námky"
+
+#: src/task-list-view/gtd-edit-pane.ui:137
+msgid "_Delete"
+msgstr "O_dstranit"
+
+#: src/task-list-view/gtd-edit-pane.ui:176
+msgctxt "taskdate"
+msgid "None"
+msgstr "Žádné"
 
 #. Translators: %1$s is the task list name, %2$s is the provider name
 #: src/task-list-view/gtd-new-task-row.c:91
@@ -657,7 +601,64 @@ msgstr "Přejmenovat %s"
 msgid "%1$s \t <small>%2$s</small>"
 msgstr "%1$s \t <small>%2$s</small>"
 
+#: src/task-list-view/gtd-new-task-row.ui:15
+msgid "New task…"
+msgstr "Nový úkol…"
+
 #: src/task-list-view/gtd-task-list-view.c:442
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Úkol <b>%s</b> byl odstraněn"
+
+#: src/widgets/gtd-empty-list-widget.c:51
+msgid "No more tasks left"
+msgstr "Nezbývá žádný další úkol"
+
+#: src/widgets/gtd-empty-list-widget.c:52
+msgid "Nothing else to do here"
+msgstr "Zde již není potřeba nic dělat"
+
+#: src/widgets/gtd-empty-list-widget.c:53
+msgid "You made it!"
+msgstr "Splnili jste to!"
+
+#: src/widgets/gtd-empty-list-widget.c:54
+msgid "Looks like there’s nothing else left here"
+msgstr "Vypadá to, že zde již nic nezbývá"
+
+#: src/widgets/gtd-empty-list-widget.c:59
+msgid "Get some rest now"
+msgstr "Trochu si odpočiňte"
+
+#: src/widgets/gtd-empty-list-widget.c:60
+msgid "Enjoy the rest of your day"
+msgstr "Užívejte si zbytek dne"
+
+#: src/widgets/gtd-empty-list-widget.c:61
+msgid "Good job!"
+msgstr "Dobrá práce!"
+
+#: src/widgets/gtd-empty-list-widget.c:62
+msgid "Meanwhile, spread the love"
+msgstr "Mezi tím můžete šířit dobro a lásku"
+
+#: src/widgets/gtd-empty-list-widget.c:63
+msgid "Working hard is always rewarded"
+msgstr "Tvrdá práce se vždy vyplatí"
+
+#: src/widgets/gtd-empty-list-widget.c:74
+msgid "No tasks found"
+msgstr "Žádné úkoly nebyly nalezeny"
+
+#: src/widgets/gtd-empty-list-widget.c:75
+msgid "You can add tasks using the <b>+</b> above"
+msgstr "Úkoly můžete přidat pomocí <b>+</b> níže"
+
+#~ msgid "org.gnome.Todo"
+#~ msgstr "org.gnome.Todo"
+
+#~ msgid "_Quit"
+#~ msgstr "U_končit"
+
+#~ msgid "Rename %s"
+#~ msgstr "Přejmenovat %s"
