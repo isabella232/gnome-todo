@@ -1202,14 +1202,6 @@ gtd_task_compare (GtdTask *t1,
     return -1;
 
   /*
-   * Zero, compare by subtask hierarchy
-   */
-  retval = compare_by_subtasks (&t1, &t2);
-
-  if (retval != 0)
-    return retval;
-
-  /*
    * The custom position overrides any comparison we can make. To keep compatibility,
    * for now, we only compare by position if both tasks have a custom position set.
    */
@@ -1220,6 +1212,14 @@ gtd_task_compare (GtdTask *t1,
       if (retval != 0)
         return retval;
     }
+
+  /*
+   * Zero, compare by subtask hierarchy
+   */
+  retval = compare_by_subtasks (&t1, &t2);
+
+  if (retval != 0)
+    return retval;
 
   /*
    * Second, compare by ::due-date.
