@@ -149,7 +149,7 @@ add_project_arguments(common_flags + compiler_flags, language: 'c')
 #######################
 
 glib_dep = dependency('glib-2.0', version: '>= 2.58.0')
-gtk_dep = dependency('gtk+-4.0', version: '>= 3.92.0')
+gtk_dep = dependency('gtk4', version: '>= 3.92.0')
 
 gnome_todo_deps = [
   glib_dep,
