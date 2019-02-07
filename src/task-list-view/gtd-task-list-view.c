@@ -827,12 +827,17 @@ listbox_drag_drop (GtkWidget       *widget,
                    gint             y,
                    GtdTaskListView *self)
 {
+  GtdTaskListViewPrivate *priv = gtd_task_list_view_get_instance_private (self);
   GtkListBoxRow *drop_row;
+  GtdTaskRow *hovered_row;
   GtkWidget *source_widget;
   GtkWidget *row;
   GtdTask *new_parent_task;
+  GtdTask *hovered_task;
   GtdTask *source_task;
   GdkDrag *drag;
+  gint64 current_position;
+  gint64 new_position;
 
   GTD_ENTRY;
 
@@ -855,7 +860,9 @@ listbox_drag_drop (GtkWidget       *widget,
   gtk_widget_show (row);
 
   drop_row = get_drop_row_at_y (self, y);
-  new_parent_task = gtd_task_row_get_dnd_drop_task (task_row_from_row (drop_row));
+  hovered_row = task_row_from_row (drop_row);
+  hovered_task = gtd_task_row_get_task (hovered_row);
+  new_parent_task = gtd_task_row_get_dnd_drop_task (hovered_row);
   source_task = gtd_task_row_get_task (GTD_TASK_ROW (row));
 
   g_assert (source_task != NULL);
@@ -867,7 +874,7 @@ listbox_drag_drop (GtkWidget       *widget,
       if (gtd_task_is_subtask (source_task, new_parent_task))
         {
           gdk_drop_finish (drop, 0);
-          return FALSE;
+          GTD_RETURN (FALSE);
         }
 
       gtd_task_add_subtask (new_parent_task, source_task);
@@ -879,10 +886,15 @@ listbox_drag_drop (GtkWidget       *widget,
         gtd_task_remove_subtask (current_parent_task, source_task);
     }
 
-  /* Reset the task position */
-  gtd_task_set_position (source_task, -1);
+  /*
+   * FIXME: via DnD, we only support moving the task to below another
+   * task, thus the "+ 1"
+   */
+  new_position = gtd_task_get_position (hovered_task) + 1;
+  current_position = gtd_task_get_position (source_task);
 
-  gtd_provider_update_task (gtd_task_get_provider (source_task), source_task);
+  if (new_position != current_position)
+    gtd_task_list_move_task_to_position (GTD_TASK_LIST (priv->model), source_task, new_position);
 
   check_dnd_scroll (self, TRUE, -1);
   gdk_drop_finish (drop, GDK_ACTION_MOVE);
