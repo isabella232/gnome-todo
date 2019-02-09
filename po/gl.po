@@ -2,34 +2,33 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Fran Dieguez <frandieguez@gnome.org>, 2015-2019.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-toto 3.18\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-12-16 11:07+0000\n"
-"PO-Revision-Date: 2019-01-28 23:23+0100\n"
+"POT-Creation-Date: 2019-02-01 18:18+0000\n"
+"PO-Revision-Date: 2019-02-09 16:53+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
-"Language-Team: Galician <proxecto@trasno.gal>\n"
+"Language-Team: Galician\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 3.30.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.1\n"
 "X-Project-Style: gnome\n"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:141
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
+#: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
 #: src/gtd-window.c:717 src/gtd-window.c:748 src/main.c:35
 msgid "To Do"
 msgstr "Tarefas"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:8
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:8
 msgid "Task manager for GNOME"
 msgstr "Xestor de tarefas para GNOME"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:11
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:11
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
 "GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
@@ -41,42 +40,42 @@ msgstr ""
 "de tarefas. Manteña as súas tarefas no seu computador ou sincroníceas con "
 "fornecedores na nube. Personalice a súa experiencia con engadidos."
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:25
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:25
 msgid "GNOME To Do with the dark theme variant"
 msgstr "Tarefas de GNOME coa variante de tema escuro"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:29
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:29
 msgid "Editing a tasklist with GNOME To Do"
 msgstr "Editar unha lista de tarefas con Tarefas de GNOME"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:33
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:33
 msgid "Task lists displayed on grid mode"
 msgstr "Listas de tarefas mostradas en modo grella"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:37
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:37
 msgid "Task lists displayed on list mode"
 msgstr "Listas de tarefas mostradas en modo lista"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:41
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:41
 msgid "Available plugins for GNOME To Do"
 msgstr "Engadidos dispoñíbeis para Tarefas de GNOME"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:45
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:45
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr ""
 "Visualizar as tarefas de hoxe no panel Hoxe de Lista de tarefas de GNOME"
 
-#: data/org.gnome.Todo.desktop.in:4
+#: data/org.gnome.Todo.desktop.in.in:4
 msgid "Manage your personal tasks"
 msgstr "Xestione as súas tarefas persoais"
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Todo.desktop.in:7
-msgid "org.gnome.Todo"
-msgstr "org.gnome.Todo"
+#: data/org.gnome.Todo.desktop.in.in:7
+msgid "@icon@"
+msgstr "@icon@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Todo.desktop.in:13
+#: data/org.gnome.Todo.desktop.in.in:13
 msgid "Task;Productivity;Todo;"
 msgstr "Tarefas;Productividade;Para facer;"
 
@@ -186,14 +185,14 @@ msgstr "Mañán"
 msgid "All"
 msgstr "Todo"
 
-#: plugins/background/gtd-plugin-background.c:151
+#: plugins/background/gtd-plugin-background.c:150
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
 msgstr[0] "%1$s e unha tarefa máis"
 msgstr[1] "%1$s e %2$d tarefas máis"
 
-#: plugins/background/gtd-plugin-background.c:255
+#: plugins/background/gtd-plugin-background.c:254
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
@@ -431,7 +430,6 @@ msgid "Enable debug messages"
 msgstr "Activar mensaxes de depuración"
 
 #: src/gtd-application.c:143
-#| msgid "Copyright © %1$d–%2$d The To Do authors"
 msgid "Copyright © 2015–2018 The To Do authors"
 msgstr "Copyright © 2015–2018 Os autores da Lista de Tarefas"
 
@@ -477,11 +475,11 @@ msgid "No extensions found"
 msgstr "Non se atoparon extensións"
 
 #: src/gtd-task-list-panel.ui:38 src/gtd-task-list-panel.ui:74
-#: src/gtd-task-list-panel.ui:98 src/sidebar/gtd-sidebar-list-row.ui:67
+#: src/gtd-task-list-panel.ui:98
 msgid "Rename"
 msgstr "Renomear"
 
-#: src/gtd-task-list-panel.ui:57 src/sidebar/gtd-sidebar-list-row.ui:71
+#: src/gtd-task-list-panel.ui:57
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -506,12 +504,9 @@ msgid "_New List"
 msgstr "Nova _lista"
 
 #: src/gtd-window.ui:185
-msgid "_About"
-msgstr "_Sobre"
-
-#: src/gtd-window.ui:189
-msgid "_Quit"
-msgstr "_Saír"
+#| msgid "_About"
+msgid "_About To Do"
+msgstr "_Sobre Tarefas"
 
 #: src/provider/gtd-provider-popover.ui:23
 msgid "Create _List"
@@ -653,6 +648,12 @@ msgstr "Non se atoparon tarefas"
 #: src/widgets/gtd-empty-list-widget.c:75
 msgid "You can add tasks using the <b>+</b> above"
 msgstr "Pode engadir tarefas usando o <b>+</b> de arriba"
+
+#~ msgid "org.gnome.Todo"
+#~ msgstr "org.gnome.Todo"
+
+#~ msgid "_Quit"
+#~ msgstr "_Saír"
 
 #~ msgid "_Priority"
 #~ msgstr "_Prioridade"
