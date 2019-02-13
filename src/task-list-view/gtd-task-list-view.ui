@@ -26,53 +26,57 @@
 
                 <!-- Listbox -->
                 <child>
-                  <object class="GtkBox">
-                    <property name="can_focus">false</property>
-                    <property name="margin-top">6</property>
-                    <property name="margin-bottom">64</property>
-                    <property name="margin-start">18</property>
-                    <property name="margin-end">18</property>
-                    <property name="orientation">vertical</property>
-
-                    <child>
-                      <object class="GtkListBox" id="listbox">
-                        <property name="can_focus">False</property>
-                        <property name="hexpand">True</property>
-                        <property name="selection_mode">none</property>
-                        <signal name="drag-drop" handler="listbox_drag_drop" object="GtdTaskListView" swapped="no" />
-                        <signal name="drag-leave" handler="listbox_drag_leave" object="GtdTaskListView" swapped="no" />
-                        <signal name="drag-motion" handler="listbox_drag_motion" object="GtdTaskListView" swapped="no" />
-                        <signal name="row-activated" handler="on_listbox_row_activated_cb" object="GtdTaskListView" swapped="no" />
-                        <style>
-                          <class name="transparent" />
-                        </style>
-                      </object>
-                    </child>
-
-                    <child>
-                      <object class="GtdNewTaskRow" id="new_task_row">
-                        <property name="margin-bottom">24</property>
-                        <signal name="enter" handler="on_new_task_row_entered_cb" object="GtdTaskListView" swapped="yes" />
-                        <signal name="exit" handler="on_new_task_row_exited_cb" object="GtdTaskListView" swapped="yes" />
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
+                  <object class="GtkStackPage">
                     <property name="name">listbox</property>
-                  </packing>
+                    <property name="child">
+                      <object class="GtkBox">
+                        <property name="can_focus">false</property>
+                        <property name="margin-top">6</property>
+                        <property name="margin-bottom">64</property>
+                        <property name="margin-start">18</property>
+                        <property name="margin-end">18</property>
+                        <property name="orientation">vertical</property>
+
+                        <child>
+                          <object class="GtkListBox" id="listbox">
+                            <property name="can_focus">False</property>
+                            <property name="hexpand">True</property>
+                            <property name="selection_mode">none</property>
+                            <signal name="drag-drop" handler="listbox_drag_drop" object="GtdTaskListView" swapped="no" />
+                            <signal name="drag-leave" handler="listbox_drag_leave" object="GtdTaskListView" swapped="no" />
+                            <signal name="drag-motion" handler="listbox_drag_motion" object="GtdTaskListView" swapped="no" />
+                            <signal name="row-activated" handler="on_listbox_row_activated_cb" object="GtdTaskListView" swapped="no" />
+                            <style>
+                              <class name="transparent" />
+                            </style>
+                          </object>
+                        </child>
+
+                        <child>
+                          <object class="GtdNewTaskRow" id="new_task_row">
+                            <property name="margin-bottom">24</property>
+                            <signal name="enter" handler="on_new_task_row_entered_cb" object="GtdTaskListView" swapped="yes" />
+                            <signal name="exit" handler="on_new_task_row_exited_cb" object="GtdTaskListView" swapped="yes" />
+                          </object>
+                        </child>
+                      </object>
+                    </property>,
+                  </object>
                 </child>
 
                 <!-- Spinner -->
                 <child>
-                  <object class="GtkSpinner">
-                    <property name="can_focus">False</property>
-                    <property name="active">True</property>
-                    <property name="width-request">96</property>
-                    <property name="height-request">96</property>
-                  </object>
-                  <packing>
+                  <object class="GtkStackPage">
                     <property name="name">loading</property>
-                  </packing>
+                    <property name="child">
+                      <object class="GtkSpinner">
+                        <property name="can_focus">False</property>
+                        <property name="active">True</property>
+                        <property name="width-request">96</property>
+                        <property name="height-request">96</property>
+                      </object>
+                    </property>
+                  </object>
                 </child>
 
               </object>

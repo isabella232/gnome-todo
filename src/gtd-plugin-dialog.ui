@@ -19,39 +19,46 @@
             <property name="hexpand">True</property>
             <property name="vexpand">True</property>
             <property name="interpolate_size">True</property>
+
             <child>
-              <object class="GtkScrolledWindow">
-                <property name="can_focus">True</property>
-                <property name="propagate_natural_width">True</property>
-                <child>
-                  <object class="GtkViewport">
-                    <property name="can_focus">False</property>
-                    <property name="shadow_type">none</property>
+              <object class="GtkStackPage">
+                <property name="name">list</property>
+                <property name="child">
+                  <object class="GtkScrolledWindow">
+                    <property name="can_focus">True</property>
+                    <property name="propagate_natural_width">True</property>
                     <child>
-                      <object class="GtkListBox" id="listbox">
+                      <object class="GtkViewport">
                         <property name="can_focus">False</property>
-                        <property name="selection_mode">none</property>
-                        <style>
-                          <class name="extension-list" />
-                        </style>
+                        <property name="shadow_type">none</property>
+                        <child>
+                          <object class="GtkListBox" id="listbox">
+                            <property name="can_focus">False</property>
+                            <property name="selection_mode">none</property>
+                            <style>
+                              <class name="extension-list" />
+                            </style>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>
-                </child>
+                </property>
               </object>
-              <packing>
-                <property name="name">list</property>
-              </packing>
             </child>
+
             <child>
-              <object class="GtkFrame" id="frame">
-                <property name="can_focus">False</property>
-                <property name="shadow_type">none</property>
-              </object>
-              <packing>
+              <object class="GtkStackPage">
                 <property name="name">config</property>
-              </packing>
+                <property name="child">
+                  <object class="GtkFrame" id="frame">
+                    <property name="can_focus">False</property>
+                    <property name="shadow_type">none</property>
+                  </object>
+                </property>
+              </object>
             </child>
+
           </object>
         </child>
       </object>

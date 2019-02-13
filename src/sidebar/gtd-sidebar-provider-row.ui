@@ -46,23 +46,24 @@
 
                 <!-- Loading spinner -->
                 <child>
-                  <object class="GtkSpinner">
-                    <property name="can_focus">False</property>
-                    <property name="active">True</property>
-                  </object>
-                  <packing>
+                  <object class="GtkStackPage">
                     <property name="name">spinner</property>
-                  </packing>
+                    <property name="child">
+                      <object class="GtkSpinner">
+                        <property name="active">True</property>
+                      </object>
+                    </property>
+                  </object>
                 </child>
 
                 <!-- Drop down icon -->
                 <child>
-                  <object class="GtkBox">
-                    <property name="can_focus">False</property>
-                  </object>
-                  <packing>
+                  <object class="GtkStackPage">
                     <property name="name">empty</property>
-                  </packing>
+                    <property name="child">
+                      <object class="GtkBox" />
+                    </property>
+                  </object>
                 </child>
 
               </object>
