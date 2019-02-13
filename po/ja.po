@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-12 15:27+0000\n"
+"POT-Creation-Date: 2019-02-13 12:06+0000\n"
 "PO-Revision-Date: 2019-02-13 21:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -205,7 +205,7 @@ msgstr ""
 
 #: data/ui/initial-setup.ui:67
 msgid "To Do Setup"
-msgstr ""
+msgstr "To Do のセットアップ"
 
 #: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
 #: data/ui/window.ui:74
@@ -381,7 +381,7 @@ msgstr "このコンピューター上"
 msgid "Error fetching tasks from list"
 msgstr ""
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:110
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-edit-pane.c:110
 msgid "No date set"
 msgstr "期日の設定なし"
 
@@ -390,18 +390,18 @@ msgstr "期日の設定なし"
 #. * have plurals, some languages reuse the singular form for numbers
 #. * like 21, 31, 41, etc.
 #.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:102
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
 #, c-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] "%d日前"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:147
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:147
 msgid "Yesterday"
 msgstr "昨日"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:118
 #: plugins/score/score/__init__.py:101
 #: plugins/today-panel/gtd-panel-today.c:134
 #: plugins/today-panel/gtd-panel-today.c:139
@@ -409,18 +409,18 @@ msgstr "昨日"
 msgid "Today"
 msgstr "今日"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:143
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:122 src/gtd-task-row.c:143
 msgid "Tomorrow"
 msgstr "明日"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:365
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:370
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:507
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:356
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:358
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:495
 msgid "Scheduled"
 msgstr "スケジュール"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:512
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:500
 #: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
 msgid "Clear completed tasks…"
