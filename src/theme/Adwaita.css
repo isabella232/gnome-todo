@@ -129,6 +129,16 @@ image.color-circle-icon {
 
 
 /* Color button */
+colorbutton {
+    border-radius: 6px;
+    transition: 100ms;
+}
+
+colorbutton:hover {
+    filter: brightness(80%);
+    transition: 100ms;
+}
+
 colorbutton.dark image {
     color: white;
 }
