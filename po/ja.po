@@ -2,7 +2,7 @@
 # Copyright (C) 2016 gnome-todo's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-todo package.
 # sujiniku <sujinikusityuu@gmail.com>, 2016.
-# Shinichirou Yamada <yamada_strong_yamada_nice_64bit@yahoo.co.jp >, 2018.
+# Shinichirou Yamada <yamada_strong_yamada_nice_64bit@yahoo.co.jp>, 2018.
 # Kentaro KAZUHAMA <kazken3@gmail.com>, 2018.
 # sicklylife <translation@sicklylife.jp>, 2019.
 #
@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-12-16 11:07+0000\n"
-"PO-Revision-Date: 2019-01-29 01:21+0900\n"
+"POT-Creation-Date: 2018-03-12 15:27+0000\n"
+"PO-Revision-Date: 2019-02-13 21:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -21,8 +21,8 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:141
-#: src/gtd-window.c:717 src/gtd-window.c:748 src/main.c:35
+#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
+#: src/gtd-window.c:799 src/gtd-window.c:830 src/main.c:35
 msgid "To Do"
 msgstr "To Do"
 
@@ -31,36 +31,52 @@ msgid "Task manager for GNOME"
 msgstr "GNOME のためのタスクマネージャー"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:11
+#, fuzzy
+#| msgid ""
+#| "GNOME To Do is a simple task management application designed to integrate "
+#| "with GNOME."
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
-"GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
-"todos on your computer or sync them with cloud providers. Customize your "
-"experience with plugins."
+"GNOME. It is extensible through plugins and supports custom task providers."
 msgstr ""
+"GNOME To Do はシンプルなタスク管理アプリケーションです。GNOMEと統合されていま"
+"す。"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:25
+#: data/appdata/org.gnome.Todo.appdata.xml.in:24
 msgid "GNOME To Do with the dark theme variant"
 msgstr ""
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:29
+#: data/appdata/org.gnome.Todo.appdata.xml.in:28
 msgid "Editing a tasklist with GNOME To Do"
 msgstr ""
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:33
+#: data/appdata/org.gnome.Todo.appdata.xml.in:32
 msgid "Task lists displayed on grid mode"
 msgstr ""
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:37
+#: data/appdata/org.gnome.Todo.appdata.xml.in:36
 msgid "Task lists displayed on list mode"
 msgstr ""
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:41
+#: data/appdata/org.gnome.Todo.appdata.xml.in:40
 msgid "Available plugins for GNOME To Do"
 msgstr ""
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:45
+#: data/appdata/org.gnome.Todo.appdata.xml.in:44
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr ""
+
+#: data/gtk/menus.ui:15 data/ui/plugin-dialog.ui:75
+msgid "Extensions"
+msgstr "拡張機能"
+
+#: data/gtk/menus.ui:22
+msgid "_About"
+msgstr "このアプリケーションについて(_A)"
+
+#: data/gtk/menus.ui:26
+msgid "_Quit"
+msgstr "終了(_Q)"
 
 #: data/org.gnome.Todo.desktop.in:4
 msgid "Manage your personal tasks"
@@ -69,7 +85,7 @@ msgstr ""
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 #: data/org.gnome.Todo.desktop.in:7
 msgid "org.gnome.Todo"
-msgstr "org.gnome.Todo"
+msgstr ""
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Todo.desktop.in:13
@@ -133,63 +149,164 @@ msgstr ""
 msgid "The current list selector. Can be “grid” or “list”."
 msgstr ""
 
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
-#: plugins/next-week-panel/gtd-next-week-panel.c:112
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:103
-#: src/task-list-view/gtd-edit-pane.c:110
-msgid "No date set"
-msgstr "期日の設定なし"
+#: data/ui/edit-pane.ui:43
+msgid "_Notes"
+msgstr "メモ(_N)"
 
-#. Translators: This message will never be used with '1 day ago'
-#. * but the singular form is required because some languages do not
-#. * have plurals, some languages reuse the singular form for numbers
-#. * like 21, 31, 41, etc.
-#.
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:125
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:116
-#, c-format
-msgid "%d day ago"
-msgid_plural "%d days ago"
-msgstr[0] "%d 日前"
+#: data/ui/edit-pane.ui:93
+msgid "D_ue Date"
+msgstr "期日(_U)"
 
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:120
-#: src/task-list-view/gtd-task-row.c:147
-msgid "Yesterday"
-msgstr "昨日"
+#: data/ui/edit-pane.ui:111
+msgid "_Today"
+msgstr "今日(_T)"
 
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
-#: plugins/next-week-panel/gtd-next-week-panel.c:124
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:124
-#: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:154
-#: plugins/today-panel/gtd-panel-today.c:258
-#: src/task-list-view/gtd-task-row.c:139
-msgid "Today"
-msgstr "今日"
+#: data/ui/edit-pane.ui:121
+msgid "To_morrow"
+msgstr "明日(_M)"
 
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
-#: plugins/next-week-panel/gtd-next-week-panel.c:128
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:128
-#: src/task-list-view/gtd-task-row.c:143
-msgid "Tomorrow"
-msgstr "明日"
+#: data/ui/edit-pane.ui:169
+msgid "_Priority"
+msgstr "優先度(_P)"
 
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:297
-msgid "All"
-msgstr "すべて"
+#: data/ui/edit-pane.ui:187
+msgctxt "taskpriority"
+msgid "None"
+msgstr "なし"
 
-#: plugins/background/gtd-plugin-background.c:151
+#: data/ui/edit-pane.ui:188
+msgid "Low"
+msgstr "低"
+
+#: data/ui/edit-pane.ui:189
+msgid "Medium"
+msgstr "中"
+
+#: data/ui/edit-pane.ui:190
+msgid "High"
+msgstr "高"
+
+#: data/ui/edit-pane.ui:198 data/ui/list-selector-panel.ui:93
+msgid "_Delete"
+msgstr "削除(_D)"
+
+#: data/ui/edit-pane.ui:249
+msgctxt "taskdate"
+msgid "None"
+msgstr "なし"
+
+#: data/ui/initial-setup.ui:25
+msgid "Welcome"
+msgstr "ようこそ"
+
+#: data/ui/initial-setup.ui:40
+msgid "Log in to online accounts to access your tasks"
+msgstr ""
+
+#: data/ui/initial-setup.ui:67
+msgid "To Do Setup"
+msgstr ""
+
+#: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
+#: data/ui/window.ui:74
+msgid "_Cancel"
+msgstr "キャンセル(_C)"
+
+#: data/ui/initial-setup.ui:80
+msgid "_Done"
+msgstr "完了(_D)"
+
+#: data/ui/list-selector-panel.ui:79 data/ui/list-selector-panel.ui:173
+msgid "_Rename"
+msgstr "名前の変更(_R)"
+
+#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:469
+msgid "Lists"
+msgstr "リスト"
+
+#: data/ui/list-selector-panel.ui:129
+msgid "Tasks"
+msgstr "タスク"
+
+#: data/ui/list-selector-panel.ui:147
+msgid "Name of the task list"
+msgstr "タスクリストの名前"
+
+#: data/ui/list-selector-panel.ui:263
+msgid "_New List"
+msgstr "新しいリスト(_N)"
+
+#: data/ui/list-view.ui:113
+msgid "Show or hide completed tasks"
+msgstr "完了したタスクの表示/非表示"
+
+#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
+msgid "Done"
+msgstr "完了"
+
+#: data/ui/new-task-row.ui:29
+msgid "New task…"
+msgstr "新しいタスク…"
+
+#: data/ui/plugin-dialog.ui:118
+msgid "No extensions found"
+msgstr "拡張機能が見つかりません"
+
+#: data/ui/provider-popover.ui:25
+msgid "Create _List"
+msgstr "リストを作成(_L)"
+
+#: data/ui/provider-popover.ui:59
+msgid "List Name"
+msgstr "リスト名"
+
+#: data/ui/provider-popover.ui:155
+msgid "Select a storage location"
+msgstr "ストレージの場所を選択"
+
+#: data/ui/provider-row.ui:70
+msgid "Off"
+msgstr "オフ"
+
+#: data/ui/provider-selector.ui:27
+msgid "Click to add a new Google account"
+msgstr "クリックで新しい Google アカウントを追加します"
+
+#: data/ui/provider-selector.ui:51
+msgid "Google"
+msgstr "Google"
+
+#: data/ui/provider-selector.ui:67
+msgid "Click to add a new ownCloud account"
+msgstr "クリックで新しい ownCloud アカウントを追加します"
+
+#: data/ui/provider-selector.ui:91
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: data/ui/provider-selector.ui:107
+msgid "Click to add a new Microsoft Exchange account"
+msgstr "クリックで新しい Microsoft Exchange アカウントを追加します"
+
+#: data/ui/provider-selector.ui:131
+msgid "Microsoft Exchange"
+msgstr "Microsoft Exchange"
+
+#: data/ui/provider-selector.ui:154
+msgid "Or you can just store your tasks on this computer"
+msgstr "またはこのコンピューターにタスクを保存することもできます"
+
+#: plugins/background/gtd-plugin-background.c:150
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
 msgstr[0] ""
 
-#: plugins/background/gtd-plugin-background.c:255
+#: plugins/background/gtd-plugin-background.c:249
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
-msgstr[0] ""
+msgstr[0] "今日は%d件のタスクがあります"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:6
 msgid "Run To Do on startup"
@@ -231,112 +348,132 @@ msgstr ""
 msgid "Failed to connect to task list"
 msgstr ""
 
-#: plugins/eds/gtd-provider-eds.c:272
+#: plugins/eds/gtd-provider-eds.c:351
 msgid "An error occurred while creating a task"
 msgstr ""
 
-#: plugins/eds/gtd-provider-eds.c:306
+#: plugins/eds/gtd-provider-eds.c:383
 msgid "An error occurred while modifying a task"
 msgstr ""
 
-#: plugins/eds/gtd-provider-eds.c:327
+#: plugins/eds/gtd-provider-eds.c:404
 msgid "An error occurred while removing a task"
 msgstr ""
 
-#: plugins/eds/gtd-provider-eds.c:345
+#: plugins/eds/gtd-provider-eds.c:422
 msgid "An error occurred while creating a task list"
 msgstr ""
 
-#: plugins/eds/gtd-provider-eds.c:367 plugins/eds/gtd-provider-eds.c:390
+#: plugins/eds/gtd-provider-eds.c:444 plugins/eds/gtd-provider-eds.c:467
 msgid "An error occurred while modifying a task list"
 msgstr ""
 
 #: plugins/eds/gtd-provider-local.c:50
-msgid "On This Computer"
-msgstr "このコンピューター上"
-
-#: plugins/eds/gtd-provider-local.c:62
 msgid "Local"
 msgstr "ローカル"
 
-#: plugins/eds/gtd-task-list-eds.c:283 plugins/eds/gtd-task-list-eds.c:316
-#: plugins/eds/gtd-task-list-eds.c:340
+#: plugins/eds/gtd-provider-local.c:56
+msgid "On This Computer"
+msgstr "このコンピューター上"
+
+#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:307
+#: plugins/eds/gtd-task-list-eds.c:331
 msgid "Error fetching tasks from list"
 msgstr ""
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:120
-#: plugins/today-panel/gtd-panel-today.c:145
-msgid "Overdue"
-msgstr ""
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:110
+msgid "No date set"
+msgstr "期日の設定なし"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:345
-msgid "Next 7 Days"
-msgstr ""
+#. Translators: This message will never be used with '1 day ago'
+#. * but the singular form is required because some languages do not
+#. * have plurals, some languages reuse the singular form for numbers
+#. * like 21, 31, 41, etc.
+#.
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:102
+#, c-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "%d日前"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:343
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:147
+msgid "Yesterday"
+msgstr "昨日"
+
+#. Setup a title
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
+#: plugins/score/score/__init__.py:101
+#: plugins/today-panel/gtd-panel-today.c:134
+#: plugins/today-panel/gtd-panel-today.c:139
+#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:139
+msgid "Today"
+msgstr "今日"
+
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:143
+msgid "Tomorrow"
+msgstr "明日"
+
+#. Setup a title
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:365
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:370
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:507
 msgid "Scheduled"
 msgstr "スケジュール"
+
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:512
+#: plugins/today-panel/gtd-panel-today.c:278
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
+msgid "Clear completed tasks…"
+msgstr "完了したタスクを消去…"
 
 #: plugins/score/score/__init__.py:90
 msgid "No task completed today"
 msgstr ""
 
-#: plugins/todoist/gtd-plugin-todoist.c:109
-msgid "GNOME To Do cannot connect to Todoist due to network issue"
-msgstr ""
-
-#: plugins/todoist/gtd-plugin-todoist.c:110
-msgid ""
-"Not able to communicate with Todoist. Please check your internet "
-"connectivity."
-msgstr ""
-
-#: plugins/todoist/gtd-provider-todoist.c:213
+#: plugins/todoist/gtd-provider-todoist.c:212
 msgid "Error fetching Todoist account key"
 msgstr ""
 
-#: plugins/todoist/gtd-provider-todoist.c:214
+#: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr ""
 
-#: plugins/todoist/gtd-provider-todoist.c:555
+#: plugins/todoist/gtd-provider-todoist.c:557
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr ""
 
-#: plugins/todoist/gtd-provider-todoist.c:563
+#: plugins/todoist/gtd-provider-todoist.c:565
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
 msgstr ""
 
-#: plugins/todoist/gtd-provider-todoist.c:850
+#: plugins/todoist/gtd-provider-todoist.c:865
 msgid "An error occurred while updating a Todoist task"
 msgstr ""
 
-#: plugins/todoist/gtd-provider-todoist.c:965
+#: plugins/todoist/gtd-provider-todoist.c:982
 msgid "An error occurred while retrieving Todoist data"
 msgstr ""
 
-#: plugins/todoist/gtd-provider-todoist.c:1040
+#: plugins/todoist/gtd-provider-todoist.c:1057
 msgid "An error occurred while updating Todoist"
 msgstr ""
 
-#: plugins/todoist/gtd-provider-todoist.c:1100
+#: plugins/todoist/gtd-provider-todoist.c:1117
 msgid "Todoist"
 msgstr ""
 
-#: plugins/todoist/gtd-provider-todoist.c:1411
+#: plugins/todoist/gtd-provider-todoist.c:1426
 #, c-format
 msgid "Todoist: %s"
 msgstr ""
 
 #: plugins/todoist/ui/preferences.ui:81
-#, fuzzy
-#| msgid "No tasks found"
 msgid "No Todoist accounts found"
-msgstr "タスクが見つかりませんでした"
+msgstr ""
 
 #: plugins/todoist/ui/preferences.ui:90
 msgid "Add a Todoist account"
@@ -367,15 +504,15 @@ msgid ""
 "recommended to use Todo.txt integration on production systems."
 msgstr ""
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:574
+#: plugins/todo-txt/gtd-provider-todo-txt.c:326
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr ""
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:643
+#: plugins/todo-txt/gtd-provider-todo-txt.c:395
 msgid "Todo.txt"
 msgstr ""
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:655
+#: plugins/todo-txt/gtd-provider-todo-txt.c:401
 msgid "On the Todo.txt file"
 msgstr ""
 
@@ -389,23 +526,15 @@ msgstr ""
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:112
-#, fuzzy
-#| msgid "Scheduled"
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:103
 msgid "Unscheduled"
-msgstr "スケジュール"
-
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
-#: src/gtd-task-list-panel.ui:45
-msgid "Clear completed tasks…"
-msgstr "完了したタスクを削除…"
+msgstr ""
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
-#, fuzzy, python-format
-#| msgid "Scheduled"
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:106
+#, python-format
 msgid "Unscheduled (%d)"
-msgstr "スケジュール"
+msgstr ""
 
 #: src/gtd-application.c:72
 msgid "Quit GNOME To Do"
@@ -415,34 +544,67 @@ msgstr ""
 msgid "Enable debug messages"
 msgstr ""
 
-#: src/gtd-application.c:143
-msgid "Copyright © 2015–2018 The To Do authors"
-msgstr "Copyright © 2015–2018 The To Do authors"
+#: src/gtd-application.c:146
+#, c-format
+msgid "Copyright © %1$d The To Do authors"
+msgstr ""
 
-#: src/gtd-application.c:148
+#: src/gtd-application.c:151
+#, c-format
+msgid "Copyright © %1$d–%2$d The To Do authors"
+msgstr ""
+
+#: src/gtd-application.c:163
 msgid "translator-credits"
 msgstr ""
+"Kentaro KAZUHAMA <kazken3@gmail.com>\n"
+"Shinichirou Yamada <yamada_strong_yamada_nice_64bit@yahoo.co.jp>\n"
+"sicklylife <translation@sicklylife.jp>\n"
+"sujiniku <sujinikusityuu@gmail.com>"
 
-#: src/gtd-initial-setup-window.ui:23
-msgid "Welcome"
-msgstr "ようこそ"
+#: src/gtd-empty-list-widget.c:51
+msgid "No more tasks left"
+msgstr "もうタスクはありません"
 
-#: src/gtd-initial-setup-window.ui:37
-msgid "Log in to online accounts to access your tasks"
+#: src/gtd-empty-list-widget.c:52
+msgid "Nothing else to do here"
 msgstr ""
 
-#: src/gtd-initial-setup-window.ui:62
-msgid "To Do Setup"
-msgstr "To Do のセットアップ"
+#: src/gtd-empty-list-widget.c:53
+msgid "You made it!"
+msgstr ""
 
-#: src/gtd-initial-setup-window.ui:65 src/gtd-window.ui:116
-#: src/provider/gtd-provider-popover.ui:40
-msgid "_Cancel"
-msgstr "キャンセル(_C)"
+#: src/gtd-empty-list-widget.c:54
+msgid "Looks like there’s nothing else left here"
+msgstr ""
 
-#: src/gtd-initial-setup-window.ui:74
-msgid "_Done"
-msgstr "完了(_D)"
+#: src/gtd-empty-list-widget.c:59
+msgid "Get some rest now"
+msgstr ""
+
+#: src/gtd-empty-list-widget.c:60
+msgid "Enjoy the rest of your day"
+msgstr ""
+
+#: src/gtd-empty-list-widget.c:61
+msgid "Good job!"
+msgstr ""
+
+#: src/gtd-empty-list-widget.c:62
+msgid "Meanwhile, spread the love"
+msgstr ""
+
+#: src/gtd-empty-list-widget.c:63
+msgid "Working hard is always rewarded"
+msgstr ""
+
+#: src/gtd-empty-list-widget.c:74
+msgid "No tasks found"
+msgstr "タスクが見つかりませんでした"
+
+#: src/gtd-empty-list-widget.c:75
+msgid "You can add tasks using the <b>+</b> above"
+msgstr "上にある <b>+</b> を使用してタスクを追加できます"
 
 #: src/gtd-plugin-dialog-row.c:97
 msgid "Error loading extension"
@@ -452,228 +614,71 @@ msgstr ""
 msgid "Error unloading extension"
 msgstr ""
 
-#: src/gtd-plugin-dialog.ui:62 src/gtd-window.ui:179
-msgid "Extensions"
+#: src/gtd-task-list-view.c:292
+msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 
-#: src/gtd-plugin-dialog.ui:96
-msgid "No extensions found"
-msgstr ""
+#: src/gtd-task-list-view.c:295
+msgid "Once removed, the tasks cannot be recovered."
+msgstr "いったん削除したタスクは、復活できません。"
 
-#: src/gtd-task-list-panel.ui:38 src/gtd-task-list-panel.ui:74
-#: src/gtd-task-list-panel.ui:98 src/sidebar/gtd-sidebar-list-row.ui:67
-msgid "Rename"
-msgstr "名前の変更"
+#: src/gtd-task-list-view.c:298 src/views/gtd-list-selector-panel.c:388
+msgid "Cancel"
+msgstr "キャンセル"
 
-#: src/gtd-task-list-panel.ui:57 src/sidebar/gtd-sidebar-list-row.ui:71
-msgid "Delete"
+#: src/gtd-task-list-view.c:300
+msgid "Remove"
 msgstr "削除"
 
-#: src/gtd-window.c:107
-msgid ""
-"This is a development build of To Do. You may experience errors, wrong "
-"behaviors, and data loss."
-msgstr ""
-
-#: src/gtd-window.c:421
-msgid "Details"
-msgstr "詳細"
-
-#: src/gtd-window.c:712
-msgid "Click a task list to select"
-msgstr "クリックしてタスクリストを選択"
-
-#: src/gtd-window.ui:63
-msgid "_New List"
-msgstr "新しいリスト(_N)"
-
-#: src/gtd-window.ui:185
-msgid "_About"
-msgstr "このアプリケーションについて(_A)"
-
-#: src/gtd-window.ui:189
-msgid "_Quit"
-msgstr "終了(_Q)"
-
-#: src/provider/gtd-provider-popover.ui:23
-msgid "Create _List"
-msgstr "リストを作成(_L)"
-
-#: src/provider/gtd-provider-popover.ui:54
-msgid "List Name"
-msgstr "リスト名"
-
-#: src/provider/gtd-provider-popover.ui:132
-msgid "Select a storage location"
-msgstr "ストレージの場所を選択"
-
-#: src/provider/gtd-provider-row.ui:64
-msgid "Off"
-msgstr "オフ"
-
-#: src/provider/gtd-provider-selector.ui:23
-msgid "Click to add a new Google account"
-msgstr ""
-
-#: src/provider/gtd-provider-selector.ui:39
-msgid "Google"
-msgstr "Google"
-
-#: src/provider/gtd-provider-selector.ui:49
-msgid "Click to add a new ownCloud account"
-msgstr ""
-
-#: src/provider/gtd-provider-selector.ui:65
-msgid "ownCloud"
-msgstr "ownCloud"
-
-#: src/provider/gtd-provider-selector.ui:75
-msgid "Click to add a new Microsoft Exchange account"
-msgstr ""
-
-#: src/provider/gtd-provider-selector.ui:91
-msgid "Microsoft Exchange"
-msgstr "Microsoft Exchange"
-
-#: src/provider/gtd-provider-selector.ui:104
-msgid "Or you can just store your tasks on this computer"
-msgstr ""
-
-#: src/sidebar/gtd-sidebar.c:304
-#, fuzzy, c-format
-#| msgid "Task <b>%s</b> removed"
-msgid "Task list <b>%s</b> removed"
-msgstr "タスク <b>%s</b> は削除されました"
-
-#: src/sidebar/gtd-sidebar.c:307 src/task-list-view/gtd-task-list-view.c:461
-msgid "Undo"
-msgstr "戻す"
-
-#: src/sidebar/gtd-sidebar-provider-row.ui:88
-msgid "Loading…"
-msgstr "読み込み中…"
-
-#: src/task-list-view/gtd-edit-pane.ui:24
-msgid "D_ue Date"
-msgstr "期日(_U)"
-
-#: src/task-list-view/gtd-edit-pane.ui:41
-msgid "_Today"
-msgstr "今日(_T)"
-
-#: src/task-list-view/gtd-edit-pane.ui:50
-msgid "To_morrow"
-msgstr "明日(_M)"
-
-#: src/task-list-view/gtd-edit-pane.ui:91
-msgid "_Notes"
-msgstr "メモ(_N)"
-
-#: src/task-list-view/gtd-edit-pane.ui:137
-msgid "_Delete"
-msgstr "削除(_D)"
-
-#: src/task-list-view/gtd-edit-pane.ui:176
-msgctxt "taskdate"
-msgid "None"
-msgstr "なし"
-
-#. Translators: %1$s is the task list name, %2$s is the provider name
-#: src/task-list-view/gtd-new-task-row.c:91
+#: src/gtd-task-list-view.c:390
 #, c-format
-msgid "%1$s \t <small>%2$s</small>"
-msgstr ""
+msgid "Done (%d)"
+msgstr "完了 (%d)"
 
-#: src/task-list-view/gtd-new-task-row.ui:15
-msgid "New task…"
-msgstr "新しいタスク…"
-
-#: src/task-list-view/gtd-task-list-view.c:442
+#: src/gtd-task-list-view.c:660
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "タスク <b>%s</b> は削除されました"
 
-#: src/widgets/gtd-empty-list-widget.c:51
-msgid "No more tasks left"
-msgstr "もうタスクはありません"
+#: src/gtd-task-list-view.c:684
+msgid "Undo"
+msgstr "戻す"
 
-#: src/widgets/gtd-empty-list-widget.c:52
-msgid "Nothing else to do here"
+#: src/gtd-window.c:476
+msgid "Details"
+msgstr "詳細"
+
+#: src/gtd-window.c:689
+msgid "Loading your task lists…"
 msgstr ""
 
-#: src/widgets/gtd-empty-list-widget.c:53
-msgid "You made it!"
-msgstr ""
+#: src/gtd-window.c:793
+msgid "Click a task list to select"
+msgstr "クリックしてタスクリストを選択"
 
-#: src/widgets/gtd-empty-list-widget.c:54
-msgid "Looks like there’s nothing else left here"
-msgstr ""
+#.
+#. * If there's no task available, draw a "No tasks" string at
+#. * the middle of the list thumbnail.
+#.
+#: src/views/gtd-list-selector-grid-item.c:250
+msgid "No tasks"
+msgstr "タスクなし"
 
-#: src/widgets/gtd-empty-list-widget.c:59
-msgid "Get some rest now"
-msgstr ""
+#: src/views/gtd-list-selector-panel.c:381
+msgid "Remove the selected task lists?"
+msgstr "選択したタスクリストを削除しますか?"
 
-#: src/widgets/gtd-empty-list-widget.c:60
-msgid "Enjoy the rest of your day"
-msgstr ""
+#: src/views/gtd-list-selector-panel.c:384
+msgid "Once removed, the task lists cannot be recovered."
+msgstr "いったん削除したタスクリストは、復活できません。"
 
-#: src/widgets/gtd-empty-list-widget.c:61
-msgid "Good job!"
-msgstr ""
+#: src/views/gtd-list-selector-panel.c:396
+msgid "Remove task lists"
+msgstr "タスクリストを削除"
 
-#: src/widgets/gtd-empty-list-widget.c:62
-msgid "Meanwhile, spread the love"
-msgstr ""
-
-#: src/widgets/gtd-empty-list-widget.c:63
-msgid "Working hard is always rewarded"
-msgstr ""
-
-#: src/widgets/gtd-empty-list-widget.c:74
-msgid "No tasks found"
-msgstr "タスクが見つかりませんでした"
-
-#: src/widgets/gtd-empty-list-widget.c:75
-msgid "You can add tasks using the <b>+</b> above"
-msgstr "上にある <b>+</b> を使用してタスクを追加できます"
-
-#~ msgid ""
-#~ "GNOME To Do is a simple task management application designed to integrate "
-#~ "with GNOME."
-#~ msgstr ""
-#~ "GNOME To Do はシンプルなタスク管理アプリケーションです。GNOMEと統合されて"
-#~ "います。"
+#: src/views/gtd-list-selector-panel.c:709
+msgid "Clear completed tasks"
+msgstr "完了したタスクを消去"
 
 #~ msgid "New List…"
 #~ msgstr "新しいリスト…"
-
-#~ msgid "Priority"
-#~ msgstr "優先度"
-
-#~ msgctxt "taskpriority"
-#~ msgid "None"
-#~ msgstr "なし"
-
-#~ msgid "Low"
-#~ msgstr "低"
-
-#~ msgid "Medium"
-#~ msgstr "中"
-
-#~ msgid "High"
-#~ msgstr "高"
-
-#~ msgid "Lists"
-#~ msgstr "リスト"
-
-#~ msgid "Tasks"
-#~ msgstr "タスク"
-
-#~ msgid "No tasks"
-#~ msgstr "タスクなし"
-
-#~ msgid "Remove the selected task lists?"
-#~ msgstr "選択したタスクリストを削除しますか?"
-
-#~ msgid "Once removed, the task lists cannot be recovered."
-#~ msgstr "いったん削除したタスクリストは、復活できません。"
