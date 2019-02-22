@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
 "POT-Creation-Date: 2018-03-12 15:27+0000\n"
-"PO-Revision-Date: 2019-02-21 14:09+0000\n"
+"PO-Revision-Date: 2019-02-22 08:33+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -31,11 +31,14 @@ msgstr "Verkefnastjóri fyrir GNOME"
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
 "GNOME. It is extensible through plugins and supports custom task providers."
-msgstr "GNOME-verkefnastýring er "
+msgstr ""
+"GNOME-verkefnastýring er forrit sem heldur utan um verk og er hannað til að"
+" samtvinnast GNOME-skjáborðsumhverfinu. Mögulegt er að útvíkka virkni þess"
+" með viðbótareiningum og það styður einnig sérsniðnar verkefnaveitur."
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:24
 msgid "GNOME To Do with the dark theme variant"
-msgstr "Nota dökkt afbrigði þema"
+msgstr "GNOME-verkefnastýring með dökku afbrigði þema"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:28
 msgid "Editing a tasklist with GNOME To Do"
@@ -56,6 +59,7 @@ msgstr "Tiltækar viðbætur fyrir GNOME-verkefnastýringuna"
 #: data/appdata/org.gnome.Todo.appdata.xml.in:44
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr ""
+"Framsetning verkefna dagsins á 'Í dag'-spjaldi GNOME-verkefnastýringarinnar"
 
 #: data/gtk/menus.ui:15 data/ui/plugin-dialog.ui:75
 msgid "Extensions"
@@ -115,6 +119,8 @@ msgstr "Fyrsta keyrsla GNOME-verkefnastýringar"
 msgid ""
 "Whether it’s the first run of GNOME To Do (to run the initial setup) or not"
 msgstr ""
+"Hvort þetta sé fyrsta keyrsla GNOME-verkefnastýringarinnar (og það eigi að"
+" keyra frumstillingaferlið) eða ekki"
 
 #: data/org.gnome.todo.gschema.xml:26
 msgid "Default provider to add new lists to"
@@ -192,7 +198,7 @@ msgstr "Velkomin(n)"
 
 #: data/ui/initial-setup.ui:40
 msgid "Log in to online accounts to access your tasks"
-msgstr ""
+msgstr "Skráðu þig inn í aðganga þína á netinu til að sjá verkefnin þín"
 
 #: data/ui/initial-setup.ui:67
 #| msgid "To Do"
@@ -308,7 +314,7 @@ msgstr "Keyra verkefnastýringu í ræsingu"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:7
 msgid "Whether GNOME To Do should run on startup"
-msgstr ""
+msgstr "Hvort GNOME-verkefnastýringin eigi að keyra í ræsingu"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:11
 msgid "Show notifications on startup"
@@ -316,7 +322,7 @@ msgstr "Birta tilkynningar við ræsingu"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:12
 msgid "Whether GNOME To Do should show notifications or not"
-msgstr ""
+msgstr "Hvort GNOME-verkefnastýringin eigi að birta tilkynningar eður ei"
 
 #: plugins/background/ui/preferences.ui:53
 msgid "Run on Startup"
@@ -433,23 +439,27 @@ msgstr "Engu verkefni lokið í dag"
 
 #: plugins/todoist/gtd-provider-todoist.c:212
 msgid "Error fetching Todoist account key"
-msgstr ""
+msgstr "Villa við að sækja aðgangslykil Todoist"
 
 #: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Please ensure that Todoist account is correctly configured."
-msgstr ""
+msgstr "Gakktu úr skugga um að Todoist-aðgangurinn sé rétt stilltur."
 
 #: plugins/todoist/gtd-provider-todoist.c:557
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr ""
+"GNOME ToDo-verkefnastýringin hefur ekki réttindi til að framkvæma þessa"
+" aðgerð: %s"
 
 #: plugins/todoist/gtd-provider-todoist.c:565
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
 msgstr ""
+"Ógilt svar barst frá Todoist-vefþjónunum. Hladdu GNOME-verkefnastýringunni"
+" aftur inn."
 
 #: plugins/todoist/gtd-provider-todoist.c:865
 #| msgid "Error loading Todoist tasks"
@@ -458,11 +468,11 @@ msgstr "Villa kom upp við uppfærslu Todoist-verkefna"
 
 #: plugins/todoist/gtd-provider-todoist.c:982
 msgid "An error occurred while retrieving Todoist data"
-msgstr ""
+msgstr "Villa kom upp við að ná í Todoist-gögn"
 
 #: plugins/todoist/gtd-provider-todoist.c:1057
 msgid "An error occurred while updating Todoist"
-msgstr ""
+msgstr "Villa kom upp við uppfærslu Todoist"
 
 #: plugins/todoist/gtd-provider-todoist.c:1117
 msgid "Todoist"
@@ -506,10 +516,13 @@ msgid ""
 "experience instability, errors and eventually data loss. It is not "
 "recommended to use Todo.txt integration on production systems."
 msgstr ""
+"<b>Aðvörun!</b> Stuðningur við Gera.txt er á tilraunastigi og því mögulega"
+" óstöðugur. Þú gætir fundið fyrir óstöðugleika, villum og jafnvel gagnatapi."
+" Ekki er mælt með því að nota samþættingu við Gera.txt í alvöru vinnuumhverfi."
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:326
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
-msgstr ""
+msgstr "Villa kom upp við að opna skráavöktun. Gera.txt verður ekki vöktuð"
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:395
 msgid "Todo.txt"
