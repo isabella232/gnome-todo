@@ -112,7 +112,7 @@ filter_func (GObject *item,
   task = (GtdTask*) item;
   entry = (GtkEntry*) user_data;
 
-  normalized_entry_text = gtd_normalize_casefold_and_unaccent (gtk_entry_get_text (entry));
+  normalized_entry_text = gtd_normalize_casefold_and_unaccent (gtk_editable_get_text (GTK_EDITABLE (entry)));
   normalized_task_name = gtd_normalize_casefold_and_unaccent (gtd_task_get_title (task));
 
   return strstr (normalized_task_name, normalized_entry_text) != NULL;

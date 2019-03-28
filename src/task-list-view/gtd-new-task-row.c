@@ -142,10 +142,10 @@ entry_activated_cb (GtdNewTaskRow *self)
 
   gtd_provider_create_task (gtd_task_list_get_provider (list),
                             list,
-                            gtk_entry_get_text (self->entry),
+                            gtk_editable_get_text (GTK_EDITABLE (self->entry)),
                             gtd_task_list_view_get_default_date (view));
 
-  gtk_entry_set_text (self->entry, "");
+  gtk_editable_set_text (GTK_EDITABLE (self->entry), "");
 }
 
 static void

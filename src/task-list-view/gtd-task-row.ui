@@ -89,11 +89,11 @@
 
                     <!-- Task title entry -->
                     <child>
-                      <object class="GtdExpandableEntry" id="title_entry">
+                      <object class="GtkText" id="title_entry">
                         <property name="hexpand">True</property>
                         <property name="halign">start</property>
                         <property name="width-chars">5</property>
-                        <property name="propagate-natural-width">True</property>
+                        <property name="propagate-text-width">True</property>
                         <signal name="activate" handler="on_task_changed_cb" object="GtdTaskRow" swapped="yes" />
                         <signal name="notify::text" handler="on_task_changed_cb" object="GtdTaskRow" swapped="yes" />
                         <style>

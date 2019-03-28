@@ -33,7 +33,7 @@ struct _GtdProviderPopover
   GtkWidget            *change_location_button;
   GtkWidget            *location_provider_image;
   GtkWidget            *new_list_create_button;
-  GtkWidget            *new_list_name_entry;
+  GtkEditable          *new_list_name_entry;
   GtkWidget            *stack;
   GtkWidget            *provider_selector;
 };
@@ -66,7 +66,7 @@ clear_and_hide (GtdProviderPopover *popover)
   g_list_free (locations);
 
   /* By clearing the text, Create button will get insensitive */
-  gtk_entry_set_text (GTK_ENTRY (popover->new_list_name_entry), "");
+  gtk_editable_set_text (popover->new_list_name_entry, "");
 
   /* Hide the popover at last */
   gtk_widget_hide (GTK_WIDGET (popover));
@@ -87,7 +87,7 @@ create_task_list (GtdProviderPopover *popover)
   const gchar *name;
 
   provider = gtd_provider_selector_get_selected_provider (GTD_PROVIDER_SELECTOR (popover->provider_selector));
-  name = gtk_entry_get_text (GTK_ENTRY (popover->new_list_name_entry));
+  name = gtk_editable_get_text (popover->new_list_name_entry);
 
   gtd_provider_create_task_list (provider, name);
 }
@@ -154,7 +154,7 @@ gtd_provider_popover__provider_selected (GtdProviderPopover *popover,
       gtk_stack_set_visible_child_name (GTK_STACK (popover->stack), "main");
 
       if (gtk_widget_is_visible (GTK_WIDGET (popover)))
-        gtk_widget_grab_focus (popover->new_list_name_entry);
+        gtk_widget_grab_focus (GTK_WIDGET (popover->new_list_name_entry));
     }
 }
 

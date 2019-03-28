@@ -20,7 +20,6 @@
 
 #include "gtd-debug.h"
 #include "gtd-edit-pane.h"
-#include "gtd-expandable-entry.h"
 #include "gtd-manager.h"
 #include "gtd-markdown-renderer.h"
 #include "gtd-provider.h"
@@ -547,8 +546,6 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   object_class->set_property = gtd_task_row_set_property;
 
   widget_class->measure = gtd_row_measure_with_max;
-
-  g_type_ensure (GTD_TYPE_EXPANDABLE_ENTRY);
 
   /**
    * GtdTaskRow::handle-subtasks:

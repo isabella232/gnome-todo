@@ -36,7 +36,7 @@ struct _GtdTaskListPanel
   GtkFlowBox         *colors_flowbox;
   GtkPopover         *popover;
   GtkWidget          *rename_button;
-  GtkEntry           *rename_entry;
+  GtkEditable        *rename_entry;
   GtdTaskListView    *task_list_view;
 
   GtkWidget          *previous_color_button;
@@ -154,12 +154,12 @@ rename_list (GtdTaskListPanel *self)
   GtdTaskList *list;
 
   g_assert (gtk_widget_get_visible (GTK_WIDGET (self->popover)));
-  g_assert (g_utf8_validate (gtk_entry_get_text (self->rename_entry), -1, NULL));
+  g_assert (g_utf8_validate (gtk_editable_get_text (self->rename_entry), -1, NULL));
 
   list = GTD_TASK_LIST (gtd_task_list_view_get_model (self->task_list_view));
   g_assert (list != NULL);
 
-  new_name = g_strdup (gtk_entry_get_text (self->rename_entry));
+  new_name = g_strdup (gtk_editable_get_text (self->rename_entry));
   new_name = g_strstrip (new_name);
 
   /*
@@ -169,14 +169,14 @@ rename_list (GtdTaskListPanel *self)
   if (!new_name || new_name[0] == '\0')
     return;
 
-  if (g_strcmp0 (gtk_entry_get_text (self->rename_entry), gtd_task_list_get_name (list)) != 0)
+  if (g_strcmp0 (new_name, gtd_task_list_get_name (list)) != 0)
     {
-      gtd_task_list_set_name (list, gtk_entry_get_text (self->rename_entry));
+      gtd_task_list_set_name (list, new_name);
       gtd_provider_update_task_list (gtd_task_list_get_provider (list), list);
     }
 
   gtk_popover_popdown (self->popover);
-  gtk_entry_set_text (self->rename_entry, "");
+  gtk_editable_set_text (self->rename_entry, "");
 }
 
 
@@ -235,7 +235,7 @@ static void
 on_popover_hidden_cb (GtkPopover       *popover,
                       GtdTaskListPanel *self)
 {
-  gtk_entry_set_text (self->rename_entry, "");
+  gtk_editable_set_text (self->rename_entry, "");
 }
 
 static void
@@ -253,15 +253,14 @@ on_rename_entry_activated_cb (GtkEntry         *entry,
 }
 
 static void
-on_rename_entry_text_changed_cb (GtkEntry         *entry,
+on_rename_entry_text_changed_cb (GtkEditable      *entry,
                                  GParamSpec       *pspec,
                                  GtdTaskListPanel *self)
 {
-
   g_autofree gchar *new_name = NULL;
   gboolean valid;
 
-  new_name = g_strdup (gtk_entry_get_text (self->rename_entry));
+  new_name = g_strdup (gtk_editable_get_text (entry));
   new_name = g_strstrip (new_name);
 
   valid = new_name && new_name[0] != '\0';
@@ -436,6 +435,7 @@ gtd_task_list_panel_class_init (GtdTaskListPanelClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, colors_flowbox);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, popover);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, rename_button);
+  gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, rename_entry);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, rename_entry);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, task_list_view);
 

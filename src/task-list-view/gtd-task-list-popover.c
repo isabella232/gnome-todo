@@ -36,7 +36,7 @@ struct _GtdTaskListPopover
 
   GtkSizeGroup       *sizegroup;
   GtkListBox         *listbox;
-  GtkEntry           *search_entry;
+  GtkEditable        *search_entry;
 
   GtdTaskList        *selected_list;
   GtdManager         *manager;
@@ -90,7 +90,7 @@ filter_listbox_cb (gpointer  item,
   self = (GtdTaskListPopover*) user_data;
   list = (GtdTaskList*) item;
 
-  normalized_search_query = gtd_normalize_casefold_and_unaccent (gtk_entry_get_text (self->search_entry));
+  normalized_search_query = gtd_normalize_casefold_and_unaccent (gtk_editable_get_text (self->search_entry));
   normalized_list_name = gtd_normalize_casefold_and_unaccent (gtd_task_list_get_name (list));
 
   return g_strrstr (normalized_list_name, normalized_search_query) != NULL;
@@ -164,18 +164,18 @@ on_listbox_row_activated_cb (GtkListBox         *listbox,
                              GtkListBoxRow      *row,
                              GtdTaskListPopover *self)
 {
-  GtdTaskList *list = g_object_get_data (G_OBJECT (row), "tasklist");
+  GtdTaskList *list = g_object_get_data (G_OBJECT (row), "tasklit");
 
   set_selected_tasklist (self, list);
   gtk_popover_popdown (GTK_POPOVER (self));
-  gtk_entry_set_text (self->search_entry, "");
+  gtk_editable_set_text (self->search_entry, "");
 }
 
 static void
 on_popover_closed_cb (GtkPopover         *popover,
                       GtdTaskListPopover *self)
 {
-  gtk_entry_set_text (self->search_entry, "");
+  gtk_editable_set_text (self->search_entry, "");
 }
 
 static void
@@ -186,7 +186,7 @@ on_search_entry_activated_cb (GtkEntry           *entry,
 
   set_selected_tasklist (self, list);
   gtk_popover_popdown (GTK_POPOVER (self));
-  gtk_entry_set_text (self->search_entry, "");
+  gtk_editable_set_text (self->search_entry, "");
 }
 
 static void
