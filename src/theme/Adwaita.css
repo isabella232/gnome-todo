@@ -69,9 +69,15 @@ taskrow.active {
 }
 
 /* task title entry */
-taskrow entry { border: none; background: none; }
-taskrow entry { border: solid 1px transparent;  }
-taskrow entry:hover:not(:focus) { border: solid 1px @borders;     }
+taskrow text {
+  border: solid 1px transparent;
+  background: none;
+  border-radius: 3px;
+}
+
+taskrow text:hover:not(:focus) {
+  border: solid 1px @borders;
+}
 
 /* line-through complete tasks */
 taskrow.complete > * { opacity: 0.5; }
