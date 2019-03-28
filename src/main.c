@@ -1,4 +1,3 @@
-/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 2; tab-width: 2 -*-  */
 /*
  * main.c
  * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
@@ -23,16 +22,17 @@
 #include <glib/gi18n.h>
 
 gint
-main (gint  argc,
-      char *argv[])
+main (gint    argc,
+      gchar **argv)
 {
-  g_autoptr (GtdApplication) app;
+  g_autoptr (GtdApplication) app = NULL;
+  g_autofree gchar *program_name = NULL;
 
   bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   textdomain (GETTEXT_PACKAGE);
 
-  g_autofree gchar *program_name = g_strconcat (_("To Do"), NAME_SUFFIX, NULL);
+  program_name = g_strconcat (_("To Do"), NAME_SUFFIX, NULL);
   g_set_application_name (program_name);
 
   app = gtd_application_new ();
