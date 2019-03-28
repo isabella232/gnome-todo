@@ -304,22 +304,19 @@ error_message_notification_secondary_action (GtdNotification *notification,
 static void
 load_geometry (GtdWindow *self)
 {
-  GdkRectangle geometry;
   GSettings *settings;
   GtkWindow *window;
   gboolean maximized;
+  gint height;
+  gint width;
 
   window = GTK_WINDOW (self);
   settings = gtd_manager_get_settings (gtd_manager_get_default ());
 
   maximized = g_settings_get_boolean (settings, "window-maximized");
-  g_settings_get (settings, "window-size", "(ii)", &geometry.width, &geometry.height);
-  g_settings_get (settings, "window-position", "(ii)", &geometry.x, &geometry.y);
+  g_settings_get (settings, "window-size", "(ii)", &width, &height);
 
-  gtk_window_set_default_size (window, geometry.width, geometry.height);
-
-  if (geometry.y > -1)
-    gtk_window_move (window, geometry.x, geometry.y);
+  gtk_window_set_default_size (window, width, height);
 
   if (maximized)
     gtk_window_maximize (window);
@@ -447,10 +444,11 @@ on_show_notification_cb (GtdManager      *manager,
 static void
 gtd_window_unmap (GtkWidget *widget)
 {
-  GdkRectangle geometry;
   GSettings *settings;
   GtkWindow *window;
   gboolean maximized;
+  gint height;
+  gint width;
 
   window = GTK_WINDOW (widget);
   settings = gtd_manager_get_settings (gtd_manager_get_default ());
@@ -461,10 +459,8 @@ gtd_window_unmap (GtkWidget *widget)
   if (maximized)
     return;
 
-  gtk_window_get_size (window, &geometry.width, &geometry.height);
-  gtk_window_get_position (window, &geometry.x, &geometry.y);
-  g_settings_set (settings, "window-size", "(ii)", geometry.width, geometry.height);
-  g_settings_set (settings, "window-position", "(ii)", geometry.x, geometry.y);
+  gtk_window_get_size (window, &width, &height);
+  g_settings_set (settings, "window-size", "(ii)", width, height);
 
   GTK_WIDGET_CLASS (gtd_window_parent_class)->unmap (widget);
 }
