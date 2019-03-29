@@ -130,6 +130,10 @@ execute_notification (GtdNotificationWidget *self,
 
 static void
 on_motion_controller_enter_cb (GtkEventController    *controller,
+                               gdouble                x,
+                               gdouble                y,
+                               GdkCrossingMode        crossing_mode,
+                               GdkNotifyType          notify_type,
                                GtdNotificationWidget *self)
 {
   gtd_notification_stop (self->current_notification);
@@ -137,6 +141,8 @@ on_motion_controller_enter_cb (GtkEventController    *controller,
 
 static void
 on_motion_controller_leave_cb (GtkEventController    *controller,
+                               GdkCrossingMode        crossing_mode,
+                               GdkNotifyType          notify_type,
                                GtdNotificationWidget *self)
 {
   gtd_notification_start (self->current_notification);
