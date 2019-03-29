@@ -69,14 +69,11 @@
             </child>
 
             <!-- App menu -->
-            <child>
+            <child type="end">
               <object class="GtkMenuButton">
                 <property name="menu-model">app-menu</property>
                 <property name="direction">none</property>
               </object>
-              <packing>
-                <property name="pack-type">end</property>
-              </packing>
             </child>
           </object>
         </child>
@@ -111,7 +108,7 @@
                 <property name="pack_type">start</property>
               </packing>
             </child>
-            <child>
+            <child type="end">
               <object class="GtkButton" id="cancel_selection_button">
                 <property name="label" translatable="yes">_Cancel</property>
                 <property name="use_underline">True</property>
@@ -120,37 +117,24 @@
                 <property name="receives_default">True</property>
                 <signal name="clicked" handler="on_cancel_selection_button_clicked" object="GtdWindow" swapped="no" />
               </object>
-              <packing>
-                <property name="pack_type">end</property>
-                <property name="position">2</property>
-              </packing>
             </child>
-            <child>
+            <child type="end">
               <object class="GtkMenuButton" id="gear_menu_button">
                 <property name="can_focus">True</property>
                 <property name="icon-name">view-more-symbolic</property>
               </object>
-              <packing>
-                <property name="pack_type">end</property>
-              </packing>
             </child>
-            <child>
+            <child type="end">
               <object class="GtkBox" id="panel_box_end">
                 <property name="can_focus">False</property>
                 <property name="spacing">6</property>
               </object>
-              <packing>
-                <property name="pack_type">end</property>
-              </packing>
             </child>
-            <child>
+            <child type="end">
               <object class="GtkBox" id="extension_box_end">
                 <property name="can_focus">False</property>
                 <property name="spacing">6</property>
               </object>
-              <packing>
-                <property name="pack_type">end</property>
-              </packing>
             </child>
           </object>
         </child>
