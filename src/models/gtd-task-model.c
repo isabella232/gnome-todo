@@ -204,7 +204,7 @@ gtd_task_model_get_item (GListModel *model,
 
   for (i = 0; i < g_list_model_get_n_items (tasklists); i++)
     {
-      g_autoptr (GtdTaskList) tasklist;
+      g_autoptr (GtdTaskList) tasklist = NULL;
       guint n_items;
 
       tasklist = g_list_model_get_item (tasklists, i);

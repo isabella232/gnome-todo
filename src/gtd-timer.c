@@ -53,7 +53,7 @@ static guint signals[N_SIGNALS] = { 0, };
 static void
 update_current_day (GtdTimer *self)
 {
-  g_autoptr (GDateTime) now;
+  g_autoptr (GDateTime) now = NULL;
 
   now = g_date_time_new_now_local ();
 
