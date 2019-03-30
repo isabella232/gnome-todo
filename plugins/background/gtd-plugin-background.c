@@ -329,7 +329,7 @@ watch_manager_for_new_lists (GtdPluginBackground *self)
                             G_CALLBACK (on_tasklist_notified),
                             self);
 
-  g_signal_connect_swapped (gtd_manager_get_timer (manager),
+  g_signal_connect_swapped (gtd_manager_get_clock (manager),
                             "update",
                             G_CALLBACK (send_notification),
                             self);
@@ -380,7 +380,7 @@ gtd_plugin_background_deactivate (GtdActivatable *activatable)
                                         on_tasklist_notified,
                                         self);
 
-  g_signal_handlers_disconnect_by_func (gtd_manager_get_timer (manager),
+  g_signal_handlers_disconnect_by_func (gtd_manager_get_clock (manager),
                                         send_notification,
                                         self);
 

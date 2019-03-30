@@ -1,4 +1,4 @@
-/* gtd-timer.c
+/* gtd-clock.c
  *
  * Copyright (C) 2017 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
@@ -16,13 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#define G_LOG_DOMAIN "GtdTimer"
+#define G_LOG_DOMAIN "GtdClock"
 
-#include "gtd-timer.h"
+#include "gtd-clock.h"
 
 #include <gio/gio.h>
 
-struct _GtdTimer
+struct _GtdClock
 {
   GtdObject           parent;
 
@@ -36,7 +36,7 @@ struct _GtdTimer
 
 static gboolean      update_for_day_change                       (gpointer           user_data);
 
-G_DEFINE_TYPE (GtdTimer, gtd_timer, GTD_TYPE_OBJECT)
+G_DEFINE_TYPE (GtdClock, gtd_clock, GTD_TYPE_OBJECT)
 
 enum
 {
@@ -51,7 +51,7 @@ static guint signals[N_SIGNALS] = { 0, };
  */
 
 static void
-update_current_day (GtdTimer *self)
+update_current_day (GtdClock *self)
 {
   g_autoptr (GDateTime) now = NULL;
 
@@ -69,7 +69,7 @@ update_current_day (GtdTimer *self)
 }
 
 static void
-schedule_update_for_day_change (GtdTimer *self)
+schedule_update_for_day_change (GtdClock *self)
 {
   g_autoptr (GDateTime) now;
   guint seconds_between;
@@ -101,7 +101,7 @@ logind_signal_received_cb (GDBusProxy  *logind,
                            const gchar *sender,
                            const gchar *signal,
                            GVariant    *params,
-                           GtdTimer    *self)
+                           GtdClock    *self)
 {
   GVariant *child;
   gboolean resuming;
@@ -129,9 +129,9 @@ login_proxy_acquired_cb (GObject      *source,
                          gpointer      user_data)
 {
   g_autoptr (GError) error = NULL;
-  GtdTimer *self;
+  GtdClock *self;
 
-  self = GTD_TIMER (user_data);
+  self = GTD_CLOCK (user_data);
 
   gtd_object_pop_loading (GTD_OBJECT (self));
 
@@ -152,7 +152,7 @@ login_proxy_acquired_cb (GObject      *source,
 static gboolean
 update_for_day_change (gpointer user_data)
 {
-  GtdTimer *self = user_data;
+  GtdClock *self = user_data;
 
   /* Remove it first */
   self->update_timeout_id = 0;
@@ -171,9 +171,9 @@ update_for_day_change (gpointer user_data)
  * GObject overrides
  */
 static void
-gtd_timer_finalize (GObject *object)
+gtd_clock_finalize (GObject *object)
 {
-  GtdTimer *self = (GtdTimer *)object;
+  GtdClock *self = (GtdClock *)object;
 
   g_cancellable_cancel (self->cancellable);
 
@@ -188,11 +188,11 @@ gtd_timer_finalize (GObject *object)
   g_clear_object (&self->cancellable);
   g_clear_object (&self->logind);
 
-  G_OBJECT_CLASS (gtd_timer_parent_class)->finalize (object);
+  G_OBJECT_CLASS (gtd_clock_parent_class)->finalize (object);
 }
 
 static void
-gtd_timer_get_property (GObject    *object,
+gtd_clock_get_property (GObject    *object,
                         guint       prop_id,
                         GValue     *value,
                         GParamSpec *pspec)
@@ -201,7 +201,7 @@ gtd_timer_get_property (GObject    *object,
 }
 
 static void
-gtd_timer_set_property (GObject      *object,
+gtd_clock_set_property (GObject      *object,
                         guint         prop_id,
                         const GValue *value,
                         GParamSpec   *pspec)
@@ -210,22 +210,22 @@ gtd_timer_set_property (GObject      *object,
 }
 
 static void
-gtd_timer_class_init (GtdTimerClass *klass)
+gtd_clock_class_init (GtdClockClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gtd_timer_finalize;
-  object_class->get_property = gtd_timer_get_property;
-  object_class->set_property = gtd_timer_set_property;
+  object_class->finalize = gtd_clock_finalize;
+  object_class->get_property = gtd_clock_get_property;
+  object_class->set_property = gtd_clock_set_property;
 
   /**
-   * GtdTimer:update:
+   * GtdClock:update:
    *
    * Emited when an update is required. This is emited usually
    * after a session resume, or a day change.
    */
   signals[UPDATE] = g_signal_new ("update",
-                                  GTD_TYPE_TIMER,
+                                  GTD_TYPE_CLOCK,
                                   G_SIGNAL_RUN_LAST,
                                   0, NULL, NULL, NULL,
                                   G_TYPE_NONE,
@@ -233,7 +233,7 @@ gtd_timer_class_init (GtdTimerClass *klass)
 }
 
 static void
-gtd_timer_init (GtdTimer *self)
+gtd_clock_init (GtdClock *self)
 {
   gtd_object_push_loading (GTD_OBJECT (self));
 
@@ -253,8 +253,8 @@ gtd_timer_init (GtdTimer *self)
   schedule_update_for_day_change (self);
 }
 
-GtdTimer*
-gtd_timer_new (void)
+GtdClock*
+gtd_clock_new (void)
 {
-  return g_object_new (GTD_TYPE_TIMER, NULL);
+  return g_object_new (GTD_TYPE_CLOCK, NULL);
 }

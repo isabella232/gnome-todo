@@ -1,4 +1,4 @@
-/* gtd-timer.h
+/* gtd-clock.h
  *
  * Copyright (C) 2017 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
@@ -16,8 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GTD_TIMER_H
-#define GTD_TIMER_H
+#pragma once
 
 #include "gtd-object.h"
 
@@ -25,13 +24,10 @@
 
 G_BEGIN_DECLS
 
-#define GTD_TYPE_TIMER (gtd_timer_get_type())
+#define GTD_TYPE_CLOCK (gtd_clock_get_type())
 
-G_DECLARE_FINAL_TYPE (GtdTimer, gtd_timer, GTD, TIMER, GtdObject)
+G_DECLARE_FINAL_TYPE (GtdClock, gtd_clock, GTD, CLOCK, GtdObject)
 
-GtdTimer*            gtd_timer_new                               (void);
+GtdClock*            gtd_clock_new                               (void);
 
 G_END_DECLS
-
-#endif /* GTD_TIMER_H */
-

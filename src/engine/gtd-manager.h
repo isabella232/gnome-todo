@@ -70,7 +70,7 @@ void                 gtd_manager_emit_error_message              (GtdManager    
 void                 gtd_manager_send_notification               (GtdManager         *self,
                                                                   GtdNotification    *notification);
 
-GtdTimer*            gtd_manager_get_timer                       (GtdManager         *self);
+GtdClock*            gtd_manager_get_clock                       (GtdManager         *self);
 
 GListModel*          gtd_manager_get_task_lists_model            (GtdManager         *self);
 

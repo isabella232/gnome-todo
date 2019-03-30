@@ -270,7 +270,7 @@ on_model_items_changed_cb (GListModel       *model,
 }
 
 static void
-on_timer_updated_cb (GtdTimer         *timer,
+on_clock_updated_cb (GtdClock         *clock,
                      GtdAllTasksPanel *self)
 {
   g_autoptr (GDateTime) now = NULL;
@@ -454,9 +454,9 @@ gtd_all_tasks_panel_init (GtdAllTasksPanel *self)
                            self,
                            0);
 
-  g_signal_connect_object (gtd_manager_get_timer (manager),
+  g_signal_connect_object (gtd_manager_get_clock (manager),
                            "update",
-                           G_CALLBACK (on_timer_updated_cb),
+                           G_CALLBACK (on_clock_updated_cb),
                            self,
                            G_CONNECT_SWAPPED);
 }

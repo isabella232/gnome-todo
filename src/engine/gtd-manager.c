@@ -23,13 +23,13 @@
 #include "interfaces/gtd-provider.h"
 #include "interfaces/gtd-panel.h"
 #include "notification/gtd-notification.h"
+#include "gtd-clock.h"
 #include "gtd-debug.h"
 #include "gtd-manager.h"
 #include "gtd-manager-protected.h"
 #include "gtd-plugin-manager.h"
 #include "gtd-task.h"
 #include "gtd-task-list.h"
-#include "gtd-timer.h"
 #include "gtd-utils.h"
 
 #include <glib/gi18n.h>
@@ -62,7 +62,7 @@ struct _GtdManager
   GList              *providers;
   GList              *panels;
   GtdProvider        *default_provider;
-  GtdTimer           *timer;
+  GtdClock           *clock;
 
   GCancellable       *cancellable;
 };
@@ -91,7 +91,7 @@ enum
   PROP_0,
   PROP_DEFAULT_PROVIDER,
   PROP_DEFAULT_TASKLIST,
-  PROP_TIMER,
+  PROP_CLOCK,
   PROP_PLUGIN_MANAGER,
   LAST_PROP
 };
@@ -304,7 +304,7 @@ gtd_manager_finalize (GObject *object)
   g_clear_object (&self->cancellable);
   g_clear_object (&self->plugin_manager);
   g_clear_object (&self->settings);
-  g_clear_object (&self->timer);
+  g_clear_object (&self->clock);
   g_clear_object (&self->lists_model);
 
   G_OBJECT_CLASS (gtd_manager_parent_class)->finalize (object);
@@ -328,8 +328,8 @@ gtd_manager_get_property (GObject    *object,
       g_value_set_object (value, gtd_provider_get_default_task_list (self->default_provider));
       break;
 
-    case PROP_TIMER:
-      g_value_set_object (value, self->timer);
+    case PROP_CLOCK:
+      g_value_set_object (value, self->clock);
       break;
 
     case PROP_PLUGIN_MANAGER:
@@ -403,17 +403,17 @@ gtd_manager_class_init (GtdManagerClass *klass)
                              G_PARAM_READWRITE));
 
   /**
-   * GtdManager::timer:
+   * GtdManager::clock:
    *
-   * The underlying timer of GNOME To DO.
+   * The underlying clock of GNOME To Do.
    */
   g_object_class_install_property (
         object_class,
-        PROP_TIMER,
-        g_param_spec_object ("timer",
-                             "The timer",
-                             "The timer of the application",
-                             GTD_TYPE_TIMER,
+        PROP_CLOCK,
+        g_param_spec_object ("clock",
+                             "The clock",
+                             "The clock of the application",
+                             GTD_TYPE_CLOCK,
                              G_PARAM_READABLE));
 
   /**
@@ -613,7 +613,7 @@ gtd_manager_init (GtdManager *self)
 {
   self->settings = g_settings_new ("org.gnome.todo");
   self->plugin_manager = gtd_plugin_manager_new ();
-  self->timer = gtd_timer_new ();
+  self->clock = gtd_clock_new ();
   self->cancellable = g_cancellable_new ();
   self->lists_model = (GListModel*) gtd_list_store_new (GTD_TYPE_TASK_LIST);
   self->tasks_model = (GListModel*) _gtd_task_model_new (self);
@@ -876,21 +876,20 @@ gtd_manager_send_notification (GtdManager      *self,
 }
 
 /**
- * gtd_manager_get_timer:
+ * gtd_manager_get_clock:
  * @self: a #GtdManager
  *
- * Retrieves the #GtdTimer from @self. You can use the
- * timer to know when your code should be updated.
+ * Retrieves the #GtdClock from @self. You can use the
+ * clock to know when your code should be updated.
  *
- * Returns: (transfer none): a #GtdTimer
+ * Returns: (transfer none): a #GtdClock
  */
-GtdTimer*
-gtd_manager_get_timer (GtdManager *self)
+GtdClock*
+gtd_manager_get_clock (GtdManager *self)
 {
-
   g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
-  return self->timer;
+  return self->clock;
 }
 
 /**
