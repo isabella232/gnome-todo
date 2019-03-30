@@ -145,7 +145,7 @@ migrate_to_v1 (GtdTaskListEds *self,
 
   for (i = 0; i < n_tasks; i++)
     {
-      GtdTask *task;
+      g_autoptr (GtdTask) task = NULL;
 
       task = g_list_model_get_item (model, i);
 
@@ -158,7 +158,12 @@ migrate_to_v1 (GtdTaskListEds *self,
     }
 
   for (i = 0; i < n_tasks; i++)
-    g_object_freeze_notify (g_list_model_get_item (model, i));
+    {
+      g_autoptr (GtdTask) task = NULL;
+
+      task = g_list_model_get_item (model, i);
+      g_object_thaw_notify (G_OBJECT (task));
+    }
 }
 
 struct
