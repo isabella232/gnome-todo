@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the gnome-todo package.
 # Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2015.
 # Daniel PUENTES <blatberk@openmailbox.org>, 2015.
-# Carmen Bianca BAKKER <carmen@carmenbianca.eu>, 2018.
+# Carmen Bianca BAKKER <carmen@carmenbianca.eu>, 2018-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-12 15:27+0000\n"
-"PO-Revision-Date: 2018-10-26 11:45+0200\n"
-"Last-Translator: Carmen Bianca BAKKER <carmen@carmenbianca.eu>\n"
+"POT-Creation-Date: 2018-10-28 14:31+0000\n"
+"PO-Revision-Date: 2019-03-29 18:40+0100\n"
+"Last-Translator: Carmen Bianca Bakker <carmen@carmenbianca.eu>\n"
 "Language-Team: Esperanto <gnome-eo-list@gnome.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-DamnedLies-Scope: partial\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
@@ -66,7 +66,7 @@ msgstr "Bildigado de hodiaŭaj taskoj en la Hodiaŭ panelo de GNOME Taskoj"
 
 #: data/gtk/menus.ui:15 data/ui/plugin-dialog.ui:75
 msgid "Extensions"
-msgstr "Ettaskoj"
+msgstr "Etendaĵoj"
 
 #: data/gtk/menus.ui:22
 msgid "_About"
@@ -188,7 +188,7 @@ msgstr "Alta"
 
 #: data/ui/edit-pane.ui:198 data/ui/list-selector-panel.ui:93
 msgid "_Delete"
-msgstr "Fo_rigi"
+msgstr "_Forigi"
 
 #: data/ui/edit-pane.ui:249
 msgctxt "taskdate"
@@ -205,7 +205,7 @@ msgstr "Saluti en retajn kontojn por atingi viajn taskojn"
 
 #: data/ui/initial-setup.ui:67
 msgid "To Do Setup"
-msgstr "Agordo de Taskoj"
+msgstr "Agordado de Taskoj"
 
 #: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
 #: data/ui/window.ui:74
@@ -242,7 +242,7 @@ msgstr "Montri aŭ kaŝi plenumitajn taskojn"
 
 #: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
 msgid "Done"
-msgstr "Farite"
+msgstr "Farita"
 
 #: data/ui/new-task-row.ui:29
 msgid "New task…"
@@ -383,7 +383,7 @@ msgstr "En ĉi tiu komputilo"
 msgid "Error fetching tasks from list"
 msgstr "Eraro dum prenado de taskoj el listo"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:110
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-edit-pane.c:110
 msgid "No date set"
 msgstr "Neniu dato agordita"
 
@@ -392,19 +392,19 @@ msgstr "Neniu dato agordita"
 #. * have plurals, some languages reuse the singular form for numbers
 #. * like 21, 31, 41, etc.
 #.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:102
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
 #, c-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] "Antaŭ %d tago"
 msgstr[1] "Antaŭ %d tagoj"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:147
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:147
 msgid "Yesterday"
 msgstr "Hieraŭ"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:118
 #: plugins/score/score/__init__.py:101
 #: plugins/today-panel/gtd-panel-today.c:134
 #: plugins/today-panel/gtd-panel-today.c:139
@@ -412,18 +412,18 @@ msgstr "Hieraŭ"
 msgid "Today"
 msgstr "Hodiaŭ"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:143
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:122 src/gtd-task-row.c:143
 msgid "Tomorrow"
 msgstr "Morgaŭ"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:365
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:370
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:507
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:356
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:358
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:495
 msgid "Scheduled"
 msgstr "Planitaj"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:512
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:500
 #: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
 msgid "Clear completed tasks…"
