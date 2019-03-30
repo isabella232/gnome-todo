@@ -105,7 +105,6 @@
                 "-DENABLE_FILE_LOCKING=fcntl",
                 "-DENABLE_GTK=OFF",
                 "-DENABLE_GOOGLE=OFF",
-                "-DENABLE_UOA=OFF",
                 "-DENABLE_VALA_BINDINGS=ON",
                 "-DENABLE_WEATHER=OFF",
                 "-DWITH_OPENLDAP=OFF",
