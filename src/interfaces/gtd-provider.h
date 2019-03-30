@@ -46,6 +46,8 @@ struct _GtdProviderInterface
 
   gboolean           (*get_enabled)                              (GtdProvider        *provider);
 
+  void               (*refresh)                                  (GtdProvider        *provider);
+
   /* Customs */
   GIcon*             (*get_icon)                                 (GtdProvider        *provider);
 
@@ -88,6 +90,8 @@ const gchar*         gtd_provider_get_provider_type              (GtdProvider   
 const gchar*         gtd_provider_get_description                (GtdProvider        *provider);
 
 gboolean             gtd_provider_get_enabled                    (GtdProvider        *provider);
+
+void                 gtd_provider_refresh                        (GtdProvider        *provider);
 
 GIcon*               gtd_provider_get_icon                       (GtdProvider        *provider);
 

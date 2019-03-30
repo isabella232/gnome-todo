@@ -288,6 +288,26 @@ gtd_provider_get_enabled (GtdProvider *provider)
 }
 
 /**
+ * gtd_provider_refresh:
+ * @provider: a #GtdProvider
+ *
+ * Asks the provider to refresh. Online providers may want to
+ * synchronize tasks and tasklists, credentials, etc, when this
+ * is called.
+ *
+ * This is an optional feature. Providers that do not implement
+ * the "refresh" vfunc will be ignored.
+ */
+void
+gtd_provider_refresh (GtdProvider *provider)
+{
+  g_return_if_fail (GTD_IS_PROVIDER (provider));
+
+  if (GTD_PROVIDER_GET_IFACE (provider)->refresh)
+    GTD_PROVIDER_GET_IFACE (provider)->refresh (provider);
+}
+
+/**
  * gtd_provider_get_icon:
  * @provider: a #GtdProvider
  *
