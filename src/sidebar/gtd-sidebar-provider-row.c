@@ -175,7 +175,7 @@ on_provider_lists_changed_cb (GtdProvider           *provider,
                               GtdTaskList           *list,
                               GtdSidebarProviderRow *self)
 {
-  update_provider_label (self);
+  update_loading_state (self);
 }
 
 static void
