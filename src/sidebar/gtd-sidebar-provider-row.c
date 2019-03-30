@@ -20,6 +20,7 @@
 
 #define G_LOG_DOMAIN "GtdSidebarProviderRow"
 
+#include "gtd-debug.h"
 #include "gtd-manager.h"
 #include "gtd-provider.h"
 #include "gtd-sidebar-provider-row.h"
@@ -112,6 +113,12 @@ update_loading_state (GtdSidebarProviderRow *self)
   lists = gtd_provider_get_task_lists (self->provider);
   is_loading = gtd_object_get_loading (GTD_OBJECT (self->provider));
   has_lists = lists != NULL;
+
+  GTD_TRACE_MSG ("'%s' (%s): is_loading: %d, has_lists: %d",
+                 gtd_provider_get_name (self->provider),
+                 gtd_provider_get_id (self->provider),
+                 is_loading,
+                 has_lists);
 
   gtk_stack_set_visible_child_name (self->stack, is_loading ? "spinner" : "empty");
   gtk_widget_set_visible (self->loading_label, is_loading && !has_lists);
