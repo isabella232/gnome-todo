@@ -19,6 +19,7 @@
 #define G_LOG_DOMAIN "GtdClock"
 
 #include "gtd-clock.h"
+#include "gtd-debug.h"
 
 #include <gio/gio.h>
 
@@ -26,20 +27,23 @@ struct _GtdClock
 {
   GtdObject           parent;
 
-  guint               update_timeout_id;
+  guint               timeout_id;
 
-  GDateTime          *current_day;
+  GDateTime          *current;
 
   GDBusProxy         *logind;
   GCancellable       *cancellable;
 };
 
-static gboolean      update_for_day_change                       (gpointer           user_data);
+static gboolean      timeout_cb                                  (gpointer           user_data);
 
 G_DEFINE_TYPE (GtdClock, gtd_clock, GTD_TYPE_OBJECT)
 
 enum
 {
+  DAY_CHANGED,
+  HOUR_CHANGED,
+  MINUTE_CHANGED,
   UPDATE,
   N_SIGNALS
 };
@@ -51,45 +55,59 @@ static guint signals[N_SIGNALS] = { 0, };
  */
 
 static void
-update_current_day (GtdClock *self)
+update_current_date (GtdClock *self)
 {
-  g_autoptr (GDateTime) now = NULL;
+  g_autoptr (GDateTime) now;
+  gboolean minute_changed;
+  gboolean hour_changed;
+  gboolean day_changed;
+
+  GTD_ENTRY;
 
   now = g_date_time_new_now_local ();
 
-  if (g_date_time_get_year (now) != g_date_time_get_year (self->current_day) ||
-      g_date_time_get_month (now) != g_date_time_get_month (self->current_day) ||
-      g_date_time_get_day_of_month (now) != g_date_time_get_day_of_month (self->current_day))
-    {
-      g_clear_pointer (&self->current_day, g_date_time_unref);
-      self->current_day = g_date_time_ref (now);
+  day_changed = g_date_time_get_year (now) != g_date_time_get_year (self->current) ||
+                g_date_time_get_day_of_year (now) != g_date_time_get_day_of_year (self->current);
+  hour_changed = day_changed || g_date_time_get_hour (now) != g_date_time_get_hour (self->current);
+  minute_changed = hour_changed || g_date_time_get_minute (now) != g_date_time_get_minute (self->current);
 
-      g_signal_emit (self, signals[UPDATE], 0);
-    }
+  if (day_changed)
+    g_signal_emit (self, signals[DAY_CHANGED], 0);
+
+  if (hour_changed)
+    g_signal_emit (self, signals[HOUR_CHANGED], 0);
+
+  if (minute_changed)
+    g_signal_emit (self, signals[MINUTE_CHANGED], 0);
+
+  g_signal_emit (self, signals[UPDATE], 0);
+
+  GTD_TRACE_MSG ("Ticking clock");
+
+  g_clear_pointer (&self->current, g_date_time_unref);
+  self->current = g_date_time_ref (now);
+
+  GTD_EXIT;
 }
 
 static void
-schedule_update_for_day_change (GtdClock *self)
+schedule_update (GtdClock *self)
 {
   g_autoptr (GDateTime) now;
   guint seconds_between;
 
   /* Remove the previous timeout if we came from resume */
-  if (self->update_timeout_id > 0)
+  if (self->timeout_id > 0)
     {
-      g_source_remove (self->update_timeout_id);
-      self->update_timeout_id = 0;
+      g_source_remove (self->timeout_id);
+      self->timeout_id = 0;
     }
 
   now = g_date_time_new_now_local ();
 
-  seconds_between = (24 - g_date_time_get_hour (now)) * 3600 +
-                    (60 - g_date_time_get_minute (now)) * 60 +
-                    (60 - g_date_time_get_seconds (now));
+  seconds_between = 60 - g_date_time_get_second (now);
 
-  self->update_timeout_id = g_timeout_add_seconds (seconds_between,
-                                                   update_for_day_change,
-                                                   self);
+  self->timeout_id = g_timeout_add_seconds (seconds_between, timeout_cb, self);
 }
 
 /*
@@ -116,8 +134,8 @@ logind_signal_received_cb (GDBusProxy  *logind,
   if (resuming)
     {
       /* Reschedule the daily timeout */
-      update_current_day (self);
-      schedule_update_for_day_change (self);
+      update_current_date (self);
+      schedule_update (self);
     }
 
   g_clear_pointer (&child, g_variant_unref);
@@ -150,22 +168,18 @@ login_proxy_acquired_cb (GObject      *source,
 }
 
 static gboolean
-update_for_day_change (gpointer user_data)
+timeout_cb (gpointer user_data)
 {
   GtdClock *self = user_data;
 
-  /* Remove it first */
-  self->update_timeout_id = 0;
+  self->timeout_id = 0;
 
-  /*
-   * Because we can't rely on the current timeout,
-   * reschedule it entirely.
-   */
-  update_current_day (self);
-  schedule_update_for_day_change (self);
+  update_current_date (self);
+  schedule_update (self);
 
   return G_SOURCE_REMOVE;
 }
+
 
 /*
  * GObject overrides
@@ -177,13 +191,13 @@ gtd_clock_finalize (GObject *object)
 
   g_cancellable_cancel (self->cancellable);
 
-  if (self->update_timeout_id > 0)
+  if (self->timeout_id > 0)
     {
-      g_source_remove (self->update_timeout_id);
-      self->update_timeout_id = 0;
+      g_source_remove (self->timeout_id);
+      self->timeout_id = 0;
     }
 
-  g_clear_pointer (&self->current_day, g_date_time_unref);
+  g_clear_pointer (&self->current, g_date_time_unref);
 
   g_clear_object (&self->cancellable);
   g_clear_object (&self->logind);
@@ -219,6 +233,40 @@ gtd_clock_class_init (GtdClockClass *klass)
   object_class->set_property = gtd_clock_set_property;
 
   /**
+   * GtdClock:day-changed:
+   *
+   * Emited when the day changes.
+   */
+  signals[DAY_CHANGED] = g_signal_new ("day-changed",
+                                       GTD_TYPE_CLOCK,
+                                       G_SIGNAL_RUN_LAST,
+                                       0, NULL, NULL, NULL,
+                                       G_TYPE_NONE,
+                                       0);
+  /**
+   * GtdClock:hour-changed:
+   *
+   * Emited when the current hour changes.
+   */
+  signals[HOUR_CHANGED] = g_signal_new ("hour-changed",
+                                        GTD_TYPE_CLOCK,
+                                        G_SIGNAL_RUN_LAST,
+                                        0, NULL, NULL, NULL,
+                                        G_TYPE_NONE,
+                                        0);
+  /**
+   * GtdClock:minute-changed:
+   *
+   * Emited when the current minute changes.
+   */
+  signals[MINUTE_CHANGED] = g_signal_new ("minute-changed",
+                                          GTD_TYPE_CLOCK,
+                                          G_SIGNAL_RUN_LAST,
+                                          0, NULL, NULL, NULL,
+                                          G_TYPE_NONE,
+                                          0);
+
+  /**
    * GtdClock:update:
    *
    * Emited when an update is required. This is emited usually
@@ -237,7 +285,7 @@ gtd_clock_init (GtdClock *self)
 {
   gtd_object_push_loading (GTD_OBJECT (self));
 
-  self->current_day = g_date_time_new_now_local ();
+  self->current = g_date_time_new_now_local ();
   self->cancellable = g_cancellable_new ();
 
   g_dbus_proxy_new_for_bus (G_BUS_TYPE_SYSTEM,
@@ -250,7 +298,7 @@ gtd_clock_init (GtdClock *self)
                             login_proxy_acquired_cb,
                             self);
 
-  schedule_update_for_day_change (self);
+  schedule_update (self);
 }
 
 GtdClock*
