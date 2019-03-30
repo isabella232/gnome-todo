@@ -44,7 +44,6 @@ enum
   DAY_CHANGED,
   HOUR_CHANGED,
   MINUTE_CHANGED,
-  UPDATE,
   N_SIGNALS
 };
 
@@ -79,8 +78,6 @@ update_current_date (GtdClock *self)
 
   if (minute_changed)
     g_signal_emit (self, signals[MINUTE_CHANGED], 0);
-
-  g_signal_emit (self, signals[UPDATE], 0);
 
   GTD_TRACE_MSG ("Ticking clock");
 
@@ -265,19 +262,6 @@ gtd_clock_class_init (GtdClockClass *klass)
                                           0, NULL, NULL, NULL,
                                           G_TYPE_NONE,
                                           0);
-
-  /**
-   * GtdClock:update:
-   *
-   * Emited when an update is required. This is emited usually
-   * after a session resume, or a day change.
-   */
-  signals[UPDATE] = g_signal_new ("update",
-                                  GTD_TYPE_CLOCK,
-                                  G_SIGNAL_RUN_LAST,
-                                  0, NULL, NULL, NULL,
-                                  G_TYPE_NONE,
-                                  0);
 }
 
 static void

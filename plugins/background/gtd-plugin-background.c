@@ -330,7 +330,7 @@ watch_manager_for_new_lists (GtdPluginBackground *self)
                             self);
 
   g_signal_connect_swapped (gtd_manager_get_clock (manager),
-                            "update",
+                            "day-changed",
                             G_CALLBACK (send_notification),
                             self);
 }

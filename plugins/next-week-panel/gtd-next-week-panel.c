@@ -318,8 +318,8 @@ on_model_items_changed_cb (GListModel       *model,
 }
 
 static void
-on_clock_updated_cb (GtdClock         *clock,
-                     GtdNextWeekPanel *self)
+on_clock_day_changed_cb (GtdClock         *clock,
+                         GtdNextWeekPanel *self)
 {
   g_autoptr (GDateTime) now = NULL;
 
@@ -505,8 +505,8 @@ gtd_next_week_panel_init (GtdNextWeekPanel *self)
                            0);
 
   g_signal_connect_object (gtd_manager_get_clock (manager),
-                           "update",
-                           G_CALLBACK (on_clock_updated_cb),
+                           "day-changed",
+                           G_CALLBACK (on_clock_day_changed_cb),
                            self,
                            G_CONNECT_SWAPPED);
 }
