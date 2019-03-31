@@ -100,27 +100,27 @@ static void
 gtd_provider_goa_set_account (GtdProviderGoa *provider,
                               GoaAccount     *account)
 {
-  if (provider->account != account)
-    {
-      g_autofree gchar *icon_name = NULL;
+  g_autofree gchar *icon_name = NULL;
 
-      g_set_object (&provider->account, account);
-      g_object_notify (G_OBJECT (provider), "account");
+  if (provider->account == account)
+    return;
 
-      g_debug ("Setting up Online Account: %s (%s)",
-               goa_account_get_identity (account),
-               goa_account_get_id (account));
+  g_set_object (&provider->account, account);
+  g_object_notify (G_OBJECT (provider), "account");
 
-      /* Update icon */
-      icon_name = g_strdup_printf ("goa-account-%s", goa_account_get_provider_type (provider->account));
-      g_set_object (&provider->icon, g_themed_icon_new (icon_name));
-      g_object_notify (G_OBJECT (provider), "icon");
+  g_debug ("Setting up Online Account: %s (%s)",
+           goa_account_get_identity (account),
+           goa_account_get_id (account));
 
-      /* Provider id */
-      provider->id = g_strdup_printf ("%s@%s",
-                                      goa_account_get_provider_type (provider->account),
-                                      goa_account_get_id (provider->account));
-    }
+  /* Update icon */
+  icon_name = g_strdup_printf ("goa-account-%s", goa_account_get_provider_type (provider->account));
+  g_set_object (&provider->icon, g_themed_icon_new (icon_name));
+  g_object_notify (G_OBJECT (provider), "icon");
+
+  /* Provider id */
+  provider->id = g_strdup_printf ("%s@%s",
+                                  goa_account_get_provider_type (provider->account),
+                                  goa_account_get_id (provider->account));
 }
 
 
