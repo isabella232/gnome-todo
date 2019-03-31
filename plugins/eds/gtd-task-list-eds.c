@@ -754,63 +754,63 @@ void
 gtd_task_list_eds_set_source (GtdTaskListEds *self,
                               ESource        *source)
 {
+  ESourceSelectable *selectable;
+  GdkRGBA color;
+
   g_return_if_fail (GTD_IS_TASK_LIST_EDS (self));
 
-  if (g_set_object (&self->source, source))
-    {
-      ESourceSelectable *selectable;
-      GdkRGBA color;
+  if (!g_set_object (&self->source, source))
+    return;
 
-      /* Setup color */
-      selectable = E_SOURCE_SELECTABLE (e_source_get_extension (source, E_SOURCE_EXTENSION_TASK_LIST));
+  /* Setup color */
+  selectable = E_SOURCE_SELECTABLE (e_source_get_extension (source, E_SOURCE_EXTENSION_TASK_LIST));
 
-      if (!gdk_rgba_parse (&color, e_source_selectable_get_color (selectable)))
-        gdk_rgba_parse (&color, "#ffffff"); /* calendar default color */
+  if (!gdk_rgba_parse (&color, e_source_selectable_get_color (selectable)))
+    gdk_rgba_parse (&color, "#ffffff"); /* calendar default color */
 
-      gtd_task_list_set_color (GTD_TASK_LIST (self), &color);
+  gtd_task_list_set_color (GTD_TASK_LIST (self), &color);
 
-      g_object_bind_property_full (self,
-                                   "color",
-                                   selectable,
-                                   "color",
-                                   G_BINDING_BIDIRECTIONAL,
-                                   color_to_string,
-                                   string_to_color,
-                                   self,
-                                   NULL);
+  g_object_bind_property_full (self,
+                               "color",
+                               selectable,
+                               "color",
+                               G_BINDING_BIDIRECTIONAL,
+                               color_to_string,
+                               string_to_color,
+                               self,
+                               NULL);
 
-      /* Setup tasklist name */
-      gtd_task_list_set_name (GTD_TASK_LIST (self), e_source_get_display_name (source));
+  /* Setup tasklist name */
+  gtd_task_list_set_name (GTD_TASK_LIST (self), e_source_get_display_name (source));
 
-      g_object_bind_property (source,
-                              "display-name",
-                              self,
-                              "name",
-                              G_BINDING_BIDIRECTIONAL);
+  g_object_bind_property (source,
+                          "display-name",
+                          self,
+                          "name",
+                          G_BINDING_BIDIRECTIONAL);
 
-      /* Save the task list every time something changes */
-      g_signal_connect_swapped (source,
-                                "notify",
-                                G_CALLBACK (save_task_list),
-                                self);
+  /* Save the task list every time something changes */
+  g_signal_connect_swapped (source,
+                            "notify",
+                            G_CALLBACK (save_task_list),
+                            self);
 
-      /* Update ::is-removable property */
-      gtd_task_list_set_is_removable (GTD_TASK_LIST (self),
-                                      e_source_get_removable (source) ||
-                                      e_source_get_remote_deletable (source));
+  /* Update ::is-removable property */
+  gtd_task_list_set_is_removable (GTD_TASK_LIST (self),
+                                  e_source_get_removable (source) ||
+                                  e_source_get_remote_deletable (source));
 
-      g_signal_connect_swapped (source,
-                                "notify::removable",
-                                G_CALLBACK (on_source_removable_changed_cb),
-                                self);
+  g_signal_connect_swapped (source,
+                            "notify::removable",
+                            G_CALLBACK (on_source_removable_changed_cb),
+                            self);
 
-      g_signal_connect_swapped (source,
-                                "notify::remote-deletable",
-                                G_CALLBACK (on_source_removable_changed_cb),
-                                self);
+  g_signal_connect_swapped (source,
+                            "notify::remote-deletable",
+                            G_CALLBACK (on_source_removable_changed_cb),
+                            self);
 
-      g_object_notify (G_OBJECT (self), "source");
-    }
+  g_object_notify (G_OBJECT (self), "source");
 }
 
 ECalClient*
