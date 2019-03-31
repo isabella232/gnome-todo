@@ -523,6 +523,18 @@ on_source_removable_changed_cb (GtdTaskListEds *list)
 }
 
 static void
+on_source_selectable_selected_changed_cb (ESourceSelectable *selectable,
+                                          GParamSpec        *pspec,
+                                          GtdTaskListEds    *self)
+{
+  g_debug ("%s (%s): ESourceSelectable:selected changed, notifying...",
+           e_source_get_uid (self->source),
+           e_source_get_display_name (self->source));
+
+  g_object_notify (G_OBJECT (self), "archived");
+}
+
+static void
 on_save_task_list_finished_cb (GObject      *source,
                                GAsyncResult *result,
                                gpointer      user_data)
@@ -603,6 +615,39 @@ string_to_color (GBinding     *binding,
 /*
  * GtdTaskList overrides
  */
+
+static gboolean
+gtd_task_list_eds_get_archived (GtdTaskList *list)
+{
+  ESourceSelectable *selectable;
+  GtdTaskListEds *self;
+
+  self = GTD_TASK_LIST_EDS (list);
+  selectable = e_source_get_extension (self->source, E_SOURCE_EXTENSION_TASK_LIST);
+
+  return !e_source_selectable_get_selected (selectable);
+}
+
+static void
+gtd_task_list_eds_set_archived (GtdTaskList *list,
+                                gboolean     archived)
+{
+  ESourceSelectable *selectable;
+  GtdTaskListEds *self;
+
+  GTD_ENTRY;
+
+  self = GTD_TASK_LIST_EDS (list);
+  selectable = e_source_get_extension (self->source, E_SOURCE_EXTENSION_TASK_LIST);
+
+  g_signal_handlers_block_by_func (selectable, on_source_selectable_selected_changed_cb, self);
+
+  e_source_selectable_set_selected (selectable, !archived);
+
+  g_signal_handlers_unblock_by_func (selectable, on_source_selectable_selected_changed_cb, self);
+
+  GTD_EXIT;
+}
 
 static void
 gtd_task_list_eds_task_added (GtdTaskList *list,
@@ -695,6 +740,8 @@ gtd_task_list_eds_class_init (GtdTaskListEdsClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtdTaskListClass *task_list_class = GTD_TASK_LIST_CLASS (klass);
 
+  task_list_class->get_archived = gtd_task_list_eds_get_archived;
+  task_list_class->set_archived = gtd_task_list_eds_set_archived;
   task_list_class->task_added = gtd_task_list_eds_task_added;
 
   object_class->finalize = gtd_task_list_eds_finalize;
@@ -784,6 +831,12 @@ gtd_task_list_eds_set_source (GtdTaskListEds *self,
                                string_to_color,
                                self,
                                NULL);
+
+  g_signal_connect_object (selectable,
+                           "notify::selected",
+                           G_CALLBACK (on_source_selectable_selected_changed_cb),
+                           self,
+                           0);
 
   /* Setup tasklist name */
   gtd_task_list_set_name (GTD_TASK_LIST (self), e_source_get_display_name (source));
