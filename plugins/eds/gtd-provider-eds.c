@@ -174,6 +174,9 @@ on_source_added_cb (GtdProviderEds *provider,
   if (!e_source_has_extension (source, E_SOURCE_EXTENSION_TASK_LIST) ||
       !GTD_PROVIDER_EDS_CLASS (G_OBJECT_GET_CLASS (provider))->should_load_source (provider, source))
     {
+      GTD_TRACE_MSG ("Ignoring source %s (%s)",
+                     e_source_get_display_name (source),
+                     e_source_get_uid (source));
       return;
     }
 
