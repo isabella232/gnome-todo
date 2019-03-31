@@ -15,7 +15,7 @@
 
         <child>
           <object class="GtkStackPage">
-            <property name="name">selector</property>
+            <property name="name">main</property>
             <property name="child">
               <object class="GtkGrid" id="new_list_popover_grid">
                 <property name="can_focus">False</property>
