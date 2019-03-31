@@ -419,7 +419,7 @@ gtd_task_list_class_init (GtdTaskListClass *klass)
                                                "Color of the list",
                                                "The color of the list",
                                                GDK_TYPE_RGBA,
-                                               G_PARAM_READWRITE);
+                                               G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
 
   /**
    * GtdTaskList::is-removable:
@@ -430,7 +430,7 @@ gtd_task_list_class_init (GtdTaskListClass *klass)
                                                         "Whether the task list is removable",
                                                         "Whether the task list can be removed from the system",
                                                         FALSE,
-                                                        G_PARAM_READWRITE);
+                                                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
 
   /**
    * GtdTaskList::name:
@@ -441,7 +441,7 @@ gtd_task_list_class_init (GtdTaskListClass *klass)
                                                "Name of the list",
                                                "The name of the list",
                                                NULL,
-                                               G_PARAM_READWRITE);
+                                               G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
 
   /**
    * GtdTaskList::provider:
@@ -452,7 +452,7 @@ gtd_task_list_class_init (GtdTaskListClass *klass)
                                                     "Provider of the list",
                                                     "The provider that handles the list",
                                                     GTD_TYPE_PROVIDER,
-                                                    G_PARAM_READWRITE);
+                                                    G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
 
   g_object_class_install_properties (object_class, N_PROPS, properties);
 
