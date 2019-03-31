@@ -96,18 +96,12 @@
                 <property name="can_focus">False</property>
                 <property name="spacing">6</property>
               </object>
-              <packing>
-                <property name="pack_type">start</property>
-              </packing>
             </child>
             <child>
               <object class="GtkBox" id="extension_box_start">
                 <property name="can_focus">False</property>
                 <property name="spacing">6</property>
               </object>
-              <packing>
-                <property name="pack_type">start</property>
-              </packing>
             </child>
             <child type="end">
               <object class="GtkButton" id="cancel_selection_button">
