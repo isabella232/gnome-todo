@@ -189,7 +189,7 @@ on_source_added_cb (GtdProviderEds *provider,
 
   e_cal_client_connect (source,
                         E_CAL_CLIENT_SOURCE_TYPE_TASKS,
-                        10, /* seconds to wait */
+                        15, /* seconds to wait */
                         NULL,
                         on_client_connected_cb,
                         provider);
