@@ -46,6 +46,7 @@ typedef struct
   GCancellable         *cancellable;
 
   gint                  lazy_load_id;
+  gulong                minute_changed_handler_id;
 } GtdProviderEdsPrivate;
 
 
@@ -237,6 +238,35 @@ on_default_tasklist_changed_cb (ESourceRegistry *source_registry,
 
 out:
   g_clear_object (&default_source);
+}
+
+static void
+on_minute_changed_cb (GtdClock       *clock,
+                      GtdProviderEds *self)
+{
+  gtd_provider_refresh (GTD_PROVIDER (self));
+}
+
+static void
+on_source_refreshed_cb (GObject      *source_object,
+                        GAsyncResult *result,
+                        gpointer      user_data)
+{
+  GtdProviderEdsPrivate *priv = gtd_provider_eds_get_instance_private (user_data);
+  g_autoptr (GError) error = NULL;
+
+  GTD_ENTRY;
+
+  e_source_registry_refresh_backend_finish (priv->source_registry, result, &error);
+
+  if (error)
+    {
+      if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+        g_warning ("Error refreshing source: %s", error->message);
+      GTD_RETURN ();
+    }
+
+  GTD_EXIT;
 }
 
 #define REPORT_ERROR(title,error) \
@@ -453,6 +483,51 @@ gtd_provider_eds_get_enabled (GtdProvider *provider)
   g_return_val_if_fail (GTD_IS_PROVIDER_EDS (provider), FALSE);
 
   return GTD_PROVIDER_EDS_CLASS (G_OBJECT_GET_CLASS (provider))->get_enabled (GTD_PROVIDER_EDS (provider));
+}
+
+static void
+gtd_provider_eds_refresh (GtdProvider *provider)
+{
+  g_autoptr (GHashTable) collections = NULL;
+  GtdProviderEdsPrivate *priv;
+  GtdProviderEds *self;
+  GHashTableIter iter;
+  GtdTaskListEds *list;
+
+  GTD_ENTRY;
+
+  g_return_if_fail (GTD_IS_PROVIDER_EDS (provider));
+
+  self = GTD_PROVIDER_EDS (provider);
+  priv = gtd_provider_eds_get_instance_private (self);
+  collections = g_hash_table_new (g_direct_hash, g_direct_equal);
+
+  g_hash_table_iter_init (&iter, priv->task_lists);
+  while (g_hash_table_iter_next (&iter, (gpointer*) &list, NULL))
+    {
+      g_autoptr (ESource) collection = NULL;
+      ESource *source;
+
+      source = gtd_task_list_eds_get_source (list);
+      collection = e_source_registry_find_extension (priv->source_registry,
+                                                     source,
+                                                     E_SOURCE_EXTENSION_COLLECTION);
+
+      if (!collection || g_hash_table_contains (collections, collection))
+        continue;
+
+      GTD_TRACE_MSG ("Refreshing collection %s", e_source_get_uid (collection));
+
+      e_source_registry_refresh_backend (priv->source_registry,
+                                         e_source_get_uid (collection),
+                                         priv->cancellable,
+                                         on_source_refreshed_cb,
+                                         g_object_ref (self));
+
+      g_hash_table_add (collections, collection);
+    }
+
+  GTD_EXIT;
 }
 
 static GIcon*
@@ -717,6 +792,7 @@ gtd_provider_iface_init (GtdProviderInterface *iface)
   iface->get_provider_type = gtd_provider_eds_get_provider_type;
   iface->get_description = gtd_provider_eds_get_description;
   iface->get_enabled = gtd_provider_eds_get_enabled;
+  iface->refresh = gtd_provider_eds_refresh;
   iface->get_icon = gtd_provider_eds_get_icon;
   iface->create_task = gtd_provider_eds_create_task;
   iface->update_task = gtd_provider_eds_update_task;
