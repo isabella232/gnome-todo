@@ -508,7 +508,7 @@ gtd_next_week_panel_init (GtdNextWeekPanel *self)
                            "day-changed",
                            G_CALLBACK (on_clock_day_changed_cb),
                            self,
-                           G_CONNECT_SWAPPED);
+                           0);
 }
 
 GtkWidget*

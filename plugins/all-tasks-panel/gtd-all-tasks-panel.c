@@ -458,7 +458,7 @@ gtd_all_tasks_panel_init (GtdAllTasksPanel *self)
                            "day-changed",
                            G_CALLBACK (on_clock_day_changed_cb),
                            self,
-                           G_CONNECT_SWAPPED);
+                           0);
 }
 
 GtkWidget*
