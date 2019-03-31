@@ -213,6 +213,8 @@ maybe_migrate_todo_api_version (GtdTaskListEds *self)
       g_debug ("  Migrating task list to GNOME To Do API v%u", new_api_version);
 
       migration_vtable[i].migrate (self, changed_tasks);
+
+      e_source_gnome_todo_set_api_version (gnome_todo_extension, new_api_version);
       api_version_changed = TRUE;
     }
 
