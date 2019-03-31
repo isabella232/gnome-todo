@@ -35,6 +35,13 @@ struct _GtdTaskListClass
 {
   GtdObjectClass        parent;
 
+  /* Vfuncs */
+  gboolean              (*get_archived)                         (GtdTaskList            *self);
+
+  void                  (*set_archived)                         (GtdTaskList            *self,
+                                                                 gboolean                archived);
+
+  /* Signal methods */
   void                  (*task_added)                           (GtdTaskList            *list,
                                                                  GtdTask                *task);
 
@@ -87,6 +94,11 @@ GtdTask*                gtd_task_list_get_task_by_id            (GtdTaskList    
 void                    gtd_task_list_move_task_to_position     (GtdTaskList            *self,
                                                                  GtdTask                *task,
                                                                  guint                   new_position);
+
+gboolean                gtd_task_list_get_archived              (GtdTaskList            *self);
+
+void                    gtd_task_list_set_archived              (GtdTaskList            *self,
+                                                                 gboolean                archived);
 
 G_END_DECLS
 

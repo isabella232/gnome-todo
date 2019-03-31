@@ -55,6 +55,7 @@ typedef struct
 
   gchar               *name;
   gboolean             removable;
+  gboolean             archived;
 } GtdTaskListPrivate;
 
 
@@ -84,6 +85,7 @@ enum
 enum
 {
   PROP_0,
+  PROP_ARCHIVED,
   PROP_COLOR,
   PROP_IS_REMOVABLE,
   PROP_NAME,
@@ -314,6 +316,28 @@ g_list_model_iface_init (GListModelInterface *iface)
 
 
 /*
+ * GtdTaskList overrides
+ */
+
+static gboolean
+gtd_task_list_real_get_archived (GtdTaskList *self)
+{
+  GtdTaskListPrivate *priv = gtd_task_list_get_instance_private (self);
+
+  return priv->archived;
+}
+
+static void
+gtd_task_list_real_set_archived (GtdTaskList *self,
+                                 gboolean     archived)
+{
+  GtdTaskListPrivate *priv = gtd_task_list_get_instance_private (self);
+
+  priv->archived = archived;
+}
+
+
+/*
  * GObject overrides
  */
 
@@ -345,6 +369,10 @@ gtd_task_list_get_property (GObject    *object,
 
   switch (prop_id)
     {
+    case PROP_ARCHIVED:
+      g_value_set_boolean (value, gtd_task_list_get_archived (self));
+      break;
+
     case PROP_COLOR:
       {
         GdkRGBA *color = gtd_task_list_get_color (self);
@@ -380,6 +408,10 @@ gtd_task_list_set_property (GObject      *object,
 
   switch (prop_id)
     {
+    case PROP_ARCHIVED:
+      gtd_task_list_set_archived (self, g_value_get_boolean (value));
+      break;
+
     case PROP_COLOR:
       gtd_task_list_set_color (self, g_value_get_boxed (value));
       break;
@@ -410,6 +442,19 @@ gtd_task_list_class_init (GtdTaskListClass *klass)
   object_class->get_property = gtd_task_list_get_property;
   object_class->set_property = gtd_task_list_set_property;
 
+  klass->get_archived = gtd_task_list_real_get_archived;
+  klass->set_archived = gtd_task_list_real_set_archived;
+
+  /**
+   * GtdTaskList::archived:
+   *
+   * Whether the task list is archived or not.
+   */
+  properties[PROP_ARCHIVED] = g_param_spec_boolean ("archived",
+                                                    "Whether the list is archived",
+                                                    "Whether the list is archived or not",
+                                                    FALSE,
+                                                    G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
   /**
    * GtdTaskList::color:
    *
@@ -1026,4 +1071,46 @@ gtd_task_list_move_task_to_position (GtdTaskList *self,
     }
 
   priv->freeze_counter--;
+}
+
+/**
+ * gtd_task_list_get_archived:
+ * @self: a #GtdTaskList
+ *
+ * Retrieves whether @self is archived or not. Archived task lists
+ * are hidden by default, and new tasks cannot be added.
+ *
+ * Returns: %TRUE if @self is archived, %FALSE otherwise.
+ */
+gboolean
+gtd_task_list_get_archived (GtdTaskList *self)
+{
+  g_return_val_if_fail (GTD_IS_TASK_LIST (self), FALSE);
+
+  return GTD_TASK_LIST_GET_CLASS (self)->get_archived (self);
+}
+
+/**
+ * gtd_task_list_set_archived:
+ * @self: a #GtdTaskList
+ * @archived: whether @self is archived or not
+ *
+ * Sets the "archive" property of @self to @archived.
+ */
+void
+gtd_task_list_set_archived (GtdTaskList *self,
+                            gboolean     archived)
+{
+  gboolean was_archived;
+
+  g_return_if_fail (GTD_IS_TASK_LIST (self));
+
+  was_archived = gtd_task_list_get_archived (self);
+
+  if (archived == was_archived)
+    return;
+
+  GTD_TASK_LIST_GET_CLASS (self)->set_archived (self, archived);
+
+  g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_ARCHIVED]);
 }
