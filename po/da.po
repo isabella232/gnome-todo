@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-09 02:49+0000\n"
+"POT-Creation-Date: 2019-03-30 09:36+0000\n"
 "PO-Revision-Date: 2018-03-09 18:54+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -80,11 +80,6 @@ msgstr "_Afslut"
 #: data/org.gnome.Todo.desktop.in:4
 msgid "Manage your personal tasks"
 msgstr "Håndtér dine personlige opgaver"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Todo.desktop.in:7
-msgid "org.gnome.Todo"
-msgstr "org.gnome.Todo"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Todo.desktop.in:13
@@ -241,7 +236,7 @@ msgstr "_Ny liste"
 msgid "Show or hide completed tasks"
 msgstr "Vis eller skjul færdiggjorte opgaver"
 
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:379
+#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
 msgid "Done"
 msgstr "Færdig"
 
@@ -384,7 +379,7 @@ msgstr "På denne computer"
 msgid "Error fetching tasks from list"
 msgstr "Fejl ved hentning af opgaver fra liste"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:110
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-edit-pane.c:110
 msgid "No date set"
 msgstr "Ingen dato angivet"
 
@@ -393,38 +388,38 @@ msgstr "Ingen dato angivet"
 #. * have plurals, some languages reuse the singular form for numbers
 #. * like 21, 31, 41, etc.
 #.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:102
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
 #, c-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] "%d dag siden"
 msgstr[1] "%d dage siden"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:148
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:147
 msgid "Yesterday"
 msgstr "I går"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:118
 #: plugins/score/score/__init__.py:101
 #: plugins/today-panel/gtd-panel-today.c:134
 #: plugins/today-panel/gtd-panel-today.c:139
-#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:140
+#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:139
 msgid "Today"
 msgstr "I dag"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:144
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:122 src/gtd-task-row.c:143
 msgid "Tomorrow"
 msgstr "I morgen"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:365
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:370
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:507
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:356
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:358
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:495
 msgid "Scheduled"
 msgstr "Planlagt"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:512
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:500
 #: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
 msgid "Clear completed tasks…"
@@ -572,8 +567,9 @@ msgstr ""
 "scootergrisen\n"
 "Alan Mortensen\n"
 "\n"
-"Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
-"Mere info: http://www.dansk-gruppen.dk"
+"Dansk-gruppen\n"
+"Websted <http://dansk-gruppen.dk>\n"
+"E-mail <dansk@dansk-gruppen.dk>"
 
 #: src/gtd-empty-list-widget.c:51
 msgid "No more tasks left"
@@ -637,34 +633,34 @@ msgstr "Fejl ved indlæsning af udvidelse"
 msgid "Error unloading extension"
 msgstr "Fejl ved deaktivering af udvidelse"
 
-#: src/gtd-task-list-view.c:293
+#: src/gtd-task-list-view.c:292
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Fjernelse af denne opgave vil også fjerne dens underopgaver. Fjern alligevel?"
 
-#: src/gtd-task-list-view.c:296
+#: src/gtd-task-list-view.c:295
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Når opgaverne er fjernet, kan de ikke gendannes."
 
-#: src/gtd-task-list-view.c:299 src/views/gtd-list-selector-panel.c:388
+#: src/gtd-task-list-view.c:298 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "Annullér"
 
-#: src/gtd-task-list-view.c:301
+#: src/gtd-task-list-view.c:300
 msgid "Remove"
 msgstr "Fjern"
 
-#: src/gtd-task-list-view.c:381
+#: src/gtd-task-list-view.c:390
 #, c-format
 msgid "Done (%d)"
 msgstr "Færdig (%d)"
 
-#: src/gtd-task-list-view.c:661
+#: src/gtd-task-list-view.c:660
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Opgaven <b>%s</b> fjernet"
 
-#: src/gtd-task-list-view.c:685
+#: src/gtd-task-list-view.c:684
 msgid "Undo"
 msgstr "Fortryd"
 
@@ -703,6 +699,9 @@ msgstr "Fjern opgavelister"
 #: src/views/gtd-list-selector-panel.c:709
 msgid "Clear completed tasks"
 msgstr "Ryd færdiggjorte opgaver"
+
+#~ msgid "org.gnome.Todo"
+#~ msgstr "org.gnome.Todo"
 
 #~ msgid "New List…"
 #~ msgstr "Ny liste …"
@@ -774,11 +773,11 @@ msgstr "Ryd færdiggjorte opgaver"
 #~ msgstr "Ukendt symbol i en Todo.txt-linje"
 
 #~ msgid ""
-#~ "To Do cannot recognize some tags in your Todo.txt file. Some tasks may "
-#~ "not be loaded"
+#~ "To Do cannot recognize some tags in your Todo.txt file. Some tasks may not "
+#~ "be loaded"
 #~ msgstr ""
-#~ "To Do kan ikke genkende visse mærker i din Todo.txt-fil. Nogle opgaver "
-#~ "kan måske ikke indlæses"
+#~ "To Do kan ikke genkende visse mærker i din Todo.txt-fil. Nogle opgaver kan "
+#~ "måske ikke indlæses"
 
 #~ msgid "No task list found for some tasks"
 #~ msgstr "Ingen opgaveliste fundet for visse opgaver"
@@ -788,8 +787,8 @@ msgstr "Ryd færdiggjorte opgaver"
 #~ "supports tasks with a task list. Please add a list to all your tasks"
 #~ msgstr ""
 #~ "Nogle af opgaverne i din Todo.txt-fil har ikke nogen opgaveliste. To Do "
-#~ "understøtter opgaver med en opgaveliste. Tilføj venligst en liste for "
-#~ "alle opgaverne"
+#~ "understøtter opgaver med en opgaveliste. Tilføj venligst en liste for alle "
+#~ "opgaverne"
 
 #~ msgid "Setting new color for task list"
 #~ msgstr "Sætter ny farve for opgavelisten"
@@ -818,6 +817,7 @@ msgstr "Ryd færdiggjorte opgaver"
 #~ msgid "Default storage location"
 #~ msgstr "Standardlagerplacering"
 
-# øhm??
+#~ # øhm??
 #~ msgid "unscheduled-panel"
 #~ msgstr "ikke planlagt-panel"
+
