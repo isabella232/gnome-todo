@@ -1,101 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.19.0 -->
 <interface>
   <requires lib="gtk+" version="3.18"/>
   <template class="GtdPluginDialogRow" parent="GtkListBoxRow">
-    <property name="can_focus">True</property>
+    <property name="can_focus">1</property>
     <child>
       <object class="GtkGrid">
-        <property name="can_focus">False</property>
         <property name="margin">12</property>
         <property name="column_spacing">12</property>
         <child>
           <object class="GtkImage" id="icon_image">
-            <property name="can_focus">False</property>
             <property name="pixel_size">32</property>
             <property name="icon_name">application-system-symbolic</property>
+            <layout>
+              <property name="left_attach">0</property>
+              <property name="top_attach">0</property>
+              <property name="row-span">2</property>
+            </layout>
           </object>
-          <packing>
-            <property name="left_attach">0</property>
-            <property name="top_attach">0</property>
-            <property name="height">2</property>
-          </packing>
         </child>
         <child>
           <object class="GtkLabel" id="name_label">
-            <property name="can_focus">False</property>
-            <property name="hexpand">True</property>
+            <property name="hexpand">1</property>
             <property name="xalign">0</property>
+            <layout>
+              <property name="left_attach">1</property>
+              <property name="top_attach">0</property>
+            </layout>
           </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkLabel" id="description_label">
-            <property name="can_focus">False</property>
-            <property name="hexpand">True</property>
+            <property name="hexpand">1</property>
             <property name="xalign">0</property>
             <style>
               <class name="dim-label"/>
             </style>
+            <layout>
+              <property name="left_attach">1</property>
+              <property name="top_attach">1</property>
+            </layout>
           </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">1</property>
-          </packing>
         </child>
         <child>
           <object class="GtkImage" id="error_image">
-            <property name="visible">False</property>
-            <property name="can_focus">False</property>
+            <property name="visible">0</property>
             <property name="valign">center</property>
             <property name="halign">center</property>
             <property name="icon_name">dialog-warning-symbolic</property>
             <property name="pixel_size">16</property>
+            <layout>
+              <property name="left_attach">2</property>
+              <property name="top_attach">0</property>
+              <property name="row-span">2</property>
+            </layout>
           </object>
-          <packing>
-            <property name="left_attach">2</property>
-            <property name="top_attach">0</property>
-            <property name="height">2</property>
-          </packing>
         </child>
         <child>
           <object class="GtkSwitch" id="loaded_switch">
-            <property name="can_focus">True</property>
+            <property name="can_focus">1</property>
             <property name="valign">center</property>
-            <signal name="notify::active" handler="loaded_switch_changed" object="GtdPluginDialogRow" swapped="yes" />
+            <signal name="notify::active" handler="loaded_switch_changed" object="GtdPluginDialogRow" swapped="yes"/>
+            <layout>
+              <property name="left_attach">3</property>
+              <property name="top_attach">0</property>
+              <property name="row-span">2</property>
+            </layout>
           </object>
-          <packing>
-            <property name="left_attach">3</property>
-            <property name="top_attach">0</property>
-            <property name="height">2</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton" id="preferences_button">
-            <property name="can_focus">True</property>
-            <property name="sensitive">False</property>
+            <property name="can_focus">1</property>
+            <property name="sensitive">0</property>
             <property name="halign">center</property>
             <property name="valign">center</property>
-            <signal name="clicked" handler="preferences_button_clicked" object="GtdPluginDialogRow" swapped="yes" />
+            <signal name="clicked" handler="preferences_button_clicked" object="GtdPluginDialogRow" swapped="yes"/>
             <style>
-              <class name="circle" />
+              <class name="circle"/>
             </style>
             <child>
               <object class="GtkImage">
-                <property name="can_focus">False</property>
                 <property name="icon_name">preferences-system-symbolic</property>
                 <property name="pixel_size">16</property>
               </object>
             </child>
+            <layout>
+              <property name="left_attach">4</property>
+              <property name="top_attach">0</property>
+              <property name="row-span">2</property>
+            </layout>
           </object>
-          <packing>
-            <property name="left_attach">4</property>
-            <property name="top_attach">0</property>
-            <property name="height">2</property>
-          </packing>
         </child>
       </object>
     </child>

@@ -3,28 +3,19 @@
   <requires lib="gtk+" version="3.16"/>
   <template class="GtdEditPane" parent="GtkBox">
     <property name="orientation">vertical</property>
-    <property name="can_focus">False</property>
-    <property name="hexpand">True</property>
+    <property name="hexpand">1</property>
     <property name="spacing">6</property>
     <property name="margin-start">12</property>
     <property name="margin-end">12</property>
     <property name="margin-bottom">12</property>
-
-    <!-- Header separator -->
     <child>
-      <object class="GtkSeparator" id="separator">
-        <property name="can_focus">False</property>
-      </object>
+      <object class="GtkSeparator" id="separator"/>
     </child>
-
-
-    <!-- Due date -->
     <child>
       <object class="GtkLabel" id="due_date_dim_label">
         <property name="label" translatable="yes">D_ue Date</property>
-        <property name="use_underline">True</property>
+        <property name="use_underline">1</property>
         <property name="mnemonic_widget">date_button</property>
-        <property name="can_focus">False</property>
         <property name="xalign">0</property>
         <property name="margin-top">12</property>
         <style>
@@ -32,46 +23,41 @@
         </style>
       </object>
     </child>
-
     <child>
       <object class="GtkBox">
-        <property name="can_focus">False</property>
         <child>
           <object class="GtkButton">
             <property name="label" translatable="yes">_Today</property>
-            <property name="use_underline">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <signal name="clicked" handler="on_today_button_clicked_cb" object="GtdEditPane" swapped="no" />
+            <property name="use_underline">1</property>
+            <property name="can_focus">1</property>
+            <property name="receives_default">1</property>
+            <signal name="clicked" handler="on_today_button_clicked_cb" object="GtdEditPane" swapped="no"/>
           </object>
         </child>
         <child>
           <object class="GtkButton">
             <property name="label" translatable="yes">To_morrow</property>
-            <property name="use_underline">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
+            <property name="use_underline">1</property>
+            <property name="can_focus">1</property>
+            <property name="receives_default">1</property>
             <signal name="clicked" handler="on_tomorrow_button_clicked_cb" object="GtdEditPane" swapped="no"/>
           </object>
         </child>
         <child>
           <object class="GtkMenuButton" id="date_button">
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
+            <property name="can_focus">1</property>
+            <property name="receives_default">1</property>
             <property name="popover">date_popover</property>
             <child>
               <object class="GtkBox" id="date_button_box">
-                <property name="can_focus">False</property>
                 <property name="spacing">7</property>
                 <child>
                   <object class="GtkLabel" id="date_label">
-                    <property name="can_focus">False</property>
                     <property name="width-chars">10</property>
                   </object>
                 </child>
                 <child>
                   <object class="GtkImage" id="date_button_image">
-                    <property name="can_focus">False</property>
                     <property name="icon_name">pan-down-symbolic</property>
                   </object>
                 </child>
@@ -84,14 +70,11 @@
         </style>
       </object>
     </child>
-
-    <!-- Notes -->
     <child>
       <object class="GtkLabel">
         <property name="label" translatable="yes">_Notes</property>
-        <property name="use_underline">True</property>
+        <property name="use_underline">1</property>
         <property name="mnemonic_widget">notes_textview</property>
-        <property name="can_focus">False</property>
         <property name="xalign">0</property>
         <property name="margin-top">12</property>
         <style>
@@ -101,81 +84,72 @@
     </child>
     <child>
       <object class="GtkScrolledWindow">
-        <property name="expand">True</property>
-        <property name="can-focus">True</property>
+        <property name="expand">1</property>
+        <property name="can-focus">1</property>
         <property name="shadow-type">in</property>
         <property name="min-content-height">200</property>
         <child>
           <object class="GtkTextView" id="notes_textview">
-            <property name="can_focus">True</property>
-            <property name="accepts_tab">False</property>
+            <property name="can_focus">1</property>
+            <property name="accepts_tab">0</property>
             <property name="left-margin">6</property>
             <property name="right-margin">6</property>
             <property name="pixels-above-lines">6</property>
             <property name="wrap-mode">word-char</property>
             <property name="buffer">text_buffer</property>
-
             <child>
               <object class="GtkGestureMultiPress">
                 <property name="propagation-phase">capture</property>
-                <signal name="pressed" handler="on_hyperlink_clicked_cb" object="GtdEditPane" swapped="no" />
+                <signal name="pressed" handler="on_hyperlink_clicked_cb" object="GtdEditPane" swapped="no"/>
               </object>
             </child>
             <child>
               <object class="GtkEventControllerMotion">
-                <signal name="motion" handler="on_hyperlink_hover_cb" object="GtdEditPane" swapped="no" />
+                <signal name="motion" handler="on_hyperlink_hover_cb" object="GtdEditPane" swapped="no"/>
               </object>
             </child>
           </object>
         </child>
       </object>
     </child>
-
-    <!-- Delete button -->
     <child>
       <object class="GtkButton" id="remove_button">
         <property name="label" translatable="yes">_Delete</property>
-        <property name="use_underline">True</property>
-        <property name="can_focus">True</property>
-        <property name="receives_default">True</property>
-        <property name="vexpand">True</property>
+        <property name="use_underline">1</property>
+        <property name="can_focus">1</property>
+        <property name="receives_default">1</property>
+        <property name="vexpand">1</property>
         <property name="valign">end</property>
         <property name="halign">end</property>
         <property name="margin-top">12</property>
-        <signal name="clicked" handler="on_delete_button_clicked_cb" object="GtdEditPane" swapped="no" />
+        <signal name="clicked" handler="on_delete_button_clicked_cb" object="GtdEditPane" swapped="no"/>
         <style>
           <class name="destructive-action"/>
         </style>
       </object>
     </child>
-
   </template>
-
   <object class="GtkTextBuffer" id="text_buffer">
-    <signal name="notify::text" handler="on_text_buffer_changed_cb" object="GtdEditPane" swapped="no" />
+    <signal name="notify::text" handler="on_text_buffer_changed_cb" object="GtdEditPane" swapped="no"/>
   </object>
-
   <object class="GtkPopover" id="date_popover">
-    <property name="can_focus">False</property>
     <property name="position">bottom</property>
     <child>
       <object class="GtkBox" id="date_popover_box">
-        <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="margin">12</property>
         <property name="spacing">12</property>
         <child>
           <object class="GtkCalendar" id="calendar">
-            <property name="can_focus">True</property>
-            <property name="show_week_numbers">True</property>
+            <property name="can_focus">1</property>
+            <property name="show_week_numbers">1</property>
             <signal name="day-selected" handler="on_date_selected_cb" object="GtdEditPane" swapped="no"/>
           </object>
         </child>
         <child>
           <object class="GtkButton" id="no_date_button">
             <property name="label" translatable="yes" context="taskdate">None</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">False</property>
+            <property name="can_focus">1</property>
             <signal name="clicked" handler="on_no_date_button_clicked_cb" object="GtdEditPane" swapped="no"/>
           </object>
         </child>

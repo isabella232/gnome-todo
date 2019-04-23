@@ -1,115 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <template class="GtdTaskListPanel" parent="GtkBox">
-    <property name="visible">true</property>
-    <property name="can-focus">false</property>
-
-    <!-- Main task list view -->
     <child>
-      <object class="GtdTaskListView" id="task_list_view">
-      </object>
+      <object class="GtdTaskListView" id="task_list_view"/>
     </child>
-
   </template>
-
-  <!-- Popover -->
   <object class="GtkPopoverMenu" id="popover">
-    <property name="visible">false</property>
-    <signal name="hide" handler="on_popover_hidden_cb" object="GtdTaskListPanel" swapped="no" />
-
+    <property name="visible">0</property>
+    <signal name="hide" handler="on_popover_hidden_cb" object="GtdTaskListPanel" swapped="no"/>
     <child>
       <object class="GtkBox">
         <property name="orientation">vertical</property>
         <property name="spacing">12</property>
-
-        <!-- Color grid -->
         <child>
           <object class="GtkFlowBox" id="colors_flowbox">
-            <property name="expand">true</property>
+            <property name="expand">1</property>
             <property name="selection-mode">none</property>
             <property name="min-children-per-line">3</property>
             <property name="max-children-per-line">3</property>
-            <signal name="child-activated" handler="on_colors_flowbox_child_activated_cb" object="GtdTaskListPanel" swapped="no" />
+            <signal name="child-activated" handler="on_colors_flowbox_child_activated_cb" object="GtdTaskListPanel" swapped="no"/>
           </object>
         </child>
-
         <child>
           <object class="GtkModelButton">
             <property name="text" translatable="yes">Rename</property>
             <property name="menu-name">rename</property>
           </object>
         </child>
-
         <child>
           <object class="GtkModelButton">
             <property name="text" translatable="yes">Clear completed tasks…</property>
             <property name="action-name">list.clear-completed-tasks</property>
           </object>
         </child>
-
         <child>
-          <object class="GtkSeparator">
-          </object>
+          <object class="GtkSeparator"/>
         </child>
-
         <child>
           <object class="GtkModelButton">
             <property name="text" translatable="yes">Delete</property>
-            <signal name="clicked" handler="on_delete_button_clicked_cb" object="GtdTaskListPanel" swapped="no" />
+            <signal name="clicked" handler="on_delete_button_clicked_cb" object="GtdTaskListPanel" swapped="no"/>
           </object>
         </child>
       </object>
     </child>
-
-    <!-- Rename submenu -->
     <child>
       <object class="GtkBox">
-        <property name="can_focus">False</property>
+        <property name="name">rename</property>
         <property name="orientation">vertical</property>
         <property name="spacing">12</property>
         <property name="margin">12</property>
-
         <child>
           <object class="GtkModelButton" id="rename_header_button">
             <property name="text" translatable="yes">Rename</property>
             <property name="menu-name">main</property>
-            <property name="inverted">true</property>
-            <property name="centered">true</property>
+            <property name="inverted">1</property>
+            <property name="centered">1</property>
           </object>
         </child>
-
         <child>
           <object class="GtkBox">
-            <property name="can_focus">False</property>
             <property name="spacing">12</property>
-
-            <!-- Entry -->
             <child>
               <object class="GtkEntry" id="rename_entry">
-                <signal name="activate" handler="on_rename_entry_activated_cb" object="GtdTaskListPanel" swapped="no" />
-                <signal name="notify::text" handler="on_rename_entry_text_changed_cb" object="GtdTaskListPanel" swapped="no" />
+                <signal name="activate" handler="on_rename_entry_activated_cb" object="GtdTaskListPanel" swapped="no"/>
+                <signal name="notify::text" handler="on_rename_entry_text_changed_cb" object="GtdTaskListPanel" swapped="no"/>
               </object>
             </child>
-
-            <!-- Button -->
             <child>
               <object class="GtkButton" id="rename_button">
-                <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Rename</property>
-                <signal name="clicked" handler="on_rename_button_clicked_cb" object="GtdTaskListPanel" swapped="no" />
+                <signal name="clicked" handler="on_rename_button_clicked_cb" object="GtdTaskListPanel" swapped="no"/>
                 <style>
                   <class name="destructive-action"/>
                 </style>
               </object>
             </child>
-
           </object>
         </child>
-
       </object>
-      <packing>
-        <property name="submenu">rename</property>
-      </packing>
     </child>
   </object>
 </interface>

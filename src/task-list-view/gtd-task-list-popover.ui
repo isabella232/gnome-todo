@@ -1,44 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <template class="GtdTaskListPopover" parent="GtkPopover">
-    <signal name="closed" handler="on_popover_closed_cb" object="GtdTaskListPopover" swapped="no" />
+    <signal name="closed" handler="on_popover_closed_cb" object="GtdTaskListPopover" swapped="no"/>
     <child>
       <object class="GtkBox">
         <property name="margin">18</property>
         <property name="spacing">12</property>
         <property name="orientation">vertical</property>
-
-        <!-- Search entry -->
         <child>
           <object class="GtkSearchEntry" id="search_entry">
-            <signal name="activate" handler="on_search_entry_activated_cb" object="GtdTaskListPopover" swapped="no" />
-            <signal name="search-changed" handler="on_search_entry_search_changed_cb" object="GtdTaskListPopover" swapped="no" />
+            <signal name="activate" handler="on_search_entry_activated_cb" object="GtdTaskListPopover" swapped="no"/>
+            <signal name="search-changed" handler="on_search_entry_search_changed_cb" object="GtdTaskListPopover" swapped="no"/>
           </object>
         </child>
-
-        <!-- Listbox -->
         <child>
           <object class="GtkScrolledWindow">
             <property name="hscrollbar-policy">never</property>
             <property name="max-content-height">480</property>
-            <property name="propagate-natural-height">true</property>
+            <property name="propagate-natural-height">1</property>
             <child>
               <object class="GtkListBox" id="listbox">
                 <property name="selection_mode">none</property>
-                <signal name="row-activated" handler="on_listbox_row_activated_cb" object="GtdTaskListPopover" swapped="no" />
+                <signal name="row-activated" handler="on_listbox_row_activated_cb" object="GtdTaskListPopover" swapped="no"/>
                 <style>
-                  <class name="background" />
+                  <class name="background"/>
                 </style>
               </object>
             </child>
           </object>
         </child>
-
       </object>
     </child>
   </template>
-
-  <object class="GtkSizeGroup" id="sizegroup">
-    <property name="mode">horizontal</property>
-  </object>
+  <object class="GtkSizeGroup" id="sizegroup"/>
 </interface>
