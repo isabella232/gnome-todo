@@ -29,7 +29,6 @@ struct _GtdColorButton
 {
   GtkWidget           parent;
 
-  GtkCssProvider     *css_provider;
   GdkRGBA             color;
 
   GtkWidget          *selected_icon;
@@ -117,11 +116,7 @@ gtd_color_button_snapshot (GtkWidget   *widget,
   width = gtk_widget_get_width (widget);
   height = gtk_widget_get_height (widget);
 
-  gtk_snapshot_render_background (snapshot,
-                                  gtk_widget_get_style_context (widget),
-                                  0, 0,
-                                  width, height);
-
+  gtk_snapshot_append_color (snapshot, &self->color, &GRAPHENE_RECT_INIT (0, 0, width, height));
   gtk_widget_snapshot_child (widget, self->selected_icon, snapshot);
 }
 
@@ -154,7 +149,6 @@ gtd_color_button_finalize (GObject *object)
   GtdColorButton *self = (GtdColorButton *)object;
 
   g_clear_pointer (&self->selected_icon, gtk_widget_unparent);
-  g_clear_object (&self->css_provider);
 
   G_OBJECT_CLASS (gtd_color_button_parent_class)->finalize (object);
 }
@@ -237,6 +231,7 @@ gtd_color_button_new (const GdkRGBA *color)
 {
   return g_object_new (GTD_TYPE_COLOR_BUTTON,
                        "color", color,
+                       "overflow", GTK_OVERFLOW_HIDDEN,
                        NULL);
 }
 
@@ -252,53 +247,17 @@ void
 gtd_color_button_set_color (GtdColorButton *self,
                             const GdkRGBA  *color)
 {
-  g_autofree gchar *color_string = NULL;
-  g_autofree gchar *css_snippet = NULL;
-  g_autofree gchar *css_class = NULL;
   GtkStyleContext *context;
-  GQuark color_id;
 
   g_return_if_fail (GTD_IS_COLOR_BUTTON (self));
 
   if (gdk_rgba_equal (&self->color, color))
     return;
 
-  context = gtk_widget_get_style_context (GTK_WIDGET (self));
-
-  /* Remove the old CSS class */
-  if (self->css_provider)
-    {
-      g_autofree gchar *old_color_string = NULL;
-      g_autofree gchar *old_css_class = NULL;
-      GQuark old_color_id;
-
-      old_color_string = gdk_rgba_to_string (&self->color);
-      old_color_id = g_quark_from_string (old_color_string);
-      old_css_class = g_strdup_printf ("%d", old_color_id);
-
-      gtk_style_context_remove_class (context, old_css_class);
-    }
-
   self->color = *color;
   self->color.alpha = 1.0;
 
-  /* Eventually create the CSS provider */
-  if (!self->css_provider)
-    {
-      self->css_provider = gtk_css_provider_new ();
-      gtk_style_context_add_provider (context,
-                                      GTK_STYLE_PROVIDER (self->css_provider),
-                                      GTK_STYLE_PROVIDER_PRIORITY_USER);
-    }
-
-  color_string = gdk_rgba_to_string (color);
-  color_id = g_quark_from_string (color_string);
-  css_snippet = g_strdup_printf ("colorbutton.%d { background-color: %s; }", color_id, color_string);
-  gtk_css_provider_load_from_data (self->css_provider, css_snippet, -1);
-
-  /* Add the new CSS class */
-  css_class = g_strdup_printf ("%d", color_id);
-  gtk_style_context_add_class (context, css_class);
+  context = gtk_widget_get_style_context (GTK_WIDGET (self));
 
   /* ... and adjust the icon color */
   if (INTENSITY (self->color.red, self->color.green, self->color.blue) > 0.5)
