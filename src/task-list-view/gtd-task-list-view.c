@@ -139,7 +139,6 @@ typedef struct
 #define DND_SCROLL_OFFSET            24 //px
 #define LUMINANCE(c)                 (0.299 * c->red + 0.587 * c->green + 0.114 * c->blue)
 #define TASK_REMOVED_NOTIFICATION_ID "task-removed-id"
-#define N_TASKS_BEFORE_LOAD          50
 
 
 static void          on_clear_completed_tasks_activated_cb       (GSimpleAction      *simple,
