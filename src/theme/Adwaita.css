@@ -4,7 +4,7 @@
 
 row.thumbnail {
     border: solid 1px @borders;
-    box-shadow: 0px 0px 3px alpha(@borders, 0.8);;
+    box-shadow: 0px 0px 3px alpha(@borders, 0.8);
     border-radius: 16px;
 }
 
@@ -95,7 +95,7 @@ newtaskrow entry { padding: 0 16px 0 14px; }
 
 /* extension list */
 list.extension-list row {
-    border-bottom: solid 1px @borders
+    border-bottom: solid 1px @borders;
 }
 
 /* circle button */
