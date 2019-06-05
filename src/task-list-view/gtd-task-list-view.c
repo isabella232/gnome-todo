@@ -112,7 +112,7 @@ typedef struct
 
 struct _GtdTaskListView
 {
-  GtkOverlay          parent;
+  GtkBox                  parent;
 
   /*<private>*/
   GtdTaskListViewPrivate *priv;
