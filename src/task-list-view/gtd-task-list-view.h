@@ -27,7 +27,7 @@ G_BEGIN_DECLS
 
 #define GTD_TYPE_TASK_LIST_VIEW (gtd_task_list_view_get_type())
 
-G_DECLARE_FINAL_TYPE (GtdTaskListView, gtd_task_list_view, GTD, TASK_LIST_VIEW, GtkOverlay)
+G_DECLARE_FINAL_TYPE (GtdTaskListView, gtd_task_list_view, GTD, TASK_LIST_VIEW, GtkBox)
 
 /**
  * GtdTaskListViewFilterFunc:

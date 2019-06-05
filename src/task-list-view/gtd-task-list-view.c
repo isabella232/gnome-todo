@@ -158,7 +158,7 @@ static void          on_task_row_exited_cb                       (GtdTaskListVie
 static gboolean      scroll_to_bottom_cb                         (gpointer            data);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GtdTaskListView, gtd_task_list_view, GTK_TYPE_OVERLAY)
+G_DEFINE_TYPE_WITH_PRIVATE (GtdTaskListView, gtd_task_list_view, GTK_TYPE_BOX)
 
 static const GActionEntry gtd_task_list_view_entries[] = {
   { "clear-completed-tasks", on_clear_completed_tasks_activated_cb },
