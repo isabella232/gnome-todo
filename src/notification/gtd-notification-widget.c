@@ -29,12 +29,13 @@ typedef enum
 
 struct _GtdNotificationWidget
 {
-  GtkRevealer         parent;
+  GtkBin              parent;
 
   /* widgets */
   GtkButton          *secondary_button;
   GtkSpinner         *spinner;
   GtkLabel           *text_label;
+  GtkRevealer        *revealer;
 
   /* internal data */
   GQueue             *queue;
@@ -55,7 +56,7 @@ static void          execute_notification                        (GtdNotificatio
 static void          on_notification_executed_cb                 (GtdNotification       *notification,
                                                                   GtdNotificationWidget *self);
 
-G_DEFINE_TYPE (GtdNotificationWidget, gtd_notification_widget, GTK_TYPE_REVEALER)
+G_DEFINE_TYPE (GtdNotificationWidget, gtd_notification_widget, GTK_TYPE_BIN)
 
 static void
 clear_bindings (GtdNotificationWidget *self)
@@ -79,13 +80,13 @@ stop_or_run_notifications (GtdNotificationWidget *self)
 
   if (self->current_notification)
     {
-      gtk_revealer_set_reveal_child (GTK_REVEALER (self), TRUE);
+      gtk_revealer_set_reveal_child (self->revealer, TRUE);
       execute_notification (self, self->current_notification);
       self->state = STATE_EXECUTING;
     }
   else
     {
-      gtk_revealer_set_reveal_child (GTK_REVEALER (self), FALSE);
+      gtk_revealer_set_reveal_child (self->revealer, FALSE);
       self->state = STATE_IDLE;
     }
 }

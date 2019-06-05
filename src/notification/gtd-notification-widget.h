@@ -27,7 +27,7 @@ G_BEGIN_DECLS
 
 #define GTD_TYPE_NOTIFICATION_WIDGET (gtd_notification_widget_get_type())
 
-G_DECLARE_FINAL_TYPE (GtdNotificationWidget, gtd_notification_widget, GTD, NOTIFICATION_WIDGET, GtkRevealer)
+G_DECLARE_FINAL_TYPE (GtdNotificationWidget, gtd_notification_widget, GTD, NOTIFICATION_WIDGET, GtkBin)
 
 GtkWidget*           gtd_notification_widget_new                 (void);
 
