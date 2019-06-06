@@ -324,14 +324,14 @@ static gboolean
 scroll_to_bottom_cb (gpointer data)
 {
   GtdTaskListViewPrivate *priv;
-  GtkWindow *window;
   GtkWidget *widget;
+  GtkRoot *root;
 
   priv = gtd_task_list_view_get_instance_private (data);
   widget = GTK_WIDGET (data);
-  window = GTK_WINDOW (gtk_widget_get_toplevel (widget));
+  root = gtk_widget_get_root (widget);
 
-  g_assert (window != NULL);
+  g_assert (root != NULL);
 
   priv->scroll_to_bottom_handler_id = 0;
 
@@ -342,7 +342,7 @@ scroll_to_bottom_cb (gpointer data)
   if (gtk_widget_get_visible (widget) &&
       gtk_widget_get_child_visible (widget) &&
       gtk_widget_get_mapped (widget) &&
-      !gtk_widget_is_ancestor (gtk_window_get_focus (window), widget))
+      !gtk_widget_is_ancestor (gtk_window_get_focus (GTK_WINDOW (root)), widget))
     {
       gboolean ignored;
 
@@ -440,7 +440,7 @@ on_remove_task_row_cb (GtdTaskRow      *row,
   task = gtd_task_row_get_task (row);
 
   text = g_strdup_printf (_("Task <b>%s</b> removed"), gtd_task_get_title (task));
-  window = GTD_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (self)));
+  window = GTD_WINDOW (gtk_widget_get_root (GTK_WIDGET (self)));
 
   data = g_new0 (RemoveTaskData, 1);
   data->view = self;
@@ -1023,22 +1023,18 @@ static void
 gtd_task_list_view_map (GtkWidget *widget)
 {
   GtdTaskListViewPrivate *priv;
-  GtkWidget *window;
+  GtkRoot *root;
 
   GTK_WIDGET_CLASS (gtd_task_list_view_parent_class)->map (widget);
 
   priv = GTD_TASK_LIST_VIEW (widget)->priv;
-  window = gtk_widget_get_toplevel (widget);
+  root = gtk_widget_get_root (widget);
 
   /* Clear previously added "list" actions */
-  gtk_widget_insert_action_group (window,
-                                  "list",
-                                  NULL);
+  gtk_widget_insert_action_group (GTK_WIDGET (root), "list", NULL);
 
   /* Add this instance's action group */
-  gtk_widget_insert_action_group (window,
-                                  "list",
-                                  priv->action_group);
+  gtk_widget_insert_action_group (GTK_WIDGET (root), "list", priv->action_group);
 }
 
 static void

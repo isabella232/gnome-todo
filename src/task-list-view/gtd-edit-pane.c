@@ -321,7 +321,7 @@ on_hyperlink_clicked_cb (GtkGestureClick *gesture,
       GtkTextIter url_start;
       GtkTextIter url_end;
       GtkTextTag *tag;
-      GtkWindow *window;
+      GtkRoot *root;
 
       tag = l->data;
 
@@ -343,9 +343,10 @@ on_hyperlink_clicked_cb (GtkGestureClick *gesture,
         continue;
 
       url = gtk_text_iter_get_text (&url_start, &url_end);
-      window = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (text_view)));
+      root = gtk_widget_get_root (GTK_WIDGET (text_view));
 
-      gtk_show_uri_on_window (window, url, GDK_CURRENT_TIME, &error);
+      if (root && GTK_IS_WINDOW (root))
+        gtk_show_uri_on_window (GTK_WINDOW (root), url, GDK_CURRENT_TIME, &error);
 
       if (error)
         {
