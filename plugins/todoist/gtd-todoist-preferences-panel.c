@@ -25,8 +25,9 @@
 
 struct _GtdTodoistPreferencesPanel
 {
-  GtkStack            parent;
+  GtkBin              parent;
 
+  GtkStack           *stack;
   GoaClient          *client;
   GtkWidget          *accounts_listbox;
   GtkWidget          *add_button;
@@ -34,7 +35,7 @@ struct _GtdTodoistPreferencesPanel
   GtkWidget          *empty_page;
 };
 
-G_DEFINE_TYPE (GtdTodoistPreferencesPanel, gtd_todoist_preferences_panel, GTK_TYPE_STACK)
+G_DEFINE_TYPE (GtdTodoistPreferencesPanel, gtd_todoist_preferences_panel, GTK_TYPE_BIN)
 
 GtdTodoistPreferencesPanel*
 gtd_todoist_preferences_panel_new (void)
@@ -155,7 +156,7 @@ on_goa_account_added (GoaClient                   *client,
   gtk_container_add (GTK_CONTAINER (box), desc);
   gtk_container_add (GTK_CONTAINER (row), box);
 
-  gtk_stack_set_visible_child (GTK_STACK (self), self->accounts_page);
+  gtk_stack_set_visible_child (self->stack, self->accounts_page);
 
   gtk_list_box_insert (GTK_LIST_BOX (self->accounts_listbox), GTK_WIDGET (row), -1);
 }
@@ -198,7 +199,7 @@ on_goa_account_removed (GoaClient                   *client,
 
   /* Change to empty_page if the listbox becomes empty after this removal */
   if (!todoist_accounts)
-    gtk_stack_set_visible_child (GTK_STACK (self), self->empty_page);
+    gtk_stack_set_visible_child (self->stack, self->empty_page);
 
   g_list_free (child);
 }
@@ -278,6 +279,7 @@ gtd_todoist_preferences_panel_class_init (GtdTodoistPreferencesPanelClass *klass
   gtk_widget_class_bind_template_child (widget_class, GtdTodoistPreferencesPanel, add_button);
   gtk_widget_class_bind_template_child (widget_class, GtdTodoistPreferencesPanel, accounts_page);
   gtk_widget_class_bind_template_child (widget_class, GtdTodoistPreferencesPanel, empty_page);
+  gtk_widget_class_bind_template_child (widget_class, GtdTodoistPreferencesPanel, stack);
 
   gtk_widget_class_bind_template_callback (widget_class, account_row_clicked_cb);
 }
@@ -290,7 +292,7 @@ gtd_todoist_preferences_panel_init (GtdTodoistPreferencesPanel *self)
   gtk_widget_init_template (GTK_WIDGET (self));
 
   /* Set Empty Page as the default initial preferences page */
-  gtk_stack_set_visible_child (GTK_STACK (self), self->empty_page);
+  gtk_stack_set_visible_child (self->stack, self->empty_page);
 
   label = gtk_label_new ("No Todoist account configured");
   gtk_widget_show (label);
