@@ -98,7 +98,7 @@
             <property name="wrap-mode">word-char</property>
             <property name="buffer">text_buffer</property>
             <child>
-              <object class="GtkGestureMultiPress">
+              <object class="GtkGestureClick">
                 <property name="propagation-phase">capture</property>
                 <signal name="pressed" handler="on_hyperlink_clicked_cb" object="GtdEditPane" swapped="no"/>
               </object>

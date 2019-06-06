@@ -35,7 +35,7 @@
                     <signal name="drag-data-get" handler="on_drag_data_get_cb" object="GtdTaskRow" swapped="no"/>
                     <signal name="drag-failed" handler="on_drag_failed_cb" object="GtdTaskRow" swapped="no"/>
                     <child>
-                      <object class="GtkGestureMultiPress">
+                      <object class="GtkGestureClick">
                         <property name="propagation-phase">capture</property>
                         <signal name="pressed" handler="on_button_press_event_cb" object="GtdTaskRow" swapped="no"/>
                       </object>
@@ -61,7 +61,7 @@
                     <signal name="drag-end" handler="on_drag_end_cb" object="GtdTaskRow" swapped="no"/>
                     <signal name="drag-failed" handler="on_drag_failed_cb" object="GtdTaskRow" swapped="no"/>
                     <child>
-                      <object class="GtkGestureMultiPress">
+                      <object class="GtkGestureClick">
                         <property name="propagation-phase">capture</property>
                         <signal name="pressed" handler="on_button_press_event_cb" object="GtdTaskRow" swapped="no"/>
                       </object>

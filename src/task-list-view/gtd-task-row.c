@@ -262,11 +262,11 @@ on_remove_task_cb (GtdEditPane *edit_panel,
 }
 
 static void
-on_button_press_event_cb (GtkGestureMultiPress *gesture,
-                          gint                  n_press,
-                          gdouble               x,
-                          gdouble               y,
-                          GtdTaskRow           *self)
+on_button_press_event_cb (GtkGestureClick *gesture,
+                          gint             n_press,
+                          gdouble          x,
+                          gdouble          y,
+                          GtdTaskRow      *self)
 {
   GtkWidget *widget;
   gint real_x;
@@ -284,7 +284,7 @@ on_button_press_event_cb (GtkGestureMultiPress *gesture,
   self->clicked_x = real_x;
   self->clicked_y = real_y;
 
-  GTD_TRACE_MSG ("GtkGestureMultiPress:pressed received from a %s at %.1f,%.1f (%d,%d)",
+  GTD_TRACE_MSG ("GtkGestureClick:pressed received from a %s at %.1f,%.1f (%d,%d)",
                  G_OBJECT_TYPE_NAME (widget),
                  x,
                  y,

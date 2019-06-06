@@ -277,11 +277,11 @@ on_hyperlink_hover_cb (GtkEventControllerMotion *controller,
 }
 
 static void
-on_hyperlink_clicked_cb (GtkGestureMultiPress *gesture,
-                         gint                  n_press,
-                         gdouble               x,
-                         gdouble               y,
-                         GtdEditPane          *self)
+on_hyperlink_clicked_cb (GtkGestureClick *gesture,
+                         gint             n_press,
+                         gdouble          x,
+                         gdouble          y,
+                         GtdEditPane     *self)
 {
   GdkEventSequence *sequence;
   GtkTextBuffer *buffer;
