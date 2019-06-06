@@ -214,6 +214,7 @@ gtd_notification_widget_class_init (GtdNotificationWidgetClass *klass)
 
   gtk_widget_class_bind_template_child (widget_class, GtdNotificationWidget, secondary_button);
   gtk_widget_class_bind_template_child (widget_class, GtdNotificationWidget, spinner);
+  gtk_widget_class_bind_template_child (widget_class, GtdNotificationWidget, revealer);
   gtk_widget_class_bind_template_child (widget_class, GtdNotificationWidget, text_label);
 
   gtk_widget_class_bind_template_callback (widget_class, on_close_button_clicked_cb);
