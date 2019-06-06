@@ -61,7 +61,7 @@ gtd_row_measure_with_max (GtkWidget      *widget,
         *minimum = (MIN (local_minimum_width, MAX_WIDTH) - margins) * scale_factor;
 
       if (natural)
-        *natural = (MAX (local_minimum_width, MAX_WIDTH) - margins) * scale_factor;
+        *natural = (MAX (local_natural_width, MAX_WIDTH) - margins) * scale_factor;
     }
 }
 
