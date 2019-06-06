@@ -230,7 +230,6 @@ gtd_color_button_init (GtdColorButton *self)
   gtk_widget_set_parent (self->selected_icon, GTK_WIDGET (self));
 
   gtk_widget_set_can_focus (GTK_WIDGET (self), TRUE);
-  gtk_widget_set_has_surface (GTK_WIDGET (self), FALSE);
 }
 
 GtkWidget*
