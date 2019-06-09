@@ -48,6 +48,9 @@ struct _GtdPanelInterface
   guint32            (*get_priority)                       (GtdPanel        *self);
 
   gchar*             (*get_subtitle)                       (GtdPanel        *self);
+
+  void               (*activate)                           (GtdPanel        *self,
+                                                            GVariant        *parameters);
 };
 
 const gchar*         gtd_panel_get_panel_name                    (GtdPanel           *panel);
@@ -65,6 +68,9 @@ GtkPopover*          gtd_panel_get_popover                       (GtdPanel      
 guint32              gtd_panel_get_priority                      (GtdPanel           *self);
 
 gchar*               gtd_panel_get_subtitle                      (GtdPanel           *self);
+
+void                 gtd_panel_activate                          (GtdPanel           *self,
+                                                                  GVariant           *parameters);
 
 G_END_DECLS
 

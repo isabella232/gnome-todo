@@ -265,7 +265,7 @@ gtd_panel_get_priority (GtdPanel *self)
 
 /**
  * gtd_panel_get_subtitle:
- * @panel: a #GtdPanel
+ * @self: a #GtdPanel
  *
  * Retrieves the subtitle of @panel
  *
@@ -278,4 +278,36 @@ gtd_panel_get_subtitle (GtdPanel *self)
   g_return_val_if_fail (GTD_PANEL_GET_IFACE (self)->get_icon, NULL);
 
   return GTD_PANEL_GET_IFACE (self)->get_subtitle (self);
+}
+
+/**
+ * gtd_panel_activate:
+ * @self: a #GtdPanel
+ * @parameters: (nullable): parameters of the panel
+ *
+ * Activates the panel with @parameters. The passed parameters
+ * are in free form, to allow panels have any input they want.
+ *
+ * This is an optional vfunc.
+ */
+void
+gtd_panel_activate (GtdPanel *self,
+                    GVariant *parameters)
+{
+
+  g_return_if_fail (GTD_IS_PANEL (self));
+
+  if (GTD_PANEL_GET_IFACE (self)->activate)
+    {
+      g_autofree gchar *formatted_params = NULL;
+
+      if (parameters)
+        formatted_params = g_variant_print (parameters, TRUE);
+
+      g_debug ("Activating %s with parameters %s",
+               G_OBJECT_TYPE_NAME (self),
+               formatted_params);
+
+      GTD_PANEL_GET_IFACE (self)->activate (self, parameters);
+    }
 }
