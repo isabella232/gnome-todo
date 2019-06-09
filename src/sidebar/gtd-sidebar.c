@@ -100,8 +100,10 @@ add_task_list (GtdSidebar  *self,
 {
   g_debug ("Adding task list '%s'", gtd_task_list_get_name (list));
 
-  gtk_list_box_prepend (self->listbox, gtd_sidebar_list_row_new (list));
-  gtk_list_box_prepend (self->archive_listbox, gtd_sidebar_list_row_new (list));
+  if (!gtd_task_list_get_archived (list))
+    gtk_list_box_prepend (self->listbox, gtd_sidebar_list_row_new (list));
+  else
+    gtk_list_box_prepend (self->archive_listbox, gtd_sidebar_list_row_new (list));
 }
 
 static void
@@ -177,6 +179,7 @@ typedef gpointer (*GetDataFunc) (gpointer data);
 
 static gpointer
 get_row_internal (GtdSidebar  *self,
+                  GtkListBox  *listbox,
                   GType        type,
                   GetDataFunc  get_data_func,
                   gpointer     data)
@@ -184,7 +187,7 @@ get_row_internal (GtdSidebar  *self,
   g_autoptr (GList) rows = NULL;
   GList *l;
 
-  rows = gtk_container_get_children (GTK_CONTAINER (self->listbox));
+  rows = gtk_container_get_children (GTK_CONTAINER (listbox));
 
   for (l = rows; l; l = l->next)
     {
@@ -200,6 +203,7 @@ get_row_for_panel (GtdSidebar *self,
                    GtdPanel   *panel)
 {
   return get_row_internal (self,
+                           self->listbox,
                            GTD_TYPE_SIDEBAR_PANEL_ROW,
                            (GetDataFunc) gtd_sidebar_panel_row_get_panel,
                            panel);
@@ -207,9 +211,11 @@ get_row_for_panel (GtdSidebar *self,
 
 static GtkListBoxRow*
 get_row_for_provider (GtdSidebar  *self,
+                      GtkListBox  *listbox,
                       GtdProvider *provider)
 {
   return get_row_internal (self,
+                           listbox,
                            GTD_TYPE_SIDEBAR_PROVIDER_ROW,
                            (GetDataFunc) gtd_sidebar_provider_row_get_provider,
                            provider);
@@ -217,9 +223,11 @@ get_row_for_provider (GtdSidebar  *self,
 
 static GtkListBoxRow*
 get_row_for_task_list (GtdSidebar  *self,
+                       GtkListBox  *listbox,
                        GtdTaskList *list)
 {
   return get_row_internal (self,
+                           listbox,
                            GTD_TYPE_SIDEBAR_LIST_ROW,
                            (GetDataFunc) gtd_sidebar_list_row_get_task_list,
                            list);
@@ -285,7 +293,11 @@ on_task_list_panel_list_deleted_cb (GtdTaskListPanel *panel,
   GtdNotification *notification;
   g_autofree gchar *title = NULL;
 
-  row = (GtdSidebarListRow*) get_row_for_task_list (self, list);
+  if (gtd_task_list_get_archived (list))
+    row = (GtdSidebarListRow*) get_row_for_task_list (self, self->archive_listbox, list);
+  else
+    row = (GtdSidebarListRow*) get_row_for_task_list (self, self->listbox, list);
+
   g_assert (row != NULL && GTD_IS_SIDEBAR_LIST_ROW (row));
 
   GTD_TRACE_MSG ("Removing task list row from sidebar");
@@ -368,11 +380,13 @@ on_panel_stack_visible_child_changed_cb (GtkStack   *panel_stack,
                                          GtdSidebar *self)
 {
   GtkListBoxRow *panel_row;
+  GtkListBox *listbox;
   GtdPanel *visible_panel;
 
   g_assert (GTD_IS_PANEL (gtk_stack_get_visible_child (panel_stack)));
 
   visible_panel = GTD_PANEL (gtk_stack_get_visible_child (panel_stack));
+  listbox = self->listbox;
 
   /*
    * If the currently visible panel is the tasklist panel, we
@@ -384,10 +398,15 @@ on_panel_stack_visible_child_changed_cb (GtkStack   *panel_stack,
       GtdTaskList *task_list;
 
       task_list = gtd_task_list_panel_get_task_list (GTD_TASK_LIST_PANEL (self->task_list_panel));
-
       g_assert (task_list != NULL);
 
-      panel_row = get_row_for_task_list (self, task_list);
+      panel_row = get_row_for_task_list (self, self->listbox, task_list);
+
+      if (!panel_row)
+        {
+          panel_row = get_row_for_task_list (self, self->archive_listbox, task_list);
+          listbox = self->archive_listbox;
+        }
     }
   else
     {
@@ -395,8 +414,8 @@ on_panel_stack_visible_child_changed_cb (GtkStack   *panel_stack,
     }
 
   /* Select the row if it's not already selected*/
-  if (panel_row != gtk_list_box_get_selected_row (self->listbox))
-    gtk_list_box_select_row (self->listbox, panel_row);
+  if (gtk_list_box_row_is_selected (panel_row))
+    gtk_list_box_select_row (listbox, panel_row);
 }
 
 static void
@@ -412,12 +431,14 @@ on_provider_removed_cb (GtdManager  *manager,
                         GtdProvider *provider,
                         GtdSidebar  *self)
 {
-  GtkListBoxRow *row = get_row_for_provider (self, provider);
+  GtkListBoxRow *row;
 
   g_debug ("Removing provider '%s'", gtd_provider_get_name (provider));
 
-  g_assert (row != NULL);
+  row = get_row_for_provider (self, self->listbox, provider);
+  gtk_widget_destroy (GTK_WIDGET (row));
 
+  row = get_row_for_provider (self, self->archive_listbox, provider);
   gtk_widget_destroy (GTK_WIDGET (row));
 }
 
@@ -435,9 +456,14 @@ on_task_list_removed_cb (GtdManager  *manager,
                          GtdTaskList *list,
                          GtdSidebar  *self)
 {
-  GtkListBoxRow *row = get_row_for_task_list (self, list);
+  GtkListBoxRow *row;
 
   g_debug ("Removing task list '%s'", gtd_task_list_get_name (list));
+
+  if (!gtd_task_list_get_archived (list))
+    row = get_row_for_task_list (self, self->listbox, list);
+  else
+    row = get_row_for_task_list (self, self->archive_listbox, list);
 
   g_assert (row != NULL);
 
