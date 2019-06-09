@@ -55,16 +55,18 @@ G_DEFINE_TYPE (GtdSidebar, gtd_sidebar, GTK_TYPE_BOX)
  * Auxiliary methods
  */
 
-static void
+static gboolean
 activate_row_below (GtdSidebar        *self,
                     GtdSidebarListRow *current_row)
 {
   g_autoptr (GList) children = NULL;
   GtkWidget *next_row;
+  GtkWidget *parent;
   GList *l;
   gboolean after_deleted;
 
-  children = gtk_container_get_children (GTK_CONTAINER (self->listbox));
+  parent = gtk_widget_get_parent (GTK_WIDGET (current_row));
+  children = gtk_container_get_children (GTK_CONTAINER (parent));
   after_deleted = FALSE;
   next_row = NULL;
 
@@ -92,6 +94,8 @@ activate_row_below (GtdSidebar        *self,
 
   if (next_row)
     g_signal_emit_by_name (next_row, "activate");
+
+  return next_row != NULL;
 }
 
 static void
@@ -233,6 +237,20 @@ get_row_for_task_list (GtdSidebar  *self,
                            list);
 }
 
+static void
+activate_appropriate_row (GtdSidebar    *self,
+                          GtkListBoxRow *row)
+{
+  GtkListBoxRow *to_be_activated;
+
+  if (activate_row_below (self, GTD_SIDEBAR_LIST_ROW (row)))
+    return;
+
+  gtd_sidebar_set_archive_visible (self, FALSE);
+
+  to_be_activated = gtk_list_box_get_row_at_index (self->listbox, 0);
+  g_signal_emit_by_name (to_be_activated, "activate");
+}
 
 /*
  * Callbacks
@@ -314,7 +332,7 @@ on_task_list_panel_list_deleted_cb (GtdTaskListPanel *panel,
    * there are no other task list after this one).
    */
   if (gtk_list_box_row_is_selected (GTK_LIST_BOX_ROW (row)))
-    activate_row_below (self, row);
+    activate_appropriate_row (self, GTK_LIST_BOX_ROW (row));
 
   gtk_widget_hide (GTK_WIDGET (row));
 }
@@ -449,6 +467,42 @@ on_task_list_added_cb (GtdManager  *manager,
                        GtdSidebar  *self)
 {
   add_task_list (self, list);
+}
+
+static void
+on_task_list_changed_cb (GtdManager  *manager,
+                         GtdTaskList *list,
+                         GtdSidebar  *self)
+{
+  GtkListBoxRow *row;
+  gboolean archived;
+
+  archived = gtd_task_list_get_archived (list);
+  row = get_row_for_task_list (self,
+                               archived ? self->archive_listbox : self->listbox,
+                               list);
+
+  /*
+   * The task was either archived or unarchived; remove it and add to
+   * the appropriate listbox.
+   */
+  if (!row)
+    {
+      row = get_row_for_task_list (self,
+                                   archived ? self->listbox : self->archive_listbox,
+                                   list);
+      g_assert (row != NULL);
+
+      /* Change to another panel or taklist */
+      if (gtk_list_box_row_is_selected (row))
+        activate_appropriate_row (self, row);
+
+      /* Destroy the old row */
+      gtk_widget_destroy (GTK_WIDGET (row));
+
+      /* Add a new row */
+      add_task_list (self, list);
+    }
 }
 
 static void
@@ -625,6 +679,7 @@ gtd_sidebar_constructed (GObject *object)
     }
 
   g_signal_connect (manager, "list-added", G_CALLBACK (on_task_list_added_cb), self);
+  g_signal_connect (manager, "list-changed", G_CALLBACK (on_task_list_changed_cb), self);
   g_signal_connect (manager, "list-removed", G_CALLBACK (on_task_list_removed_cb), self);
 }
 
