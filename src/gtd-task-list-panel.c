@@ -20,6 +20,8 @@
 
 #define G_LOG_DOMAIN "GtdTaskListPanel"
 
+#include <glib/gi18n.h>
+
 #include "gtd-color-button.h"
 #include "gtd-debug.h"
 #include "gtd-panel.h"
@@ -33,6 +35,7 @@ struct _GtdTaskListPanel
 {
   GtkBox              parent;
 
+  GtkModelButton     *archive_button;
   GtkFlowBox         *colors_flowbox;
   GtkPopover         *popover;
   GtkWidget          *rename_button;
@@ -179,10 +182,53 @@ rename_list (GtdTaskListPanel *self)
   gtk_editable_set_text (self->rename_entry, "");
 }
 
+static void
+update_archive_button (GtdTaskListPanel *self)
+{
+  GtdTaskList *list;
+  gboolean archived;
+
+  GTD_ENTRY;
+
+  list = GTD_TASK_LIST (gtd_task_list_view_get_model (self->task_list_view));
+  g_assert (list != NULL);
+
+  archived = gtd_task_list_get_archived (list);
+  g_object_set (self->archive_button,
+                "text", archived ? _("Unarchive") : _("Archive"),
+                NULL);
+
+  GTD_EXIT;
+}
+
 
 /*
  * Callbacks
  */
+
+static void
+on_archive_button_clicked_cb (GtkModelButton   *button,
+                              GtdTaskListPanel *self)
+{
+  GtdProvider *provider;
+  GtdTaskList *list;
+  gboolean archived;
+
+  GTD_ENTRY;
+
+  list = GTD_TASK_LIST (gtd_task_list_view_get_model (self->task_list_view));
+  g_assert (list != NULL);
+
+  archived = gtd_task_list_get_archived (list);
+  gtd_task_list_set_archived (list, !archived);
+
+  update_archive_button (self);
+
+  provider = gtd_task_list_get_provider (list);
+  gtd_provider_update_task_list (provider, list);
+
+  GTD_EXIT;
+}
 
 static void
 on_colors_flowbox_child_activated_cb (GtkFlowBox       *colors_flowbox,
@@ -432,6 +478,7 @@ gtd_task_list_panel_class_init (GtdTaskListPanelClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-task-list-panel.ui");
 
+  gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, archive_button);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, colors_flowbox);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, popover);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, rename_button);
@@ -439,6 +486,7 @@ gtd_task_list_panel_class_init (GtdTaskListPanelClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, rename_entry);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, task_list_view);
 
+  gtk_widget_class_bind_template_callback (widget_class, on_archive_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_colors_flowbox_child_activated_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_delete_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_popover_hidden_cb);
@@ -479,6 +527,7 @@ gtd_task_list_panel_set_task_list (GtdTaskListPanel *self,
   gtd_task_list_view_set_model (self->task_list_view, G_LIST_MODEL (list));
 
   update_selected_color (self);
+  update_archive_button (self);
 
   g_object_notify (G_OBJECT (self), "title");
 }
