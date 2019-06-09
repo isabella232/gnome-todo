@@ -47,14 +47,6 @@ struct _GtdSidebar
 
 G_DEFINE_TYPE (GtdSidebar, gtd_sidebar, GTK_TYPE_BOX)
 
-enum
-{
-  PROP_0,
-  N_PROPS
-};
-
-//static GParamSpec *properties [N_PROPS];
-
 
 /*
  * Auxiliary methods
@@ -562,55 +554,12 @@ gtd_sidebar_constructed (GObject *object)
 }
 
 static void
-gtd_sidebar_finalize (GObject *object)
-{
-  //GtdSidebar *self = (GtdSidebar *)object;
-
-  G_OBJECT_CLASS (gtd_sidebar_parent_class)->finalize (object);
-}
-
-static void
-gtd_sidebar_get_property (GObject    *object,
-                          guint       prop_id,
-                          GValue     *value,
-                          GParamSpec *pspec)
-{
-  //GtdSidebar *self = GTD_SIDEBAR (object);
-
-  switch (prop_id)
-    {
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-    }
-}
-
-static void
-gtd_sidebar_set_property (GObject      *object,
-                          guint         prop_id,
-                          const GValue *value,
-                          GParamSpec   *pspec)
-{
-  //GtdSidebar *self = GTD_SIDEBAR (object);
-
-  switch (prop_id)
-    {
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-    }
-}
-
-static void
 gtd_sidebar_class_init (GtdSidebarClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->constructed = gtd_sidebar_constructed;
-  object_class->finalize = gtd_sidebar_finalize;
-  object_class->get_property = gtd_sidebar_get_property;
-  object_class->set_property = gtd_sidebar_set_property;
-
-  //g_object_class_install_properties (object_class, N_PROPS, properties);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/sidebar/gtd-sidebar.ui");
 
