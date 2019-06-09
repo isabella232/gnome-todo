@@ -246,7 +246,9 @@ activate_appropriate_row (GtdSidebar    *self,
   if (activate_row_below (self, GTD_SIDEBAR_LIST_ROW (row)))
     return;
 
-  gtd_sidebar_set_archive_visible (self, FALSE);
+  gtk_widget_activate_action (GTK_WIDGET (self),
+                              "win.toggle-archive",
+                              g_variant_new_boolean (FALSE));
 
   to_be_activated = gtk_list_box_get_row_at_index (self->listbox, 0);
   g_signal_emit_by_name (to_be_activated, "activate");
