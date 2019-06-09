@@ -591,6 +591,7 @@ gtd_sidebar_init (GtdSidebar *self)
   gtk_widget_init_template (GTK_WIDGET (self));
 
   gtk_list_box_set_sort_func (self->listbox, sort_listbox_cb, self, NULL);
+  gtk_list_box_set_sort_func (self->archive_listbox, sort_listbox_cb, self, NULL);
 }
 
 void
