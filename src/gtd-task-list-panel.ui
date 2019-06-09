@@ -10,6 +10,7 @@
     <signal name="hide" handler="on_popover_hidden_cb" object="GtdTaskListPanel" swapped="no"/>
     <child>
       <object class="GtkBox">
+        <property name="name">main</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkFlowBox" id="colors_flowbox">
@@ -59,8 +60,7 @@
           <object class="GtkModelButton" id="rename_header_button">
             <property name="text" translatable="yes">Rename</property>
             <property name="menu-name">main</property>
-            <property name="inverted">1</property>
-            <property name="centered">1</property>
+            <property name="role">title</property>
           </object>
         </child>
         <child>
