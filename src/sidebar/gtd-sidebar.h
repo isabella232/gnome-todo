@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "gtd-panel.h"
+
 G_BEGIN_DECLS
 
 #define GTD_TYPE_SIDEBAR (gtd_sidebar_get_type())
