@@ -661,6 +661,26 @@ gtd_task_list_eds_task_added (GtdTaskList *list,
 
 
 /*
+ * GtdObject overrides
+ */
+
+static const gchar*
+gtd_task_list_eds_get_uid (GtdObject *object)
+{
+  GtdTaskListEds *self = GTD_TASK_LIST_EDS (object);
+
+  return e_source_get_uid (self->source);
+}
+
+static void
+gtd_task_list_eds_set_uid (GtdObject   *object,
+                           const gchar *uid)
+{
+  g_assert_not_reached ();
+}
+
+
+/*
  * GObject overrides
  */
 
@@ -738,11 +758,15 @@ static void
 gtd_task_list_eds_class_init (GtdTaskListEdsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GtdObjectClass *gtd_object_class = GTD_OBJECT_CLASS (klass);
   GtdTaskListClass *task_list_class = GTD_TASK_LIST_CLASS (klass);
 
   task_list_class->get_archived = gtd_task_list_eds_get_archived;
   task_list_class->set_archived = gtd_task_list_eds_set_archived;
   task_list_class->task_added = gtd_task_list_eds_task_added;
+
+  gtd_object_class->get_uid = gtd_task_list_eds_get_uid;
+  gtd_object_class->set_uid = gtd_task_list_eds_set_uid;
 
   object_class->finalize = gtd_task_list_eds_finalize;
   object_class->get_property = gtd_task_list_eds_get_property;
