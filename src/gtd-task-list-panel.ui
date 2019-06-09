@@ -11,7 +11,6 @@
     <child>
       <object class="GtkBox">
         <property name="orientation">vertical</property>
-        <property name="spacing">12</property>
         <child>
           <object class="GtkFlowBox" id="colors_flowbox">
             <property name="expand">1</property>
