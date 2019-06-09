@@ -166,7 +166,7 @@ gtd_object_class_init (GtdObjectClass *klass)
                                               "Unique identifier of the object",
                                               "The unique identifier of the object, defined by the backend",
                                               NULL,
-                                              G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+                                              G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
   /**
    * GtdObject::loading:
