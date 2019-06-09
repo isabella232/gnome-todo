@@ -41,13 +41,13 @@ struct _GtdPanelInterface
 
   const GMenu*       (*get_menu)                           (GtdPanel        *panel);
 
-  GIcon*            (*get_icon)                            (GtdPanel        *self);
+  GIcon*             (*get_icon)                           (GtdPanel        *self);
 
-  GtkPopover*       (*get_popover)                         (GtdPanel        *self);
+  GtkPopover*        (*get_popover)                        (GtdPanel        *self);
 
-  guint32           (*get_priority)                        (GtdPanel        *self);
+  guint32            (*get_priority)                       (GtdPanel        *self);
 
-  gchar*            (*get_subtitle)                        (GtdPanel        *self);
+  gchar*             (*get_subtitle)                       (GtdPanel        *self);
 };
 
 const gchar*         gtd_panel_get_panel_name                    (GtdPanel           *panel);
