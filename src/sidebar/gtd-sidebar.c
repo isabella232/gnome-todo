@@ -316,7 +316,11 @@ on_listbox_row_activated_cb (GtkListBox    *panels_listbox,
     {
       GtdPanel *panel = gtd_sidebar_panel_row_get_panel (GTD_SIDEBAR_PANEL_ROW (row));
 
-      gtk_stack_set_visible_child (self->panel_stack, GTK_WIDGET (panel));
+      gtk_widget_activate_action (GTK_WIDGET (self),
+                                  "win.activate-panel",
+                                  g_variant_new ("(sv)",
+                                                 gtd_panel_get_panel_name (panel),
+                                                 g_variant_new_maybe (G_VARIANT_TYPE_VARIANT, NULL)));
     }
   else if (GTD_IS_SIDEBAR_PROVIDER_ROW (row))
     {
@@ -324,16 +328,29 @@ on_listbox_row_activated_cb (GtkListBox    *panels_listbox,
     }
   else if (GTD_IS_SIDEBAR_LIST_ROW (row))
     {
-      GtdTaskList *list = gtd_sidebar_list_row_get_task_list (GTD_SIDEBAR_LIST_ROW (row));
+      g_autoptr (GVariant) panel_params = NULL;
+      GVariantBuilder builder;
+      GtdProvider *provider;
+      GtdTaskList *list;
 
-      /*
-       * First, update the tasklist. This must be done before changing the
-       * stack's visible child, otherwise we hit an assertion failure.
-       */
-      gtd_task_list_panel_set_task_list (GTD_TASK_LIST_PANEL (self->task_list_panel), list);
+      list = gtd_sidebar_list_row_get_task_list (GTD_SIDEBAR_LIST_ROW (row));
+      provider = gtd_task_list_get_provider (list);
 
-      /* Show the task list panel */
-      gtk_stack_set_visible_child (self->panel_stack, GTK_WIDGET (self->task_list_panel));
+      g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
+      g_variant_builder_add (&builder, "{sv}",
+                             "provider-id",
+                             g_variant_new_string (gtd_provider_get_id (provider)));
+      g_variant_builder_add (&builder, "{sv}",
+                             "task-list-id",
+                             g_variant_new_string (gtd_object_get_uid (GTD_OBJECT (list))));
+
+      panel_params = g_variant_new ("(sv)",
+                                    "task-list-panel",
+                                    g_variant_builder_end (&builder));
+
+      gtk_widget_activate_action (GTK_WIDGET (self),
+                                  "win.activate-panel",
+                                  g_steal_pointer (&panel_params));
     }
   else if (row == self->archive_row)
     {

@@ -378,6 +378,33 @@ on_active_state_changed_cb (GObject    *object,
 }
 
 static void
+on_action_activate_panel_activated_cb (GSimpleAction *simple,
+                                       GVariant      *parameters,
+                                       gpointer       user_data)
+{
+  g_autoptr (GVariant) panel_parameters = NULL;
+  g_autofree gchar *panel_id = NULL;
+  GtdWindow *self;
+  GtdPanel *panel;
+
+  self = GTD_WINDOW (user_data);
+
+  g_variant_get (parameters,
+                 "(sv)",
+                 &panel_id,
+                 &panel_parameters);
+
+  g_debug ("Activating panel '%s'", panel_id);
+
+  panel = (GtdPanel *) gtk_stack_get_child_by_name (self->stack, panel_id);
+  g_return_if_fail (panel && GTD_IS_PANEL (panel));
+
+  gtd_panel_activate (panel, panel_parameters);
+
+  gtk_stack_set_visible_child (self->stack, GTK_WIDGET (panel));
+}
+
+static void
 on_cancel_selection_button_clicked (GtkWidget *button,
                                     GtdWindow *self)
 {
@@ -675,7 +702,16 @@ gtd_window_class_init (GtdWindowClass *klass)
 static void
 gtd_window_init (GtdWindow *self)
 {
+  static const GActionEntry entries[] = {
+    { "activate-panel", on_action_activate_panel_activated_cb, "(sv)" },
+  };
+
   gtk_widget_init_template (GTK_WIDGET (self));
+
+  g_action_map_add_action_entries (G_ACTION_MAP (self),
+                                   entries,
+                                   G_N_ELEMENTS (entries),
+                                   self);
 
   /* Task list panel */
   self->task_list_panel = GTD_PANEL (gtd_task_list_panel_new ());

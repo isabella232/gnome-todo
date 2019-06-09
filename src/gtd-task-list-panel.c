@@ -24,6 +24,7 @@
 
 #include "gtd-color-button.h"
 #include "gtd-debug.h"
+#include "gtd-manager.h"
 #include "gtd-panel.h"
 #include "gtd-provider.h"
 #include "gtd-task-list.h"
@@ -376,6 +377,67 @@ gtd_task_list_panel_get_subtitle (GtdPanel *panel)
 }
 
 static void
+gtd_task_list_panel_activate (GtdPanel *panel,
+                              GVariant *parameters)
+{
+  GtdTaskListPanel *self;
+  GVariantDict dict;
+  GtdTaskList *list;
+  GListModel *model;
+  const gchar *task_list_id;
+  const gchar *provider_id;
+  guint i;
+
+  GTD_ENTRY;
+
+  self = GTD_TASK_LIST_PANEL (panel);
+
+  /*
+   * The task list panel must receive an a{sv} and looks for:
+   *
+   *  * provider-id: the id of the provider
+   *  * task-list-id: the id of the task list
+   *
+   * So it can find the task list from the GtdManager.
+   */
+
+  g_variant_dict_init (&dict, parameters);
+  g_variant_dict_lookup (&dict, "provider-id", "&s", &provider_id);
+  g_variant_dict_lookup (&dict, "task-list-id", "&s", &task_list_id);
+
+  GTD_TRACE_MSG ("Activating %s with 'provider-id': %s and 'task-list-id': %s",
+                 G_OBJECT_TYPE_NAME (self),
+                 provider_id,
+                 task_list_id);
+
+  model = gtd_manager_get_task_lists_model (gtd_manager_get_default ());
+  list = NULL;
+
+  for (i = 0; i < g_list_model_get_n_items (model); i++)
+    {
+      g_autoptr (GtdTaskList) task_list = NULL;
+      GtdProvider *provider;
+
+      task_list = g_list_model_get_item (model, i);
+      if (g_strcmp0 (gtd_object_get_uid (GTD_OBJECT (task_list)), task_list_id) != 0)
+        continue;
+
+      provider = gtd_task_list_get_provider (task_list);
+      if (g_strcmp0 (gtd_provider_get_id (provider), provider_id) != 0)
+        return;
+
+      list = task_list;
+      break;
+    }
+
+  g_assert (list != NULL);
+
+  gtd_task_list_panel_set_task_list (self, list);
+
+  GTD_EXIT;
+}
+
+static void
 gtd_panel_iface_init (GtdPanelInterface *iface)
 {
   iface->get_panel_name = gtd_task_list_panel_get_panel_name;
@@ -386,6 +448,7 @@ gtd_panel_iface_init (GtdPanelInterface *iface)
   iface->get_popover = gtd_task_list_panel_get_popover;
   iface->get_priority = gtd_task_list_panel_get_priority;
   iface->get_subtitle = gtd_task_list_panel_get_subtitle;
+  iface->activate = gtd_task_list_panel_activate;
 }
 
 
