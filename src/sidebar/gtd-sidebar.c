@@ -39,7 +39,10 @@ struct _GtdSidebar
 {
   GtkBox              parent;
 
+  GtkListBox         *archive_listbox;
+  GtkListBoxRow      *archive_row;
   GtkListBox         *listbox;
+  GtkStack           *stack;
 
   GtkStack           *panel_stack;
   GtdPanel           *task_list_panel;
@@ -95,13 +98,10 @@ static void
 add_task_list (GtdSidebar  *self,
                GtdTaskList *list)
 {
-  GtkWidget *row;
-
   g_debug ("Adding task list '%s'", gtd_task_list_get_name (list));
 
-  row = gtd_sidebar_list_row_new (list);
-
-  gtk_list_box_prepend (self->listbox, row);
+  gtk_list_box_prepend (self->listbox, gtd_sidebar_list_row_new (list));
+  gtk_list_box_prepend (self->archive_listbox, gtd_sidebar_list_row_new (list));
 }
 
 static void
@@ -121,13 +121,10 @@ static void
 add_provider (GtdSidebar  *self,
               GtdProvider *provider)
 {
-  GtkWidget *row;
-
   g_debug ("Adding provider '%s'", gtd_provider_get_name (provider));
 
-  row = gtd_sidebar_provider_row_new (provider);
-
-  gtk_list_box_prepend (self->listbox, row);
+  gtk_list_box_prepend (self->listbox, gtd_sidebar_provider_row_new (provider));
+  gtk_list_box_prepend (self->archive_listbox, gtd_sidebar_provider_row_new (provider));
 }
 
 static gint
@@ -337,6 +334,10 @@ on_listbox_row_activated_cb (GtkListBox    *panels_listbox,
 
       /* Show the task list panel */
       gtk_stack_set_visible_child (self->panel_stack, GTK_WIDGET (self->task_list_panel));
+    }
+  else if (row == self->archive_row)
+    {
+      gtk_stack_set_visible_child (self->stack, GTK_WIDGET (self->archive_listbox));
     }
   else
     {
@@ -563,7 +564,11 @@ gtd_sidebar_class_init (GtdSidebarClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/sidebar/gtd-sidebar.ui");
 
+  gtk_widget_class_bind_template_child (widget_class, GtdSidebar, archive_listbox);
+  gtk_widget_class_bind_template_child (widget_class, GtdSidebar, archive_row);
   gtk_widget_class_bind_template_child (widget_class, GtdSidebar, listbox);
+  gtk_widget_class_bind_template_child (widget_class, GtdSidebar, stack);
+
   gtk_widget_class_bind_template_callback (widget_class, on_listbox_row_activated_cb);
 
   gtk_widget_class_set_css_name (widget_class, "sidebar");
