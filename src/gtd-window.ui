@@ -46,12 +46,22 @@
         <child>
           <object class="GtkHeaderBar" id="start_headerbar">
             <child>
-              <object class="GtkMenuButton">
+              <object class="GtkMenuButton" id="new_list_button">
                 <property name="can_focus">1</property>
                 <property name="label" translatable="yes">New List</property>
                 <property name="receives_default">1</property>
                 <property name="popover">new_list_popover</property>
                 <property name="halign">start</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="back_button">
+                <property name="visible" bind-source="new_list_button" bind-property="visible" bind-flags="sync-create|invert-boolean" />
+                <property name="can_focus">1</property>
+                <property name="receives_default">1</property>
+                <property name="halign">start</property>
+                <property name="action-name">win.toggle-archive</property>
+                <property name="icon-name">go-previous-symbolic</property>
               </object>
             </child>
             <child type="end">

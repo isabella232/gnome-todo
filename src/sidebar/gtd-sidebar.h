@@ -38,4 +38,7 @@ void                 gtd_sidebar_set_task_list_panel             (GtdSidebar    
 
 void                 gtd_sidebar_activate                        (GtdSidebar         *self);
 
+void                 gtd_sidebar_set_archive_visible             (GtdSidebar         *self,
+                                                                  gboolean            show_archive);
+
 G_END_DECLS

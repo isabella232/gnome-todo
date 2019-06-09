@@ -58,9 +58,11 @@ struct _GtdWindow
 {
   GtkApplicationWindow application;
 
+  GtkWidget          *back_button;
   GtkWidget          *cancel_selection_button;
   GtkWidget          *gear_menu_button;
   GtkHeaderBar       *headerbar;
+  GtkWidget          *new_list_button;
   GtkStack           *stack;
   GtdSidebar         *sidebar;
 
@@ -405,6 +407,21 @@ on_action_activate_panel_activated_cb (GSimpleAction *simple,
 }
 
 static void
+on_action_toggle_archive_activated_cb (GSimpleAction *simple,
+                                       GVariant      *state,
+                                       gpointer       user_data)
+{
+  GtdWindow *self;
+  gboolean archive_visible;
+
+  self = GTD_WINDOW (user_data);
+  archive_visible = g_variant_get_boolean (state);
+
+  gtk_widget_set_visible (self->new_list_button, !archive_visible);
+  gtd_sidebar_set_archive_visible (self->sidebar, archive_visible);
+}
+
+static void
 on_cancel_selection_button_clicked (GtkWidget *button,
                                     GtdWindow *self)
 {
@@ -682,10 +699,12 @@ gtd_window_class_init (GtdWindowClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-window.ui");
 
+  gtk_widget_class_bind_template_child (widget_class, GtdWindow, back_button);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, cancel_selection_button);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, gear_menu_button);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, headerbar);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, notification_widget);
+  gtk_widget_class_bind_template_child (widget_class, GtdWindow, new_list_button);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, sidebar);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, stack);
 
@@ -704,6 +723,7 @@ gtd_window_init (GtdWindow *self)
 {
   static const GActionEntry entries[] = {
     { "activate-panel", on_action_activate_panel_activated_cb, "(sv)" },
+    { "toggle-archive", on_action_toggle_archive_activated_cb, "b" },
   };
 
   gtk_widget_init_template (GTK_WIDGET (self));
@@ -712,6 +732,9 @@ gtd_window_init (GtdWindow *self)
                                    entries,
                                    G_N_ELEMENTS (entries),
                                    self);
+
+  gtk_actionable_set_action_target_value (GTK_ACTIONABLE (self->back_button),
+                                          g_variant_new_boolean (FALSE));
 
   /* Task list panel */
   self->task_list_panel = GTD_PANEL (gtd_task_list_panel_new ());

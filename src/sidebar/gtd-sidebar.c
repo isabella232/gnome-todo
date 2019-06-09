@@ -354,7 +354,7 @@ on_listbox_row_activated_cb (GtkListBox    *panels_listbox,
     }
   else if (row == self->archive_row)
     {
-      gtk_stack_set_visible_child (self->stack, GTK_WIDGET (self->archive_listbox));
+      gtk_widget_activate_action (GTK_WIDGET (self), "win.toggle-archive", g_variant_new_boolean (TRUE));
     }
   else
     {
@@ -680,4 +680,16 @@ gtd_sidebar_activate (GtdSidebar *self)
 
   first_row = gtk_list_box_get_row_at_index (self->listbox, 0);
   g_signal_emit_by_name (first_row, "activate");
+}
+
+void
+gtd_sidebar_set_archive_visible (GtdSidebar *self,
+                                 gboolean    show_archive)
+{
+  g_assert (GTD_IS_SIDEBAR (self));
+
+  if (show_archive)
+    gtk_stack_set_visible_child (self->stack, GTK_WIDGET (self->archive_listbox));
+  else
+    gtk_stack_set_visible_child (self->stack, GTK_WIDGET (self->listbox));
 }
