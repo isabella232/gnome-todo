@@ -2,6 +2,10 @@
 <interface>
   <template class="GtdSidebar" parent="GtkBox">
     <property name="hexpand">0</property>
+    <style>
+      <class name="sidebar"/>
+    </style>
+
     <child>
       <object class="GtkScrolledWindow">
         <property name="can_focus">1</property>
@@ -10,6 +14,8 @@
         <child>
           <object class="GtkStack" id="stack">
             <property name="expand">1</property>
+            <property name="homogeneous">true</property>
+            <property name="transition-type">slide-left-right</property>
 
             <!-- Main Listbox -->
             <child>
@@ -20,9 +26,6 @@
                     <property name="expand">1</property>
                     <property name="selection_mode">browse</property>
                     <signal name="row-activated" handler="on_listbox_row_activated_cb" object="GtdSidebar" swapped="no"/>
-                    <style>
-                      <class name="sidebar"/>
-                    </style>
 
                     <!-- Archive row -->
                     <child>
@@ -76,9 +79,6 @@
                     <property name="expand">1</property>
                     <property name="selection_mode">browse</property>
                     <signal name="row-activated" handler="on_listbox_row_activated_cb" object="GtdSidebar" swapped="no"/>
-                    <style>
-                      <class name="sidebar"/>
-                    </style>
                   </object>
                 </property>
               </object>
