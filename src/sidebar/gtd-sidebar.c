@@ -41,7 +41,7 @@ struct _GtdSidebar
 
   GtkListBox         *listbox;
 
-  GtkStack           *stack;
+  GtkStack           *panel_stack;
   GtdPanel           *task_list_panel;
 };
 
@@ -319,7 +319,7 @@ on_listbox_row_activated_cb (GtkListBox    *panels_listbox,
     {
       GtdPanel *panel = gtd_sidebar_panel_row_get_panel (GTD_SIDEBAR_PANEL_ROW (row));
 
-      gtk_stack_set_visible_child (self->stack, GTK_WIDGET (panel));
+      gtk_stack_set_visible_child (self->panel_stack, GTK_WIDGET (panel));
     }
   else if (GTD_IS_SIDEBAR_PROVIDER_ROW (row))
     {
@@ -336,7 +336,7 @@ on_listbox_row_activated_cb (GtkListBox    *panels_listbox,
       gtd_task_list_panel_set_task_list (GTD_TASK_LIST_PANEL (self->task_list_panel), list);
 
       /* Show the task list panel */
-      gtk_stack_set_visible_child (self->stack, GTK_WIDGET (self->task_list_panel));
+      gtk_stack_set_visible_child (self->panel_stack, GTK_WIDGET (self->task_list_panel));
     }
   else
     {
@@ -584,9 +584,9 @@ gtd_sidebar_set_panel_stack (GtdSidebar *self,
   g_return_if_fail (GTD_IS_SIDEBAR (self));
   g_return_if_fail (GTK_IS_STACK (stack));
 
-  g_assert (self->stack == NULL);
+  g_assert (self->panel_stack == NULL);
 
-  self->stack = g_object_ref (stack);
+  self->panel_stack = g_object_ref (stack);
 
   on_panel_stack_visible_child_changed_cb (stack, NULL, self);
   g_signal_connect_object (stack,
