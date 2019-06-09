@@ -427,6 +427,26 @@ on_task_list_removed_cb (GtdManager  *manager,
   gtk_widget_destroy (GTK_WIDGET (row));
 }
 
+static gboolean
+filter_listbox_cb (GtkListBoxRow *row,
+                   gpointer       user_data)
+{
+  GtdTaskList *list;
+  GtkListBox *parent;
+  GtdSidebar *self;
+  gboolean archive;
+
+  if (!GTD_IS_SIDEBAR_LIST_ROW (row))
+    return TRUE;
+
+  self = GTD_SIDEBAR (user_data);
+  parent = (GtkListBox *) gtk_widget_get_parent (GTK_WIDGET (row));
+  list = gtd_sidebar_list_row_get_task_list (GTD_SIDEBAR_LIST_ROW (row));
+  archive = parent == self->archive_listbox;
+
+  return gtd_task_list_get_archived (list) == archive;
+}
+
 static gint
 sort_listbox_cb (GtkListBoxRow *row_a,
                  GtkListBoxRow *row_b,
@@ -591,7 +611,10 @@ gtd_sidebar_init (GtdSidebar *self)
   gtk_widget_init_template (GTK_WIDGET (self));
 
   gtk_list_box_set_sort_func (self->listbox, sort_listbox_cb, self, NULL);
+  gtk_list_box_set_filter_func (self->listbox, filter_listbox_cb, self, NULL);
+
   gtk_list_box_set_sort_func (self->archive_listbox, sort_listbox_cb, self, NULL);
+  gtk_list_box_set_filter_func (self->archive_listbox, filter_listbox_cb, self, NULL);
 }
 
 void
