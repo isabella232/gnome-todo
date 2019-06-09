@@ -432,6 +432,17 @@ sort_listbox_cb (GtkListBoxRow *row_a,
                  GtkListBoxRow *row_b,
                  gpointer       user_data)
 {
+  GtdSidebar *self = GTD_SIDEBAR (user_data);
+
+  /* Special-case the Archive row */
+  if (row_a == self->archive_row || row_b == self->archive_row)
+    {
+      if (GTD_IS_SIDEBAR_PANEL_ROW (row_b))
+        return 1;
+      else
+        return -1;
+    }
+
   if (G_OBJECT_TYPE (row_a) != G_OBJECT_TYPE (row_b))
     {
       gint result;
