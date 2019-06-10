@@ -26,6 +26,7 @@ src/gtd-application.c
 src/gtd-initial-setup-window.ui
 src/gtd-plugin-dialog-row.c
 src/gtd-plugin-dialog.ui
+src/gtd-task-list-panel.c
 src/gtd-task-list-panel.ui
 src/gtd-window.c
 src/gtd-window.ui
@@ -37,6 +38,7 @@ src/sidebar/gtd-sidebar.c
 src/sidebar/gtd-sidebar-list-row.c
 src/sidebar/gtd-sidebar-list-row.ui
 src/sidebar/gtd-sidebar-provider-row.ui
+src/sidebar/gtd-sidebar.ui
 src/task-list-view/gtd-edit-pane.c
 src/task-list-view/gtd-edit-pane.ui
 src/task-list-view/gtd-new-task-row.c
