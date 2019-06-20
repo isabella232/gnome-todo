@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-09 02:49+0000\n"
-"PO-Revision-Date: 2018-03-10 23:13+0100\n"
+"POT-Creation-Date: 2019-06-10 13:27+0000\n"
+"PO-Revision-Date: 2019-06-21 01:11+0200\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
@@ -17,75 +17,61 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2.1\n"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
-#: src/gtd-window.c:799 src/gtd-window.c:830 src/main.c:35
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
+#: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
+#: src/gtd-window.c:845 src/gtd-window.c:876 src/main.c:35
 msgid "To Do"
 msgstr "Popis zadataka"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:8
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:8
 msgid "Task manager for GNOME"
 msgstr "Upravitelj zadataka za GNOME"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:11
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:11
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
-"GNOME. It is extensible through plugins and supports custom task providers."
+"GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
+"todos on your computer or sync them with cloud providers. Customize your "
+"experience with plugins."
 msgstr ""
-"GNOME upravitelj zadataka je aplikacija upravljanja zadacima dizajnirana za "
-"integraciju u GNOME. Proširiva je putem priključaka i omogućuje prilagođene "
-"pružatelje usluga zadataka."
+"GNOME Upravitelj zadataka je aplikacija upravljanja zadacima dizajnirana za "
+"integraciju u GNOME. Spremite i organizirajte svoje zadatke. Čuvajte svoje "
+"zadatke na računalu ili ih uskladite s mrežnim pružateljima usluge zadataka. "
+"Prilagodite svoje iskustvo pomoću priključaka."
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:24
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:25
 msgid "GNOME To Do with the dark theme variant"
 msgstr "GNOME upravitelj zadataka sa varijantom tamne teme"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:28
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:29
 msgid "Editing a tasklist with GNOME To Do"
 msgstr "Uređivanje popisa zadataka sa GNOME upraviteljem zadataka"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:32
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:33
 msgid "Task lists displayed on grid mode"
 msgstr "Popisi zadataka prikazan u mrežnom prikazu"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:36
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:37
 msgid "Task lists displayed on list mode"
 msgstr "Popisi zadataka prikazan u prikazu popisa"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:40
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:41
 msgid "Available plugins for GNOME To Do"
 msgstr "Dostupni priključci za GNOME upravitelja zadataka"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:44
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:45
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr ""
 "Vizualiziraj današnje zadatke na današnjem panelu GNOME upravitelja zadataka"
 
-#: data/gtk/menus.ui:15 data/ui/plugin-dialog.ui:75
-msgid "Extensions"
-msgstr "Proširenja"
-
-#: data/gtk/menus.ui:22
-msgid "_About"
-msgstr "_O programu"
-
-#: data/gtk/menus.ui:26
-msgid "_Quit"
-msgstr "_Zatvori"
-
-#: data/org.gnome.Todo.desktop.in:4
+#: data/org.gnome.Todo.desktop.in.in:4
 msgid "Manage your personal tasks"
 msgstr "Upravljajte svojim osobnim zadacima"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Todo.desktop.in:7
-msgid "org.gnome.Todo"
-msgstr "org.gnome.Todo"
-
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Todo.desktop.in:13
+#: data/org.gnome.Todo.desktop.in.in:13
 msgid "Task;Productivity;Todo;"
 msgstr "Zadatak;Produktivnost;Popis zadataka;"
 
@@ -106,194 +92,87 @@ msgid "Window size (width and height)."
 msgstr "Veličina prozora (širina i visina)."
 
 #: data/org.gnome.todo.gschema.xml:16
-msgid "Window position"
-msgstr "Položaj prozora"
-
-#: data/org.gnome.todo.gschema.xml:17
-msgid "Window position (x and y)."
-msgstr "Položaj prozora (x-os i y-os)"
-
-#: data/org.gnome.todo.gschema.xml:21
 msgid "First run of GNOME To Do"
 msgstr "Prvo pokretanje GNOME upravitelja zadataka"
 
-#: data/org.gnome.todo.gschema.xml:22
+#: data/org.gnome.todo.gschema.xml:17
 msgid ""
 "Whether it’s the first run of GNOME To Do (to run the initial setup) or not"
 msgstr ""
 "Treba li ili ne pokrenuti prvo pokretanje GNOME upravitelja zadataka "
 "(pokretanje početnog postavljanja)"
 
-#: data/org.gnome.todo.gschema.xml:26
+#: data/org.gnome.todo.gschema.xml:21
 msgid "Default provider to add new lists to"
 msgstr "Zadani pružatelj usluga za dodavanje novih popisa"
 
-#: data/org.gnome.todo.gschema.xml:27
+#: data/org.gnome.todo.gschema.xml:22
 msgid "The identifier of the default provider to add new lists to"
 msgstr "Identifikator zadanog pružatelja usluga za dodavanje novih popisa"
 
-#: data/org.gnome.todo.gschema.xml:31
+#: data/org.gnome.todo.gschema.xml:26
 msgid "List of active extensions"
 msgstr "Popis aktivnih proširenja"
 
-#: data/org.gnome.todo.gschema.xml:32
+#: data/org.gnome.todo.gschema.xml:27
 msgid "The list of active extensions"
 msgstr "Popis aktivnih proširenja"
 
-#: data/org.gnome.todo.gschema.xml:36
+#: data/org.gnome.todo.gschema.xml:31
 msgid "The current list selector"
 msgstr "Trenutni prikaz popisa"
 
-#: data/org.gnome.todo.gschema.xml:37
+#: data/org.gnome.todo.gschema.xml:32
 msgid "The current list selector. Can be “grid” or “list”."
 msgstr "Trenutni prikaz popisa. Može biti “mreža” ili “popis”."
 
-#: data/ui/edit-pane.ui:43
-msgid "_Notes"
-msgstr "_Napomene"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
+#: plugins/next-week-panel/gtd-next-week-panel.c:112
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:103
+#: src/task-list-view/gtd-edit-pane.c:110
+msgid "No date set"
+msgstr "Datum nije postavljen"
 
-#: data/ui/edit-pane.ui:93
-msgid "D_ue Date"
-msgstr "R_ok"
+#. Translators: This message will never be used with '1 day ago'
+#. * but the singular form is required because some languages do not
+#. * have plurals, some languages reuse the singular form for numbers
+#. * like 21, 31, 41, etc.
+#.
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:125
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:116
+#, c-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "prije %d dana"
+msgstr[1] "prije %d dana"
+msgstr[2] "prije %d dana"
 
-#: data/ui/edit-pane.ui:111
-msgid "_Today"
-msgstr "_Danas"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:120
+#: src/task-list-view/gtd-task-row.c:146
+msgid "Yesterday"
+msgstr "Jučer"
 
-#: data/ui/edit-pane.ui:121
-msgid "To_morrow"
-msgstr "Su_tra"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
+#: plugins/next-week-panel/gtd-next-week-panel.c:124
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:124
+#: plugins/score/score/__init__.py:101
+#: plugins/today-panel/gtd-panel-today.c:154
+#: plugins/today-panel/gtd-panel-today.c:258
+#: src/task-list-view/gtd-task-row.c:138
+msgid "Today"
+msgstr "Danas"
 
-#: data/ui/edit-pane.ui:169
-msgid "_Priority"
-msgstr "_Prioritet"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
+#: plugins/next-week-panel/gtd-next-week-panel.c:128
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:128
+#: src/task-list-view/gtd-task-row.c:142
+msgid "Tomorrow"
+msgstr "Sutra"
 
-#: data/ui/edit-pane.ui:187
-msgctxt "taskpriority"
-msgid "None"
-msgstr "Nijedan"
-
-#: data/ui/edit-pane.ui:188
-msgid "Low"
-msgstr "Nizak"
-
-#: data/ui/edit-pane.ui:189
-msgid "Medium"
-msgstr "Srednji"
-
-#: data/ui/edit-pane.ui:190
-msgid "High"
-msgstr "Visoki"
-
-#: data/ui/edit-pane.ui:198 data/ui/list-selector-panel.ui:93
-msgid "_Delete"
-msgstr "_Obriši"
-
-#: data/ui/edit-pane.ui:249
-msgctxt "taskdate"
-msgid "None"
-msgstr "Nijedan"
-
-#: data/ui/initial-setup.ui:25
-msgid "Welcome"
-msgstr "Dobrodošli"
-
-#: data/ui/initial-setup.ui:40
-msgid "Log in to online accounts to access your tasks"
-msgstr "Prijavite se u mrežne račune za pristup vašim zadacima"
-
-#: data/ui/initial-setup.ui:67
-msgid "To Do Setup"
-msgstr "Popisa zadataka postavljanje"
-
-#: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
-#: data/ui/window.ui:74
-msgid "_Cancel"
-msgstr "_Odustani"
-
-#: data/ui/initial-setup.ui:80
-msgid "_Done"
-msgstr "_Završeno"
-
-#: data/ui/list-selector-panel.ui:79 data/ui/list-selector-panel.ui:173
-msgid "_Rename"
-msgstr "_Preimenuj"
-
-#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:469
-msgid "Lists"
-msgstr "Popis"
-
-#: data/ui/list-selector-panel.ui:129
-msgid "Tasks"
-msgstr "Zadaci"
-
-#: data/ui/list-selector-panel.ui:147
-msgid "Name of the task list"
-msgstr "Naziv popisa zadatka"
-
-#: data/ui/list-selector-panel.ui:263
-msgid "_New List"
-msgstr "_Novi popis"
-
-#: data/ui/list-view.ui:113
-msgid "Show or hide completed tasks"
-msgstr "Prikaži ili sakrij završene zadatke"
-
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:379
-msgid "Done"
-msgstr "Završeno"
-
-#: data/ui/new-task-row.ui:29
-msgid "New task…"
-msgstr "Novi zadatak…"
-
-#: data/ui/plugin-dialog.ui:118
-msgid "No extensions found"
-msgstr "Nema pronađenih proširenja"
-
-#: data/ui/provider-popover.ui:25
-msgid "Create _List"
-msgstr "Stvori popis"
-
-#: data/ui/provider-popover.ui:59
-msgid "List Name"
-msgstr "Naziv popisa"
-
-#: data/ui/provider-popover.ui:155
-msgid "Select a storage location"
-msgstr "Odaberi lokaciju pohrane"
-
-#: data/ui/provider-row.ui:70
-msgid "Off"
-msgstr "Isključeno"
-
-#: data/ui/provider-selector.ui:27
-msgid "Click to add a new Google account"
-msgstr "Klikni za dodavanje novog Google računa"
-
-#: data/ui/provider-selector.ui:51
-msgid "Google"
-msgstr "Google"
-
-#: data/ui/provider-selector.ui:67
-msgid "Click to add a new ownCloud account"
-msgstr "Klikni za dodavanje novog ownCloud računa"
-
-#: data/ui/provider-selector.ui:91
-msgid "ownCloud"
-msgstr "ownCloud"
-
-#: data/ui/provider-selector.ui:107
-msgid "Click to add a new Microsoft Exchange account"
-msgstr "Klikni za dodavanje novog Microsoft Exchange računa"
-
-#: data/ui/provider-selector.ui:131
-msgid "Microsoft Exchange"
-msgstr "Microsoft Exchange"
-
-#: data/ui/provider-selector.ui:154
-msgid "Or you can just store your tasks on this computer"
-msgstr "Ili jednostavno možete pohraniti vaše zadatke na ovom računalu"
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:297
+msgid "All"
+msgstr "Sve"
 
 #: plugins/background/gtd-plugin-background.c:150
 #, c-format
@@ -303,7 +182,7 @@ msgstr[0] "%1$s i %2$d drugi zadatak"
 msgstr[1] "%1$s i %2$d druga zadatka"
 msgstr[2] "%1$s i %2$d drugih zadatka"
 
-#: plugins/background/gtd-plugin-background.c:249
+#: plugins/background/gtd-plugin-background.c:254
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
@@ -327,19 +206,19 @@ msgstr "Prikaži obavijesti pri pokretanju"
 msgid "Whether GNOME To Do should show notifications or not"
 msgstr "Treba li GNOME Upravitelj zadataka prikazati obavijesti pri pokretanju"
 
-#: plugins/background/ui/preferences.ui:53
+#: plugins/background/ui/preferences.ui:39
 msgid "Run on Startup"
 msgstr "Pokreni pri pokretanju"
 
-#: plugins/background/ui/preferences.ui:66
+#: plugins/background/ui/preferences.ui:50
 msgid "Run To Do automatically when you log in"
 msgstr "Pokreni Popis zadataka automatski kada se prijavite"
 
-#: plugins/background/ui/preferences.ui:122
+#: plugins/background/ui/preferences.ui:96
 msgid "Show Notifications"
 msgstr "Prikaži obavijesti"
 
-#: plugins/background/ui/preferences.ui:135
+#: plugins/background/ui/preferences.ui:107
 msgid "When To Do runs, show a startup notification"
 msgstr "Kada se Popis zadataka pokrene, prikaži obavijest pokretanja"
 
@@ -347,110 +226,87 @@ msgstr "Kada se Popis zadataka pokrene, prikaži obavijest pokretanja"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Greška učitavanja GNOME mrežnih računa"
 
-#: plugins/eds/gtd-provider-eds.c:139
+#: plugins/eds/gtd-provider-eds.c:140
 msgid "Failed to connect to task list"
 msgstr "Neuspješno povezivanje s popisom zadatka"
 
-#: plugins/eds/gtd-provider-eds.c:351
+#: plugins/eds/gtd-provider-eds.c:305
 msgid "An error occurred while creating a task"
 msgstr "Greška pri stvaranju zadatka"
 
-#: plugins/eds/gtd-provider-eds.c:383
+#: plugins/eds/gtd-provider-eds.c:350
 msgid "An error occurred while modifying a task"
 msgstr "Greška pri promijeni zadatka"
 
-#: plugins/eds/gtd-provider-eds.c:404
+#: plugins/eds/gtd-provider-eds.c:371
 msgid "An error occurred while removing a task"
 msgstr "Greška pri uklanjanju zadatka"
 
-#: plugins/eds/gtd-provider-eds.c:422
+#: plugins/eds/gtd-provider-eds.c:389
 msgid "An error occurred while creating a task list"
 msgstr "Greška pri stvaranju popisa zadatka"
 
-#: plugins/eds/gtd-provider-eds.c:444 plugins/eds/gtd-provider-eds.c:467
+#: plugins/eds/gtd-provider-eds.c:411 plugins/eds/gtd-provider-eds.c:434
 msgid "An error occurred while modifying a task list"
 msgstr "Greška pri uklanjanju popisa zadatka"
 
 #: plugins/eds/gtd-provider-local.c:50
-msgid "Local"
-msgstr "Lokalno"
-
-#: plugins/eds/gtd-provider-local.c:56
 msgid "On This Computer"
 msgstr "Na ovom računalu"
 
-#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:307
-#: plugins/eds/gtd-task-list-eds.c:331
+#: plugins/eds/gtd-provider-local.c:62
+msgid "Local"
+msgstr "Lokalno"
+
+#: plugins/eds/gtd-task-list-eds.c:459 plugins/eds/gtd-task-list-eds.c:486
+#: plugins/eds/gtd-task-list-eds.c:510
 msgid "Error fetching tasks from list"
 msgstr "Greška preuzimanja zadataka s popisa"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:110
-msgid "No date set"
-msgstr "Datum nije postavljen"
+#: plugins/next-week-panel/gtd-next-week-panel.c:120
+#: plugins/today-panel/gtd-panel-today.c:145
+msgid "Overdue"
+msgstr "Isteklo"
 
-#. Translators: This message will never be used with '1 day ago'
-#. * but the singular form is required because some languages do not
-#. * have plurals, some languages reuse the singular form for numbers
-#. * like 21, 31, 41, etc.
-#.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:102
-#, c-format
-msgid "%d day ago"
-msgid_plural "%d days ago"
-msgstr[0] "prije %d dana"
-msgstr[1] "prije %d dana"
-msgstr[2] "prije %d dana"
+#: plugins/next-week-panel/gtd-next-week-panel.c:345
+msgid "Next 7 Days"
+msgstr "Sljedećih 7 dana"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:148
-msgid "Yesterday"
-msgstr "Jučer"
-
-#. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
-#: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:134
-#: plugins/today-panel/gtd-panel-today.c:139
-#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:140
-msgid "Today"
-msgstr "Danas"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:144
-msgid "Tomorrow"
-msgstr "Sutra"
-
-#. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:365
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:370
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:507
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:343
 msgid "Scheduled"
 msgstr "Raspored"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:512
-#: plugins/today-panel/gtd-panel-today.c:278
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
-msgid "Clear completed tasks…"
-msgstr "Obriši završene zadatke…"
 
 #: plugins/score/score/__init__.py:90
 msgid "No task completed today"
 msgstr "Danas nema završenih zadataka"
 
-#: plugins/todoist/gtd-provider-todoist.c:212
+#: plugins/todoist/gtd-plugin-todoist.c:109
+msgid "GNOME To Do cannot connect to Todoist due to network issue"
+msgstr ""
+"GNOME Upravitelj zadataka se ne može povezati s Todoist zbog mrežnih problema"
+
+#: plugins/todoist/gtd-plugin-todoist.c:110
+msgid ""
+"Not able to communicate with Todoist. Please check your internet "
+"connectivity."
+msgstr "Nemoguća komunikacija s Todoist. Provjerite svoj pristup internetu."
+
+#: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Error fetching Todoist account key"
 msgstr "Greška preuzimanja ključa Todoist računa"
 
-#: plugins/todoist/gtd-provider-todoist.c:213
+#: plugins/todoist/gtd-provider-todoist.c:214
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Pobrinite se da je Todoist račun pravilno podešen."
 
-#: plugins/todoist/gtd-provider-todoist.c:557
+#: plugins/todoist/gtd-provider-todoist.c:555
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr ""
 "GNOME Popis zadataka nema potrebne dozvole za obavljanje ove radnje: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:565
+#: plugins/todoist/gtd-provider-todoist.c:563
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
@@ -458,32 +314,32 @@ msgstr ""
 "Neispravan odgovor je primljen sa Todoist poslužitelja. Ponovno učitajte "
 "GNOME Popis zadataka."
 
-#: plugins/todoist/gtd-provider-todoist.c:865
+#: plugins/todoist/gtd-provider-todoist.c:850
 msgid "An error occurred while updating a Todoist task"
 msgstr "Greška pri nadopuni Todoist zadatka"
 
-#: plugins/todoist/gtd-provider-todoist.c:982
+#: plugins/todoist/gtd-provider-todoist.c:965
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Greška se dogodila pri primanju Todoist podataka"
 
-#: plugins/todoist/gtd-provider-todoist.c:1057
+#: plugins/todoist/gtd-provider-todoist.c:1040
 msgid "An error occurred while updating Todoist"
 msgstr "Greška pri Todoist nadopuni"
 
-#: plugins/todoist/gtd-provider-todoist.c:1117
+#: plugins/todoist/gtd-provider-todoist.c:1100
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1426
+#: plugins/todoist/gtd-provider-todoist.c:1411
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
 
-#: plugins/todoist/ui/preferences.ui:81
+#: plugins/todoist/ui/preferences.ui:65
 msgid "No Todoist accounts found"
 msgstr "Nema pronađenih Todoist računa"
 
-#: plugins/todoist/ui/preferences.ui:90
+#: plugins/todoist/ui/preferences.ui:74
 msgid "Add a Todoist account"
 msgstr "Dodaj Todoist račun"
 
@@ -516,17 +372,17 @@ msgstr ""
 "Nije preporučljivo korištenje Popis-zadataka.txt integraciju na proizvodnim "
 "sustavima."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:326
+#: plugins/todo-txt/gtd-provider-todo-txt.c:574
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr ""
 "Greška pri otvaranju nadgledane datoteke. Popis-zadataka.txt se neće "
 "nadgledati"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:395
+#: plugins/todo-txt/gtd-provider-todo-txt.c:643
 msgid "Todo.txt"
 msgstr "Popis-zadataka.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:401
+#: plugins/todo-txt/gtd-provider-todo-txt.c:655
 msgid "On the Todo.txt file"
 msgstr "U datoteci Popis-zadataka.txt"
 
@@ -540,12 +396,17 @@ msgstr "Izvor Popis-zadataka.txt datoteke"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:103
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:112
 msgid "Unscheduled"
 msgstr "Uklonjeno s rasporeda"
 
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
+#: src/gtd-task-list-panel.ui:32
+msgid "Clear completed tasks…"
+msgstr "Obriši završene zadatke…"
+
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:106
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
 #, python-format
 msgid "Unscheduled (%d)"
 msgstr "Uklonjeno s rasporeda (%d)"
@@ -558,65 +419,36 @@ msgstr "Zatvori GNOME upravitelj zadataka"
 msgid "Enable debug messages"
 msgstr "Omogući poruke otklanjanja grešaka"
 
-#: src/gtd-application.c:146
-#, c-format
-msgid "Copyright © %1$d The To Do authors"
-msgstr "Autorsko pravo © %1$d Popis zadataka autori"
+#: src/gtd-application.c:143
+msgid "Copyright © 2015–2018 The To Do authors"
+msgstr "Autorsko pravo © 2015–2018 autori Upravitelj zadatka"
 
-#: src/gtd-application.c:151
-#, c-format
-msgid "Copyright © %1$d–%2$d The To Do authors"
-msgstr "Autorsko pravo © %1$d–%2$d Popis zadataka autori"
-
-#: src/gtd-application.c:163
+#: src/gtd-application.c:148
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
 "  gogo https://launchpad.net/~trebelnik-stefina"
 
-#: src/gtd-empty-list-widget.c:51
-msgid "No more tasks left"
-msgstr "Nema preostalih zadataka"
+#: src/gtd-initial-setup-window.ui:20
+msgid "Welcome"
+msgstr "Dobrodošli"
 
-#: src/gtd-empty-list-widget.c:52
-msgid "Nothing else to do here"
-msgstr "Ovdje nema nikakvih zadataka"
+#: src/gtd-initial-setup-window.ui:31
+msgid "Log in to online accounts to access your tasks"
+msgstr "Prijavite se u mrežne račune za pristup vašim zadacima"
 
-#: src/gtd-empty-list-widget.c:53
-msgid "You made it!"
-msgstr "Obavili ste sve zadatke!"
+#: src/gtd-initial-setup-window.ui:53
+msgid "To Do Setup"
+msgstr "Popisa zadataka postavljanje"
 
-#: src/gtd-empty-list-widget.c:54
-msgid "Looks like there’s nothing else left here"
-msgstr "Izgleda da ovdje više nema preostalih zadataka"
+#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:96
+#: src/provider/gtd-provider-popover.ui:40
+msgid "_Cancel"
+msgstr "_Odustani"
 
-#: src/gtd-empty-list-widget.c:59
-msgid "Get some rest now"
-msgstr "Sada se malo odmorite"
-
-#: src/gtd-empty-list-widget.c:60
-msgid "Enjoy the rest of your day"
-msgstr "Uživajte u ostatku dana"
-
-#: src/gtd-empty-list-widget.c:61
-msgid "Good job!"
-msgstr "Dobro obavljeno!"
-
-#: src/gtd-empty-list-widget.c:62
-msgid "Meanwhile, spread the love"
-msgstr "U međuvremenu, širite ljubav"
-
-#: src/gtd-empty-list-widget.c:63
-msgid "Working hard is always rewarded"
-msgstr "Težak rad je uvijek dobro nagrađen"
-
-#: src/gtd-empty-list-widget.c:74
-msgid "No tasks found"
-msgstr "Nema pronađenih zadataka"
-
-#: src/gtd-empty-list-widget.c:75
-msgid "You can add tasks using the <b>+</b> above"
-msgstr "Možete dodati zadatak koristeći <b>+</b> iznad"
+#: src/gtd-initial-setup-window.ui:65
+msgid "_Done"
+msgstr "_Završeno"
 
 #: src/gtd-plugin-dialog-row.c:97
 msgid "Error loading extension"
@@ -626,72 +458,277 @@ msgstr "Greška učitavanja proširenja"
 msgid "Error unloading extension"
 msgstr "Greška oslobađanja proširenja"
 
-#: src/gtd-task-list-view.c:293
-msgid "Removing this task will also remove its subtasks. Remove anyway?"
+#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:138
+msgid "Extensions"
+msgstr "Proširenja"
+
+#: src/gtd-plugin-dialog.ui:90
+msgid "No extensions found"
+msgstr "Nema pronađenih proširenja"
+
+#: src/gtd-task-list-panel.c:199
+msgid "Unarchive"
+msgstr "Otpakiraj"
+
+#: src/gtd-task-list-panel.c:199 src/gtd-task-list-panel.ui:41
+#: src/sidebar/gtd-sidebar.ui:51
+msgid "Archive"
+msgstr "Zapakiraj"
+
+#: src/gtd-task-list-panel.ui:26 src/gtd-task-list-panel.ui:61
+#: src/gtd-task-list-panel.ui:77
+msgid "Rename"
+msgstr "Preimenuj"
+
+#: src/gtd-task-list-panel.ui:47
+msgid "Delete"
+msgstr "Obriši"
+
+#: src/gtd-window.c:115
+msgid ""
+"This is a development build of To Do. You may experience errors, wrong "
+"behaviors, and data loss."
 msgstr ""
-"Uklanjanje ovog zadatka će isto ukloniti njegove podzadatke. Svejedno ukloni?"
+"Ovo je razvojno izdanje Upravitelja zadatka. Možete se suočiti s greškama, "
+"neuobičajenim ponašanjem i gubitkom podataka."
 
-#: src/gtd-task-list-view.c:296
-msgid "Once removed, the tasks cannot be recovered."
-msgstr "Jednom uklonjen, zadatak se više ne može obnoviti."
+#: src/gtd-window.c:517
+msgid "Details"
+msgstr "Pojedinosti"
 
-#: src/gtd-task-list-view.c:299 src/views/gtd-list-selector-panel.c:388
-msgid "Cancel"
-msgstr "Odustani"
+#: src/gtd-window.c:840
+msgid "Click a task list to select"
+msgstr "Klikni popis zadatka za odabir"
 
-#: src/gtd-task-list-view.c:301
-msgid "Remove"
-msgstr "Ukloni"
+#: src/gtd-window.ui:51
+msgid "New List"
+msgstr "Novi popis"
 
-#: src/gtd-task-list-view.c:381
+#: src/gtd-window.ui:144
+msgid "_About To Do"
+msgstr "_O Upravitelju zadacima"
+
+#: src/provider/gtd-provider-popover.ui:23
+msgid "Create _List"
+msgstr "Stvori popis"
+
+#: src/provider/gtd-provider-popover.ui:53
+msgid "List Name"
+msgstr "Naziv popisa"
+
+#: src/provider/gtd-provider-popover.ui:130
+msgid "Select a storage location"
+msgstr "Odaberi lokaciju pohrane"
+
+#: src/provider/gtd-provider-row.ui:57
+msgid "Off"
+msgstr "Isključeno"
+
+#: src/provider/gtd-provider-selector.ui:19
+msgid "Click to add a new Google account"
+msgstr "Klikni za dodavanje novog Google računa"
+
+#: src/provider/gtd-provider-selector.ui:32
+msgid "Google"
+msgstr "Google"
+
+#: src/provider/gtd-provider-selector.ui:42
+msgid "Click to add a new ownCloud account"
+msgstr "Klikni za dodavanje novog ownCloud računa"
+
+#: src/provider/gtd-provider-selector.ui:55
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: src/provider/gtd-provider-selector.ui:65
+msgid "Click to add a new Microsoft Exchange account"
+msgstr "Klikni za dodavanje novog Microsoft Exchange računa"
+
+#: src/provider/gtd-provider-selector.ui:78
+msgid "Microsoft Exchange"
+msgstr "Microsoft Exchange"
+
+#: src/provider/gtd-provider-selector.ui:91
+msgid "Or you can just store your tasks on this computer"
+msgstr "Ili jednostavno možete pohraniti vaše zadatke na ovom računalu"
+
+#: src/sidebar/gtd-sidebar.c:325
 #, c-format
-msgid "Done (%d)"
-msgstr "Završeno (%d)"
+msgid "Task list <b>%s</b> removed"
+msgstr "Popis zadataka <b>%s</b> je uklonjen"
 
-#: src/gtd-task-list-view.c:661
+#: src/sidebar/gtd-sidebar.c:328 src/task-list-view/gtd-task-list-view.c:460
+msgid "Undo"
+msgstr "Poništi"
+
+#: src/sidebar/gtd-sidebar-provider-row.ui:69
+msgid "Loading…"
+msgstr "Učitavanje…"
+
+#: src/task-list-view/gtd-edit-pane.ui:16
+msgid "D_ue Date"
+msgstr "R_ok"
+
+#: src/task-list-view/gtd-edit-pane.ui:30
+msgid "_Today"
+msgstr "_Danas"
+
+#: src/task-list-view/gtd-edit-pane.ui:39
+msgid "To_morrow"
+msgstr "Su_tra"
+
+#: src/task-list-view/gtd-edit-pane.ui:75
+msgid "_Notes"
+msgstr "_Napomene"
+
+#: src/task-list-view/gtd-edit-pane.ui:117
+msgid "_Delete"
+msgstr "_Obriši"
+
+#: src/task-list-view/gtd-edit-pane.ui:151
+msgctxt "taskdate"
+msgid "None"
+msgstr "Nijedan"
+
+#. Translators: %1$s is the task list name, %2$s is the provider name
+#: src/task-list-view/gtd-new-task-row.c:91
+#, c-format
+msgid "%1$s \t <small>%2$s</small>"
+msgstr "%1$s \t <small>%2$s</small>"
+
+#: src/task-list-view/gtd-new-task-row.ui:14
+msgid "New task…"
+msgstr "Novi zadatak…"
+
+#: src/task-list-view/gtd-task-list-view.c:441
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Zadatak <b>%s</b> je uklonjen"
 
-#: src/gtd-task-list-view.c:685
-msgid "Undo"
-msgstr "Poništi"
+#: src/widgets/gtd-empty-list-widget.c:51
+msgid "No more tasks left"
+msgstr "Nema preostalih zadataka"
 
-#: src/gtd-window.c:476
-msgid "Details"
-msgstr "Pojedinosti"
+#: src/widgets/gtd-empty-list-widget.c:52
+msgid "Nothing else to do here"
+msgstr "Ovdje nema nikakvih zadataka"
 
-#: src/gtd-window.c:689
-msgid "Loading your task lists…"
-msgstr "Učitavanje popisa zadataka…"
+#: src/widgets/gtd-empty-list-widget.c:53
+msgid "You made it!"
+msgstr "Obavili ste sve zadatke!"
 
-#: src/gtd-window.c:793
-msgid "Click a task list to select"
-msgstr "Klikni popis zadatka za odabir"
+#: src/widgets/gtd-empty-list-widget.c:54
+msgid "Looks like there’s nothing else left here"
+msgstr "Izgleda da ovdje više nema preostalih zadataka"
 
-#.
-#. * If there's no task available, draw a "No tasks" string at
-#. * the middle of the list thumbnail.
-#.
-#: src/views/gtd-list-selector-grid-item.c:250
-msgid "No tasks"
-msgstr "Nema zadataka"
+#: src/widgets/gtd-empty-list-widget.c:59
+msgid "Get some rest now"
+msgstr "Sada se malo odmorite"
 
-#: src/views/gtd-list-selector-panel.c:381
-msgid "Remove the selected task lists?"
-msgstr "Ukloni odabrane popise zadatka?"
+#: src/widgets/gtd-empty-list-widget.c:60
+msgid "Enjoy the rest of your day"
+msgstr "Uživajte u ostatku dana"
 
-#: src/views/gtd-list-selector-panel.c:384
-msgid "Once removed, the task lists cannot be recovered."
-msgstr "Jednom uklonjeni, popisi zadatka se više ne mogu obnoviti."
+#: src/widgets/gtd-empty-list-widget.c:61
+msgid "Good job!"
+msgstr "Dobro obavljeno!"
 
-#: src/views/gtd-list-selector-panel.c:396
-msgid "Remove task lists"
-msgstr "Ukloni popise zadatka"
+#: src/widgets/gtd-empty-list-widget.c:62
+msgid "Meanwhile, spread the love"
+msgstr "U međuvremenu, širite ljubav"
 
-#: src/views/gtd-list-selector-panel.c:709
-msgid "Clear completed tasks"
-msgstr "Obriši završene zadatke"
+#: src/widgets/gtd-empty-list-widget.c:63
+msgid "Working hard is always rewarded"
+msgstr "Težak rad je uvijek dobro nagrađen"
+
+#: src/widgets/gtd-empty-list-widget.c:74
+msgid "No tasks found"
+msgstr "Nema pronađenih zadataka"
+
+#: src/widgets/gtd-empty-list-widget.c:75
+msgid "You can add tasks using the <b>+</b> above"
+msgstr "Možete dodati zadatak koristeći <b>+</b> iznad"
+
+#~ msgid "_Quit"
+#~ msgstr "_Zatvori"
+
+#~ msgid "org.gnome.Todo"
+#~ msgstr "org.gnome.Todo"
+
+#~ msgid "Window position"
+#~ msgstr "Položaj prozora"
+
+#~ msgid "Window position (x and y)."
+#~ msgstr "Položaj prozora (x-os i y-os)"
+
+#~ msgid "_Priority"
+#~ msgstr "_Prioritet"
+
+#~ msgctxt "taskpriority"
+#~ msgid "None"
+#~ msgstr "Nijedan"
+
+#~ msgid "Low"
+#~ msgstr "Nizak"
+
+#~ msgid "Medium"
+#~ msgstr "Srednji"
+
+#~ msgid "High"
+#~ msgstr "Visoki"
+
+#~ msgid "Lists"
+#~ msgstr "Popis"
+
+#~ msgid "Tasks"
+#~ msgstr "Zadaci"
+
+#~ msgid "Name of the task list"
+#~ msgstr "Naziv popisa zadatka"
+
+#~ msgid "Show or hide completed tasks"
+#~ msgstr "Prikaži ili sakrij završene zadatke"
+
+#~ msgid "Done"
+#~ msgstr "Završeno"
+
+#~ msgid "Copyright © %1$d The To Do authors"
+#~ msgstr "Autorsko pravo © %1$d Popis zadataka autori"
+
+#~ msgid "Removing this task will also remove its subtasks. Remove anyway?"
+#~ msgstr ""
+#~ "Uklanjanje ovog zadatka će isto ukloniti njegove podzadatke. Svejedno "
+#~ "ukloni?"
+
+#~ msgid "Once removed, the tasks cannot be recovered."
+#~ msgstr "Jednom uklonjen, zadatak se više ne može obnoviti."
+
+#~ msgid "Cancel"
+#~ msgstr "Odustani"
+
+#~ msgid "Remove"
+#~ msgstr "Ukloni"
+
+#~ msgid "Done (%d)"
+#~ msgstr "Završeno (%d)"
+
+#~ msgid "Loading your task lists…"
+#~ msgstr "Učitavanje popisa zadataka…"
+
+#~ msgid "No tasks"
+#~ msgstr "Nema zadataka"
+
+#~ msgid "Remove the selected task lists?"
+#~ msgstr "Ukloni odabrane popise zadatka?"
+
+#~ msgid "Once removed, the task lists cannot be recovered."
+#~ msgstr "Jednom uklonjeni, popisi zadatka se više ne mogu obnoviti."
+
+#~ msgid "Remove task lists"
+#~ msgstr "Ukloni popise zadatka"
+
+#~ msgid "Clear completed tasks"
+#~ msgstr "Obriši završene zadatke"
 
 #~ msgid "Error creating new task list"
 #~ msgstr "Greška stvaranja novog popisa zadatka"
@@ -707,9 +744,6 @@ msgstr "Obriši završene zadatke"
 
 #~ msgid "Priority"
 #~ msgstr "Prioritet"
-
-#~ msgid "Delete"
-#~ msgstr "Obriši"
 
 #~ msgid "Error loading Evolution-Data-Server backend"
 #~ msgstr ""
