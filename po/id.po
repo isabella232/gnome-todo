@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the gnome-todo package.
 # Ade Malsasa Akbar <teknoloid@gmail.com>, 2015.
 # Andika Triwidada <andika@gmail.com>, 2015.
+# Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017, 2018, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2019-02-01 18:18+0000\n"
-"PO-Revision-Date: 2019-02-03 15:11+0700\n"
+"POT-Creation-Date: 2019-06-10 13:27+0000\n"
+"PO-Revision-Date: 2019-06-21 15:58+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian\n"
 "Language: id\n"
@@ -16,12 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural= n!=1;\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.3\n"
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
 #: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
-#: src/gtd-window.c:717 src/gtd-window.c:748 src/main.c:35
+#: src/gtd-window.c:845 src/gtd-window.c:876 src/main.c:35
 msgid "To Do"
 msgstr "To Do"
 
@@ -69,11 +70,6 @@ msgstr "Memvisualisasikan tugas untuk hari ini pada panel GNOME To Do"
 msgid "Manage your personal tasks"
 msgstr "Kelola tugas pribadi Anda"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Todo.desktop.in.in:7
-msgid "@icon@"
-msgstr "@icon@"
-
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Todo.desktop.in.in:13
 msgid "Task;Productivity;Todo;"
@@ -96,45 +92,37 @@ msgid "Window size (width and height)."
 msgstr "Ukuran jendela (panjang dan lebar)."
 
 #: data/org.gnome.todo.gschema.xml:16
-msgid "Window position"
-msgstr "Posisi jendela"
-
-#: data/org.gnome.todo.gschema.xml:17
-msgid "Window position (x and y)."
-msgstr "Posisi jendela (x dan y)"
-
-#: data/org.gnome.todo.gschema.xml:21
 msgid "First run of GNOME To Do"
 msgstr "Pertama kali menjalankan GNOME To Do"
 
-#: data/org.gnome.todo.gschema.xml:22
+#: data/org.gnome.todo.gschema.xml:17
 msgid ""
 "Whether it’s the first run of GNOME To Do (to run the initial setup) or not"
 msgstr ""
 "Apakah ini pertama kalinya GNOME To Do dijalankan (untuk menjalankan "
 "pengaturan awal) atau bukan"
 
-#: data/org.gnome.todo.gschema.xml:26
+#: data/org.gnome.todo.gschema.xml:21
 msgid "Default provider to add new lists to"
 msgstr "Penyedia baku tempat menambahkan daftar baru"
 
-#: data/org.gnome.todo.gschema.xml:27
+#: data/org.gnome.todo.gschema.xml:22
 msgid "The identifier of the default provider to add new lists to"
 msgstr "Tanda pengenal penyedia baku tempat menambahkan daftar baru"
 
-#: data/org.gnome.todo.gschema.xml:31
+#: data/org.gnome.todo.gschema.xml:26
 msgid "List of active extensions"
 msgstr "Daftar ekstensi aktif"
 
-#: data/org.gnome.todo.gschema.xml:32
+#: data/org.gnome.todo.gschema.xml:27
 msgid "The list of active extensions"
 msgstr "Daftar ekstensi yang masih aktif"
 
-#: data/org.gnome.todo.gschema.xml:36
+#: data/org.gnome.todo.gschema.xml:31
 msgid "The current list selector"
 msgstr "Pemililh daftar saat ini"
 
-#: data/org.gnome.todo.gschema.xml:37
+#: data/org.gnome.todo.gschema.xml:32
 msgid "The current list selector. Can be “grid” or “list”."
 msgstr "Pemilih daftar saat ini. Bisa berupa 'grid' atau 'daftar'."
 
@@ -160,7 +148,7 @@ msgstr[1] "%d hari yang lalu"
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:120
-#: src/task-list-view/gtd-task-row.c:147
+#: src/task-list-view/gtd-task-row.c:146
 msgid "Yesterday"
 msgstr "Kemarin"
 
@@ -170,14 +158,14 @@ msgstr "Kemarin"
 #: plugins/score/score/__init__.py:101
 #: plugins/today-panel/gtd-panel-today.c:154
 #: plugins/today-panel/gtd-panel-today.c:258
-#: src/task-list-view/gtd-task-row.c:139
+#: src/task-list-view/gtd-task-row.c:138
 msgid "Today"
 msgstr "Hari Ini"
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
 #: plugins/next-week-panel/gtd-next-week-panel.c:128
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:128
-#: src/task-list-view/gtd-task-row.c:143
+#: src/task-list-view/gtd-task-row.c:142
 msgid "Tomorrow"
 msgstr "Besok"
 
@@ -215,19 +203,19 @@ msgstr "Tampilkan notifikasi saat awal mula"
 msgid "Whether GNOME To Do should show notifications or not"
 msgstr "Apakah GNOME To Do harus menampilkan notifikasi atau tidak"
 
-#: plugins/background/ui/preferences.ui:53
+#: plugins/background/ui/preferences.ui:39
 msgid "Run on Startup"
 msgstr "Jalankan saat Awal Mula"
 
-#: plugins/background/ui/preferences.ui:66
+#: plugins/background/ui/preferences.ui:50
 msgid "Run To Do automatically when you log in"
 msgstr "Jalankan To Do secara otomatis saat masuk"
 
-#: plugins/background/ui/preferences.ui:122
+#: plugins/background/ui/preferences.ui:96
 msgid "Show Notifications"
 msgstr "Tampilkan Notifikasi"
 
-#: plugins/background/ui/preferences.ui:135
+#: plugins/background/ui/preferences.ui:107
 msgid "When To Do runs, show a startup notification"
 msgstr "Ketika To Do berjalan, tampilkan notifikasi awal mula"
 
@@ -235,27 +223,27 @@ msgstr "Ketika To Do berjalan, tampilkan notifikasi awal mula"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Galat saat memuat Akun Daring GNOME"
 
-#: plugins/eds/gtd-provider-eds.c:139
+#: plugins/eds/gtd-provider-eds.c:140
 msgid "Failed to connect to task list"
 msgstr "Gagal terhubung ke daftar tugas"
 
-#: plugins/eds/gtd-provider-eds.c:272
+#: plugins/eds/gtd-provider-eds.c:305
 msgid "An error occurred while creating a task"
 msgstr "Terjadi galat saat membuat tugas"
 
-#: plugins/eds/gtd-provider-eds.c:306
+#: plugins/eds/gtd-provider-eds.c:350
 msgid "An error occurred while modifying a task"
 msgstr "Terjadi galat saat memodifikasi tugas"
 
-#: plugins/eds/gtd-provider-eds.c:327
+#: plugins/eds/gtd-provider-eds.c:371
 msgid "An error occurred while removing a task"
 msgstr "Terjadi galat saat menghapus tugas"
 
-#: plugins/eds/gtd-provider-eds.c:345
+#: plugins/eds/gtd-provider-eds.c:389
 msgid "An error occurred while creating a task list"
 msgstr "Terjadi galat saat membuat daftar tugas"
 
-#: plugins/eds/gtd-provider-eds.c:367 plugins/eds/gtd-provider-eds.c:390
+#: plugins/eds/gtd-provider-eds.c:411 plugins/eds/gtd-provider-eds.c:434
 msgid "An error occurred while modifying a task list"
 msgstr "Terjadi galat saat memodifikasi daftar tugas"
 
@@ -267,8 +255,8 @@ msgstr "Pada Komputer Ini"
 msgid "Local"
 msgstr "Lokal"
 
-#: plugins/eds/gtd-task-list-eds.c:283 plugins/eds/gtd-task-list-eds.c:316
-#: plugins/eds/gtd-task-list-eds.c:340
+#: plugins/eds/gtd-task-list-eds.c:459 plugins/eds/gtd-task-list-eds.c:486
+#: plugins/eds/gtd-task-list-eds.c:510
 msgid "Error fetching tasks from list"
 msgstr "Galat mengambil tugas dari daftar"
 
@@ -345,11 +333,11 @@ msgstr "Todoist"
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
 
-#: plugins/todoist/ui/preferences.ui:81
+#: plugins/todoist/ui/preferences.ui:65
 msgid "No Todoist accounts found"
 msgstr "Tidak ada akun Todoist yang ditemukan"
 
-#: plugins/todoist/ui/preferences.ui:90
+#: plugins/todoist/ui/preferences.ui:74
 msgid "Add a Todoist account"
 msgstr "Tambah akun Todoist"
 
@@ -409,7 +397,7 @@ msgid "Unscheduled"
 msgstr "Tak terjadwal"
 
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
-#: src/gtd-task-list-panel.ui:45
+#: src/gtd-task-list-panel.ui:32
 msgid "Clear completed tasks…"
 msgstr "Bersihkan tugas yang telah selesai…"
 
@@ -438,24 +426,24 @@ msgstr ""
 "Andika Triwidada <andika@gmail.com>, 2015.\n"
 "Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017, 2018, 2019."
 
-#: src/gtd-initial-setup-window.ui:23
+#: src/gtd-initial-setup-window.ui:20
 msgid "Welcome"
 msgstr "Selamat Datang"
 
-#: src/gtd-initial-setup-window.ui:37
+#: src/gtd-initial-setup-window.ui:31
 msgid "Log in to online accounts to access your tasks"
 msgstr "Masuk ke akun daring untuk mengakses tugas Anda"
 
-#: src/gtd-initial-setup-window.ui:62
+#: src/gtd-initial-setup-window.ui:53
 msgid "To Do Setup"
 msgstr "Atur To Do"
 
-#: src/gtd-initial-setup-window.ui:65 src/gtd-window.ui:116
+#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:96
 #: src/provider/gtd-provider-popover.ui:40
 msgid "_Cancel"
 msgstr "_Batal"
 
-#: src/gtd-initial-setup-window.ui:74
+#: src/gtd-initial-setup-window.ui:65
 msgid "_Done"
 msgstr "_Selesai"
 
@@ -467,24 +455,33 @@ msgstr "Galat saat memuat ekstensi"
 msgid "Error unloading extension"
 msgstr "Galat saat membongkar ekstensi"
 
-#: src/gtd-plugin-dialog.ui:62 src/gtd-window.ui:179
+#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:138
 msgid "Extensions"
 msgstr "Ekstensi"
 
-#: src/gtd-plugin-dialog.ui:96
+#: src/gtd-plugin-dialog.ui:90
 msgid "No extensions found"
 msgstr "Tidak ditemukan ekstensi"
 
-#: src/gtd-task-list-panel.ui:38 src/gtd-task-list-panel.ui:74
-#: src/gtd-task-list-panel.ui:98
+#: src/gtd-task-list-panel.c:199
+msgid "Unarchive"
+msgstr "Tidak diarsipkan"
+
+#: src/gtd-task-list-panel.c:199 src/gtd-task-list-panel.ui:41
+#: src/sidebar/gtd-sidebar.ui:51
+msgid "Archive"
+msgstr "Arsipkan"
+
+#: src/gtd-task-list-panel.ui:26 src/gtd-task-list-panel.ui:61
+#: src/gtd-task-list-panel.ui:77
 msgid "Rename"
 msgstr "Ubah Nama"
 
-#: src/gtd-task-list-panel.ui:57
+#: src/gtd-task-list-panel.ui:47
 msgid "Delete"
 msgstr "Hapus"
 
-#: src/gtd-window.c:107
+#: src/gtd-window.c:115
 msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
@@ -492,19 +489,19 @@ msgstr ""
 "Ini adalah hasil bangun pengembangan (development build) dari To Do. Anda "
 "mungkin mengalami kesalahan, perilaku salah, dan kehilangan data."
 
-#: src/gtd-window.c:421
+#: src/gtd-window.c:517
 msgid "Details"
 msgstr "Rincian"
 
-#: src/gtd-window.c:712
+#: src/gtd-window.c:840
 msgid "Click a task list to select"
 msgstr "Klik sebuah daftar tugas untuk memilih"
 
-#: src/gtd-window.ui:63
-msgid "_New List"
-msgstr "Daftar B_aru"
+#: src/gtd-window.ui:51
+msgid "New List"
+msgstr "Daftar Baru"
 
-#: src/gtd-window.ui:185
+#: src/gtd-window.ui:144
 msgid "_About To Do"
 msgstr "Tent_ang To Do"
 
@@ -512,80 +509,80 @@ msgstr "Tent_ang To Do"
 msgid "Create _List"
 msgstr "Buat _Daftar"
 
-#: src/provider/gtd-provider-popover.ui:54
+#: src/provider/gtd-provider-popover.ui:53
 msgid "List Name"
 msgstr "Nama Daftar"
 
-#: src/provider/gtd-provider-popover.ui:132
+#: src/provider/gtd-provider-popover.ui:130
 msgid "Select a storage location"
 msgstr "Pilih lokasi penyimpanan"
 
-#: src/provider/gtd-provider-row.ui:64
+#: src/provider/gtd-provider-row.ui:57
 msgid "Off"
 msgstr "Mati"
 
-#: src/provider/gtd-provider-selector.ui:23
+#: src/provider/gtd-provider-selector.ui:19
 msgid "Click to add a new Google account"
 msgstr "Klik untuk menambahkan akun Google baru"
 
-#: src/provider/gtd-provider-selector.ui:39
+#: src/provider/gtd-provider-selector.ui:32
 msgid "Google"
 msgstr "Google"
 
-#: src/provider/gtd-provider-selector.ui:49
+#: src/provider/gtd-provider-selector.ui:42
 msgid "Click to add a new ownCloud account"
 msgstr "Klik untuk menambahkan akun ownCloud baru"
 
-#: src/provider/gtd-provider-selector.ui:65
+#: src/provider/gtd-provider-selector.ui:55
 msgid "ownCloud"
 msgstr "ownCloud"
 
-#: src/provider/gtd-provider-selector.ui:75
+#: src/provider/gtd-provider-selector.ui:65
 msgid "Click to add a new Microsoft Exchange account"
 msgstr "Klik untuk menambahkan akun Microsoft Exchange baru"
 
-#: src/provider/gtd-provider-selector.ui:91
+#: src/provider/gtd-provider-selector.ui:78
 msgid "Microsoft Exchange"
 msgstr "Microsoft Exchange"
 
-#: src/provider/gtd-provider-selector.ui:104
+#: src/provider/gtd-provider-selector.ui:91
 msgid "Or you can just store your tasks on this computer"
 msgstr "Atau Anda bisa menyimpan tugas Anda pada komputer ini"
 
-#: src/sidebar/gtd-sidebar.c:304
+#: src/sidebar/gtd-sidebar.c:325
 #, c-format
 msgid "Task list <b>%s</b> removed"
 msgstr "Daftar tugas <b>%s</b> dihapus"
 
-#: src/sidebar/gtd-sidebar.c:307 src/task-list-view/gtd-task-list-view.c:461
+#: src/sidebar/gtd-sidebar.c:328 src/task-list-view/gtd-task-list-view.c:460
 msgid "Undo"
 msgstr "Undo"
 
-#: src/sidebar/gtd-sidebar-provider-row.ui:88
+#: src/sidebar/gtd-sidebar-provider-row.ui:69
 msgid "Loading…"
 msgstr "Memuat…"
 
-#: src/task-list-view/gtd-edit-pane.ui:24
+#: src/task-list-view/gtd-edit-pane.ui:16
 msgid "D_ue Date"
 msgstr "Jat_uh Tempo"
 
-#: src/task-list-view/gtd-edit-pane.ui:41
+#: src/task-list-view/gtd-edit-pane.ui:30
 msgid "_Today"
 msgstr "Hari _Ini"
 
-#: src/task-list-view/gtd-edit-pane.ui:50
+#: src/task-list-view/gtd-edit-pane.ui:39
 msgid "To_morrow"
 msgstr "Bes_ok"
 
-#: src/task-list-view/gtd-edit-pane.ui:91
+#: src/task-list-view/gtd-edit-pane.ui:75
 msgid "_Notes"
 msgstr "_Catatan"
 
-#: src/task-list-view/gtd-edit-pane.ui:137
+#: src/task-list-view/gtd-edit-pane.ui:117
 msgid "_Delete"
 msgstr "_Hapus"
 
-#: src/task-list-view/gtd-edit-pane.ui:176
+#: src/task-list-view/gtd-edit-pane.ui:151
 msgctxt "taskdate"
 msgid "None"
 msgstr "Nihil"
@@ -596,11 +593,11 @@ msgstr "Nihil"
 msgid "%1$s \t <small>%2$s</small>"
 msgstr "%1$s \t <small>%2$s</small>"
 
-#: src/task-list-view/gtd-new-task-row.ui:15
+#: src/task-list-view/gtd-new-task-row.ui:14
 msgid "New task…"
 msgstr "Tugas baru…"
 
-#: src/task-list-view/gtd-task-list-view.c:442
+#: src/task-list-view/gtd-task-list-view.c:441
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Tugas <b>%s</b> dihapus"
@@ -648,6 +645,15 @@ msgstr "Tidak ada tugas ditemukan"
 #: src/widgets/gtd-empty-list-widget.c:75
 msgid "You can add tasks using the <b>+</b> above"
 msgstr "Anda dapat menambahkan tugas menggunakan <b>+</b> diatas"
+
+#~ msgid "@icon@"
+#~ msgstr "@icon@"
+
+#~ msgid "Window position"
+#~ msgstr "Posisi jendela"
+
+#~ msgid "Window position (x and y)."
+#~ msgstr "Posisi jendela (x dan y)"
 
 #~ msgid "_Quit"
 #~ msgstr "_Keluar"
