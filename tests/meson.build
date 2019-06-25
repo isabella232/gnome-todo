@@ -40,11 +40,8 @@ static_test_env = [
 ]
 
 static_test_cflags = [
-  '-fPIE',
   '-DTEST_DATA_DIR="@0@/data"'.format(meson.current_source_dir()),
 ]
-
-static_test_link_args = ['-fPIC']
 
 static_tests = [
   'test-model-filter',
@@ -61,8 +58,8 @@ foreach static_test : static_tests
               static_test,
                    source,
                   c_args : static_test_cflags,
-               link_args : static_test_link_args,
             dependencies : gnome_todo_deps,
+                     pie : true,
                link_with : tests_libs,
      include_directories : tests_incs,
   )
