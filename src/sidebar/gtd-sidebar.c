@@ -246,9 +246,7 @@ activate_appropriate_row (GtdSidebar    *self,
   if (activate_row_below (self, GTD_SIDEBAR_LIST_ROW (row)))
     return;
 
-  gtk_widget_activate_action (GTK_WIDGET (self),
-                              "win.toggle-archive",
-                              g_variant_new_boolean (FALSE));
+  gtk_widget_activate_action (GTK_WIDGET (self), "win.toggle-archive", "b", FALSE);
 
   to_be_activated = gtk_list_box_get_row_at_index (self->listbox, 0);
   g_signal_emit_by_name (to_be_activated, "activate");
@@ -350,9 +348,9 @@ on_listbox_row_activated_cb (GtkListBox    *panels_listbox,
 
       gtk_widget_activate_action (GTK_WIDGET (self),
                                   "win.activate-panel",
-                                  g_variant_new ("(sv)",
-                                                 gtd_panel_get_panel_name (panel),
-                                                 g_variant_new_maybe (G_VARIANT_TYPE_VARIANT, NULL)));
+                                  "(sv)",
+                                  gtd_panel_get_panel_name (panel),
+                                  g_variant_new_maybe (G_VARIANT_TYPE_VARIANT, NULL));
     }
   else if (GTD_IS_SIDEBAR_PROVIDER_ROW (row))
     {
@@ -360,7 +358,6 @@ on_listbox_row_activated_cb (GtkListBox    *panels_listbox,
     }
   else if (GTD_IS_SIDEBAR_LIST_ROW (row))
     {
-      g_autoptr (GVariant) panel_params = NULL;
       GVariantBuilder builder;
       GtdProvider *provider;
       GtdTaskList *list;
@@ -376,17 +373,15 @@ on_listbox_row_activated_cb (GtkListBox    *panels_listbox,
                              "task-list-id",
                              g_variant_new_string (gtd_object_get_uid (GTD_OBJECT (list))));
 
-      panel_params = g_variant_new ("(sv)",
-                                    "task-list-panel",
-                                    g_variant_builder_end (&builder));
-
       gtk_widget_activate_action (GTK_WIDGET (self),
                                   "win.activate-panel",
-                                  g_steal_pointer (&panel_params));
+                                  "(sv)",
+                                  "task-list-panel",
+                                  g_variant_builder_end (&builder));
     }
   else if (row == self->archive_row)
     {
-      gtk_widget_activate_action (GTK_WIDGET (self), "win.toggle-archive", g_variant_new_boolean (TRUE));
+      gtk_widget_activate_action (GTK_WIDGET (self), "win.toggle-archive", "b", TRUE);
     }
   else
     {
