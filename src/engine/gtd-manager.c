@@ -428,7 +428,7 @@ gtd_manager_class_init (GtdManagerClass *klass)
                              "The plugin manager",
                              "The plugin manager of the application",
                              GTD_TYPE_PLUGIN_MANAGER,
-                             G_PARAM_READABLE | G_PARAM_PRIVATE));
+                             G_PARAM_READABLE));
 
   /**
    * GtdManager::list-added:
