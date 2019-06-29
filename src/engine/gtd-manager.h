@@ -74,6 +74,8 @@ GtdClock*            gtd_manager_get_clock                       (GtdManager    
 
 GListModel*          gtd_manager_get_task_lists_model            (GtdManager         *self);
 
+GListModel*          gtd_manager_get_all_tasks_model             (GtdManager         *self);
+
 GListModel*          gtd_manager_get_tasks_model                 (GtdManager         *self);
 
 G_END_DECLS

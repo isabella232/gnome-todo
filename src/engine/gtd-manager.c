@@ -58,6 +58,7 @@ struct _GtdManager
 
   GListModel         *lists_model;
   GListModel         *tasks_model;
+  GListModel         *unarchived_tasks_model;
 
   GList              *providers;
   GList              *panels;
@@ -119,6 +120,19 @@ check_provider_is_default (GtdManager  *self,
 /*
  * Callbacks
  */
+
+static gboolean
+filter_achived_lists_func (gpointer item,
+                           gpointer user_data)
+{
+  GtdTaskList *list;
+  GtdTask *task;
+
+  task = (GtdTask*) item;
+  list = gtd_task_get_list (task);
+
+  return !gtd_task_list_get_archived (list);
+}
 
 static gint
 compare_lists_cb (GtdTaskList *list_a,
@@ -208,6 +222,8 @@ on_list_changed_cb (GtdProvider *provider,
   gtd_list_store_sort (GTD_LIST_STORE (self->lists_model),
                        (GCompareDataFunc) compare_lists_cb,
                        self);
+
+  gtk_filter_list_model_refilter (GTK_FILTER_LIST_MODEL (self->unarchived_tasks_model));
 
   g_signal_emit (self, signals[LIST_CHANGED], 0, list);
 }
@@ -305,6 +321,7 @@ gtd_manager_finalize (GObject *object)
   g_clear_object (&self->plugin_manager);
   g_clear_object (&self->settings);
   g_clear_object (&self->clock);
+  g_clear_object (&self->unarchived_tasks_model);
   g_clear_object (&self->lists_model);
 
   G_OBJECT_CLASS (gtd_manager_parent_class)->finalize (object);
@@ -617,6 +634,10 @@ gtd_manager_init (GtdManager *self)
   self->cancellable = g_cancellable_new ();
   self->lists_model = (GListModel*) gtd_list_store_new (GTD_TYPE_TASK_LIST);
   self->tasks_model = (GListModel*) _gtd_task_model_new (self);
+  self->unarchived_tasks_model = (GListModel*) gtk_filter_list_model_new (self->tasks_model,
+                                                                          filter_achived_lists_func,
+                                                                          self,
+                                                                          NULL);
 }
 
 /**
@@ -912,8 +933,9 @@ gtd_manager_get_task_lists_model (GtdManager *self)
   return self->lists_model;
 }
 
+
 /**
- * gtd_manager_get_tasks_model:
+ * gtd_manager_get_all_tasks_model:
  * @self: a #GtdManager
  *
  * Retrieves the #GListModel containing #GtdTasks from
@@ -925,11 +947,35 @@ gtd_manager_get_task_lists_model (GtdManager *self)
  * Returns: (transfer none): a #GListModel
  */
 GListModel*
-gtd_manager_get_tasks_model (GtdManager *self)
+gtd_manager_get_all_tasks_model (GtdManager *self)
 {
   g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
   return self->tasks_model;
+}
+
+/**
+ * gtd_manager_get_tasks_model:
+ * @self: a #GtdManager
+ *
+ * Retrieves the #GListModel containing #GtdTasks from
+ * @self. You can use the this model to bind to GtkListBox
+ * or other widgets.
+ *
+ * The model returned by this function is filtered to only
+ * contain tasks from unarchived lists. If you need all tasks,
+ * see gtd_manager_get_all_tasks_model().
+ *
+ * The model is sorted.
+ *
+ * Returns: (transfer none): a #GListModel
+ */
+GListModel*
+gtd_manager_get_tasks_model (GtdManager *self)
+{
+  g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
+
+  return self->unarchived_tasks_model;
 }
 
 void
