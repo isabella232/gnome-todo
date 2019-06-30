@@ -531,23 +531,52 @@ on_task_list_removed_cb (GtdManager  *manager,
 }
 
 static gboolean
+filter_archive_listbox_cb (GtkListBoxRow *row,
+                           gpointer       user_data)
+{
+  if (GTD_IS_SIDEBAR_LIST_ROW (row))
+    {
+      GtdTaskList *list;
+
+      list = gtd_sidebar_list_row_get_task_list (GTD_SIDEBAR_LIST_ROW (row));
+      return gtd_task_list_get_archived (list);
+    }
+  else if (GTD_IS_SIDEBAR_PROVIDER_ROW (row))
+    {
+      g_autoptr (GList) lists = NULL;
+      GtdProvider *provider;
+      GList *l;
+
+      provider = gtd_sidebar_provider_row_get_provider (GTD_SIDEBAR_PROVIDER_ROW (row));
+      lists = gtd_provider_get_task_lists (provider);
+
+      for (l = lists; l; l = l->next)
+        {
+          if (gtd_task_list_get_archived (l->data))
+            return TRUE;
+        }
+
+      return FALSE;
+    }
+  else
+    {
+      g_assert_not_reached ();
+    }
+
+  return FALSE;
+}
+
+static gboolean
 filter_listbox_cb (GtkListBoxRow *row,
                    gpointer       user_data)
 {
   GtdTaskList *list;
-  GtkListBox *parent;
-  GtdSidebar *self;
-  gboolean archive;
 
   if (!GTD_IS_SIDEBAR_LIST_ROW (row))
     return TRUE;
 
-  self = GTD_SIDEBAR (user_data);
-  parent = (GtkListBox *) gtk_widget_get_parent (GTK_WIDGET (row));
   list = gtd_sidebar_list_row_get_task_list (GTD_SIDEBAR_LIST_ROW (row));
-  archive = parent == self->archive_listbox;
-
-  return gtd_task_list_get_archived (list) == archive;
+  return !gtd_task_list_get_archived (list);
 }
 
 static gint
@@ -718,7 +747,7 @@ gtd_sidebar_init (GtdSidebar *self)
   gtk_list_box_set_filter_func (self->listbox, filter_listbox_cb, self, NULL);
 
   gtk_list_box_set_sort_func (self->archive_listbox, sort_listbox_cb, self, NULL);
-  gtk_list_box_set_filter_func (self->archive_listbox, filter_listbox_cb, self, NULL);
+  gtk_list_box_set_filter_func (self->archive_listbox, filter_archive_listbox_cb, self, NULL);
 }
 
 void
