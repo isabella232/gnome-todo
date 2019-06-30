@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2019-06-10 13:27+0000\n"
-"PO-Revision-Date: 2019-06-11 10:06+0200\n"
+"POT-Creation-Date: 2019-06-30 00:52+0000\n"
+"PO-Revision-Date: 2019-06-30 16:35+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
@@ -543,18 +543,22 @@ msgstr "Microsoft Exchange"
 msgid "Or you can just store your tasks on this computer"
 msgstr "O archiviâ lis ativitâts su chest computer"
 
-#: src/sidebar/gtd-sidebar.c:325
+#: src/sidebar/gtd-sidebar.c:329
 #, c-format
 msgid "Task list <b>%s</b> removed"
 msgstr "Liste ativitâts <b>%s</b> gjavade"
 
-#: src/sidebar/gtd-sidebar.c:328 src/task-list-view/gtd-task-list-view.c:460
+#: src/sidebar/gtd-sidebar.c:332 src/task-list-view/gtd-task-list-view.c:460
 msgid "Undo"
 msgstr "Anule"
 
 #: src/sidebar/gtd-sidebar-provider-row.ui:69
 msgid "Loading…"
 msgstr "Daûr a cjariâ…"
+
+#: src/sidebar/gtd-sidebar.ui:102
+msgid "No archived lists"
+msgstr "Nissune liste archiviade"
 
 #: src/task-list-view/gtd-edit-pane.ui:16
 msgid "D_ue Date"
