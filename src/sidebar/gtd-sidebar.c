@@ -105,9 +105,15 @@ add_task_list (GtdSidebar  *self,
   g_debug ("Adding task list '%s'", gtd_task_list_get_name (list));
 
   if (!gtd_task_list_get_archived (list))
-    gtk_list_box_prepend (self->listbox, gtd_sidebar_list_row_new (list));
+    {
+      gtk_list_box_prepend (self->listbox, gtd_sidebar_list_row_new (list));
+      gtk_list_box_invalidate_filter (self->listbox);
+    }
   else
-    gtk_list_box_prepend (self->archive_listbox, gtd_sidebar_list_row_new (list));
+    {
+      gtk_list_box_prepend (self->archive_listbox, gtd_sidebar_list_row_new (list));
+      gtk_list_box_invalidate_filter (self->archive_listbox);
+    }
 }
 
 static void
@@ -508,17 +514,20 @@ on_task_list_removed_cb (GtdManager  *manager,
                          GtdSidebar  *self)
 {
   GtkListBoxRow *row;
+  GtkListBox *listbox;
 
   g_debug ("Removing task list '%s'", gtd_task_list_get_name (list));
 
   if (!gtd_task_list_get_archived (list))
-    row = get_row_for_task_list (self, self->listbox, list);
+    listbox = self->listbox;
   else
-    row = get_row_for_task_list (self, self->archive_listbox, list);
+    listbox = self->archive_listbox;
 
+  row = get_row_for_task_list (self, listbox, list);
   g_assert (row != NULL);
 
   gtk_widget_destroy (GTK_WIDGET (row));
+  gtk_list_box_invalidate_filter (listbox);
 }
 
 static gboolean
