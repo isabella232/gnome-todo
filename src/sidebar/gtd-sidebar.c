@@ -478,12 +478,12 @@ on_task_list_changed_cb (GtdManager  *manager,
                          GtdSidebar  *self)
 {
   GtkListBoxRow *row;
+  GtkListBox *listbox;
   gboolean archived;
 
   archived = gtd_task_list_get_archived (list);
-  row = get_row_for_task_list (self,
-                               archived ? self->archive_listbox : self->listbox,
-                               list);
+  listbox = archived ? self->archive_listbox : self->listbox;
+  row = get_row_for_task_list (self, listbox, list);
 
   /*
    * The task was either archived or unarchived; remove it and add to
@@ -491,9 +491,8 @@ on_task_list_changed_cb (GtdManager  *manager,
    */
   if (!row)
     {
-      row = get_row_for_task_list (self,
-                                   archived ? self->listbox : self->archive_listbox,
-                                   list);
+      listbox = archived ? self->listbox : self->archive_listbox;
+      row = get_row_for_task_list (self, listbox, list);
       g_assert (row != NULL);
 
       /* Change to another panel or taklist */
@@ -506,6 +505,8 @@ on_task_list_changed_cb (GtdManager  *manager,
       /* Add a new row */
       add_task_list (self, list);
     }
+
+  gtk_list_box_invalidate_filter (listbox);
 }
 
 static void
