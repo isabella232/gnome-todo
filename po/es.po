@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2019-06-10 13:27+0000\n"
-"PO-Revision-Date: 2019-06-19 09:37+0200\n"
+"POT-Creation-Date: 2019-06-30 00:52+0000\n"
+"PO-Revision-Date: 2019-07-02 11:36+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -498,7 +498,6 @@ msgid "Click a task list to select"
 msgstr "Pulse sobre una tarea para seleccionarla"
 
 #: src/gtd-window.ui:51
-#| msgid "_New List"
 msgid "New List"
 msgstr "Nueva lista"
 
@@ -550,18 +549,23 @@ msgstr "Microsoft Exchange"
 msgid "Or you can just store your tasks on this computer"
 msgstr "O simplemente puede guardar las tareas en este equipo"
 
-#: src/sidebar/gtd-sidebar.c:325
+#: src/sidebar/gtd-sidebar.c:329
 #, c-format
 msgid "Task list <b>%s</b> removed"
 msgstr "Lista de tareas <b>%s</b> eliminada"
 
-#: src/sidebar/gtd-sidebar.c:328 src/task-list-view/gtd-task-list-view.c:460
+#: src/sidebar/gtd-sidebar.c:332 src/task-list-view/gtd-task-list-view.c:460
 msgid "Undo"
 msgstr "Deshacer"
 
 #: src/sidebar/gtd-sidebar-provider-row.ui:69
 msgid "Loading…"
 msgstr "Cargando…"
+
+#: src/sidebar/gtd-sidebar.ui:102
+#| msgid "Name of the list"
+msgid "No archived lists"
+msgstr "No hay listas archivadas"
 
 #: src/task-list-view/gtd-edit-pane.ui:16
 msgid "D_ue Date"
@@ -1020,9 +1024,6 @@ msgstr "Puede añadir tareas usando el <b>+</b> anterior"
 
 #~ msgid "Whether the task list can be removed from the system"
 #~ msgstr "Indica si se puede eliminar la lista de tareas del sistema"
-
-#~ msgid "Name of the list"
-#~ msgstr "Nombre de la lista"
 
 #~ msgid "The name of the list"
 #~ msgstr "El nombre de la lista"
