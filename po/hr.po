@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2019-06-10 13:27+0000\n"
-"PO-Revision-Date: 2019-06-21 01:11+0200\n"
-"Last-Translator: gogo <trebelnik2@gmail.com>\n"
+"POT-Creation-Date: 2019-06-30 00:52+0000\n"
+"PO-Revision-Date: 2019-07-19 23:03+0200\n"
+"Last-Translator: gogo <linux.hr@protonmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
@@ -552,18 +552,22 @@ msgstr "Microsoft Exchange"
 msgid "Or you can just store your tasks on this computer"
 msgstr "Ili jednostavno možete pohraniti vaše zadatke na ovom računalu"
 
-#: src/sidebar/gtd-sidebar.c:325
+#: src/sidebar/gtd-sidebar.c:329
 #, c-format
 msgid "Task list <b>%s</b> removed"
 msgstr "Popis zadataka <b>%s</b> je uklonjen"
 
-#: src/sidebar/gtd-sidebar.c:328 src/task-list-view/gtd-task-list-view.c:460
+#: src/sidebar/gtd-sidebar.c:332 src/task-list-view/gtd-task-list-view.c:460
 msgid "Undo"
 msgstr "Poništi"
 
 #: src/sidebar/gtd-sidebar-provider-row.ui:69
 msgid "Loading…"
 msgstr "Učitavanje…"
+
+#: src/sidebar/gtd-sidebar.ui:102
+msgid "No archived lists"
+msgstr "Nema arhiviranih popisa"
 
 #: src/task-list-view/gtd-edit-pane.ui:16
 msgid "D_ue Date"
