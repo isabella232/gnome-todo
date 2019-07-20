@@ -762,7 +762,6 @@ gtd_sidebar_set_panel_stack (GtdSidebar *self,
 
   self->panel_stack = g_object_ref (stack);
 
-  on_panel_stack_visible_child_changed_cb (stack, NULL, self);
   g_signal_connect_object (stack,
                            "notify::visible-child",
                            G_CALLBACK (on_panel_stack_visible_child_changed_cb),
