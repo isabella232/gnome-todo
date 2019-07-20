@@ -409,6 +409,9 @@ gtd_list_store_remove (GtdListStore *store,
   g_return_if_fail (GTD_IS_LIST_STORE (store));
 
   it = g_hash_table_lookup (store->item_to_iter, item);
+  if (!it)
+    return;
+
   g_return_if_fail (!g_sequence_iter_is_end (it));
 
   position = g_sequence_iter_get_position (it);
