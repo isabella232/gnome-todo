@@ -155,7 +155,9 @@ on_default_list_changed_cb (GtdProvider *provider,
                             GParamSpec  *pspec,
                             GtdManager  *self)
 {
+  GTD_ENTRY;
   g_object_notify (G_OBJECT (self), "default-task-list");
+  GTD_EXIT;
 }
 
 static void
@@ -163,7 +165,9 @@ on_task_list_modified_cb (GtdTaskList *list,
                           GtdTask     *task,
                           GtdManager  *self)
 {
+  GTD_ENTRY;
   g_signal_emit (self, signals[LIST_CHANGED], 0, list);
+  GTD_EXIT;
 }
 
 static void
@@ -171,9 +175,13 @@ on_panel_added_cb (GtdPluginManager *plugin_manager,
                    GtdPanel         *panel,
                    GtdManager       *self)
 {
+  GTD_ENTRY;
+
   self->panels = g_list_append (self->panels, panel);
 
   g_signal_emit (self, signals[PANEL_ADDED], 0, panel);
+
+  GTD_EXIT;
 }
 
 static void
@@ -181,9 +189,13 @@ on_panel_removed_cb (GtdPluginManager *plugin_manager,
                      GtdPanel         *panel,
                      GtdManager       *self)
 {
+  GTD_ENTRY;
+
   self->panels = g_list_remove (self->panels, panel);
 
   g_signal_emit (self, signals[PANEL_REMOVED], 0, panel);
+
+  GTD_EXIT;
 }
 
 static void
@@ -191,6 +203,8 @@ on_list_added_cb (GtdProvider *provider,
                   GtdTaskList *list,
                   GtdManager  *self)
 {
+  GTD_ENTRY;
+
   gtd_list_store_insert_sorted (GTD_LIST_STORE (self->lists_model),
                                 list,
                                 (GCompareDataFunc) compare_lists_cb,
@@ -212,6 +226,8 @@ on_list_added_cb (GtdProvider *provider,
                     self);
 
   g_signal_emit (self, signals[LIST_ADDED], 0, list);
+
+  GTD_EXIT;
 }
 
 static void
@@ -219,6 +235,8 @@ on_list_changed_cb (GtdProvider *provider,
                     GtdTaskList *list,
                     GtdManager  *self)
 {
+  GTD_ENTRY;
+
   gtd_list_store_sort (GTD_LIST_STORE (self->lists_model),
                        (GCompareDataFunc) compare_lists_cb,
                        self);
@@ -226,6 +244,8 @@ on_list_changed_cb (GtdProvider *provider,
   gtk_filter_list_model_refilter (GTK_FILTER_LIST_MODEL (self->unarchived_tasks_model));
 
   g_signal_emit (self, signals[LIST_CHANGED], 0, list);
+
+  GTD_EXIT;
 }
 
 static void
@@ -233,8 +253,10 @@ on_list_removed_cb (GtdProvider *provider,
                     GtdTaskList *list,
                     GtdManager  *self)
 {
+  GTD_ENTRY;
+
   if (!list)
-      return;
+      GTD_RETURN ();
 
   gtd_list_store_remove (GTD_LIST_STORE (self->lists_model), list);
 
@@ -243,6 +265,8 @@ on_list_removed_cb (GtdProvider *provider,
                                         self);
 
   g_signal_emit (self, signals[LIST_REMOVED], 0, list);
+
+  GTD_EXIT;
 }
 
 static void
@@ -252,6 +276,8 @@ on_provider_added_cb (GtdPluginManager *plugin_manager,
 {
   g_autoptr (GList) lists = NULL;
   GList *l;
+
+  GTD_ENTRY;
 
   self->providers = g_list_append (self->providers, provider);
 
@@ -280,6 +306,8 @@ on_provider_added_cb (GtdPluginManager *plugin_manager,
   check_provider_is_default (self, provider);
 
   g_signal_emit (self, signals[PROVIDER_ADDED], 0, provider);
+
+  GTD_EXIT;
 }
 
 static void
@@ -289,6 +317,8 @@ on_provider_removed_cb (GtdPluginManager *plugin_manager,
 {
   g_autoptr (GList) lists = NULL;
   GList *l;
+
+  GTD_ENTRY;
 
   self->providers = g_list_remove (self->providers, provider);
 
@@ -304,6 +334,8 @@ on_provider_removed_cb (GtdPluginManager *plugin_manager,
   g_signal_handlers_disconnect_by_func (provider, on_list_removed_cb, self);
 
   g_signal_emit (self, signals[PROVIDER_REMOVED], 0, provider);
+
+  GTD_EXIT;
 }
 
 
