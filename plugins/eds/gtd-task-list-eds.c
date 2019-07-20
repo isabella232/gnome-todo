@@ -42,6 +42,13 @@ struct _GtdTaskListEds
 
 typedef struct
 {
+  GtdProvider        *provider;
+  ESource            *source;
+  ECalClient         *client;
+} NewTaskListData;
+
+typedef struct
+{
   GtdTask            *child;
   gchar              *parent_uid;
 } PendingSubtaskData;
@@ -64,6 +71,20 @@ enum
 /*
  * Auxiliary methods
  */
+
+static void
+new_task_list_data_free (gpointer data)
+{
+  NewTaskListData *list_data = data;
+
+  if (!list_data)
+    return;
+
+  g_clear_object (&list_data->provider);
+  g_clear_object (&list_data->source);
+  g_clear_object (&list_data->client);
+  g_free (list_data);
+}
 
 static PendingSubtaskData*
 pending_subtask_data_new (GtdTask     *child,
@@ -299,6 +320,25 @@ process_pending_subtasks (GtdTaskListEds *self,
 /*
  * Callbacks
  */
+
+static gboolean
+new_task_list_in_idle_cb (gpointer data)
+{
+  g_autoptr (GtdTaskListEds) list_eds = NULL;
+  g_autoptr (GTask) task = data;
+  NewTaskListData *list_data;
+
+  list_data = g_task_get_task_data (task);
+  list_eds = g_object_new (GTD_TYPE_TASK_LIST_EDS,
+                           "provider", list_data->provider,
+                           "source", list_data->source,
+                           "client", list_data->client,
+                           NULL);
+
+  g_task_return_pointer (task, g_steal_pointer (&list_eds), NULL);
+
+  return G_SOURCE_REMOVE;
+}
 
 static void
 on_client_objects_modified_for_migration_cb (GObject      *object,
@@ -806,16 +846,37 @@ gtd_task_list_eds_init (GtdTaskListEds *self)
   self->pending_subtasks = g_ptr_array_new_with_free_func ((GDestroyNotify) pending_subtask_data_free);
 }
 
-GtdTaskListEds*
-gtd_task_list_eds_new (GtdProvider *provider,
-                       ESource     *source,
-                       ECalClient  *client)
+void
+gtd_task_list_eds_new (GtdProvider         *provider,
+                       ESource             *source,
+                       ECalClient          *client,
+                       GAsyncReadyCallback  callback,
+                       GCancellable        *cancellable,
+                       gpointer             user_data)
 {
-  return g_object_new (GTD_TYPE_TASK_LIST_EDS,
-                       "provider", provider,
-                       "source", source,
-                       "client", client,
-                       NULL);
+  g_autoptr (GTask) task = NULL;
+  NewTaskListData *data;
+
+  data = g_new (NewTaskListData, 1);
+  data->provider = g_object_ref (provider);
+  data->source = g_object_ref (source);
+  data->client = g_object_ref (client);
+
+  task = g_task_new (NULL, cancellable, callback, user_data);
+  g_task_set_task_data (task, data, new_task_list_data_free);
+  g_task_set_source_tag (task, gtd_task_list_eds_new);
+
+  g_idle_add (new_task_list_in_idle_cb, g_steal_pointer (&task));
+}
+
+GtdTaskListEds*
+gtd_task_list_eds_new_finish (GAsyncResult  *result,
+                              GError       **error)
+{
+  g_return_val_if_fail (G_IS_TASK (result), NULL);
+  g_return_val_if_fail (!error || !*error, NULL);
+
+  return g_task_propagate_pointer (G_TASK (result), error);
 }
 
 ESource*

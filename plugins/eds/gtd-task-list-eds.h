@@ -30,9 +30,15 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (GtdTaskListEds, gtd_task_list_eds, GTD, TASK_LIST_EDS, GtdTaskList)
 
-GtdTaskListEds*      gtd_task_list_eds_new                       (GtdProvider        *provider,
-                                                                  ESource            *source,
-                                                                  ECalClient         *client);
+void                 gtd_task_list_eds_new                       (GtdProvider         *provider,
+                                                                  ESource             *source,
+                                                                  ECalClient          *client,
+                                                                  GAsyncReadyCallback  callback,
+                                                                  GCancellable        *cancellable,
+                                                                  gpointer             user_data);
+
+GtdTaskListEds*      gtd_task_list_eds_new_finish                (GAsyncResult       *result,
+                                                                  GError            **error);
 
 ESource*             gtd_task_list_eds_get_source                (GtdTaskListEds     *list);
 
