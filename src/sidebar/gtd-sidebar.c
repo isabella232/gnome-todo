@@ -525,7 +525,8 @@ on_task_list_removed_cb (GtdManager  *manager,
     listbox = self->archive_listbox;
 
   row = get_row_for_task_list (self, listbox, list);
-  g_assert (row != NULL);
+  if (!row)
+    return;
 
   gtk_widget_destroy (GTK_WIDGET (row));
   gtk_list_box_invalidate_filter (listbox);
