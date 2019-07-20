@@ -167,11 +167,13 @@ on_entry_icon_released_cb (GtkEntry             *entry,
 
 static void
 on_focus_in_cb (GtkEventControllerKey *event_controller,
+                GdkCrossingMode        mode,
+                GdkNotifyType          detail,
                 GtdNewTaskRow         *self)
 {
   GTD_ENTRY;
 
-  gtd_new_task_row_set_active (self, TRUE);
+  g_signal_emit (self, signals[ENTER], 0);
 
   GTD_EXIT;
 }
@@ -305,10 +307,7 @@ gtd_new_task_row_set_active (GtdNewTaskRow *self,
   g_return_if_fail (GTD_IS_NEW_TASK_ROW (self));
 
   if (active)
-    {
-      gtk_widget_grab_focus (GTK_WIDGET (self->entry));
-      g_signal_emit (self, signals[ENTER], 0);
-    }
+    gtk_widget_grab_focus (GTK_WIDGET (self->entry));
 }
 
 void
