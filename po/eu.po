@@ -8,8 +8,8 @@
 msgid ""
 msgstr "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2019-04-08 19:21+0000\n"
-"PO-Revision-Date: 2019-05-04 10:00+0100\n"
+"POT-Creation-Date: 2019-06-30 00:52+0000\n"
+"PO-Revision-Date: 2019-07-23 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asier.sarasua@gmail.com>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -20,7 +20,7 @@ msgstr "Project-Id-Version: gnome-todo master\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
 #: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
-#: src/gtd-window.c:786 src/gtd-window.c:817 src/main.c:35
+#: src/gtd-window.c:845 src/gtd-window.c:876 src/main.c:35
 msgid "To Do"
 msgstr "Egitekoak"
 
@@ -195,19 +195,19 @@ msgstr "Erakutsi jakinarazpenak abioan"
 msgid "Whether GNOME To Do should show notifications or not"
 msgstr "GNOMEren Egitekoak jakinarazpenak erakutsiko dituen edo ez"
 
-#: plugins/background/ui/preferences.ui:53
+#: plugins/background/ui/preferences.ui:39
 msgid "Run on Startup"
 msgstr "Exekutatu abioan"
 
-#: plugins/background/ui/preferences.ui:66
+#: plugins/background/ui/preferences.ui:50
 msgid "Run To Do automatically when you log in"
 msgstr "Exekutatu Egitekoak automatikoki saioa hasten duzunean"
 
-#: plugins/background/ui/preferences.ui:122
+#: plugins/background/ui/preferences.ui:96
 msgid "Show Notifications"
 msgstr "Erakutsi jakinarazpenak"
 
-#: plugins/background/ui/preferences.ui:135
+#: plugins/background/ui/preferences.ui:107
 msgid "When To Do runs, show a startup notification"
 msgstr "Egitekoak exekutatzean, erakutsi abioko jakinarazpena"
 
@@ -247,8 +247,8 @@ msgstr "Ordenagailu honetan"
 msgid "Local"
 msgstr "Lokala"
 
-#: plugins/eds/gtd-task-list-eds.c:456 plugins/eds/gtd-task-list-eds.c:483
-#: plugins/eds/gtd-task-list-eds.c:507
+#: plugins/eds/gtd-task-list-eds.c:459 plugins/eds/gtd-task-list-eds.c:486
+#: plugins/eds/gtd-task-list-eds.c:510
 msgid "Error fetching tasks from list"
 msgstr "Errorea zereginak zerrendatik eskuratzean"
 
@@ -321,11 +321,11 @@ msgstr "Todoist"
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
 
-#: plugins/todoist/ui/preferences.ui:81
+#: plugins/todoist/ui/preferences.ui:65
 msgid "No Todoist accounts found"
 msgstr "Ez da Todoist zerbitzuko konturik aurkitu"
 
-#: plugins/todoist/ui/preferences.ui:90
+#: plugins/todoist/ui/preferences.ui:74
 msgid "Add a Todoist account"
 msgstr "Gehitu Todoist-eko kontua"
 
@@ -381,7 +381,7 @@ msgid "Unscheduled"
 msgstr "Planifikatu gabekoak"
 
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
-#: src/gtd-task-list-panel.ui:45
+#: src/gtd-task-list-panel.ui:32
 msgid "Clear completed tasks…"
 msgstr "Garbitu burututako zereginak…"
 
@@ -407,24 +407,24 @@ msgstr "Copyright-a © 2015–2018 Egitekoak aplikazioaren egileak"
 msgid "translator-credits"
 msgstr "Asier Sarasua Garmendia <asier.sarasua@gmail.com>"
 
-#: src/gtd-initial-setup-window.ui:23
+#: src/gtd-initial-setup-window.ui:20
 msgid "Welcome"
 msgstr "Ongi etorri"
 
-#: src/gtd-initial-setup-window.ui:37
+#: src/gtd-initial-setup-window.ui:31
 msgid "Log in to online accounts to access your tasks"
 msgstr "Hasi saioa lineako kontuetan zure zereginak atzitzeko"
 
-#: src/gtd-initial-setup-window.ui:62
+#: src/gtd-initial-setup-window.ui:53
 msgid "To Do Setup"
 msgstr "Egitekoak-en konfigurazioa"
 
-#: src/gtd-initial-setup-window.ui:65 src/gtd-window.ui:108
-#: src/provider/gtd-provider-popover.ui:44
+#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:96
+#: src/provider/gtd-provider-popover.ui:40
 msgid "_Cancel"
 msgstr "_Utzi"
 
-#: src/gtd-initial-setup-window.ui:74
+#: src/gtd-initial-setup-window.ui:65
 msgid "_Done"
 msgstr "_Eginda"
 
@@ -436,123 +436,136 @@ msgstr "Errorea hedapena kargatzean"
 msgid "Error unloading extension"
 msgstr "Errorea hedapena desgaitzean"
 
-#: src/gtd-plugin-dialog.ui:69 src/gtd-window.ui:158
+#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:138
 msgid "Extensions"
 msgstr "Hedapenak"
 
-#: src/gtd-plugin-dialog.ui:103
+#: src/gtd-plugin-dialog.ui:90
 msgid "No extensions found"
 msgstr "Ez da hedapenik aurkitu"
 
-#: src/gtd-task-list-panel.ui:38 src/gtd-task-list-panel.ui:74
-#: src/gtd-task-list-panel.ui:98
+#: src/gtd-task-list-panel.c:199
+msgid "Unarchive"
+msgstr "Atera artxibotik"
+
+#: src/gtd-task-list-panel.c:199 src/gtd-task-list-panel.ui:41
+#: src/sidebar/gtd-sidebar.ui:51
+msgid "Archive"
+msgstr "Artxibatu"
+
+#: src/gtd-task-list-panel.ui:26 src/gtd-task-list-panel.ui:61
+#: src/gtd-task-list-panel.ui:77
 msgid "Rename"
 msgstr "Aldatu izena"
 
-#: src/gtd-task-list-panel.ui:57
+#: src/gtd-task-list-panel.ui:47
 msgid "Delete"
 msgstr "Ezabatu"
 
-#: src/gtd-window.c:113
+#: src/gtd-window.c:115
 msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
 msgstr "Hau Egitekoak aplikazioaren garapen-bertsio bat da. Erroreak, portaera okerrak eta datuen galerak izan ditzakezu."
 
-#: src/gtd-window.c:473
+#: src/gtd-window.c:517
 msgid "Details"
 msgstr "Xehetasunak"
 
-#: src/gtd-window.c:781
+#: src/gtd-window.c:840
 msgid "Click a task list to select"
 msgstr "Egin klik zereginen zerrendan hautatzeko"
 
-#: src/gtd-window.ui:64
-msgid "_New List"
-msgstr "Zerrenda _berria"
+#: src/gtd-window.ui:51
+msgid "New List"
+msgstr "Zerrenda berria"
 
-#: src/gtd-window.ui:164
+#: src/gtd-window.ui:144
 msgid "_About To Do"
 msgstr "_Egitekoak aplikazioari buruz"
 
-#: src/provider/gtd-provider-popover.ui:27
+#: src/provider/gtd-provider-popover.ui:23
 msgid "Create _List"
 msgstr "_Sortu zerrenda"
 
-#: src/provider/gtd-provider-popover.ui:58
+#: src/provider/gtd-provider-popover.ui:53
 msgid "List Name"
 msgstr "Zerrenda-izena"
 
-#: src/provider/gtd-provider-popover.ui:139
+#: src/provider/gtd-provider-popover.ui:130
 msgid "Select a storage location"
 msgstr "Hautatu biltegi baten kokalekua"
 
-#: src/provider/gtd-provider-row.ui:64
+#: src/provider/gtd-provider-row.ui:57
 msgid "Off"
 msgstr "Desaktibatuta"
 
-#: src/provider/gtd-provider-selector.ui:23
+#: src/provider/gtd-provider-selector.ui:19
 msgid "Click to add a new Google account"
 msgstr "Egin klik Google-eko kontu berri bat gehitzeko"
 
-#: src/provider/gtd-provider-selector.ui:39
+#: src/provider/gtd-provider-selector.ui:32
 msgid "Google"
 msgstr "Google"
 
-#: src/provider/gtd-provider-selector.ui:49
+#: src/provider/gtd-provider-selector.ui:42
 msgid "Click to add a new ownCloud account"
 msgstr "Egin klik ownCloud-eko kontu berri bat gehitzeko"
 
-#: src/provider/gtd-provider-selector.ui:65
+#: src/provider/gtd-provider-selector.ui:55
 msgid "ownCloud"
 msgstr "ownCloud"
 
-#: src/provider/gtd-provider-selector.ui:75
+#: src/provider/gtd-provider-selector.ui:65
 msgid "Click to add a new Microsoft Exchange account"
 msgstr "Egin klik 'Microsoft Exchange'-ko kontu berri bat gehitzeko"
 
-#: src/provider/gtd-provider-selector.ui:91
+#: src/provider/gtd-provider-selector.ui:78
 msgid "Microsoft Exchange"
 msgstr "Microsoft Exchange"
 
-#: src/provider/gtd-provider-selector.ui:104
+#: src/provider/gtd-provider-selector.ui:91
 msgid "Or you can just store your tasks on this computer"
 msgstr "Edo zure zereginak ordenagailu honetan gorde ditzakezu"
 
-#: src/sidebar/gtd-sidebar.c:304
+#: src/sidebar/gtd-sidebar.c:329
 #, c-format
 msgid "Task list <b>%s</b> removed"
 msgstr "<b>%s</b> zereginen zerrenda kendu da"
 
-#: src/sidebar/gtd-sidebar.c:307 src/task-list-view/gtd-task-list-view.c:461
+#: src/sidebar/gtd-sidebar.c:332 src/task-list-view/gtd-task-list-view.c:460
 msgid "Undo"
 msgstr "Desegin"
 
-#: src/sidebar/gtd-sidebar-provider-row.ui:89
+#: src/sidebar/gtd-sidebar-provider-row.ui:69
 msgid "Loading…"
 msgstr "Kargatzen..."
 
-#: src/task-list-view/gtd-edit-pane.ui:24
+#: src/sidebar/gtd-sidebar.ui:102
+msgid "No archived lists"
+msgstr "Ez dago artxibatutako zerrendarik"
+
+#: src/task-list-view/gtd-edit-pane.ui:16
 msgid "D_ue Date"
 msgstr "_Mugaeguna"
 
-#: src/task-list-view/gtd-edit-pane.ui:41
+#: src/task-list-view/gtd-edit-pane.ui:30
 msgid "_Today"
 msgstr "_Gaur"
 
-#: src/task-list-view/gtd-edit-pane.ui:50
+#: src/task-list-view/gtd-edit-pane.ui:39
 msgid "To_morrow"
 msgstr "_Bihar"
 
-#: src/task-list-view/gtd-edit-pane.ui:91
+#: src/task-list-view/gtd-edit-pane.ui:75
 msgid "_Notes"
 msgstr "_Oharrak"
 
-#: src/task-list-view/gtd-edit-pane.ui:137
+#: src/task-list-view/gtd-edit-pane.ui:117
 msgid "_Delete"
 msgstr "Ez_abatu"
 
-#: src/task-list-view/gtd-edit-pane.ui:176
+#: src/task-list-view/gtd-edit-pane.ui:151
 msgctxt "taskdate"
 msgid "None"
 msgstr "Bat ere ez"
@@ -563,11 +576,11 @@ msgstr "Bat ere ez"
 msgid "%1$s \t <small>%2$s</small>"
 msgstr "%1$s \t <small>%2$s</small>"
 
-#: src/task-list-view/gtd-new-task-row.ui:15
+#: src/task-list-view/gtd-new-task-row.ui:14
 msgid "New task…"
 msgstr "Zeregin berria…"
 
-#: src/task-list-view/gtd-task-list-view.c:442
+#: src/task-list-view/gtd-task-list-view.c:441
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "<b>%s</b> zeregina kenduta"
