@@ -1,0 +1,628 @@
+# Karbi translation for gnome-todo.
+# Copyright (C) 2019 gnome-todo's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-todo package.
+# Jor Teron <jor.teron@gmail.com>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-todo master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
+"POT-Creation-Date: 2019-07-22 05:08+0000\n"
+"PO-Revision-Date: 2019-07-23 05:08+0000\n"
+"Last-Translator: Jor Teron <jor.teron@gmail.com>\n"
+"Language-Team: Karbi <karbi.translation@gmail.com>\n"
+"Language: mjw\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
+#: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
+#: src/gtd-window.c:845 src/gtd-window.c:876 src/main.c:35
+msgid "To Do"
+msgstr "Klem ji asai"
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:8
+msgid "Task manager for GNOME"
+msgstr "GNOME phan Task manager"
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:11
+msgid ""
+"GNOME To Do is a task management application designed to integrate with "
+"GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
+"todos on your computer or sync them with cloud providers. Customize your "
+"experience with plugins."
+msgstr ""
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:25
+msgid "GNOME To Do with the dark theme variant"
+msgstr ""
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:29
+msgid "Editing a tasklist with GNOME To Do"
+msgstr ""
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:33
+msgid "Task lists displayed on grid mode"
+msgstr ""
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:37
+msgid "Task lists displayed on list mode"
+msgstr ""
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:41
+msgid "Available plugins for GNOME To Do"
+msgstr ""
+
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:45
+msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
+msgstr ""
+
+#: data/org.gnome.Todo.desktop.in.in:4
+msgid "Manage your personal tasks"
+msgstr ""
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Todo.desktop.in.in:13
+msgid "Task;Productivity;Todo;"
+msgstr "Task;Productivity;Todo;"
+
+#: data/org.gnome.todo.gschema.xml:6
+msgid "Window maximized"
+msgstr "Window pathe-tan"
+
+#: data/org.gnome.todo.gschema.xml:7
+msgid "Window maximized state"
+msgstr ""
+
+#: data/org.gnome.todo.gschema.xml:11
+msgid "Window size"
+msgstr "Window apun"
+
+#: data/org.gnome.todo.gschema.xml:12
+msgid "Window size (width and height)."
+msgstr "Window apun (arpan pen arjon)."
+
+#: data/org.gnome.todo.gschema.xml:16
+msgid "First run of GNOME To Do"
+msgstr "GNOME To Do kangpu cheng"
+
+#: data/org.gnome.todo.gschema.xml:17
+msgid ""
+"Whether it’s the first run of GNOME To Do (to run the initial setup) or not"
+msgstr "Nangli GNOME To Do kangpu cheng loma mate kali?"
+
+#: data/org.gnome.todo.gschema.xml:21
+msgid "Default provider to add new lists to"
+msgstr ""
+
+#: data/org.gnome.todo.gschema.xml:22
+msgid "The identifier of the default provider to add new lists to"
+msgstr ""
+
+#: data/org.gnome.todo.gschema.xml:26
+msgid "List of active extensions"
+msgstr ""
+
+#: data/org.gnome.todo.gschema.xml:27
+msgid "The list of active extensions"
+msgstr ""
+
+#: data/org.gnome.todo.gschema.xml:31
+msgid "The current list selector"
+msgstr ""
+
+#: data/org.gnome.todo.gschema.xml:32
+msgid "The current list selector. Can be “grid” or “list”."
+msgstr ""
+
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
+#: plugins/next-week-panel/gtd-next-week-panel.c:112
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:103
+#: src/task-list-view/gtd-edit-pane.c:110
+msgid "No date set"
+msgstr "Arni tok-te"
+
+#. Translators: This message will never be used with '1 day ago'
+#. * but the singular form is required because some languages do not
+#. * have plurals, some languages reuse the singular form for numbers
+#. * like 21, 31, 41, etc.
+#.
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:125
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:116
+#, c-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "Ni %d aphrang"
+msgstr[1] "Ni %d aphrang"
+
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:120
+#: src/task-list-view/gtd-task-row.c:146
+msgid "Yesterday"
+msgstr "Tumi"
+
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
+#: plugins/next-week-panel/gtd-next-week-panel.c:124
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:124
+#: plugins/score/score/__init__.py:101
+#: plugins/today-panel/gtd-panel-today.c:154
+#: plugins/today-panel/gtd-panel-today.c:258
+#: src/task-list-view/gtd-task-row.c:138
+msgid "Today"
+msgstr "Pini"
+
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
+#: plugins/next-week-panel/gtd-next-week-panel.c:128
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:128
+#: src/task-list-view/gtd-task-row.c:142
+msgid "Tomorrow"
+msgstr "Pinap"
+
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:297
+msgid "All"
+msgstr "Kado-kawe"
+
+#: plugins/background/gtd-plugin-background.c:150
+#, c-format
+msgid "%1$s and one more task"
+msgid_plural "%1$s and %2$d other tasks"
+msgstr[0] "%1$s anke isi kaprek sai dolang"
+msgstr[1] "%1$s anke %2$d kaprek sai dolang"
+
+#: plugins/background/gtd-plugin-background.c:254
+#, c-format
+msgid "You have %d task for today"
+msgid_plural "You have %d tasks for today"
+msgstr[0] "Pini nangli %d sai do"
+msgstr[1] "Pini nangli %d sai do"
+
+#: plugins/background/org.gnome.todo.background.gschema.xml:6
+msgid "Run To Do on startup"
+msgstr ""
+
+#: plugins/background/org.gnome.todo.background.gschema.xml:7
+msgid "Whether GNOME To Do should run on startup"
+msgstr ""
+
+#: plugins/background/org.gnome.todo.background.gschema.xml:11
+msgid "Show notifications on startup"
+msgstr ""
+
+#: plugins/background/org.gnome.todo.background.gschema.xml:12
+msgid "Whether GNOME To Do should show notifications or not"
+msgstr ""
+
+#: plugins/background/ui/preferences.ui:39
+msgid "Run on Startup"
+msgstr ""
+
+#: plugins/background/ui/preferences.ui:50
+msgid "Run To Do automatically when you log in"
+msgstr ""
+
+#: plugins/background/ui/preferences.ui:96
+msgid "Show Notifications"
+msgstr "Notifications paklang"
+
+#: plugins/background/ui/preferences.ui:107
+msgid "When To Do runs, show a startup notification"
+msgstr ""
+
+#: plugins/eds/gtd-plugin-eds.c:201
+msgid "Error loading GNOME Online Accounts"
+msgstr ""
+
+#: plugins/eds/gtd-provider-eds.c:173
+msgid "Failed to connect to task list"
+msgstr ""
+
+#: plugins/eds/gtd-provider-eds.c:328
+msgid "An error occurred while creating a task"
+msgstr ""
+
+#: plugins/eds/gtd-provider-eds.c:373
+msgid "An error occurred while modifying a task"
+msgstr ""
+
+#: plugins/eds/gtd-provider-eds.c:394
+msgid "An error occurred while removing a task"
+msgstr ""
+
+#: plugins/eds/gtd-provider-eds.c:412
+msgid "An error occurred while creating a task list"
+msgstr ""
+
+#: plugins/eds/gtd-provider-eds.c:434 plugins/eds/gtd-provider-eds.c:457
+msgid "An error occurred while modifying a task list"
+msgstr ""
+
+#: plugins/eds/gtd-provider-local.c:50
+msgid "On This Computer"
+msgstr "laso Computer long"
+
+#: plugins/eds/gtd-provider-local.c:62
+msgid "Local"
+msgstr ""
+
+#: plugins/eds/gtd-task-list-eds.c:499 plugins/eds/gtd-task-list-eds.c:526
+#: plugins/eds/gtd-task-list-eds.c:550
+msgid "Error fetching tasks from list"
+msgstr ""
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:120
+#: plugins/today-panel/gtd-panel-today.c:145
+msgid "Overdue"
+msgstr ""
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:345
+msgid "Next 7 Days"
+msgstr "Ni 7 aphi"
+
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:343
+msgid "Scheduled"
+msgstr ""
+
+#: plugins/score/score/__init__.py:90
+msgid "No task completed today"
+msgstr "Pini isi sai ta tangte"
+
+#: plugins/todoist/gtd-plugin-todoist.c:109
+msgid "GNOME To Do cannot connect to Todoist due to network issue"
+msgstr ""
+
+#: plugins/todoist/gtd-plugin-todoist.c:110
+msgid ""
+"Not able to communicate with Todoist. Please check your internet "
+"connectivity."
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:213
+msgid "Error fetching Todoist account key"
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:214
+msgid "Please ensure that Todoist account is correctly configured."
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:555
+#, c-format
+msgid ""
+"GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:563
+#, c-format
+msgid ""
+"Invalid response received from Todoist servers. Please reload GNOME To Do."
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:850
+msgid "An error occurred while updating a Todoist task"
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:965
+msgid "An error occurred while retrieving Todoist data"
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:1040
+msgid "An error occurred while updating Todoist"
+msgstr ""
+
+#: plugins/todoist/gtd-provider-todoist.c:1100
+msgid "Todoist"
+msgstr "Sai-a-list"
+
+#: plugins/todoist/gtd-provider-todoist.c:1411
+#, c-format
+msgid "Todoist: %s"
+msgstr "Sai-a-list: %s"
+
+#: plugins/todoist/ui/preferences.ui:65
+msgid "No Todoist accounts found"
+msgstr ""
+
+#: plugins/todoist/ui/preferences.ui:74
+msgid "Add a Todoist account"
+msgstr ""
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:87
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:124
+msgid "Cannot create Todo.txt file"
+msgstr ""
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:161
+msgid "Select a Todo.txt-formatted file:"
+msgstr ""
+
+#. Filechooser
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:165
+msgid "Select a file"
+msgstr "File chongvai"
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:191
+msgid "Error opening Todo.txt file"
+msgstr "Todo.txt file kangpu chokche dokok"
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:201
+msgid ""
+"<b>Warning!</b> Todo.txt support is experimental and unstable. You may "
+"experience instability, errors and eventually data loss. It is not "
+"recommended to use Todo.txt integration on production systems."
+msgstr ""
+
+#: plugins/todo-txt/gtd-provider-todo-txt.c:574
+msgid "Error while opening the file monitor. Todo.txt will not be monitored"
+msgstr ""
+
+#: plugins/todo-txt/gtd-provider-todo-txt.c:643
+msgid "Todo.txt"
+msgstr "Todo.txt"
+
+#: plugins/todo-txt/gtd-provider-todo-txt.c:655
+msgid "On the Todo.txt file"
+msgstr "Todo.txt long"
+
+#: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:6
+msgid "Todo.txt File"
+msgstr "Todo.txt File"
+
+#: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:7
+msgid "Source of the Todo.txt file"
+msgstr ""
+
+#. Translators: 'Unscheduled' as in 'Unscheduled tasks'
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:112
+msgid "Unscheduled"
+msgstr ""
+
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
+#: src/gtd-task-list-panel.ui:32
+msgid "Clear completed tasks…"
+msgstr ""
+
+#. Translators: 'Unscheduled' as in 'Unscheduled tasks'
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
+#, python-format
+msgid "Unscheduled (%d)"
+msgstr ""
+
+#: src/gtd-application.c:72
+msgid "Quit GNOME To Do"
+msgstr "GNOME To Do kanghap"
+
+#: src/gtd-application.c:73
+msgid "Enable debug messages"
+msgstr ""
+
+#: src/gtd-application.c:143
+msgid "Copyright © 2015–2018 The To Do authors"
+msgstr "Copyright © 2015–2018 The To Do authors"
+
+#: src/gtd-application.c:148
+msgid "translator-credits"
+msgstr "Jor Teron <jor.teron@gmail.com>"
+
+#: src/gtd-initial-setup-window.ui:20
+msgid "Welcome"
+msgstr "Kardom"
+
+#: src/gtd-initial-setup-window.ui:31
+msgid "Log in to online accounts to access your tasks"
+msgstr ""
+
+#: src/gtd-initial-setup-window.ui:53
+msgid "To Do Setup"
+msgstr ""
+
+#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:96
+#: src/provider/gtd-provider-popover.ui:40
+msgid "_Cancel"
+msgstr ""
+
+#: src/gtd-initial-setup-window.ui:65
+msgid "_Done"
+msgstr "Tanglo"
+
+#: src/gtd-plugin-dialog-row.c:97
+msgid "Error loading extension"
+msgstr ""
+
+#: src/gtd-plugin-dialog-row.c:97
+msgid "Error unloading extension"
+msgstr ""
+
+#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:138
+msgid "Extensions"
+msgstr "Extensions"
+
+#: src/gtd-plugin-dialog.ui:90
+msgid "No extensions found"
+msgstr "isi extensions ta longle"
+
+#: src/gtd-task-list-panel.c:199
+msgid "Unarchive"
+msgstr ""
+
+#: src/gtd-task-list-panel.c:199 src/gtd-task-list-panel.ui:41
+#: src/sidebar/gtd-sidebar.ui:51
+msgid "Archive"
+msgstr ""
+
+#: src/gtd-task-list-panel.ui:26 src/gtd-task-list-panel.ui:61
+#: src/gtd-task-list-panel.ui:77
+msgid "Rename"
+msgstr "Men-kelar"
+
+#: src/gtd-task-list-panel.ui:47
+msgid "Delete"
+msgstr "Kethan"
+
+#: src/gtd-window.c:115
+msgid ""
+"This is a development build of To Do. You may experience errors, wrong "
+"behaviors, and data loss."
+msgstr ""
+
+#: src/gtd-window.c:517
+msgid "Details"
+msgstr ""
+
+#: src/gtd-window.c:840
+msgid "Click a task list to select"
+msgstr ""
+
+#: src/gtd-window.ui:51
+msgid "New List"
+msgstr "Kimi List"
+
+#: src/gtd-window.ui:144
+msgid "_About To Do"
+msgstr "To Do _Aputhak"
+
+#: src/provider/gtd-provider-popover.ui:23
+msgid "Create _List"
+msgstr "_List selam"
+
+#: src/provider/gtd-provider-popover.ui:53
+msgid "List Name"
+msgstr "List Amen"
+
+#: src/provider/gtd-provider-popover.ui:130
+msgid "Select a storage location"
+msgstr "Storage dim chongvai nangji"
+
+#: src/provider/gtd-provider-row.ui:57
+msgid "Off"
+msgstr ""
+
+#: src/provider/gtd-provider-selector.ui:19
+msgid "Click to add a new Google account"
+msgstr "Google account thap dunji phan click ik-noi"
+
+#: src/provider/gtd-provider-selector.ui:32
+msgid "Google"
+msgstr "Google"
+
+#: src/provider/gtd-provider-selector.ui:42
+msgid "Click to add a new ownCloud account"
+msgstr "ownCloud account thap dunji phan click ik-noi"
+
+#: src/provider/gtd-provider-selector.ui:55
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: src/provider/gtd-provider-selector.ui:65
+msgid "Click to add a new Microsoft Exchange account"
+msgstr "Microsoft Exchange account thap dunji phan click ik-noi"
+
+#: src/provider/gtd-provider-selector.ui:78
+msgid "Microsoft Exchange"
+msgstr "Microsoft Exchange"
+
+#: src/provider/gtd-provider-selector.ui:91
+msgid "Or you can just store your tasks on this computer"
+msgstr "Mate nangli tasks computer long mat-le thap phit tame"
+
+#: src/sidebar/gtd-sidebar.c:329
+#, c-format
+msgid "Task list <b>%s</b> removed"
+msgstr ""
+
+#: src/sidebar/gtd-sidebar.c:332 src/task-list-view/gtd-task-list-view.c:460
+msgid "Undo"
+msgstr ""
+
+#: src/sidebar/gtd-sidebar-provider-row.ui:69
+msgid "Loading…"
+msgstr "Wang bomlo…"
+
+#: src/sidebar/gtd-sidebar.ui:102
+msgid "No archived lists"
+msgstr ""
+
+#: src/task-list-view/gtd-edit-pane.ui:16
+msgid "D_ue Date"
+msgstr ""
+
+#: src/task-list-view/gtd-edit-pane.ui:30
+msgid "_Today"
+msgstr "Pini"
+
+#: src/task-list-view/gtd-edit-pane.ui:39
+msgid "To_morrow"
+msgstr "Pinap"
+
+#: src/task-list-view/gtd-edit-pane.ui:75
+msgid "_Notes"
+msgstr "_Notes"
+
+#: src/task-list-view/gtd-edit-pane.ui:117
+msgid "_Delete"
+msgstr "Kethan"
+
+#: src/task-list-view/gtd-edit-pane.ui:151
+msgctxt "taskdate"
+msgid "None"
+msgstr "Angse"
+
+#. Translators: %1$s is the task list name, %2$s is the provider name
+#: src/task-list-view/gtd-new-task-row.c:91
+#, c-format
+msgid "%1$s \t <small>%2$s</small>"
+msgstr ""
+
+#: src/task-list-view/gtd-new-task-row.ui:14
+msgid "New task…"
+msgstr "Kimi task…"
+
+#: src/task-list-view/gtd-task-list-view.c:441
+#, c-format
+msgid "Task <b>%s</b> removed"
+msgstr ""
+
+#: src/widgets/gtd-empty-list-widget.c:51
+msgid "No more tasks left"
+msgstr "Task awe tang lo"
+
+#: src/widgets/gtd-empty-list-widget.c:52
+msgid "Nothing else to do here"
+msgstr "Klem ji ason awe"
+
+#: src/widgets/gtd-empty-list-widget.c:53
+msgid "You made it!"
+msgstr "Nangli pale chit lo!"
+
+#: src/widgets/gtd-empty-list-widget.c:54
+msgid "Looks like there’s nothing else left here"
+msgstr "Klem ji a sai chun ed-lo, non klem ji awe lo."
+
+#: src/widgets/gtd-empty-list-widget.c:59
+msgid "Get some rest now"
+msgstr "Sai tang lo pot, nangli sang ik melo"
+
+#: src/widgets/gtd-empty-list-widget.c:60
+msgid "Enjoy the rest of your day"
+msgstr "Pini nang Rani seng arong noi"
+
+#: src/widgets/gtd-empty-list-widget.c:61
+msgid "Good job!"
+msgstr "Klem mesen lo!"
+
+#: src/widgets/gtd-empty-list-widget.c:62
+msgid "Meanwhile, spread the love"
+msgstr "Laso angbong, nangli ning dok pu bang pen chethan tame"
+
+#: src/widgets/gtd-empty-list-widget.c:63
+msgid "Working hard is always rewarded"
+msgstr "Chori se cholong, menthu alangpong"
+
+#: src/widgets/gtd-empty-list-widget.c:74
+msgid "No tasks found"
+msgstr "Tasks longle"
+
+#: src/widgets/gtd-empty-list-widget.c:75
+msgid "You can add tasks using the <b>+</b> above"
+msgstr "Nangli tasks thap ji pulote angsong <b>+</b> pen me"
