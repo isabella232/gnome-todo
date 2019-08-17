@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2019-02-01 18:18+0000\n"
-"PO-Revision-Date: 2019-02-05 21:33+0200\n"
+"POT-Creation-Date: 2019-06-30 00:52+0000\n"
+"PO-Revision-Date: 2019-08-17 17:55+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
 #: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
-#: src/gtd-window.c:717 src/gtd-window.c:748 src/main.c:35
+#: src/gtd-window.c:845 src/gtd-window.c:876 src/main.c:35
 msgid "To Do"
 msgstr "Tehtävät"
 
@@ -69,11 +69,6 @@ msgstr "Kuluvan päivän tehtävien visualisointia Tänään-näkymässä"
 msgid "Manage your personal tasks"
 msgstr "Hallitse omia tehtäviäsi"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Todo.desktop.in.in:7
-msgid "@icon@"
-msgstr "@icon@"
-
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Todo.desktop.in.in:13
 msgid "Task;Productivity;Todo;"
@@ -96,49 +91,41 @@ msgid "Window size (width and height)."
 msgstr "Ikkunan koko (leveys ja korkeus)."
 
 #: data/org.gnome.todo.gschema.xml:16
-msgid "Window position"
-msgstr "Ikkunan sijainti"
-
-#: data/org.gnome.todo.gschema.xml:17
-msgid "Window position (x and y)."
-msgstr "Ikkunan sijainti (x ja y)."
-
-#: data/org.gnome.todo.gschema.xml:21
 msgid "First run of GNOME To Do"
 msgstr "Gnomen tehtävien ensimmäinen käynnistyskerta"
 
-#: data/org.gnome.todo.gschema.xml:22
+#: data/org.gnome.todo.gschema.xml:17
 msgid ""
 "Whether it’s the first run of GNOME To Do (to run the initial setup) or not"
 msgstr ""
 "Käynnistetäänkö Gnomen tehtäväsovellus ensimmäistä kertaa vai ei (eli "
 "käynnistetäänkö ensikerran toimenpiteet)"
 
-#: data/org.gnome.todo.gschema.xml:26
+#: data/org.gnome.todo.gschema.xml:21
 #, fuzzy
 #| msgid "Default location to add new lists to"
 msgid "Default provider to add new lists to"
 msgstr "Oletussijainti, johon uudet listat lisätään"
 
-#: data/org.gnome.todo.gschema.xml:27
+#: data/org.gnome.todo.gschema.xml:22
 #, fuzzy
 #| msgid "The identifier of the default location to add new lists to"
 msgid "The identifier of the default provider to add new lists to"
 msgstr "Tunniste oletussijainnille, johon uudet listat lisätään"
 
-#: data/org.gnome.todo.gschema.xml:31
+#: data/org.gnome.todo.gschema.xml:26
 msgid "List of active extensions"
 msgstr "Luettelo aktiivisista laajennuksista"
 
-#: data/org.gnome.todo.gschema.xml:32
+#: data/org.gnome.todo.gschema.xml:27
 msgid "The list of active extensions"
 msgstr "Luettelo aktiivisista laajennuksista"
 
-#: data/org.gnome.todo.gschema.xml:36
+#: data/org.gnome.todo.gschema.xml:31
 msgid "The current list selector"
 msgstr "Nykyinen luettelovalitsin"
 
-#: data/org.gnome.todo.gschema.xml:37
+#: data/org.gnome.todo.gschema.xml:32
 msgid "The current list selector. Can be “grid” or “list”."
 msgstr ""
 "Nykyinen luettelovalitsin. Voi olla “grid” (ruudukko) tai “list” (luettelo)."
@@ -165,7 +152,7 @@ msgstr[1] "%d päivää sitten"
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:120
-#: src/task-list-view/gtd-task-row.c:147
+#: src/task-list-view/gtd-task-row.c:146
 msgid "Yesterday"
 msgstr "Eilen"
 
@@ -175,14 +162,14 @@ msgstr "Eilen"
 #: plugins/score/score/__init__.py:101
 #: plugins/today-panel/gtd-panel-today.c:154
 #: plugins/today-panel/gtd-panel-today.c:258
-#: src/task-list-view/gtd-task-row.c:139
+#: src/task-list-view/gtd-task-row.c:138
 msgid "Today"
 msgstr "Tänään"
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
 #: plugins/next-week-panel/gtd-next-week-panel.c:128
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:128
-#: src/task-list-view/gtd-task-row.c:143
+#: src/task-list-view/gtd-task-row.c:142
 msgid "Tomorrow"
 msgstr "Huomenna"
 
@@ -220,21 +207,21 @@ msgstr "Näytä ilmoitukset käynnistyksen yhteydessä"
 msgid "Whether GNOME To Do should show notifications or not"
 msgstr "Tulisiko tehtäväsovelluksen näyttää ilmoituksia vai ei"
 
-#: plugins/background/ui/preferences.ui:53
+#: plugins/background/ui/preferences.ui:39
 msgid "Run on Startup"
 msgstr "Suorita käynnistyksen yhteydessä"
 
-#: plugins/background/ui/preferences.ui:66
+#: plugins/background/ui/preferences.ui:50
 msgid "Run To Do automatically when you log in"
 msgstr ""
 "Käynnistetäänkö tehtäväsovellus automaattisesti sisäänkirjautumisen "
 "yhteydessä"
 
-#: plugins/background/ui/preferences.ui:122
+#: plugins/background/ui/preferences.ui:96
 msgid "Show Notifications"
 msgstr "Näytä ilmoitukset"
 
-#: plugins/background/ui/preferences.ui:135
+#: plugins/background/ui/preferences.ui:107
 msgid "When To Do runs, show a startup notification"
 msgstr "Kun tehtäväsovellus käynnistyy, näytä aloitusilmoitus"
 
@@ -242,27 +229,27 @@ msgstr "Kun tehtäväsovellus käynnistyy, näytä aloitusilmoitus"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Virhe ladatessa Gnomen verkkotilejä"
 
-#: plugins/eds/gtd-provider-eds.c:139
+#: plugins/eds/gtd-provider-eds.c:140
 msgid "Failed to connect to task list"
 msgstr "Yhteys tehtävälistaan epäonnistui"
 
-#: plugins/eds/gtd-provider-eds.c:272
+#: plugins/eds/gtd-provider-eds.c:305
 msgid "An error occurred while creating a task"
 msgstr "Tehtävää luotaessa tapahtui virhe"
 
-#: plugins/eds/gtd-provider-eds.c:306
+#: plugins/eds/gtd-provider-eds.c:350
 msgid "An error occurred while modifying a task"
 msgstr "Tehtävää muokatessa tapahtui virhe"
 
-#: plugins/eds/gtd-provider-eds.c:327
+#: plugins/eds/gtd-provider-eds.c:371
 msgid "An error occurred while removing a task"
 msgstr "Tehtävää poistaessa tapahtui virhe"
 
-#: plugins/eds/gtd-provider-eds.c:345
+#: plugins/eds/gtd-provider-eds.c:389
 msgid "An error occurred while creating a task list"
 msgstr "Tehtävälistaa luotaessa tapahtui virhe"
 
-#: plugins/eds/gtd-provider-eds.c:367 plugins/eds/gtd-provider-eds.c:390
+#: plugins/eds/gtd-provider-eds.c:411 plugins/eds/gtd-provider-eds.c:434
 msgid "An error occurred while modifying a task list"
 msgstr "Tehtävälistaa muokatessa tapahtui virhe"
 
@@ -274,8 +261,8 @@ msgstr "Tällä tietokoneella"
 msgid "Local"
 msgstr "Paikallinen"
 
-#: plugins/eds/gtd-task-list-eds.c:283 plugins/eds/gtd-task-list-eds.c:316
-#: plugins/eds/gtd-task-list-eds.c:340
+#: plugins/eds/gtd-task-list-eds.c:459 plugins/eds/gtd-task-list-eds.c:486
+#: plugins/eds/gtd-task-list-eds.c:510
 msgid "Error fetching tasks from list"
 msgstr "Virhe hakiessa tehtäviä listalta"
 
@@ -352,11 +339,11 @@ msgstr "Todoist"
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
 
-#: plugins/todoist/ui/preferences.ui:81
+#: plugins/todoist/ui/preferences.ui:65
 msgid "No Todoist accounts found"
 msgstr "Todoist-tilejä ei löytynyt"
 
-#: plugins/todoist/ui/preferences.ui:90
+#: plugins/todoist/ui/preferences.ui:74
 msgid "Add a Todoist account"
 msgstr "Lisää Todoist-tili"
 
@@ -415,7 +402,7 @@ msgid "Unscheduled"
 msgstr "Ajastamaton"
 
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
-#: src/gtd-task-list-panel.ui:45
+#: src/gtd-task-list-panel.ui:32
 msgid "Clear completed tasks…"
 msgstr "Tyhjennä valmistuneet tehtävät…"
 
@@ -434,7 +421,6 @@ msgid "Enable debug messages"
 msgstr "Ota käyttöön vianjäljitysviestit"
 
 #: src/gtd-application.c:143
-#| msgid "Copyright © %1$d–%2$d The To Do authors"
 msgid "Copyright © 2015–2018 The To Do authors"
 msgstr "Tekijänoikeus © 2015–2018 The To Do -sovelluksen kehittäjät"
 
@@ -442,24 +428,24 @@ msgstr "Tekijänoikeus © 2015–2018 The To Do -sovelluksen kehittäjät"
 msgid "translator-credits"
 msgstr "Jiri Grönroos"
 
-#: src/gtd-initial-setup-window.ui:23
+#: src/gtd-initial-setup-window.ui:20
 msgid "Welcome"
 msgstr "Tervetuloa"
 
-#: src/gtd-initial-setup-window.ui:37
+#: src/gtd-initial-setup-window.ui:31
 msgid "Log in to online accounts to access your tasks"
 msgstr "Kirjaudu verkkotileihisi käyttääksesi tehtävälistoja"
 
-#: src/gtd-initial-setup-window.ui:62
+#: src/gtd-initial-setup-window.ui:53
 msgid "To Do Setup"
 msgstr "Tehtäväsovelluksen alkumääritykset"
 
-#: src/gtd-initial-setup-window.ui:65 src/gtd-window.ui:116
+#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:96
 #: src/provider/gtd-provider-popover.ui:40
 msgid "_Cancel"
 msgstr "_Peru"
 
-#: src/gtd-initial-setup-window.ui:74
+#: src/gtd-initial-setup-window.ui:65
 msgid "_Done"
 msgstr "_Valmis"
 
@@ -471,24 +457,33 @@ msgstr "Virhe laajennusta ladatessa"
 msgid "Error unloading extension"
 msgstr "Virhe poistaessa laajennusta käytöstä"
 
-#: src/gtd-plugin-dialog.ui:62 src/gtd-window.ui:179
+#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:138
 msgid "Extensions"
 msgstr "Laajennukset"
 
-#: src/gtd-plugin-dialog.ui:96
+#: src/gtd-plugin-dialog.ui:90
 msgid "No extensions found"
 msgstr "Laajennuksia ei löytynyt"
 
-#: src/gtd-task-list-panel.ui:38 src/gtd-task-list-panel.ui:74
-#: src/gtd-task-list-panel.ui:98
+#: src/gtd-task-list-panel.c:199
+msgid "Unarchive"
+msgstr "Poista arkistosta"
+
+#: src/gtd-task-list-panel.c:199 src/gtd-task-list-panel.ui:41
+#: src/sidebar/gtd-sidebar.ui:51
+msgid "Archive"
+msgstr "Arkistoi"
+
+#: src/gtd-task-list-panel.ui:26 src/gtd-task-list-panel.ui:61
+#: src/gtd-task-list-panel.ui:77
 msgid "Rename"
 msgstr "Nimeä uudelleen"
 
-#: src/gtd-task-list-panel.ui:57
+#: src/gtd-task-list-panel.ui:47
 msgid "Delete"
 msgstr "Poista"
 
-#: src/gtd-window.c:107
+#: src/gtd-window.c:115
 msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
@@ -496,19 +491,19 @@ msgstr ""
 "Tämä on kehitysversio tehtäväsovelluksesta. Saatat kohdata virheitä, "
 "vääränlaista toimintaa ja tietojen menetystä."
 
-#: src/gtd-window.c:421
+#: src/gtd-window.c:517
 msgid "Details"
 msgstr "Tiedot"
 
-#: src/gtd-window.c:712
+#: src/gtd-window.c:840
 msgid "Click a task list to select"
 msgstr "Napsauta tehtävälistaa valitaksesi"
 
-#: src/gtd-window.ui:63
-msgid "_New List"
-msgstr "Uusi _lista"
+#: src/gtd-window.ui:51
+msgid "New List"
+msgstr "Uusi lista"
 
-#: src/gtd-window.ui:185
+#: src/gtd-window.ui:144
 msgid "_About To Do"
 msgstr "_Tietoja - Tehtävät"
 
@@ -516,80 +511,84 @@ msgstr "_Tietoja - Tehtävät"
 msgid "Create _List"
 msgstr "Luo l_ista"
 
-#: src/provider/gtd-provider-popover.ui:54
+#: src/provider/gtd-provider-popover.ui:53
 msgid "List Name"
 msgstr "Listan nimi"
 
-#: src/provider/gtd-provider-popover.ui:132
+#: src/provider/gtd-provider-popover.ui:130
 msgid "Select a storage location"
 msgstr "Valitse tallennustilan sijainti"
 
-#: src/provider/gtd-provider-row.ui:64
+#: src/provider/gtd-provider-row.ui:57
 msgid "Off"
 msgstr "Pois"
 
-#: src/provider/gtd-provider-selector.ui:23
+#: src/provider/gtd-provider-selector.ui:19
 msgid "Click to add a new Google account"
 msgstr "Napsauta lisätäksesi Google-tilin"
 
-#: src/provider/gtd-provider-selector.ui:39
+#: src/provider/gtd-provider-selector.ui:32
 msgid "Google"
 msgstr "Google"
 
-#: src/provider/gtd-provider-selector.ui:49
+#: src/provider/gtd-provider-selector.ui:42
 msgid "Click to add a new ownCloud account"
 msgstr "Napsauta lisätäksesi ownCloud-tilin"
 
-#: src/provider/gtd-provider-selector.ui:65
+#: src/provider/gtd-provider-selector.ui:55
 msgid "ownCloud"
 msgstr "ownCloud"
 
-#: src/provider/gtd-provider-selector.ui:75
+#: src/provider/gtd-provider-selector.ui:65
 msgid "Click to add a new Microsoft Exchange account"
 msgstr "Napsauta lisätäksesi Microsoft Exchange -tilin"
 
-#: src/provider/gtd-provider-selector.ui:91
+#: src/provider/gtd-provider-selector.ui:78
 msgid "Microsoft Exchange"
 msgstr "Microsoft Exchange"
 
-#: src/provider/gtd-provider-selector.ui:104
+#: src/provider/gtd-provider-selector.ui:91
 msgid "Or you can just store your tasks on this computer"
 msgstr "Tai halutessasi voit tallettaa tehtäväsi tälle tietokoneelle"
 
-#: src/sidebar/gtd-sidebar.c:304
+#: src/sidebar/gtd-sidebar.c:329
 #, c-format
 msgid "Task list <b>%s</b> removed"
 msgstr "Tehtävälista <b>%s<b> poistettu"
 
-#: src/sidebar/gtd-sidebar.c:307 src/task-list-view/gtd-task-list-view.c:461
+#: src/sidebar/gtd-sidebar.c:332 src/task-list-view/gtd-task-list-view.c:460
 msgid "Undo"
 msgstr "Kumoa"
 
-#: src/sidebar/gtd-sidebar-provider-row.ui:88
+#: src/sidebar/gtd-sidebar-provider-row.ui:69
 msgid "Loading…"
 msgstr "Ladataan…"
 
-#: src/task-list-view/gtd-edit-pane.ui:24
+#: src/sidebar/gtd-sidebar.ui:102
+msgid "No archived lists"
+msgstr "Ei arkistoituja listoja"
+
+#: src/task-list-view/gtd-edit-pane.ui:16
 msgid "D_ue Date"
 msgstr "_Eräpäivä"
 
-#: src/task-list-view/gtd-edit-pane.ui:41
+#: src/task-list-view/gtd-edit-pane.ui:30
 msgid "_Today"
 msgstr "_Tänään"
 
-#: src/task-list-view/gtd-edit-pane.ui:50
+#: src/task-list-view/gtd-edit-pane.ui:39
 msgid "To_morrow"
 msgstr "H_uomenna"
 
-#: src/task-list-view/gtd-edit-pane.ui:91
+#: src/task-list-view/gtd-edit-pane.ui:75
 msgid "_Notes"
 msgstr "_Huomautukset"
 
-#: src/task-list-view/gtd-edit-pane.ui:137
+#: src/task-list-view/gtd-edit-pane.ui:117
 msgid "_Delete"
 msgstr "P_oista"
 
-#: src/task-list-view/gtd-edit-pane.ui:176
+#: src/task-list-view/gtd-edit-pane.ui:151
 msgctxt "taskdate"
 msgid "None"
 msgstr "Ei päiväystä"
@@ -600,11 +599,11 @@ msgstr "Ei päiväystä"
 msgid "%1$s \t <small>%2$s</small>"
 msgstr "%1$s \t <small>%2$s</small>"
 
-#: src/task-list-view/gtd-new-task-row.ui:15
+#: src/task-list-view/gtd-new-task-row.ui:14
 msgid "New task…"
 msgstr "Uusi tehtävä…"
 
-#: src/task-list-view/gtd-task-list-view.c:442
+#: src/task-list-view/gtd-task-list-view.c:441
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Tehtävä <b>%s<b> poistettu"
@@ -652,6 +651,15 @@ msgstr "Tehtäviä ei löytynyt"
 #: src/widgets/gtd-empty-list-widget.c:75
 msgid "You can add tasks using the <b>+</b> above"
 msgstr "Voit lisätä tehtäviä napsauttamalla yllä olevaa <b>+</b>-painiketta"
+
+#~ msgid "@icon@"
+#~ msgstr "@icon@"
+
+#~ msgid "Window position"
+#~ msgstr "Ikkunan sijainti"
+
+#~ msgid "Window position (x and y)."
+#~ msgstr "Ikkunan sijainti (x ja y)."
 
 #~ msgid "_Quit"
 #~ msgstr "_Lopeta"
