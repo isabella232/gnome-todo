@@ -78,12 +78,14 @@
         },
         {
             "name" : "libpeas",
+            "buildsystem" : "meson",
             "cleanup" : [
                 "/bin/*",
                 "/lib/peas-demo"
             ],
             "config-opts" : [
-                "-disable-gtk"
+                "-Dwidgetry=false",
+                "-Ddemos=false"
             ],
             "sources" : [
                 {
