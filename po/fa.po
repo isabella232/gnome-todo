@@ -2,95 +2,86 @@
 # Copyright (C) 2015 gnome-todo's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-todo package.
 # Arash Mousavi <mousavi.arash@gmail.com>, 2015.
+# Danial Behzadi <dani.behzi@ubuntu.com>, 2016, 2017, 2018, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"todo&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2017-09-28 11:49+0000\n"
-"PO-Revision-Date: 2017-09-30 19:01+0330\n"
-"Last-Translator: Arash Mousavi <mousavi.arash@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
+"POT-Creation-Date: 2019-03-30 09:36+0000\n"
+"PO-Revision-Date: 2019-09-04 08:07+0000\n"
+"Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7 data/org.gnome.Todo.desktop.in:3
-#: src/gtd-application.c:152 src/gtd-application.c:178 src/gtd-window.c:952
-#: src/gtd-window.c:987
+#: src/gtd-application.c:156 src/gtd-window.c:799 src/gtd-window.c:830
+#: src/main.c:35
 msgid "To Do"
-msgstr "فعالیت"
+msgstr "فعالیت‌ها"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:8
 msgid "Task manager for GNOME"
-msgstr "مدیریت فعالیت‌ها برای گنوم"
+msgstr "مدیر وظیفه برای گنوم"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:11
 msgid ""
-"GNOME To Do is a task management application designed to integrate with "
-"GNOME. It is extensible through plugins and supports custom task providers."
+"GNOME To Do is a task management application designed to integrate with GNOME. "
+"It is extensible through plugins and supports custom task providers."
 msgstr ""
-"«فعالیت‌های گنوم» یک برنامه مدیریت وظایف است که برای یکپارچگی با گنوم طراحی "
-"شده است. کارکردش از طریق افزونه‌ها گسترش پیدا می‌کند و از چندین فراهم‌کنندهٔ "
-"پشتیبانی می‌کند."
+"فعالیت‌های گنوم یک برنامه مدیریت وظایف است که برای یکپارچگی با گنوم طراحی شده "
+"است. از طریق افزایه‌ها گسترش پیدا کرده و از چندین فراهم‌کنندهٔ فعالیت پشتیبانی "
+"می‌کند."
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:24
 msgid "GNOME To Do with the dark theme variant"
-msgstr "فعالیت‌های گنوم با تم تاریک"
+msgstr "فعالیت‌های گنوم با زمینهٔ تاریک"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:28
 msgid "Editing a tasklist with GNOME To Do"
-msgstr "ویرایش یک فهرست فعالیت با «فعالیت‌های گنوم»"
+msgstr "ویرایش یک فهرست وظایف با فعالیت‌های گنوم"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:32
 msgid "Task lists displayed on grid mode"
-msgstr "فهرست فعالیت‌ها در حالت شبکه‌ای"
+msgstr "فهرست وظایف در حالت شبکه‌ای"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:36
 msgid "Task lists displayed on list mode"
-msgstr "فهرست فعالیت‌ها در حالت فهرستی"
+msgstr "فهرست وظایف در حالت فهرستی"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:40
 msgid "Available plugins for GNOME To Do"
-msgstr "افزونه‌های موجود برای فعالیت‌های گنوم"
+msgstr "افزایه‌های موجود برای فعالیت‌های گنوم"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:44
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
-msgstr "نمایش فعالیت‌های امروز بر روی تابلوی امروزِ «فعالیت‌های گنوم»"
+msgstr "نمایش وظایف امروز روی تابلوی امروزِ فعالیت‌های گنوم"
 
-#: data/gtk/menus.ui:7
-msgid "New List…"
-msgstr "فهرست جدید…"
-
-#: data/gtk/menus.ui:20 data/ui/plugin-dialog.ui:75
+#: data/gtk/menus.ui:15 data/ui/plugin-dialog.ui:75
 msgid "Extensions"
-msgstr "متصل‌شونده‌ها"
+msgstr "افزونه‌ها"
 
-#: data/gtk/menus.ui:27
+#: data/gtk/menus.ui:22
 msgid "_About"
 msgstr "_درباره"
 
-#: data/gtk/menus.ui:31
+#: data/gtk/menus.ui:26
 msgid "_Quit"
 msgstr "_خروج"
 
 #: data/org.gnome.Todo.desktop.in:4
 msgid "Manage your personal tasks"
-msgstr "فعالیت‌های شخصی خود را مدیریت کنید"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Todo.desktop.in:7
-msgid "org.gnome.Todo"
-msgstr "org.gnome.Todo"
+msgstr "مدیریت وظایف شخصیتان"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Todo.desktop.in:13
 msgid "Task;Productivity;Todo;"
-msgstr "Task;Productivity;Todo;فعالیت;کارایی;"
+msgstr "Task;Productivity;Todo;فعالیت;کارایی;وظایف;"
 
 #: data/org.gnome.todo.gschema.xml:6
 msgid "Window maximized"
@@ -98,170 +89,159 @@ msgstr "پنجره بیشینه شد"
 
 #: data/org.gnome.todo.gschema.xml:7
 msgid "Window maximized state"
-msgstr "وضعیت بیشینه‌ی پنجره"
+msgstr "وضعیت بیشینهٔ پنجره"
 
 #: data/org.gnome.todo.gschema.xml:11
 msgid "Window size"
-msgstr "اندازه پنجره"
+msgstr "اندازهٔ پنجره"
 
 #: data/org.gnome.todo.gschema.xml:12
 msgid "Window size (width and height)."
-msgstr "اندازه پنجره (عرض و ارتفاع)."
+msgstr "اندازهٔ پنجره (پهنا و بلندا)"
 
 #: data/org.gnome.todo.gschema.xml:16
 msgid "Window position"
-msgstr "مکان پنجره"
+msgstr "موقعیت پنجره"
 
 #: data/org.gnome.todo.gschema.xml:17
 msgid "Window position (x and y)."
-msgstr "مکان پنجره (x و y)."
+msgstr "موقعیت پنجره (x و y)"
 
 #: data/org.gnome.todo.gschema.xml:21
 msgid "First run of GNOME To Do"
-msgstr "اولین اجرای «فعالیت‌های گنوم»"
+msgstr "نخستین اجرای فعالیت‌های گنوم"
 
 #: data/org.gnome.todo.gschema.xml:22
 msgid ""
 "Whether it’s the first run of GNOME To Do (to run the initial setup) or not"
 msgstr ""
-"اینکه آیا این اولین اجرای برنامه‌ی فعالیت‌هام گنوم است (برای اجرای تنظیمات "
-"اولیه) یا خیر"
+"این که نخستین اجرای برنامهٔ فعالیت‌هام گنوم است (برای اجرای برپایی نخستین) یا نه"
 
 #: data/org.gnome.todo.gschema.xml:26
 msgid "Default provider to add new lists to"
-msgstr "فراهم‌کننده پیش‌فرض برای اضافه کردن فهرست‌های جدید"
+msgstr "فراهم‌کنندهٔ پیش‌گزیده برای افزودن فهرست‌های جدید"
 
 #: data/org.gnome.todo.gschema.xml:27
 msgid "The identifier of the default provider to add new lists to"
-msgstr "شناسه فراهم‌کننده پیش‌فرض برای اضافه کردن فهرست‌های جدید"
+msgstr "شناسه فراهم‌کنندهٔ پیش‌گزیده برای افزودن فهرست‌های جدید"
 
 #: data/org.gnome.todo.gschema.xml:31
 msgid "List of active extensions"
-msgstr "فهرست متصل‌شونده‌های فعال"
+msgstr "فهرست افزونه‌های فعال"
 
 #: data/org.gnome.todo.gschema.xml:32
 msgid "The list of active extensions"
-msgstr "فهرست متصل‌شونده‌های فعال"
+msgstr "فهرست افزونه‌های فعال"
 
 #: data/org.gnome.todo.gschema.xml:36
 msgid "The current list selector"
-msgstr "نمایشگر فهرست فعلی"
+msgstr "گزینشگر فهرست جاری"
 
 #: data/org.gnome.todo.gschema.xml:37
 msgid "The current list selector. Can be “grid” or “list”."
-msgstr "انتخابگرِ فهرستِ فعلی. می‌تواند «grid» یا «list» باشد."
+msgstr "گزینشنگر فهرست جاری. می‌تواند «grid» یا «list» باشد."
 
-#: data/ui/edit-pane.ui:24 plugins/eds/edit-pane.ui:259
-msgctxt "taskdate"
-msgid "None"
-msgstr "هیچکدام"
-
-#: data/ui/edit-pane.ui:94 plugins/eds/edit-pane.ui:43 src/gtd-window.c:546
-msgid "Details"
-msgstr "جزئیات"
-
-#: data/ui/edit-pane.ui:125
+#: data/ui/edit-pane.ui:43
 msgid "_Notes"
 msgstr "_یادداشت‌ها"
 
-#: data/ui/edit-pane.ui:168
+#: data/ui/edit-pane.ui:93
 msgid "D_ue Date"
-msgstr "تاریخ _سر رسید"
+msgstr "تاریخ _سررسید"
 
-#: data/ui/edit-pane.ui:188
+#: data/ui/edit-pane.ui:111
+msgid "_Today"
+msgstr "_امروز"
+
+#: data/ui/edit-pane.ui:121
+msgid "To_morrow"
+msgstr "_فردا"
+
+#: data/ui/edit-pane.ui:169
 msgid "_Priority"
 msgstr "ا_لویت"
 
-#: data/ui/edit-pane.ui:208 plugins/eds/edit-pane.ui:195
+#: data/ui/edit-pane.ui:187
 msgctxt "taskpriority"
 msgid "None"
-msgstr "هیچکدام"
+msgstr "هیچ‌کدام"
 
-#: data/ui/edit-pane.ui:209 plugins/eds/edit-pane.ui:196
+#: data/ui/edit-pane.ui:188
 msgid "Low"
-msgstr "پایین"
+msgstr "کم"
 
-#: data/ui/edit-pane.ui:210 plugins/eds/edit-pane.ui:197
+#: data/ui/edit-pane.ui:189
 msgid "Medium"
-msgstr "متوسط"
+msgstr "متوسّط"
 
-#: data/ui/edit-pane.ui:211 plugins/eds/edit-pane.ui:198
+#: data/ui/edit-pane.ui:190
 msgid "High"
-msgstr "بالا"
+msgstr "زیاد"
 
-#: data/ui/edit-pane.ui:222 data/ui/list-selector-panel.ui:93
+#: data/ui/edit-pane.ui:198 data/ui/list-selector-panel.ui:93
 msgid "_Delete"
 msgstr "_حذف"
 
-#: data/ui/edit-pane.ui:246
-msgid "_Today"
-msgstr "ا_مروز"
-
-#: data/ui/edit-pane.ui:257
-msgid "To_morrow"
-msgstr "فر_دا"
-
-#: data/ui/edit-pane.ui:268
-msgid "Next _Week"
-msgstr "_هفته بعد"
+#: data/ui/edit-pane.ui:249
+msgctxt "taskdate"
+msgid "None"
+msgstr "هیچ‌کدام"
 
 #: data/ui/initial-setup.ui:25
 msgid "Welcome"
-msgstr "خوش آمدید"
+msgstr "خوش‌آمدید"
 
 #: data/ui/initial-setup.ui:40
 msgid "Log in to online accounts to access your tasks"
-msgstr "وارد حساب‌های برخط خود شوید تا به فعالیت‌های خود دسترسی داشته باشید"
+msgstr "برای دسترسی به وظایفتان، وارد حساب‌های برخط شوید"
 
 #: data/ui/initial-setup.ui:67
 msgid "To Do Setup"
 msgstr "برپاسازی فعالیت‌ها"
 
-#: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
-#: data/ui/window.ui:71
+#: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43 data/ui/window.ui:74
 msgid "_Cancel"
 msgstr "_لغو"
 
 #: data/ui/initial-setup.ui:80
 msgid "_Done"
-msgstr "ا_عمال"
+msgstr "_اعمال"
 
 #: data/ui/list-selector-panel.ui:79 data/ui/list-selector-panel.ui:173
 msgid "_Rename"
 msgstr "_تغییر نام"
 
-#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:471
+#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:469
 msgid "Lists"
 msgstr "فهرست‌ها"
 
 #: data/ui/list-selector-panel.ui:129
 msgid "Tasks"
-msgstr "فعالیت‌ها"
+msgstr "وظایف"
 
 #: data/ui/list-selector-panel.ui:147
 msgid "Name of the task list"
-msgstr "نام فهرست فعالیت‌ها"
+msgstr "نام فهرست وظایف"
 
 #: data/ui/list-selector-panel.ui:263
 msgid "_New List"
 msgstr "فهرست _جدید"
 
-#: data/ui/list-view.ui:111
+#: data/ui/list-view.ui:113
 msgid "Show or hide completed tasks"
-msgstr "نمایش یا مخفی کردن فعالیت‌های تکمیل شده"
+msgstr "نمایش یا نهفتن وظایف تکمیل شده"
 
-#: data/ui/list-view.ui:137 src/gtd-task-list-view.c:784
-#: src/gtd-task-list-view.c:789
+#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
 msgid "Done"
 msgstr "اعمال"
 
-#: data/ui/new-task-row.ui:39
+#: data/ui/new-task-row.ui:29
 msgid "New task…"
-msgstr "فعالیت جدید…"
+msgstr "وظیفهٔ جدید…"
 
 #: data/ui/plugin-dialog.ui:118
 msgid "No extensions found"
-msgstr "هیچ متصل‌شونده‌ای پیدا نشد"
+msgstr "هیچ افزونه‌ای پیدا نشد"
 
 #: data/ui/provider-popover.ui:25
 msgid "Create _List"
@@ -273,7 +253,7 @@ msgstr "نام فهرست"
 
 #: data/ui/provider-popover.ui:155
 msgid "Select a storage location"
-msgstr "انتخاب یک مکان ذخیره"
+msgstr "گزینش یک مکان ذخیره"
 
 #: data/ui/provider-row.ui:70
 msgid "Off"
@@ -281,7 +261,7 @@ msgstr "خاموش"
 
 #: data/ui/provider-selector.ui:27
 msgid "Click to add a new Google account"
-msgstr "برای اضافه کردن یک حساب گوگل جدید کلیک کنید"
+msgstr "برای افزودن حساب گوگلی جدید کلیک کنید"
 
 #: data/ui/provider-selector.ui:51
 msgid "Google"
@@ -289,444 +269,495 @@ msgstr "گوگل"
 
 #: data/ui/provider-selector.ui:67
 msgid "Click to add a new ownCloud account"
-msgstr "برای اضافه کردن یک حساب جدید ownCloud کلیک کنید"
+msgstr "برای افزودن حساب اون‌کلودی جدید کلیک کنید"
 
 #: data/ui/provider-selector.ui:91
 msgid "ownCloud"
-msgstr "ownCloud"
+msgstr "اون‌کلود"
 
 #: data/ui/provider-selector.ui:107
 msgid "Click to add a new Microsoft Exchange account"
-msgstr "برای اضافه کردن یک حسال جدید مایکروسافت Exchange کلیک کنید"
+msgstr "برای افزودن حساب اکسچنج مایکروسافتی جدید کلیک کنید"
 
 #: data/ui/provider-selector.ui:131
 msgid "Microsoft Exchange"
-msgstr "مایکروسافت Exchange"
+msgstr "اکسچنج مایکروسافت"
 
 #: data/ui/provider-selector.ui:154
 msgid "Or you can just store your tasks on this computer"
-msgstr "یا اینکه می‌توانید فعالیت‌های خود را روی همین رایانه ذخیره کنید"
+msgstr "یا می‌توانید وظایفتان را روی این رایانه ذخیره کنید"
 
-#: plugins/background/gtd-plugin-background.c:148
+#: plugins/background/gtd-plugin-background.c:150
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
-msgstr[0] "%1$s و یک فعالیت دیگر"
-msgstr[1] "%1$s و %2$d فعالیت دیگر"
+msgstr[0] "%1$s و یک وظیفهٔ دیگر"
+msgstr[1] "%1$s و %2$Id وظیفهٔ دیگر"
 
-#: plugins/background/gtd-plugin-background.c:247
+#: plugins/background/gtd-plugin-background.c:249
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
-msgstr[0] "شما %Id فعالیت برای امروز دارید"
+msgstr[0] "برای امروز %Id وظیفه دارید"
 msgstr[1] "شما %Id فعالیت برای امروز دارید"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:6
 msgid "Run To Do on startup"
-msgstr "اجرای «فعالیت‌ها» در هنگام ورود به سیستم"
+msgstr "اجرای فعالیت‌ها در شروع"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:7
 msgid "Whether GNOME To Do should run on startup"
-msgstr ""
-"اینکه «فعالیت‌های گنوم» باید در هنگام ورود به سیستم به طور خودکار اجرا شود یا "
-"خیر"
+msgstr "این که فعالیت‌های گنوم باید هنگام شروع اجرا شود یا نه"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:11
 msgid "Show notifications on startup"
-msgstr "نمایش اعلان در هنگام شروع خودکار"
+msgstr "نمایش آگاهی‌ها در شروع"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:12
 msgid "Whether GNOME To Do should show notifications or not"
-msgstr "اینکه آیا «فعالیت‌های گنوم» باید اعلان نشان دهد یا خیر."
+msgstr "این که فعالیت‌های گنوم باید آگاهی نشان دهد یا نه"
 
 #: plugins/background/ui/preferences.ui:53
 msgid "Run on Startup"
-msgstr "اجرا در هنگام ورود به سیستم"
+msgstr "اجرا در شروع"
 
 #: plugins/background/ui/preferences.ui:66
 msgid "Run To Do automatically when you log in"
-msgstr "اجرای خودکار «فعالیت‌ها» در هنگام ورود به سیستم"
+msgstr "اجرای خودکار فعالیت‌ها هنگام ورودتان"
 
 #: plugins/background/ui/preferences.ui:122
 msgid "Show Notifications"
-msgstr "نمایش اعلان‌ها"
+msgstr "نمایش آگاهی‌ها"
 
 #: plugins/background/ui/preferences.ui:135
 msgid "When To Do runs, show a startup notification"
-msgstr "هنگامی که «فعالیت‌ها» اجرا می‌شود، یک اعلان نمایش بده"
+msgstr "نمایش یک آگاهی شروع هنگام اجرای فعالیت‌ها"
 
-#: plugins/eds/edit-pane.ui:76
-msgid "Notes"
-msgstr "نوشته‌ها"
-
-#: plugins/eds/edit-pane.ui:117
-msgid "Due Date"
-msgstr "تاریخ پایان"
-
-#: plugins/eds/edit-pane.ui:177
-msgid "Priority"
-msgstr "الویت"
-
-#: plugins/eds/edit-pane.ui:209
-msgid "Delete"
-msgstr "حذف"
-
-#: plugins/eds/gtd-plugin-eds.c:243 plugins/eds/gtd-plugin-eds.c:247
+#: plugins/eds/gtd-plugin-eds.c:201
 msgid "Error loading GNOME Online Accounts"
-msgstr "خطا در هنگام بارگیری حساب‌های برخط گنوم"
+msgstr "خطای بار کردن حساب‌های برخط گنوم"
 
-#: plugins/eds/gtd-plugin-eds.c:274
-msgid "Error loading Evolution-Data-Server backend"
-msgstr "خطا در خواندن پسانه Evolution-Data-Server"
-
-#: plugins/eds/gtd-provider-eds.c:136 plugins/eds/gtd-provider-eds.c:140
-msgid "Error fetching tasks from list"
-msgstr "خطا در هنگام گرفتن فعالیت‌ها از فهرست"
-
-#: plugins/eds/gtd-provider-eds.c:174 plugins/eds/gtd-provider-eds.c:179
+#: plugins/eds/gtd-provider-eds.c:139
 msgid "Failed to connect to task list"
-msgstr "اتصال به فهرست فعالیت‌ها شکست خورد"
+msgstr "شکست در اتصال به فهرست وظایف"
 
-#: plugins/eds/gtd-provider-eds.c:227
-msgid "Task list source successfully connected"
-msgstr "منبع فهرست فعالیت‌ها بطور موفقیت‌آمیزی متصل شد"
+#: plugins/eds/gtd-provider-eds.c:351
+msgid "An error occurred while creating a task"
+msgstr "خطا هنگام ایجاد یک وظیفه"
 
-#: plugins/eds/gtd-provider-eds.c:336
-msgid "Failed to prompt for credentials"
-msgstr "درخواست برای اطلاعات گذرواژه شکست خورد"
+#: plugins/eds/gtd-provider-eds.c:383
+msgid "An error occurred while modifying a task"
+msgstr "خطا هنگام اصلاح وظیفه"
 
-#: plugins/eds/gtd-provider-eds.c:359
-msgid "Failed to prompt for credentials for"
-msgstr "درخواست برای اطلاعات گذرواژه شکست خورد"
+#: plugins/eds/gtd-provider-eds.c:404
+msgid "An error occurred while removing a task"
+msgstr "خطا هنگام برداشتن یک وظیفه"
 
-#: plugins/eds/gtd-provider-eds.c:413
-msgid "Authentication failure"
-msgstr "تصدیق هویت شکست خورد"
+#: plugins/eds/gtd-provider-eds.c:422
+msgid "An error occurred while creating a task list"
+msgstr "خطا هنگام ایجاد فهرستی از وظایف"
 
-#: plugins/eds/gtd-provider-eds.c:487
-msgid "Error loading task manager"
-msgstr "خطا در هنگام بارگیری مدیر فعالیت‌ها"
+#: plugins/eds/gtd-provider-eds.c:444 plugins/eds/gtd-provider-eds.c:467
+msgid "An error occurred while modifying a task list"
+msgstr "خطا هنگام اصلاح فهرستی از وظایف"
 
-#: plugins/eds/gtd-provider-eds.c:573 plugins/eds/gtd-provider-eds.c:581
-msgid "Error creating task"
-msgstr "خطا در هنگام ساخت فعالیت"
-
-#: plugins/eds/gtd-provider-eds.c:623 plugins/eds/gtd-provider-eds.c:627
-msgid "Error updating task"
-msgstr "خطا در بروزرسانی فعالیت"
-
-#: plugins/eds/gtd-provider-eds.c:661 plugins/eds/gtd-provider-eds.c:665
-msgid "Error removing task"
-msgstr "خطا در هنگام حذف فعالیت"
-
-#: plugins/eds/gtd-provider-eds.c:691 plugins/eds/gtd-provider-eds.c:695
-msgid "Error creating task list"
-msgstr "خطا در حذف فهرست فعالیت‌ها"
-
-#: plugins/eds/gtd-provider-eds.c:716 plugins/eds/gtd-provider-eds.c:720
-msgid "Error removing task list"
-msgstr "خطا در حذف فهرست فعالیت‌ها"
-
-#: plugins/eds/gtd-provider-eds.c:779 plugins/eds/gtd-provider-eds.c:783
-#: plugins/eds/gtd-task-list-eds.c:69
-msgid "Error saving task list"
-msgstr "خطا در ذخیره فهرست فعالیت‌ها"
-
-#: plugins/eds/gtd-provider-local.c:61
+#: plugins/eds/gtd-provider-local.c:50
 msgid "Local"
-msgstr "محلی"
+msgstr "محلّی"
 
-#: plugins/eds/gtd-provider-local.c:67
+#: plugins/eds/gtd-provider-local.c:56
 msgid "On This Computer"
-msgstr "بر روی این رایانه"
+msgstr "روی این رایانه"
 
-#: plugins/eds/gtd-provider-local.c:134 plugins/eds/gtd-provider-local.c:138
-msgid "Error creating new task list"
-msgstr "خطا در هنگام ساخت یک فهرست فعالیت"
+#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:307
+#: plugins/eds/gtd-task-list-eds.c:331
+msgid "Error fetching tasks from list"
+msgstr "خطای دریافت وظایف از فهرست"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:94 src/gtd-edit-pane.c:217
-#: src/gtd-task-row.c:374
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-edit-pane.c:110
 msgid "No date set"
 msgstr "هیچ تاریخی ثبت نشده"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:102 src/gtd-task-row.c:352
+#. Translators: This message will never be used with '1 day ago'
+#. * but the singular form is required because some languages do not
+#. * have plurals, some languages reuse the singular form for numbers
+#. * like 21, 31, 41, etc.
+#.
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
 #, c-format
-msgid "Yesterday"
+msgid "%d day ago"
 msgid_plural "%d days ago"
-msgstr[0] "دیروز"
-msgstr[1] "%Id روز گذشته"
+msgstr[0] "%Id روز پیش"
+msgstr[1] "%Id روز پیش"
+
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:147
+msgid "Yesterday"
+msgstr "دیروز"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:106
-#: plugins/score/score/__init__.py:95 plugins/today-panel/gtd-panel-today.c:132
-#: plugins/today-panel/gtd-panel-today.c:137
-#: plugins/today-panel/gtd-panel-today.c:271 src/gtd-task-row.c:344
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:118
+#: plugins/score/score/__init__.py:101 plugins/today-panel/gtd-panel-today.c:134
+#: plugins/today-panel/gtd-panel-today.c:139
+#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:139
 msgid "Today"
 msgstr "امروز"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:110 src/gtd-task-row.c:348
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:122 src/gtd-task-row.c:143
 msgid "Tomorrow"
 msgstr "فردا"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:366
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:371
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:508
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:356
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:358
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:495
 msgid "Scheduled"
-msgstr "برنامه‌ریزی شده"
+msgstr "زمان‌بندی شده"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:513
-#: plugins/today-panel/gtd-panel-today.c:276
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:52
-#: src/views/gtd-list-selector-panel.c:712
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:500
+#: plugins/today-panel/gtd-panel-today.c:278
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
 msgid "Clear completed tasks…"
-msgstr "پاک کردن فعالیت‌های تکمیل شده…"
+msgstr "پاک‌سازی وظایف کامل…"
 
-#: plugins/score/score/__init__.py:84
+#: plugins/score/score/__init__.py:90
 msgid "No task completed today"
-msgstr "هیچ فعالیتی امروز کامل نشده است"
+msgstr "هیچ وظیفه‌ای امروز کامل نشده"
 
-#: plugins/todoist/gtd-provider-todoist.c:118
+#: plugins/todoist/gtd-provider-todoist.c:212
+msgid "Error fetching Todoist account key"
+msgstr "خطای گرفتن کلید حساب Todoist"
+
+#: plugins/todoist/gtd-provider-todoist.c:213
+msgid "Please ensure that Todoist account is correctly configured."
+msgstr "لطفا مطمئن شوید که حساب Todoist به درستی پیکربندی شده."
+
+#: plugins/todoist/gtd-provider-todoist.c:557
+#, c-format
+msgid ""
+"GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
+msgstr "فعالیت‌های گنوم دسترسی لازم برای این کار را ندارد: %s"
+
+#: plugins/todoist/gtd-provider-todoist.c:565
+#, c-format
+msgid "Invalid response received from Todoist servers. Please reload GNOME To Do."
+msgstr ""
+"پاسخی نامعتبر از کارساز Todoist دریافت شد. لطفاً فعالیت‌های گنوم را دوباره بار "
+"کنید."
+
+#: plugins/todoist/gtd-provider-todoist.c:865
+msgid "An error occurred while updating a Todoist task"
+msgstr "خطا هنگام به‌روز رسانی یک وظیفهٔ Todoist"
+
+#: plugins/todoist/gtd-provider-todoist.c:982
+msgid "An error occurred while retrieving Todoist data"
+msgstr "خطا هنگام دریافت داده‌ّای Todoist"
+
+#: plugins/todoist/gtd-provider-todoist.c:1057
+msgid "An error occurred while updating Todoist"
+msgstr "خطا هنگام به‌روز رسانی Todoist"
+
+#: plugins/todoist/gtd-provider-todoist.c:1117
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:198
-#: plugins/todoist/gtd-provider-todoist.c:430
-msgid "Error loading Todoist tasks"
-msgstr "خطا در هنگام بارگیری فعالیت‌های Todoist"
-
-#: plugins/todoist/gtd-provider-todoist.c:213
-msgid "Error fetching Todoist account key"
-msgstr "خطا در دریافت کلید حساب Todoist"
-
-#: plugins/todoist/gtd-provider-todoist.c:214
-msgid "Please ensure that Todoist account is correctly configured."
-msgstr "لطفا مطمئن شوید که حساب Todoist به درستی پیکربندی شده است."
-
-#: plugins/todoist/gtd-provider-todoist.c:427
-#, c-format
-msgid "Bad status code (%d) received. Please check your connection."
-msgstr "کد وضعیت (%Id) نادرستی دریافت شد. لطفا اتصال خود را بررسی کنید."
-
-#: plugins/todoist/gtd-provider-todoist.c:962
+#: plugins/todoist/gtd-provider-todoist.c:1426
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
 
-#: plugins/todoist/ui/preferences.ui:80
+#: plugins/todoist/ui/preferences.ui:81
 msgid "No Todoist accounts found"
 msgstr "هیچ حساب Todoistای پیدا نشد"
 
-#: plugins/todoist/ui/preferences.ui:89
+#: plugins/todoist/ui/preferences.ui:90
 msgid "Add a Todoist account"
-msgstr "اضافه کردن یک حساب Todoist"
+msgstr "افزودن یک حساب Todoist"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:142
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:183
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:87
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:124
 msgid "Cannot create Todo.txt file"
 msgstr "نمی‌توان پروندهٔ Todo.txt را ساخت"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:307
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:161
 msgid "Select a Todo.txt-formatted file:"
-msgstr "یک پرونده با قالب Todo.txt انتخاب کنید:"
+msgstr "گزینش پرونده‌ای با قالب Todo.txt:"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:308
+#. Filechooser
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:165
 msgid "Select a file"
-msgstr "انتخاب یک پرونده"
+msgstr "گزینش یک پرونده"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:75
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:191
+msgid "Error opening Todo.txt file"
+msgstr "خطا در گشودن پروندهٔ Todo.txt"
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:201
+msgid ""
+"<b>Warning!</b> Todo.txt support is experimental and unstable. You may "
+"experience instability, errors and eventually data loss. It is not recommended "
+"to use Todo.txt integration on production systems."
+msgstr ""
+"پشتیبانی از Todo.txt آزمایشی و ناپایدار است. ممکن است ناپایداری یا خطا تجربه "
+"کرده و حتا داده‌هایتان را از دست بدهید. استفاده از یکپارچگی Todo.txt روی "
+"سامانه‌‌های محصول، استفاده نمی‌شود."
+
+#: plugins/todo-txt/gtd-provider-todo-txt.c:326
+msgid "Error while opening the file monitor. Todo.txt will not be monitored"
+msgstr "خطا هنگام گشودن پایشگر پرونده. Todo.txt پایش نخواهد شد"
+
+#: plugins/todo-txt/gtd-provider-todo-txt.c:395
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:81
+#: plugins/todo-txt/gtd-provider-todo-txt.c:401
 msgid "On the Todo.txt file"
-msgstr "بر روی پروندهٔ Todo.txt"
-
-#: plugins/todo-txt/gtd-provider-todo-txt.c:112
-#: plugins/todo-txt/gtd-provider-todo-txt.c:116
-msgid "Error while opening Todo.txt"
-msgstr "خطا در هنگام باز کردن Todo.txt"
-
-#: plugins/todo-txt/gtd-provider-todo-txt.c:263
-#: plugins/todo-txt/gtd-provider-todo-txt.c:267
-msgid "Error while reading a line from Todo.txt"
-msgstr "خطا هنگام خواندن یکی از خط‌ها در Todo.txt"
-
-#: plugins/todo-txt/gtd-provider-todo-txt.c:384
-msgid "Error while opening the file monitor. Todo.txt will not be monitored"
-msgstr "خطا در هنگام باز کردن پایشگر پرونده. Todo.txt پایش نخواهد شد"
-
-#: plugins/todo-txt/gtd-todo-txt-parser.c:310
-msgid "Incorrect date"
-msgstr "تاریخ نادرست"
-
-#: plugins/todo-txt/gtd-todo-txt-parser.c:311
-msgid "Please make sure the date in Todo.txt is valid."
-msgstr "لطفا مطمئن شوید که تاریخ در Todo.txt معتبر است."
-
-#: plugins/todo-txt/gtd-todo-txt-parser.c:342
-msgid "Unrecognized token in a Todo.txt line"
-msgstr "توکن ناشناس در Todo.txt"
-
-#: plugins/todo-txt/gtd-todo-txt-parser.c:343
-msgid ""
-"To Do cannot recognize some tags in your Todo.txt file. Some tasks may not be "
-"loaded"
-msgstr ""
-"«فعالیت‌ها» نمی‌تواند برخی از برچسب‌ها را در پرونده Todo.txt تشخیص دهد. برخی از "
-"فعالیت‌ها ممکن است بار نشوند"
-
-#: plugins/todo-txt/gtd-todo-txt-parser.c:354
-msgid "No task list found for some tasks"
-msgstr "هیچ فهرست فعالیتی برای برخی از فعالیت‌ها پیدا نشد"
-
-#: plugins/todo-txt/gtd-todo-txt-parser.c:355
-msgid ""
-"Some of the tasks in your Todo.txt file do not have a task list. To Do "
-"supports tasks with a task list. Please add a list to all your tasks"
-msgstr ""
-"برخی از فعالیت‌ها در پرونده Todo.txt فهرست فعالیتی ندارند. «فعالیت‌ها» از "
-"فعالیت‌های دارای فهرست فعالیت پشتیبانی می‌کند. لطفا یک فهرست به تمام فعالیت‌های "
-"خود اضافه کنید"
+msgstr "روی پروندهٔ Todo.txt"
 
 #: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:6
 msgid "Todo.txt File"
-msgstr "پرونده Todo.txt"
+msgstr "پروندهٔ Todo.txt"
 
 #: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:7
 msgid "Source of the Todo.txt file"
 msgstr "منبع پروندهٔ Todo.txt"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:34
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:96
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:103
 msgid "Unscheduled"
-msgstr "برنامه‌ریزی نشده"
+msgstr "زمان‌بندی نشده"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:99
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:106
 #, python-format
 msgid "Unscheduled (%d)"
-msgstr "برنامه‌ریزی نشده (%d)"
+msgstr "زمان‌بندی نشده (%d)"
 
-#: src/gtd-application.c:142
+#: src/gtd-application.c:72
+msgid "Quit GNOME To Do"
+msgstr "خروج از فعالیت‌های گنوم"
+
+#: src/gtd-application.c:73
+msgid "Enable debug messages"
+msgstr "به کار انداختن پیام‌های رفع‌اشکال"
+
+#: src/gtd-application.c:146
 #, c-format
-msgid "Copyright © %d The To Do authors"
-msgstr "حق رونوشت © %Id توسعه‌دهندگان فعالیت‌ها"
+msgid "Copyright © %1$d The To Do authors"
+msgstr "حق رونوشت © %1$Id توسعه‌دهندگان فعالیت‌ها"
 
-#: src/gtd-application.c:147
+#: src/gtd-application.c:151
 #, c-format
-msgid "Copyright © %d–%d The To Do authors"
-msgstr "حق رونوشت © %Id-%Id توسعه‌دهندگان فعالیت‌ها"
+msgid "Copyright © %1$d–%2$d The To Do authors"
+msgstr "حق رونوشت © %1$Id–%2$Id توسعه‌دهندگان فعالیت‌ها"
 
-#: src/gtd-application.c:159
+#: src/gtd-application.c:163
 msgid "translator-credits"
-msgstr "آرش موسوی <mousavi.arash@gmail.com>"
-
-#: src/gtd-empty-list-widget.c:49
-msgid "No more tasks left"
-msgstr "هیچ فعالیت دیگری نیست"
-
-#: src/gtd-empty-list-widget.c:50
-msgid "Nothing else to do here"
-msgstr "اینجا هیچ کاری برای انجام نیست"
+msgstr ""
+"آرش موسوی <mousavi.arash@gmail.com>\n"
+"دانیال بهزادی <dani.behzi@ubuntu.com>"
 
 #: src/gtd-empty-list-widget.c:51
-msgid "You made it!"
-msgstr "موفق شدی!"
+msgid "No more tasks left"
+msgstr "هیچ وظیفهٔ دیگری باقی‌نمانده"
 
 #: src/gtd-empty-list-widget.c:52
+msgid "Nothing else to do here"
+msgstr "هیچ کاری دیگری برای انجام نیست"
+
+#: src/gtd-empty-list-widget.c:53
+msgid "You made it!"
+msgstr "موفق شدید!"
+
+#: src/gtd-empty-list-widget.c:54
 msgid "Looks like there’s nothing else left here"
-msgstr "بنظر میاد چیز دیگه‌ای اینجا باقی نمانده"
-
-#: src/gtd-empty-list-widget.c:57
-msgid "Get some rest now"
-msgstr "کمی استراحت کن"
-
-#: src/gtd-empty-list-widget.c:58
-msgid "Enjoy the rest of your day"
-msgstr "از بقیه روز لذت ببر"
+msgstr "به نظر هیچ چیز دیگری باقی نمانده"
 
 #: src/gtd-empty-list-widget.c:59
-msgid "Good job!"
-msgstr "کارت درسته!"
+msgid "Get some rest now"
+msgstr "کنون کمی بیاسای"
 
 #: src/gtd-empty-list-widget.c:60
-msgid "Meanwhile, spread the love"
-msgstr "در همین حین، خبر رو پخش کنید"
+msgid "Enjoy the rest of your day"
+msgstr "از باقی روزت لذت ببر"
 
 #: src/gtd-empty-list-widget.c:61
+msgid "Good job!"
+msgstr "عالی!"
+
+#: src/gtd-empty-list-widget.c:62
+msgid "Meanwhile, spread the love"
+msgstr "در این حین، عشق بپراکن"
+
+#: src/gtd-empty-list-widget.c:63
 msgid "Working hard is always rewarded"
-msgstr "سخت‌کوشی همیشه نتیجه میده"
+msgstr "مزد آن گرفت جان برادر که کار کرد"
 
-#: src/gtd-empty-list-widget.c:72
+#: src/gtd-empty-list-widget.c:74
 msgid "No tasks found"
-msgstr "هیچ فعالیتی پیدا نشد"
+msgstr "هیچ وظیفه‌ای پیدا نشد"
 
-#: src/gtd-empty-list-widget.c:73
+#: src/gtd-empty-list-widget.c:75
 msgid "You can add tasks using the <b>+</b> above"
-msgstr "با استفاده از <b>+</b> در بالا می‌توانید فعالیت‌ها را اضافه کنید"
+msgstr "با <b>+</b> در بالا می‌توانید وظیفه بیفزایید"
 
-#: src/gtd-plugin-dialog-row.c:95
-msgid "Error loading plugin"
-msgstr "خطا در بارگیری افزونه"
+#: src/gtd-plugin-dialog-row.c:97
+msgid "Error loading extension"
+msgstr "خطای بار کردن افزونه"
 
-#: src/gtd-plugin-dialog-row.c:95
-msgid "Error unloading plugin"
-msgstr "خطا در غیرفعال کردن افزونه"
+#: src/gtd-plugin-dialog-row.c:97
+msgid "Error unloading extension"
+msgstr "خطای تخلیهٔ افزونه"
 
-#: src/gtd-task-list-view.c:612
+#: src/gtd-task-list-view.c:292
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
-msgstr "حذف این فعالیت، زیرفعالیت‌های آن را نیز پاک خواهد کرد. مطمئن هستید؟"
+msgstr "برداشتن این وظیفه، زیروظایفش را نیز برخواهد داشت. بر هر صورت برداشته شود؟"
 
-#: src/gtd-task-list-view.c:615
+#: src/gtd-task-list-view.c:295
 msgid "Once removed, the tasks cannot be recovered."
-msgstr "بعد از حذف کردن، دیگر امکان برگرداندن فهرست فعالیت‌ها نیست."
+msgstr "پس از حذف، دیگر امکان برگرداندن وظایف نیست."
 
-#: src/gtd-task-list-view.c:618 src/views/gtd-list-selector-panel.c:392
+#: src/gtd-task-list-view.c:298 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "لغو"
 
-#: src/gtd-task-list-view.c:620
+#: src/gtd-task-list-view.c:300
 msgid "Remove"
-msgstr "حذف"
+msgstr "برداشتن"
 
-#: src/gtd-task-list-view.c:669
+#: src/gtd-task-list-view.c:390
+#, c-format
+msgid "Done (%d)"
+msgstr "انجام (%Id)"
+
+#: src/gtd-task-list-view.c:660
 #, c-format
 msgid "Task <b>%s</b> removed"
-msgstr "فعالیت <b>%s</b> حذف شد"
+msgstr "وظیفهٔ <b>%s</b> برداشته شد"
 
-#: src/gtd-task-list-view.c:699
+#: src/gtd-task-list-view.c:684
 msgid "Undo"
 msgstr "برگردان"
 
-#: src/gtd-window.c:820
+#: src/gtd-window.c:476
+msgid "Details"
+msgstr "جزییات"
+
+#: src/gtd-window.c:689
 msgid "Loading your task lists…"
-msgstr "بارگیری فهرست‌های فعالیت شما…"
+msgstr "بار کردن فهرست‌های وظایفتان…"
 
-#: src/gtd-window.c:946
+#: src/gtd-window.c:793
 msgid "Click a task list to select"
-msgstr "برای انتخاب روی یک فهرست فعالیت کلیک کنید"
+msgstr "برای گزینش روی فهرستی کلیک کنید"
 
-#: src/views/gtd-list-selector-grid-item.c:234
+#.
+#. * If there's no task available, draw a "No tasks" string at
+#. * the middle of the list thumbnail.
+#.
+#: src/views/gtd-list-selector-grid-item.c:250
 msgid "No tasks"
-msgstr "بدون فعالیت"
+msgstr "بدون وظیفه"
 
-#: src/views/gtd-list-selector-panel.c:186
-msgid "Setting new color for task list"
-msgstr "انتخاب رنگ جدید برای فهرست فعالیت"
-
-#: src/views/gtd-list-selector-panel.c:385
+#: src/views/gtd-list-selector-panel.c:381
 msgid "Remove the selected task lists?"
-msgstr "حذف فهرست‌های فعالیت انتخاب شده؟"
+msgstr "بردشاتن فهرست‌های وظایف انتخاب شده؟"
 
-#: src/views/gtd-list-selector-panel.c:388
+#: src/views/gtd-list-selector-panel.c:384
 msgid "Once removed, the task lists cannot be recovered."
-msgstr "بعد از حذف کردن، دیگر امکان برگرداندن فهرست فعالیت‌ها نیست."
+msgstr "پس از حذف، دیگر امکان برگرداندن فهرست وظایف نیست."
 
-#: src/views/gtd-list-selector-panel.c:400
+#: src/views/gtd-list-selector-panel.c:396
 msgid "Remove task lists"
-msgstr "حذف فهرست فعالیت"
+msgstr "برداشتن فهرست وظایف"
+
+#: src/views/gtd-list-selector-panel.c:709
+msgid "Clear completed tasks"
+msgstr "پاک‌سازی وظایف کامل"
+
+#~ msgid "New List…"
+#~ msgstr "فهرست جدید…"
+
+#~ msgid "org.gnome.Todo"
+#~ msgstr "org.gnome.Todo"
+
+#~ msgid "Next _Week"
+#~ msgstr "_هفته بعد"
+
+#~ msgid "Notes"
+#~ msgstr "نوشته‌ها"
+
+#~ msgid "Due Date"
+#~ msgstr "تاریخ پایان"
+
+#~ msgid "Priority"
+#~ msgstr "الویت"
+
+#~ msgid "Delete"
+#~ msgstr "حذف"
+
+#~ msgid "Error loading Evolution-Data-Server backend"
+#~ msgstr "خطا در خواندن پسانه Evolution-Data-Server"
+
+#~ msgid "Task list source successfully connected"
+#~ msgstr "منبع فهرست فعالیت‌ها بطور موفقیت‌آمیزی متصل شد"
+
+#~ msgid "Failed to prompt for credentials"
+#~ msgstr "درخواست برای اطلاعات گذرواژه شکست خورد"
+
+#~ msgid "Failed to prompt for credentials for"
+#~ msgstr "درخواست برای اطلاعات گذرواژه شکست خورد"
+
+#~ msgid "Authentication failure"
+#~ msgstr "تصدیق هویت شکست خورد"
+
+#~ msgid "Error loading task manager"
+#~ msgstr "خطا در هنگام بارگیری مدیر فعالیت‌ها"
+
+#~ msgid "Error updating task"
+#~ msgstr "خطا در بروزرسانی فعالیت"
+
+#~ msgid "Error saving task list"
+#~ msgstr "خطا در ذخیره فهرست فعالیت‌ها"
+
+#~ msgid "Error creating new task list"
+#~ msgstr "خطا در هنگام ساخت یک فهرست فعالیت"
+
+#~ msgid "Bad status code (%d) received. Please check your connection."
+#~ msgstr "کد وضعیت (%Id) نادرستی دریافت شد. لطفا اتصال خود را بررسی کنید."
+
+#~ msgid "Error while reading a line from Todo.txt"
+#~ msgstr "خطا هنگام خواندن یکی از خط‌ها در Todo.txt"
+
+#~ msgid "Incorrect date"
+#~ msgstr "تاریخ نادرست"
+
+#~ msgid "Please make sure the date in Todo.txt is valid."
+#~ msgstr "لطفا مطمئن شوید که تاریخ در Todo.txt معتبر است."
+
+#~ msgid "Unrecognized token in a Todo.txt line"
+#~ msgstr "توکن ناشناس در Todo.txt"
+
+#~ msgid ""
+#~ "To Do cannot recognize some tags in your Todo.txt file. Some tasks may not "
+#~ "be loaded"
+#~ msgstr ""
+#~ "«فعالیت‌ها» نمی‌تواند برخی از برچسب‌ها را در پرونده Todo.txt تشخیص دهد. برخی از "
+#~ "فعالیت‌ها ممکن است بار نشوند"
+
+#~ msgid "No task list found for some tasks"
+#~ msgstr "هیچ فهرست فعالیتی برای برخی از فعالیت‌ها پیدا نشد"
+
+#~ msgid ""
+#~ "Some of the tasks in your Todo.txt file do not have a task list. To Do "
+#~ "supports tasks with a task list. Please add a list to all your tasks"
+#~ msgstr ""
+#~ "برخی از فعالیت‌ها در پرونده Todo.txt فهرست فعالیتی ندارند. «فعالیت‌ها» از "
+#~ "فعالیت‌های دارای فهرست فعالیت پشتیبانی می‌کند. لطفا یک فهرست به تمام فعالیت‌های "
+#~ "خود اضافه کنید"
+
+#~ msgid "Setting new color for task list"
+#~ msgstr "انتخاب رنگ جدید برای فهرست فعالیت"
 
 #~ msgid "Change default storage location…"
 #~ msgstr "تغییر محل ذخیره پیش‌فرض..."
