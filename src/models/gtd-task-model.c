@@ -68,7 +68,6 @@ on_model_items_changed_cb (GListModel   *model,
   GTD_TRACE_MSG ("Child model changed with position=%u, n_removed=%u, n_added=%u", position, n_removed, n_added);
 
   g_list_model_items_changed (G_LIST_MODEL (self), position, n_removed, n_added);
-
 }
 
 
