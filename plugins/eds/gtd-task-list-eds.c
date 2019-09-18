@@ -892,6 +892,7 @@ gtd_task_list_eds_set_source (GtdTaskListEds *self,
                               ESource        *source)
 {
   ESourceSelectable *selectable;
+  ESourceRefresh *refresh;
   GdkRGBA color;
 
   g_return_if_fail (GTD_IS_TASK_LIST_EDS (self));
@@ -952,6 +953,13 @@ gtd_task_list_eds_set_source (GtdTaskListEds *self,
                             "notify::remote-deletable",
                             G_CALLBACK (on_source_removable_changed_cb),
                             self);
+
+  /* Refresh timeout */
+  refresh = e_source_get_extension (source, E_SOURCE_EXTENSION_REFRESH);
+  e_source_refresh_set_enabled (refresh, TRUE);
+  e_source_refresh_set_interval_minutes (refresh, 5);
+
+  e_source_write (source, NULL, NULL, NULL);
 
   g_object_notify (G_OBJECT (self), "source");
 }
