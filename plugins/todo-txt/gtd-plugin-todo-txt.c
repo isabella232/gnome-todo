@@ -202,7 +202,7 @@ setup_preferences_panel (GtdPluginTodoTxt *self)
                           "You may experience instability, errors and eventually data loss. "
                           "It is not recommended to use Todo.txt integration on production systems."));
   gtk_label_set_max_width_chars (GTK_LABEL (label), 60);
-  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_label_set_wrap (GTK_LABEL (label), FALSE);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_lines (GTK_LABEL (label), 3);
   gtk_widget_set_margin_top (label, 18);
