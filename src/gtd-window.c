@@ -82,7 +82,7 @@ struct _GtdWindow
   /* mode */
   GtdWindowMode       mode;
 
-  gulong              block_refresh_timeout_id;
+  guint               block_refresh_timeout_id;
 };
 
 typedef struct
@@ -621,11 +621,7 @@ gtd_window_finalize (GObject *object)
 
   G_OBJECT_CLASS (gtd_window_parent_class)->finalize (object);
 
-  if (self->block_refresh_timeout_id)
-    {
-      g_source_remove (self->block_refresh_timeout_id);
-      self->block_refresh_timeout_id = 0;
-    }
+  g_clear_handle_id (&self->block_refresh_timeout_id, g_source_remove);
 }
 
 static void
