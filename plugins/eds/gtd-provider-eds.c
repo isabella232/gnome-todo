@@ -46,7 +46,6 @@ typedef struct
   GCancellable         *cancellable;
 
   gint                  lazy_load_id;
-  gulong                minute_changed_handler_id;
 } GtdProviderEdsPrivate;
 
 
@@ -264,13 +263,6 @@ on_default_tasklist_changed_cb (ESourceRegistry *source_registry,
 
 out:
   g_clear_object (&default_source);
-}
-
-static void
-on_minute_changed_cb (GtdClock       *clock,
-                      GtdProviderEds *self)
-{
-  gtd_provider_refresh (GTD_PROVIDER (self));
 }
 
 static void
@@ -1003,20 +995,10 @@ gtd_provider_eds_class_init (GtdProviderEdsClass *klass)
 static void
 gtd_provider_eds_init (GtdProviderEds *self)
 {
-  GtdProviderEdsPrivate *priv;
-  GtdManager *manager;
-  GtdClock *clock;
-
-  priv = gtd_provider_eds_get_instance_private (self);
-  manager = gtd_manager_get_default ();
-  clock = gtd_manager_get_clock (manager);
+  GtdProviderEdsPrivate *priv = gtd_provider_eds_get_instance_private (self);
 
   priv->cancellable = g_cancellable_new ();
   priv->task_lists = g_hash_table_new (g_direct_hash, g_direct_equal);
-  priv->minute_changed_handler_id = g_signal_connect (clock,
-                                                      "minute-changed",
-                                                      G_CALLBACK (on_minute_changed_cb),
-                                                      self);
 }
 
 GtdProviderEds*
