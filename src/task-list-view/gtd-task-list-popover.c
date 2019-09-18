@@ -164,7 +164,7 @@ on_listbox_row_activated_cb (GtkListBox         *listbox,
                              GtkListBoxRow      *row,
                              GtdTaskListPopover *self)
 {
-  GtdTaskList *list = g_object_get_data (G_OBJECT (row), "tasklit");
+  GtdTaskList *list = g_object_get_data (G_OBJECT (row), "tasklist");
 
   set_selected_tasklist (self, list);
   gtk_popover_popdown (GTK_POPOVER (self));
