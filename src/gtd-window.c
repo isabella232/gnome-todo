@@ -81,8 +81,6 @@ struct _GtdWindow
 
   /* mode */
   GtdWindowMode       mode;
-
-  guint               block_refresh_timeout_id;
 };
 
 typedef struct
@@ -91,9 +89,6 @@ typedef struct
   gchar              *primary_text;
   gchar              *secondary_text;
 } ErrorData;
-
-
-static gboolean      block_refresh_cb                            (gpointer           data);
 
 
 G_DEFINE_TYPE (GtdWindow, gtd_window, GTK_TYPE_APPLICATION_WINDOW)
@@ -185,14 +180,6 @@ remove_widgets (GtdWindow *self,
       g_object_ref (l->data);
       gtk_container_remove (GTK_CONTAINER (container), l->data);
     }
-}
-
-static void
-block_refresh (GtdWindow *self)
-{
-  g_debug ("Blocking refreshs triggered by window focus");
-
-  self->block_refresh_timeout_id = g_timeout_add_seconds (20, block_refresh_cb, self);
 }
 
 static void
@@ -336,47 +323,6 @@ load_geometry (GtdWindow *self)
 
   if (maximized)
     gtk_window_maximize (window);
-}
-
-static gboolean
-block_refresh_cb (gpointer data)
-{
-  GtdWindow *self = data;
-
-  g_debug ("Unblocking refreshs triggered by window focus");
-
-  self->block_refresh_timeout_id = 0;
-
-  return G_SOURCE_REMOVE;
-}
-
-static void
-on_active_state_changed_cb (GObject    *object,
-                            GParamSpec *pspec,
-                            GtdWindow  *self)
-{
-  g_autoptr (GList) providers = NULL;
-  GList *l;
-
-  GTD_ENTRY;
-
-  if (!gtk_window_is_active (GTK_WINDOW (self)) ||
-      self->block_refresh_timeout_id > 0)
-    {
-      GTD_RETURN ();
-    }
-
-  g_debug ("Window focused, refreshing providers");
-
-  providers = gtd_manager_get_providers (gtd_manager_get_default ());
-
-  /* Refresh all providers */
-  for (l = providers; l; l = l->next)
-    gtd_provider_refresh (l->data);
-
-  block_refresh (self);
-
-  GTD_EXIT;
 }
 
 static void
@@ -615,16 +561,6 @@ gtd_window_constructed (GObject *object)
 }
 
 static void
-gtd_window_finalize (GObject *object)
-{
-  GtdWindow *self = GTD_WINDOW (object);
-
-  G_OBJECT_CLASS (gtd_window_parent_class)->finalize (object);
-
-  g_clear_handle_id (&self->block_refresh_timeout_id, g_source_remove);
-}
-
-static void
 gtd_window_get_property (GObject    *object,
                          guint       prop_id,
                          GValue     *value,
@@ -669,7 +605,6 @@ gtd_window_class_init (GtdWindowClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->constructed = gtd_window_constructed;
-  object_class->finalize = gtd_window_finalize;
   object_class->get_property = gtd_window_get_property;
   object_class->set_property = gtd_window_set_property;
 
@@ -709,7 +644,6 @@ gtd_window_class_init (GtdWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, panel_box_end);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, panel_box_start);
 
-  gtk_widget_class_bind_template_callback (widget_class, on_active_state_changed_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_cancel_selection_button_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_stack_visible_child_cb);
 }
@@ -742,8 +676,6 @@ gtd_window_init (GtdWindow *self)
   /* Development build */
   if (is_development_build ())
     setup_development_build (self);
-
-  block_refresh (self);
 }
 
 GtkWidget*

@@ -4,7 +4,6 @@
   <template class="GtdWindow" parent="GtkApplicationWindow">
     <property name="default_width">800</property>
     <property name="default_height">600</property>
-    <signal name="notify::is-active" handler="on_active_state_changed_cb" object="GtdWindow" swapped="no"/>
     <style>
       <class name="org-gnome-Todo"/>
     </style>
