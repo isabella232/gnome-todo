@@ -363,6 +363,7 @@ dummy_provider_generate_task_list (DummyProvider *self)
       title = g_strdup_printf ("%d", i);
 
       task = gtd_task_new ();
+      gtd_task_set_list (task, list);
       gtd_object_set_uid (GTD_OBJECT (task), uuid);
       gtd_task_set_title (task, title);
       gtd_task_set_position (task, n_generated_tasks++);
@@ -378,6 +379,7 @@ dummy_provider_generate_task_list (DummyProvider *self)
           subtask_title = g_strdup_printf ("%d:%d", i, j);
 
           subtask = gtd_task_new ();
+          gtd_task_set_list (subtask, list);
           gtd_object_set_uid (GTD_OBJECT (subtask), subtask_uuid);
           gtd_task_set_title (subtask, subtask_title);
           gtd_task_set_position (subtask, n_generated_tasks++);
