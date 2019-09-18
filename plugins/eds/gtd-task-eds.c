@@ -669,6 +669,8 @@ gtd_task_eds_apply (GtdTaskEds *self)
 {
   g_return_if_fail (GTD_IS_TASK_EDS (self));
 
+  e_cal_component_commit_sequence (self->new_component);
+
   /* Make new_component the actual component */
   gtd_task_eds_set_component (self, self->new_component);
 }
