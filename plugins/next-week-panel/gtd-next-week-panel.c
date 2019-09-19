@@ -292,15 +292,17 @@ filter_func (gpointer item,
 {
   g_autoptr (GDateTime) task_dt = NULL;
   GtdTask *task;
+  gboolean complete;
   gint days_offset;
 
   task = (GtdTask*) item;
+  complete = gtd_task_get_complete (task);
   task_dt = gtd_task_get_due_date (task);
 
-  return !gtd_task_get_complete (task) &&
-         task_dt != NULL &&
+  return task_dt != NULL &&
          get_date_offset (task_dt, &days_offset, NULL) &&
-         days_offset < 7;
+         days_offset < 7 &&
+         ((days_offset < 0 && !complete) || days_offset >= 0);
 }
 
 static void

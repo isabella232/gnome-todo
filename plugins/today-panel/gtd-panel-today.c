@@ -98,13 +98,6 @@ is_today (GDateTime *today,
   return FALSE;
 }
 
-static inline gboolean
-should_be_added (GDateTime *today,
-                 GDateTime *dt)
-{
-  return is_today (today, dt) || is_overdue (today, dt);
-}
-
 static GtkWidget*
 create_label (const gchar *text,
               gboolean     overdue)
@@ -169,12 +162,15 @@ filter_func (gpointer  item,
   g_autoptr (GDateTime) task_dt = NULL;
   g_autoptr (GDateTime) now = NULL;
   GtdTask *task;
+  gboolean complete;
 
   task = (GtdTask*) item;
   now = g_date_time_new_now_local ();
   task_dt = gtd_task_get_due_date (task);
 
-  return !gtd_task_get_complete (task) && should_be_added (now, task_dt);
+  complete = gtd_task_get_complete (task);
+
+  return is_today (now, task_dt) || (!complete && is_overdue (now, task_dt));
 }
 
 static gint
