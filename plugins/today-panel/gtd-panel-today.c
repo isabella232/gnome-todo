@@ -35,6 +35,7 @@ struct _GtdPanelToday
   GtdTaskListView    *view;
 
   GtkFilterListModel *filter_model;
+  GtkFilterListModel *incomplete_model;
   GtkSortListModel   *sort_model;
 };
 
@@ -173,6 +174,15 @@ filter_func (gpointer  item,
   return is_today (now, task_dt) || (!complete && is_overdue (now, task_dt));
 }
 
+static gboolean
+filter_complete_func (gpointer item,
+                      gpointer user_data)
+{
+  GtdTask *task = (GtdTask*) item;
+
+  return !gtd_task_get_complete (task);
+}
+
 static gint
 sort_func (gconstpointer a,
            gconstpointer b,
@@ -305,6 +315,7 @@ gtd_panel_today_finalize (GObject *object)
 
   g_clear_object (&self->icon);
   g_clear_object (&self->filter_model);
+  g_clear_object (&self->incomplete_model);
   g_clear_object (&self->sort_model);
 
   G_OBJECT_CLASS (gtd_panel_today_parent_class)->finalize (object);
@@ -387,6 +398,7 @@ gtd_panel_today_init (GtdPanelToday *self)
 
   self->filter_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager), filter_func, self, NULL);
   self->sort_model = gtk_sort_list_model_new (G_LIST_MODEL (self->filter_model), sort_func, self, NULL);
+  self->incomplete_model = gtk_filter_list_model_new (G_LIST_MODEL (self->sort_model), filter_complete_func, self, NULL);
 
   /* Connect to GtdManager::list-* signals to update the title */
   manager = gtd_manager_get_default ();
@@ -406,7 +418,7 @@ gtd_panel_today_init (GtdPanelToday *self)
 
   gtd_task_list_view_set_header_func (self->view, header_func, self);
 
-  g_signal_connect_object (self->sort_model,
+  g_signal_connect_object (self->incomplete_model,
                            "items-changed",
                            G_CALLBACK (on_model_items_changed_cb),
                            self,

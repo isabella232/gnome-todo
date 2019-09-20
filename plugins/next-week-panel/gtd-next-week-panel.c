@@ -42,6 +42,7 @@ struct _GtdNextWeekPanel
   GtdTaskListView    *view;
 
   GtkFilterListModel *filter_model;
+  GtkFilterListModel *incomplete_model;
   GtkSortListModel   *sort_model;
 };
 
@@ -305,6 +306,15 @@ filter_func (gpointer item,
          ((days_offset < 0 && !complete) || days_offset >= 0);
 }
 
+static gboolean
+filter_complete_func (gpointer item,
+                      gpointer user_data)
+{
+  GtdTask *task = (GtdTask*) item;
+
+  return !gtd_task_get_complete (task);
+}
+
 static void
 on_model_items_changed_cb (GListModel       *model,
                            guint             position,
@@ -403,6 +413,7 @@ gtd_next_week_panel_finalize (GObject *object)
 
   g_clear_object (&self->icon);
   g_clear_object (&self->filter_model);
+  g_clear_object (&self->incomplete_model);
   g_clear_object (&self->sort_model);
 
   G_OBJECT_CLASS (gtd_next_week_panel_parent_class)->finalize (object);
@@ -483,6 +494,7 @@ gtd_next_week_panel_init (GtdNextWeekPanel *self)
 
   self->filter_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager), filter_func, self, NULL);
   self->sort_model = gtk_sort_list_model_new (G_LIST_MODEL (self->filter_model), sort_func, self, NULL);
+  self->incomplete_model = gtk_filter_list_model_new (G_LIST_MODEL (self->sort_model), filter_complete_func, self, NULL);
 
   /* The main view */
   self->view = GTD_TASK_LIST_VIEW (gtd_task_list_view_new ());
@@ -500,7 +512,7 @@ gtd_next_week_panel_init (GtdNextWeekPanel *self)
                                       (GtdTaskListViewHeaderFunc) header_func,
                                       self);
 
-  g_signal_connect_object (self->sort_model,
+  g_signal_connect_object (self->incomplete_model,
                            "items-changed",
                            G_CALLBACK (on_model_items_changed_cb),
                            self,
