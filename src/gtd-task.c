@@ -1213,17 +1213,13 @@ gtd_task_compare (GtdTask *t1,
         return retval;
     }
 
-  /*
-   * Zero, compare by subtask hierarchy
-   */
+  /* Compare by subtask hierarchy */
   retval = compare_by_subtasks (&t1, &t2);
 
   if (retval != 0)
     return retval;
 
-  /*
-   * Second, compare by ::due-date.
-   */
+  /* Compare by due date */
   dt1 = gtd_task_get_due_date (t1);
   dt2 = gtd_task_get_due_date (t2);
 
@@ -1244,9 +1240,7 @@ gtd_task_compare (GtdTask *t1,
   if (retval != 0)
     return retval;
 
-  /*
-   * Fourth, compare by ::creation-date.
-   */
+  /* Compare by creation date */
   dt1 = gtd_task_get_creation_date (t1);
   dt2 = gtd_task_get_creation_date (t2);
 
@@ -1265,9 +1259,7 @@ gtd_task_compare (GtdTask *t1,
   if (retval != 0)
     return retval;
 
-  /*
-   * If they're equal up to now, compare by title.
-   */
+  /* If they're equal up to now, compare by title */
   txt1 = txt2 = NULL;
 
   txt1 = g_utf8_casefold (gtd_task_get_title (t1), -1);
