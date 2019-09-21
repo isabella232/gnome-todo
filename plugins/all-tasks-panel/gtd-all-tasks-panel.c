@@ -239,10 +239,44 @@ sort_func (gconstpointer a,
            gconstpointer b,
            gpointer      user_data)
 {
-  GtdTask *task_a = (GtdTask*) a;
-  GtdTask *task_b = (GtdTask*) b;
+  g_autoptr (GDateTime) dt1 = NULL;
+  g_autoptr (GDateTime) dt2 = NULL;
+  GtdTask *task1;
+  GtdTask *task2;
+  GDate dates[2];
+  gint result;
 
-  return gtd_task_compare (task_a, task_b);
+  task1 = (GtdTask*) a;
+  task2 = (GtdTask*) b;
+
+  dt1 = gtd_task_get_due_date (task1);
+  dt2 = gtd_task_get_due_date (task2);
+
+  if (!dt1 && !dt2)
+    return gtd_task_compare (task1, task2);
+  else if (!dt1)
+    return 1;
+  else if (!dt2)
+    return -1;
+
+  g_date_clear (dates, 2);
+
+  g_date_set_dmy (&dates[0],
+                  g_date_time_get_day_of_month (dt1),
+                  g_date_time_get_month (dt1),
+                  g_date_time_get_year (dt1));
+
+  g_date_set_dmy (&dates[1],
+                  g_date_time_get_day_of_month (dt2),
+                  g_date_time_get_month (dt2),
+                  g_date_time_get_year (dt2));
+
+  result = g_date_days_between (&dates[1], &dates[0]);
+
+  if (result != 0)
+    return result;
+
+  return gtd_task_compare (task1, task2);
 }
 
 static gboolean
