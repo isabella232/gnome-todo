@@ -14,7 +14,8 @@
         <child>
           <object class="GtkStack" id="stack">
             <property name="expand">1</property>
-            <property name="homogeneous">false</property>
+            <property name="hhomogeneous">true</property>
+            <property name="vhomogeneous">false</property>
             <property name="transition-type">slide-left-right</property>
 
             <!-- Main Listbox -->
