@@ -492,8 +492,6 @@ gtd_window_unmap (GtkWidget *widget)
   GSettings *settings;
   GtkWindow *window;
   gboolean maximized;
-  gint height;
-  gint width;
 
   window = GTK_WINDOW (widget);
   settings = gtd_manager_get_settings (gtd_manager_get_default ());
@@ -501,11 +499,14 @@ gtd_window_unmap (GtkWidget *widget)
 
   g_settings_set_boolean (settings, "window-maximized", maximized);
 
-  if (maximized)
-    return;
+  if (!maximized)
+    {
+      gint height;
+      gint width;
 
-  gtk_window_get_size (window, &width, &height);
-  g_settings_set (settings, "window-size", "(ii)", width, height);
+      gtk_window_get_size (window, &width, &height);
+      g_settings_set (settings, "window-size", "(ii)", width, height);
+    }
 
   GTK_WIDGET_CLASS (gtd_window_parent_class)->unmap (widget);
 }
