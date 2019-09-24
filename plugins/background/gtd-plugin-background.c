@@ -20,14 +20,28 @@
 
 #include "config.h"
 
+#include "gtd-debug.h"
 #include "gtd-plugin-background.h"
 
 #include <glib/gi18n.h>
+#include <gdk/gdk.h>
 #include <gtk/gtk.h>
+
+#ifdef GDK_WINDOWING_WAYLAND
+#include <gdk/wayland/gdkwayland.h>
+#endif
+
+#ifdef GDK_WINDOWING_WAYLAND
+#include <gdk/x11/gdkx.h>
+#endif
 
 #define AUTOSTART_NOTIFICATION_ID      "Gtd::BackgroundPlugin::autostart_notification"
 #define AUTOSTART_NOTIFICATION_TIMEOUT 3  /* seconds */
 #define MAX_BODY_LENGTH                50 /* chars */
+
+#define DESKTOP_PORTAL_BUS_NAME "org.freedesktop.portal.Desktop"
+#define DESKTOP_PORTAL_OBJECT_PATH "/org/freedesktop/portal/desktop"
+#define DESKTOP_PORTAL_BACKGROUND_INTERFACE "org.freedesktop.portal.Background"
 
 struct _GtdPluginBackground
 {
@@ -35,9 +49,14 @@ struct _GtdPluginBackground
 
   GtkWidget          *preferences_panel;
 
+  GDBusProxy         *desktop_portal;
+
   GSettings          *settings;
-  gboolean            startup_notification : 1;
-  gboolean            show_notifications : 1;
+  gboolean            startup_notification;
+  gboolean            show_notifications;
+
+  gboolean            enabled;
+  gboolean            autostart;
 
   guint               startup_notification_timeout_id;
 };
@@ -60,6 +79,7 @@ enum {
 /*
  * Auxiliary methods
  */
+
 static inline GtkWindow*
 get_window (void)
 {
@@ -68,42 +88,232 @@ get_window (void)
   return GTK_WINDOW (gtk_application_get_active_window (app));
 }
 
-static void
-set_autostart_enabled (GtdPluginBackground *self,
-                       gboolean             enabled)
+static gboolean
+is_gnome_todo_active (void)
 {
-  g_autoptr (GFile) file;
-  g_autofree gchar *autostart_file_path;
-  g_autofree gchar *user_autostart_file;
+  GListModel *toplevels;
+  guint i;
 
-  autostart_file_path = g_build_filename (PACKAGE_DATA_DIR, AUTOSTART_FILE, NULL);
-  user_autostart_file = g_build_filename (g_get_user_config_dir (), "autostart", AUTOSTART_FILE, NULL);
-  file = g_file_new_for_path (user_autostart_file);
-
-  /*
-   * Create a symbolic link to the autostart file if enabled,
-   * otherwise remove the symbolic link.
-   */
-  if (enabled)
+  toplevels = gtk_window_get_toplevels ();
+  for (i = 0; i < g_list_model_get_n_items (toplevels); i++)
     {
-      g_autoptr (GFile) parent = NULL;
+      g_autoptr (GtkWidget) toplevel = g_list_model_get_item (toplevels, i);
 
-      /* Nothing to do if the file already exists */
-      if (g_file_query_exists (file, NULL))
-        return;
+      if (GTK_IS_WINDOW (toplevel) && gtk_window_is_active (GTK_WINDOW (toplevel)))
+        return TRUE;
+    }
 
-      /* Ensure the autostart directory first */
-      parent = g_file_get_parent (file);
-      g_file_make_directory_with_parents (parent, NULL, NULL);
+  return FALSE;
+}
 
-      /* Symlink the Autostart.desktop file */
-      g_file_make_symbolic_link (file, autostart_file_path, NULL, NULL);
+static void
+on_request_signal_emitted_cb (GDBusProxy          *request_proxy,
+                              gchar               *sender_name,
+                              gchar               *signal_name,
+                              GVariant            *parameters,
+                              GtdPluginBackground *self)
+{
+  GTD_ENTRY;
+
+  if (g_strcmp0 (signal_name, "Response") == 0)
+    {
+      g_autoptr (GVariant) results = NULL;
+      gboolean run_in_background;
+      gboolean autostart;
+      guint response;
+
+      g_variant_get (parameters, "(u@a{sv})", &response, &results);
+
+      if (response != 0)
+        {
+          g_critical ("Error setting");
+          return;
+        }
+
+      g_variant_lookup (results, "background", "b", &run_in_background);
+      g_variant_lookup (results, "autostart", "b", &autostart);
+
+    }
+
+  g_object_unref (request_proxy);
+
+  GTD_EXIT;
+}
+
+static void
+update_background_portal (GtdPluginBackground *self,
+                          const gchar         *handle)
+{
+  g_autoptr (GDBusProxy) request_proxy = NULL;
+  g_autoptr (GVariant) result = NULL;
+  g_autoptr (GError) error = NULL;
+  gchar *request_object_path;
+  GVariantBuilder builder;
+
+  GTD_ENTRY;
+
+  if (!self->desktop_portal)
+    {
+      self->desktop_portal = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+                                                            G_DBUS_PROXY_FLAGS_NONE,
+                                                            NULL,
+                                                            "org.freedesktop.portal.Desktop",
+                                                            "/org/freedesktop/portal/desktop",
+                                                            "org.freedesktop.portal.Background",
+                                                            NULL,
+                                                            &error);
+
+      if (error)
+        {
+          g_warning ("Failed to connect to the desktop portal: %s", error->message);
+          GTD_RETURN ();
+        }
+    }
+
+  g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
+  g_variant_builder_add (&builder, "{sv}", "autostart", g_variant_new_boolean (self->autostart));
+  if (self->autostart)
+    {
+      const gchar * commands[] = { "gnome-todo", "--gapplication-service", NULL };
+
+      g_variant_builder_add (&builder, "{sv}", "commandline", g_variant_new_strv (commands, -1));
+    }
+
+  result = g_dbus_proxy_call_sync (self->desktop_portal,
+                                   "RequestBackground",
+                                   g_variant_new ("(sa{sv})", handle, &builder),
+                                   G_DBUS_CALL_FLAGS_NONE,
+                                   30000,
+                                   NULL,
+                                   &error);
+  if (error)
+    {
+      g_warning ("Error calling D-Bus method: %s", error->message);
+      GTD_RETURN ();
+    }
+
+  g_variant_get (result, "(o)", &request_object_path);
+  request_proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+                                                 G_DBUS_PROXY_FLAGS_NONE,
+                                                 NULL,
+                                                 "org.freedesktop.portal.Desktop",
+                                                 request_object_path,
+                                                 "org.freedesktop.portal.Request",
+                                                 NULL,
+                                                 &error);
+
+  if (error)
+    {
+      g_warning ("Error calling D-Bus method: %s", error->message);
+      GTD_RETURN ();
+    }
+
+  g_signal_connect_object (g_steal_pointer (&request_proxy),
+                           "g-signal",
+                           G_CALLBACK (on_request_signal_emitted_cb),
+                           self,
+                           0);
+
+  GTD_EXIT;
+}
+
+#ifdef GDK_WINDOWING_WAYLAND
+static void
+on_wayland_surface_handle_exported_cb (GdkSurface  *surface,
+                                       const gchar *surface_handle,
+                                       gpointer     user_data)
+{
+  GtdPluginBackground *self;
+  g_autofree gchar *handle = NULL;
+
+  GTD_ENTRY;
+
+  self = GTD_PLUGIN_BACKGROUND (user_data);
+  handle = g_strdup_printf ("wayland:%s", surface_handle);
+
+  update_background_portal (self, handle);
+
+  gdk_wayland_surface_unexport_handle (surface);
+
+  GTD_EXIT;
+}
+#endif
+
+static void
+stub_destroy (gpointer data)
+{
+}
+
+static void
+acquire_surface_handle (GtdPluginBackground *self)
+{
+  GdkSurface *surface;
+  GtkWindow *window;
+
+  GTD_ENTRY;
+
+  window = get_window ();
+  surface = gtk_native_get_surface (GTK_NATIVE (window));
+
+  g_assert (surface != NULL);
+
+#ifdef GDK_WINDOWING_WAYLAND
+  if (GDK_IS_WAYLAND_SURFACE (surface))
+    {
+      gdk_wayland_surface_export_handle (surface, on_wayland_surface_handle_exported_cb, self, stub_destroy);
+    }
+  else
+#endif
+#ifdef GDK_WINDOWING_X11
+  if (GDK_IS_X11_SURFACE (surface))
+    {
+      g_autofree gchar *handle = NULL;
+
+      handle = g_strdup_printf ("x11:%lx", gdk_x11_surface_get_xid (surface));
+      update_background_portal (self, handle);
+    }
+  else
+#endif
+    g_critical ("No valid backend");
+
+  GTD_EXIT;
+}
+
+static void
+on_window_active_changed_cb (GtkWindow           *window,
+                             GParamSpec          *pspec,
+                             GtdPluginBackground *self)
+{
+  GTD_ENTRY;
+
+  g_signal_handlers_disconnect_by_func (window, on_window_active_changed_cb, self);
+  acquire_surface_handle (self);
+
+  GTD_EXIT;
+}
+
+static void
+start_update (GtdPluginBackground *self)
+{
+  GtkWindow *window;
+
+  GTD_ENTRY;
+
+  window = get_window ();
+  if (gtk_widget_get_visible (GTK_WIDGET (window)) && is_gnome_todo_active ())
+    {
+      acquire_surface_handle (self);
     }
   else
     {
-      /* Remove the startup file */
-      g_file_delete (file, NULL, NULL);
+      g_signal_connect_object (window,
+                               "notify::is-active",
+                               G_CALLBACK (on_window_active_changed_cb),
+                               self,
+                               G_CONNECT_AFTER);
     }
+
+  GTD_EXIT;
 }
 
 static gchar*
@@ -277,7 +487,9 @@ on_startup_changed (GSettings           *settings,
                     const gchar         *key,
                     GtdPluginBackground *self)
 {
-  set_autostart_enabled (self, g_settings_get_boolean (settings, key));
+  self->autostart = g_settings_get_boolean (settings, key);
+
+  start_update (self);
 }
 
 static gboolean
@@ -347,6 +559,8 @@ gtd_plugin_background_activate (GtdActivatable *activatable)
   self = GTD_PLUGIN_BACKGROUND (activatable);
   window = get_window ();
 
+  self->enabled = TRUE;
+
   gtk_window_set_hide_on_close (window, TRUE);
 
   on_startup_changed (self->settings, "run-on-startup", self);
@@ -370,6 +584,9 @@ gtd_plugin_background_deactivate (GtdActivatable *activatable)
   manager = gtd_manager_get_default ();
   window = get_window ();
 
+  self->enabled = FALSE;
+  self->autostart = FALSE;
+
   gtk_window_set_hide_on_close (window, FALSE);
 
   g_signal_handlers_disconnect_by_func (self->settings,
@@ -392,7 +609,7 @@ gtd_plugin_background_deactivate (GtdActivatable *activatable)
     }
 
   /* Deactivate auto startup */
-  set_autostart_enabled (self, FALSE);
+  start_update (self);
 }
 
 static GList*
