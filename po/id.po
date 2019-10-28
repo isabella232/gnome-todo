@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2019-06-30 00:52+0000\n"
-"PO-Revision-Date: 2019-07-08 15:45+0700\n"
+"POT-Creation-Date: 2019-09-25 13:29+0000\n"
+"PO-Revision-Date: 2019-10-28 13:05+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian\n"
 "Language: id\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural= n!=1;\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
 #: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
-#: src/gtd-window.c:845 src/gtd-window.c:876 src/main.c:35
+#: src/gtd-window.c:774 src/gtd-window.c:805 src/main.c:35
 msgid "To Do"
 msgstr "To Do"
 
@@ -127,7 +127,7 @@ msgid "The current list selector. Can be “grid” or “list”."
 msgstr "Pemilih daftar saat ini. Bisa berupa 'grid' atau 'daftar'."
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
-#: plugins/next-week-panel/gtd-next-week-panel.c:112
+#: plugins/next-week-panel/gtd-next-week-panel.c:113
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:103
 #: src/task-list-view/gtd-edit-pane.c:110
 msgid "No date set"
@@ -153,23 +153,23 @@ msgid "Yesterday"
 msgstr "Kemarin"
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
-#: plugins/next-week-panel/gtd-next-week-panel.c:124
+#: plugins/next-week-panel/gtd-next-week-panel.c:125
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:124
 #: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:154
-#: plugins/today-panel/gtd-panel-today.c:258
+#: plugins/today-panel/gtd-panel-today.c:148
+#: plugins/today-panel/gtd-panel-today.c:264
 #: src/task-list-view/gtd-task-row.c:138
 msgid "Today"
 msgstr "Hari Ini"
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
-#: plugins/next-week-panel/gtd-next-week-panel.c:128
+#: plugins/next-week-panel/gtd-next-week-panel.c:129
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:128
 #: src/task-list-view/gtd-task-row.c:142
 msgid "Tomorrow"
 msgstr "Besok"
 
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:297
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:331
 msgid "All"
 msgstr "Semua"
 
@@ -223,27 +223,27 @@ msgstr "Ketika To Do berjalan, tampilkan notifikasi awal mula"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Galat saat memuat Akun Daring GNOME"
 
-#: plugins/eds/gtd-provider-eds.c:140
+#: plugins/eds/gtd-provider-eds.c:172
 msgid "Failed to connect to task list"
 msgstr "Gagal terhubung ke daftar tugas"
 
-#: plugins/eds/gtd-provider-eds.c:305
+#: plugins/eds/gtd-provider-eds.c:320
 msgid "An error occurred while creating a task"
 msgstr "Terjadi galat saat membuat tugas"
 
-#: plugins/eds/gtd-provider-eds.c:350
+#: plugins/eds/gtd-provider-eds.c:365
 msgid "An error occurred while modifying a task"
 msgstr "Terjadi galat saat memodifikasi tugas"
 
-#: plugins/eds/gtd-provider-eds.c:371
+#: plugins/eds/gtd-provider-eds.c:386
 msgid "An error occurred while removing a task"
 msgstr "Terjadi galat saat menghapus tugas"
 
-#: plugins/eds/gtd-provider-eds.c:389
+#: plugins/eds/gtd-provider-eds.c:404
 msgid "An error occurred while creating a task list"
 msgstr "Terjadi galat saat membuat daftar tugas"
 
-#: plugins/eds/gtd-provider-eds.c:411 plugins/eds/gtd-provider-eds.c:434
+#: plugins/eds/gtd-provider-eds.c:426 plugins/eds/gtd-provider-eds.c:449
 msgid "An error occurred while modifying a task list"
 msgstr "Terjadi galat saat memodifikasi daftar tugas"
 
@@ -255,17 +255,17 @@ msgstr "Pada Komputer Ini"
 msgid "Local"
 msgstr "Lokal"
 
-#: plugins/eds/gtd-task-list-eds.c:459 plugins/eds/gtd-task-list-eds.c:486
-#: plugins/eds/gtd-task-list-eds.c:510
+#: plugins/eds/gtd-task-list-eds.c:499 plugins/eds/gtd-task-list-eds.c:526
+#: plugins/eds/gtd-task-list-eds.c:550
 msgid "Error fetching tasks from list"
 msgstr "Galat mengambil tugas dari daftar"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:120
-#: plugins/today-panel/gtd-panel-today.c:145
+#: plugins/next-week-panel/gtd-next-week-panel.c:121
+#: plugins/today-panel/gtd-panel-today.c:139
 msgid "Overdue"
 msgstr "Terlambat"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:345
+#: plugins/next-week-panel/gtd-next-week-panel.c:357
 msgid "Next 7 Days"
 msgstr "7 Hari Berikutnya"
 
@@ -438,7 +438,7 @@ msgstr "Masuk ke akun daring untuk mengakses tugas Anda"
 msgid "To Do Setup"
 msgstr "Atur To Do"
 
-#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:96
+#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:95
 #: src/provider/gtd-provider-popover.ui:40
 msgid "_Cancel"
 msgstr "_Batal"
@@ -455,7 +455,7 @@ msgstr "Galat saat memuat ekstensi"
 msgid "Error unloading extension"
 msgstr "Galat saat membongkar ekstensi"
 
-#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:138
+#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:137
 msgid "Extensions"
 msgstr "Ekstensi"
 
@@ -468,7 +468,6 @@ msgid "Unarchive"
 msgstr "Tidak diarsipkan"
 
 #: src/gtd-task-list-panel.c:199 src/gtd-task-list-panel.ui:41
-#: src/sidebar/gtd-sidebar.ui:51
 msgid "Archive"
 msgstr "Arsipkan"
 
@@ -481,7 +480,7 @@ msgstr "Ubah Nama"
 msgid "Delete"
 msgstr "Hapus"
 
-#: src/gtd-window.c:115
+#: src/gtd-window.c:110
 msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
@@ -489,19 +488,19 @@ msgstr ""
 "Ini adalah hasil bangun pengembangan (development build) dari To Do. Anda "
 "mungkin mengalami kesalahan, perilaku salah, dan kehilangan data."
 
-#: src/gtd-window.c:517
+#: src/gtd-window.c:463
 msgid "Details"
 msgstr "Rincian"
 
-#: src/gtd-window.c:840
+#: src/gtd-window.c:769
 msgid "Click a task list to select"
 msgstr "Klik sebuah daftar tugas untuk memilih"
 
-#: src/gtd-window.ui:51
+#: src/gtd-window.ui:50
 msgid "New List"
 msgstr "Daftar Baru"
 
-#: src/gtd-window.ui:144
+#: src/gtd-window.ui:143
 msgid "_About To Do"
 msgstr "Tent_ang To Do"
 
@@ -562,7 +561,12 @@ msgstr "Undo"
 msgid "Loading…"
 msgstr "Memuat…"
 
-#: src/sidebar/gtd-sidebar.ui:102
+#. Translators: 'archived' as in 'archived task lists'
+#: src/sidebar/gtd-sidebar.ui:52
+msgid "Archived"
+msgstr "Diarsipkan"
+
+#: src/sidebar/gtd-sidebar.ui:103
 msgid "No archived lists"
 msgstr "Tidak ada daftar yang diarsipkan"
 
