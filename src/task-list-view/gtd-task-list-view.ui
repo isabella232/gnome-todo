@@ -10,6 +10,7 @@
         <property name="hexpand">1</property>
         <property name="vexpand">1</property>
         <property name="min-content-height">320</property>
+        <property name="hscrollbar-policy">never</property>
         <child>
           <object class="GtkStack" id="stack">
             <property name="homogeneous">0</property>
