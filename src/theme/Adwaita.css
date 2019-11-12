@@ -133,6 +133,13 @@ image.color-circle-icon {
 .titlebar > separator:dir(rtl) { margin-right: -1px; }
 .titlebar > headerbar:first-child:dir(rtl) { margin-left: 1px; }
 
+/*
+ * Override the CSS for a Box in a titlebar in order to fix unwanted spacing.
+ *
+ * TODO: Remove when https://gitlab.gnome.org/GNOME/gtk/issues/2233 is fixed
+ */
+box.titlebar { border-spacing: 0; }
+
 
 /* Color button */
 colorbutton {
