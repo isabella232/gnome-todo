@@ -131,6 +131,12 @@
       <widget name="start_headerbar"/>
     </widgets>
   </object>
+  <object class="GtkSizeGroup">
+    <widgets>
+      <widget name="stack"/>
+      <widget name="headerbar"/>
+    </widgets>
+  </object>
   <menu id="app-menu">
     <section>
       <item>
