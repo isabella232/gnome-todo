@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2019-06-30 00:52+0000\n"
-"PO-Revision-Date: 2019-08-17 20:29+0200\n"
+"POT-Creation-Date: 2019-09-18 22:22+0000\n"
+"PO-Revision-Date: 2019-11-29 16:59+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
 #: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
-#: src/gtd-window.c:845 src/gtd-window.c:876 src/main.c:35
+#: src/gtd-window.c:773 src/gtd-window.c:804 src/main.c:35
 msgid "To Do"
 msgstr "Uppgifter"
 
@@ -225,27 +225,27 @@ msgstr "Visa en uppstartsavisering då Uppgifter körs"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Fel vid inläsning av GNOME Nätkonton"
 
-#: plugins/eds/gtd-provider-eds.c:140
+#: plugins/eds/gtd-provider-eds.c:172
 msgid "Failed to connect to task list"
 msgstr "Misslyckades med att ansluta till uppgiftslista"
 
-#: plugins/eds/gtd-provider-eds.c:305
+#: plugins/eds/gtd-provider-eds.c:320
 msgid "An error occurred while creating a task"
 msgstr "Ett fel uppstod vid skapande av en uppgift"
 
-#: plugins/eds/gtd-provider-eds.c:350
+#: plugins/eds/gtd-provider-eds.c:365
 msgid "An error occurred while modifying a task"
 msgstr "Ett fel uppstod vid ändring av en uppgift"
 
-#: plugins/eds/gtd-provider-eds.c:371
+#: plugins/eds/gtd-provider-eds.c:386
 msgid "An error occurred while removing a task"
 msgstr "Ett fel uppstod vid borttagning av en uppgift"
 
-#: plugins/eds/gtd-provider-eds.c:389
+#: plugins/eds/gtd-provider-eds.c:404
 msgid "An error occurred while creating a task list"
 msgstr "Ett fel uppstod vid skapande av en uppgiftslista"
 
-#: plugins/eds/gtd-provider-eds.c:411 plugins/eds/gtd-provider-eds.c:434
+#: plugins/eds/gtd-provider-eds.c:426 plugins/eds/gtd-provider-eds.c:449
 msgid "An error occurred while modifying a task list"
 msgstr "Ett fel uppstod vid ändring av en uppgiftslista"
 
@@ -257,8 +257,8 @@ msgstr "På den här datorn"
 msgid "Local"
 msgstr "Lokal"
 
-#: plugins/eds/gtd-task-list-eds.c:459 plugins/eds/gtd-task-list-eds.c:486
-#: plugins/eds/gtd-task-list-eds.c:510
+#: plugins/eds/gtd-task-list-eds.c:499 plugins/eds/gtd-task-list-eds.c:526
+#: plugins/eds/gtd-task-list-eds.c:550
 msgid "Error fetching tasks from list"
 msgstr "Fel vid hämtning av uppgifter från lista"
 
@@ -442,7 +442,7 @@ msgstr "Logga in på nätkonton för att komma åt dina uppgifter"
 msgid "To Do Setup"
 msgstr "Konfiguration av Uppgifter"
 
-#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:96
+#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:95
 #: src/provider/gtd-provider-popover.ui:40
 msgid "_Cancel"
 msgstr "A_vbryt"
@@ -459,7 +459,7 @@ msgstr "Fel vid inläsning av tillägg"
 msgid "Error unloading extension"
 msgstr "Fel vid inaktivering av tillägg"
 
-#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:138
+#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:137
 msgid "Extensions"
 msgstr "Tillägg"
 
@@ -472,7 +472,6 @@ msgid "Unarchive"
 msgstr "Återställ från arkiv"
 
 #: src/gtd-task-list-panel.c:199 src/gtd-task-list-panel.ui:41
-#: src/sidebar/gtd-sidebar.ui:51
 msgid "Archive"
 msgstr "Arkivera"
 
@@ -485,7 +484,7 @@ msgstr "Byt namn"
 msgid "Delete"
 msgstr "Ta bort"
 
-#: src/gtd-window.c:115
+#: src/gtd-window.c:110
 msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
@@ -493,19 +492,19 @@ msgstr ""
 "Detta är ett utvecklingsbygge av Uppgifter. Du kan uppleva fel, felaktigt "
 "beteende samt dataförlust."
 
-#: src/gtd-window.c:517
+#: src/gtd-window.c:463
 msgid "Details"
 msgstr "Detaljer"
 
-#: src/gtd-window.c:840
+#: src/gtd-window.c:768
 msgid "Click a task list to select"
 msgstr "Klicka på en uppgiftslista för att markera"
 
-#: src/gtd-window.ui:51
+#: src/gtd-window.ui:50
 msgid "New List"
 msgstr "Ny lista"
 
-#: src/gtd-window.ui:144
+#: src/gtd-window.ui:143
 msgid "_About To Do"
 msgstr "_Om Uppgifter"
 
@@ -565,6 +564,11 @@ msgstr "Ångra"
 #: src/sidebar/gtd-sidebar-provider-row.ui:69
 msgid "Loading…"
 msgstr "Läser in…"
+
+#. Translators: 'archived' as in 'archived task lists'
+#: src/sidebar/gtd-sidebar.ui:51
+msgid "Archived"
+msgstr "Arkiverade"
 
 #: src/sidebar/gtd-sidebar.ui:102
 msgid "No archived lists"
