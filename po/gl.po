@@ -6,21 +6,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-toto 3.18\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2019-02-01 18:18+0000\n"
-"PO-Revision-Date: 2019-02-09 16:53+0200\n"
-"Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
+"POT-Creation-Date: 2019-09-18 22:22+0000\n"
+"PO-Revision-Date: 2019-12-27 13:51+0100\n"
+"Last-Translator: Fran Diéguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
 #: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
-#: src/gtd-window.c:717 src/gtd-window.c:748 src/main.c:35
+#: src/gtd-window.c:773 src/gtd-window.c:804 src/main.c:35
 msgid "To Do"
 msgstr "Tarefas"
 
@@ -35,7 +35,7 @@ msgid ""
 "todos on your computer or sync them with cloud providers. Customize your "
 "experience with plugins."
 msgstr ""
-"Tarefas de GNOME é un aplicativo de xestión de tarefas deseñado para "
+"Tarefas de GNOME é unha aplicación de xestión de tarefas deseñado para "
 "integrarse con GNOME. Garde e ordene as súas tarefas. Xestione varias listas "
 "de tarefas. Manteña as súas tarefas no seu computador ou sincroníceas con "
 "fornecedores na nube. Personalice a súa experiencia con engadidos."
@@ -69,11 +69,6 @@ msgstr ""
 msgid "Manage your personal tasks"
 msgstr "Xestione as súas tarefas persoais"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Todo.desktop.in.in:7
-msgid "@icon@"
-msgstr "@icon@"
-
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Todo.desktop.in.in:13
 msgid "Task;Productivity;Todo;"
@@ -96,45 +91,37 @@ msgid "Window size (width and height)."
 msgstr "Tamaño da xanela (ancho e alto)."
 
 #: data/org.gnome.todo.gschema.xml:16
-msgid "Window position"
-msgstr "Posición da xanela"
-
-#: data/org.gnome.todo.gschema.xml:17
-msgid "Window position (x and y)."
-msgstr "Posición da xanela (x e y)."
-
-#: data/org.gnome.todo.gschema.xml:21
 msgid "First run of GNOME To Do"
 msgstr "Primeira execución da Lista de tarefas de GNOME"
 
-#: data/org.gnome.todo.gschema.xml:22
+#: data/org.gnome.todo.gschema.xml:17
 msgid ""
 "Whether it’s the first run of GNOME To Do (to run the initial setup) or not"
 msgstr ""
 "Indica se é a primeira vez que se executa Lista de tarefas de GNOME (para "
 "iniciar a configuración inicial) ou non"
 
-#: data/org.gnome.todo.gschema.xml:26
+#: data/org.gnome.todo.gschema.xml:21
 msgid "Default provider to add new lists to"
 msgstr "Fornecedor predeterminado ao que engadir novas listas"
 
-#: data/org.gnome.todo.gschema.xml:27
+#: data/org.gnome.todo.gschema.xml:22
 msgid "The identifier of the default provider to add new lists to"
 msgstr "Identificador do fornecedor predeterminado ao que engadir novas listas"
 
-#: data/org.gnome.todo.gschema.xml:31
+#: data/org.gnome.todo.gschema.xml:26
 msgid "List of active extensions"
 msgstr "Lista da extensións activas"
 
-#: data/org.gnome.todo.gschema.xml:32
+#: data/org.gnome.todo.gschema.xml:27
 msgid "The list of active extensions"
 msgstr "A lista de extensións activas"
 
-#: data/org.gnome.todo.gschema.xml:36
+#: data/org.gnome.todo.gschema.xml:31
 msgid "The current list selector"
 msgstr "O selector de lista actual"
 
-#: data/org.gnome.todo.gschema.xml:37
+#: data/org.gnome.todo.gschema.xml:32
 msgid "The current list selector. Can be “grid” or “list”."
 msgstr "O selector de lista actual. Pode ser «grid» ou «list»."
 
@@ -160,7 +147,7 @@ msgstr[1] "hai %d días"
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:120
-#: src/task-list-view/gtd-task-row.c:147
+#: src/task-list-view/gtd-task-row.c:146
 msgid "Yesterday"
 msgstr "Onte"
 
@@ -170,14 +157,14 @@ msgstr "Onte"
 #: plugins/score/score/__init__.py:101
 #: plugins/today-panel/gtd-panel-today.c:154
 #: plugins/today-panel/gtd-panel-today.c:258
-#: src/task-list-view/gtd-task-row.c:139
+#: src/task-list-view/gtd-task-row.c:138
 msgid "Today"
 msgstr "Hoxe"
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
 #: plugins/next-week-panel/gtd-next-week-panel.c:128
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:128
-#: src/task-list-view/gtd-task-row.c:143
+#: src/task-list-view/gtd-task-row.c:142
 msgid "Tomorrow"
 msgstr "Mañán"
 
@@ -215,19 +202,19 @@ msgstr "Mostrar as notificacións ao arrincar"
 msgid "Whether GNOME To Do should show notifications or not"
 msgstr "Indica se Tarefas de GNOME debería mostrar notificacións ou non"
 
-#: plugins/background/ui/preferences.ui:53
+#: plugins/background/ui/preferences.ui:39
 msgid "Run on Startup"
 msgstr "Executar ao arrincar"
 
-#: plugins/background/ui/preferences.ui:66
+#: plugins/background/ui/preferences.ui:50
 msgid "Run To Do automatically when you log in"
 msgstr "Executar automaticamente Tarefas cando inicie sesión"
 
-#: plugins/background/ui/preferences.ui:122
+#: plugins/background/ui/preferences.ui:96
 msgid "Show Notifications"
 msgstr "Mostrar notificacións"
 
-#: plugins/background/ui/preferences.ui:135
+#: plugins/background/ui/preferences.ui:107
 msgid "When To Do runs, show a startup notification"
 msgstr "Cando se executa Tarefas, mostrar unha notificació de arrinque"
 
@@ -235,27 +222,27 @@ msgstr "Cando se executa Tarefas, mostrar unha notificació de arrinque"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Produciuse un erro ao cargar as contas en liña de GNOME"
 
-#: plugins/eds/gtd-provider-eds.c:139
+#: plugins/eds/gtd-provider-eds.c:172
 msgid "Failed to connect to task list"
 msgstr "Produciuse un fallo ao conectarse á lista de tarefas"
 
-#: plugins/eds/gtd-provider-eds.c:272
+#: plugins/eds/gtd-provider-eds.c:320
 msgid "An error occurred while creating a task"
 msgstr "Produciuse un erro ao crear unha tarefa"
 
-#: plugins/eds/gtd-provider-eds.c:306
+#: plugins/eds/gtd-provider-eds.c:365
 msgid "An error occurred while modifying a task"
 msgstr "Produciuse un erro ao modificar unha tarefa"
 
-#: plugins/eds/gtd-provider-eds.c:327
+#: plugins/eds/gtd-provider-eds.c:386
 msgid "An error occurred while removing a task"
 msgstr "Produciuse un erro ao eliminar unha tarefa"
 
-#: plugins/eds/gtd-provider-eds.c:345
+#: plugins/eds/gtd-provider-eds.c:404
 msgid "An error occurred while creating a task list"
 msgstr "Produciuse un erro ao crear unha lista de tarefas"
 
-#: plugins/eds/gtd-provider-eds.c:367 plugins/eds/gtd-provider-eds.c:390
+#: plugins/eds/gtd-provider-eds.c:426 plugins/eds/gtd-provider-eds.c:449
 msgid "An error occurred while modifying a task list"
 msgstr "Produciuse un erro ao modificar unha lista de tarefas"
 
@@ -267,8 +254,8 @@ msgstr "Neste computador"
 msgid "Local"
 msgstr "Local"
 
-#: plugins/eds/gtd-task-list-eds.c:283 plugins/eds/gtd-task-list-eds.c:316
-#: plugins/eds/gtd-task-list-eds.c:340
+#: plugins/eds/gtd-task-list-eds.c:499 plugins/eds/gtd-task-list-eds.c:526
+#: plugins/eds/gtd-task-list-eds.c:550
 msgid "Error fetching tasks from list"
 msgstr "Produciuse un erro ao obter as tarefas da lista"
 
@@ -346,11 +333,11 @@ msgstr "Todoist"
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
 
-#: plugins/todoist/ui/preferences.ui:81
+#: plugins/todoist/ui/preferences.ui:65
 msgid "No Todoist accounts found"
 msgstr "Non se atoparon contas de Todoist"
 
-#: plugins/todoist/ui/preferences.ui:90
+#: plugins/todoist/ui/preferences.ui:74
 msgid "Add a Todoist account"
 msgstr "Engadir unha conta de Todoist"
 
@@ -411,7 +398,7 @@ msgid "Unscheduled"
 msgstr "Sen programar"
 
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
-#: src/gtd-task-list-panel.ui:45
+#: src/gtd-task-list-panel.ui:32
 msgid "Clear completed tasks…"
 msgstr "Limpar as tarefas completas…"
 
@@ -435,26 +422,26 @@ msgstr "Copyright © 2015–2018 Os autores da Lista de Tarefas"
 
 #: src/gtd-application.c:148
 msgid "translator-credits"
-msgstr "Fran Diéguez <frandieguez@gnome.org>, 2015."
+msgstr "Fran Diéguez <frandieguez@gnome.org>, 2015-2020."
 
-#: src/gtd-initial-setup-window.ui:23
+#: src/gtd-initial-setup-window.ui:20
 msgid "Welcome"
 msgstr "Benvido/a"
 
-#: src/gtd-initial-setup-window.ui:37
+#: src/gtd-initial-setup-window.ui:31
 msgid "Log in to online accounts to access your tasks"
 msgstr "Inicie sesión en contas en liña para acceder ás súas tarefas"
 
-#: src/gtd-initial-setup-window.ui:62
+#: src/gtd-initial-setup-window.ui:53
 msgid "To Do Setup"
 msgstr "Configurar Lista de Tarefas"
 
-#: src/gtd-initial-setup-window.ui:65 src/gtd-window.ui:116
+#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:95
 #: src/provider/gtd-provider-popover.ui:40
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: src/gtd-initial-setup-window.ui:74
+#: src/gtd-initial-setup-window.ui:65
 msgid "_Done"
 msgstr "_Feito"
 
@@ -466,24 +453,32 @@ msgstr "Produciuse un erro ao cargar a extensión"
 msgid "Error unloading extension"
 msgstr "Produciuse un erro ao descargar o engadido"
 
-#: src/gtd-plugin-dialog.ui:62 src/gtd-window.ui:179
+#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:137
 msgid "Extensions"
 msgstr "Extensións"
 
-#: src/gtd-plugin-dialog.ui:96
+#: src/gtd-plugin-dialog.ui:90
 msgid "No extensions found"
 msgstr "Non se atoparon extensións"
 
-#: src/gtd-task-list-panel.ui:38 src/gtd-task-list-panel.ui:74
-#: src/gtd-task-list-panel.ui:98
+#: src/gtd-task-list-panel.c:199
+msgid "Unarchive"
+msgstr "Desarquivar"
+
+#: src/gtd-task-list-panel.c:199 src/gtd-task-list-panel.ui:41
+msgid "Archive"
+msgstr "Arquivar"
+
+#: src/gtd-task-list-panel.ui:26 src/gtd-task-list-panel.ui:61
+#: src/gtd-task-list-panel.ui:77
 msgid "Rename"
 msgstr "Renomear"
 
-#: src/gtd-task-list-panel.ui:57
+#: src/gtd-task-list-panel.ui:47
 msgid "Delete"
 msgstr "Eliminar"
 
-#: src/gtd-window.c:107
+#: src/gtd-window.c:110
 msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
@@ -491,20 +486,19 @@ msgstr ""
 "Esta é unha construción de desenvolvemento de Tarefas. Pode experimentar "
 "erros, comportamento incorrecto e perda de datos."
 
-#: src/gtd-window.c:421
+#: src/gtd-window.c:463
 msgid "Details"
 msgstr "Detalles"
 
-#: src/gtd-window.c:712
+#: src/gtd-window.c:768
 msgid "Click a task list to select"
 msgstr "Prema unha lista de tarefas para seleccionala"
 
-#: src/gtd-window.ui:63
-msgid "_New List"
-msgstr "Nova _lista"
+#: src/gtd-window.ui:50
+msgid "New List"
+msgstr "Nova lista"
 
-#: src/gtd-window.ui:185
-#| msgid "_About"
+#: src/gtd-window.ui:143
 msgid "_About To Do"
 msgstr "_Sobre Tarefas"
 
@@ -512,80 +506,89 @@ msgstr "_Sobre Tarefas"
 msgid "Create _List"
 msgstr "Crear _lista"
 
-#: src/provider/gtd-provider-popover.ui:54
+#: src/provider/gtd-provider-popover.ui:53
 msgid "List Name"
 msgstr "Nome da lista"
 
-#: src/provider/gtd-provider-popover.ui:132
+#: src/provider/gtd-provider-popover.ui:130
 msgid "Select a storage location"
 msgstr "Seleccione a localización do almacenamento"
 
-#: src/provider/gtd-provider-row.ui:64
+#: src/provider/gtd-provider-row.ui:57
 msgid "Off"
 msgstr "Desactivado"
 
-#: src/provider/gtd-provider-selector.ui:23
+#: src/provider/gtd-provider-selector.ui:19
 msgid "Click to add a new Google account"
 msgstr "Prema para engadir unha conta de Google"
 
-#: src/provider/gtd-provider-selector.ui:39
+#: src/provider/gtd-provider-selector.ui:32
 msgid "Google"
 msgstr "Google"
 
-#: src/provider/gtd-provider-selector.ui:49
+#: src/provider/gtd-provider-selector.ui:42
 msgid "Click to add a new ownCloud account"
 msgstr "Prema para engadir unha conta de ownCloud"
 
-#: src/provider/gtd-provider-selector.ui:65
+#: src/provider/gtd-provider-selector.ui:55
 msgid "ownCloud"
 msgstr "ownCloud"
 
-#: src/provider/gtd-provider-selector.ui:75
+#: src/provider/gtd-provider-selector.ui:65
 msgid "Click to add a new Microsoft Exchange account"
 msgstr "Prema para engadir unha conta de Microsoft Exchange"
 
-#: src/provider/gtd-provider-selector.ui:91
+#: src/provider/gtd-provider-selector.ui:78
 msgid "Microsoft Exchange"
 msgstr "Microsoft Exchange"
 
-#: src/provider/gtd-provider-selector.ui:104
+#: src/provider/gtd-provider-selector.ui:91
 msgid "Or you can just store your tasks on this computer"
 msgstr "Ou tamén pode almacenar as súas tarefas neste computador"
 
-#: src/sidebar/gtd-sidebar.c:304
+#: src/sidebar/gtd-sidebar.c:329
 #, c-format
 msgid "Task list <b>%s</b> removed"
 msgstr "Lista de tarefas <b>%s</b> eliminada"
 
-#: src/sidebar/gtd-sidebar.c:307 src/task-list-view/gtd-task-list-view.c:461
+#: src/sidebar/gtd-sidebar.c:332 src/task-list-view/gtd-task-list-view.c:460
 msgid "Undo"
 msgstr "Desfacer"
 
-#: src/sidebar/gtd-sidebar-provider-row.ui:88
+#: src/sidebar/gtd-sidebar-provider-row.ui:69
 msgid "Loading…"
 msgstr "Cargando…"
 
-#: src/task-list-view/gtd-edit-pane.ui:24
+#. Translators: 'archived' as in 'archived task lists'
+#: src/sidebar/gtd-sidebar.ui:51
+msgid "Archived"
+msgstr "Arquivado"
+
+#: src/sidebar/gtd-sidebar.ui:102
+msgid "No archived lists"
+msgstr "Non hai listas arquivadas"
+
+#: src/task-list-view/gtd-edit-pane.ui:16
 msgid "D_ue Date"
 msgstr "Data de _vencemento"
 
-#: src/task-list-view/gtd-edit-pane.ui:41
+#: src/task-list-view/gtd-edit-pane.ui:30
 msgid "_Today"
 msgstr "_Hoxe"
 
-#: src/task-list-view/gtd-edit-pane.ui:50
+#: src/task-list-view/gtd-edit-pane.ui:39
 msgid "To_morrow"
 msgstr "M_añá"
 
-#: src/task-list-view/gtd-edit-pane.ui:91
+#: src/task-list-view/gtd-edit-pane.ui:75
 msgid "_Notes"
 msgstr "_Notas"
 
-#: src/task-list-view/gtd-edit-pane.ui:137
+#: src/task-list-view/gtd-edit-pane.ui:117
 msgid "_Delete"
 msgstr "_Eliminar"
 
-#: src/task-list-view/gtd-edit-pane.ui:176
+#: src/task-list-view/gtd-edit-pane.ui:151
 msgctxt "taskdate"
 msgid "None"
 msgstr "Ningunha"
@@ -596,11 +599,11 @@ msgstr "Ningunha"
 msgid "%1$s \t <small>%2$s</small>"
 msgstr "%1$s \t <small>%2$s</small>"
 
-#: src/task-list-view/gtd-new-task-row.ui:15
+#: src/task-list-view/gtd-new-task-row.ui:14
 msgid "New task…"
 msgstr "Novas tarefas…"
 
-#: src/task-list-view/gtd-task-list-view.c:442
+#: src/task-list-view/gtd-task-list-view.c:441
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Tarefa <b>%s</b> eliminada"
@@ -648,517 +651,3 @@ msgstr "Non se atoparon tarefas"
 #: src/widgets/gtd-empty-list-widget.c:75
 msgid "You can add tasks using the <b>+</b> above"
 msgstr "Pode engadir tarefas usando o <b>+</b> de arriba"
-
-#~ msgid "org.gnome.Todo"
-#~ msgstr "org.gnome.Todo"
-
-#~ msgid "_Quit"
-#~ msgstr "_Saír"
-
-#~ msgid "_Priority"
-#~ msgstr "_Prioridade"
-
-#~ msgctxt "taskpriority"
-#~ msgid "None"
-#~ msgstr "Ningunha"
-
-#~ msgid "Low"
-#~ msgstr "Baixa"
-
-#~ msgid "Medium"
-#~ msgstr "Media"
-
-#~ msgid "High"
-#~ msgstr "Alta"
-
-#~ msgid "Copyright © %1$d The To Do authors"
-#~ msgstr "Dereitos de autor © %1$d Os autores do To Do"
-
-#~ msgid "Removing this task will also remove its subtasks. Remove anyway?"
-#~ msgstr ""
-#~ "Ao eliminar esta tarefa tamén se eliminarán as súas subtarefas. Desexa "
-#~ "eliminala igualmente?"
-
-#~ msgid "Once removed, the tasks cannot be recovered."
-#~ msgstr "Logo de eliminalas, as tarefas non se poden recuperar."
-
-#~ msgid "Cancel"
-#~ msgstr "Cancelar"
-
-#~ msgid "Remove"
-#~ msgstr "Eliminar"
-
-#~| msgid "_Rename"
-#~ msgid "Rename %s"
-#~ msgstr "Renomear %s"
-
-#~ msgid "Lists"
-#~ msgstr "Listas"
-
-#~ msgid "Tasks"
-#~ msgstr "Tarefas"
-
-#~ msgid "Name of the task list"
-#~ msgstr "Nome da lista de tarefas"
-
-#~ msgid "Show or hide completed tasks"
-#~ msgstr "Mostrar ou ocultar as tarefas completadas"
-
-#~ msgid "Done"
-#~ msgstr "Feito"
-
-#~ msgid "Done (%d)"
-#~ msgstr "Feito (%d)"
-
-#~ msgid "Loading your task lists…"
-#~ msgstr "Cargando a lista de tarefas…"
-
-#~ msgid "No tasks"
-#~ msgstr "Non hai tarefas"
-
-#~ msgid "Remove the selected task lists?"
-#~ msgstr "Desexa eliminar as listas de tarefas seleccionadas?"
-
-#~ msgid "Once removed, the task lists cannot be recovered."
-#~ msgstr "Logo de eliminalas, as listas de tarefas non se poden recuperar."
-
-#~ msgid "Remove task lists"
-#~ msgstr "Eliminar as listas de tarefas"
-
-#~| msgid "Clear completed tasks…"
-#~ msgid "Clear completed tasks"
-#~ msgstr "Limpar as tarefas completadas"
-
-#~ msgid "Notes"
-#~ msgstr "Notas"
-
-#~ msgid "Due Date"
-#~ msgstr "Data de vencemento"
-
-#~ msgid "Priority"
-#~ msgstr "Prioridade"
-
-#~ msgid "Error updating task"
-#~ msgstr "Produciuse un erro ao actualizar a tarefa"
-
-#~ msgid "Error creating task list"
-#~ msgstr "Produciuse un erro ao crear a lista de tarefas"
-
-#~ msgid "Error creating remote task list"
-#~ msgstr "Produciuse un erro creando a lista de tarefas remotas"
-
-#~ msgid "Error updating task list"
-#~ msgstr "Produciuse un erro actualizando a lista"
-
-#~ msgid "Error removing remote task list"
-#~ msgstr "Produciuse un erro eliminando a lista de tarefas remotas"
-
-#~ msgid "Error creating new task list"
-#~ msgstr "Produciuse un erro ao crear a nova lista de tarefas"
-
-#~ msgid "Error loading Todoist tasks"
-#~ msgstr "Produciuse un erro ao cargar as tarefas de Todoist"
-
-#~ msgid "Bad status code (%d) received. Please check your connection."
-#~ msgstr ""
-#~ "Recibiuse código de estado incorrecto (%d). Comprobe a súa conexión."
-
-#~ msgid "Error while reading a line from Todo.txt"
-#~ msgstr "Produciuse un erro ao ler unha liña desde o Todo.txt"
-
-#~ msgid "Incorrect date"
-#~ msgstr "Data incorrecta"
-
-#~ msgid "Please make sure the date in Todo.txt is valid."
-#~ msgstr "Asegúrese de que a data en Todo.txt é válida."
-
-#~ msgid "Unrecognized token in a Todo.txt line"
-#~ msgstr "Token non recoñecido na liña de Todo.txt"
-
-#~ msgid ""
-#~ "To Do cannot recognize some tags in your Todo.txt file. Some tasks may "
-#~ "not be loaded"
-#~ msgstr ""
-#~ "Tarefas non pode recoñecer algunhas etiquetas no seu ficheiro Todo.txt. É "
-#~ "posíbel que algunhas tarefas non se carguen"
-
-#~ msgid "No task list found for some tasks"
-#~ msgstr "Non se atopou unha lista de tarefas para algunhas tarefas"
-
-#~ msgid ""
-#~ "Some of the tasks in your Todo.txt file do not have a task list. To Do "
-#~ "supports tasks with a task list. Please add a list to all your tasks"
-#~ msgstr ""
-#~ "Algunhas das tarefas no seu ficheiro Todo.txt non ten unha lista de "
-#~ "tarefas. Tarefas admite tarefas cunha lista de tarefas. Engada unha lista "
-#~ "a todas as súas tarefas"
-
-#~ msgid "New List…"
-#~ msgstr "Nova lista…"
-
-#~ msgid "Next _Week"
-#~ msgstr "Seguinte _semana"
-
-#~ msgid "Error loading Evolution-Data-Server backend"
-#~ msgstr "Produciuse un erro ao cargar o motor Evolution-Data-Server"
-
-#~ msgid "Task list source successfully connected"
-#~ msgstr "Conexión con éxito á orixe da lista de tarefas"
-
-#~ msgid "Failed to prompt for credentials"
-#~ msgstr "Produciuse un fallo ao solicitar as credenciais"
-
-#~ msgid "Failed to prompt for credentials for"
-#~ msgstr "Produciuse un fallo ao solicitar as credenciais para"
-
-#~ msgid "Authentication failure"
-#~ msgstr "Fallo de autenticación"
-
-#~ msgid "Error loading task manager"
-#~ msgstr "Produciuse un erro ao cargar o xestor de tarefas"
-
-#~ msgid "Error creating task"
-#~ msgstr "Produciuse un erro ao crear a tarefa"
-
-#~ msgid "Error saving task list"
-#~ msgstr "Produciuse un erro ao gardar a lista de tarefas"
-
-#~ msgid "Setting new color for task list"
-#~ msgstr "Estabelecendo nova cor para a lista de tarefas"
-
-#~ msgid "Change default storage location…"
-#~ msgstr "Cambiar a localización de almacenamento por omisión…"
-
-#~ msgid "Error loading CSS from resource"
-#~ msgstr "Prouciuse un erro ao cargar o CSS desde o recurso"
-
-#~ msgid "Error while converting the default Todo.txt path to an URI"
-#~ msgstr ""
-#~ "Produciuse un erro ao converter a ruta por omisión do Todo.txt a un URI"
-
-#~ msgid "Error while adding a task to Todo.txt"
-#~ msgstr "Produciuse un erro ao engadir unha tarefas a Todo.txt"
-
-#~ msgid "Error while reading tasks from Todo.txt"
-#~ msgstr "Produciuse un erro ao obter as tarefas desde Todo.txt"
-
-#~ msgid "Error while reading task lists from Todo.txt"
-#~ msgstr "Produciuse un erro ao crear a lista de tarefas desde Todo.txt"
-
-#~ msgid "Select the default storage location to create task lists:"
-#~ msgstr ""
-#~ "Seleccione a localización de almacenamento por omisión ao crear listas de "
-#~ "tarefas:"
-
-#~ msgid "Default storage location"
-#~ msgstr "Localización do almacenamento por omisión"
-
-#~ msgid "unscheduled-panel"
-#~ msgstr "unscheduled-panel"
-
-#~ msgid "Skipping already loaded task list "
-#~ msgstr "Omitindo a lista de tarefas xa cargadas"
-
-#~ msgid "Manager of this application"
-#~ msgstr "O xestor deste aplicativo"
-
-#~ msgid "The manager of the application"
-#~ msgstr "O xestor deste aplicativo"
-
-#~ msgid "Task being edited"
-#~ msgstr "Tarefa editándose"
-
-#~ msgid "The task that is actually being edited"
-#~ msgstr "A tarefa está actualmente editándose"
-
-#~ msgid "Manager of the task"
-#~ msgstr "Xestor da tarefa"
-
-#~ msgid "The singleton manager instance of the task"
-#~ msgstr "Unha instancia de xestión singleton da tarefa"
-
-#~ msgid "The online accounts client of the manager"
-#~ msgstr "O cliente das contas en liña do xestor"
-
-#~ msgid ""
-#~ "The read-only GNOME online accounts client loaded and owned by the manager"
-#~ msgstr ""
-#~ "Cliente de contas en liña de GNOME xa cargado e que pertence ao xestor"
-
-#~ msgid "Whether GNOME Online Accounts client is ready"
-#~ msgstr "Indica se o cliente de Contas en liña de GNOME está listo"
-
-#~ msgid "Whether the read-only GNOME online accounts client is loaded"
-#~ msgstr ""
-#~ "Indica se o cliente de só lectura de contas en liña de GNOME está cargado"
-
-#~ msgid "The source registry of the manager"
-#~ msgstr "O rexistro de orixe do xestor"
-
-#~ msgid "The read-only source registry loaded and owned by the manager"
-#~ msgstr "Rexistro de orixe de só lectura cargado e que pertence ao xestor"
-
-#~ msgid "Unique identifier of the object"
-#~ msgstr "Identificador único do obxecto"
-
-#~ msgid "The unique identifier of the object, defined by the backend"
-#~ msgstr "O identificador único do boxecto, difinido polo backend"
-
-#~ msgid "Ready state of the object"
-#~ msgstr "Estado de preparación do obxecto"
-
-#~ msgid "Whether the object is marked as ready or not"
-#~ msgstr "Indica se o obxecto está marcado como listo ou non"
-
-#~ msgid "Whether the task is completed or not"
-#~ msgstr "Indica se a tarefa está completada ou non"
-
-#~ msgid "Whether the task is marked as completed by the user"
-#~ msgstr "Indica se a tarefa está marcada como completada polo usuario"
-
-#~ msgid "Component of the task"
-#~ msgstr "Compoñente da tarefa"
-
-#~ msgid "The #ECalComponent this task handles."
-#~ msgstr "#ECalComponent que xestiona esta tarefa."
-
-#~ msgid "Description of the task"
-#~ msgstr "Descrición da tarefa"
-
-#~ msgid "Optional string describing the task"
-#~ msgstr "Cade de texto opcional que describe a tarefa"
-
-#~ msgid "End date of the task"
-#~ msgstr "Data de final da tarefa"
-
-#~ msgid "The day the task is supposed to be completed"
-#~ msgstr "O día que a tarefa se supón que debe estar completada"
-
-#~ msgid "The list that owns this task"
-#~ msgstr "A lista á que pertence esta tarefa"
-
-#~ msgid "Priority of the task"
-#~ msgstr "Prioridade da tarefa"
-
-#~ msgid ""
-#~ "The priority of the task. 0 means no priority set, and tasks will be "
-#~ "sorted alphabetically."
-#~ msgstr ""
-#~ "A prioridade da tarefa. 0 significa que non ten prioridade, e polo tanto "
-#~ "as tarefas ordenaranse de forma alfabética."
-
-#~ msgid "Title of the task"
-#~ msgstr "Título da tarefa"
-
-#~ msgid "The title of the task"
-#~ msgstr "O título da tarefa"
-
-#~ msgid "Color of the list"
-#~ msgstr "Cor da lista"
-
-#~ msgid "The color of the list"
-#~ msgstr "A cor da lista"
-
-#~ msgid "Whether the task list is removable"
-#~ msgstr "Indica se a lista de tarefas é de só lectura"
-
-#~ msgid "Whether the task list can be removed from the system"
-#~ msgstr "Indica se a lista de tarefas pode eliminarse do sistema"
-
-#~ msgid "Name of the list"
-#~ msgstr "Nome da lista"
-
-#~ msgid "The name of the list"
-#~ msgstr "O nome da lista"
-
-#~ msgid "Data origin of the list"
-#~ msgstr "Datos de orixe da lista"
-
-#~ msgid "The data origin location of the list"
-#~ msgstr "Os datos de localización de orixe da lista"
-
-#~ msgid "The parent source that handles the list"
-#~ msgstr "O orixe do pai que xestiona a lista"
-
-#~ msgid "Mode of this item"
-#~ msgstr "Modo deste elemento"
-
-#~ msgid "The mode of this item, inherited from the parent's mode"
-#~ msgstr "O modo deste elemento, herdado do modo do pai"
-
-#~ msgid "Whether the task list is selected"
-#~ msgstr "Indica se a lista de tarefas está completada"
-
-#~ msgid "Whether the task list is selected when in selection mode"
-#~ msgstr ""
-#~ "Indica se a lista de tarefas está seleccionada cando está en modo de "
-#~ "selección"
-
-#~ msgid "The task list associated with this item"
-#~ msgstr "A lista de tareas asociada a este elemento"
-
-#~ msgid "Manager of this window's application"
-#~ msgstr "Xestor do aplicativo de xanelas"
-
-#~ msgid "The manager of the window's application"
-#~ msgstr "O xestor do aplicativo de xanelas"
-
-#~ msgid "Whether the list is readonly"
-#~ msgstr "Indica se a lista é de só lectura"
-
-#~ msgid ""
-#~ "Whether the list is readonly, i.e. doesn't show the New Task row, or not"
-#~ msgstr ""
-#~ "Indica se a lista é de só lectura, p.ex. non se mostra a fila Nova "
-#~ "tarefa, ou non"
-
-#~ msgid "Whether task rows show the list name"
-#~ msgstr "Indica se a lista de tarefas mostra o nome da lista"
-
-#~ msgid "Whether task rows show the list name at the end of the row"
-#~ msgstr ""
-#~ "Indica se as filas de tarefas mostran o nome da lista ao final da fila"
-
-#~ msgid "Whether completed tasks are shown"
-#~ msgstr "Indica se se mostran as tarefas completadas"
-
-#~ msgid "Whether completed tasks are visible or not"
-#~ msgstr "Indica se se mostran as tarefas completadas están visíbeis ou non"
-
-#~ msgid "If the row is used to add a new task"
-#~ msgstr "Se a fila se usa para engadir unha nova tarefa"
-
-#~ msgid "Whether the row is used to add a new task"
-#~ msgstr "Indica se a fila se usa para engadir unha nova tarefa"
-
-#~ msgid "Task of the row"
-#~ msgstr "Tarefa da fila"
-
-#~ msgid "The task that this row represents"
-#~ msgstr "A tarefa que esta fila representa"
-
-#~ msgid "Mode of this window"
-#~ msgstr "Modo desta xanela"
-
-#~ msgid "The interaction mode of the window"
-#~ msgstr "O modo de interacción desta xanela"
-
-#~ msgid "Whether the storage is enabled"
-#~ msgstr "Indica se o almacenamento está activado"
-
-#~ msgid "Whether the storage is available to be used."
-#~ msgstr "Indica se o almacenamento está dispoñíbel para usarse."
-
-#~ msgid "Icon of the storage"
-#~ msgstr "Icona do almacenamento"
-
-#~ msgid "The icon representing the storage location."
-#~ msgstr "A icona que representa a localización do almacenamento."
-
-#~ msgid "Identifier of the storage"
-#~ msgstr "Identificador do almacenamento"
-
-#~ msgid "The unique identifier of the storage location."
-#~ msgstr "Un identificador único da localización do almacenamento."
-
-#~ msgid "Whether the storage is the default"
-#~ msgstr "Indica se o almacenamento está o predefinido"
-
-#~ msgid "Whether the storage is the default storage location to be used."
-#~ msgstr ""
-#~ "Indica se o almacenamento é a localización de almacenamento predefinido "
-#~ "para usarse."
-
-#~ msgid "Name of the storage"
-#~ msgstr "Nome do almacenamento"
-
-#~ msgid "The user-visible name of the storage location."
-#~ msgstr "O nome visíbel polo usuario da localización de almacenamento."
-
-#~ msgid "Name of the data provider of the storage"
-#~ msgstr "Nome do fornecedor de datos do almacenamento"
-
-#~ msgid "The user-visible name of the data provider of the storage location."
-#~ msgstr ""
-#~ "O nome visible polo usuario do fornecedor dde datos da localización do "
-#~ "almacenamento."
-
-#~ msgid "Account of the storage"
-#~ msgstr "Conta do almacenamento"
-
-#~ msgid "The account of the storage location."
-#~ msgstr "A conta da localización de almacenamento."
-
-#~ msgid "Parent of the storage"
-#~ msgstr "Pai do almacenamento"
-
-#~ msgid "The parent source identifier of the storage location."
-#~ msgstr "O identificador de orixe pai da localización do almacenamento."
-
-#~ msgid "Storage of the row"
-#~ msgstr "Almacenamento da fila"
-
-#~ msgid "The storage that this row holds"
-#~ msgstr "O almacenamento no que está esta fila"
-
-#~ msgid "Show local storage row"
-#~ msgstr "Mostrar a fila de almacenamento local"
-
-#~ msgid "Whether should show a local storage row instead of a checkbox"
-#~ msgstr ""
-#~ "Indica se se debería mostrar unha fila de almacenamento local dunha caixa "
-#~ "de verificacion"
-
-#~ msgid "Show stub rows"
-#~ msgstr "Mostrar filas auxiliares"
-
-#~ msgid "Whether should show stub rows for non-added accounts"
-#~ msgstr ""
-#~ "Indica se se deberían mostrar filas de código auxiliar para as contas non "
-#~ "engadidas"
-
-#~ msgid "Selects default storage row"
-#~ msgstr "Seleccione a fila de almacenamento por omisión"
-
-#~ msgid "Whether should select the default storage row"
-#~ msgstr ""
-#~ "Indica se se debería seleccionar a fila de almacenamento por omisión"
-
-#~ msgid "Whether the notification has a primary action"
-#~ msgstr "Indica se a notificación ten unha acción primaria"
-
-#~ msgid ""
-#~ "Whether the notification has the primary action, activated on timeout or "
-#~ "dismiss"
-#~ msgstr ""
-#~ "Indica se a notificación ten unha acción primaria, activada con tempo de "
-#~ "espera ou omitida"
-
-#~ msgid "Whether the notification has a secondary action"
-#~ msgstr "Indica se a notificación ten unha acción secundaria"
-
-#~ msgid ""
-#~ "Whether the notification has the secondary action, activated by the user"
-#~ msgstr ""
-#~ "Indica se a notificación ten unha acción secundaria, activada polo usuario"
-
-#~ msgid "Text of the secondary action button"
-#~ msgstr "O texto do botón de acción secundario"
-
-#~ msgid "The text of the secondary action button"
-#~ msgstr "O texto do botón de acción secundario"
-
-#~ msgid "The main message of the notification"
-#~ msgstr "O mensaxe principal da notificación"
-
-#~ msgid "Notification timeout"
-#~ msgstr "Tempo de espera da notificación"
-
-#~ msgid "The time the notification is displayed"
-#~ msgstr "O tempo que se mostra a notificación"
-
-#~ msgid "Provider type of the storage"
-#~ msgstr "Tipo de fornecedor do almacenamento"
-
-#~ msgid "Provider name of the storage"
-#~ msgstr "Nome do fornecedor do almacenamento"
