@@ -1,19 +1,19 @@
 # Brazilian Portuguese translation for gnome-todo.
-# Copyright (C) 2019 gnome-todo's COPYRIGHT HOLDER
+# Copyright (C) 2020 gnome-todo's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-todo package.
 # Georges Basile Stavracas Neto <georges.stavracas@gmail.com>, 2015.
 # Artur de Aquino Morais <artur.morais93@outlook.com>, 2016.
 # Gustavo Marques <gutodisse@gmail.com>, 2016.
 # Enrico Nicoletto <liverig@gmail.com>, 2015, 2016.
 # Isaac F. Ferreira Filho <isaacmob@riseup.net>, 2017.
-# Rafael Fontenelle <rafaelff@gnome.org>, 2015-2019.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2015-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2019-06-30 00:52+0000\n"
-"PO-Revision-Date: 2019-07-22 02:06-0300\n"
+"POT-Creation-Date: 2019-12-27 12:57+0000\n"
+"PO-Revision-Date: 2020-01-04 22:55-0300\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
 #: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
-#: src/gtd-window.c:845 src/gtd-window.c:876 src/main.c:35
+#: src/gtd-window.c:774 src/gtd-window.c:805 src/main.c:35
 msgid "To Do"
 msgstr "Tarefas"
 
@@ -132,7 +132,7 @@ msgid "The current list selector. Can be “grid” or “list”."
 msgstr "O seletor da lista atual. Pode ser “grid” ou “list”."
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
-#: plugins/next-week-panel/gtd-next-week-panel.c:112
+#: plugins/next-week-panel/gtd-next-week-panel.c:113
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:103
 #: src/task-list-view/gtd-edit-pane.c:110
 msgid "No date set"
@@ -158,34 +158,34 @@ msgid "Yesterday"
 msgstr "Ontem"
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
-#: plugins/next-week-panel/gtd-next-week-panel.c:124
+#: plugins/next-week-panel/gtd-next-week-panel.c:125
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:124
 #: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:154
-#: plugins/today-panel/gtd-panel-today.c:258
+#: plugins/today-panel/gtd-panel-today.c:148
+#: plugins/today-panel/gtd-panel-today.c:264
 #: src/task-list-view/gtd-task-row.c:138
 msgid "Today"
 msgstr "Hoje"
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
-#: plugins/next-week-panel/gtd-next-week-panel.c:128
+#: plugins/next-week-panel/gtd-next-week-panel.c:129
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:128
 #: src/task-list-view/gtd-task-row.c:142
 msgid "Tomorrow"
 msgstr "Amanhã"
 
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:297
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:331
 msgid "All"
 msgstr "Todas"
 
-#: plugins/background/gtd-plugin-background.c:150
+#: plugins/background/gtd-plugin-background.c:360
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
 msgstr[0] "%1$s e uma tarefa mais"
 msgstr[1] "%1$s e %2$d outras tarefas"
 
-#: plugins/background/gtd-plugin-background.c:254
+#: plugins/background/gtd-plugin-background.c:464
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
@@ -228,27 +228,27 @@ msgstr "Quando Tarefas for executar, mostrar uma notificação de inicializaçã
 msgid "Error loading GNOME Online Accounts"
 msgstr "Erro ao carregar as contas online do GNOME"
 
-#: plugins/eds/gtd-provider-eds.c:140
+#: plugins/eds/gtd-provider-eds.c:172
 msgid "Failed to connect to task list"
 msgstr "Ocorreu falha ao conectar com a lista de tarefas"
 
-#: plugins/eds/gtd-provider-eds.c:305
+#: plugins/eds/gtd-provider-eds.c:320
 msgid "An error occurred while creating a task"
 msgstr "Ocorreu um erro ao criar uma tarefa"
 
-#: plugins/eds/gtd-provider-eds.c:350
+#: plugins/eds/gtd-provider-eds.c:365
 msgid "An error occurred while modifying a task"
 msgstr "Ocorreu um erro ao modificar uma tarefa"
 
-#: plugins/eds/gtd-provider-eds.c:371
+#: plugins/eds/gtd-provider-eds.c:386
 msgid "An error occurred while removing a task"
 msgstr "Ocorreu um erro ao remover uma tarefa"
 
-#: plugins/eds/gtd-provider-eds.c:389
+#: plugins/eds/gtd-provider-eds.c:404
 msgid "An error occurred while creating a task list"
 msgstr "Ocorreu um erro ao criar uma lista de tarefas"
 
-#: plugins/eds/gtd-provider-eds.c:411 plugins/eds/gtd-provider-eds.c:434
+#: plugins/eds/gtd-provider-eds.c:426 plugins/eds/gtd-provider-eds.c:449
 msgid "An error occurred while modifying a task list"
 msgstr "Ocorreu um erro ao modificar uma lista de tarefas"
 
@@ -260,17 +260,17 @@ msgstr "Neste computador"
 msgid "Local"
 msgstr "Local"
 
-#: plugins/eds/gtd-task-list-eds.c:459 plugins/eds/gtd-task-list-eds.c:486
-#: plugins/eds/gtd-task-list-eds.c:510
+#: plugins/eds/gtd-task-list-eds.c:499 plugins/eds/gtd-task-list-eds.c:526
+#: plugins/eds/gtd-task-list-eds.c:550
 msgid "Error fetching tasks from list"
 msgstr "Erro ao obter tarefas da lista"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:120
-#: plugins/today-panel/gtd-panel-today.c:145
+#: plugins/next-week-panel/gtd-next-week-panel.c:121
+#: plugins/today-panel/gtd-panel-today.c:139
 msgid "Overdue"
 msgstr "Atrasado"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:345
+#: plugins/next-week-panel/gtd-next-week-panel.c:357
 msgid "Next 7 Days"
 msgstr "Próximos 7 dias"
 
@@ -446,7 +446,7 @@ msgstr "Conecte-se às contas online para acessar suas tarefas"
 msgid "To Do Setup"
 msgstr "Configuração de Tarefas"
 
-#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:96
+#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:95
 #: src/provider/gtd-provider-popover.ui:40
 msgid "_Cancel"
 msgstr "_Cancelar"
@@ -463,7 +463,7 @@ msgstr "Erro ao carregar a extensão"
 msgid "Error unloading extension"
 msgstr "Erro ao descarregar a extensão"
 
-#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:138
+#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:143
 msgid "Extensions"
 msgstr "Extensões"
 
@@ -476,7 +476,6 @@ msgid "Unarchive"
 msgstr "Desarquivar"
 
 #: src/gtd-task-list-panel.c:199 src/gtd-task-list-panel.ui:41
-#: src/sidebar/gtd-sidebar.ui:51
 msgid "Archive"
 msgstr "Arquivar"
 
@@ -489,7 +488,7 @@ msgstr "Renomear"
 msgid "Delete"
 msgstr "Excluir"
 
-#: src/gtd-window.c:115
+#: src/gtd-window.c:110
 msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
@@ -497,19 +496,19 @@ msgstr ""
 "essa é uma compilação de desenvolvimento do Tarefas. Você pode presenciar "
 "erros, comportamentos errôneos e perda de dados."
 
-#: src/gtd-window.c:517
+#: src/gtd-window.c:463
 msgid "Details"
 msgstr "Detalhes"
 
-#: src/gtd-window.c:840
+#: src/gtd-window.c:769
 msgid "Click a task list to select"
 msgstr "Clique para selecionar uma lista de tarefas"
 
-#: src/gtd-window.ui:51
+#: src/gtd-window.ui:50
 msgid "New List"
 msgstr "Nova lista"
 
-#: src/gtd-window.ui:144
+#: src/gtd-window.ui:149
 msgid "_About To Do"
 msgstr "_Sobre o Tarefas"
 
@@ -570,7 +569,13 @@ msgstr "Desfazer"
 msgid "Loading…"
 msgstr "Carregando…"
 
-#: src/sidebar/gtd-sidebar.ui:102
+#. Translators: 'archived' as in 'archived task lists'
+#: src/sidebar/gtd-sidebar.ui:52
+#| msgid "Archive"
+msgid "Archived"
+msgstr "Arquivada"
+
+#: src/sidebar/gtd-sidebar.ui:103
 msgid "No archived lists"
 msgstr "Nenhuma lista arquivada"
 
