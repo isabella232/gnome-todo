@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2019-06-30 00:52+0000\n"
-"PO-Revision-Date: 2019-07-19 23:03+0200\n"
+"POT-Creation-Date: 2020-01-18 12:15+0000\n"
+"PO-Revision-Date: 2020-01-19 00:02+0100\n"
 "Last-Translator: gogo <linux.hr@protonmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
 #: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
-#: src/gtd-window.c:845 src/gtd-window.c:876 src/main.c:35
+#: src/gtd-window.c:774 src/gtd-window.c:805 src/main.c:35
 msgid "To Do"
 msgstr "Popis zadataka"
 
@@ -127,7 +127,7 @@ msgid "The current list selector. Can be “grid” or “list”."
 msgstr "Trenutni prikaz popisa. Može biti “mreža” ili “popis”."
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
-#: plugins/next-week-panel/gtd-next-week-panel.c:112
+#: plugins/next-week-panel/gtd-next-week-panel.c:113
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:103
 #: src/task-list-view/gtd-edit-pane.c:110
 msgid "No date set"
@@ -154,27 +154,27 @@ msgid "Yesterday"
 msgstr "Jučer"
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
-#: plugins/next-week-panel/gtd-next-week-panel.c:124
+#: plugins/next-week-panel/gtd-next-week-panel.c:125
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:124
 #: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:154
-#: plugins/today-panel/gtd-panel-today.c:258
+#: plugins/today-panel/gtd-panel-today.c:148
+#: plugins/today-panel/gtd-panel-today.c:264
 #: src/task-list-view/gtd-task-row.c:138
 msgid "Today"
 msgstr "Danas"
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
-#: plugins/next-week-panel/gtd-next-week-panel.c:128
+#: plugins/next-week-panel/gtd-next-week-panel.c:129
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:128
 #: src/task-list-view/gtd-task-row.c:142
 msgid "Tomorrow"
 msgstr "Sutra"
 
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:297
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:331
 msgid "All"
 msgstr "Sve"
 
-#: plugins/background/gtd-plugin-background.c:150
+#: plugins/background/gtd-plugin-background.c:360
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
@@ -182,7 +182,7 @@ msgstr[0] "%1$s i %2$d drugi zadatak"
 msgstr[1] "%1$s i %2$d druga zadatka"
 msgstr[2] "%1$s i %2$d drugih zadatka"
 
-#: plugins/background/gtd-plugin-background.c:254
+#: plugins/background/gtd-plugin-background.c:464
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
@@ -226,27 +226,27 @@ msgstr "Kada se Popis zadataka pokrene, prikaži obavijest pokretanja"
 msgid "Error loading GNOME Online Accounts"
 msgstr "Greška učitavanja GNOME mrežnih računa"
 
-#: plugins/eds/gtd-provider-eds.c:140
+#: plugins/eds/gtd-provider-eds.c:172
 msgid "Failed to connect to task list"
 msgstr "Neuspješno povezivanje s popisom zadatka"
 
-#: plugins/eds/gtd-provider-eds.c:305
+#: plugins/eds/gtd-provider-eds.c:320
 msgid "An error occurred while creating a task"
 msgstr "Greška pri stvaranju zadatka"
 
-#: plugins/eds/gtd-provider-eds.c:350
+#: plugins/eds/gtd-provider-eds.c:365
 msgid "An error occurred while modifying a task"
 msgstr "Greška pri promijeni zadatka"
 
-#: plugins/eds/gtd-provider-eds.c:371
+#: plugins/eds/gtd-provider-eds.c:386
 msgid "An error occurred while removing a task"
 msgstr "Greška pri uklanjanju zadatka"
 
-#: plugins/eds/gtd-provider-eds.c:389
+#: plugins/eds/gtd-provider-eds.c:404
 msgid "An error occurred while creating a task list"
 msgstr "Greška pri stvaranju popisa zadatka"
 
-#: plugins/eds/gtd-provider-eds.c:411 plugins/eds/gtd-provider-eds.c:434
+#: plugins/eds/gtd-provider-eds.c:426 plugins/eds/gtd-provider-eds.c:449
 msgid "An error occurred while modifying a task list"
 msgstr "Greška pri uklanjanju popisa zadatka"
 
@@ -258,17 +258,17 @@ msgstr "Na ovom računalu"
 msgid "Local"
 msgstr "Lokalno"
 
-#: plugins/eds/gtd-task-list-eds.c:459 plugins/eds/gtd-task-list-eds.c:486
-#: plugins/eds/gtd-task-list-eds.c:510
+#: plugins/eds/gtd-task-list-eds.c:499 plugins/eds/gtd-task-list-eds.c:526
+#: plugins/eds/gtd-task-list-eds.c:550
 msgid "Error fetching tasks from list"
 msgstr "Greška preuzimanja zadataka s popisa"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:120
-#: plugins/today-panel/gtd-panel-today.c:145
+#: plugins/next-week-panel/gtd-next-week-panel.c:121
+#: plugins/today-panel/gtd-panel-today.c:139
 msgid "Overdue"
 msgstr "Isteklo"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:345
+#: plugins/next-week-panel/gtd-next-week-panel.c:357
 msgid "Next 7 Days"
 msgstr "Sljedećih 7 dana"
 
@@ -441,7 +441,7 @@ msgstr "Prijavite se u mrežne račune za pristup vašim zadacima"
 msgid "To Do Setup"
 msgstr "Popisa zadataka postavljanje"
 
-#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:96
+#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:95
 #: src/provider/gtd-provider-popover.ui:40
 msgid "_Cancel"
 msgstr "_Odustani"
@@ -458,7 +458,7 @@ msgstr "Greška učitavanja proširenja"
 msgid "Error unloading extension"
 msgstr "Greška oslobađanja proširenja"
 
-#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:138
+#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:143
 msgid "Extensions"
 msgstr "Proširenja"
 
@@ -471,7 +471,6 @@ msgid "Unarchive"
 msgstr "Otpakiraj"
 
 #: src/gtd-task-list-panel.c:199 src/gtd-task-list-panel.ui:41
-#: src/sidebar/gtd-sidebar.ui:51
 msgid "Archive"
 msgstr "Zapakiraj"
 
@@ -484,7 +483,7 @@ msgstr "Preimenuj"
 msgid "Delete"
 msgstr "Obriši"
 
-#: src/gtd-window.c:115
+#: src/gtd-window.c:110
 msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
@@ -492,19 +491,19 @@ msgstr ""
 "Ovo je razvojno izdanje Upravitelja zadatka. Možete se suočiti s greškama, "
 "neuobičajenim ponašanjem i gubitkom podataka."
 
-#: src/gtd-window.c:517
+#: src/gtd-window.c:463
 msgid "Details"
 msgstr "Pojedinosti"
 
-#: src/gtd-window.c:840
+#: src/gtd-window.c:769
 msgid "Click a task list to select"
 msgstr "Klikni popis zadatka za odabir"
 
-#: src/gtd-window.ui:51
+#: src/gtd-window.ui:50
 msgid "New List"
 msgstr "Novi popis"
 
-#: src/gtd-window.ui:144
+#: src/gtd-window.ui:149
 msgid "_About To Do"
 msgstr "_O Upravitelju zadacima"
 
@@ -565,7 +564,12 @@ msgstr "Poništi"
 msgid "Loading…"
 msgstr "Učitavanje…"
 
-#: src/sidebar/gtd-sidebar.ui:102
+#. Translators: 'archived' as in 'archived task lists'
+#: src/sidebar/gtd-sidebar.ui:52
+msgid "Archived"
+msgstr "Zapakirano"
+
+#: src/sidebar/gtd-sidebar.ui:103
 msgid "No archived lists"
 msgstr "Nema arhiviranih popisa"
 
