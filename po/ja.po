@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-01-16 12:03+0000\n"
-"PO-Revision-Date: 2020-01-17 00:00+0200\n"
+"POT-Creation-Date: 2020-01-18 12:22+0000\n"
+"PO-Revision-Date: 2020-01-19 00:00+0200\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -37,9 +37,9 @@ msgid ""
 "todos on your computer or sync them with cloud providers. Customize your "
 "experience with plugins."
 msgstr ""
-"GNOME To Do は GNOME と統合するようデザインされた、タスク管理アプリケーシ"
-"ョンです。To Do の整理や保存、複数の To Do リストの管理、クラウドプロバイ"
-"ダーを介しての To Do の同期、プラグインによるカスタマイズなどが可能です。"
+"GNOME To Do は GNOME と統合するようデザインされた、タスク管理アプリケーション"
+"です。To Do の整理や保存、複数の To Do リストの管理、クラウドプロバイダーを介"
+"しての To Do の同期、プラグインによるカスタマイズなどが可能です。"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:25
 msgid "GNOME To Do with the dark theme variant"
@@ -97,8 +97,7 @@ msgstr "GNOME To Do を起動したことがあるかどうか"
 #: data/org.gnome.todo.gschema.xml:17
 msgid ""
 "Whether it’s the first run of GNOME To Do (to run the initial setup) or not"
-msgstr ""
-"GNOME To Do を起動して初期セットアップを実行したことがあるかどうかです"
+msgstr "GNOME To Do を起動して初期セットアップを実行したことがあるかどうかです"
 
 #: data/org.gnome.todo.gschema.xml:21
 msgid "Default provider to add new lists to"
@@ -274,15 +273,13 @@ msgstr "今日完了したタスクはありません"
 
 #: plugins/todoist/gtd-plugin-todoist.c:109
 msgid "GNOME To Do cannot connect to Todoist due to network issue"
-msgstr ""
-"ネットワークの問題により GNOME To Do が Todoist に接続できません"
+msgstr "ネットワークの問題により GNOME To Do が Todoist に接続できません"
 
 #: plugins/todoist/gtd-plugin-todoist.c:110
 msgid ""
 "Not able to communicate with Todoist. Please check your internet "
 "connectivity."
-msgstr ""
-"Todoist に接続できません。インターネット接続を確認してください。"
+msgstr "Todoist に接続できません。インターネット接続を確認してください。"
 
 #: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Error fetching Todoist account key"
@@ -290,23 +287,21 @@ msgstr "Todoist のアカウントキー取得中にエラーが発生しまし�
 
 #: plugins/todoist/gtd-provider-todoist.c:214
 msgid "Please ensure that Todoist account is correctly configured."
-msgstr ""
-"Todoist のアカウントが正しく設定されていることを確認してください。"
+msgstr "Todoist のアカウントが正しく設定されていることを確認してください。"
 
 #: plugins/todoist/gtd-provider-todoist.c:555
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
-msgstr ""
-"このアクションの実行に必要な権限が GNOME To Do にはありません: %s"
+msgstr "このアクションの実行に必要な権限が GNOME To Do にはありません: %s"
 
 #: plugins/todoist/gtd-provider-todoist.c:563
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
 msgstr ""
-"Todoist のサーバーから不正なレスポンスを受け取りました。GNOME To Do を再読"
-"み込みしてください。"
+"Todoist のサーバーから不正なレスポンスを受け取りました。GNOME To Do を再読み"
+"込みしてください。"
 
 #: plugins/todoist/gtd-provider-todoist.c:850
 msgid "An error occurred while updating a Todoist task"
@@ -361,14 +356,14 @@ msgid ""
 "experience instability, errors and eventually data loss. It is not "
 "recommended to use Todo.txt integration on production systems."
 msgstr ""
-"<b>警告!</b> Todo.txt サポートは実験段階かつ不安定です。不安定な状態に"
-"陥ったりエラーやデータ損失が発生する可能性があります。重要なデータを扱う"
-"環境での Todo.txt 機能の使用はお勧めしません。"
+"<b>警告!</b> Todo.txt サポートは実験段階です。不安定な状態に陥ったりエラーや"
+"データ損失が発生する可能性があります。重要なデータを扱う環境での Todo.txt 機"
+"能の使用はお勧めできません。"
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:574
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr ""
-"Todo.txt を監視していないためファイルモニターを開くときにエラーが発生しました"
+"ファイルモニターを開くときにエラーが発生したため Todo.txt を監視しません"
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:643
 msgid "Todo.txt"
@@ -482,8 +477,8 @@ msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
 msgstr ""
-"これは To Do の開発ビルドです。エラーや不正な動作、データ損失が発生する"
-"可能性があります。"
+"これは To Do の開発ビルドです。エラーや不正な動作、データ損失が発生する可能性"
+"があります。"
 
 #: src/gtd-window.c:463
 msgid "Details"
@@ -617,7 +612,7 @@ msgstr "やることはありません"
 
 #: src/widgets/gtd-empty-list-widget.c:53
 msgid "You made it!"
-msgstr "やり遂げたね!"
+msgstr "やり遂げましたね!"
 
 #: src/widgets/gtd-empty-list-widget.c:54
 msgid "Looks like there’s nothing else left here"
@@ -629,7 +624,7 @@ msgstr "今はゆっくり休んでください"
 
 #: src/widgets/gtd-empty-list-widget.c:60
 msgid "Enjoy the rest of your day"
-msgstr "余暇をお楽しみください"
+msgstr "余暇を楽しんでください"
 
 #: src/widgets/gtd-empty-list-widget.c:61
 msgid "Good job!"
