@@ -71,31 +71,20 @@ static void          on_date_selected_cb                         (GtkCalendar   
 static void
 update_date_widgets (GtdEditPane *self)
 {
-  GDateTime *dt;
+  g_autoptr (GDateTime) dt = NULL;
   gchar *text;
 
   g_return_if_fail (GTD_IS_EDIT_PANE (self));
 
-  dt = self->task ? gtd_task_get_due_date (self->task) : NULL;
+  dt = self->task ? g_date_time_ref (gtd_task_get_due_date (self->task)) : NULL;
   text = dt ? g_date_time_format (dt, "%x") : NULL;
 
   g_signal_handlers_block_by_func (self->calendar, on_date_selected_cb, self);
 
-  if (dt)
-    {
-      gtk_calendar_select_day (self->calendar, dt);
+  if (!dt)
+    dt = g_date_time_new_now_local ();
 
-    }
-  else
-    {
-      GDateTime *today;
-
-      today = g_date_time_new_now_local ();
-
-      gtk_calendar_select_day (self->calendar, dt);
-
-      g_clear_pointer (&today, g_date_time_unref);
-    }
+  gtk_calendar_select_day (self->calendar, dt);
 
   g_signal_handlers_unblock_by_func (self->calendar, on_date_selected_cb, self);
 
