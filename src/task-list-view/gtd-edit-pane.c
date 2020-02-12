@@ -83,11 +83,7 @@ update_date_widgets (GtdEditPane *self)
 
   if (dt)
     {
-      gtk_calendar_select_month (self->calendar,
-                                 g_date_time_get_month (dt) - 1,
-                                 g_date_time_get_year (dt));
-
-      gtk_calendar_select_day (self->calendar, g_date_time_get_day_of_month (dt));
+      gtk_calendar_select_day (self->calendar, dt);
 
     }
   else
@@ -96,11 +92,7 @@ update_date_widgets (GtdEditPane *self)
 
       today = g_date_time_new_now_local ();
 
-      gtk_calendar_select_month (self->calendar,
-                                 g_date_time_get_month (today) - 1,
-                                 g_date_time_get_year (today));
-      gtk_calendar_select_day (self->calendar,
-                               g_date_time_get_day_of_month (today));
+      gtk_calendar_select_day (self->calendar, dt);
 
       g_clear_pointer (&today, g_date_time_unref);
     }
@@ -123,24 +115,10 @@ on_date_selected_cb (GtkCalendar *calendar,
 {
   g_autoptr (GDateTime) new_dt = NULL;
   g_autofree gchar *text = NULL;
-  guint year;
-  guint month;
-  guint day;
 
   GTD_ENTRY;
 
-  gtk_calendar_get_date (calendar,
-                         &year,
-                         &month,
-                         &day);
-
-  new_dt = g_date_time_new_local (year,
-                                  month + 1,
-                                  day,
-                                  0,
-                                  0,
-                                  0);
-
+  new_dt = gtk_calendar_get_date (calendar);
   text = g_date_time_format (new_dt, "%x");
 
   gtd_task_set_due_date (self->task, new_dt);
