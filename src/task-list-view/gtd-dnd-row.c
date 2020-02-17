@@ -224,6 +224,7 @@ gtd_dnd_row_drag_drop (GtkWidget *widget,
                        gint       x,
                        gint       y)
 {
+#if 0
   GtdDndRow *self;
   GtkWidget *source_widget, *row;
   GtdTask *row_task, *target_task;
@@ -283,7 +284,6 @@ gtd_dnd_row_drag_drop (GtkWidget *widget,
 
   gtk_list_box_invalidate_sort (GTK_LIST_BOX (gtk_widget_get_parent (widget)));
 
-  return TRUE;
+#endif
+  return FALSE;
 }
-
-

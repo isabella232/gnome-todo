@@ -30,10 +30,6 @@
                   <object class="GtkImage" id="dnd_icon">
                     <property name="icon-name">drag-handle-symbolic</property>
                     <property name="pixel-size">16</property>
-                    <signal name="drag-begin" handler="on_drag_begin_cb" object="GtdTaskRow" swapped="no"/>
-                    <signal name="drag-end" handler="on_drag_end_cb" object="GtdTaskRow" swapped="no"/>
-                    <signal name="drag-data-get" handler="on_drag_data_get_cb" object="GtdTaskRow" swapped="no"/>
-                    <signal name="drag-failed" handler="on_drag_failed_cb" object="GtdTaskRow" swapped="no"/>
                     <child>
                       <object class="GtkGestureClick">
                         <property name="propagation-phase">capture</property>
@@ -57,9 +53,6 @@
                 </child>
                 <child>
                   <object class="GtkBox" id="header_event_box">
-                    <signal name="drag-begin" handler="on_drag_begin_cb" object="GtdTaskRow" swapped="no"/>
-                    <signal name="drag-end" handler="on_drag_end_cb" object="GtdTaskRow" swapped="no"/>
-                    <signal name="drag-failed" handler="on_drag_failed_cb" object="GtdTaskRow" swapped="no"/>
                     <child>
                       <object class="GtkGestureClick">
                         <property name="propagation-phase">capture</property>

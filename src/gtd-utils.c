@@ -18,6 +18,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+#include "gtd-task.h"
 #include "gtd-utils.h"
 #include "gtd-utils-private.h"
 
@@ -117,7 +118,7 @@ _gtd_get_content_formats (void)
   static GdkContentFormats *content_formats = NULL;
 
   if (!content_formats)
-    content_formats = gdk_content_formats_new_for_gtype (GTK_TYPE_WIDGET);
+    content_formats = gdk_content_formats_new_for_gtype (GTD_TYPE_TASK);
 
   return content_formats;
 }

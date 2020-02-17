@@ -82,7 +82,8 @@ main (gint   argc,
   gtk_container_add (GTK_CONTAINER (window), grid);
   gtk_window_present (window);
 
-  gtk_main ();
+  while (TRUE)
+    g_main_context_iteration (NULL, TRUE);
 
   return 0;
 }

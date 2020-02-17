@@ -164,7 +164,8 @@ main (gint   argc,
   /* Schedule a live removal of tasks */
   dummy_provider_schedule_remove_task (dummy_provider);
 
-  gtk_main ();
+  while (TRUE)
+    g_main_context_iteration (NULL, TRUE);
 
   return 0;
 }

@@ -37,8 +37,8 @@
           <object class="GtkSeparator"/>
         </child>
         <child>
-          <object class="GtkModelButton" id="archive_button">
-            <property name="text" translatable="yes">Archive</property>
+          <object class="GtkButton" id="archive_button">
+            <property name="label" translatable="yes">Archive</property>
             <signal name="clicked" handler="on_archive_button_clicked_cb" object="GtdTaskListPanel" swapped="no"/>
           </object>
         </child>

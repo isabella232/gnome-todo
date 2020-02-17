@@ -36,7 +36,7 @@ struct _GtdTaskListPanel
 {
   GtkBox              parent;
 
-  GtkModelButton     *archive_button;
+  GtkButton          *archive_button;
   GtkFlowBox         *colors_flowbox;
   GtkPopover         *popover;
   GtkWidget          *rename_button;
@@ -196,7 +196,7 @@ update_archive_button (GtdTaskListPanel *self)
 
   archived = gtd_task_list_get_archived (list);
   g_object_set (self->archive_button,
-                "text", archived ? _("Unarchive") : _("Archive"),
+                "label", archived ? _("Unarchive") : _("Archive"),
                 NULL);
 
   GTD_EXIT;
@@ -208,7 +208,7 @@ update_archive_button (GtdTaskListPanel *self)
  */
 
 static void
-on_archive_button_clicked_cb (GtkModelButton   *button,
+on_archive_button_clicked_cb (GtkButton        *button,
                               GtdTaskListPanel *self)
 {
   GtdProvider *provider;
@@ -265,7 +265,7 @@ on_colors_flowbox_child_activated_cb (GtkFlowBox       *colors_flowbox,
 }
 
 static void
-on_delete_button_clicked_cb (GtkModelButton   *button,
+on_delete_button_clicked_cb (GtkButton        *button,
                              GtdTaskListPanel *self)
 {
   GtdTaskList *list;
@@ -457,14 +457,6 @@ gtd_panel_iface_init (GtdPanelInterface *iface)
  */
 
 static void
-gtd_task_list_panel_finalize (GObject *object)
-{
-  //GtdTaskListPanel *self = (GtdTaskListPanel *)object;
-
-  G_OBJECT_CLASS (gtd_task_list_panel_parent_class)->finalize (object);
-}
-
-static void
 gtd_task_list_panel_get_property (GObject    *object,
                                   guint       prop_id,
                                   GValue     *value,
@@ -517,7 +509,6 @@ gtd_task_list_panel_class_init (GtdTaskListPanelClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->finalize = gtd_task_list_panel_finalize;
   object_class->get_property = gtd_task_list_panel_get_property;
   object_class->set_property = gtd_task_list_panel_set_property;
 

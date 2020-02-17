@@ -741,28 +741,83 @@ check_dnd_scroll (GtdTaskListView *self,
     }
 }
 
+static GtdTask*
+get_task_from_drag (GtdTaskListView *self,
+                    GdkDrag         *drag)
+{
+  g_autoptr (GdkContentProvider) content = NULL;
+  g_autoptr (GError) error = NULL;
+  GValue value;
+
+  g_object_get (drag, "content", &content, NULL);
+  if (!content)
+    {
+      g_info ("Only dragging task rows is supported");
+      return NULL;
+    }
+
+  g_value_init (&value, GTD_TYPE_TASK);
+  gdk_content_provider_get_value (content, &value, &error);
+  if (!error)
+    {
+      g_warning ("Error retriving drag value: %s", error->message);
+      return NULL;
+    }
+
+  g_assert (G_VALUE_HOLDS_OBJECT (&value));
+
+  g_message ("%p", g_value_get_object (&value));
+  return g_value_get_object (&value);
+}
+
+static gboolean
+on_drop_target_accept_cb (GtkDropTarget   *drop_target,
+                          GdkDrop         *drop,
+                          GtdTaskListView *self)
+{
+  g_autoptr (GdkContentFormats) formats = NULL;
+  g_autoptr (GString) string = NULL;
+  GdkContentProvider *provider;
+  GdkDrag *drag;
+
+  GTD_ENTRY;
+
+  drag = gdk_drop_get_drag (drop);
+
+  if (!drag)
+    GTD_RETURN (FALSE);
+
+  provider = gdk_drag_get_con
+  formats = gdk_dr (drop);
+
+  string = g_string_new ("");
+  gdk_content_formats_print (formats, string);
+  g_message ("%s: %s", G_STRFUNC, string->str);
+
+  GTD_RETURN (gdk_content_formats_contain_gtype (formats, GTD_TYPE_TASK));
+}
+
 static void
-listbox_drag_leave (GtkListBox      *listbox,
-                    GdkDrop         *drop,
-                    GtdTaskListView *self)
+on_drop_target_drag_leave_cb (GtkDropTarget   *drop_target,
+                              GdkDrop         *drop,
+                              GtdTaskListView *self)
 {
   unset_previously_highlighted_row (self);
   check_dnd_scroll (self, TRUE, -1);
 }
 
 static gboolean
-listbox_drag_motion (GtkListBox      *listbox,
-                     GdkDrop         *drop,
-                     gint             x,
-                     gint             y,
-                     GtdTaskListView *self)
+on_drop_target_drag_motion_cb (GtkDropTarget   *drop_target,
+                               GdkDrop         *drop,
+                               gint             x,
+                               gint             y,
+                               GtdTaskListView *self)
 {
   GtdTaskListViewPrivate *priv;
   GtkListBoxRow *highlighted_row;
-  GtkListBoxRow *source_row;
   GtdTaskRow *highlighted_task_row;
   GtdTaskRow *source_task_row;
-  GtkWidget *source_widget;
+  GtdTask *task;
   GdkDrag *drag;
   gint x_offset;
 
@@ -777,9 +832,9 @@ listbox_drag_motion (GtkListBox      *listbox,
       GTD_GOTO (fail);
     }
 
-  source_widget = gtk_drag_get_source_widget (drag);
-  source_row = GTK_LIST_BOX_ROW (gtk_widget_get_ancestor (source_widget, GTK_TYPE_LIST_BOX_ROW));
-  source_task_row = task_row_from_row (source_row);
+  task = get_task_from_drag (self, drag);
+
+  source_task_row = g_hash_table_lookup (priv->task_to_row, task);
 
   /* Update the x value according to the current offset */
   if (gtk_widget_get_direction (GTK_WIDGET (self)) == GTK_TEXT_DIR_RTL)
@@ -799,7 +854,7 @@ listbox_drag_motion (GtkListBox      *listbox,
   if (row_is_subtask_of (source_task_row, highlighted_task_row))
     GTD_GOTO (fail);
 
-  gtk_widget_translate_coordinates (GTK_WIDGET (listbox),
+  gtk_widget_translate_coordinates (GTK_WIDGET (priv->listbox),
                                     GTK_WIDGET (highlighted_task_row),
                                     x,
                                     0,
@@ -820,16 +875,15 @@ fail:
 }
 
 static gboolean
-listbox_drag_drop (GtkWidget       *widget,
-                   GdkDrop         *drop,
-                   gint             x,
-                   gint             y,
-                   GtdTaskListView *self)
+on_drop_target_drag_drop_cb (GtkDropTarget   *drop_target,
+                             GdkDrop         *drop,
+                             gint             x,
+                             gint             y,
+                             GtdTaskListView *self)
 {
-  GtdTaskListViewPrivate *priv = gtd_task_list_view_get_instance_private (self);
+  GtdTaskListViewPrivate *priv;
   GtkListBoxRow *drop_row;
   GtdTaskRow *hovered_row;
-  GtkWidget *source_widget;
   GtkWidget *row;
   GtdTask *new_parent_task;
   GtdTask *hovered_task;
@@ -840,29 +894,30 @@ listbox_drag_drop (GtkWidget       *widget,
 
   GTD_ENTRY;
 
+  priv = gtd_task_list_view_get_instance_private (self);
   drag = gdk_drop_get_drag (drop);
-  source_widget = gtk_drag_get_source_widget (drag);
+
+  if (!drag)
+    {
+      g_info ("Only dragging task rows is supported");
+      GTD_RETURN (FALSE);
+    }
 
   unset_previously_highlighted_row (self);
 
-  if (!source_widget)
-    {
-      gdk_drop_finish (drop, 0);
-      GTD_RETURN (FALSE);
-    }
+  source_task = get_task_from_drag (self, drag);
 
   /*
    * When the drag operation began, the source row was hidden. Now is the time
    * to show it again.
    */
-  row = gtk_widget_get_ancestor (source_widget, GTD_TYPE_TASK_ROW);
+  row = g_hash_table_lookup (priv->task_to_row, source_task);
   gtk_widget_show (row);
 
   drop_row = get_drop_row_at_y (self, y);
   hovered_row = task_row_from_row (drop_row);
   hovered_task = gtd_task_row_get_task (hovered_row);
   new_parent_task = gtd_task_row_get_dnd_drop_task (hovered_row);
-  source_task = gtd_task_row_get_task (GTD_TASK_ROW (row));
 
   g_assert (source_task != NULL);
   g_assert (source_task != new_parent_task);
@@ -1135,9 +1190,6 @@ gtd_task_list_view_class_init (GtdTaskListViewClass *klass)
   gtk_widget_class_bind_template_child_private (widget_class, GtdTaskListView, scrolled_window);
   gtk_widget_class_bind_template_child_private (widget_class, GtdTaskListView, stack);
 
-  gtk_widget_class_bind_template_callback (widget_class, listbox_drag_drop);
-  gtk_widget_class_bind_template_callback (widget_class, listbox_drag_leave);
-  gtk_widget_class_bind_template_callback (widget_class, listbox_drag_motion);
   gtk_widget_class_bind_template_callback (widget_class, on_listbox_row_activated_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_new_task_row_entered_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_new_task_row_exited_cb);
@@ -1150,7 +1202,10 @@ gtd_task_list_view_class_init (GtdTaskListViewClass *klass)
 static void
 gtd_task_list_view_init (GtdTaskListView *self)
 {
-  GtdTaskListViewPrivate *priv = gtd_task_list_view_get_instance_private (self);
+  GtdTaskListViewPrivate *priv;
+  GtkDropTarget *target;
+
+  priv = gtd_task_list_view_get_instance_private (self);
 
   self->priv = priv;
 
@@ -1163,10 +1218,13 @@ gtd_task_list_view_init (GtdTaskListView *self)
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
-  gtk_drag_dest_set (GTK_WIDGET (priv->listbox),
-                     0,
-                     _gtd_get_content_formats (),
-                     GDK_ACTION_MOVE);
+  target = gtk_drop_target_new (_gtd_get_content_formats (), GDK_ACTION_MOVE);
+  g_signal_connect (target, "accept", G_CALLBACK (on_drop_target_accept_cb), self);
+  g_signal_connect (target, "drag-drop", G_CALLBACK (on_drop_target_drag_drop_cb), self);
+  g_signal_connect (target, "drag-leave", G_CALLBACK (on_drop_target_drag_leave_cb), self);
+  g_signal_connect (target, "drag-motion", G_CALLBACK (on_drop_target_drag_motion_cb), self);
+
+  gtk_widget_add_controller (GTK_WIDGET (priv->listbox), GTK_EVENT_CONTROLLER (target));
 
   priv->renderer = gtd_markdown_renderer_new ();
 }

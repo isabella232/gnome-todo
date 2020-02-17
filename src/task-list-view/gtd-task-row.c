@@ -292,13 +292,33 @@ on_button_press_event_cb (GtkGestureClick *gesture,
                  real_y);
 }
 
-static void
-on_drag_begin_cb (GtkWidget  *event_box,
-                  GdkDrag    *drag,
-                  GtdTaskRow *self)
+static GdkContentProvider*
+on_drag_prepare_cb (GtkDragSource *source,
+                    gdouble        x,
+                    gdouble        y,
+                    GtdTaskRow    *self)
 {
-  GtkWidget *widget, *new_row;
-  gint x_offset;
+  GdkContentProvider *content;
+  GValue value = G_VALUE_INIT;
+
+  GTD_ENTRY;
+
+  /* Setup the content provider */
+  g_value_init (&value, GTD_TYPE_TASK);
+  g_value_set_object (&value, self->task);
+
+  content = gdk_content_provider_new_for_value (&value);
+  g_value_unset (&value);
+
+  GTD_RETURN (content);
+}
+
+static void
+on_drag_begin_cb (GtkDragSource *source,
+                  GdkDrag       *drag,
+                  GtdTaskRow    *self)
+{
+  GtkWidget *widget;
 
   GTD_ENTRY;
 
@@ -306,18 +326,22 @@ on_drag_begin_cb (GtkWidget  *event_box,
 
   gtk_widget_set_cursor_from_name (widget, "grabbing");
 
+#if 0
+  g_autoptr (GtkWidget) drag_icon = NULL;
+  GtkWidget * *new_row;
+  gint x_offset;
+
   /*
    * gtk_drag_set_icon_widget() inserts the row in a different GtkWindow, so
    * we have to create a new, transient row.
    */
   new_row = create_transient_row (self);
+  drag_icon = gtk_drag_icon_new_for_drag (drag);
+  gtk_container_add (GTK_CONTAINER (drag_icon), new_row);
 
   x_offset = gtk_widget_get_margin_start (self->content_box);
-
-  gtk_drag_set_icon_widget (drag,
-                            new_row,
-                            self->clicked_x + x_offset,
-                            self->clicked_y);
+  gdk_drag_set_hotspot (drag, self->clicked_x + x_offset, self->clicked_y);
+#endif
 
   gtk_widget_hide (widget);
 
@@ -325,18 +349,10 @@ on_drag_begin_cb (GtkWidget  *event_box,
 }
 
 static void
-on_drag_data_get_cb (GtkWidget        *widget,
-                     GdkDrag          *drag,
-                     GtkSelectionData *data,
-                     GtdTaskRow       *self)
-{
-  GTD_TRACE_MSG ("Drag data get");
-}
-
-static void
-on_drag_end_cb (GtkWidget  *event_box,
-                GdkDrag    *drag,
-                GtdTaskRow *self)
+on_drag_end_cb (GtkDragSource *source,
+                GdkDrag       *drag,
+                gboolean       delete_data,
+                GtdTaskRow    *self)
 {
   GTD_ENTRY;
 
@@ -349,10 +365,10 @@ on_drag_end_cb (GtkWidget  *event_box,
 }
 
 static gboolean
-on_drag_failed_cb (GtkWidget     *widget,
-                   GdkDrag       *drag,
-                   GtkDragResult  result,
-                   GtdTaskRow    *self)
+on_drag_cancelled_cb (GtkDragSource       *source,
+                      GdkDrag             *drag,
+                      GdkDragCancelReason  result,
+                      GtdTaskRow          *self)
 {
   GTD_ENTRY;
 
@@ -573,7 +589,7 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
                                "Renderer",
                                "Renderer",
                                GTD_TYPE_MARKDOWN_RENDERER,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_PRIVATE | G_PARAM_STATIC_STRINGS));
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
 
   /**
    * GtdTaskRow::task:
@@ -650,10 +666,6 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
 
   gtk_widget_class_bind_template_callback (widget_class, on_button_press_event_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_complete_check_toggled_cb);
-  gtk_widget_class_bind_template_callback (widget_class, on_drag_begin_cb);
-  gtk_widget_class_bind_template_callback (widget_class, on_drag_data_get_cb);
-  gtk_widget_class_bind_template_callback (widget_class, on_drag_end_cb);
-  gtk_widget_class_bind_template_callback (widget_class, on_drag_failed_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_key_pressed_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_remove_task_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_task_changed_cb);
@@ -664,25 +676,24 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
 static void
 gtd_task_row_init (GtdTaskRow *self)
 {
+  GtkDragSource *drag_source;
+
   self->handle_subtasks = TRUE;
   self->active = FALSE;
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
-  /* DnD icon */
-  gtk_drag_source_set (self->dnd_icon,
-                       GDK_BUTTON1_MASK,
-                       _gtd_get_content_formats (),
-                       GDK_ACTION_MOVE);
+  drag_source = gtk_drag_source_new ();
+  gtk_drag_source_set_actions (drag_source, GDK_ACTION_MOVE);
+
+  g_signal_connect (drag_source, "prepare", G_CALLBACK (on_drag_prepare_cb), self);
+  g_signal_connect (drag_source, "drag-begin", G_CALLBACK (on_drag_begin_cb), self);
+  g_signal_connect (drag_source, "drag-cancel", G_CALLBACK (on_drag_cancelled_cb), self);
+  g_signal_connect (drag_source, "drag-end", G_CALLBACK (on_drag_end_cb), self);
+
+  gtk_widget_add_controller (GTK_WIDGET (self), GTK_EVENT_CONTROLLER (drag_source));
 
   gtk_widget_set_cursor_from_name (self->dnd_icon, "grab");
-
-  /* Header box */
-  gtk_drag_source_set (self->header_event_box,
-                       GDK_BUTTON1_MASK,
-                       _gtd_get_content_formats (),
-                       GDK_ACTION_MOVE);
-
   gtk_widget_set_cursor_from_name (self->header_event_box, "pointer");
 }
 
@@ -782,18 +793,6 @@ gtd_task_row_set_handle_subtasks (GtdTaskRow *self,
   gtk_widget_set_visible (self->dnd_icon, handle_subtasks);
   on_depth_changed_cb (self, NULL, self->task);
 
-  if (handle_subtasks)
-    {
-      gtk_drag_source_set (self->header_event_box,
-                           GDK_BUTTON1_MASK,
-                           _gtd_get_content_formats (),
-                           GDK_ACTION_MOVE);
-    }
-  else
-    {
-      gtk_drag_source_unset (self->header_event_box);
-    }
-
   g_object_notify (G_OBJECT (self), "handle-subtasks");
 }
 
@@ -884,6 +883,7 @@ gtd_task_row_set_drag_offset (GtdTaskRow *self,
                               GdkDrag    *drag,
                               gint        x_offset)
 {
+#if 0
   GtkWidget *source_widget;
   GtkWidget *source_row;
   gint current_task_depth;
@@ -908,6 +908,7 @@ gtd_task_row_set_drag_offset (GtdTaskRow *self,
                  depth);
 
   gtk_widget_show (self->dnd_frame);
+#endif
 }
 
 void
