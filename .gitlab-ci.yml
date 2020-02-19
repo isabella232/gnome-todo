@@ -4,59 +4,10 @@ variables:
   GIT_SUBMODULE_STRATEGY: normal
   BUNDLE: "org.gnome.TodoDevel.flatpak"
 
-
-.build_template: &distro_build
-  script:
-    - meson _build
-    - ninja -C _build install
-
 stages:
    - flatpak
-   - build
    - review
    - deploy
-
-
-##################
-# Fedora Rawhide #
-##################
-
-fedora:rawhide:
-    image: fedora:rawhide
-    stage: build
-
-    before_script:
-      - dnf install -y gcc meson ninja-build gettext gtk-doc glib2-devel gtk3-devel
-        gnome-online-accounts-devel libpeas-devel evolution-data-server-devel
-        rest-devel json-glib-devel
-
-    <<: *distro_build
-    only:
-    - schedules
-    - web
-    - tags
-
-
-
-################
-# Ubuntu Devel #
-################
-
-ubuntu:devel:
-    image: ubuntu:devel
-    stage: build
-    before_script:
-    # Ubuntu requires running update to fetch metadata and find packges
-    - apt update
-    - apt install -y gcc meson gettext gtk-doc-tools libglib2.0-dev git libgtk-3-dev
-                     libgoa-1.0-dev libpeas-dev libecal1.2-dev libedataserver1.2-dev
-                     librest-dev libjson-glib-dev
-    <<: *distro_build
-    only:
-    - schedules
-    - web
-    - tags
-
 
 
 ##################
