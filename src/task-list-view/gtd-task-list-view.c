@@ -776,8 +776,6 @@ on_drop_target_accept_cb (GtkDropTarget   *drop_target,
                           GtdTaskListView *self)
 {
   g_autoptr (GdkContentFormats) formats = NULL;
-  g_autoptr (GString) string = NULL;
-  GdkContentProvider *provider;
   GdkDrag *drag;
 
   GTD_ENTRY;
@@ -787,12 +785,7 @@ on_drop_target_accept_cb (GtkDropTarget   *drop_target,
   if (!drag)
     GTD_RETURN (FALSE);
 
-  provider = gdk_drag_get_con
-  formats = gdk_dr (drop);
-
-  string = g_string_new ("");
-  gdk_content_formats_print (formats, string);
-  g_message ("%s: %s", G_STRFUNC, string->str);
+  formats = gdk_drop_get_formats (drop);
 
   GTD_RETURN (gdk_content_formats_contain_gtype (formats, GTD_TYPE_TASK));
 }
