@@ -70,14 +70,13 @@
 
     # Generate a Flatpak bundle
     - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${APP_ID} ${BRANCH}
-    - tar cf repo.tar repo/
   artifacts:
     name: 'Flatpak artifacts'
     expose_as: 'Get Flatpak bundle here'
     when: 'always'
     paths:
       - "${BUNDLE}"
-      - 'repo.tar'
+      - 'repo/'
       - '_build/meson-logs/meson-log.txt'
       - '_build/meson-logs/testlog.txt'
     expire_in: 14 days
