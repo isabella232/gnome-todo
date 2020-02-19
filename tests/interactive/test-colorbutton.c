@@ -78,7 +78,7 @@ main (gint   argc,
         group = color_button;
     }
 
-  window = GTK_WINDOW (gtk_window_new (GTK_WINDOW_TOPLEVEL));
+  window = GTK_WINDOW (gtk_window_new ());
   gtk_container_add (GTK_CONTAINER (window), grid);
   gtk_window_present (window);
 

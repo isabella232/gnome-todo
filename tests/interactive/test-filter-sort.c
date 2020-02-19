@@ -278,7 +278,7 @@ main (gint   argc,
   gtk_container_add (GTK_CONTAINER (vbox), scrolledwindow);
 
   /* Window */
-  window = GTK_WINDOW (gtk_window_new (GTK_WINDOW_TOPLEVEL));
+  window = GTK_WINDOW (gtk_window_new ());
   gtk_window_set_default_size (window, 800, 600);
   gtk_container_add (GTK_CONTAINER (window), vbox);
   gtk_window_present (window);
