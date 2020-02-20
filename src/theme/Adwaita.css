@@ -118,6 +118,11 @@ tasklistview.light emptylistwidget image {
     color: black;
 }
 
+tasklistview list:drop(active) {
+    box-shadow: none;
+    border: none;
+}
+
 /* Add a subtle shadow to color circles */
 image.color-circle-icon {
     -gtk-icon-shadow: 0 1px alpha(black, 0.18);
