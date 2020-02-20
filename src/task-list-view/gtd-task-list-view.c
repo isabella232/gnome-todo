@@ -798,7 +798,7 @@ on_drop_target_drag_leave_cb (GtkDropTarget   *drop_target,
   check_dnd_scroll (self, TRUE, -1);
 }
 
-static gboolean
+static void
 on_drop_target_drag_motion_cb (GtkDropTarget   *drop_target,
                                GdkDrop         *drop,
                                gint             x,
@@ -859,11 +859,11 @@ on_drop_target_drag_motion_cb (GtkDropTarget   *drop_target,
 success:
   gdk_drop_status (drop, GDK_ACTION_MOVE);
   check_dnd_scroll (self, FALSE, y);
-  GTD_RETURN (TRUE);
+  GTD_RETURN ();
 
 fail:
   gdk_drop_status (drop, 0);
-  GTD_RETURN (FALSE);
+  GTD_RETURN ();
 }
 
 static gboolean
