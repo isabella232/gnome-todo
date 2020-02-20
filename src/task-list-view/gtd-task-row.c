@@ -299,16 +299,10 @@ on_drag_prepare_cb (GtkDragSource *source,
                     GtdTaskRow    *self)
 {
   GdkContentProvider *content;
-  GValue value = G_VALUE_INIT;
-
   GTD_ENTRY;
 
   /* Setup the content provider */
-  g_value_init (&value, GTD_TYPE_TASK);
-  g_value_set_object (&value, self->task);
-
-  content = gdk_content_provider_new_for_value (&value);
-  g_value_unset (&value);
+  content = gdk_content_provider_new_typed (GTD_TYPE_TASK, self->task);
 
   GTD_RETURN (content);
 }
