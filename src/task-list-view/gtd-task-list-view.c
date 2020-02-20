@@ -747,7 +747,7 @@ get_task_from_drag (GtdTaskListView *self,
 {
   g_autoptr (GdkContentProvider) content = NULL;
   g_autoptr (GError) error = NULL;
-  GValue value;
+  GValue value = G_VALUE_INIT;
 
   g_object_get (drag, "content", &content, NULL);
   if (!content)
