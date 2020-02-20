@@ -853,7 +853,7 @@ on_drop_target_drag_motion_cb (GtkDropTarget   *drop_target,
                                     &x_offset,
                                     NULL);
 
-  gtd_task_row_set_drag_offset (highlighted_task_row, drag, x_offset);
+  gtd_task_row_set_drag_offset (highlighted_task_row, source_task_row, x_offset);
   priv->highlighted_row = highlighted_row;
 
 success:

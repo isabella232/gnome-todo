@@ -60,7 +60,7 @@ void                      gtd_task_row_set_sizegroups           (GtdTaskRow     
 gint                      gtd_task_row_get_x_offset             (GtdTaskRow          *self);
 
 void                      gtd_task_row_set_drag_offset          (GtdTaskRow          *self,
-                                                                 GdkDrag             *drag,
+                                                                 GtdTaskRow          *source_row,
                                                                  gint                 x_offset);
 
 void                      gtd_task_row_unset_drag_offset        (GtdTaskRow          *self);
