@@ -219,14 +219,13 @@ gtd_dnd_row_drag_motion (GtkWidget *widget,
 }
 
 gboolean
-gtd_dnd_row_drag_drop (GtkWidget *widget,
-                       GdkDrop   *drop,
-                       gint       x,
-                       gint       y)
+gtd_dnd_row_drag_drop (GtkWidget  *widget,
+                       GtdTaskRow *source_row,
+                       GdkDrop    *drop,
+                       gint        x,
+                       gint        y)
 {
-#if 0
   GtdDndRow *self;
-  GtkWidget *source_widget, *row;
   GtdTask *row_task, *target_task;
   GdkDrag *drag;
 
@@ -238,24 +237,17 @@ gtd_dnd_row_drag_drop (GtkWidget *widget,
 
   gtk_widget_hide (widget);
 
-  row = NULL;
-  source_widget = gtk_drag_get_source_widget (drag);
-
-  if (!source_widget)
-    return FALSE;
-
   /*
    * When the drag operation began, the source row was hidden. Now is the time
    * to show it again.
    */
-  row = gtk_widget_get_ancestor (source_widget, GTD_TYPE_TASK_ROW);
-  gtk_widget_show (row);
+  gtk_widget_show (GTK_WIDGET (source_row));
 
   /* Do not allow dropping on itself, nor on the new task row */
-  if (!row || row == widget || GTD_IS_NEW_TASK_ROW (row))
+  if (!source_row || (GtkWidget*) source_row == widget || GTD_IS_NEW_TASK_ROW (source_row))
     return FALSE;
 
-  row_task = gtd_task_row_get_task (GTD_TASK_ROW (row));
+  row_task = gtd_task_row_get_task (source_row);
   target_task = get_real_task_for_depth (self);
 
   if (target_task)
@@ -284,6 +276,5 @@ gtd_dnd_row_drag_drop (GtkWidget *widget,
 
   gtk_list_box_invalidate_sort (GTK_LIST_BOX (gtk_widget_get_parent (widget)));
 
-#endif
   return FALSE;
 }

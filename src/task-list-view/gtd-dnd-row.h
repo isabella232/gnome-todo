@@ -38,6 +38,7 @@ void                 gtd_dnd_row_set_row_above                   (GtdDndRow     
 
 
 gboolean             gtd_dnd_row_drag_drop                       (GtkWidget          *widget,
+                                                                  GtdTaskRow         *source_row,
                                                                   GdkDrop            *drop,
                                                                   gint                x,
                                                                   gint                y);
