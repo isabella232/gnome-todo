@@ -766,7 +766,6 @@ get_task_from_drag (GtdTaskListView *self,
 
   g_assert (G_VALUE_HOLDS_OBJECT (&value));
 
-  g_message ("%p", g_value_get_object (&value));
   return g_value_get_object (&value);
 }
 
