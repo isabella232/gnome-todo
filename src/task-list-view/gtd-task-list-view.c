@@ -758,7 +758,7 @@ get_task_from_drag (GtdTaskListView *self,
 
   g_value_init (&value, GTD_TYPE_TASK);
   gdk_content_provider_get_value (content, &value, &error);
-  if (!error)
+  if (error)
     {
       g_warning ("Error retriving drag value: %s", error->message);
       return NULL;
