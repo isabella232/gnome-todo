@@ -877,8 +877,8 @@ gtd_task_row_set_drag_offset (GtdTaskRow *self,
                               GtdTaskRow *source_row,
                               gint        x_offset)
 {
-  GtkRequisition min_size;
   gint current_task_depth;
+  gint min_height;
   gint depth;
 
   g_return_if_fail (GTD_IS_TASK_ROW (self));
@@ -887,14 +887,14 @@ gtd_task_row_set_drag_offset (GtdTaskRow *self,
   x_offset = MAX (x_offset, 0);
 
   /* Make the DnD frame match the height of the dragged row */
-  gtk_widget_get_preferred_size (GTK_WIDGET (source_row), &min_size, NULL);
-  gtk_widget_set_size_request (self->dnd_frame, -1, min_size.height);
+  gtk_widget_measure (GTK_WIDGET (self), GTK_ORIENTATION_VERTICAL, -1, &min_height, NULL, NULL, NULL);
+  gtk_widget_set_size_request (self->dnd_frame, -1, min_height);
 
   current_task_depth = gtd_task_get_depth (self->task);
   depth = CLAMP (x_offset / 32, 0, current_task_depth + 1);
   gtk_widget_set_margin_start (self->dnd_frame, depth * 32 + 12);
 
-  GTD_TRACE_MSG ("DnD frame height: %d, depth: %d", min_size.height, depth);
+  GTD_TRACE_MSG ("DnD frame height: %d, depth: %d", min_height, depth);
 
   gtk_widget_show (self->dnd_frame);
 }
