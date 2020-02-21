@@ -227,14 +227,11 @@ gtd_dnd_row_drag_drop (GtkWidget  *widget,
 {
   GtdDndRow *self;
   GtdTask *row_task, *target_task;
-  GdkDrag *drag;
 
   self = GTD_DND_ROW (widget);
-  drag = gdk_drop_get_drag (drop);
 
   /* Reset padding */
   update_row_padding (self);
-
   gtk_widget_hide (widget);
 
   /*
