@@ -148,6 +148,16 @@
             ]
         },
         {
+            "name" : "libportal",
+            "buildsystem" : "meson",
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://github.com/flatpak/libportal.git"
+                }
+            ]
+        },
+        {
             "name" : "gnome-todo",
             "buildsystem" : "meson",
             "config-opts" : [
