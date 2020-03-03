@@ -14,7 +14,8 @@
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkFlowBox" id="colors_flowbox">
-            <property name="expand">1</property>
+            <property name="hexpand">true</property>
+            <property name="vexpand">true</property>
             <property name="selection-mode">none</property>
             <property name="min-children-per-line">3</property>
             <property name="max-children-per-line">3</property>
@@ -55,7 +56,10 @@
         <property name="name">rename</property>
         <property name="orientation">vertical</property>
         <property name="spacing">12</property>
-        <property name="margin">12</property>
+        <property name="margin-top">12</property>
+        <property name="margin-bottom">12</property>
+        <property name="margin-start">12</property>
+        <property name="margin-end">12</property>
         <child>
           <object class="GtkModelButton" id="rename_header_button">
             <property name="text" translatable="yes">Rename</property>

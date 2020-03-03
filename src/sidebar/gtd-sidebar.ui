@@ -13,7 +13,8 @@
         <property name="hscrollbar-policy">never</property>
         <child>
           <object class="GtkStack" id="stack">
-            <property name="expand">1</property>
+            <property name="hexpand">true</property>
+            <property name="vexpand">true</property>
             <property name="hhomogeneous">true</property>
             <property name="vhomogeneous">false</property>
             <property name="transition-type">slide-left-right</property>
@@ -24,7 +25,8 @@
                 <property name="name">main</property>
                 <property name="child">
                   <object class="GtkListBox" id="listbox">
-                    <property name="expand">1</property>
+                    <property name="hexpand">true</property>
+                    <property name="vexpand">true</property>
                     <property name="selection_mode">browse</property>
                     <signal name="row-activated" handler="on_listbox_row_activated_cb" object="GtdSidebar" swapped="no"/>
 
@@ -34,7 +36,10 @@
                         <property name="can_focus">1</property>
                         <child>
                           <object class="GtkBox">
-                            <property name="margin">10</property>
+                            <property name="margin-top">10</property>
+                            <property name="margin-bottom">10</property>
+                            <property name="margin-start">10</property>
+                            <property name="margin-end">10</property>
                             <property name="spacing">6</property>
                             <child>
                               <object class="GtkImage">
@@ -77,7 +82,8 @@
                 <property name="name">archive</property>
                 <property name="child">
                   <object class="GtkListBox" id="archive_listbox">
-                    <property name="expand">1</property>
+                    <property name="hexpand">true</property>
+                    <property name="vexpand">true</property>
                     <property name="selection_mode">browse</property>
                     <signal name="row-activated" handler="on_listbox_row_activated_cb" object="GtdSidebar" swapped="no"/>
 

@@ -158,7 +158,7 @@ on_rename_popover_hidden_cb (GtkPopover        *popover,
    * list and avoid parsing any CSS for it. It's a small performance
    * improvement.
    */
-  gtk_popover_set_relative_to (popover, NULL);
+  gtk_widget_set_parent (GTK_WIDGET (popover), NULL);
 }
 
 

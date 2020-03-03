@@ -84,7 +84,8 @@
     </child>
     <child>
       <object class="GtkScrolledWindow">
-        <property name="expand">1</property>
+        <property name="hexpand">true</property>
+        <property name="vexpand">true</property>
         <property name="can-focus">1</property>
         <property name="shadow-type">in</property>
         <property name="min-content-height">200</property>
@@ -137,7 +138,10 @@
     <child>
       <object class="GtkBox" id="date_popover_box">
         <property name="orientation">vertical</property>
-        <property name="margin">12</property>
+        <property name="margin-top">12</property>
+        <property name="margin-bottom">12</property>
+        <property name="margin-start">12</property>
+        <property name="margin-end">12</property>
         <property name="spacing">12</property>
         <child>
           <object class="GtkCalendar" id="calendar">

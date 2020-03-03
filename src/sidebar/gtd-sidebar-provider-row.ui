@@ -39,7 +39,7 @@
                     <property name="name">spinner</property>
                     <property name="child">
                       <object class="GtkSpinner">
-                        <property name="active">1</property>
+                        <property name="spinning">true</property>
                       </object>
                     </property>
                   </object>

@@ -5,7 +5,10 @@
     <signal name="closed" handler="gtd_provider_popover__closed" swapped="no"/>
     <child>
       <object class="GtkStack" id="stack">
-        <property name="margin">18</property>
+        <property name="margin-top">18</property>
+        <property name="margin-bottom">18</property>
+        <property name="margin-start">18</property>
+        <property name="margin-end">18</property>
         <property name="vhomogeneous">0</property>
         <property name="interpolate_size">1</property>
         <property name="transition_duration">300</property>

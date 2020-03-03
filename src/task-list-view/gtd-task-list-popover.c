@@ -113,7 +113,10 @@ create_list_row_cb (gpointer item,
   box = g_object_new (GTK_TYPE_BOX,
                       "orientation", GTK_ORIENTATION_HORIZONTAL,
                       "spacing", 12,
-                      "margin", 6,
+                      "margin-top", 6,
+                      "margin-bottom", 6,
+                      "margin-start", 6,
+                      "margin-end", 6,
                       NULL);
 
   /* Icon */

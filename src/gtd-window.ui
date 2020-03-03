@@ -26,7 +26,8 @@
             </child>
             <child>
               <object class="GtkStack" id="stack">
-                <property name="expand">1</property>
+                <property name="hexpand">true</property>
+                <property name="vexpand">true</property>
                 <property name="homogeneous">0</property>
                 <property name="transition_duration">250</property>
                 <property name="transition_type">crossfade</property>

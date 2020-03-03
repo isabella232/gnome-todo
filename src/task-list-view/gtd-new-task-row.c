@@ -166,10 +166,8 @@ on_entry_icon_released_cb (GtkEntry             *entry,
 }
 
 static void
-on_focus_in_cb (GtkEventControllerKey *event_controller,
-                GdkCrossingMode        mode,
-                GdkNotifyType          detail,
-                GtdNewTaskRow         *self)
+on_focus_enter_cb (GtkEventControllerKey *event_controller,
+                   GtdNewTaskRow         *self)
 {
   GTD_ENTRY;
 
@@ -269,7 +267,7 @@ gtd_new_task_row_class_init (GtdNewTaskRowClass *klass)
 
   gtk_widget_class_bind_template_callback (widget_class, entry_activated_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_entry_icon_released_cb);
-  gtk_widget_class_bind_template_callback (widget_class, on_focus_in_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_focus_enter_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_tasklist_popover_changed_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_tasklist_popover_closed_cb);
 

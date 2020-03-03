@@ -857,12 +857,12 @@ on_drop_target_drag_motion_cb (GtkDropTarget   *drop_target,
   priv->highlighted_row = highlighted_row;
 
 success:
-  gdk_drop_status (drop, GDK_ACTION_MOVE);
+  gdk_drop_status (drop, GDK_ACTION_MOVE, GDK_ACTION_MOVE);
   check_dnd_scroll (self, FALSE, y);
   GTD_RETURN ();
 
 fail:
-  gdk_drop_status (drop, 0);
+  gdk_drop_status (drop, 0, 0);
   GTD_RETURN ();
 }
 
@@ -1210,7 +1210,7 @@ gtd_task_list_view_init (GtdTaskListView *self)
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
-  target = gtk_drop_target_new (_gtd_get_content_formats (), GDK_ACTION_MOVE);
+  target = gtk_drop_target_new (GTD_TYPE_TASK, GDK_ACTION_MOVE);
   g_signal_connect (target, "accept", G_CALLBACK (on_drop_target_accept_cb), self);
   g_signal_connect (target, "drag-drop", G_CALLBACK (on_drop_target_drag_drop_cb), self);
   g_signal_connect (target, "drag-leave", G_CALLBACK (on_drop_target_drag_leave_cb), self);

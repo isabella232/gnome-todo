@@ -245,15 +245,15 @@ static void
 on_source_changed_cb (GtkWidget        *preference_panel,
                       GtdPluginTodoTxt *self)
 {
+  g_autoptr (GFile) file = NULL;
   GtdProviderTodoTxt *provider;
 
   GTD_ENTRY;
 
   g_clear_object (&self->source_file);
 
-  g_settings_set_string (self->settings,
-                        "file",
-                         gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (self->preferences)));
+  file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (self->preferences));
+  g_settings_set_string (self->settings, "file", g_file_peek_path (file));
 
   if (self->providers)
     {
