@@ -281,6 +281,7 @@ gtd_new_task_row_init (GtdNewTaskRow *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
 
+  gtk_widget_set_parent (GTK_WIDGET (self->tasklist_popover), GTK_WIDGET (self->entry));
   update_secondary_icon (self);
 }
 
