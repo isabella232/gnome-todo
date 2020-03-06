@@ -554,7 +554,7 @@ msgstr "Tai halutessasi voit tallettaa tehtäväsi tälle tietokoneelle"
 #: src/sidebar/gtd-sidebar.c:329
 #, c-format
 msgid "Task list <b>%s</b> removed"
-msgstr "Tehtävälista <b>%s<b> poistettu"
+msgstr "Tehtävälista <b>%s</b> poistettu"
 
 #: src/sidebar/gtd-sidebar.c:332 src/task-list-view/gtd-task-list-view.c:460
 msgid "Undo"
@@ -606,7 +606,7 @@ msgstr "Uusi tehtävä…"
 #: src/task-list-view/gtd-task-list-view.c:441
 #, c-format
 msgid "Task <b>%s</b> removed"
-msgstr "Tehtävä <b>%s<b> poistettu"
+msgstr "Tehtävä <b>%s</b> poistettu"
 
 #: src/widgets/gtd-empty-list-widget.c:51
 msgid "No more tasks left"
