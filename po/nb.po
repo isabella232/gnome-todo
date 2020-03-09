@@ -1,15 +1,15 @@
 # Norwegian bokmål translation of gnome-todo.
 # Copyright (C) 1998-2004, 2005 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@gnome.org>, 1998-2018.
+# Kjartan Maraas <kmaraas@gnome.org>, 1998-2020.
 # Terance Edward Sola <terance@lyse.net>, 2005.
 # Torstein Adolf Winterseth <kvikende@fsfe.org>, 2010.
 # Alexander Strand <godsetalex@gmail.com>
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-todo 3.30.x\n"
+"Project-Id-Version: gnome-todo 3.36.x\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-12 15:27+0000\n"
-"PO-Revision-Date: 2018-10-15 00:33+0200\n"
+"POT-Creation-Date: 2019-12-04 03:25+0000\n"
+"PO-Revision-Date: 2020-03-09 15:13+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: Norsk bokmål\n"
@@ -76,11 +76,6 @@ msgstr "A_vslutt"
 #: data/org.gnome.Todo.desktop.in:4
 msgid "Manage your personal tasks"
 msgstr "Håndter dine personlige oppgaver"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Todo.desktop.in:7
-msgid "org.gnome.Todo"
-msgstr "org.gnome.Todo"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Todo.desktop.in:13
@@ -317,7 +312,7 @@ msgstr ""
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:11
 msgid "Show notifications on startup"
-msgstr ""
+msgstr "Vis varslinger ved oppstart"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:12
 msgid "Whether GNOME To Do should show notifications or not"
@@ -380,7 +375,7 @@ msgstr "På denne datamaskinen"
 msgid "Error fetching tasks from list"
 msgstr "Feil ved henting av oppgave fra liste"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:110
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-edit-pane.c:110
 msgid "No date set"
 msgstr "Ingen dato satt"
 
@@ -389,19 +384,19 @@ msgstr "Ingen dato satt"
 #. * have plurals, some languages reuse the singular form for numbers
 #. * like 21, 31, 41, etc.
 #.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:102
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
 #, c-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] "%d dag siden"
 msgstr[1] "%d dager siden"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:147
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:147
 msgid "Yesterday"
 msgstr "I går"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:118
 #: plugins/score/score/__init__.py:101
 #: plugins/today-panel/gtd-panel-today.c:134
 #: plugins/today-panel/gtd-panel-today.c:139
@@ -409,18 +404,18 @@ msgstr "I går"
 msgid "Today"
 msgstr "I dag"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:143
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:122 src/gtd-task-row.c:143
 msgid "Tomorrow"
 msgstr "I morgen"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:365
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:370
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:507
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:356
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:358
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:495
 msgid "Scheduled"
 msgstr "Planlagt"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:512
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:500
 #: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
 msgid "Clear completed tasks…"
@@ -442,13 +437,17 @@ msgstr "Sjekk at Todoist-kontoen er korrekt konfigurert."
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
-msgstr "GNOME gjøremål har ikke nødvendige rettigheter til å utføre denne handlingen: %s"
+msgstr ""
+"GNOME gjøremål har ikke nødvendige rettigheter til å utføre denne "
+"handlingen: %s"
 
 #: plugins/todoist/gtd-provider-todoist.c:565
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
-msgstr "Ugyldig svar mottatt fra Todoist-tjenere. Vennligst last GNOME gjøremål på nytt"
+msgstr ""
+"Ugyldig svar mottatt fra Todoist-tjenere. Vennligst last GNOME gjøremål på "
+"nytt"
 
 #: plugins/todoist/gtd-provider-todoist.c:865
 msgid "An error occurred while updating a Todoist task"
@@ -502,7 +501,10 @@ msgid ""
 "<b>Warning!</b> Todo.txt support is experimental and unstable. You may "
 "experience instability, errors and eventually data loss. It is not "
 "recommended to use Todo.txt integration on production systems."
-msgstr "<b>Advarsel!</b> Støtte for Todo.txt er eksperimentell og ustabil. Du kan oppleve ustabilitet, feil og til slutt kanskje til og med tap av data. Det anbefales ikke å bruke Todo.txt-integrasjonen på produksjonssystemer."
+msgstr ""
+"<b>Advarsel!</b> Støtte for Todo.txt er eksperimentell og ustabil. Du kan "
+"oppleve ustabilitet, feil og til slutt kanskje til og med tap av data. Det "
+"anbefales ikke å bruke Todo.txt-integrasjonen på produksjonssystemer."
 
 #: plugins/todo-txt/gtd-provider-todo-txt.c:326
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
@@ -676,3 +678,6 @@ msgstr "Fjern oppgavelister"
 #: src/views/gtd-list-selector-panel.c:709
 msgid "Clear completed tasks"
 msgstr "Fjern fullførte oppgaver"
+
+#~ msgid "org.gnome.Todo"
+#~ msgstr "org.gnome.Todo"
