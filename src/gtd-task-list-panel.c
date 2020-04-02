@@ -1,6 +1,6 @@
 /* gtd-task-list-panel.c
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ struct _GtdTaskListPanel
   GtkButton          *archive_button;
   GtkFlowBox         *colors_flowbox;
   GtkPopover         *popover;
+  GtkStack           *popover_stack;
   GtkWidget          *rename_button;
   GtkEditable        *rename_entry;
   GtdTaskListView    *task_list_view;
@@ -276,6 +277,13 @@ on_delete_button_clicked_cb (GtkButton        *button,
   GTD_TRACE_MSG ("Emitting GtdTaskListPanel:list-deleted");
 
   g_signal_emit (self, signals[LIST_DELETED], 0, list);
+}
+
+static void
+on_go_to_rename_page_button_clicked_cb (GtkButton        *button,
+                                        GtdTaskListPanel *self)
+{
+  gtk_stack_set_visible_child_name (self->popover_stack, "rename");
 }
 
 static void
@@ -535,6 +543,7 @@ gtd_task_list_panel_class_init (GtdTaskListPanelClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, archive_button);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, colors_flowbox);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, popover);
+  gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, popover_stack);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, rename_button);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, rename_entry);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, rename_entry);
@@ -543,6 +552,7 @@ gtd_task_list_panel_class_init (GtdTaskListPanelClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, on_archive_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_colors_flowbox_child_activated_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_delete_button_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_go_to_rename_page_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_popover_hidden_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_rename_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_rename_entry_activated_cb);
