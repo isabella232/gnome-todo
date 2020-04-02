@@ -1,6 +1,6 @@
 /* gtd-task-list-view.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -821,8 +821,8 @@ fail:
 static gboolean
 on_drop_target_drag_drop_cb (GtkDropTarget   *drop_target,
                              const GValue    *value,
-                             gint             x,
-                             gint             y,
+                             gdouble          x,
+                             gdouble          y,
                              GtdTaskListView *self)
 {
   GtdTaskListViewPrivate *priv;
