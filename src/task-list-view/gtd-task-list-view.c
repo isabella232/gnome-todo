@@ -827,6 +827,7 @@ on_drop_target_drag_drop_cb (GtkDropTarget   *drop_target,
 {
   GtdTaskListViewPrivate *priv;
   GtkListBoxRow *drop_row;
+  GtdProvider *provider;
   GtdTaskRow *hovered_row;
   GtkWidget *row;
   GtdTask *new_parent_task;
@@ -901,6 +902,10 @@ on_drop_target_drag_drop_cb (GtkDropTarget   *drop_target,
 
   if (new_position != current_position)
     gtd_task_list_move_task_to_position (GTD_TASK_LIST (priv->model), source_task, new_position);
+
+  /* Finally, save the task */
+  provider = gtd_task_list_get_provider (gtd_task_get_list (source_task));
+  gtd_provider_update_task (provider, source_task);
 
   check_dnd_scroll (self, TRUE, -1);
   gdk_drop_finish (drop, GDK_ACTION_MOVE);
