@@ -877,6 +877,12 @@ on_drop_target_drag_drop_cb (GtkDropTarget   *drop_target,
           GTD_RETURN (FALSE);
         }
 
+      GTD_TRACE_MSG ("Making '%s' (%s) subtask of '%s' (%s)",
+                     gtd_task_get_title (source_task),
+                     gtd_object_get_uid (GTD_OBJECT (source_task)),
+                     gtd_task_get_title (new_parent_task),
+                     gtd_object_get_uid (GTD_OBJECT (new_parent_task)));
+
       gtd_task_add_subtask (new_parent_task, source_task);
     }
   else
