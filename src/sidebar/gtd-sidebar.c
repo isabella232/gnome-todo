@@ -1,6 +1,6 @@
 /* gtd-sidebar.c
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,6 +46,8 @@ struct _GtdSidebar
 
   GtkStack           *panel_stack;
   GtdPanel           *task_list_panel;
+
+  GSimpleActionGroup *action_group;
 };
 
 G_DEFINE_TYPE (GtdSidebar, gtd_sidebar, GTK_TYPE_BOX)
@@ -261,6 +263,76 @@ activate_appropriate_row (GtdSidebar    *self,
 /*
  * Callbacks
  */
+
+static void
+on_action_move_up_activated_cb (GSimpleAction *simple,
+                                GVariant      *parameters,
+                                gpointer       user_data)
+{
+  GtkListBoxRow *selected_row;
+  GtkListBoxRow *previous_row;
+  GtdSidebar *self;
+  gint selected_row_index;
+
+  GTD_ENTRY;
+
+  self = GTD_SIDEBAR (user_data);
+  selected_row = gtk_list_box_get_selected_row (self->listbox);
+  g_assert (selected_row != NULL);
+
+  selected_row_index = gtk_list_box_row_get_index (selected_row);
+  if (selected_row_index == 0)
+    return;
+
+  do
+    {
+      previous_row = gtk_list_box_get_row_at_index (self->listbox,
+                                                    --selected_row_index);
+    }
+  while (previous_row &&
+         (previous_row == self->archive_row ||
+          !gtk_list_box_row_get_activatable (previous_row)));
+
+
+  if (previous_row)
+    g_signal_emit_by_name (previous_row, "activate");
+
+  GTD_EXIT;
+}
+
+static void
+on_action_move_down_activated_cb (GSimpleAction *simple,
+                                  GVariant      *parameters,
+                                  gpointer       user_data)
+{
+  GtkListBoxRow *selected_row;
+  GtkListBoxRow *next_row;
+  GtdSidebar *self;
+  gint selected_row_index;
+
+  GTD_ENTRY;
+
+  self = GTD_SIDEBAR (user_data);
+  selected_row = gtk_list_box_get_selected_row (self->listbox);
+  g_assert (selected_row != NULL);
+
+  selected_row_index = gtk_list_box_row_get_index (selected_row);
+
+  do
+    {
+      next_row = gtk_list_box_get_row_at_index (self->listbox,
+                                                ++selected_row_index);
+    }
+  while (next_row &&
+         (next_row == self->archive_row ||
+          !gtk_list_box_row_get_activatable (next_row)));
+
+
+  if (next_row)
+    g_signal_emit_by_name (next_row, "activate");
+
+  GTD_EXIT;
+}
 
 static void
 on_panel_added_cb (GtdManager *manager,
@@ -743,6 +815,10 @@ gtd_sidebar_class_init (GtdSidebarClass *klass)
 static void
 gtd_sidebar_init (GtdSidebar *self)
 {
+  static const GActionEntry entries[] = {
+    { "move-up", on_action_move_up_activated_cb },
+    { "move-down", on_action_move_down_activated_cb },
+  };
   gtk_widget_init_template (GTK_WIDGET (self));
 
   gtk_list_box_set_sort_func (self->listbox, sort_listbox_cb, self, NULL);
@@ -750,6 +826,17 @@ gtd_sidebar_init (GtdSidebar *self)
 
   gtk_list_box_set_sort_func (self->archive_listbox, sort_listbox_cb, self, NULL);
   gtk_list_box_set_filter_func (self->archive_listbox, filter_archive_listbox_cb, self, NULL);
+
+  self->action_group = g_simple_action_group_new ();
+
+  g_action_map_add_action_entries (G_ACTION_MAP (self->action_group),
+                                   entries,
+                                   G_N_ELEMENTS (entries),
+                                   self);
+
+  gtk_widget_insert_action_group (GTK_WIDGET (self),
+                                  "sidebar",
+                                  G_ACTION_GROUP (self->action_group));
 }
 
 void
