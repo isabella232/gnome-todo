@@ -1,36 +1,36 @@
 # Chinese (China) translation for gnome-todo.
-# Copyright (C) 2015 gnome-todo's COPYRIGHT HOLDER
+# Copyright (C) 2015-2018 gnome-todo's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-todo package.
 # Arthur2e5 <arthur2e5@aosc.xyz>, 2015.
 # Jeff Bai <jeffbai@aosc.xyz>, 2016.
+# Dingzhong Chen <wsxy162@@gmail.com>, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"todo&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2016-12-20 01:01+0000\n"
-"PO-Revision-Date: 2016-12-11 22:56+0800\n"
-"Last-Translator: Mandy Wang <wangmychn@gmail.com>\n"
-"Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
+"POT-Creation-Date: 2018-09-01 00:19+0000\n"
+"PO-Revision-Date: 2018-09-03 12:56-0500\n"
+"Last-Translator: Mingcong Bai <jeffbai@aosc.xyz>\n"
+"Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.9\n"
 
-#: ../data/appdata/org.gnome.Todo.appdata.xml.in.h:1
-#: ../data/org.gnome.Todo.desktop.in.in.h:1 ../src/gtd-application.c:123
-#: ../src/gtd-application.c:149 ../src/gtd-window.c:940
+#: data/appdata/org.gnome.Todo.appdata.xml.in:7
+#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
+#: src/gtd-window.c:799 src/gtd-window.c:830 src/main.c:35
 msgid "To Do"
 msgstr "待办事项"
 
-#: ../data/appdata/org.gnome.Todo.appdata.xml.in.h:2
+#: data/appdata/org.gnome.Todo.appdata.xml.in:8
 msgid "Task manager for GNOME"
 msgstr "GNOME 待办事项管理器"
 
-#: ../data/appdata/org.gnome.Todo.appdata.xml.in.h:3
+#: data/appdata/org.gnome.Todo.appdata.xml.in:11
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
 "GNOME. It is extensible through plugins and supports custom task providers."
@@ -38,521 +38,775 @@ msgstr ""
 "GNOME 待办事项是一个待办事项管理应用程序，为与 GNOME 集成而设计。它可以通过插"
 "件扩展，并且支持自定义任务提供者。"
 
-#: ../data/appdata/org.gnome.Todo.appdata.xml.in.h:4
-msgid "GNOME To Do with the Dark theme variant"
-msgstr "转化为黑暗主题的 GNOME 待办事项"
+#: data/appdata/org.gnome.Todo.appdata.xml.in:24
+msgid "GNOME To Do with the dark theme variant"
+msgstr "使用暗色主题的 GNOME 待办事项"
 
-#: ../data/appdata/org.gnome.Todo.appdata.xml.in.h:5
+#: data/appdata/org.gnome.Todo.appdata.xml.in:28
 msgid "Editing a tasklist with GNOME To Do"
 msgstr "用 GNOME 待办事项来编辑一个任务列表"
 
-#: ../data/appdata/org.gnome.Todo.appdata.xml.in.h:6
+#: data/appdata/org.gnome.Todo.appdata.xml.in:32
 msgid "Task lists displayed on grid mode"
 msgstr "网格模式下显示的任务列表"
 
-#: ../data/appdata/org.gnome.Todo.appdata.xml.in.h:7
+#: data/appdata/org.gnome.Todo.appdata.xml.in:36
 msgid "Task lists displayed on list mode"
 msgstr "列表模式下显示的任务列表"
 
-#: ../data/appdata/org.gnome.Todo.appdata.xml.in.h:8
+#: data/appdata/org.gnome.Todo.appdata.xml.in:40
 msgid "Available plugins for GNOME To Do"
 msgstr "GNOME 待办事项可用的插件"
 
-#: ../data/appdata/org.gnome.Todo.appdata.xml.in.h:9
-msgid "Visualizing tasks for today on GNOME To Do's Today panel"
+#: data/appdata/org.gnome.Todo.appdata.xml.in:44
+msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr "在 GNOME 待办事项的今日面板上将今天的任务可视化"
 
-#: ../data/gtk/menus.ui.h:1
-msgid "New List…"
-msgstr "新建列表..."
-
-#: ../data/gtk/menus.ui.h:2
-msgid "Change default storage location…"
-msgstr "更改默认存储位置..."
-
-#: ../data/gtk/menus.ui.h:3 ../data/ui/plugin-dialog.ui.h:1
+#: data/gtk/menus.ui:15 data/ui/plugin-dialog.ui:75
 msgid "Extensions"
 msgstr "扩展"
 
-#: ../data/gtk/menus.ui.h:4
+#: data/gtk/menus.ui:22
 msgid "_About"
 msgstr "关于(_A)"
 
-#: ../data/gtk/menus.ui.h:5
+#: data/gtk/menus.ui:26
 msgid "_Quit"
 msgstr "退出(_Q)"
 
-#: ../data/org.gnome.Todo.desktop.in.in.h:2
+#: data/org.gnome.Todo.desktop.in:4
 msgid "Manage your personal tasks"
 msgstr "管理您的个人任务"
 
-#: ../data/org.gnome.Todo.desktop.in.in.h:3
-msgid "Task;Productivity;"
-msgstr "Task;Productivity;任务;生产力;待办;"
+#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+#: data/org.gnome.Todo.desktop.in:7
+msgid "org.gnome.Todo"
+msgstr "org.gnome.Todo"
 
-#: ../data/org.gnome.todo.gschema.xml.h:1
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Todo.desktop.in:13
+msgid "Task;Productivity;Todo;"
+msgstr "Task;Productivity;Todo;待办事项;生产力;任务;"
+
+#: data/org.gnome.todo.gschema.xml:6
 msgid "Window maximized"
 msgstr "窗口已最大化"
 
-#: ../data/org.gnome.todo.gschema.xml.h:2
+#: data/org.gnome.todo.gschema.xml:7
 msgid "Window maximized state"
 msgstr "窗口最大化状态"
 
-#: ../data/org.gnome.todo.gschema.xml.h:3
+#: data/org.gnome.todo.gschema.xml:11
 msgid "Window size"
 msgstr "窗口大小"
 
-#: ../data/org.gnome.todo.gschema.xml.h:4
+#: data/org.gnome.todo.gschema.xml:12
 msgid "Window size (width and height)."
 msgstr "窗口大小（宽度和高度）。"
 
-#: ../data/org.gnome.todo.gschema.xml.h:5
+#: data/org.gnome.todo.gschema.xml:16
 msgid "Window position"
 msgstr "窗口位置"
 
-#: ../data/org.gnome.todo.gschema.xml.h:6
+#: data/org.gnome.todo.gschema.xml:17
 msgid "Window position (x and y)."
 msgstr "窗口位置（横纵坐标）。"
 
-#: ../data/org.gnome.todo.gschema.xml.h:7
+#: data/org.gnome.todo.gschema.xml:21
 msgid "First run of GNOME To Do"
 msgstr "第一次运行 GNOME 待办事项"
 
-#: ../data/org.gnome.todo.gschema.xml.h:8
+#: data/org.gnome.todo.gschema.xml:22
 msgid ""
-"Whether it's the first run of GNOME To Do (to run the initial setup) or not"
-msgstr "是否为第一次运行 GNOME 待办事项(以运行初始化设置)"
+"Whether it’s the first run of GNOME To Do (to run the initial setup) or not"
+msgstr "是否为第一次运行 GNOME 待办事项（以运行初始化设置）"
 
-#: ../data/org.gnome.todo.gschema.xml.h:9
+#: data/org.gnome.todo.gschema.xml:26
 msgid "Default provider to add new lists to"
 msgstr "要添加到新列表的默认提供者"
 
-#: ../data/org.gnome.todo.gschema.xml.h:10
+#: data/org.gnome.todo.gschema.xml:27
 msgid "The identifier of the default provider to add new lists to"
 msgstr "要添加到新列表的默认提供者的标识符"
 
-#: ../data/org.gnome.todo.gschema.xml.h:11
+#: data/org.gnome.todo.gschema.xml:31
 msgid "List of active extensions"
 msgstr "已激活扩展列表"
 
-#: ../data/org.gnome.todo.gschema.xml.h:12
+#: data/org.gnome.todo.gschema.xml:32
 msgid "The list of active extensions"
 msgstr "已激活扩展列表"
 
-#: ../data/org.gnome.todo.gschema.xml.h:13
+#: data/org.gnome.todo.gschema.xml:36
 msgid "The current list selector"
 msgstr "当前列表选择器"
 
-#: ../data/org.gnome.todo.gschema.xml.h:14
-msgid "The current list selector. Can be 'grid' or 'list'."
+#: data/org.gnome.todo.gschema.xml:37
+msgid "The current list selector. Can be “grid” or “list”."
 msgstr "当前列表选择器。可为“grid”或“list”。"
 
-#: ../data/ui/edit-pane.ui.h:1 ../plugins/eds/edit-pane.ui.h:10
-msgctxt "taskdate"
-msgid "None"
-msgstr "无"
+#: data/ui/edit-pane.ui:43
+msgid "_Notes"
+msgstr "备注(_N)"
 
-#: ../data/ui/edit-pane.ui.h:2 ../plugins/eds/edit-pane.ui.h:1
-#: ../src/gtd-window.c:542
-msgid "Details"
-msgstr "细节"
+#: data/ui/edit-pane.ui:93
+msgid "D_ue Date"
+msgstr "到期日(_U)"
 
-#: ../data/ui/edit-pane.ui.h:3 ../plugins/eds/edit-pane.ui.h:2
-msgid "Notes"
-msgstr "备注"
+#: data/ui/edit-pane.ui:111
+msgid "_Today"
+msgstr "今天(_T)"
 
-#: ../data/ui/edit-pane.ui.h:4 ../plugins/eds/edit-pane.ui.h:3
-msgid "Due Date"
-msgstr "截止日期"
+#: data/ui/edit-pane.ui:121
+msgid "To_morrow"
+msgstr "明天(_M)"
 
-#: ../data/ui/edit-pane.ui.h:5 ../plugins/eds/edit-pane.ui.h:4
-msgid "Priority"
-msgstr "优先级"
+#: data/ui/edit-pane.ui:169
+msgid "_Priority"
+msgstr "优先级(_P)"
 
-#: ../data/ui/edit-pane.ui.h:6 ../plugins/eds/edit-pane.ui.h:5
+#: data/ui/edit-pane.ui:187
 msgctxt "taskpriority"
 msgid "None"
 msgstr "无"
 
-#: ../data/ui/edit-pane.ui.h:7 ../plugins/eds/edit-pane.ui.h:6
+#: data/ui/edit-pane.ui:188
 msgid "Low"
 msgstr "低"
 
-#: ../data/ui/edit-pane.ui.h:8 ../plugins/eds/edit-pane.ui.h:7
+#: data/ui/edit-pane.ui:189
 msgid "Medium"
 msgstr "中"
 
-#: ../data/ui/edit-pane.ui.h:9 ../plugins/eds/edit-pane.ui.h:8
+#: data/ui/edit-pane.ui:190
 msgid "High"
 msgstr "高"
 
-#: ../data/ui/edit-pane.ui.h:10 ../data/ui/list-selector-panel.ui.h:2
-#: ../plugins/eds/edit-pane.ui.h:9
-msgid "Delete"
-msgstr "删除"
+#: data/ui/edit-pane.ui:198 data/ui/list-selector-panel.ui:93
+msgid "_Delete"
+msgstr "删除(_D)"
 
-#. Setup a title
-#: ../data/ui/edit-pane.ui.h:11
-#: ../plugins/scheduled-panel/gtd-panel-scheduled.c:87
-#: ../plugins/score/score/__init__.py:95
-#: ../plugins/today-panel/gtd-panel-today.c:135
-#: ../plugins/today-panel/gtd-panel-today.c:140
-#: ../plugins/today-panel/gtd-panel-today.c:309 ../src/gtd-task-row.c:299
-msgid "Today"
-msgstr "今日"
+#: data/ui/edit-pane.ui:249
+msgctxt "taskdate"
+msgid "None"
+msgstr "无"
 
-#: ../data/ui/edit-pane.ui.h:12
-#: ../plugins/scheduled-panel/gtd-panel-scheduled.c:91
-#: ../src/gtd-task-row.c:303
-msgid "Tomorrow"
-msgstr "明天"
-
-#: ../data/ui/edit-pane.ui.h:13
-msgid "Next Week"
-msgstr "下周"
-
-#: ../data/ui/initial-setup.ui.h:1
+#: data/ui/initial-setup.ui:25
 msgid "Welcome"
 msgstr "欢迎"
 
-#: ../data/ui/initial-setup.ui.h:2
-msgid "Login to online accounts to access your tasks"
-msgstr "登录在线帐户以访问您的任务"
+#: data/ui/initial-setup.ui:40
+msgid "Log in to online accounts to access your tasks"
+msgstr "登录在线帐号以访问您的任务"
 
-#: ../data/ui/initial-setup.ui.h:3 ../data/ui/provider-popover.ui.h:2
-#: ../data/ui/window.ui.h:1 ../src/gtd-task-list-view.c:599
-#: ../src/views/gtd-list-selector-panel.c:388
-msgid "Cancel"
-msgstr "取消"
+#: data/ui/initial-setup.ui:67
+msgid "To Do Setup"
+msgstr "GNOME 待办事项设置"
 
-#: ../data/ui/initial-setup.ui.h:4 ../data/ui/list-view.ui.h:2
-#: ../src/gtd-task-list-view.c:764
-msgid "Done"
-msgstr "完成"
+#: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
+#: data/ui/window.ui:74
+msgid "_Cancel"
+msgstr "取消（_C）"
 
-#: ../data/ui/list-selector-panel.ui.h:1
-msgid "Rename"
-msgstr "重命名"
+#: data/ui/initial-setup.ui:80
+msgid "_Done"
+msgstr "完成(_D)"
 
-#: ../data/ui/list-selector-panel.ui.h:3
-#: ../src/views/gtd-list-selector-panel.c:467
+#: data/ui/list-selector-panel.ui:79 data/ui/list-selector-panel.ui:173
+msgid "_Rename"
+msgstr "重命名(_R)"
+
+#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:469
 msgid "Lists"
 msgstr "列表"
 
-#: ../data/ui/list-selector-panel.ui.h:4
+#: data/ui/list-selector-panel.ui:129
 msgid "Tasks"
 msgstr "任务"
 
-#: ../data/ui/list-selector-panel.ui.h:5
+#: data/ui/list-selector-panel.ui:147
 msgid "Name of the task list"
 msgstr "任务列表的名称"
 
-#: ../data/ui/list-selector-panel.ui.h:6
-msgid "New List"
-msgstr "新建列表"
+#: data/ui/list-selector-panel.ui:263
+msgid "_New List"
+msgstr "新建列表(_N)"
 
-#: ../data/ui/list-view.ui.h:1
+#: data/ui/list-view.ui:113
 msgid "Show or hide completed tasks"
 msgstr "显示或隐藏已完成的任务"
 
-#: ../data/ui/plugin-dialog.ui.h:2
+#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
+msgid "Done"
+msgstr "完成"
+
+#: data/ui/new-task-row.ui:29
+msgid "New task…"
+msgstr "增加新任务…"
+
+#: data/ui/plugin-dialog.ui:118
 msgid "No extensions found"
 msgstr "未发现扩展"
 
-#: ../data/ui/provider-popover.ui.h:1
-msgid "Create"
-msgstr "创建"
+#: data/ui/provider-popover.ui:25
+msgid "Create _List"
+msgstr "创建列表(_L)"
 
-#: ../data/ui/provider-popover.ui.h:3
+#: data/ui/provider-popover.ui:59
 msgid "List Name"
 msgstr "列表名称"
 
-#: ../data/ui/provider-popover.ui.h:4
+#: data/ui/provider-popover.ui:155
 msgid "Select a storage location"
 msgstr "选择存储位置"
 
-#: ../data/ui/provider-row.ui.h:1
+#: data/ui/provider-row.ui:70
 msgid "Off"
 msgstr "关"
 
-#: ../data/ui/provider-selector.ui.h:1
+#: data/ui/provider-selector.ui:27
 msgid "Click to add a new Google account"
-msgstr "单击此处以添加新的谷歌帐户"
+msgstr "单击此处以添加新的谷歌帐号"
 
-#: ../data/ui/provider-selector.ui.h:2
+#: data/ui/provider-selector.ui:51
 msgid "Google"
 msgstr "谷歌"
 
-#: ../data/ui/provider-selector.ui.h:3
+#: data/ui/provider-selector.ui:67
 msgid "Click to add a new ownCloud account"
-msgstr "单击此处以添加一个新的 ownCloud 帐户"
+msgstr "单击此处以添加新的 ownCloud 帐号"
 
-#: ../data/ui/provider-selector.ui.h:4
+#: data/ui/provider-selector.ui:91
 msgid "ownCloud"
 msgstr "ownCloud"
 
-#: ../data/ui/provider-selector.ui.h:5
+#: data/ui/provider-selector.ui:107
 msgid "Click to add a new Microsoft Exchange account"
-msgstr "单击此处以添加新的 Microsoft Exchange 帐户"
+msgstr "单击此处以添加新的 Microsoft Exchange 帐号"
 
-#: ../data/ui/provider-selector.ui.h:6
+#: data/ui/provider-selector.ui:131
 msgid "Microsoft Exchange"
 msgstr "Microsoft Exchange"
 
-#: ../data/ui/provider-selector.ui.h:7
+#: data/ui/provider-selector.ui:154
 msgid "Or you can just store your tasks on this computer"
 msgstr "或者您可以只将任务存在此计算机上"
 
-#: ../data/ui/task-row.ui.h:1
-msgid "New task…"
-msgstr "增加新任务..."
+#: plugins/background/gtd-plugin-background.c:150
+#, c-format
+msgid "%1$s and one more task"
+msgid_plural "%1$s and %2$d other tasks"
+msgstr[0] "%1$s 以及 %2$d 项其他任务"
 
-#: ../plugins/eds/gtd-plugin-eds.c:244 ../plugins/eds/gtd-plugin-eds.c:248
+#: plugins/background/gtd-plugin-background.c:249
+#, c-format
+msgid "You have %d task for today"
+msgid_plural "You have %d tasks for today"
+msgstr[0] "你今天还有 %d 项任务"
+
+#: plugins/background/org.gnome.todo.background.gschema.xml:6
+msgid "Run To Do on startup"
+msgstr "启动时运行 GNOME 待办事项"
+
+#: plugins/background/org.gnome.todo.background.gschema.xml:7
+msgid "Whether GNOME To Do should run on startup"
+msgstr "GNOME 待办事项是否在系统启动时启动"
+
+#: plugins/background/org.gnome.todo.background.gschema.xml:11
+msgid "Show notifications on startup"
+msgstr "在启动时显示通知"
+
+#: plugins/background/org.gnome.todo.background.gschema.xml:12
+msgid "Whether GNOME To Do should show notifications or not"
+msgstr "GNOME 待办事项是否应该显示通知"
+
+#: plugins/background/ui/preferences.ui:53
+msgid "Run on Startup"
+msgstr "启动时运行"
+
+#: plugins/background/ui/preferences.ui:66
+msgid "Run To Do automatically when you log in"
+msgstr "在登录时自动运行 GNOME 待办事项"
+
+#: plugins/background/ui/preferences.ui:122
+msgid "Show Notifications"
+msgstr "显示通知"
+
+#: plugins/background/ui/preferences.ui:135
+msgid "When To Do runs, show a startup notification"
+msgstr "在 GNOME 待办事项运行时，显示启动通知"
+
+#: plugins/eds/gtd-plugin-eds.c:201
 msgid "Error loading GNOME Online Accounts"
-msgstr "加载 GNOME 在线帐户时出错"
+msgstr "加载 GNOME 在线帐号时出错"
 
-#: ../plugins/eds/gtd-plugin-eds.c:273
-msgid "Error loading Evolution-Data-Server backend"
-msgstr "载入 Evolution-Data-Server 后端时出错"
+#: plugins/eds/gtd-provider-eds.c:139
+msgid "Failed to connect to task list"
+msgstr "无法连接到任务列表"
 
-#: ../plugins/eds/gtd-plugin-eds.c:364 ../src/gtd-application.c:243
-msgid "Error loading CSS from resource"
-msgstr "从资源加载 CSS 时出错"
-
-#: ../plugins/eds/gtd-provider-eds.c:132 ../plugins/eds/gtd-provider-eds.c:136
-msgid "Error fetching tasks from list"
-msgstr "从列表中获取任务时出错"
-
-#: ../plugins/eds/gtd-provider-eds.c:196
-msgid "Task list source successfully connected"
-msgstr "成功连接到任务列表来源"
-
-#: ../plugins/eds/gtd-provider-eds.c:203 ../plugins/eds/gtd-provider-eds.c:208
-msgid "Failed to connect to task list source"
-msgstr "未能连接到任务列表来源"
-
-#: ../plugins/eds/gtd-provider-eds.c:322
-msgid "Failed to prompt for credentials"
-msgstr "提示请求凭据失败"
-
-#: ../plugins/eds/gtd-provider-eds.c:345
-msgid "Failed to prompt for credentials for"
-msgstr "为如下项目提示请求凭据失败："
-
-#: ../plugins/eds/gtd-provider-eds.c:399
-msgid "Authentication failure"
-msgstr "认证失败"
-
-#: ../plugins/eds/gtd-provider-eds.c:451
-msgid "Error loading task manager"
-msgstr "加载任务管理器时出错"
-
-#: ../plugins/eds/gtd-provider-eds.c:550 ../plugins/eds/gtd-provider-eds.c:558
-msgid "Error creating task"
+#: plugins/eds/gtd-provider-eds.c:351
+msgid "An error occurred while creating a task"
 msgstr "创建任务时出错"
 
-#: ../plugins/eds/gtd-provider-eds.c:598 ../plugins/eds/gtd-provider-eds.c:602
-msgid "Error updating task"
-msgstr "更新任务时出错"
+#: plugins/eds/gtd-provider-eds.c:383
+msgid "An error occurred while modifying a task"
+msgstr "修改任务时出错"
 
-#: ../plugins/eds/gtd-provider-eds.c:634 ../plugins/eds/gtd-provider-eds.c:638
-msgid "Error removing task"
-msgstr "删除任务时出错"
+#: plugins/eds/gtd-provider-eds.c:404
+msgid "An error occurred while removing a task"
+msgstr "移除任务时出错"
 
-#: ../plugins/eds/gtd-provider-eds.c:662 ../plugins/eds/gtd-provider-eds.c:666
-msgid "Error creating task list"
+#: plugins/eds/gtd-provider-eds.c:422
+msgid "An error occurred while creating a task list"
 msgstr "创建任务列表时出错"
 
-#: ../plugins/eds/gtd-provider-eds.c:683 ../plugins/eds/gtd-provider-eds.c:687
-msgid "Error removing task list"
-msgstr "删除任务列表时出错"
+#: plugins/eds/gtd-provider-eds.c:444 plugins/eds/gtd-provider-eds.c:467
+msgid "An error occurred while modifying a task list"
+msgstr "修改任务列表时出错"
 
-#: ../plugins/eds/gtd-provider-eds.c:744 ../plugins/eds/gtd-provider-eds.c:748
-#: ../plugins/eds/gtd-task-list-eds.c:69
-msgid "Error saving task list"
-msgstr "保存任务列表时出错"
-
-#: ../plugins/eds/gtd-provider-local.c:60
+#: plugins/eds/gtd-provider-local.c:50
 msgid "Local"
 msgstr "本地"
 
-#: ../plugins/eds/gtd-provider-local.c:66
+#: plugins/eds/gtd-provider-local.c:56
 msgid "On This Computer"
 msgstr "在这台电脑上"
 
-#: ../plugins/eds/gtd-provider-local.c:133
-#: ../plugins/eds/gtd-provider-local.c:137
-msgid "Error creating new task list"
-msgstr "创建新的任务列表时出错"
+#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:307
+#: plugins/eds/gtd-task-list-eds.c:331
+msgid "Error fetching tasks from list"
+msgstr "从列表中获取任务时出错"
 
-#: ../plugins/scheduled-panel/gtd-panel-scheduled.c:67
-#: ../src/gtd-edit-pane.c:217 ../src/gtd-task-row.c:329
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-edit-pane.c:110
 msgid "No date set"
 msgstr "没有设定日期"
 
-#: ../plugins/scheduled-panel/gtd-panel-scheduled.c:83
-#: ../src/gtd-task-row.c:307
+#. Translators: This message will never be used with '1 day ago'
+#. * but the singular form is required because some languages do not
+#. * have plurals, some languages reuse the singular form for numbers
+#. * like 21, 31, 41, etc.
+#.
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
 #, c-format
-msgid "Yesterday"
+msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] "%d 天前"
 
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:147
+msgid "Yesterday"
+msgstr "昨天"
+
 #. Setup a title
-#: ../plugins/scheduled-panel/gtd-panel-scheduled.c:342
-#: ../plugins/scheduled-panel/gtd-panel-scheduled.c:347
-#: ../plugins/scheduled-panel/gtd-panel-scheduled.c:479
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:118
+#: plugins/score/score/__init__.py:101
+#: plugins/today-panel/gtd-panel-today.c:134
+#: plugins/today-panel/gtd-panel-today.c:139
+#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:139
+msgid "Today"
+msgstr "今天"
+
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:122 src/gtd-task-row.c:143
+msgid "Tomorrow"
+msgstr "明天"
+
+#. Setup a title
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:356
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:358
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:495
 msgid "Scheduled"
 msgstr "已计划"
 
-#: ../plugins/scheduled-panel/gtd-panel-scheduled.c:484
-#: ../plugins/today-panel/gtd-panel-today.c:314
-#: ../src/views/gtd-list-selector-panel.c:713
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:500
+#: plugins/today-panel/gtd-panel-today.c:278
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
 msgid "Clear completed tasks…"
-msgstr "清除已完成任务..."
+msgstr "清除已完成任务…"
 
-#: ../plugins/score/score/__init__.py:84
+#: plugins/score/score/__init__.py:90
 msgid "No task completed today"
 msgstr "今天没有已完成的任务"
 
+#: plugins/todoist/gtd-provider-todoist.c:212
+msgid "Error fetching Todoist account key"
+msgstr "获取 Todoist 帐号密钥时发生错误"
+
+#: plugins/todoist/gtd-provider-todoist.c:213
+msgid "Please ensure that Todoist account is correctly configured."
+msgstr "请检查你已正确配置 Todoist 帐号。"
+
+#: plugins/todoist/gtd-provider-todoist.c:557
+#, c-format
+msgid ""
+"GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
+msgstr "GNOME 待办事项没有权限来执行此操作：%s"
+
+#: plugins/todoist/gtd-provider-todoist.c:565
+#, c-format
+msgid ""
+"Invalid response received from Todoist servers. Please reload GNOME To Do."
+msgstr "接受到来自 Todoist 服务器的无效回应。请重新载入 GNOME 待办事项。"
+
+#: plugins/todoist/gtd-provider-todoist.c:865
+msgid "An error occurred while updating a Todoist task"
+msgstr "更新 Todoist 任务时出错"
+
+#: plugins/todoist/gtd-provider-todoist.c:982
+msgid "An error occurred while retrieving Todoist data"
+msgstr "检索 Todoist 数据时出错"
+
+#: plugins/todoist/gtd-provider-todoist.c:1057
+msgid "An error occurred while updating Todoist"
+msgstr "更新 Todoist 时出错"
+
+#: plugins/todoist/gtd-provider-todoist.c:1117
+msgid "Todoist"
+msgstr "Todoist"
+
+#: plugins/todoist/gtd-provider-todoist.c:1426
+#, c-format
+msgid "Todoist: %s"
+msgstr "Todoist: %s"
+
+#: plugins/todoist/ui/preferences.ui:81
+msgid "No Todoist accounts found"
+msgstr "没有 Todoist 帐号"
+
+#: plugins/todoist/ui/preferences.ui:90
+msgid "Add a Todoist account"
+msgstr "添加 Todoist 帐号"
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:87
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:124
+msgid "Cannot create Todo.txt file"
+msgstr "无法创建 Todo.txt 文件"
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:161
+msgid "Select a Todo.txt-formatted file:"
+msgstr "请选择 Todo.txt 格式的文件："
+
+#. Filechooser
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:165
+msgid "Select a file"
+msgstr "选择文件"
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:191
+msgid "Error opening Todo.txt file"
+msgstr "打开 Todo.txt 文件出错"
+
+#: plugins/todo-txt/gtd-plugin-todo-txt.c:201
+msgid ""
+"<b>Warning!</b> Todo.txt support is experimental and unstable. You may "
+"experience instability, errors and eventually data loss. It is not "
+"recommended to use Todo.txt integration on production systems."
+msgstr ""
+"<b>警告！</b> Todo.txt 支持目前属于实验性且不稳定。您可能会遇到不稳定、错误和"
+"数据丢失。不推荐在生产系统上使用 Todo.txt 集成。"
+
+#: plugins/todo-txt/gtd-provider-todo-txt.c:326
+msgid "Error while opening the file monitor. Todo.txt will not be monitored"
+msgstr "无法启动文件监视器。Todo.txt 将不会被监视"
+
+#: plugins/todo-txt/gtd-provider-todo-txt.c:395
+msgid "Todo.txt"
+msgstr "Todo.txt"
+
+#: plugins/todo-txt/gtd-provider-todo-txt.c:401
+msgid "On the Todo.txt file"
+msgstr "在 Todo.txt 文件中"
+
+#: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:6
+msgid "Todo.txt File"
+msgstr "Todo.txt 文件"
+
+#: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:7
+msgid "Source of the Todo.txt file"
+msgstr "Todo.txt 源文件"
+
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: ../plugins/unscheduled-panel/unscheduled-panel/__init__.py:34
-#: ../plugins/unscheduled-panel/unscheduled-panel/__init__.py:89
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:103
 msgid "Unscheduled"
 msgstr "未计划"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: ../plugins/unscheduled-panel/unscheduled-panel/__init__.py:92
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:106
 #, python-format
 msgid "Unscheduled (%d)"
 msgstr "未计划 (%d)"
 
+#: src/gtd-application.c:72
+msgid "Quit GNOME To Do"
+msgstr "退出 GNOME 待办事项"
+
+#: src/gtd-application.c:73
+msgid "Enable debug messages"
+msgstr "启用调试信息"
+
 # 按 GPL, ‘Copyright' 这个词能保证受国际认可，不该翻译。
-#: ../src/gtd-application.c:113
+#: src/gtd-application.c:146
 #, c-format
-msgid "Copyright © %d The To Do authors"
-msgstr "Copyright © %d To Do 作者们"
+msgid "Copyright © %1$d The To Do authors"
+msgstr "Copyright © %1$d GNOME 待办事项作者们"
 
-#: ../src/gtd-application.c:118
+#: src/gtd-application.c:151
 #, c-format
-msgid "Copyright © %d–%d The To Do authors"
-msgstr "Copyright © %d – %d GNOME 待办事项作者"
+msgid "Copyright © %1$d–%2$d The To Do authors"
+msgstr "Copyright © %1$d – %2$d GNOME 待办事项作者"
 
-#: ../src/gtd-application.c:130
+#: src/gtd-application.c:163
 msgid "translator-credits"
 msgstr ""
 "Mingye Wang <arthur200126@gmail.com>, 2015.\n"
 "Aron Xu <aronxu@gnome.org>, 2015.\n"
-"Mandy Wang <wangmychn@gmail.com>, 2016"
+"Mandy Wang <wangmychn@gmail.com>, 2016\n"
+"Zixing Liu <liushuyu011@gmail.com>, 2017\n"
+"Tong Hui <tonghuix@gmail.com>, 2018\n"
+"Dingzhong Chen <wsxy162@gmail.com>, 2018\n"
+"Mingcong Bai <jeffbai@aosc.xyz>, 2018"
 
-#: ../src/gtd-empty-list-widget.c:49
+#: src/gtd-empty-list-widget.c:51
 msgid "No more tasks left"
 msgstr "没有任务剩余"
 
-#: ../src/gtd-empty-list-widget.c:50
+#: src/gtd-empty-list-widget.c:52
 msgid "Nothing else to do here"
 msgstr "没什么要做的事了"
 
-#: ../src/gtd-empty-list-widget.c:51
+#: src/gtd-empty-list-widget.c:53
 msgid "You made it!"
 msgstr "你做到了！"
 
-#: ../src/gtd-empty-list-widget.c:52
-msgid "Looks like there's nothing else left here"
-msgstr "看起来这里没有什么事了"
+#: src/gtd-empty-list-widget.c:54
+msgid "Looks like there’s nothing else left here"
+msgstr "看起来没剩什么事了"
 
-#: ../src/gtd-empty-list-widget.c:57
+#: src/gtd-empty-list-widget.c:59
 msgid "Get some rest now"
 msgstr "现在休息一下"
 
-#: ../src/gtd-empty-list-widget.c:58
+#: src/gtd-empty-list-widget.c:60
 msgid "Enjoy the rest of your day"
 msgstr "享受您今天的闲暇时光"
 
-#: ../src/gtd-empty-list-widget.c:59
+#: src/gtd-empty-list-widget.c:61
 msgid "Good job!"
 msgstr "干得不错！"
 
-#: ../src/gtd-empty-list-widget.c:60
+#: src/gtd-empty-list-widget.c:62
 msgid "Meanwhile, spread the love"
 msgstr "与此同时，将爱传播"
 
-#: ../src/gtd-empty-list-widget.c:61
+#: src/gtd-empty-list-widget.c:63
 msgid "Working hard is always rewarded"
 msgstr "努力工作总会得到回报"
 
-#: ../src/gtd-empty-list-widget.c:72
+#: src/gtd-empty-list-widget.c:74
 msgid "No tasks found"
 msgstr "没有发现任务"
 
-#: ../src/gtd-empty-list-widget.c:73
+#: src/gtd-empty-list-widget.c:75
 msgid "You can add tasks using the <b>+</b> above"
 msgstr "您可以使用上面的 <b>+</b> 来添加任务"
 
-#: ../src/gtd-plugin-dialog-row.c:95
-msgid "Error loading plugin"
-msgstr "加载插件时出错"
+#: src/gtd-plugin-dialog-row.c:97
+msgid "Error loading extension"
+msgstr "加载扩展时出错"
 
-#: ../src/gtd-plugin-dialog-row.c:95
-msgid "Error unloading plugin"
-msgstr "卸载插件时出错"
+#: src/gtd-plugin-dialog-row.c:97
+msgid "Error unloading extension"
+msgstr "卸载扩展时出错"
 
-#: ../src/gtd-task-list-view.c:593
+#: src/gtd-task-list-view.c:292
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
-msgstr "如果删除此任务，那么它的子任务也将被删除。确定要删除吗？"
+msgstr "如果移除此任务，那么它的子任务也将被移除。确定要移除吗？"
 
-#: ../src/gtd-task-list-view.c:596
+#: src/gtd-task-list-view.c:295
 msgid "Once removed, the tasks cannot be recovered."
-msgstr "一旦删除，任务将无法恢复。"
+msgstr "一旦移除，任务将无法恢复。"
 
-#: ../src/gtd-task-list-view.c:601
+#: src/gtd-task-list-view.c:298 src/views/gtd-list-selector-panel.c:388
+msgid "Cancel"
+msgstr "取消"
+
+#: src/gtd-task-list-view.c:300
 msgid "Remove"
-msgstr "删除"
+msgstr "移除"
 
-#: ../src/gtd-task-list-view.c:650
+#: src/gtd-task-list-view.c:390
+#, c-format
+msgid "Done (%d)"
+msgstr "完成 (%d)"
+
+#: src/gtd-task-list-view.c:660
 #, c-format
 msgid "Task <b>%s</b> removed"
-msgstr "任务 <b>%s</b> 已删除"
+msgstr "任务 <b>%s</b> 已移除"
 
-#: ../src/gtd-task-list-view.c:680
+#: src/gtd-task-list-view.c:684
 msgid "Undo"
 msgstr "撤消"
 
-#: ../src/gtd-window.c:808
+#: src/gtd-window.c:476
+msgid "Details"
+msgstr "细节"
+
+#: src/gtd-window.c:689
 msgid "Loading your task lists…"
 msgstr "正在加载您的任务列表…"
 
-#: ../src/gtd-window.c:934
+#: src/gtd-window.c:793
 msgid "Click a task list to select"
 msgstr "单击任务列表以选择"
 
-#: ../src/views/gtd-list-selector-grid-item.c:233
+#.
+#. * If there's no task available, draw a "No tasks" string at
+#. * the middle of the list thumbnail.
+#.
+#: src/views/gtd-list-selector-grid-item.c:250
 msgid "No tasks"
 msgstr "无任务"
 
-#: ../src/views/gtd-list-selector-panel.c:185
-msgid "Setting new color for task list"
-msgstr "设置任务列表的新颜色"
-
-#: ../src/views/gtd-list-selector-panel.c:381
+#: src/views/gtd-list-selector-panel.c:381
 msgid "Remove the selected task lists?"
-msgstr "删除选定的任务列表？"
+msgstr "移除选定的任务列表？"
 
-#: ../src/views/gtd-list-selector-panel.c:384
+#: src/views/gtd-list-selector-panel.c:384
 msgid "Once removed, the task lists cannot be recovered."
-msgstr "一旦删除，任务列表无法恢复。"
+msgstr "一旦移除，任务列表无法恢复。"
 
-#: ../src/views/gtd-list-selector-panel.c:396
+#: src/views/gtd-list-selector-panel.c:396
 msgid "Remove task lists"
-msgstr "删除任务列表"
+msgstr "移除任务列表"
+
+#: src/views/gtd-list-selector-panel.c:709
+msgid "Clear completed tasks"
+msgstr "清除已完成任务"
+
+#~ msgid "Delete"
+#~ msgstr "删除"
+
+#~ msgid "Loading…"
+#~ msgstr "载入中…"
+
+#~ msgid "All"
+#~ msgstr "所有"
+
+#~ msgid "Overdue"
+#~ msgstr "逾期"
+
+#~ msgid "Next 7 Days"
+#~ msgstr "下周"
+
+#~ msgid "GNOME To Do cannot connect to Todoist due to network issue"
+#~ msgstr "GNOME To Do 因网络问题无法连接到 Todoist"
+
+#~ msgid ""
+#~ "Not able to communicate with Todoist. Please check your internet "
+#~ "connectivity."
+#~ msgstr "无法连接到 Todoist。请检查您的互联网连接。"
+
+#~ msgid "%1$s \t <small>%2$s</small>"
+#~ msgstr "%1$s \t <small>%2$s</small>"
+
+#~ msgid ""
+#~ "This is a development build of To Do. You may experience errors, wrong "
+#~ "behaviors, and data loss."
+#~ msgstr "该 To Do 为开发版本。您可能会遇到错误，不正常行为以及数据丢失。"
+
+#~ msgid "Task list <b>%s</b> removed"
+#~ msgstr "已移除任务列表 <b>%s</b>"
+
+#~ msgid "Rename %s"
+#~ msgstr "重命名 %s"
+
+#~ msgid "Error creating new task list"
+#~ msgstr "创建新的任务列表时出错"
+
+#~ msgid "Error while reading a line from Todo.txt"
+#~ msgstr "无法读取 Todo.txt 文件"
+
+#~ msgid "Incorrect date"
+#~ msgstr "不正确的日期"
+
+#~ msgid "Please make sure the date in Todo.txt is valid."
+#~ msgstr "请检查 Todo.txt 中的日期是否正确。"
+
+#~ msgid "Unrecognized token in a Todo.txt line"
+#~ msgstr "Todo.txt 文件中存在无法识别的指令"
+
+#~ msgid ""
+#~ "To Do cannot recognize some tags in your Todo.txt file. Some tasks may "
+#~ "not be loaded"
+#~ msgstr ""
+#~ "GNOME 待办事项不能识别你的 Todo.txt 文件中的部分标签。一些任务可能没有被导"
+#~ "入"
+
+#~ msgid "No task list found for some tasks"
+#~ msgstr "某些任务没有任务列表"
+
+#~ msgid ""
+#~ "Some of the tasks in your Todo.txt file do not have a task list. To Do "
+#~ "supports tasks with a task list. Please add a list to all your tasks"
+#~ msgstr ""
+#~ "你的 Todo.txt 文件中的一些任务没有加任务列表。GNOME 待办事项只支持带任务列"
+#~ "表的任务。请确保你的所有任务都有任务列表"
+
+#~ msgid "New List…"
+#~ msgstr "新建列表…"
+
+#~ msgid "Next _Week"
+#~ msgstr "下周(&W)"
+
+#~ msgid "Notes"
+#~ msgstr "备注"
+
+#~ msgid "Due Date"
+#~ msgstr "截止日期"
+
+#~ msgid "Priority"
+#~ msgstr "优先级"
+
+#~ msgid "Error loading Evolution-Data-Server backend"
+#~ msgstr "载入 Evolution-Data-Server 后端时出错"
+
+#~ msgid "Task list source successfully connected"
+#~ msgstr "成功连接到任务列表来源"
+
+#~ msgid "Failed to prompt for credentials"
+#~ msgstr "提示请求凭据失败"
+
+#~ msgid "Failed to prompt for credentials for"
+#~ msgstr "为如下项目提示请求凭据失败"
+
+#~ msgid "Authentication failure"
+#~ msgstr "认证失败"
+
+#~ msgid "Error loading task manager"
+#~ msgstr "加载任务管理器时出错"
+
+#~ msgid "Error updating task"
+#~ msgstr "更新任务时出错"
+
+#~ msgid "Error saving task list"
+#~ msgstr "保存任务列表时出错"
+
+#~ msgid "Bad status code (%d) received. Please check your connection."
+#~ msgstr "收到错误的状态代码 (%d)。请检查网络连接。"
+
+#~ msgid "Setting new color for task list"
+#~ msgstr "设置任务列表的新颜色"
+
+#~ msgid "Change default storage location…"
+#~ msgstr "更改默认存储位置..."
+
+#~ msgid "Error loading CSS from resource"
+#~ msgstr "从资源加载 CSS 时出错"
 
 #~ msgid "Select the default storage location to create task lists:"
 #~ msgstr "选择创建任务列表时的默认存储位置："
 
 #~ msgid "Default storage location"
 #~ msgstr "默认存储位置"
-
-#~ msgid "Todo"
-#~ msgstr "待办事项"
 
 #~ msgid "Skipping already loaded task list "
 #~ msgstr "跳过已经加载的任务列表 "
