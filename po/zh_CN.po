@@ -7,11 +7,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"todo&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2016-08-26 20:55+0000\n"
-"PO-Revision-Date: 2016-10-29 23:32+0800\n"
-"Last-Translator: Jeff Bai <jeffbai@aosc.xyz>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-todo&keywords=I18N+L10N&component=General\n"
+"POT-Creation-Date: 2016-10-29 15:32+0000\n"
+"PO-Revision-Date: 2016-10-31 15:20+0800\n"
+"Last-Translator: Tong Hui <tonghuix@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -99,16 +98,12 @@ msgid ""
 msgstr "是否为第一次运行 GNOME 待办事项(以运行初始化设置)"
 
 #: ../data/org.gnome.todo.gschema.xml.h:9
-#, fuzzy
-#| msgid "Default location to add new lists to"
 msgid "Default provider to add new lists to"
-msgstr "要加入到新列表的默认位置"
+msgstr "要加入到新列表的默认提供商"
 
 #: ../data/org.gnome.todo.gschema.xml.h:10
-#, fuzzy
-#| msgid "The identifier of the default location to add new lists to"
 msgid "The identifier of the default provider to add new lists to"
-msgstr "要加入到新列表的默认位置的标识符"
+msgstr "要加入到新列表默认提供商的标识符"
 
 #: ../data/org.gnome.todo.gschema.xml.h:11
 msgid "List of active extensions"
@@ -409,7 +404,8 @@ msgstr "Copyright © %d – %d GNOME 待办事项作者"
 msgid "translator-credits"
 msgstr ""
 "Mingye Wang <arthur200126@gmail.com>, 2015.\n"
-"Aron Xu <aronxu@gnome.org>, 2015."
+"Aron Xu <aronxu@gnome.org>, 2015.\n"
+"Tong Hui <tonghuix@gmail.com>, 2016."
 
 #: ../src/gtd-plugin-dialog-row.c:95
 msgid "Error loading plugin"
