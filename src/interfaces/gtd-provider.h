@@ -1,6 +1,6 @@
 /* gtd-storage.h
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,6 +79,8 @@ struct _GtdProviderInterface
 
   void               (*set_default_task_list)                    (GtdProvider        *provider,
                                                                   GtdTaskList        *list);
+
+  GtdTaskList*       (*get_inbox)                                (GtdProvider        *provider);
 };
 
 const gchar*         gtd_provider_get_id                         (GtdProvider        *provider);
@@ -121,6 +123,8 @@ GtdTaskList*         gtd_provider_get_default_task_list          (GtdProvider   
 
 void                 gtd_provider_set_default_task_list          (GtdProvider        *provider,
                                                                   GtdTaskList        *list);
+
+GtdTaskList*         gtd_provider_get_inbox                      (GtdProvider        *provider);
 
 gint                 gtd_provider_compare                        (GtdProvider        *a,
                                                                   GtdProvider        *b);

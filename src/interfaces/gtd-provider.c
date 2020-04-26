@@ -1,6 +1,6 @@
 /* gtd-provider.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -479,6 +479,23 @@ gtd_provider_set_default_task_list (GtdProvider *provider,
   g_return_if_fail (GTD_PROVIDER_GET_IFACE (provider)->set_default_task_list);
 
   return GTD_PROVIDER_GET_IFACE (provider)->set_default_task_list (provider, list);
+}
+
+/**
+ * gtd_provider_get_inbox:
+ * @provider: a #GtdProvider
+ *
+ * Retrieves the inbox of @provider.
+ *
+ * Returns: (transfer none)(nullable): a #GtdTaskList
+ */
+GtdTaskList*
+gtd_provider_get_inbox (GtdProvider *provider)
+{
+  g_return_val_if_fail (GTD_IS_PROVIDER (provider), NULL);
+  g_return_val_if_fail (GTD_PROVIDER_GET_IFACE (provider)->get_inbox, NULL);
+
+  return GTD_PROVIDER_GET_IFACE (provider)->get_inbox (provider);
 }
 
 /**
