@@ -1,6 +1,6 @@
 /* gtd-provider-eds.h
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GTD_PROVIDER_EDS_H
-#define GTD_PROVIDER_EDS_H
+#pragma once
 
 #include "gnome-todo.h"
 
@@ -57,5 +56,3 @@ GtdProviderEds*      gtd_provider_eds_new                        (ESourceRegistr
 ESourceRegistry*     gtd_provider_eds_get_registry               (GtdProviderEds     *local);
 
 G_END_DECLS
-
-#endif /* GTD_PROVIDER_EDS_H */
