@@ -108,6 +108,7 @@ typedef struct
   GtdTaskRow             *active_row;
   GtkSizeGroup           *due_date_sizegroup;
   GtkSizeGroup           *tasklist_name_sizegroup;
+  GtdTaskListSelectorBehavior task_list_selector_behavior;
 } GtdTaskListViewPrivate;
 
 struct _GtdTaskListView
@@ -1166,6 +1167,7 @@ gtd_task_list_view_init (GtdTaskListView *self)
 
   self->priv = priv;
 
+  priv->task_list_selector_behavior = GTD_TASK_LIST_SELECTOR_BEHAVIOR_AUTOMATIC;
   priv->task_to_row = g_hash_table_new (NULL, NULL);
 
   priv->can_toggle = TRUE;
@@ -1283,7 +1285,8 @@ gtd_task_list_view_set_model (GtdTaskListView *view,
 
   schedule_scroll_to_bottom (view);
 
-  gtd_new_task_row_set_show_list_selector (GTD_NEW_TASK_ROW (priv->new_task_row), !GTD_IS_TASK_LIST (model));
+  if (priv->task_list_selector_behavior == GTD_TASK_LIST_SELECTOR_BEHAVIOR_AUTOMATIC)
+    gtd_new_task_row_set_show_list_selector (GTD_NEW_TASK_ROW (priv->new_task_row), !GTD_IS_TASK_LIST (model));
 
   if (!GTD_IS_TASK_LIST (model))
     return;
@@ -1599,4 +1602,52 @@ gtd_task_list_view_set_handle_subtasks (GtdTaskListView *self,
   priv->handle_subtasks = handle_subtasks;
 
   g_object_notify (G_OBJECT (self), "handle-subtasks");
+}
+
+
+GtdTaskListSelectorBehavior
+gtd_task_list_view_get_task_list_selector_behavior (GtdTaskListView *self)
+{
+  GtdTaskListViewPrivate *priv;
+
+  g_return_val_if_fail (GTD_IS_TASK_LIST_VIEW (self), -1);
+
+  priv = gtd_task_list_view_get_instance_private (self);
+
+  return priv->task_list_selector_behavior;
+}
+
+void
+gtd_task_list_view_set_task_list_selector_behavior (GtdTaskListView             *self,
+                                                    GtdTaskListSelectorBehavior  behavior)
+{
+  GtdTaskListViewPrivate *priv;
+
+  g_return_if_fail (GTD_IS_TASK_LIST_VIEW (self));
+
+  priv = gtd_task_list_view_get_instance_private (self);
+
+  if (priv->task_list_selector_behavior == behavior)
+    return;
+
+  priv->task_list_selector_behavior = behavior;
+
+  switch (behavior)
+    {
+    case GTD_TASK_LIST_SELECTOR_BEHAVIOR_AUTOMATIC:
+      if (priv->model)
+        {
+          gtd_new_task_row_set_show_list_selector (GTD_NEW_TASK_ROW (priv->new_task_row),
+                                                   !GTD_IS_TASK_LIST (priv->model));
+        }
+      break;
+
+    case GTD_TASK_LIST_SELECTOR_BEHAVIOR_ALWAYS_SHOW:
+      gtd_new_task_row_set_show_list_selector (GTD_NEW_TASK_ROW (priv->new_task_row), TRUE);
+      break;
+
+    case GTD_TASK_LIST_SELECTOR_BEHAVIOR_ALWAYS_HIDE:
+      gtd_new_task_row_set_show_list_selector (GTD_NEW_TASK_ROW (priv->new_task_row), FALSE);
+      break;
+    }
 }

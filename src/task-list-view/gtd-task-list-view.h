@@ -1,6 +1,6 @@
 /* gtd-task-list-view.h
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,13 @@ G_BEGIN_DECLS
 #define GTD_TYPE_TASK_LIST_VIEW (gtd_task_list_view_get_type())
 
 G_DECLARE_FINAL_TYPE (GtdTaskListView, gtd_task_list_view, GTD, TASK_LIST_VIEW, GtkBox)
+
+typedef enum
+{
+  GTD_TASK_LIST_SELECTOR_BEHAVIOR_AUTOMATIC,
+  GTD_TASK_LIST_SELECTOR_BEHAVIOR_ALWAYS_SHOW,
+  GTD_TASK_LIST_SELECTOR_BEHAVIOR_ALWAYS_HIDE,
+} GtdTaskListSelectorBehavior;
 
 /**
  * GtdTaskListViewFilterFunc:
@@ -111,6 +118,11 @@ gboolean                  gtd_task_list_view_get_handle_subtasks (GtdTaskListVie
 
 void                      gtd_task_list_view_set_handle_subtasks (GtdTaskListView       *self,
                                                                   gboolean               handle_subtasks);
+
+GtdTaskListSelectorBehavior gtd_task_list_view_get_task_list_selector_behavior (GtdTaskListView             *self);
+
+void                        gtd_task_list_view_set_task_list_selector_behavior (GtdTaskListView             *self,
+                                                                                GtdTaskListSelectorBehavior  behavior);
 
 G_END_DECLS
 
