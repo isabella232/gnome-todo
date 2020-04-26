@@ -27,13 +27,8 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
-#ifdef GDK_WINDOWING_WAYLAND
-#include <gdk/wayland/gdkwayland.h>
-#endif
-
-#ifdef GDK_WINDOWING_WAYLAND
-#include <gdk/x11/gdkx.h>
-#endif
+#include <libportal/portal.h>
+#include <libportal/portal-gtk4.h>
 
 #define AUTOSTART_NOTIFICATION_ID      "Gtd::BackgroundPlugin::autostart_notification"
 #define AUTOSTART_NOTIFICATION_TIMEOUT 3  /* seconds */
@@ -57,6 +52,8 @@ struct _GtdPluginBackground
 
   gboolean            enabled;
   gboolean            autostart;
+
+  XdpPortal          *portal;
 
   guint               startup_notification_timeout_id;
 };
@@ -107,174 +104,55 @@ is_gnome_todo_active (void)
 }
 
 static void
-on_request_signal_emitted_cb (GDBusProxy          *request_proxy,
-                              gchar               *sender_name,
-                              gchar               *signal_name,
-                              GVariant            *parameters,
-                              GtdPluginBackground *self)
+on_request_background_called_cb (GObject      *object,
+                                 GAsyncResult *result,
+                                 gpointer      user_data)
 {
-  GTD_ENTRY;
-
-  if (g_strcmp0 (signal_name, "Response") == 0)
-    {
-      g_autoptr (GVariant) results = NULL;
-      gboolean run_in_background;
-      gboolean autostart;
-      guint response;
-
-      g_variant_get (parameters, "(u@a{sv})", &response, &results);
-
-      if (response != 0)
-        {
-          g_critical ("Error setting");
-          return;
-        }
-
-      g_variant_lookup (results, "background", "b", &run_in_background);
-      g_variant_lookup (results, "autostart", "b", &autostart);
-
-    }
-
-  g_object_unref (request_proxy);
-
-  GTD_EXIT;
-}
-
-static void
-update_background_portal (GtdPluginBackground *self,
-                          const gchar         *handle)
-{
-  g_autoptr (GDBusProxy) request_proxy = NULL;
-  g_autoptr (GVariant) result = NULL;
   g_autoptr (GError) error = NULL;
-  gchar *request_object_path;
-  GVariantBuilder builder;
 
   GTD_ENTRY;
 
-  if (!self->desktop_portal)
-    {
-      self->desktop_portal = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
-                                                            G_DBUS_PROXY_FLAGS_NONE,
-                                                            NULL,
-                                                            "org.freedesktop.portal.Desktop",
-                                                            "/org/freedesktop/portal/desktop",
-                                                            "org.freedesktop.portal.Background",
-                                                            NULL,
-                                                            &error);
-
-      if (error)
-        {
-          g_warning ("Failed to connect to the desktop portal: %s", error->message);
-          GTD_RETURN ();
-        }
-    }
-
-  g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
-  g_variant_builder_add (&builder, "{sv}", "autostart", g_variant_new_boolean (self->autostart));
-  if (self->autostart)
-    {
-      const gchar * commands[] = { "gnome-todo", "--gapplication-service", NULL };
-
-      g_variant_builder_add (&builder, "{sv}", "commandline", g_variant_new_strv (commands, -1));
-    }
-
-  result = g_dbus_proxy_call_sync (self->desktop_portal,
-                                   "RequestBackground",
-                                   g_variant_new ("(sa{sv})", handle, &builder),
-                                   G_DBUS_CALL_FLAGS_NONE,
-                                   30000,
-                                   NULL,
-                                   &error);
-  if (error)
-    {
-      g_warning ("Error calling D-Bus method: %s", error->message);
-      GTD_RETURN ();
-    }
-
-  g_variant_get (result, "(o)", &request_object_path);
-  request_proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
-                                                 G_DBUS_PROXY_FLAGS_NONE,
-                                                 NULL,
-                                                 "org.freedesktop.portal.Desktop",
-                                                 request_object_path,
-                                                 "org.freedesktop.portal.Request",
-                                                 NULL,
-                                                 &error);
+  xdp_portal_request_background_finish (XDP_PORTAL (object), result, &error);
 
   if (error)
-    {
-      g_warning ("Error calling D-Bus method: %s", error->message);
-      GTD_RETURN ();
-    }
-
-  g_signal_connect_object (g_steal_pointer (&request_proxy),
-                           "g-signal",
-                           G_CALLBACK (on_request_signal_emitted_cb),
-                           self,
-                           0);
+    g_warning ("Error requesting background: %s", error->message);
 
   GTD_EXIT;
 }
 
-#ifdef GDK_WINDOWING_WAYLAND
 static void
-on_wayland_surface_handle_exported_cb (GdkSurface  *surface,
-                                       const gchar *surface_handle,
-                                       gpointer     user_data)
+update_background_portal (GtdPluginBackground *self)
 {
-  GtdPluginBackground *self;
-  g_autofree gchar *handle = NULL;
-
-  GTD_ENTRY;
-
-  self = GTD_PLUGIN_BACKGROUND (user_data);
-  handle = g_strdup_printf ("wayland:%s", surface_handle);
-
-  update_background_portal (self, handle);
-
-  gdk_wayland_surface_unexport_handle (surface);
-
-  GTD_EXIT;
-}
-#endif
-
-static void
-stub_destroy (gpointer data)
-{
-}
-
-static void
-acquire_surface_handle (GtdPluginBackground *self)
-{
-  GdkSurface *surface;
+  g_autoptr (GPtrArray) commandline = NULL;
+  XdpBackgroundFlags background_flags;
+  XdpParent *parent = NULL;
   GtkWindow *window;
 
   GTD_ENTRY;
 
   window = get_window ();
-  surface = gtk_native_get_surface (GTK_NATIVE (window));
+  parent = xdp_parent_new_gtk (window);
+  background_flags = XDP_BACKGROUND_FLAG_ACTIVATABLE;
 
-  g_assert (surface != NULL);
-
-#ifdef GDK_WINDOWING_WAYLAND
-  if (GDK_IS_WAYLAND_SURFACE (surface))
+  if (self->autostart)
     {
-      gdk_wayland_surface_export_handle (surface, on_wayland_surface_handle_exported_cb, self, stub_destroy);
-    }
-  else
-#endif
-#ifdef GDK_WINDOWING_X11
-  if (GDK_IS_X11_SURFACE (surface))
-    {
-      g_autofree gchar *handle = NULL;
+      commandline = g_ptr_array_new_with_free_func (g_free);
+      g_ptr_array_add (commandline, g_strdup ("gnome-todo"));
+      g_ptr_array_add (commandline, g_strdup ("--gapplication-service"));
 
-      handle = g_strdup_printf ("x11:%lx", gdk_x11_surface_get_xid (surface));
-      update_background_portal (self, handle);
+      background_flags |= XDP_BACKGROUND_FLAG_AUTOSTART;
     }
-  else
-#endif
-    g_critical ("No valid backend");
+
+  xdp_portal_request_background (self->portal,
+                                 parent,
+                                 NULL,
+                                 commandline,
+                                 background_flags,
+                                 NULL,
+                                 on_request_background_called_cb,
+                                 self);
+
+  xdp_parent_free (parent);
 
   GTD_EXIT;
 }
@@ -287,7 +165,7 @@ on_window_active_changed_cb (GtkWindow           *window,
   GTD_ENTRY;
 
   g_signal_handlers_disconnect_by_func (window, on_window_active_changed_cb, self);
-  acquire_surface_handle (self);
+  update_background_portal (self);
 
   GTD_EXIT;
 }
@@ -302,7 +180,7 @@ start_update (GtdPluginBackground *self)
   window = get_window ();
   if (gtk_widget_get_visible (GTK_WIDGET (window)) && is_gnome_todo_active ())
     {
-      acquire_surface_handle (self);
+      update_background_portal (self);
     }
   else
     {
@@ -655,6 +533,7 @@ gtd_plugin_background_finalize (GObject *object)
   GtdPluginBackground *self = (GtdPluginBackground *)object;
 
   g_clear_object (&self->settings);
+  g_clear_object (&self->portal);
 
   G_OBJECT_CLASS (gtd_plugin_background_parent_class)->finalize (object);
 }
@@ -713,6 +592,7 @@ gtd_plugin_background_init (GtdPluginBackground *self)
   builder = gtk_builder_new_from_resource ("/org/gnome/todo/ui/background/preferences.ui");
 
   self->preferences_panel = GTK_WIDGET (gtk_builder_get_object (builder, "main_box"));
+  self->portal = xdp_portal_new ();
 
   g_settings_bind (self->settings,
                    "run-on-startup",

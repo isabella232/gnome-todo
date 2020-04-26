@@ -2,11 +2,17 @@ plugin_name = 'background'
 
 plugins_ldflags += ['-Wl,--undefined=gtd_plugin_background_register_types']
 
+background_plugin_deps = [
+  dependency('libportal'),
+  vcs_identifier_h,
+  gnome_todo_deps,
+]
+
 plugins_libs += static_library(
           plugin_name,
               sources: 'gtd-plugin-' + plugin_name + '.c',
   include_directories: plugins_incs,
-         dependencies: [ vcs_identifier_h, gnome_todo_deps ],
+         dependencies: background_plugin_deps,
                c_args: '-DPACKAGE_DATA_DIR="@0@"'.format(gnome_todo_pkgdatadir),
 )
 
