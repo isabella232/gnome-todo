@@ -104,6 +104,9 @@ static void
 add_task_list (GtdSidebar  *self,
                GtdTaskList *list)
 {
+  if (gtd_task_list_is_inbox (list))
+    return;
+
   g_debug ("Adding task list '%s'", gtd_task_list_get_name (list));
 
   if (!gtd_task_list_get_archived (list))
@@ -565,7 +568,9 @@ on_task_list_changed_cb (GtdManager  *manager,
     {
       listbox = archived ? self->listbox : self->archive_listbox;
       row = get_row_for_task_list (self, listbox, list);
-      g_assert (row != NULL);
+
+      if (!row)
+        goto out;
 
       /* Change to another panel or taklist */
       if (gtk_list_box_row_is_selected (row))
@@ -578,6 +583,7 @@ on_task_list_changed_cb (GtdManager  *manager,
       add_task_list (self, list);
     }
 
+out:
   gtk_list_box_invalidate_filter (listbox);
 }
 
@@ -590,6 +596,8 @@ on_task_list_removed_cb (GtdManager  *manager,
   GtkListBox *listbox;
 
   g_debug ("Removing task list '%s'", gtd_task_list_get_name (list));
+
+  g_assert (!gtd_task_list_is_inbox (list));
 
   if (!gtd_task_list_get_archived (list))
     listbox = self->listbox;
