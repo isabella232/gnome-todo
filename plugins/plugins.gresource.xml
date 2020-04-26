@@ -45,13 +45,17 @@
   </gresource>
 
   <!--Todo.Txt-->
+  <!--
   <gresource prefix="/org/gnome/todo">
     <file alias="plugins/todo-txt/todo-txt.plugin">todo-txt/todo-txt.plugin</file>
   </gresource>
+  -->
 
   <!--Todoist-->
+  <!--
   <gresource prefix="/org/gnome/todo">
     <file alias="plugins/todoist/todoist.plugin">todoist/todoist.plugin</file>
     <file compressed="true" alias="ui/todoist/preferences.ui">todoist/ui/preferences.ui</file>
   </gresource>
+  -->
 </gresources>
