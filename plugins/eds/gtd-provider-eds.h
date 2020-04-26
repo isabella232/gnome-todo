@@ -25,6 +25,8 @@
 
 G_BEGIN_DECLS
 
+#define GTD_PROVIDER_EDS_INBOX_ID "system-task-list"
+
 #define GTD_TYPE_PROVIDER_EDS (gtd_provider_eds_get_type())
 
 G_DECLARE_DERIVABLE_TYPE (GtdProviderEds, gtd_provider_eds, GTD, PROVIDER_EDS, GtdObject)

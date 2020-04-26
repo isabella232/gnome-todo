@@ -740,7 +740,7 @@ gtd_provider_eds_get_inbox (GtdProvider *provider)
 {
   GtdProviderEdsPrivate *priv = gtd_provider_eds_get_instance_private (GTD_PROVIDER_EDS (provider));
 
-  return g_hash_table_lookup (priv->task_lists, "system-task-list");
+  return g_hash_table_lookup (priv->task_lists, GTD_PROVIDER_EDS_INBOX_ID);
 }
 
 static void

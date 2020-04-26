@@ -1,6 +1,6 @@
 /* gtd-task-list-eds.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -894,11 +894,14 @@ gtd_task_list_eds_set_source (GtdTaskListEds *self,
   ESourceSelectable *selectable;
   ESourceRefresh *refresh;
   GdkRGBA color;
+  gboolean is_inbox;
 
   g_return_if_fail (GTD_IS_TASK_LIST_EDS (self));
 
   if (!g_set_object (&self->source, source))
     return;
+
+  is_inbox = g_str_equal (e_source_get_uid (source), GTD_PROVIDER_EDS_INBOX_ID);
 
   /* Setup color */
   selectable = E_SOURCE_SELECTABLE (e_source_get_extension (source, E_SOURCE_EXTENSION_TASK_LIST));
@@ -925,7 +928,10 @@ gtd_task_list_eds_set_source (GtdTaskListEds *self,
                            0);
 
   /* Setup tasklist name */
-  gtd_task_list_set_name (GTD_TASK_LIST (self), e_source_get_display_name (source));
+  if (is_inbox)
+    gtd_task_list_set_name (GTD_TASK_LIST (self), _("Inbox"));
+  else
+    gtd_task_list_set_name (GTD_TASK_LIST (self), e_source_get_display_name (source));
 
   g_object_bind_property (source,
                           "display-name",
