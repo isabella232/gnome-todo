@@ -1,6 +1,6 @@
 /* gtd-task-list.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1113,4 +1113,24 @@ gtd_task_list_set_archived (GtdTaskList *self,
   GTD_TASK_LIST_GET_CLASS (self)->set_archived (self, archived);
 
   g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_ARCHIVED]);
+}
+
+/**
+ * gtd_task_list_is_inbox:
+ * @self: a #GtdTaskList
+ *
+ * Retrieves whether @self is the inbox task list of its provider.
+ *
+ * Returns: %TRUE if @self is the inbox of it's provider, %FALSE otherwise.
+ */
+gboolean
+gtd_task_list_is_inbox (GtdTaskList *self)
+{
+  GtdTaskListPrivate *priv;
+
+  g_return_val_if_fail (GTD_IS_TASK_LIST (self), FALSE);
+
+  priv = gtd_task_list_get_instance_private (self);
+
+  return self == gtd_provider_get_inbox (priv->provider);
 }

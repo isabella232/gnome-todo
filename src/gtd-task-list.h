@@ -1,6 +1,6 @@
 /* gtd-task-list.h
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,6 +99,8 @@ gboolean                gtd_task_list_get_archived              (GtdTaskList    
 
 void                    gtd_task_list_set_archived              (GtdTaskList            *self,
                                                                  gboolean                archived);
+
+gboolean                gtd_task_list_is_inbox                  (GtdTaskList            *self);
 
 G_END_DECLS
 
