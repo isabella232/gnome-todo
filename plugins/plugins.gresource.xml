@@ -21,6 +21,11 @@
     <file alias="plugins/eds/eds.plugin">eds/eds.plugin</file>
   </gresource>
 
+  <!--EDS Plugin-->
+  <gresource prefix="/org/gnome/todo">
+    <file alias="plugins/inbox-panel/inbox-panel.plugin">inbox-panel/inbox-panel.plugin</file>
+  </gresource>
+
   <!--Next Week panel-->
   <gresource prefix="/org/gnome/todo">
     <file alias="plugins/next-week-panel/scheduled-panel.plugin">next-week-panel/next-week-panel.plugin</file>

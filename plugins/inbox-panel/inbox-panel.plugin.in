@@ -1,0 +1,14 @@
+[Plugin]
+Name = Inbox
+Module = inbox-panel
+Description = A panel to show tasks in the inbox
+Version = @VERSION@
+Authors = Georges Basile Stavracas Neto <gbsneto@gnome.org>
+Copyright = Copyleft © The To Do maintainers
+Website = https://wiki.gnome.org/Apps/Todo
+Hidden = true
+Builtin = true
+License = GPL
+Loader = C
+Embedded = gtd_plugin_inbox_panel_register_types
+Depends =
