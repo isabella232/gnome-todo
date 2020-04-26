@@ -24,7 +24,6 @@
                     <property name="propagate_natural_width">1</property>
                     <child>
                       <object class="GtkViewport">
-                        <property name="shadow_type">none</property>
                         <child>
                           <object class="GtkListBox" id="listbox">
                             <property name="selection_mode">none</property>
@@ -43,9 +42,7 @@
               <object class="GtkStackPage">
                 <property name="name">config</property>
                 <property name="child">
-                  <object class="GtkFrame" id="frame">
-                    <property name="shadow_type">none</property>
-                  </object>
+                  <object class="GtkFrame" id="frame" />
                 </property>
               </object>
             </child>
