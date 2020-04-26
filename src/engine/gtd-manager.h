@@ -1,6 +1,6 @@
 /* gtd-manager.h
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,8 @@ GtdProvider*         gtd_manager_get_default_provider            (GtdManager    
 
 void                 gtd_manager_set_default_provider            (GtdManager         *manager,
                                                                   GtdProvider        *provider);
+
+GtdTaskList*         gtd_manager_get_inbox                       (GtdManager         *self);
 
 GtdTaskList*         gtd_manager_get_default_task_list           (GtdManager         *self);
 

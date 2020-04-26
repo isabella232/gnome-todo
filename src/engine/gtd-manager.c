@@ -1,6 +1,6 @@
 /* gtd-manager.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -788,6 +788,30 @@ gtd_manager_set_default_provider (GtdManager  *self,
       g_object_notify (G_OBJECT (self), "default-provider");
       g_object_notify (G_OBJECT (self), "default-task-list");
     }
+}
+
+/**
+ * gtd_manager_get_inbox:
+ * @self: a #GtdManager
+ *
+ * Retrieves the local inbox.
+ *
+ * Returns: (transfer none)(nullable): a #GtdTaskList
+ */
+GtdTaskList*
+gtd_manager_get_inbox (GtdManager *self)
+{
+  GList *l;
+
+  g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
+
+  for (l = self->providers; l; l = l->next)
+    {
+      if (g_str_equal (gtd_provider_get_id (l->data), "local"))
+        return gtd_provider_get_inbox (l->data);
+    }
+
+  return NULL;
 }
 
 /**
