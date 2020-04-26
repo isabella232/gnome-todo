@@ -1,6 +1,6 @@
 /* gtd-task-list-popover.c
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,9 +65,9 @@ set_selected_tasklist (GtdTaskListPopover *self,
 
   manager = gtd_manager_get_default ();
 
-  /* NULL list means the default */
+  /* NULL list means the inbox */
   if (!list)
-    list = gtd_manager_get_default_task_list (manager);
+    list = gtd_manager_get_inbox (manager);
 
   if (g_set_object (&self->selected_list, list))
     g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_TASK_LIST]);

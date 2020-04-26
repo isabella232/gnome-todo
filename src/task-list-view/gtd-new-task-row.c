@@ -1,6 +1,6 @@
 /* gtd-new-task-row.c
  *
- * Copyright (C) 2017 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2017-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -133,10 +133,7 @@ entry_activated_cb (GtdNewTaskRow *self)
     list = gtd_task_list_popover_get_task_list (GTD_TASK_LIST_POPOVER (self->tasklist_popover));
 
   if (!list)
-    {
-      GtdProvider *provider = gtd_manager_get_default_provider (gtd_manager_get_default ());
-      list = gtd_provider_get_default_task_list (provider);
-    }
+    list = gtd_manager_get_inbox (gtd_manager_get_default ());
 
   g_return_if_fail (GTD_IS_TASK_LIST (list));
 
