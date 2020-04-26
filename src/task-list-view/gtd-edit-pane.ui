@@ -87,8 +87,10 @@
         <property name="hexpand">true</property>
         <property name="vexpand">true</property>
         <property name="can-focus">1</property>
-        <property name="shadow-type">in</property>
         <property name="min-content-height">200</property>
+        <style>
+          <class name="frame" />
+        </style>
         <child>
           <object class="GtkTextView" id="notes_textview">
             <property name="can_focus">1</property>
