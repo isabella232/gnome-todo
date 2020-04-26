@@ -1,6 +1,6 @@
 /* gtd-edit-pane.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,8 @@ struct _GtdEditPane
   GtkCalendar       *calendar;
   GtkLabel          *date_label;
   GtkTextView       *notes_textview;
+
+  GCancellable      *cancellable;
 
   /* task bindings */
   GBinding          *notes_binding;
@@ -244,6 +246,19 @@ on_hyperlink_hover_cb (GtkEventControllerMotion *controller,
 }
 
 static void
+on_uri_shown_cb (GObject      *source,
+                 GAsyncResult *result,
+                 gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+
+  gtk_show_uri_full_finish (GTK_WINDOW (source), result, &error);
+
+  if (error)
+    g_warning ("%s", error->message);
+}
+
+static void
 on_hyperlink_clicked_cb (GtkGestureClick *gesture,
                          gint             n_press,
                          gdouble          x,
@@ -282,7 +297,6 @@ on_hyperlink_clicked_cb (GtkGestureClick *gesture,
 
   for (l = tags; l; l = l->next)
     {
-      g_autoptr (GError) error = NULL;
       g_autofree gchar *tag_name = NULL;
       g_autofree gchar *url = NULL;
       GtkTextIter url_start;
@@ -313,13 +327,7 @@ on_hyperlink_clicked_cb (GtkGestureClick *gesture,
       root = gtk_widget_get_root (GTK_WIDGET (text_view));
 
       if (root && GTK_IS_WINDOW (root))
-        gtk_show_uri_on_window (GTK_WINDOW (root), url, GDK_CURRENT_TIME, &error);
-
-      if (error)
-        {
-          g_warning ("%s", error->message);
-          return;
-        }
+        gtk_show_uri_full (GTK_WINDOW (root), url, GDK_CURRENT_TIME, self->cancellable, on_uri_shown_cb, self);
     }
 }
 
@@ -333,6 +341,8 @@ gtd_edit_pane_finalize (GObject *object)
 {
   GtdEditPane *self = (GtdEditPane *) object;
 
+  g_cancellable_cancel (self->cancellable);
+  g_clear_object (&self->cancellable);
   g_clear_object (&self->task);
 
   G_OBJECT_CLASS (gtd_edit_pane_parent_class)->finalize (object);
@@ -465,6 +475,8 @@ gtd_edit_pane_class_init (GtdEditPaneClass *klass)
 static void
 gtd_edit_pane_init (GtdEditPane *self)
 {
+  self->cancellable = g_cancellable_new ();
+
   gtk_widget_init_template (GTK_WIDGET (self));
 }
 
