@@ -1,6 +1,6 @@
 /* gtd-provider-eds.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -136,7 +136,7 @@ on_task_list_eds_loaded_cb (GObject      *source_object,
 
   source = gtd_task_list_eds_get_source (list);
 
-  g_hash_table_add (priv->task_lists, list);
+  g_hash_table_insert (priv->task_lists, e_source_dup_uid (source), g_object_ref (list));
   g_object_set_data (G_OBJECT (source), "task-list", list);
 
   /* Check if the current list is the default one */
@@ -229,10 +229,8 @@ on_source_removed_cb (GtdProviderEds *provider,
   priv = gtd_provider_eds_get_instance_private (provider);
   list = g_object_get_data (G_OBJECT (source), "task-list");
 
-  if (!g_hash_table_contains (priv->task_lists, list))
+  if (!g_hash_table_remove (priv->task_lists, gtd_object_get_uid (GTD_OBJECT (list))))
     GTD_RETURN ();
-
-  g_hash_table_remove (priv->task_lists, list);
 
   /*
    * Since all subclasses will have this signal given that they
@@ -521,7 +519,7 @@ gtd_provider_eds_refresh (GtdProvider *provider)
   collections = g_hash_table_new (g_direct_hash, g_direct_equal);
 
   g_hash_table_iter_init (&iter, priv->task_lists);
-  while (g_hash_table_iter_next (&iter, (gpointer*) &list, NULL))
+  while (g_hash_table_iter_next (&iter, NULL, (gpointer*) &list))
     {
       g_autoptr (ESource) collection = NULL;
       ESource *source;
@@ -763,7 +761,7 @@ gtd_provider_eds_get_task_lists (GtdProvider *provider)
 {
   GtdProviderEdsPrivate *priv = gtd_provider_eds_get_instance_private (GTD_PROVIDER_EDS (provider));
 
-  return g_hash_table_get_keys (priv->task_lists);
+  return g_hash_table_get_values (priv->task_lists);
 }
 
 static GtdTaskList*
@@ -998,7 +996,7 @@ gtd_provider_eds_init (GtdProviderEds *self)
   GtdProviderEdsPrivate *priv = gtd_provider_eds_get_instance_private (self);
 
   priv->cancellable = g_cancellable_new ();
-  priv->task_lists = g_hash_table_new (g_direct_hash, g_direct_equal);
+  priv->task_lists = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
 }
 
 GtdProviderEds*
