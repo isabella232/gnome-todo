@@ -51,11 +51,6 @@ void                 gtd_manager_set_default_provider            (GtdManager    
 
 GtdTaskList*         gtd_manager_get_inbox                       (GtdManager         *self);
 
-GtdTaskList*         gtd_manager_get_default_task_list           (GtdManager         *self);
-
-void                 gtd_manager_set_default_task_list           (GtdManager         *self,
-                                                                  GtdTaskList        *list);
-
 GSettings*           gtd_manager_get_settings                    (GtdManager         *manager);
 
 gboolean             gtd_manager_get_is_first_run                (GtdManager         *manager);

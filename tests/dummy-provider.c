@@ -1,6 +1,6 @@
 /* dummy-provider.c
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,6 @@ G_DEFINE_TYPE_WITH_CODE (DummyProvider, dummy_provider, GTD_TYPE_OBJECT,
 enum
 {
   PROP_0,
-  PROP_DEFAULT_TASKLIST,
   PROP_DESCRIPTION,
   PROP_ENABLED,
   PROP_ICON,
@@ -196,18 +195,6 @@ dummy_provider_get_task_lists (GtdProvider *provider)
   return sequence_to_list (self->lists);
 }
 
-static GtdTaskList*
-dummy_provider_get_default_task_list (GtdProvider *provider)
-{
-  return NULL;
-}
-
-static void
-dummy_provider_set_default_task_list (GtdProvider *provider,
-                                     GtdTaskList *list)
-{
-}
-
 static void
 gtd_provider_iface_init (GtdProviderInterface *iface)
 {
@@ -224,8 +211,6 @@ gtd_provider_iface_init (GtdProviderInterface *iface)
   iface->update_task_list = dummy_provider_update_task_list;
   iface->remove_task_list = dummy_provider_remove_task_list;
   iface->get_task_lists = dummy_provider_get_task_lists;
-  iface->get_default_task_list = dummy_provider_get_default_task_list;
-  iface->set_default_task_list = dummy_provider_set_default_task_list;
 }
 
 
@@ -300,7 +285,6 @@ dummy_provider_class_init (DummyProviderClass *klass)
   object_class->get_property = dummy_provider_get_property;
   object_class->set_property = dummy_provider_set_property;
 
-  g_object_class_override_property (object_class, PROP_DEFAULT_TASKLIST, "default-task-list");
   g_object_class_override_property (object_class, PROP_DESCRIPTION, "description");
   g_object_class_override_property (object_class, PROP_ENABLED, "enabled");
   g_object_class_override_property (object_class, PROP_ICON, "icon");

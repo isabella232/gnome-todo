@@ -61,7 +61,6 @@ enum
 {
   PROP_0,
   PROP_ENABLED,
-  PROP_DEFAULT_TASKLIST,
   PROP_DESCRIPTION,
   PROP_ICON,
   PROP_ID,
@@ -117,7 +116,6 @@ on_task_list_eds_loaded_cb (GObject      *source_object,
                             GAsyncResult *result,
                             gpointer      user_data)
 {
-  g_autoptr (ESource) default_source = NULL;
   g_autoptr (GError) error = NULL;
   GtdProviderEdsPrivate *priv;
   GtdProviderEds *self;
@@ -138,12 +136,6 @@ on_task_list_eds_loaded_cb (GObject      *source_object,
 
   g_hash_table_insert (priv->task_lists, e_source_dup_uid (source), g_object_ref (list));
   g_object_set_data (G_OBJECT (source), "task-list", list);
-
-  /* Check if the current list is the default one */
-  default_source = e_source_registry_ref_default_task_list (priv->source_registry);
-
-  if (default_source == source)
-    g_object_notify (G_OBJECT (self), "default-task-list");
 
   g_debug ("Task list '%s' successfully connected", e_source_get_display_name (source));
 }
@@ -240,27 +232,6 @@ on_source_removed_cb (GtdProviderEds *provider,
   g_signal_emit_by_name (provider, "list-removed", list);
 
   GTD_EXIT;
-}
-
-static void
-on_default_tasklist_changed_cb (ESourceRegistry *source_registry,
-                                GParamSpec      *pspec,
-                                GtdProviderEds  *self)
-{
-  GtdTaskList *list;
-  ESource *default_source;
-
-  default_source = e_source_registry_ref_default_task_list (source_registry);
-  list = g_object_get_data (G_OBJECT (default_source), "task-list");
-
-  /* The list might not be loaded yet */
-  if (!list || gtd_task_list_get_provider (list) != (GtdProvider*) self)
-    goto out;
-
-  g_object_notify (G_OBJECT (self), "default-task-list");
-
-out:
-  g_clear_object (&default_source);
 }
 
 static void
@@ -772,45 +743,6 @@ gtd_provider_eds_get_inbox (GtdProvider *provider)
   return g_hash_table_lookup (priv->task_lists, "system-task-list");
 }
 
-static GtdTaskList*
-gtd_provider_eds_get_default_task_list (GtdProvider *provider)
-{
-  GtdProviderEdsPrivate *priv;
-  GtdTaskList *default_task_list;
-  ESource *default_source;
-
-  priv = gtd_provider_eds_get_instance_private (GTD_PROVIDER_EDS (provider));
-  default_source = e_source_registry_ref_default_task_list (priv->source_registry);
-  default_task_list = g_object_get_data (G_OBJECT (default_source), "task-list");
-
-  g_clear_object (&default_source);
-
-  if (default_task_list &&
-      gtd_task_list_get_provider (default_task_list) != GTD_PROVIDER (provider))
-    {
-      return NULL;
-    }
-
-  return default_task_list;
-}
-
-static void
-gtd_provider_eds_set_default_task_list (GtdProvider *provider,
-                                        GtdTaskList *list)
-{
-  GtdProviderEdsPrivate *priv;
-  ESource *source;
-
-  g_assert (GTD_IS_TASK_LIST_EDS (list));
-
-  priv = gtd_provider_eds_get_instance_private (GTD_PROVIDER_EDS (provider));
-  source = gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list));
-
-  e_source_registry_set_default_task_list (priv->source_registry, source);
-
-  g_object_notify (G_OBJECT (provider), "default-task-list");
-}
-
 static void
 gtd_provider_iface_init (GtdProviderInterface *iface)
 {
@@ -829,8 +761,6 @@ gtd_provider_iface_init (GtdProviderInterface *iface)
   iface->remove_task_list = gtd_provider_eds_remove_task_list;
   iface->get_task_lists = gtd_provider_eds_get_task_lists;
   iface->get_inbox = gtd_provider_eds_get_inbox;
-  iface->get_default_task_list = gtd_provider_eds_get_default_task_list;
-  iface->set_default_task_list = gtd_provider_eds_set_default_task_list;
 }
 
 
@@ -843,8 +773,6 @@ gtd_provider_eds_finalize (GObject *object)
 {
   GtdProviderEds *self = (GtdProviderEds *)object;
   GtdProviderEdsPrivate *priv = gtd_provider_eds_get_instance_private (self);
-
-  g_signal_handlers_disconnect_by_func (priv->source_registry, on_default_tasklist_changed_cb, self);
 
   g_cancellable_cancel (priv->cancellable);
 
@@ -891,11 +819,6 @@ gtd_provider_eds_constructed (GObject *object)
                             "source-removed",
                             G_CALLBACK (on_source_removed_cb),
                             self);
-
-  g_signal_connect (priv->source_registry,
-                    "notify::default-task-list",
-                    G_CALLBACK (on_default_tasklist_changed_cb),
-                    self);
 }
 
 static void
@@ -910,10 +833,6 @@ gtd_provider_eds_get_property (GObject    *object,
 
   switch (prop_id)
     {
-    case PROP_DEFAULT_TASKLIST:
-      g_value_set_object (value, gtd_provider_eds_get_default_task_list (provider));
-      break;
-
     case PROP_DESCRIPTION:
       g_value_set_string (value, gtd_provider_eds_get_description (provider));
       break;
@@ -958,10 +877,6 @@ gtd_provider_eds_set_property (GObject      *object,
 
   switch (prop_id)
     {
-    case PROP_DEFAULT_TASKLIST:
-      gtd_provider_eds_set_default_task_list (GTD_PROVIDER (self), g_value_get_object (value));
-      break;
-
     case PROP_REGISTRY:
       if (g_set_object (&priv->source_registry, g_value_get_object (value)))
         g_object_notify (object, "registry");
@@ -982,7 +897,6 @@ gtd_provider_eds_class_init (GtdProviderEdsClass *klass)
   object_class->get_property = gtd_provider_eds_get_property;
   object_class->set_property = gtd_provider_eds_set_property;
 
-  g_object_class_override_property (object_class, PROP_DEFAULT_TASKLIST, "default-task-list");
   g_object_class_override_property (object_class, PROP_DESCRIPTION, "description");
   g_object_class_override_property (object_class, PROP_ENABLED, "enabled");
   g_object_class_override_property (object_class, PROP_ICON, "icon");

@@ -91,7 +91,6 @@ enum
 {
   PROP_0,
   PROP_DEFAULT_PROVIDER,
-  PROP_DEFAULT_TASKLIST,
   PROP_CLOCK,
   PROP_PLUGIN_MANAGER,
   LAST_PROP
@@ -373,10 +372,6 @@ gtd_manager_get_property (GObject    *object,
       g_value_set_object (value, self->default_provider);
       break;
 
-    case PROP_DEFAULT_TASKLIST:
-      g_value_set_object (value, gtd_provider_get_default_task_list (self->default_provider));
-      break;
-
     case PROP_CLOCK:
       g_value_set_object (value, self->clock);
       break;
@@ -405,10 +400,6 @@ gtd_manager_set_property (GObject      *object,
         g_object_notify (object, "default-provider");
       break;
 
-    case PROP_DEFAULT_TASKLIST:
-      gtd_manager_set_default_task_list (self, g_value_get_object (value));
-      break;
-
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
@@ -435,20 +426,6 @@ gtd_manager_class_init (GtdManagerClass *klass)
                              "The default provider of the application",
                              "The default provider of the application",
                              GTD_TYPE_PROVIDER,
-                             G_PARAM_READWRITE));
-
-  /**
-   * GtdManager::default-task-list:
-   *
-   * The default provider.
-   */
-  g_object_class_install_property (
-        object_class,
-        PROP_DEFAULT_TASKLIST,
-        g_param_spec_object ("default-task-list",
-                             "The default task list of the application",
-                             "The default task list of the application",
-                             GTD_TYPE_TASK_LIST,
                              G_PARAM_READWRITE));
 
   /**
@@ -812,52 +789,6 @@ gtd_manager_get_inbox (GtdManager *self)
     }
 
   return NULL;
-}
-
-/**
- * gtd_manager_get_default_task_list:
- * @self: a #GtdManager
- *
- * Retrieves the default tasklist of the default provider.
- *
- * Returns: (transfer none)(nullable): a #GtdTaskList
- */
-GtdTaskList*
-gtd_manager_get_default_task_list (GtdManager *self)
-{
-  g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
-
-  if (!self->default_provider)
-    return NULL;
-
-  return gtd_provider_get_default_task_list (self->default_provider);
-}
-
-/**
- * gtd_manager_set_default_task_list:
- * @self: a #GtdManager
- * @list: (nullable): a #GtdTaskList, or %NULL
- *
- * Sets the default task list of the application.
- */
-void
-gtd_manager_set_default_task_list (GtdManager  *self,
-                                   GtdTaskList *list)
-{
-  g_return_if_fail (GTD_IS_MANAGER (self));
-  g_return_if_fail (GTD_IS_TASK_LIST (list));
-
-  if (list)
-    {
-      GtdProvider *provider;
-
-      provider = gtd_task_list_get_provider (list);
-
-      gtd_manager_set_default_provider (self, provider);
-      gtd_provider_set_default_task_list (provider, list);
-    }
-
-  g_object_notify (G_OBJECT (self), "default-task-list");
 }
 
 /**
