@@ -1,6 +1,6 @@
 /* gtd-plugin-background.c
  *
- * Copyright (C) 2017 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2017-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -712,7 +712,7 @@ gtd_plugin_background_init (GtdPluginBackground *self)
   /* And the preferences panel */
   builder = gtk_builder_new_from_resource ("/org/gnome/todo/ui/background/preferences.ui");
 
-  self->preferences_panel = GTK_WIDGET (gtk_builder_get_object (builder, "main_frame"));
+  self->preferences_panel = GTK_WIDGET (gtk_builder_get_object (builder, "main_box"));
 
   g_settings_bind (self->settings,
                    "run-on-startup",
