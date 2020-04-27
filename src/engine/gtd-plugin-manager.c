@@ -1,6 +1,6 @@
 /* gtd-plugin-manager.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,83 @@ enum
 };
 
 static guint signals[NUM_SIGNALS] = { 0, };
+
+static const gchar * const default_plugins[] = {
+  "inbox-panel",
+  "eds",
+  "night-light",
+};
+
+static gboolean
+gtd_str_equal0 (gconstpointer a,
+                gconstpointer b)
+{
+  if (a == b)
+    return TRUE;
+  else if (!a || !b)
+    return FALSE;
+  else
+    return g_str_equal (a, b);
+}
+
+static gchar**
+get_loaded_extensions (const gchar **extensions)
+{
+  g_autoptr (GPtrArray) loaded_plugins = NULL;
+  gsize i;
+
+  loaded_plugins = g_ptr_array_new ();
+
+  for (i = 0; extensions && extensions[i]; i++)
+    g_ptr_array_add (loaded_plugins, g_strdup (extensions[i]));
+
+  for (i = 0; i < G_N_ELEMENTS (default_plugins); i++)
+    {
+      if (g_ptr_array_find_with_equal_func (loaded_plugins,
+                                            default_plugins[i],
+                                            gtd_str_equal0,
+                                            NULL))
+        {
+          continue;
+        }
+
+      g_ptr_array_add (loaded_plugins, g_strdup (default_plugins[i]));
+    }
+
+  g_ptr_array_add (loaded_plugins, NULL);
+
+  return (gchar**) g_ptr_array_free (g_steal_pointer (&loaded_plugins), FALSE);
+}
+
+static gboolean
+from_gsetting_to_property_func (GValue   *value,
+                                GVariant *variant,
+                                gpointer  user_data)
+{
+  g_autofree const gchar **extensions = NULL;
+  g_autofree gchar **loaded_extensions = NULL;
+
+  extensions = g_variant_get_strv (variant, NULL);
+  loaded_extensions = get_loaded_extensions (extensions);
+
+  g_value_take_boxed (value, g_steal_pointer (&loaded_extensions));
+
+  return TRUE;
+}
+
+static GVariant*
+from_property_to_gsetting_func (const GValue       *value,
+                                const GVariantType *expected_type,
+                                gpointer            user_data)
+{
+  g_autofree gchar **loaded_extensions = NULL;
+  const gchar **extensions = NULL;
+
+  extensions = g_value_get_boxed (value);
+  loaded_extensions = get_loaded_extensions (extensions);
+
+  return g_variant_new_strv ((const gchar * const *)loaded_extensions, -1);
+}
 
 static void
 on_panel_added_cb (GtdActivatable   *activatable,
@@ -328,11 +405,15 @@ gtd_plugin_manager_load_plugins (GtdPluginManager *self)
   engine = peas_engine_get_default ();
   settings = gtd_manager_get_settings (gtd_manager_get_default ());
 
-  g_settings_bind (settings,
-		               "active-extensions",
-		               engine,
-		               "loaded-plugins",
-		               G_SETTINGS_BIND_DEFAULT);
+  g_settings_bind_with_mapping (settings,
+                                "active-extensions",
+                                engine,
+                                "loaded-plugins",
+                                G_SETTINGS_BIND_DEFAULT,
+                                from_gsetting_to_property_func,
+                                from_property_to_gsetting_func,
+                                self,
+                                NULL);
 }
 
 GtdActivatable*
