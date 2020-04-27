@@ -44,7 +44,9 @@
     <child type="titlebar">
       <object class="GtkBox">
         <child>
-          <object class="GtkHeaderBar" id="start_headerbar">
+          <object class="GtkHeaderBar" id="headerbar">
+            <property name="hexpand">1</property>
+            <property name="show-title-buttons">1</property>
             <child>
               <object class="GtkMenuButton" id="new_list_button">
                 <property name="can_focus">1</property>
@@ -64,23 +66,6 @@
                 <property name="icon-name">go-previous-symbolic</property>
               </object>
             </child>
-            <child type="end">
-              <object class="GtkMenuButton">
-                <property name="menu-model">app-menu</property>
-                <property name="direction">none</property>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkSeparator">
-            <property name="orientation">vertical</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkHeaderBar" id="headerbar">
-            <property name="hexpand">1</property>
-            <property name="show-title-buttons">1</property>
             <child>
               <object class="GtkBox" id="panel_box_start">
                 <property name="spacing">6</property>
@@ -99,6 +84,12 @@
                 <property name="can_focus">1</property>
                 <property name="receives_default">1</property>
                 <signal name="clicked" handler="on_cancel_selection_button_clicked" object="GtdWindow" swapped="no"/>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkMenuButton">
+                <property name="menu-model">app-menu</property>
+                <property name="direction">none</property>
               </object>
             </child>
             <child type="end">
@@ -125,12 +116,6 @@
   <object class="GtdProviderPopover" id="new_list_popover">
     <property name="can_focus">False</property>
     <property name="position">bottom</property>
-  </object>
-  <object class="GtkSizeGroup">
-    <widgets>
-      <widget name="sidebar"/>
-      <widget name="start_headerbar"/>
-    </widgets>
   </object>
   <object class="GtkSizeGroup">
     <widgets>
