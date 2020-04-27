@@ -2,26 +2,26 @@
 # Copyright (C) 2015 gnome-todo's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-todo package.
 # Arash Mousavi <mousavi.arash@gmail.com>, 2015.
-# Danial Behzadi <dani.behzi@ubuntu.com>, 2016, 2017, 2018, 2019.
+# Danial Behzadi <dani.behzi@ubuntu.com>, 2016-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2019-09-18 22:22+0000\n"
-"PO-Revision-Date: 2019-09-25 13:28+0000\n"
+"POT-Creation-Date: 2020-04-27 03:37+0000\n"
+"PO-Revision-Date: 2020-04-27 13:40+0000\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
 #: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
-#: src/gtd-window.c:773 src/gtd-window.c:804 src/main.c:35
+#: src/gtd-window.c:784 src/gtd-window.c:815 src/main.c:35
 msgid "To Do"
 msgstr "فعالیت‌ها"
 
@@ -124,10 +124,18 @@ msgstr "گزینشگر فهرست جاری"
 msgid "The current list selector. Can be “grid” or “list”."
 msgstr "گزینشنگر فهرست جاری. می‌تواند «grid» یا «list» باشد."
 
+#: data/org.gnome.todo.gschema.xml:36
+msgid "Sidebar revealed"
+msgstr "نوار کناری آشکار شده"
+
+#: data/org.gnome.todo.gschema.xml:37
+msgid "Whether the sidebar is revealed or not"
+msgstr "این که نوار کناری آشکار شود یا خیر"
+
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
-#: plugins/next-week-panel/gtd-next-week-panel.c:112
+#: plugins/next-week-panel/gtd-next-week-panel.c:113
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:103
-#: src/task-list-view/gtd-edit-pane.c:110
+#: src/task-list-view/gtd-edit-pane.c:93
 msgid "No date set"
 msgstr "هیچ تاریخی ثبت نشده"
 
@@ -151,32 +159,32 @@ msgid "Yesterday"
 msgstr "دیروز"
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
-#: plugins/next-week-panel/gtd-next-week-panel.c:124
+#: plugins/next-week-panel/gtd-next-week-panel.c:125
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:124
-#: plugins/score/score/__init__.py:101 plugins/today-panel/gtd-panel-today.c:154
-#: plugins/today-panel/gtd-panel-today.c:258 src/task-list-view/gtd-task-row.c:138
+#: plugins/score/score/__init__.py:101 plugins/today-panel/gtd-panel-today.c:150
+#: plugins/today-panel/gtd-panel-today.c:266 src/task-list-view/gtd-task-row.c:138
 msgid "Today"
 msgstr "امروز"
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
-#: plugins/next-week-panel/gtd-next-week-panel.c:128
+#: plugins/next-week-panel/gtd-next-week-panel.c:129
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:128
 #: src/task-list-view/gtd-task-row.c:142
 msgid "Tomorrow"
 msgstr "فردا"
 
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:297
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:333
 msgid "All"
 msgstr "همه"
 
-#: plugins/background/gtd-plugin-background.c:150
+#: plugins/background/gtd-plugin-background.c:238
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
 msgstr[0] "%1$s و یک وظیفهٔ دیگر"
 msgstr[1] "%1$s و %2$Id وظیفهٔ دیگر"
 
-#: plugins/background/gtd-plugin-background.c:254
+#: plugins/background/gtd-plugin-background.c:342
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
@@ -199,19 +207,19 @@ msgstr "نمایش آگاهی‌ها در شروع"
 msgid "Whether GNOME To Do should show notifications or not"
 msgstr "این که فعالیت‌های گنوم باید آگاهی نشان دهد یا نه"
 
-#: plugins/background/ui/preferences.ui:39
+#: plugins/background/ui/preferences.ui:41
 msgid "Run on Startup"
 msgstr "اجرا در شروع"
 
-#: plugins/background/ui/preferences.ui:50
+#: plugins/background/ui/preferences.ui:52
 msgid "Run To Do automatically when you log in"
 msgstr "اجرای خودکار فعالیت‌ها هنگام ورودتان"
 
-#: plugins/background/ui/preferences.ui:96
+#: plugins/background/ui/preferences.ui:101
 msgid "Show Notifications"
 msgstr "نمایش آگاهی‌ها"
 
-#: plugins/background/ui/preferences.ui:107
+#: plugins/background/ui/preferences.ui:112
 msgid "When To Do runs, show a startup notification"
 msgstr "نمایش یک آگاهی شروع هنگام اجرای فعالیت‌ها"
 
@@ -219,27 +227,27 @@ msgstr "نمایش یک آگاهی شروع هنگام اجرای فعالیت�
 msgid "Error loading GNOME Online Accounts"
 msgstr "خطای بار کردن حساب‌های برخط گنوم"
 
-#: plugins/eds/gtd-provider-eds.c:172
+#: plugins/eds/gtd-provider-eds.c:164
 msgid "Failed to connect to task list"
 msgstr "شکست در اتصال به فهرست وظایف"
 
-#: plugins/eds/gtd-provider-eds.c:320
+#: plugins/eds/gtd-provider-eds.c:289
 msgid "An error occurred while creating a task"
 msgstr "خطا هنگام ایجاد یک وظیفه"
 
-#: plugins/eds/gtd-provider-eds.c:365
+#: plugins/eds/gtd-provider-eds.c:334
 msgid "An error occurred while modifying a task"
 msgstr "خطا هنگام اصلاح وظیفه"
 
-#: plugins/eds/gtd-provider-eds.c:386
+#: plugins/eds/gtd-provider-eds.c:355
 msgid "An error occurred while removing a task"
 msgstr "خطا هنگام برداشتن یک وظیفه"
 
-#: plugins/eds/gtd-provider-eds.c:404
+#: plugins/eds/gtd-provider-eds.c:373
 msgid "An error occurred while creating a task list"
 msgstr "خطا هنگام ایجاد فهرستی از وظایف"
 
-#: plugins/eds/gtd-provider-eds.c:426 plugins/eds/gtd-provider-eds.c:449
+#: plugins/eds/gtd-provider-eds.c:395 plugins/eds/gtd-provider-eds.c:418
 msgid "An error occurred while modifying a task list"
 msgstr "خطا هنگام اصلاح فهرستی از وظایف"
 
@@ -256,12 +264,16 @@ msgstr "محلّی"
 msgid "Error fetching tasks from list"
 msgstr "خطای دریافت وظایف از فهرست"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:120
-#: plugins/today-panel/gtd-panel-today.c:145
+#: plugins/eds/gtd-task-list-eds.c:932
+msgid "Inbox"
+msgstr "صندوق ورودی"
+
+#: plugins/next-week-panel/gtd-next-week-panel.c:121
+#: plugins/today-panel/gtd-panel-today.c:141
 msgid "Overdue"
 msgstr "سررسید"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:345
+#: plugins/next-week-panel/gtd-next-week-panel.c:359
 msgid "Next 7 Days"
 msgstr "۷ روز آینده"
 
@@ -387,7 +399,7 @@ msgid "Unscheduled"
 msgstr "زمان‌بندی نشده"
 
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
-#: src/gtd-task-list-panel.ui:32
+#: src/gtd-task-list-panel.ui:39
 msgid "Clear completed tasks…"
 msgstr "پاک‌سازی وظایف کامل…"
 
@@ -412,8 +424,8 @@ msgstr "حق رونوشت © ۲۰۱۵–۲۰۱۸ توسعه‌دهندگان ف�
 #: src/gtd-application.c:148
 msgid "translator-credits"
 msgstr ""
-"آرش موسوی <mousavi.arash@gmail.com>\n"
-"دانیال بهزادی <dani.behzi@ubuntu.com>"
+"دانیال بهزادی <dani.behzi@ubuntu.com>\n"
+"آرش موسوی <mousavi.arash@gmail.com>"
 
 #: src/gtd-initial-setup-window.ui:20
 msgid "Welcome"
@@ -427,8 +439,8 @@ msgstr "برای دسترسی به وظایفتان، وارد حساب‌های
 msgid "To Do Setup"
 msgstr "برپاسازی فعالیت‌ها"
 
-#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:95
-#: src/provider/gtd-provider-popover.ui:40
+#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:97
+#: src/provider/gtd-provider-popover.ui:43
 msgid "_Cancel"
 msgstr "_لغو"
 
@@ -444,32 +456,32 @@ msgstr "خطای بار کردن افزونه"
 msgid "Error unloading extension"
 msgstr "خطای تخلیهٔ افزونه"
 
-#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:137
+#: src/gtd-plugin-dialog.ui:55 src/gtd-window.ui:145
 msgid "Extensions"
 msgstr "افزونه‌ها"
 
-#: src/gtd-plugin-dialog.ui:90
+#: src/gtd-plugin-dialog.ui:86
 msgid "No extensions found"
 msgstr "هیچ افزونه‌ای پیدا نشد"
 
-#: src/gtd-task-list-panel.c:199
+#: src/gtd-task-list-panel.c:200
 msgid "Unarchive"
 msgstr "در آوردن از بایگانی"
 
-#: src/gtd-task-list-panel.c:199 src/gtd-task-list-panel.ui:41
+#: src/gtd-task-list-panel.c:200 src/gtd-task-list-panel.ui:48
 msgid "Archive"
 msgstr "بایگانی"
 
-#: src/gtd-task-list-panel.ui:26 src/gtd-task-list-panel.ui:61
-#: src/gtd-task-list-panel.ui:77
+#: src/gtd-task-list-panel.ui:33 src/gtd-task-list-panel.ui:77
+#: src/gtd-task-list-panel.ui:92
 msgid "Rename"
 msgstr "تغییر نام"
 
-#: src/gtd-task-list-panel.ui:47
+#: src/gtd-task-list-panel.ui:54
 msgid "Delete"
 msgstr "حذف"
 
-#: src/gtd-window.c:110
+#: src/gtd-window.c:111
 msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
@@ -477,35 +489,35 @@ msgstr ""
 "این یک ساخت توسعه از فعالیت‌هاست. ممکن است با خطا، رفتار اشتباه و از بین رفتن "
 "داده مواجه شوید."
 
-#: src/gtd-window.c:463
+#: src/gtd-window.c:464
 msgid "Details"
 msgstr "جزییات"
 
-#: src/gtd-window.c:768
+#: src/gtd-window.c:779
 msgid "Click a task list to select"
 msgstr "برای گزینش روی فهرستی کلیک کنید"
 
-#: src/gtd-window.ui:50
+#: src/gtd-window.ui:63
 msgid "New List"
 msgstr "فهرست جدید"
 
-#: src/gtd-window.ui:143
+#: src/gtd-window.ui:151
 msgid "_About To Do"
 msgstr "دربارهٔ فعالیت‌ها"
 
-#: src/provider/gtd-provider-popover.ui:23
+#: src/provider/gtd-provider-popover.ui:26
 msgid "Create _List"
 msgstr "ایجاد _فهرست"
 
-#: src/provider/gtd-provider-popover.ui:53
+#: src/provider/gtd-provider-popover.ui:56
 msgid "List Name"
 msgstr "نام فهرست"
 
-#: src/provider/gtd-provider-popover.ui:130
+#: src/provider/gtd-provider-popover.ui:133
 msgid "Select a storage location"
 msgstr "گزینش یک مکان ذخیره"
 
-#: src/provider/gtd-provider-row.ui:57
+#: src/provider/gtd-provider-row.ui:60
 msgid "Off"
 msgstr "خاموش"
 
@@ -513,36 +525,36 @@ msgstr "خاموش"
 msgid "Click to add a new Google account"
 msgstr "برای افزودن حساب گوگلی جدید کلیک کنید"
 
-#: src/provider/gtd-provider-selector.ui:32
+#: src/provider/gtd-provider-selector.ui:35
 msgid "Google"
 msgstr "گوگل"
 
-#: src/provider/gtd-provider-selector.ui:42
+#: src/provider/gtd-provider-selector.ui:45
 msgid "Click to add a new ownCloud account"
 msgstr "برای افزودن حساب اون‌کلودی جدید کلیک کنید"
 
-#: src/provider/gtd-provider-selector.ui:55
+#: src/provider/gtd-provider-selector.ui:61
 msgid "ownCloud"
 msgstr "اون‌کلود"
 
-#: src/provider/gtd-provider-selector.ui:65
+#: src/provider/gtd-provider-selector.ui:71
 msgid "Click to add a new Microsoft Exchange account"
 msgstr "برای افزودن حساب اکسچنج مایکروسافتی جدید کلیک کنید"
 
-#: src/provider/gtd-provider-selector.ui:78
+#: src/provider/gtd-provider-selector.ui:87
 msgid "Microsoft Exchange"
 msgstr "اکسچنج مایکروسافت"
 
-#: src/provider/gtd-provider-selector.ui:91
+#: src/provider/gtd-provider-selector.ui:100
 msgid "Or you can just store your tasks on this computer"
 msgstr "یا می‌توانید وظایفتان را روی این رایانه ذخیره کنید"
 
-#: src/sidebar/gtd-sidebar.c:329
+#: src/sidebar/gtd-sidebar.c:404
 #, c-format
 msgid "Task list <b>%s</b> removed"
 msgstr "فهرست وظیفهٔ <b>%s</b> برداشته شد"
 
-#: src/sidebar/gtd-sidebar.c:332 src/task-list-view/gtd-task-list-view.c:460
+#: src/sidebar/gtd-sidebar.c:407 src/task-list-view/gtd-task-list-view.c:461
 msgid "Undo"
 msgstr "برگردان"
 
@@ -551,11 +563,11 @@ msgid "Loading…"
 msgstr "در حال بار کردن…"
 
 #. Translators: 'archived' as in 'archived task lists'
-#: src/sidebar/gtd-sidebar.ui:51
+#: src/sidebar/gtd-sidebar.ui:88
 msgid "Archived"
 msgstr "بایگانی‌شده"
 
-#: src/sidebar/gtd-sidebar.ui:102
+#: src/sidebar/gtd-sidebar.ui:140
 msgid "No archived lists"
 msgstr "فهرست‌های بایگانی‌نشده"
 
@@ -575,11 +587,11 @@ msgstr "_فردا"
 msgid "_Notes"
 msgstr "_یادداشت‌ها"
 
-#: src/task-list-view/gtd-edit-pane.ui:117
+#: src/task-list-view/gtd-edit-pane.ui:120
 msgid "_Delete"
 msgstr "_حذف"
 
-#: src/task-list-view/gtd-edit-pane.ui:151
+#: src/task-list-view/gtd-edit-pane.ui:157
 msgctxt "taskdate"
 msgid "None"
 msgstr "هیچ‌کدام"
@@ -594,7 +606,7 @@ msgstr "%1$s \t <small>%2$s</small>"
 msgid "New task…"
 msgstr "وظیفهٔ جدید…"
 
-#: src/task-list-view/gtd-task-list-view.c:441
+#: src/task-list-view/gtd-task-list-view.c:442
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "وظیفهٔ <b>%s</b> برداشته شد"
