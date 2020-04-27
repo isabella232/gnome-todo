@@ -36,6 +36,12 @@ struct _GtdWorkspaceInterface
   const gchar*       (*get_title)                                (GtdWorkspace       *self);
 
   gint               (*get_priority)                             (GtdWorkspace       *self);
+
+  GIcon*             (*get_icon)                                 (GtdWorkspace       *self);
+
+  void               (*activate)                                 (GtdWorkspace       *self);
+
+  void               (*deactivate)                               (GtdWorkspace       *self);
 };
 
 const gchar*         gtd_workspace_get_id                        (GtdWorkspace       *self);
@@ -43,5 +49,11 @@ const gchar*         gtd_workspace_get_id                        (GtdWorkspace  
 const gchar*         gtd_workspace_get_title                     (GtdWorkspace       *self);
 
 gint                 gtd_workspace_get_priority                  (GtdWorkspace       *self);
+
+GIcon*               gtd_workspace_get_icon                      (GtdWorkspace       *self);
+
+void                 gtd_workspace_activate                      (GtdWorkspace       *self);
+
+void                 gtd_workspace_deactivate                    (GtdWorkspace       *self);
 
 G_END_DECLS

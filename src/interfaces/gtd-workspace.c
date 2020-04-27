@@ -25,6 +25,29 @@ G_DEFINE_INTERFACE (GtdWorkspace, gtd_workspace, G_TYPE_OBJECT)
 static void
 gtd_workspace_default_init (GtdWorkspaceInterface *iface)
 {
+  /**
+   * GtdWorkspace::icon:
+   *
+   * The icon of the panel.
+   */
+  g_object_interface_install_property (iface,
+                                       g_param_spec_object ("icon",
+                                                            "Icon of the workspace",
+                                                            "The icon of the workspace",
+                                                            G_TYPE_ICON,
+                                                            G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
+
+  /**
+   * GtdWorkspace::title:
+   *
+   * The user-visible title of the workspace.
+   */
+  g_object_interface_install_property (iface,
+                                       g_param_spec_string ("title",
+                                                            "The title of the workspace",
+                                                            "The title of the workspace",
+                                                            NULL,
+                                                            G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 }
 
 /**
@@ -77,3 +100,53 @@ gtd_workspace_get_priority (GtdWorkspace *self)
 
   return GTD_WORKSPACE_GET_IFACE (self)->get_priority (self);
 }
+
+/**
+ * gtd_workspace_get_priority:
+ * @self: a #GtdWorkspace
+ *
+ * Retrieves the icon of @self.
+ *
+ * Returns: (transfer full): a #GIcon
+ */
+GIcon*
+gtd_workspace_get_icon (GtdWorkspace *self)
+{
+  g_return_val_if_fail (GTD_IS_WORKSPACE (self), NULL);
+  g_return_val_if_fail (GTD_WORKSPACE_GET_IFACE (self)->get_icon, NULL);
+
+  return GTD_WORKSPACE_GET_IFACE (self)->get_icon (self);
+}
+
+/**
+ * gtd_workspace_activate:
+ * @self: a #GtdWorkspace
+ *
+ * Activates @self. This happens when the workspace
+ * becomes the active workspace in the main window.
+ */
+void
+gtd_workspace_activate (GtdWorkspace *self)
+{
+  g_return_if_fail (GTD_IS_WORKSPACE (self));
+  g_return_if_fail (GTD_WORKSPACE_GET_IFACE (self)->activate);
+
+  GTD_WORKSPACE_GET_IFACE (self)->activate (self);
+}
+
+/**
+ * gtd_workspace_deactivate:
+ * @self: a #GtdWorkspace
+ *
+ * Deactivates @self. This happens when the workspace
+ * is switched away in the main window.
+ */
+void
+gtd_workspace_deactivate (GtdWorkspace *self)
+{
+  g_return_if_fail (GTD_IS_WORKSPACE (self));
+  g_return_if_fail (GTD_WORKSPACE_GET_IFACE (self)->deactivate);
+
+  GTD_WORKSPACE_GET_IFACE (self)->deactivate (self);
+}
+

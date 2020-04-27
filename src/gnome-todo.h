@@ -1,6 +1,6 @@
 /* gnome-todo.h
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,5 +35,6 @@
 #include "gtd-types.h"
 #include "gtd-utils.h"
 #include "gtd-window.h"
+#include "gtd-workspace.h"
 
 #endif /* GNOME_TODO_H */
