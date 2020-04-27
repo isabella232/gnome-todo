@@ -1,6 +1,6 @@
 /* gtd-window.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,6 +73,7 @@ struct _GtdWindow
   GtkWidget          *extension_box_start;
   GtkWidget          *panel_box_end;
   GtkWidget          *panel_box_start;
+  GtkWidget          *toggle_sidebar_button;
 
   GtdPanel           *active_panel;
   GtdPanel           *task_list_panel;
@@ -523,6 +524,7 @@ gtd_window_constructed (GObject *object)
   g_autoptr (GList) l = NULL;
   GtdPluginManager *plugin_manager;
   GtkApplication *app;
+  GtdManager *manager;
   GtdWindow *self;
   GMenu *menu;
 
@@ -539,7 +541,8 @@ gtd_window_constructed (GObject *object)
   gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->gear_menu_button), G_MENU_MODEL (menu));
 
   /* Add plugins' header widgets, and setup for new plugins */
-  plugin_manager = gtd_manager_get_plugin_manager (gtd_manager_get_default ());
+  manager = gtd_manager_get_default ();
+  plugin_manager = gtd_manager_get_plugin_manager (manager);
   plugins = gtd_plugin_manager_get_loaded_plugins (plugin_manager);
 
   for (l = plugins; l; l = l->next)
@@ -549,16 +552,22 @@ gtd_window_constructed (GObject *object)
   g_signal_connect_swapped (plugin_manager, "plugin-unloaded", G_CALLBACK (on_plugin_unloaded_cb), self);
 
   /* Add loaded panels */
-  lists = gtd_manager_get_panels (gtd_manager_get_default ());
+  lists = gtd_manager_get_panels (manager);
 
   for (l = lists; l; l = l->next)
     on_panel_added_cb (NULL, l->data, self);
 
-  g_signal_connect (gtd_manager_get_default (), "panel-added", G_CALLBACK (on_panel_added_cb), self);
-  g_signal_connect (gtd_manager_get_default (), "panel-removed", G_CALLBACK (on_panel_removed_cb), self);
+  g_signal_connect (manager, "panel-added", G_CALLBACK (on_panel_added_cb), self);
+  g_signal_connect (manager, "panel-removed", G_CALLBACK (on_panel_removed_cb), self);
 
-  g_signal_connect (gtd_manager_get_default (), "show-error-message", G_CALLBACK (on_show_error_message_cb), self);
-  g_signal_connect (gtd_manager_get_default (), "show-notification", G_CALLBACK (on_show_notification_cb), self);
+  g_signal_connect (manager, "show-error-message", G_CALLBACK (on_show_error_message_cb), self);
+  g_signal_connect (manager, "show-notification", G_CALLBACK (on_show_notification_cb), self);
+
+  g_settings_bind (gtd_manager_get_settings (manager),
+                   "sidebar-revealed",
+                   self->toggle_sidebar_button,
+                   "active",
+                   G_SETTINGS_BIND_DEFAULT);
 }
 
 static void
@@ -639,6 +648,7 @@ gtd_window_class_init (GtdWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, new_list_button);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, sidebar);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, stack);
+  gtk_widget_class_bind_template_child (widget_class, GtdWindow, toggle_sidebar_button);
 
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, extension_box_end);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, extension_box_start);

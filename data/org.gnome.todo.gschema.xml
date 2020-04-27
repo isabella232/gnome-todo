@@ -31,5 +31,10 @@
             <summary>The current list selector</summary>
             <description>The current list selector. Can be “grid” or “list”.</description>
         </key>
+        <key name="sidebar-revealed" type="b">
+            <default>true</default>
+            <summary>Sidebar revealed</summary>
+            <description>Whether the sidebar is revealed or not</description>
+        </key>
     </schema>
 </schemalist>

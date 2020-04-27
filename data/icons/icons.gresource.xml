@@ -2,6 +2,7 @@
 <gresources>
   <!-- Icons -->
   <gresource prefix="/org/gnome/todo/icons">
+    <file preprocess="xml-stripblanks" alias="scalable/actions/builder-view-left-pane-symbolic.svg">hicolor/symbolic/actions/builder-view-left-pane-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="scalable/actions/drag-handle-symbolic.svg">hicolor/symbolic/actions/drag-handle-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="scalable/actions/mail-inbox-symbolic.svg">hicolor/symbolic/actions/mail-inbox-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="scalable/actions/view-tasks-all-symbolic.svg">hicolor/symbolic/actions/view-tasks-all-symbolic.svg</file>
