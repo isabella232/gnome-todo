@@ -1,17 +1,17 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+#
 # Daniel Korostil <ted.korostiled@gmail.com>, 2016-2019.
 # Danylo Korostil <ted.korostiled@gmail.com>, 2020.
-#
+# Yuri Chornoivan <yurchor@ukr.net>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2019-11-29 16:01+0000\n"
-"PO-Revision-Date: 2020-02-27 23:32+0200\n"
-"Last-Translator: Danylo Korostil <ted.korostiled@gmail.com>\n"
-"Language-Team:  <trans-uk@lists.fedoraproject.org>\n"
+"POT-Creation-Date: 2020-04-27 03:37+0000\n"
+"PO-Revision-Date: 2020-04-27 09:12+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,12 +19,12 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2\n"
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1: 2);\n"
-"X-Generator: Gtranslator 3.34.0\n"
+"X-Generator: Lokalize 20.07.70\n"
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
 #: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
-#: src/gtd-window.c:774 src/gtd-window.c:805 src/main.c:35
+#: src/gtd-window.c:784 src/gtd-window.c:815 src/main.c:35
 msgid "To Do"
 msgstr "Треба зробити "
 
@@ -127,10 +127,18 @@ msgstr "Поточний вибір переліку"
 msgid "The current list selector. Can be “grid” or “list”."
 msgstr "Поточний вибір переліку. Може бути «ґратка» або «список»."
 
+#: data/org.gnome.todo.gschema.xml:36
+msgid "Sidebar revealed"
+msgstr "Показано бічну панель"
+
+#: data/org.gnome.todo.gschema.xml:37
+msgid "Whether the sidebar is revealed or not"
+msgstr "Чи буде показано бічну панель"
+
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
 #: plugins/next-week-panel/gtd-next-week-panel.c:113
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:103
-#: src/task-list-view/gtd-edit-pane.c:110
+#: src/task-list-view/gtd-edit-pane.c:93
 msgid "No date set"
 msgstr "Не вказано дати"
 
@@ -159,8 +167,8 @@ msgstr "Вчора (%d день тому)"
 #: plugins/next-week-panel/gtd-next-week-panel.c:125
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:124
 #: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:148
-#: plugins/today-panel/gtd-panel-today.c:264
+#: plugins/today-panel/gtd-panel-today.c:150
+#: plugins/today-panel/gtd-panel-today.c:266
 #: src/task-list-view/gtd-task-row.c:138
 msgid "Today"
 msgstr "Сьогодні"
@@ -172,11 +180,11 @@ msgstr "Сьогодні"
 msgid "Tomorrow"
 msgstr "Завтра"
 
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:331
+#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:333
 msgid "All"
 msgstr "Всі"
 
-#: plugins/background/gtd-plugin-background.c:360
+#: plugins/background/gtd-plugin-background.c:238
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
@@ -185,7 +193,7 @@ msgstr[1] "%1$s і ще %2$d завдання"
 msgstr[2] "%1$s і ще %2$d завдань"
 msgstr[3] "%1$s і ще одне завдання"
 
-#: plugins/background/gtd-plugin-background.c:464
+#: plugins/background/gtd-plugin-background.c:342
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
@@ -195,7 +203,6 @@ msgstr[2] "Ви маєте %d завдань на сьогодні"
 msgstr[3] "Ви маєте %d завдання на сьогодні"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:6
-#| msgid "Run on Startup"
 msgid "Run To Do on startup"
 msgstr "Запускати автоматично"
 
@@ -204,28 +211,26 @@ msgid "Whether GNOME To Do should run on startup"
 msgstr "Чи повинен GNOME To Do автоматично запускатися разом з системою"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:11
-#| msgid "Show Notifications"
 msgid "Show notifications on startup"
 msgstr "Показувати сповіщення про запуск"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:12
-#| msgid "When To Do runs, show a startup notification"
 msgid "Whether GNOME To Do should show notifications or not"
 msgstr "Чи повинен GNOME To Do показувати сповіщення чи ні"
 
-#: plugins/background/ui/preferences.ui:39
+#: plugins/background/ui/preferences.ui:41
 msgid "Run on Startup"
 msgstr "Запускати автоматично"
 
-#: plugins/background/ui/preferences.ui:50
+#: plugins/background/ui/preferences.ui:52
 msgid "Run To Do automatically when you log in"
 msgstr "Запускати To Do автоматично, коли Ви увійшли в систему"
 
-#: plugins/background/ui/preferences.ui:96
+#: plugins/background/ui/preferences.ui:101
 msgid "Show Notifications"
 msgstr "Показувати сповіщення"
 
-#: plugins/background/ui/preferences.ui:107
+#: plugins/background/ui/preferences.ui:112
 msgid "When To Do runs, show a startup notification"
 msgstr "Показувати сповіщення, коли To Do запущено"
 
@@ -233,27 +238,27 @@ msgstr "Показувати сповіщення, коли To Do запущен
 msgid "Error loading GNOME Online Accounts"
 msgstr "Помилка завантаження мережевих облікових записів GNOME"
 
-#: plugins/eds/gtd-provider-eds.c:172
+#: plugins/eds/gtd-provider-eds.c:164
 msgid "Failed to connect to task list"
 msgstr "Не вдалося з'єднатись зі списком завдань"
 
-#: plugins/eds/gtd-provider-eds.c:320
+#: plugins/eds/gtd-provider-eds.c:289
 msgid "An error occurred while creating a task"
 msgstr "Під час створення завдання сталася помилка"
 
-#: plugins/eds/gtd-provider-eds.c:365
+#: plugins/eds/gtd-provider-eds.c:334
 msgid "An error occurred while modifying a task"
 msgstr "Під час редагування завдання сталася помилка"
 
-#: plugins/eds/gtd-provider-eds.c:386
+#: plugins/eds/gtd-provider-eds.c:355
 msgid "An error occurred while removing a task"
 msgstr "Під час вилучення завдання сталася помилка"
 
-#: plugins/eds/gtd-provider-eds.c:404
+#: plugins/eds/gtd-provider-eds.c:373
 msgid "An error occurred while creating a task list"
 msgstr "Під час створення списку завдань сталася помилка"
 
-#: plugins/eds/gtd-provider-eds.c:426 plugins/eds/gtd-provider-eds.c:449
+#: plugins/eds/gtd-provider-eds.c:395 plugins/eds/gtd-provider-eds.c:418
 msgid "An error occurred while modifying a task list"
 msgstr "Під час редагування списку завдань сталася помилка"
 
@@ -270,12 +275,16 @@ msgstr "Локально"
 msgid "Error fetching tasks from list"
 msgstr "Помилка одержання завдань зі списку"
 
+#: plugins/eds/gtd-task-list-eds.c:932
+msgid "Inbox"
+msgstr "Вхідні"
+
 #: plugins/next-week-panel/gtd-next-week-panel.c:121
-#: plugins/today-panel/gtd-panel-today.c:139
+#: plugins/today-panel/gtd-panel-today.c:141
 msgid "Overdue"
 msgstr "Протермінований"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:357
+#: plugins/next-week-panel/gtd-next-week-panel.c:359
 msgid "Next 7 Days"
 msgstr "Наступні 7 днів"
 
@@ -402,7 +411,7 @@ msgid "Unscheduled"
 msgstr "Не заплановано"
 
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
-#: src/gtd-task-list-panel.ui:32
+#: src/gtd-task-list-panel.ui:39
 msgid "Clear completed tasks…"
 msgstr "Очистити завершені завдання…"
 
@@ -440,8 +449,8 @@ msgstr "Увійдіть до мережевого облікового запи
 msgid "To Do Setup"
 msgstr "Параметри To Do"
 
-#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:95
-#: src/provider/gtd-provider-popover.ui:40
+#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:97
+#: src/provider/gtd-provider-popover.ui:43
 msgid "_Cancel"
 msgstr "_Скасувати"
 
@@ -457,32 +466,32 @@ msgstr "Помилка завантаження додатка"
 msgid "Error unloading extension"
 msgstr "Помилка під час розвантаження розширення"
 
-#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:143
+#: src/gtd-plugin-dialog.ui:55 src/gtd-window.ui:145
 msgid "Extensions"
 msgstr "Розширення"
 
-#: src/gtd-plugin-dialog.ui:90
+#: src/gtd-plugin-dialog.ui:86
 msgid "No extensions found"
 msgstr "Не знайдено жодного розширення"
 
-#: src/gtd-task-list-panel.c:199
+#: src/gtd-task-list-panel.c:200
 msgid "Unarchive"
 msgstr "Розархівувати"
 
-#: src/gtd-task-list-panel.c:199 src/gtd-task-list-panel.ui:41
+#: src/gtd-task-list-panel.c:200 src/gtd-task-list-panel.ui:48
 msgid "Archive"
 msgstr "Архівувати"
 
-#: src/gtd-task-list-panel.ui:26 src/gtd-task-list-panel.ui:61
-#: src/gtd-task-list-panel.ui:77
+#: src/gtd-task-list-panel.ui:33 src/gtd-task-list-panel.ui:77
+#: src/gtd-task-list-panel.ui:92
 msgid "Rename"
 msgstr "Пере_йменувати"
 
-#: src/gtd-task-list-panel.ui:47
+#: src/gtd-task-list-panel.ui:54
 msgid "Delete"
 msgstr "Вилучити"
 
-#: src/gtd-window.c:110
+#: src/gtd-window.c:111
 msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
@@ -490,35 +499,35 @@ msgstr ""
 "Це розробницька збірка To Do. Можливі помилки, неочікувана поведінка і "
 "втрати даних."
 
-#: src/gtd-window.c:463
+#: src/gtd-window.c:464
 msgid "Details"
 msgstr "Подробиці"
 
-#: src/gtd-window.c:769
+#: src/gtd-window.c:779
 msgid "Click a task list to select"
 msgstr "Натисніть на список завдань, щоб вибрати"
 
-#: src/gtd-window.ui:50
+#: src/gtd-window.ui:63
 msgid "New List"
 msgstr "Новий список"
 
-#: src/gtd-window.ui:149
+#: src/gtd-window.ui:151
 msgid "_About To Do"
 msgstr "_Про програму"
 
-#: src/provider/gtd-provider-popover.ui:23
+#: src/provider/gtd-provider-popover.ui:26
 msgid "Create _List"
 msgstr "Створити _список"
 
-#: src/provider/gtd-provider-popover.ui:53
+#: src/provider/gtd-provider-popover.ui:56
 msgid "List Name"
 msgstr "Назва списку"
 
-#: src/provider/gtd-provider-popover.ui:130
+#: src/provider/gtd-provider-popover.ui:133
 msgid "Select a storage location"
 msgstr "Виберіть місце зберігання"
 
-#: src/provider/gtd-provider-row.ui:57
+#: src/provider/gtd-provider-row.ui:60
 msgid "Off"
 msgstr "Вимкнено"
 
@@ -526,36 +535,36 @@ msgstr "Вимкнено"
 msgid "Click to add a new Google account"
 msgstr "Натисніть, щоб додати обліковий запис Google"
 
-#: src/provider/gtd-provider-selector.ui:32
+#: src/provider/gtd-provider-selector.ui:35
 msgid "Google"
 msgstr "Google"
 
-#: src/provider/gtd-provider-selector.ui:42
+#: src/provider/gtd-provider-selector.ui:45
 msgid "Click to add a new ownCloud account"
 msgstr "Натисніть, щоб додати обліковий запис ownCloud"
 
-#: src/provider/gtd-provider-selector.ui:55
+#: src/provider/gtd-provider-selector.ui:61
 msgid "ownCloud"
 msgstr "ownCloud"
 
-#: src/provider/gtd-provider-selector.ui:65
+#: src/provider/gtd-provider-selector.ui:71
 msgid "Click to add a new Microsoft Exchange account"
 msgstr "Натисніть, щоб додати обліковий запис Microsoft Exchange"
 
-#: src/provider/gtd-provider-selector.ui:78
+#: src/provider/gtd-provider-selector.ui:87
 msgid "Microsoft Exchange"
 msgstr "Microsoft Exchange"
 
-#: src/provider/gtd-provider-selector.ui:91
+#: src/provider/gtd-provider-selector.ui:100
 msgid "Or you can just store your tasks on this computer"
 msgstr "Або можете просто зберігати завдання на цьому комп'ютері"
 
-#: src/sidebar/gtd-sidebar.c:329
+#: src/sidebar/gtd-sidebar.c:404
 #, c-format
 msgid "Task list <b>%s</b> removed"
 msgstr "Завдання <b>%s</b> вилучено"
 
-#: src/sidebar/gtd-sidebar.c:332 src/task-list-view/gtd-task-list-view.c:460
+#: src/sidebar/gtd-sidebar.c:407 src/task-list-view/gtd-task-list-view.c:461
 msgid "Undo"
 msgstr "Повернути"
 
@@ -564,11 +573,11 @@ msgid "Loading…"
 msgstr "Завантаження…"
 
 #. Translators: 'archived' as in 'archived task lists'
-#: src/sidebar/gtd-sidebar.ui:52
+#: src/sidebar/gtd-sidebar.ui:88
 msgid "Archived"
 msgstr "Заархівоване"
 
-#: src/sidebar/gtd-sidebar.ui:103
+#: src/sidebar/gtd-sidebar.ui:140
 msgid "No archived lists"
 msgstr "Немає архівів"
 
@@ -588,11 +597,11 @@ msgstr "За_втра"
 msgid "_Notes"
 msgstr "_Примітки"
 
-#: src/task-list-view/gtd-edit-pane.ui:117
+#: src/task-list-view/gtd-edit-pane.ui:120
 msgid "_Delete"
 msgstr "_Вилучити"
 
-#: src/task-list-view/gtd-edit-pane.ui:151
+#: src/task-list-view/gtd-edit-pane.ui:157
 msgctxt "taskdate"
 msgid "None"
 msgstr "Немає"
@@ -607,7 +616,7 @@ msgstr "%1$s \t <small>%2$s</small>"
 msgid "New task…"
 msgstr "Створити завдання…"
 
-#: src/task-list-view/gtd-task-list-view.c:441
+#: src/task-list-view/gtd-task-list-view.c:442
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Завдання <b>%s</b> вилучено"
@@ -655,180 +664,3 @@ msgstr "Не знайдено жодного завдання"
 #: src/widgets/gtd-empty-list-widget.c:75
 msgid "You can add tasks using the <b>+</b> above"
 msgstr "Можете додавати завдання за допомогою <b>+</b> зверху"
-
-#~ msgid "New List…"
-#~ msgstr "Створити список…"
-
-#~ msgid "Change default storage location…"
-#~ msgstr "Змінити типове місце зберігання…"
-
-#~ msgid "_Quit"
-#~ msgstr "Ви_йти"
-
-#~ msgid "Window position"
-#~ msgstr "Положення вікна"
-
-#~ msgid "Window position (x and y)."
-#~ msgstr "Положення вікна (x і y)."
-
-#~ msgid "_Priority"
-#~ msgstr "_Пріоритет"
-
-#~ msgctxt "taskpriority"
-#~ msgid "None"
-#~ msgstr "Немає"
-
-#~ msgid "Low"
-#~ msgstr "Низький"
-
-#~ msgid "Medium"
-#~ msgstr "Середній"
-
-#~ msgid "High"
-#~ msgstr "Високий"
-
-#~ msgid "Next _Week"
-#~ msgstr "Наступний _тиждень"
-
-#~ msgid "Lists"
-#~ msgstr "Списки"
-
-#~ msgid "Tasks"
-#~ msgstr "Завдання"
-
-#~ msgid "Name of the task list"
-#~ msgstr "Назва списку завдань"
-
-#~ msgid "Show or hide completed tasks"
-#~ msgstr "Показати або приховати завершені завдання"
-
-#~ msgid "Done"
-#~ msgstr "Зроблено"
-
-#~ msgid "Notes"
-#~ msgstr "Примітки"
-
-#~ msgid "Due Date"
-#~ msgstr "Дата завершення"
-
-#~ msgid "Priority"
-#~ msgstr "Пріоритет"
-
-#~ msgid "Error loading Evolution-Data-Server backend"
-#~ msgstr "Помилка завантаження модуля Evolution-Data-Server"
-
-#~ msgid "Error loading CSS from resource"
-#~ msgstr "Помилка завантаження CSS з ресурсу"
-
-#~ msgid "Task list source successfully connected"
-#~ msgstr "Джерело списку завдань успішно з'єднано"
-
-#~ msgid "Failed to prompt for credentials"
-#~ msgstr "Не вдалось одержати запит щодо облікових даних"
-
-#~ msgid "Failed to prompt for credentials for"
-#~ msgstr "Не вдалось одержати запит щодо облікових даних для"
-
-#~ msgid "Authentication failure"
-#~ msgstr "Не вдалося засвідчитись"
-
-#~ msgid "Error loading task manager"
-#~ msgstr "Помилка менеджера завантаження завдань"
-
-#~ msgid "Error creating task"
-#~ msgstr "Помилка створення завдання"
-
-#~ msgid "Error updating task"
-#~ msgstr "Помилка оновлення завдання"
-
-#~ msgid "Error creating task list"
-#~ msgstr "Помилка створення списку завдань"
-
-#~ msgid "Error saving task list"
-#~ msgstr "Помилка збереження списку завдань"
-
-#~ msgid "Error creating new task list"
-#~ msgstr "Помилка створення нового списку завдань"
-
-#~ msgid "Error while converting the default Todo.txt path to an URI"
-#~ msgstr "Помилка перетворення типового шляху Todo.txt на посилання"
-
-#~ msgid "Error while reading a line from Todo.txt"
-#~ msgstr "Помилка читання рядка з Todo.txt"
-
-#~ msgid "Error while adding a task to Todo.txt"
-#~ msgstr "Помилка додання завдання в Todo.txt"
-
-#~ msgid "Error while reading tasks from Todo.txt"
-#~ msgstr "Помилка читання завдання з Todo.txt"
-
-#~ msgid "Error while reading task lists from Todo.txt"
-#~ msgstr "Помилка читання списку завдань з Todo.txt"
-
-#~ msgid "Incorrect date"
-#~ msgstr "Неправильна дата"
-
-#~ msgid "Unrecognized token in a Todo.txt line"
-#~ msgstr "Невизначений ключ у рядку Todo.txt"
-
-#~ msgid ""
-#~ "To Do cannot recognize some tags in your Todo.txt file. Some tasks may "
-#~ "not be loaded"
-#~ msgstr ""
-#~ "Неможливо розпізнати деякі мітки в файлі Todo.txt. Деякі завдання можуть "
-#~ "не завантажитись"
-
-#~ msgid "No task list found for some tasks"
-#~ msgstr "Не знайдено списку завдань для деяких завдань"
-
-#~ msgid ""
-#~ "Some of the tasks in your Todo.txt file do not have a task list. To Do "
-#~ "supports tasks with a task list. Please add a list to all your tasks"
-#~ msgstr ""
-#~ "Деякі завдання у вашому файлі Todo.txt не містять списку. Підтримується "
-#~ "завдання тільки в списку. Внесіть всі завдання у списки"
-
-#~ msgid "Copyright © %d The To Do authors"
-#~ msgstr "© %d автори «Треба Зробити»"
-
-#~ msgid "Removing this task will also remove its subtasks. Remove anyway?"
-#~ msgstr ""
-#~ "Вилучення цього завдання також вилучить його підзавдання. Однакого "
-#~ "вилучити?"
-
-#~ msgid "Once removed, the tasks cannot be recovered."
-#~ msgstr "Після вилучення завдання неможливо відновити."
-
-#~ msgid "Cancel"
-#~ msgstr "Скасувати"
-
-#~ msgid "Remove"
-#~ msgstr "Вилучити"
-
-#~ msgid "Loading your task lists…"
-#~ msgstr "Завантаження списку завдань…"
-
-#~ msgid "No tasks"
-#~ msgstr "Немає завдань"
-
-#~ msgid "Setting new color for task list"
-#~ msgstr "Налаштування нового кольору для списку завдань"
-
-#~ msgid "Remove the selected task lists?"
-#~ msgstr "Вилучити вибраний список завдань?"
-
-#~ msgid "Once removed, the task lists cannot be recovered."
-#~ msgstr "Після вилучення завдання неможливо відновити."
-
-#~ msgid "Remove task lists"
-#~ msgstr "Вилучити списки завдань"
-
-#~ msgid "Select the default storage location to create task lists:"
-#~ msgstr "Виберіть типове місце зберігання, щоб створити списки завдань:"
-
-#~ msgid "Default storage location"
-#~ msgstr "Типове місце зберігання"
-
-#~| msgid "Scheduled"
-#~ msgid "unscheduled-panel"
-#~ msgstr "незапланована-панель"
