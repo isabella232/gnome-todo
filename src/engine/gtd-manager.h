@@ -75,4 +75,12 @@ GListModel*          gtd_manager_get_all_tasks_model             (GtdManager    
 
 GListModel*          gtd_manager_get_tasks_model                 (GtdManager         *self);
 
+GPtrArray*           gtd_manager_get_workspaces                  (GtdManager         *self);
+
+void                 gtd_manager_add_workspace                   (GtdManager         *self,
+                                                                  GtdWorkspace       *workspace);
+
+void                 gtd_manager_remove_workspace                (GtdManager         *self,
+                                                                  GtdWorkspace       *workspace);
+
 G_END_DECLS
