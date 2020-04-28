@@ -154,16 +154,6 @@ compare_lists_cb (GtdTaskList *list_a,
 }
 
 static void
-on_default_list_changed_cb (GtdProvider *provider,
-                            GParamSpec  *pspec,
-                            GtdManager  *self)
-{
-  GTD_ENTRY;
-  g_object_notify (G_OBJECT (self), "default-task-list");
-  GTD_EXIT;
-}
-
-static void
 on_task_list_modified_cb (GtdTaskList *list,
                           GtdTask     *task,
                           GtdManager  *self)
@@ -331,7 +321,6 @@ on_provider_removed_cb (GtdPluginManager *plugin_manager,
   for (l = lists; l != NULL; l = l->next)
     on_list_removed_cb (provider, l->data, self);
 
-  g_signal_handlers_disconnect_by_func (provider, on_default_list_changed_cb, self);
   g_signal_handlers_disconnect_by_func (provider, on_list_added_cb, self);
   g_signal_handlers_disconnect_by_func (provider, on_list_changed_cb, self);
   g_signal_handlers_disconnect_by_func (provider, on_list_removed_cb, self);
@@ -776,38 +765,16 @@ void
 gtd_manager_set_default_provider (GtdManager  *self,
                                   GtdProvider *provider)
 {
-  GtdProvider *previous;
-
   g_return_if_fail (GTD_IS_MANAGER (self));
 
-  previous = self->default_provider;
+  if (!g_set_object (&self->default_provider, provider))
+    return;
 
-  if (g_set_object (&self->default_provider, provider))
-    {
-      g_settings_set_string (self->settings,
-                             "default-provider",
-                             provider ? gtd_provider_get_id (provider) : "local");
+  g_settings_set_string (self->settings,
+                         "default-provider",
+                         provider ? gtd_provider_get_id (provider) : "local");
 
-      /* Disconnect the previous provider... */
-      if (previous)
-        {
-          g_signal_handlers_disconnect_by_func (previous,
-                                                on_default_list_changed_cb,
-                                                self);
-        }
-
-      /* ... and connect the current one */
-      if (provider)
-        {
-          g_signal_connect (provider,
-                            "notify::default-task-list",
-                            G_CALLBACK (on_default_list_changed_cb),
-                            self);
-        }
-
-      g_object_notify (G_OBJECT (self), "default-provider");
-      g_object_notify (G_OBJECT (self), "default-task-list");
-    }
+  g_object_notify (G_OBJECT (self), "default-provider");
 }
 
 /**

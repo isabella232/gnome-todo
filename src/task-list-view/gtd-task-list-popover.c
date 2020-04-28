@@ -157,12 +157,6 @@ create_list_row_cb (gpointer item,
 }
 
 static void
-on_default_tasklist_changed_cb (GtdTaskListPopover *self)
-{
-  set_selected_tasklist (self, NULL);
-}
-
-static void
 on_listbox_row_activated_cb (GtkListBox         *listbox,
                              GtkListBoxRow      *row,
                              GtdTaskListPopover *self)
@@ -257,12 +251,6 @@ gtd_task_list_popover_init (GtdTaskListPopover *self)
                            create_list_row_cb,
                            self,
                            NULL);
-
-  g_signal_connect_object (manager,
-                           "notify::default-task-list",
-                           G_CALLBACK (on_default_tasklist_changed_cb),
-                           self,
-                           G_CONNECT_SWAPPED);
 
   self->manager = manager;
 
