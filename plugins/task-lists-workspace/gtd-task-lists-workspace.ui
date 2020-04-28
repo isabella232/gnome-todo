@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="GtdTaskListsWorkspace" parent="GtkBox">
+
+    <!-- Sidebar -->
+    <child>
+      <object class="GtkRevealer" id="sidebar_revealer">
+        <property name="transition-type">slide-left</property>
+        <property name="reveal-child" bind-source="toggle_sidebar_button" bind-property="active" bind-flags="default" />
+        <child>
+          <object class="GtdSidebar" id="sidebar">
+            <property name="can_focus">False</property>
+            <property name="vexpand">True</property>
+          </object>
+        </child>
+      </object>
+    </child>
+
+    <!-- Panels Stack -->
+    <child>
+      <object class="GtkStack" id="stack">
+        <property name="hexpand">true</property>
+        <property name="vexpand">true</property>
+        <property name="homogeneous">0</property>
+        <property name="transition_duration">250</property>
+        <property name="transition_type">crossfade</property>
+        <signal name="notify::visible-child" handler="on_stack_visible_child_cb" object="GtdTaskListsWorkspace" swapped="yes"/>
+        <style>
+          <class name="background"/>
+        </style>
+      </object>
+    </child>
+
+  </template>
+
+  <!-- Start -->
+  <object class="GtkBox" id="start_box">
+    <property name="spacing">6</property>
+
+    <!-- New List -->
+    <child>
+      <object class="GtkMenuButton" id="new_list_button">
+        <property name="can_focus">1</property>
+        <property name="label" translatable="yes">New List</property>
+        <property name="receives_default">1</property>
+        <property name="popover">new_list_popover</property>
+        <property name="halign">start</property>
+      </object>
+    </child>
+
+    <child>
+      <object class="GtkButton" id="back_button">
+        <property name="visible" bind-source="new_list_button" bind-property="visible" bind-flags="sync-create|invert-boolean" />
+        <property name="can_focus">1</property>
+        <property name="receives_default">1</property>
+        <property name="halign">start</property>
+        <property name="icon-name">go-previous-symbolic</property>
+        <signal name="clicked" handler="on_back_button_clicked_cb" object="GtdTaskListsWorkspace" swapped="no" />
+      </object>
+    </child>
+
+    <child>
+      <object class="GtkToggleButton" id="toggle_sidebar_button">
+        <property name="can_focus">1</property>
+        <property name="icon-name">builder-view-left-pane-symbolic</property>
+      </object>
+    </child>
+
+    <child>
+      <object class="GtkBox" id="panel_box_start">
+        <property name="spacing">6</property>
+      </object>
+    </child>
+  </object>
+
+  <!-- End -->
+  <object class="GtkBox" id="end_box">
+    <property name="spacing">6</property>
+
+    <child>
+      <object class="GtkMenuButton" id="gear_menu_button">
+        <property name="can_focus">1</property>
+        <property name="icon-name">view-more-symbolic</property>
+      </object>
+    </child>
+
+    <child>
+      <object class="GtkBox" id="panel_box_end">
+        <property name="spacing">6</property>
+      </object>
+    </child>
+  </object>
+
+  <object class="GtdProviderPopover" id="new_list_popover">
+    <property name="can_focus">False</property>
+    <property name="position">bottom</property>
+  </object>
+</interface>

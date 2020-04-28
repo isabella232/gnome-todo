@@ -188,6 +188,7 @@ src_inc = include_directories(
   'src/interfaces',
   'src/models',
   'src/notification',
+  'src/provider',
   'src/task-list-view',
   'src/widgets',
 )

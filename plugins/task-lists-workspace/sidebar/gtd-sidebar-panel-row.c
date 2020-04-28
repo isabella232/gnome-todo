@@ -1,6 +1,6 @@
 /* gtd-sidebar-panel-row.c
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -150,7 +150,7 @@ gtd_sidebar_panel_row_class_init (GtdSidebarPanelRowClass *klass)
 
   g_object_class_install_properties (object_class, N_PROPS, properties);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/sidebar/gtd-sidebar-panel-row.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/plugins/task-lists-workspace/sidebar/gtd-sidebar-panel-row.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdSidebarPanelRow, panel_icon);
   gtk_widget_class_bind_template_child (widget_class, GtdSidebarPanelRow, subtitle_label);

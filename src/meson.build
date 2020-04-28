@@ -23,6 +23,7 @@ headers = enum_headers + files(
   'models/gtd-list-model-filter.h',
   'models/gtd-list-store.h',
   'notification/gtd-notification.h',
+  'provider/gtd-provider-popover.h',
   'task-list-view/gtd-task-list-view.h',
   'gtd-clock.h',
   'gtd-object.h',
@@ -58,10 +59,6 @@ sources = files(
   'provider/gtd-provider-popover.c',
   'provider/gtd-provider-row.c',
   'provider/gtd-provider-selector.c',
-  'sidebar/gtd-sidebar.c',
-  'sidebar/gtd-sidebar-list-row.c',
-  'sidebar/gtd-sidebar-panel-row.c',
-  'sidebar/gtd-sidebar-provider-row.c',
   'task-list-view/gtd-edit-pane.c',
   'task-list-view/gtd-dnd-row.c',
   'task-list-view/gtd-markdown-renderer.c',
@@ -81,7 +78,6 @@ sources = files(
   'gtd-rows-common.c',
   'gtd-task.c',
   'gtd-task-list.c',
-  'gtd-task-list-panel.c',
   'gtd-utils.c',
   'gtd-window.c',
   'main.c'
@@ -135,7 +131,6 @@ incs = [
     'notification',
     'interfaces',
     'widgets',
-    'sidebar',
   )
 ]
 
@@ -243,6 +238,8 @@ if get_option('introspection')
     'models/gtd-list-store.h',
     'notification/gtd-notification.c',
     'notification/gtd-notification.h',
+    'provider/gtd-provider-popover.c',
+    'provider/gtd-provider-popover.h',
     'task-list-view/gtd-task-list-view.c',
     'task-list-view/gtd-task-list-view.h',
     'gtd-enums.h',

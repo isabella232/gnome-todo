@@ -1,6 +1,6 @@
-/* gnome-todo.h
+/* gtd-plugin-task-lists-workspace.h
  *
- * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,28 +14,21 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-#ifndef GNOME_TODO_H
-#define GNOME_TODO_H
+#pragma once
 
-#include "gtd-activatable.h"
-#include "gtd-enums.h"
-#include "gtd-list-model-filter.h"
-#include "gtd-list-model-sort.h"
-#include "gtd-list-store.h"
-#include "gtd-manager.h"
-#include "gtd-notification.h"
-#include "gtd-object.h"
-#include "gtd-panel.h"
-#include "gtd-provider.h"
-#include "gtd-provider-popover.h"
-#include "gtd-task.h"
-#include "gtd-task-list.h"
-#include "gtd-task-list-view.h"
-#include "gtd-types.h"
-#include "gtd-utils.h"
-#include "gtd-window.h"
-#include "gtd-workspace.h"
+#include "gnome-todo.h"
 
-#endif /* GNOME_TODO_H */
+#include <glib.h>
+
+G_BEGIN_DECLS
+
+#define GTD_TYPE_PLUGIN_TASK_LISTS_WORKSPACE (gtd_plugin_task_lists_workspace_get_type())
+G_DECLARE_FINAL_TYPE (GtdPluginTaskListsWorkspace, gtd_plugin_task_lists_workspace, GTD, PLUGIN_TASK_LISTS_WORKSPACE, PeasExtensionBase)
+
+G_MODULE_EXPORT void gtd_plugin_task_lists_workspace_register_types   (PeasObjectModule   *module);
+
+G_END_DECLS

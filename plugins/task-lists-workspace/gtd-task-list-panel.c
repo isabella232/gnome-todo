@@ -538,7 +538,7 @@ gtd_task_list_panel_class_init (GtdTaskListPanelClass *klass)
                                         1,
                                         GTD_TYPE_TASK_LIST);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-task-list-panel.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/plugins/task-lists-workspace/gtd-task-list-panel.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, archive_button);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPanel, colors_flowbox);

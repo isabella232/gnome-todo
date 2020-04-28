@@ -5,10 +5,6 @@
     <file compressed="true" preprocess="xml-stripblanks">provider/gtd-provider-popover.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">provider/gtd-provider-row.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">provider/gtd-provider-selector.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">sidebar/gtd-sidebar.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">sidebar/gtd-sidebar-list-row.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">sidebar/gtd-sidebar-panel-row.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">sidebar/gtd-sidebar-provider-row.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">task-list-view/gtd-dnd-row.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">task-list-view/gtd-edit-pane.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">task-list-view/gtd-new-task-row.ui</file>
@@ -19,7 +15,6 @@
     <file compressed="true" preprocess="xml-stripblanks">gtd-initial-setup-window.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtd-plugin-dialog.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtd-plugin-dialog-row.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">gtd-task-list-panel.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtd-window.ui</file>
   </gresource>
 

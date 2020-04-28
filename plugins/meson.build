@@ -15,6 +15,7 @@ subdir('inbox-panel')
 subdir('next-week-panel')
 subdir('night-light')
 subdir('scheduled-panel')
+subdir('task-lists-workspace')
 subdir('today-panel')
 
 if get_option('score_plugin')

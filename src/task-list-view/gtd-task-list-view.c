@@ -331,7 +331,8 @@ scroll_to_bottom_cb (gpointer data)
   widget = GTK_WIDGET (data);
   root = gtk_widget_get_root (widget);
 
-  g_assert (root != NULL);
+  if (!root)
+    return G_SOURCE_CONTINUE;
 
   priv->scroll_to_bottom_handler_id = 0;
 

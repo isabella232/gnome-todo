@@ -257,7 +257,10 @@ activate_appropriate_row (GtdSidebar    *self,
   if (activate_row_below (self, GTD_SIDEBAR_LIST_ROW (row)))
     return;
 
-  gtk_widget_activate_action (GTK_WIDGET (self), "win.toggle-archive", "b", FALSE);
+  gtk_widget_activate_action (GTK_WIDGET (self),
+                              "task-lists-workspace.toggle-archive",
+                              "b",
+                              FALSE);
 
   to_be_activated = gtk_list_box_get_row_at_index (self->listbox, 0);
   g_signal_emit_by_name (to_be_activated, "activate");
@@ -428,7 +431,7 @@ on_listbox_row_activated_cb (GtkListBox    *panels_listbox,
       GtdPanel *panel = gtd_sidebar_panel_row_get_panel (GTD_SIDEBAR_PANEL_ROW (row));
 
       gtk_widget_activate_action (GTK_WIDGET (self),
-                                  "win.activate-panel",
+                                  "task-lists-workspace.activate-panel",
                                   "(sv)",
                                   gtd_panel_get_panel_name (panel),
                                   g_variant_new_maybe (G_VARIANT_TYPE_VARIANT, NULL));
@@ -455,14 +458,17 @@ on_listbox_row_activated_cb (GtkListBox    *panels_listbox,
                              g_variant_new_string (gtd_object_get_uid (GTD_OBJECT (list))));
 
       gtk_widget_activate_action (GTK_WIDGET (self),
-                                  "win.activate-panel",
+                                  "task-lists-workspace.activate-panel",
                                   "(sv)",
                                   "task-list-panel",
                                   g_variant_builder_end (&builder));
     }
   else if (row == self->archive_row)
     {
-      gtk_widget_activate_action (GTK_WIDGET (self), "win.toggle-archive", "b", TRUE);
+      gtk_widget_activate_action (GTK_WIDGET (self),
+                                  "task-lists-workspace.toggle-archive",
+                                  "b",
+                                  TRUE);
     }
   else
     {
@@ -808,7 +814,7 @@ gtd_sidebar_class_init (GtdSidebarClass *klass)
 
   object_class->constructed = gtd_sidebar_constructed;
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/sidebar/gtd-sidebar.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/plugins/task-lists-workspace/sidebar/gtd-sidebar.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdSidebar, archive_listbox);
   gtk_widget_class_bind_template_child (widget_class, GtdSidebar, archive_row);

@@ -1,6 +1,6 @@
 /* gtd-window.h
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,10 @@ void                      gtd_window_set_mode             (GtdWindow            
 void                      gtd_window_set_custom_title     (GtdWindow             *window,
                                                            const gchar           *title,
                                                            const gchar           *subtitle);
+
+void                      gtd_window_embed_widget_in_header (GtdWindow           *self,
+                                                             GtkWidget           *widget,
+                                                             GtkPositionType      position);
 
 G_END_DECLS
 

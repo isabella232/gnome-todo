@@ -23,6 +23,7 @@
 #include "interfaces/gtd-activatable.h"
 #include "interfaces/gtd-provider.h"
 #include "interfaces/gtd-panel.h"
+#include "interfaces/gtd-workspace.h"
 #include "gtd-application.h"
 #include "gtd-debug.h"
 #include "gtd-enum-types.h"
@@ -32,10 +33,8 @@
 #include "gtd-notification.h"
 #include "gtd-notification-widget.h"
 #include "gtd-plugin-manager.h"
-#include "gtd-sidebar.h"
 #include "gtd-task.h"
 #include "gtd-task-list.h"
-#include "gtd-task-list-panel.h"
 #include "gtd-window.h"
 #include "gtd-window-private.h"
 
@@ -58,27 +57,17 @@ struct _GtdWindow
 {
   GtkApplicationWindow application;
 
-  GtkWidget          *back_button;
   GtkWidget          *cancel_selection_button;
-  GtkWidget          *gear_menu_button;
   GtkHeaderBar       *headerbar;
-  GtkWidget          *new_list_button;
   GtkStack           *stack;
-  GtdSidebar         *sidebar;
+  GtkWidget          *workspace_box_end;
+  GtkWidget          *workspace_box_start;
 
   GtdNotificationWidget *notification_widget;
 
-  /* boxes */
-  GtkWidget          *extension_box_end;
-  GtkWidget          *extension_box_start;
-  GtkWidget          *panel_box_end;
-  GtkWidget          *panel_box_start;
-  GtkWidget          *toggle_sidebar_button;
+  GPtrArray          *workspace_header_widgets;
 
-  GtdPanel           *active_panel;
-  GtdPanel           *task_list_panel;
-
-  GBinding           *headerbar_title_binding;
+  GtdWorkspace       *current_workspace;
 
   /* mode */
   GtdWindowMode       mode;
@@ -124,141 +113,6 @@ is_development_build (void)
 #else
   return FALSE;
 #endif
-}
-
-static void
-add_widgets (GtdWindow *self,
-             GtkWidget *container_start,
-             GtkWidget *container_end,
-             GList     *widgets)
-{
-  GList *l;
-
-  for (l = widgets; l; l = l->next)
-    {
-      switch (gtk_widget_get_halign (l->data))
-        {
-        case GTK_ALIGN_START:
-          gtk_container_add (GTK_CONTAINER (container_start), l->data);
-          break;
-
-        case GTK_ALIGN_CENTER:
-          gtk_header_bar_set_custom_title (self->headerbar, l->data);
-          break;
-
-        case GTK_ALIGN_END:
-          gtk_container_add (GTK_CONTAINER (container_end), l->data);
-          break;
-
-        case GTK_ALIGN_BASELINE:
-        case GTK_ALIGN_FILL:
-        default:
-          gtk_container_add (GTK_CONTAINER (container_start), l->data);
-          break;
-        }
-    }
-}
-
-static void
-remove_widgets (GtdWindow *self,
-                GtkWidget *container_start,
-                GtkWidget *container_end,
-                GList     *widgets)
-{
-  GList *l;
-
-  for (l = widgets; l; l = l->next)
-    {
-      GtkWidget *container;
-
-      if (gtk_widget_get_halign (l->data) == GTK_ALIGN_END)
-        container = container_end;
-      else if (gtk_widget_get_halign (l->data) == GTK_ALIGN_CENTER)
-        container = GTK_WIDGET (self->headerbar);
-      else
-        container = container_start;
-
-      g_object_ref (l->data);
-      gtk_container_remove (GTK_CONTAINER (container), l->data);
-    }
-}
-
-static void
-on_plugin_loaded_cb (GtdWindow      *self,
-                     gpointer        unused_field,
-                     GtdActivatable *activatable)
-{
-  g_autoptr (GList) header_widgets = gtd_activatable_get_header_widgets (activatable);
-
-  add_widgets (self,
-               self->extension_box_start,
-               self->extension_box_end,
-               header_widgets);
-}
-
-static void
-on_plugin_unloaded_cb (GtdWindow      *self,
-                       gpointer        unused_field,
-                       GtdActivatable *activatable)
-{
-  GList *header_widgets = gtd_activatable_get_header_widgets (activatable);
-
-  remove_widgets (self,
-                  self->extension_box_start,
-                  self->extension_box_end,
-                  header_widgets);
-}
-
-static void
-update_panel_menu (GtdWindow *self)
-{
-  GtkPopover *popover;
-  const GMenu *menu;
-
-  popover = gtd_panel_get_popover (self->active_panel);
-  menu = gtd_panel_get_menu (self->active_panel);
-
-  gtk_widget_set_visible (self->gear_menu_button, popover || menu);
-
-  if (popover)
-    {
-      gtk_menu_button_set_popover (GTK_MENU_BUTTON (self->gear_menu_button), GTK_WIDGET (popover));
-    }
-  else
-    {
-      gtk_menu_button_set_popover (GTK_MENU_BUTTON (self->gear_menu_button), NULL);
-      gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->gear_menu_button), G_MENU_MODEL (menu));
-    }
-}
-
-static void
-gtd_window__panel_menu_changed (GObject    *object,
-                                GParamSpec *pspec,
-                                GtdWindow  *self)
-{
-  if (GTD_PANEL (object) != self->active_panel)
-    return;
-
-  update_panel_menu (self);
-}
-
-static void
-on_panel_added_cb (GtdManager *manager,
-                   GtdPanel   *panel,
-                   GtdWindow  *self)
-{
-  gtk_stack_add_titled (self->stack,
-                        GTK_WIDGET (panel),
-                        gtd_panel_get_panel_name (panel),
-                        gtd_panel_get_panel_title (panel));
-}
-
-static void
-on_panel_removed_cb (GtdManager *manager,
-                     GtdPanel   *panel,
-                     GtdWindow  *self)
-{
-  gtk_container_remove (GTK_CONTAINER (self->stack), GTK_WIDGET (panel));
 }
 
 static void
@@ -327,46 +181,45 @@ load_geometry (GtdWindow *self)
 }
 
 static void
-on_action_activate_panel_activated_cb (GSimpleAction *simple,
-                                       GVariant      *parameters,
-                                       gpointer       user_data)
+add_workspace (GtdWindow    *self,
+               GtdWorkspace *workspace)
 {
-  g_autoptr (GVariant) panel_parameters = NULL;
-  g_autofree gchar *panel_id = NULL;
-  GtdWindow *self;
-  GtdPanel *panel;
+  const gchar *workspace_id;
 
-  self = GTD_WINDOW (user_data);
+  workspace_id = gtd_workspace_get_id (workspace);
 
-  g_variant_get (parameters,
-                 "(sv)",
-                 &panel_id,
-                 &panel_parameters);
-
-  g_debug ("Activating panel '%s'", panel_id);
-
-  panel = (GtdPanel *) gtk_stack_get_child_by_name (self->stack, panel_id);
-  g_return_if_fail (panel && GTD_IS_PANEL (panel));
-
-  gtd_panel_activate (panel, panel_parameters);
-
-  gtk_stack_set_visible_child (self->stack, GTK_WIDGET (panel));
+  gtk_stack_add_named (self->stack, GTK_WIDGET (workspace), workspace_id);
 }
 
 static void
-on_action_toggle_archive_activated_cb (GSimpleAction *simple,
-                                       GVariant      *state,
-                                       gpointer       user_data)
+remove_all_workspace_header_widgets (GtdWindow *self)
 {
-  GtdWindow *self;
-  gboolean archive_visible;
+  GtkWidget *parent;
+  GtkWidget *widget;
+  guint i;
 
-  self = GTD_WINDOW (user_data);
-  archive_visible = g_variant_get_boolean (state);
+  GTD_ENTRY;
 
-  gtk_widget_set_visible (self->new_list_button, !archive_visible);
-  gtd_sidebar_set_archive_visible (self->sidebar, archive_visible);
+  /* remove from the header */
+  for (i = 0; i < self->workspace_header_widgets->len; i++)
+    {
+      widget = g_ptr_array_index (self->workspace_header_widgets, i);
+      parent = gtk_widget_get_parent (widget);
+
+      g_assert (parent == GTK_WIDGET (self->workspace_box_start) ||
+                parent == GTK_WIDGET (self->workspace_box_end));
+      gtk_container_remove (GTK_CONTAINER (parent), widget);
+    }
+
+  g_ptr_array_set_size (self->workspace_header_widgets, 0);
+
+  GTD_EXIT;
 }
+
+
+/*
+ * Callbacks
+ */
 
 static void
 on_cancel_selection_button_clicked (GtkWidget *button,
@@ -376,64 +229,26 @@ on_cancel_selection_button_clicked (GtkWidget *button,
 }
 
 static void
-on_stack_visible_child_cb (GtdWindow  *self,
+on_stack_visible_child_cb (GtkStack   *stack,
                            GParamSpec *pspec,
-                           GtkStack   *stack)
+                           GtdWindow  *self)
 {
-  GtkWidget *visible_child;
-  GtdPanel *panel;
-  GList *header_widgets;
+  GtdWorkspace *new_workspace;
 
-  visible_child = gtk_stack_get_visible_child (stack);
-  panel = GTD_PANEL (visible_child);
+  GTD_ENTRY;
 
-  /* Remove previous panel's widgets */
-  if (self->active_panel)
-    {
-      header_widgets = gtd_panel_get_header_widgets (self->active_panel);
+  remove_all_workspace_header_widgets (self);
 
-      /* Disconnect signals */
-      g_signal_handlers_disconnect_by_func (self->active_panel,
-                                            gtd_window__panel_menu_changed,
-                                            self);
+  if (self->current_workspace)
+    gtd_workspace_deactivate (self->current_workspace);
 
-      remove_widgets (self,
-                      self->panel_box_start,
-                      self->panel_box_end,
-                      header_widgets);
+  new_workspace = GTD_WORKSPACE (gtk_stack_get_visible_child (stack));
+  g_assert (new_workspace != NULL);
 
-      g_assert (self->headerbar_title_binding != NULL);
-      g_clear_pointer (&self->headerbar_title_binding, g_binding_unbind);
+  self->current_workspace = new_workspace;
+  gtd_workspace_activate (new_workspace);
 
-      g_list_free (header_widgets);
-    }
-
-  /* Add current panel's header widgets */
-  header_widgets = gtd_panel_get_header_widgets (panel);
-
-  add_widgets (self,
-               self->panel_box_start,
-               self->panel_box_end,
-               header_widgets);
-
-  g_list_free (header_widgets);
-
-  g_signal_connect (panel,
-                    "notify::menu",
-                    G_CALLBACK (gtd_window__panel_menu_changed),
-                    self);
-
-  /* Set panel as the new active panel */
-  g_set_object (&self->active_panel, panel);
-
-  /* Setup the panel's menu */
-  update_panel_menu (self);
-
-  self->headerbar_title_binding = g_object_bind_property (panel,
-                                                          "title",
-                                                          self->headerbar,
-                                                          "title",
-                                                          G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+  GTD_EXIT;
 }
 
 static void
@@ -482,6 +297,30 @@ on_show_notification_cb (GtdManager      *manager,
   gtd_window_notify (self, notification);
 }
 
+static void
+on_manager_workspace_added_cb (GtdManager   *manager,
+                               GtdWorkspace *workspace,
+                               GtdWindow    *self)
+{
+  GTD_ENTRY;
+
+  add_workspace (self, workspace);
+
+  GTD_EXIT;
+}
+
+static void
+on_manager_workspace_removed_cb (GtdManager   *manager,
+                                 GtdWorkspace *workspace,
+                                 GtdWindow    *self)
+{
+  GTD_ENTRY;
+
+  g_message ("Workspace removed");
+
+  GTD_EXIT;
+}
+
 
 /*
  * GtkWindow overrides
@@ -519,14 +358,10 @@ gtd_window_unmap (GtkWidget *widget)
 static void
 gtd_window_constructed (GObject *object)
 {
-  g_autoptr (GList) plugins = NULL;
-  g_autoptr (GList) lists = NULL;
-  g_autoptr (GList) l = NULL;
-  GtdPluginManager *plugin_manager;
-  GtkApplication *app;
+  g_autoptr (GPtrArray) workspaces = NULL;
   GtdManager *manager;
   GtdWindow *self;
-  GMenu *menu;
+  guint i;
 
   self = GTD_WINDOW (object);
 
@@ -535,39 +370,18 @@ gtd_window_constructed (GObject *object)
   /* Load stored size */
   load_geometry (GTD_WINDOW (object));
 
-  /* Gear menu */
-  app = GTK_APPLICATION (g_application_get_default ());
-  menu = gtk_application_get_menu_by_id (app, "gear-menu");
-  gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (self->gear_menu_button), G_MENU_MODEL (menu));
-
-  /* Add plugins' header widgets, and setup for new plugins */
   manager = gtd_manager_get_default ();
-  plugin_manager = gtd_manager_get_plugin_manager (manager);
-  plugins = gtd_plugin_manager_get_loaded_plugins (plugin_manager);
-
-  for (l = plugins; l; l = l->next)
-    on_plugin_loaded_cb (self, NULL, l->data);
-
-  g_signal_connect_swapped (plugin_manager, "plugin-loaded", G_CALLBACK (on_plugin_loaded_cb), self);
-  g_signal_connect_swapped (plugin_manager, "plugin-unloaded", G_CALLBACK (on_plugin_unloaded_cb), self);
-
-  /* Add loaded panels */
-  lists = gtd_manager_get_panels (manager);
-
-  for (l = lists; l; l = l->next)
-    on_panel_added_cb (NULL, l->data, self);
-
-  g_signal_connect (manager, "panel-added", G_CALLBACK (on_panel_added_cb), self);
-  g_signal_connect (manager, "panel-removed", G_CALLBACK (on_panel_removed_cb), self);
-
   g_signal_connect (manager, "show-error-message", G_CALLBACK (on_show_error_message_cb), self);
   g_signal_connect (manager, "show-notification", G_CALLBACK (on_show_notification_cb), self);
 
-  g_settings_bind (gtd_manager_get_settings (manager),
-                   "sidebar-revealed",
-                   self->toggle_sidebar_button,
-                   "active",
-                   G_SETTINGS_BIND_DEFAULT);
+  /* Workspaces */
+  workspaces = gtd_manager_get_workspaces (manager);
+
+  for (i = 0; i < workspaces->len; i++)
+    add_workspace (self, g_ptr_array_index (workspaces, i));
+
+  g_signal_connect (manager, "workspace-added", G_CALLBACK (on_manager_workspace_added_cb), self);
+  g_signal_connect (manager, "workspace-removed", G_CALLBACK (on_manager_workspace_removed_cb), self);
 }
 
 static void
@@ -636,24 +450,15 @@ gtd_window_class_init (GtdWindowClass *klass)
                            G_PARAM_READWRITE));
 
   g_type_ensure (GTD_TYPE_NOTIFICATION_WIDGET);
-  g_type_ensure (GTD_TYPE_SIDEBAR);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-window.ui");
 
-  gtk_widget_class_bind_template_child (widget_class, GtdWindow, back_button);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, cancel_selection_button);
-  gtk_widget_class_bind_template_child (widget_class, GtdWindow, gear_menu_button);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, headerbar);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, notification_widget);
-  gtk_widget_class_bind_template_child (widget_class, GtdWindow, new_list_button);
-  gtk_widget_class_bind_template_child (widget_class, GtdWindow, sidebar);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, stack);
-  gtk_widget_class_bind_template_child (widget_class, GtdWindow, toggle_sidebar_button);
-
-  gtk_widget_class_bind_template_child (widget_class, GtdWindow, extension_box_end);
-  gtk_widget_class_bind_template_child (widget_class, GtdWindow, extension_box_start);
-  gtk_widget_class_bind_template_child (widget_class, GtdWindow, panel_box_end);
-  gtk_widget_class_bind_template_child (widget_class, GtdWindow, panel_box_start);
+  gtk_widget_class_bind_template_child (widget_class, GtdWindow, workspace_box_end);
+  gtk_widget_class_bind_template_child (widget_class, GtdWindow, workspace_box_start);
 
   gtk_widget_class_bind_template_callback (widget_class, on_cancel_selection_button_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_stack_visible_child_cb);
@@ -662,27 +467,9 @@ gtd_window_class_init (GtdWindowClass *klass)
 static void
 gtd_window_init (GtdWindow *self)
 {
-  static const GActionEntry entries[] = {
-    { "activate-panel", on_action_activate_panel_activated_cb, "(sv)" },
-    { "toggle-archive", on_action_toggle_archive_activated_cb, "b" },
-  };
+  self->workspace_header_widgets = g_ptr_array_new_with_free_func (g_object_unref);
 
   gtk_widget_init_template (GTK_WIDGET (self));
-
-  g_action_map_add_action_entries (G_ACTION_MAP (self),
-                                   entries,
-                                   G_N_ELEMENTS (entries),
-                                   self);
-
-  gtk_actionable_set_action_target_value (GTK_ACTIONABLE (self->back_button),
-                                          g_variant_new_boolean (FALSE));
-
-  /* Task list panel */
-  self->task_list_panel = GTD_PANEL (gtd_task_list_panel_new ());
-  on_panel_added_cb (gtd_manager_get_default (), self->task_list_panel, self);
-
-  gtd_sidebar_set_panel_stack (self->sidebar, GTK_STACK (self->stack));
-  gtd_sidebar_set_task_list_panel (self->sidebar, self->task_list_panel);
 
   /* Development build */
   if (is_development_build ())
@@ -767,7 +554,6 @@ gtd_window_set_mode (GtdWindow     *self,
       context = gtk_widget_get_style_context (GTK_WIDGET (self->headerbar));
       is_selection_mode = (mode == GTD_WINDOW_MODE_SELECTION);
 
-      gtk_widget_set_visible (self->gear_menu_button, !is_selection_mode);
       gtk_widget_set_visible (self->cancel_selection_button, is_selection_mode);
       gtk_header_bar_set_show_title_buttons (self->headerbar, !is_selection_mode);
       gtk_header_bar_set_subtitle (self->headerbar, NULL);
@@ -816,11 +602,51 @@ gtd_window_set_custom_title (GtdWindow   *self,
     }
 }
 
+/**
+ * gtd_window_embed_widget_in_header:
+ * @self: a #GtdWindow
+ * @widget: a #GtkWidget
+ * @position: either @GTK_POS_LEFT or @GTK_POS_RIGHT
+ *
+ * Embeds @widget into @self's header bar.
+ */
+void
+gtd_window_embed_widget_in_header (GtdWindow       *self,
+                                   GtkWidget       *widget,
+                                   GtkPositionType  position)
+{
+  g_return_if_fail (GTD_IS_WINDOW (self));
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  GTD_ENTRY;
+
+  /* add to header */
+  switch (position)
+    {
+    case GTK_POS_RIGHT:
+      gtk_container_add (GTK_CONTAINER (self->workspace_box_end), widget);
+      break;
+
+    case GTK_POS_LEFT:
+      gtk_container_add (GTK_CONTAINER (self->workspace_box_start), widget);
+      break;
+
+    case GTK_POS_TOP:
+    case GTK_POS_BOTTOM:
+    default:
+      g_warning ("Invalid position passed");
+      return;
+    }
+
+  g_ptr_array_add (self->workspace_header_widgets, g_object_ref (widget));
+
+  GTD_EXIT;
+
+}
+
 /* Private functions */
 void
 _gtd_window_finish_startup (GtdWindow *self)
 {
   g_return_if_fail (GTD_IS_WINDOW (self));
-
-  gtd_sidebar_activate (self->sidebar);
 }

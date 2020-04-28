@@ -16,39 +16,22 @@
             <property name="valign">start</property>
           </object>
         </child>
+
+        <!-- Main Stack -->
         <child>
-          <object class="GtkBox">
-
-            <!-- Sidebar -->
-            <child>
-              <object class="GtkRevealer" id="sidebar_revealer">
-                <property name="transition-type">slide-left</property>
-                <property name="reveal-child" bind-source="toggle_sidebar_button" bind-property="active" bind-flags="default" />
-                <child>
-                  <object class="GtdSidebar" id="sidebar">
-                    <property name="can_focus">False</property>
-                    <property name="vexpand">True</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-
-            <!-- Main Stack -->
-            <child>
-              <object class="GtkStack" id="stack">
-                <property name="hexpand">true</property>
-                <property name="vexpand">true</property>
-                <property name="homogeneous">0</property>
-                <property name="transition_duration">250</property>
-                <property name="transition_type">crossfade</property>
-                <signal name="notify::visible-child" handler="on_stack_visible_child_cb" object="GtdWindow" swapped="yes"/>
-                <style>
-                  <class name="background"/>
-                </style>
-              </object>
-            </child>
+          <object class="GtkStack" id="stack">
+            <property name="hexpand">true</property>
+            <property name="vexpand">true</property>
+            <property name="homogeneous">0</property>
+            <property name="transition_duration">250</property>
+            <property name="transition_type">crossfade</property>
+            <signal name="notify::visible-child" handler="on_stack_visible_child_cb" object="GtdWindow" swapped="no"/>
+            <style>
+              <class name="background"/>
+            </style>
           </object>
         </child>
+
       </object>
     </child>
     <child type="titlebar">
@@ -58,37 +41,7 @@
             <property name="hexpand">1</property>
             <property name="show-title-buttons">1</property>
             <child>
-              <object class="GtkMenuButton" id="new_list_button">
-                <property name="can_focus">1</property>
-                <property name="label" translatable="yes">New List</property>
-                <property name="receives_default">1</property>
-                <property name="popover">new_list_popover</property>
-                <property name="halign">start</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkButton" id="back_button">
-                <property name="visible" bind-source="new_list_button" bind-property="visible" bind-flags="sync-create|invert-boolean" />
-                <property name="can_focus">1</property>
-                <property name="receives_default">1</property>
-                <property name="halign">start</property>
-                <property name="action-name">win.toggle-archive</property>
-                <property name="icon-name">go-previous-symbolic</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkToggleButton" id="toggle_sidebar_button">
-                <property name="can_focus">1</property>
-                <property name="icon-name">builder-view-left-pane-symbolic</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkBox" id="panel_box_start">
-                <property name="spacing">6</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkBox" id="extension_box_start">
+              <object class="GtkBox" id="workspace_box_start">
                 <property name="spacing">6</property>
               </object>
             </child>
@@ -109,18 +62,7 @@
               </object>
             </child>
             <child type="end">
-              <object class="GtkMenuButton" id="gear_menu_button">
-                <property name="can_focus">1</property>
-                <property name="icon-name">view-more-symbolic</property>
-              </object>
-            </child>
-            <child type="end">
-              <object class="GtkBox" id="panel_box_end">
-                <property name="spacing">6</property>
-              </object>
-            </child>
-            <child type="end">
-              <object class="GtkBox" id="extension_box_end">
+              <object class="GtkBox" id="workspace_box_end">
                 <property name="spacing">6</property>
               </object>
             </child>
@@ -129,16 +71,7 @@
       </object>
     </child>
   </template>
-  <object class="GtdProviderPopover" id="new_list_popover">
-    <property name="can_focus">False</property>
-    <property name="position">bottom</property>
-  </object>
-  <object class="GtkSizeGroup">
-    <widgets>
-      <widget name="stack"/>
-      <widget name="headerbar"/>
-    </widgets>
-  </object>
+
   <menu id="app-menu">
     <section>
       <item>
