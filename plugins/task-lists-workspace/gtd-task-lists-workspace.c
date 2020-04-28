@@ -268,7 +268,7 @@ on_stack_visible_child_cb (GtdTaskListsWorkspace *self,
 static const gchar*
 gtd_task_lists_workspace_get_id (GtdWorkspace *workspace)
 {
-  return "task-lists-workspace";
+  return "task-lists";
 }
 
 static const gchar*
