@@ -57,7 +57,6 @@ struct _GtdWindow
 {
   GtkApplicationWindow application;
 
-  GtkWidget          *cancel_selection_button;
   GtkHeaderBar       *headerbar;
   GtkStack           *stack;
   GtkWidget          *workspace_box_end;
@@ -68,9 +67,6 @@ struct _GtdWindow
   GPtrArray          *workspace_header_widgets;
 
   GtdWorkspace       *current_workspace;
-
-  /* mode */
-  GtdWindowMode       mode;
 };
 
 typedef struct
@@ -83,13 +79,6 @@ typedef struct
 
 G_DEFINE_TYPE (GtdWindow, gtd_window, GTK_TYPE_APPLICATION_WINDOW)
 
-
-enum
-{
-  PROP_0,
-  PROP_MODE,
-  LAST_PROP
-};
 
 
 static void
@@ -220,13 +209,6 @@ remove_all_workspace_header_widgets (GtdWindow *self)
 /*
  * Callbacks
  */
-
-static void
-on_cancel_selection_button_clicked (GtkWidget *button,
-                                    GtdWindow *self)
-{
-  gtd_window_set_mode (self, GTD_WINDOW_MODE_NORMAL);
-}
 
 static void
 on_stack_visible_child_cb (GtkStack   *stack,
@@ -385,82 +367,25 @@ gtd_window_constructed (GObject *object)
 }
 
 static void
-gtd_window_get_property (GObject    *object,
-                         guint       prop_id,
-                         GValue     *value,
-                         GParamSpec *pspec)
-{
-  GtdWindow *self = GTD_WINDOW (object);
-
-  switch (prop_id)
-    {
-    case PROP_MODE:
-      g_value_set_enum (value, self->mode);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-    }
-}
-
-static void
-gtd_window_set_property (GObject      *object,
-                         guint         prop_id,
-                         const GValue *value,
-                         GParamSpec   *pspec)
-{
-  GtdWindow *self = GTD_WINDOW (object);
-
-  switch (prop_id)
-    {
-    case PROP_MODE:
-      gtd_window_set_mode (self, g_value_get_enum (value));
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-    }
-}
-
-static void
 gtd_window_class_init (GtdWindowClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->constructed = gtd_window_constructed;
-  object_class->get_property = gtd_window_get_property;
-  object_class->set_property = gtd_window_set_property;
 
   widget_class->unmap = gtd_window_unmap;
-
-  /**
-   * GtdWindow::mode:
-   *
-   * The current interaction mode of the window.
-   */
-  g_object_class_install_property (
-        object_class,
-        PROP_MODE,
-        g_param_spec_enum ("mode",
-                           "Mode of this window",
-                           "The interaction mode of the window",
-                           GTD_TYPE_WINDOW_MODE,
-                           GTD_WINDOW_MODE_NORMAL,
-                           G_PARAM_READWRITE));
 
   g_type_ensure (GTD_TYPE_NOTIFICATION_WIDGET);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-window.ui");
 
-  gtk_widget_class_bind_template_child (widget_class, GtdWindow, cancel_selection_button);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, headerbar);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, notification_widget);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, stack);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, workspace_box_end);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, workspace_box_start);
 
-  gtk_widget_class_bind_template_callback (widget_class, on_cancel_selection_button_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_stack_visible_child_cb);
 }
 
@@ -514,64 +439,6 @@ gtd_window_cancel_notification (GtdWindow       *self,
   g_return_if_fail (GTD_IS_WINDOW (self));
 
   gtd_notification_widget_cancel (self->notification_widget, notification);
-}
-
-/**
- * gtd_window_get_mode:
- * @window: a #GtdWindow
- *
- * Retrieves the current mode of @window.
- *
- * Returns: the #GtdWindow::mode property value
- */
-GtdWindowMode
-gtd_window_get_mode (GtdWindow *self)
-{
-  g_return_val_if_fail (GTD_IS_WINDOW (self), GTD_WINDOW_MODE_NORMAL);
-
-  return self->mode;
-}
-
-/**
- * gtd_window_set_mode:
- * @window: a #GtdWindow
- * @mode: a #GtdWindowMode
- *
- * Sets the current window mode to @mode.
- */
-void
-gtd_window_set_mode (GtdWindow     *self,
-                     GtdWindowMode  mode)
-{
-  g_return_if_fail (GTD_IS_WINDOW (self));
-
-  if (self->mode != mode)
-    {
-      GtkStyleContext *context;
-      gboolean is_selection_mode;
-
-      self->mode = mode;
-      context = gtk_widget_get_style_context (GTK_WIDGET (self->headerbar));
-      is_selection_mode = (mode == GTD_WINDOW_MODE_SELECTION);
-
-      gtk_widget_set_visible (self->cancel_selection_button, is_selection_mode);
-      gtk_header_bar_set_show_title_buttons (self->headerbar, !is_selection_mode);
-      gtk_header_bar_set_subtitle (self->headerbar, NULL);
-
-      if (is_selection_mode)
-        {
-          gtk_style_context_add_class (context, "selection-mode");
-          gtk_header_bar_set_custom_title (self->headerbar, NULL);
-          gtk_header_bar_set_title (self->headerbar, _("Click a task list to select"));
-        }
-      else
-        {
-          gtk_style_context_remove_class (context, "selection-mode");
-          gtk_header_bar_set_title (self->headerbar, _("To Do"));
-        }
-
-      g_object_notify (G_OBJECT (self), "mode");
-    }
 }
 
 /**
