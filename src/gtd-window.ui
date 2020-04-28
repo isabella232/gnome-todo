@@ -4,6 +4,20 @@
   <template class="GtdWindow" parent="GtkApplicationWindow">
     <property name="default_width">800</property>
     <property name="default_height">600</property>
+
+    <child>
+      <object class="GtkShortcutController">
+        <property name="name">Main Window Shortcuts</property>
+        <property name="scope">global</property>
+        <child>
+          <object class="GtkShortcut">
+            <property name="trigger">F11</property>
+            <property name="action">action(win.toggle-fullscreen)</property>
+          </object>
+        </child>
+      </object>
+    </child>
+
     <style>
       <class name="org-gnome-Todo"/>
     </style>
