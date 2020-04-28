@@ -24,6 +24,7 @@
 #include "interfaces/gtd-provider.h"
 #include "interfaces/gtd-panel.h"
 #include "interfaces/gtd-workspace.h"
+#include "widgets/gtd-menu-button.h"
 #include "gtd-application.h"
 #include "gtd-debug.h"
 #include "gtd-enum-types.h"
@@ -61,12 +62,15 @@ struct _GtdWindow
   GtkStack           *stack;
   GtkWidget          *workspace_box_end;
   GtkWidget          *workspace_box_start;
+  GtkListBox         *workspaces_listbox;
+  GtdMenuButton      *workspaces_menu_button;
 
   GtdNotificationWidget *notification_widget;
 
   GPtrArray          *workspace_header_widgets;
 
   GtdWorkspace       *current_workspace;
+  GListStore         *workspaces;
 };
 
 typedef struct
@@ -79,7 +83,9 @@ typedef struct
 
 G_DEFINE_TYPE (GtdWindow, gtd_window, GTK_TYPE_APPLICATION_WINDOW)
 
-
+static gint             compare_workspaced_func                  (gconstpointer      a,
+                                                                  gconstpointer      b,
+                                                                  gpointer           user_data);
 
 static void
 setup_development_build (GtdWindow *self)
@@ -178,6 +184,20 @@ add_workspace (GtdWindow    *self,
   workspace_id = gtd_workspace_get_id (workspace);
 
   gtk_stack_add_named (self->stack, GTK_WIDGET (workspace), workspace_id);
+  g_list_store_insert_sorted (self->workspaces, workspace, compare_workspaced_func, self);
+}
+
+static void
+remove_workspace (GtdWindow    *self,
+                  GtdWorkspace *workspace)
+{
+  guint position;
+
+  if (!g_list_store_find (self->workspaces, workspace, &position))
+    return;
+
+  gtk_container_remove (GTK_CONTAINER (self->stack), GTK_WIDGET (workspace));
+  g_list_store_remove (self->workspaces, position);
 }
 
 static void
@@ -210,11 +230,27 @@ remove_all_workspace_header_widgets (GtdWindow *self)
  * Callbacks
  */
 
+
+static gint
+compare_workspaced_func (gconstpointer a,
+                         gconstpointer b,
+                         gpointer      user_data)
+{
+  gint a_priority;
+  gint b_priority;
+
+  a_priority = gtd_workspace_get_priority ((GtdWorkspace *)a);
+  b_priority = gtd_workspace_get_priority ((GtdWorkspace *)b);
+
+  return b_priority - a_priority;
+}
+
 static void
 on_stack_visible_child_cb (GtkStack   *stack,
                            GParamSpec *pspec,
                            GtdWindow  *self)
 {
+  g_autoptr (GIcon) workspace_icon = NULL;
   GtdWorkspace *new_workspace;
 
   GTD_ENTRY;
@@ -229,6 +265,9 @@ on_stack_visible_child_cb (GtkStack   *stack,
 
   self->current_workspace = new_workspace;
   gtd_workspace_activate (new_workspace);
+
+  workspace_icon = gtd_workspace_get_icon (new_workspace);
+  gtd_menu_button_set_gicon (self->workspaces_menu_button, workspace_icon);
 
   GTD_EXIT;
 }
@@ -298,9 +337,52 @@ on_manager_workspace_removed_cb (GtdManager   *manager,
 {
   GTD_ENTRY;
 
-  g_message ("Workspace removed");
+  remove_workspace (self, workspace);
 
   GTD_EXIT;
+}
+
+static void
+on_workspaces_listbox_row_activated_cb (GtkListBox    *workspaces_listbox,
+                                        GtkListBoxRow *row,
+                                        GtdWindow     *self)
+{
+  g_autoptr (GtdWorkspace) workspace = NULL;
+
+  workspace = g_list_model_get_item (G_LIST_MODEL (self->workspaces),
+                                     gtk_list_box_row_get_index (row));
+
+  gtk_stack_set_visible_child (self->stack, GTK_WIDGET (workspace));
+
+  gtd_menu_button_popdown (self->workspaces_menu_button);
+}
+
+static GtkWidget*
+create_workspace_row_func (gpointer item,
+                           gpointer user_data)
+{
+  GtkWidget *label;
+  GtkWidget *image;
+  GtkWidget *box;
+
+  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_widget_set_margin_start (box, 6);
+  gtk_widget_set_margin_end (box, 6);
+  gtk_widget_set_margin_top (box, 3);
+  gtk_widget_set_margin_bottom (box, 3);
+
+  image = gtk_image_new ();
+  g_object_bind_property (item, "icon", image, "gicon", G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+
+  label = gtk_label_new ("");
+  gtk_widget_set_hexpand (label, TRUE);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  g_object_bind_property (item, "title", label, "label", G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+
+  gtk_container_add (GTK_CONTAINER (box), image);
+  gtk_container_add (GTK_CONTAINER (box), label);
+
+  return box;
 }
 
 
@@ -338,6 +420,16 @@ gtd_window_unmap (GtkWidget *widget)
  */
 
 static void
+gtd_window_dispose (GObject *object)
+{
+  GtdWindow *self = GTD_WINDOW (object);
+
+  g_clear_object (&self->workspaces);
+
+  G_OBJECT_CLASS (gtd_window_parent_class)->dispose (object);
+}
+
+static void
 gtd_window_constructed (GObject *object)
 {
   g_autoptr (GPtrArray) workspaces = NULL;
@@ -372,10 +464,12 @@ gtd_window_class_init (GtdWindowClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->dispose = gtd_window_dispose;
   object_class->constructed = gtd_window_constructed;
 
   widget_class->unmap = gtd_window_unmap;
 
+  g_type_ensure (GTD_TYPE_MENU_BUTTON);
   g_type_ensure (GTD_TYPE_NOTIFICATION_WIDGET);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-window.ui");
@@ -385,16 +479,26 @@ gtd_window_class_init (GtdWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, stack);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, workspace_box_end);
   gtk_widget_class_bind_template_child (widget_class, GtdWindow, workspace_box_start);
+  gtk_widget_class_bind_template_child (widget_class, GtdWindow, workspaces_menu_button);
+  gtk_widget_class_bind_template_child (widget_class, GtdWindow, workspaces_listbox);
 
   gtk_widget_class_bind_template_callback (widget_class, on_stack_visible_child_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_workspaces_listbox_row_activated_cb);
 }
 
 static void
 gtd_window_init (GtdWindow *self)
 {
   self->workspace_header_widgets = g_ptr_array_new_with_free_func (g_object_unref);
+  self->workspaces = g_list_store_new (GTD_TYPE_WORKSPACE);
 
   gtk_widget_init_template (GTK_WIDGET (self));
+
+  gtk_list_box_bind_model (self->workspaces_listbox,
+                           G_LIST_MODEL (self->workspaces),
+                           create_workspace_row_func,
+                           self,
+                           NULL);
 
   /* Development build */
   if (is_development_build ())

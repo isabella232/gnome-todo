@@ -40,6 +40,15 @@
           <object class="GtkHeaderBar" id="headerbar">
             <property name="hexpand">1</property>
             <property name="show-title-buttons">1</property>
+
+            <!-- Workspace Button -->
+            <child>
+              <object class="GtdMenuButton" id="workspaces_menu_button">
+                <property name="can_focus">1</property>
+                <property name="popover">workspaces_popover</property>
+              </object>
+            </child>
+
             <child>
               <object class="GtkBox" id="workspace_box_start">
                 <property name="spacing">6</property>
@@ -61,6 +70,30 @@
       </object>
     </child>
   </template>
+
+  <!-- Workspaces Popover -->
+  <object class="GtkPopover" id="workspaces_popover">
+    <child>
+      <object class="GtkBox">
+        <property name="margin-start">6</property>
+        <property name="margin-end">6</property>
+        <property name="margin-top">6</property>
+        <property name="margin-bottom">6</property>
+        <property name="width-request">150</property>
+
+        <child>
+          <object class="GtkListBox" id="workspaces_listbox">
+            <property name="selection-mode">none</property>
+            <signal name="row-activated" handler="on_workspaces_listbox_row_activated_cb" object="GtdWindow" swapped="no" />
+            <style>
+              <class name="transparent" />
+            </style>
+          </object>
+        </child>
+
+      </object>
+    </child>
+  </object>
 
   <menu id="app-menu">
     <section>
