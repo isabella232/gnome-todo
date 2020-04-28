@@ -25,6 +25,7 @@
 #include "gtd-list-model-sort.h"
 #include "gtd-list-store.h"
 #include "gtd-manager.h"
+#include "gtd-menu-button.h"
 #include "gtd-notification.h"
 #include "gtd-object.h"
 #include "gtd-panel.h"
