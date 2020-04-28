@@ -231,6 +231,20 @@ remove_all_workspace_header_widgets (GtdWindow *self)
  */
 
 
+static void
+on_action_activate_workspace_activated_cb (GSimpleAction *simple,
+                                           GVariant      *state,
+                                           gpointer       user_data)
+{
+  GtdWindow *self;
+  const gchar *workspace_id;
+
+  self = GTD_WINDOW (user_data);
+  workspace_id = g_variant_get_string (state, NULL);
+
+  gtk_stack_set_visible_child_name (self->stack, workspace_id);
+}
+
 static gint
 compare_workspaced_func (gconstpointer a,
                          gconstpointer b,
@@ -489,6 +503,15 @@ gtd_window_class_init (GtdWindowClass *klass)
 static void
 gtd_window_init (GtdWindow *self)
 {
+  static const GActionEntry entries[] = {
+    { "activate-workspace", on_action_activate_workspace_activated_cb, "s" },
+  };
+
+  g_action_map_add_action_entries (G_ACTION_MAP (self),
+                                   entries,
+                                   G_N_ELEMENTS (entries),
+                                   self);
+
   self->workspace_header_widgets = g_ptr_array_new_with_free_func (g_object_unref);
   self->workspaces = g_list_store_new (GTD_TYPE_WORKSPACE);
 
