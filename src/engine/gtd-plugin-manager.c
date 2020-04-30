@@ -53,6 +53,7 @@ static const gchar * const default_plugins[] = {
   "inbox-panel",
   "eds",
   "night-light",
+  "peace",
 };
 
 static gboolean

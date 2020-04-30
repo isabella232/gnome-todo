@@ -37,6 +37,11 @@
     <file alias="plugins/night-light/night-light.plugin">night-light/night-light.plugin</file>
   </gresource>
 
+  <!--Peace-->
+  <gresource prefix="/org/gnome/todo">
+    <file alias="plugins/peace/peace.plugin">peace/peace.plugin</file>
+  </gresource>
+
   <!--Scheduled panel-->
   <gresource prefix="/org/gnome/todo">
     <file alias="plugins/scheduled-panel/scheduled-panel.plugin">scheduled-panel/scheduled-panel.plugin</file>
