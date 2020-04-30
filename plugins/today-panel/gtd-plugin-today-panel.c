@@ -1,6 +1,6 @@
 /* gtd-plugin-today-panel.c
  *
- * Copyright (C) 2016 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2016-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,9 @@
 #define G_LOG_DOMAIN "GtdPluginTodayPanel"
 
 #include "gtd-panel-today.h"
+
 #include "gtd-plugin-today-panel.h"
+#include "gtd-today-omni-area-addin.h"
 
 #include <glib/gi18n.h>
 #include <glib-object.h>
@@ -178,4 +180,8 @@ gtd_plugin_today_panel_register_types (PeasObjectModule *module)
   peas_object_module_register_extension_type (module,
                                               GTD_TYPE_ACTIVATABLE,
                                               GTD_TYPE_PLUGIN_TODAY_PANEL);
+
+  peas_object_module_register_extension_type (module,
+                                              GTD_TYPE_OMNI_AREA_ADDIN,
+                                              GTD_TYPE_TODAY_OMNI_AREA_ADDIN);
 }

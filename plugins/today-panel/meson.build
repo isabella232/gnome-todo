@@ -4,6 +4,7 @@ plugins_ldflags += ['-Wl,--undefined=gtd_plugin_today_panel_register_types']
 
 sources = files(
   'gtd-panel-today.c',
+  'gtd-today-omni-area-addin.c',
   'gtd-plugin-' + plugin_name + '.c'
 )
 
