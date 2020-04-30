@@ -83,6 +83,14 @@
                 <property name="spacing">6</property>
               </object>
             </child>
+
+            <!-- Omni Area -->
+            <child type="title">
+              <object class="GtdOmniArea" id="omni_area">
+              </object>
+            </child>
+
+
             <child type="end">
               <object class="GtkMenuButton">
                 <property name="menu-model">app-menu</property>

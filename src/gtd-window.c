@@ -33,6 +33,7 @@
 #include "gtd-manager-protected.h"
 #include "gtd-notification.h"
 #include "gtd-notification-widget.h"
+#include "gtd-omni-area.h"
 #include "gtd-plugin-manager.h"
 #include "gtd-task.h"
 #include "gtd-task-list.h"
@@ -577,6 +578,7 @@ gtd_window_class_init (GtdWindowClass *klass)
 
   g_type_ensure (GTD_TYPE_MENU_BUTTON);
   g_type_ensure (GTD_TYPE_NOTIFICATION_WIDGET);
+  g_type_ensure (GTD_TYPE_OMNI_AREA);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-window.ui");
 
