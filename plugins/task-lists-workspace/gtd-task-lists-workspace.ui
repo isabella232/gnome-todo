@@ -21,7 +21,6 @@
       <object class="GtkStack" id="stack">
         <property name="hexpand">true</property>
         <property name="vexpand">true</property>
-        <property name="homogeneous">0</property>
         <property name="transition_duration">250</property>
         <property name="transition_type">crossfade</property>
         <signal name="notify::visible-child" handler="on_stack_visible_child_cb" object="GtdTaskListsWorkspace" swapped="yes"/>
