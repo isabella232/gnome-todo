@@ -36,6 +36,7 @@ typedef struct _GtdMarkdownRenderer     GtdMarkdownRenderer;
 typedef struct _GtdNotification         GtdNotification;
 typedef struct _GtdNotificationWidget   GtdNotificationWidget;
 typedef struct _GtdObject               GtdObject;
+typedef struct _GtdOmniArea             GtdOmniArea;
 typedef struct _GtdPanel                GtdPanel;
 typedef struct _GtdPluginManager        GtdPluginManager;
 typedef struct _GtdProvider             GtdProvider;

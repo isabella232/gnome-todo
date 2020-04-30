@@ -28,6 +28,8 @@
 #include "gtd-menu-button.h"
 #include "gtd-notification.h"
 #include "gtd-object.h"
+#include "gtd-omni-area.h"
+#include "gtd-omni-area-addin.h"
 #include "gtd-panel.h"
 #include "gtd-provider.h"
 #include "gtd-provider-popover.h"

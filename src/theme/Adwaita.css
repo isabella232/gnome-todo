@@ -146,3 +146,19 @@ colorbutton.dark image {
 colorbutton.light image {
     color: black;
 }
+
+/* Omni Area */
+
+omniarea entry {
+  background-color: mix(@theme_bg_color, @content_view_bg, 0.25);
+  color: @theme_fg_color;
+}
+omniarea:hover entry,
+omniarea:active entry {
+  background-color: @content_view_bg;
+  color: @theme_fg_color;
+}
+
+omniarea:backdrop entry {
+  background-color: @theme_bg_color;
+}
