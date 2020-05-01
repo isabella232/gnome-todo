@@ -54,7 +54,6 @@ G_DEFINE_INTERFACE (GtdActivatable, gtd_activatable, G_TYPE_OBJECT)
 enum
 {
   PROVIDER_ADDED,
-  PROVIDER_CHANGED,
   PROVIDER_REMOVED,
   NUM_SIGNALS
 };
@@ -94,25 +93,6 @@ gtd_activatable_default_init (GtdActivatableInterface *iface)
                                           G_TYPE_NONE,
                                           1,
                                           GTD_TYPE_PROVIDER);
-
-  /**
-   * GtdActivatable::provider-changed:
-   * @activatable: a #GtdActivatable
-   * @provider: a #GtdProvider
-   *
-   * The ::provider-changed signal is emmited after a #GtdProvider
-   * has any of it's properties changed.
-   */
-  signals[PROVIDER_CHANGED] = g_signal_new ("provider-changed",
-                                            GTD_TYPE_ACTIVATABLE,
-                                            G_SIGNAL_RUN_LAST,
-                                            0,
-                                            NULL,
-                                            NULL,
-                                            NULL,
-                                            G_TYPE_NONE,
-                                            1,
-                                            GTD_TYPE_PROVIDER);
 
   /**
    * GtdActivatable::provider-removed:
