@@ -74,8 +74,8 @@ set_defines = [
   ['PACKAGE_STRING', '@0@ @1@'.format(meson.project_name(), gnome_todo_version)],
   ['PACKAGE_TARNAME', meson.project_name()],
   ['PACKAGE_URL', 'https://wiki.gnome.org/Apps/Todo'],
-  ['PACKAGE_VERSION', '@VCS_TAG@'],
-  ['VERSION', '@VCS_TAG@'],
+  ['PACKAGE_VERSION', meson.project_version()],
+  ['VERSION', meson.project_version()],
   # i18n
   ['GETTEXT_PACKAGE', meson.project_name()]
 ]
@@ -161,37 +161,11 @@ gnome_todo_deps = [
   cc.find_library('m', required: true)
 ]
 
-
-#######
-# VCS #
-#######
-
-vcs_identifier_h = declare_dependency(
-  sources: vcs_tag(
-    fallback: get_option('profile') != 'default'? 'devel' : 'stable',
-    input: configure_file(
-      output: 'config.h.in',
-      configuration: config_h
-    ),
-    output: 'config.h'
-  )
-)
+configure_file(output: 'config.h', configuration: config_h)
 
 gnome = import('gnome')
 i18n = import('i18n')
 pkg = import('pkgconfig')
-
-top_inc = include_directories('.')
-src_inc = include_directories(
-  'src',
-  'src/engine',
-  'src/interfaces',
-  'src/models',
-  'src/notification',
-  'src/provider',
-  'src/task-list-view',
-  'src/widgets',
-)
 
 data_dir = join_paths(meson.source_root(), 'data')
 icons_dir = join_paths(data_dir, 'icons')
@@ -199,7 +173,6 @@ po_dir = join_paths(meson.source_root(), 'po')
 plugins_dir = join_paths(meson.source_root(), 'plugins')
 
 subdir('build-aux')
-subdir('plugins')
 subdir('src')
 subdir('data')
 subdir('po')

@@ -7,8 +7,9 @@ sources = files(
 )
 
 tests_incs = [
-  src_inc,
+  include_directories('../src'),
   include_directories('.'),
+  incs,
 ]
 
 libgtd_tests = static_library(

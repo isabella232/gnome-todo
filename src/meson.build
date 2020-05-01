@@ -1,4 +1,37 @@
 
+sources = []
+
+#######
+# VCS #
+#######
+
+vcs_tag = vcs_tag(
+  fallback: get_option('profile') != 'default'? 'devel' : 'stable',
+     input: 'gtd-vcs.h.in',
+    output: 'gtd-vcs.h'
+)
+
+vcs_identifier_h = declare_dependency(sources: vcs_tag)
+
+gnome_todo_deps += vcs_identifier_h
+
+###########
+# Plugins #
+###########
+
+incs = include_directories(
+  'engine',
+  'interfaces',
+  'logging',
+  'models',
+  'notification',
+  'provider',
+  'task-list-view',
+  'widgets',
+)
+
+subdir('plugins')
+
 ################
 # Dependencies #
 ################
@@ -45,7 +78,7 @@ install_headers(headers, subdir: meson.project_name())
 # Source files #
 ################
 
-sources = files(
+sources += files(
   'engine/gtd-manager.c',
   'engine/gtd-plugin-manager.c',
   'interfaces/gtd-activatable.c',
@@ -102,15 +135,6 @@ sources += gnome.compile_resources(
 )
 
 sources += gnome.compile_resources(
-  'gtd-plugin-resources',
-  join_paths(plugins_dir, 'plugins.gresource.xml'),
-    source_dir: [ plugins_dir, join_paths(meson.build_root(), 'plugins') ],
-        c_name: 'todo_plugins',
-  dependencies: plugins_confs,
-        export: true,
-)
-
-sources += gnome.compile_resources(
   'gtd-icon-resources',
   join_paths(icons_dir, 'icons.gresource.xml'),
     source_dir: [ icons_dir ],
@@ -126,19 +150,6 @@ sources += gnome.mkenums(
   c_template: enum + '.c.template',
   h_template: enum + '.h.template'
 )
-
-incs = [
-  top_inc,
-  include_directories(
-    'engine',
-    'provider',
-    'logging',
-    'task-list-view',
-    'notification',
-    'interfaces',
-    'widgets',
-  )
-]
 
 cflags = [
   '-DPACKAGE_DATA_DIR="@0@"'.format(gnome_todo_pkgdatadir),
@@ -201,7 +212,6 @@ libgtd = shared_library(
 
 libgtd_dep = declare_dependency(
             link_with: libgtd,
-  include_directories: src_inc,
          dependencies: gtd_deps
 )
 
