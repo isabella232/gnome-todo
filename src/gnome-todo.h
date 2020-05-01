@@ -19,6 +19,8 @@
 #ifndef GNOME_TODO_H
 #define GNOME_TODO_H
 
+#include <libpeas/peas.h>
+
 #include "gtd-activatable.h"
 #include "gtd-enums.h"
 #include "gtd-list-model-filter.h"
