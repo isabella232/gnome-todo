@@ -10,5 +10,5 @@ Builtin = true
 Hidden = true
 License = GPL
 Loader = C
-Embedded = gtd_plugin_today_panel_register_types
+Embedded = today_panel_plugin_register_types
 Depends =

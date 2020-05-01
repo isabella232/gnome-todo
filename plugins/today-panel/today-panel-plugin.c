@@ -1,6 +1,6 @@
-/* gtd-plugin-today-panel.h
+/* gtd-plugin-today-panel.c
  *
- * Copyright (C) 2016 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2016-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,22 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GTD_PLUGIN_TODAY_PANEL_H
-#define GTD_PLUGIN_TODAY_PANEL_H
-
 #include "gnome-todo.h"
 
-#include <glib.h>
+#include "gtd-panel-today.h"
+#include "gtd-today-omni-area-addin.h"
 
-G_BEGIN_DECLS
+G_MODULE_EXPORT void
+today_panel_plugin_register_types (PeasObjectModule *module)
+{
+  peas_object_module_register_extension_type (module,
+                                              GTD_TYPE_PANEL,
+                                              GTD_TYPE_PANEL_TODAY);
 
-#define GTD_TYPE_PLUGIN_TODAY_PANEL (gtd_plugin_today_panel_get_type())
-
-G_DECLARE_FINAL_TYPE (GtdPluginTodayPanel, gtd_plugin_today_panel, GTD, PLUGIN_TODAY_PANEL, PeasExtensionBase)
-
-G_MODULE_EXPORT void gtd_plugin_today_panel_register_types       (PeasObjectModule   *module);
-
-G_END_DECLS
-
-#endif /* GTD_PLUGIN_TODAY_PANEL_H */
-
+  peas_object_module_register_extension_type (module,
+                                              GTD_TYPE_OMNI_AREA_ADDIN,
+                                              GTD_TYPE_TODAY_OMNI_AREA_ADDIN);
+}

@@ -1,11 +1,11 @@
 plugin_name = 'today-panel'
 
-plugins_ldflags += ['-Wl,--undefined=gtd_plugin_today_panel_register_types']
+plugins_ldflags += ['-Wl,--undefined=today_panel_plugin_register_types']
 
 sources = files(
   'gtd-panel-today.c',
   'gtd-today-omni-area-addin.c',
-  'gtd-plugin-' + plugin_name + '.c'
+  'today-panel-plugin.c'
 )
 
 plugins_libs += static_library(
@@ -14,12 +14,4 @@ plugins_libs += static_library(
   include_directories: plugins_incs,
          dependencies: gnome_todo_deps,
                   pic: true,
-)
-
-plugin_data = plugin_name + '.plugin'
-
-plugins_confs += configure_file(
-          input: plugin_data + '.in',
-         output: plugin_data,
-  configuration: plugins_conf
 )
