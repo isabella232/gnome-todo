@@ -1,6 +1,6 @@
 /* gtd-activatable.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,8 +53,6 @@ G_DEFINE_INTERFACE (GtdActivatable, gtd_activatable, G_TYPE_OBJECT)
 
 enum
 {
-  PANEL_ADDED,
-  PANEL_REMOVED,
   PROVIDER_ADDED,
   PROVIDER_CHANGED,
   PROVIDER_REMOVED,
@@ -77,44 +75,6 @@ gtd_activatable_default_init (GtdActivatableInterface *iface)
                                                             "The preferences panel of the plugins",
                                                             GTK_TYPE_WIDGET,
                                                             G_PARAM_READABLE));
-
-  /**
-   * GtdActivatable::panel-added:
-   * @activatable: a #GtdActivatable
-   * @panel: a #GtdPanel
-   *
-   * The ::panel-added signal is emmited after a #GtdPanel
-   * is connected.
-   */
-  signals[PANEL_ADDED] = g_signal_new ("panel-added",
-                                       GTD_TYPE_ACTIVATABLE,
-                                       G_SIGNAL_RUN_LAST,
-                                       0,
-                                       NULL,
-                                       NULL,
-                                       NULL,
-                                       G_TYPE_NONE,
-                                       1,
-                                       GTD_TYPE_PANEL);
-
-  /**
-   * GtdActivatable::panel-removed:
-   * @activatable: a #GtdActivatable
-   * @panel: a #GtdPanel
-   *
-   * The ::panel-removed signal is emmited after a #GtdPanel
-   * is removed from the list.
-   */
-  signals[PANEL_REMOVED] = g_signal_new ("panel-removed",
-                                         GTD_TYPE_ACTIVATABLE,
-                                         G_SIGNAL_RUN_LAST,
-                                         0,
-                                         NULL,
-                                         NULL,
-                                         NULL,
-                                         G_TYPE_NONE,
-                                         1,
-                                         GTD_TYPE_PANEL);
 
   /**
    * GtdActivatable::provider-added:
@@ -248,23 +208,6 @@ gtd_activatable_get_preferences_panel (GtdActivatable *activatable)
   g_return_val_if_fail (GTD_ACTIVATABLE_GET_IFACE (activatable)->get_preferences_panel, NULL);
 
   return GTD_ACTIVATABLE_GET_IFACE (activatable)->get_preferences_panel (activatable);
-}
-
-/**
- * gtd_activatable_get_panels:
- * @activatable: a #GtdActivatable
- *
- * Retrieve the panel list of @activatable if any.
- *
- * Returns: (transfer none) (element-type Gtd.Panel): a #GList
- */
-GList*
-gtd_activatable_get_panels (GtdActivatable *activatable)
-{
-  g_return_val_if_fail (GTD_IS_ACTIVATABLE (activatable), NULL);
-  g_return_val_if_fail (GTD_ACTIVATABLE_GET_IFACE (activatable)->get_panels, NULL);
-
-  return GTD_ACTIVATABLE_GET_IFACE (activatable)->get_panels (activatable);
 }
 
 /**

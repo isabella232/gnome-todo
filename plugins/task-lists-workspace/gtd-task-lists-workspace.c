@@ -25,6 +25,7 @@
 #include "sidebar/gtd-sidebar.h"
 #include "gtd-task-list-panel.h"
 
+#include <libpeas/peas.h>
 #include <glib/gi18n.h>
 
 struct _GtdTaskListsWorkspace
@@ -45,6 +46,7 @@ struct _GtdTaskListsWorkspace
   GtdPanel           *active_panel;
   GtdPanel           *task_list_panel;
 
+  PeasExtensionSet   *panels_set;
   GSimpleActionGroup *action_group;
 };
 
@@ -60,6 +62,15 @@ enum
   PROP_TITLE,
   N_PROPS
 };
+
+enum
+{
+  PANEL_ADDED,
+  PANEL_REMOVED,
+  NUM_SIGNALS
+};
+
+static guint signals[NUM_SIGNALS] = { 0, };
 
 
 /*
@@ -190,7 +201,8 @@ on_back_button_clicked_cb (GtkButton             *button,
 }
 
 static void
-on_panel_added_cb (GtdManager            *manager,
+on_panel_added_cb (PeasExtensionSet      *extension_set,
+                   PeasPluginInfo        *plugin_info,
                    GtdPanel              *panel,
                    GtdTaskListsWorkspace *self)
 {
@@ -198,14 +210,22 @@ on_panel_added_cb (GtdManager            *manager,
                         GTK_WIDGET (panel),
                         gtd_panel_get_panel_name (panel),
                         gtd_panel_get_panel_title (panel));
+
+  g_signal_emit (self, signals[PANEL_ADDED], 0, panel);
 }
 
 static void
-on_panel_removed_cb (GtdManager            *manager,
+on_panel_removed_cb (PeasExtensionSet      *extension_set,
+                     PeasPluginInfo        *plugin_info,
                      GtdPanel              *panel,
                      GtdTaskListsWorkspace *self)
 {
+  g_object_ref (panel);
+
   gtk_container_remove (GTK_CONTAINER (self->stack), GTK_WIDGET (panel));
+  g_signal_emit (self, signals[PANEL_REMOVED], 0, panel);
+
+  g_object_unref (panel);
 }
 
 static void
@@ -319,6 +339,21 @@ gtd_workspace_iface_init (GtdWorkspaceInterface  *iface)
 
 
 /*
+ * GtkWidget overrides
+ */
+
+static void
+gtd_task_lists_workspace_destroy (GtkWidget *widget)
+{
+  GtdTaskListsWorkspace *self = (GtdTaskListsWorkspace *)widget;
+
+  g_clear_object (&self->panels_set);
+
+  GTK_WIDGET_CLASS (gtd_task_lists_workspace_parent_class)->destroy (widget);
+}
+
+
+/*
  * GObject overrides
  */
 
@@ -326,8 +361,6 @@ static void
 gtd_task_lists_workspace_constructed (GObject *object)
 {
   GtdTaskListsWorkspace *self = (GtdTaskListsWorkspace *)object;
-  g_autoptr (GList) lists = NULL;
-  g_autoptr (GList) l = NULL;
   GtdManager *manager;
 
   self = GTD_TASK_LISTS_WORKSPACE (object);
@@ -338,13 +371,16 @@ gtd_task_lists_workspace_constructed (GObject *object)
   manager = gtd_manager_get_default ();
 
   /* Add loaded panels */
-  lists = gtd_manager_get_panels (manager);
+  self->panels_set = peas_extension_set_new (peas_engine_get_default (),
+                                             GTD_TYPE_PANEL,
+                                             NULL);
 
-  for (l = lists; l; l = l->next)
-    on_panel_added_cb (NULL, l->data, self);
+  peas_extension_set_foreach (self->panels_set,
+                              (PeasExtensionSetForeachFunc) on_panel_added_cb,
+                              self);
 
-  g_signal_connect (manager, "panel-added", G_CALLBACK (on_panel_added_cb), self);
-  g_signal_connect (manager, "panel-removed", G_CALLBACK (on_panel_removed_cb), self);
+  g_signal_connect (self->panels_set, "extension-added", G_CALLBACK (on_panel_added_cb), self);
+  g_signal_connect (self->panels_set, "extension-removed", G_CALLBACK (on_panel_removed_cb), self);
 
   g_settings_bind (gtd_manager_get_settings (manager),
                    "sidebar-revealed",
@@ -395,6 +431,46 @@ gtd_task_lists_workspace_class_init (GtdTaskListsWorkspaceClass *klass)
   object_class->get_property = gtd_task_lists_workspace_get_property;
   object_class->set_property = gtd_task_lists_workspace_set_property;
 
+  widget_class->destroy = gtd_task_lists_workspace_destroy;
+
+  /**
+   * GtdTaskListsWorkspace::panel-added:
+   * @manager: a #GtdManager
+   * @panel: a #GtdPanel
+   *
+   * The ::panel-added signal is emmited after a #GtdPanel
+   * is added.
+   */
+  signals[PANEL_ADDED] = g_signal_new ("panel-added",
+                                        GTD_TYPE_TASK_LISTS_WORKSPACE,
+                                        G_SIGNAL_RUN_LAST,
+                                        0,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        G_TYPE_NONE,
+                                        1,
+                                        GTD_TYPE_PANEL);
+
+  /**
+   * GtdTaskListsWorkspace::panel-removed:
+   * @manager: a #GtdManager
+   * @panel: a #GtdPanel
+   *
+   * The ::panel-removed signal is emmited after a #GtdPanel
+   * is removed from the list.
+   */
+  signals[PANEL_REMOVED] = g_signal_new ("panel-removed",
+                                         GTD_TYPE_TASK_LISTS_WORKSPACE,
+                                         G_SIGNAL_RUN_LAST,
+                                         0,
+                                         NULL,
+                                         NULL,
+                                         NULL,
+                                         G_TYPE_NONE,
+                                         1,
+                                         GTD_TYPE_PANEL);
+
   g_object_class_override_property (object_class, PROP_ICON, "icon");
   g_object_class_override_property (object_class, PROP_TITLE, "title");
 
@@ -442,8 +518,9 @@ gtd_task_lists_workspace_init (GtdTaskListsWorkspace *self)
 
   /* Task list panel */
   self->task_list_panel = GTD_PANEL (gtd_task_list_panel_new ());
-  on_panel_added_cb (gtd_manager_get_default (), self->task_list_panel, self);
+  on_panel_added_cb (NULL, NULL, self->task_list_panel, self);
 
+  gtd_sidebar_connect (self->sidebar, GTK_WIDGET (self));
   gtd_sidebar_set_panel_stack (self->sidebar, self->stack);
   gtd_sidebar_set_task_list_panel (self->sidebar, self->task_list_panel);
 

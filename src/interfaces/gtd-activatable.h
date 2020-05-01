@@ -1,6 +1,6 @@
 /* gtd-activatable.h
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,8 +42,6 @@ struct _GtdActivatableInterface
 
   GtkWidget*       (*get_preferences_panel)                (GtdActivatable     *activatable);
 
-  GList*           (*get_panels)                           (GtdActivatable     *activatable);
-
   GList*           (*get_providers)                        (GtdActivatable     *activatable);
 };
 
@@ -54,8 +52,6 @@ void                 gtd_activatable_deactivate                  (GtdActivatable
 GList*               gtd_activatable_get_header_widgets          (GtdActivatable     *activatable);
 
 GtkWidget*           gtd_activatable_get_preferences_panel       (GtdActivatable     *activatable);
-
-GList*               gtd_activatable_get_panels                  (GtdActivatable     *activatable);
 
 GList*               gtd_activatable_get_providers               (GtdActivatable     *activatable);
 

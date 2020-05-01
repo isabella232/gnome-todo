@@ -42,8 +42,6 @@ GtdManager*          gtd_manager_get_default                     (void);
 
 GList*               gtd_manager_get_providers                   (GtdManager         *manager);
 
-GList*               gtd_manager_get_panels                      (GtdManager         *manager);
-
 GtdProvider*         gtd_manager_get_default_provider            (GtdManager         *manager);
 
 void                 gtd_manager_set_default_provider            (GtdManager         *manager,

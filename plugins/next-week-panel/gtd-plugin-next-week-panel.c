@@ -1,6 +1,6 @@
 /* gtd-plugin-next-week-panel.c
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,6 @@ struct _GtdPluginNextWeekPanel
 {
   PeasExtensionBase   parent;
 
-  GList              *panels;
   GtkCssProvider     *css_provider;
 };
 
@@ -77,14 +76,6 @@ gtd_plugin_next_week_panel_get_preferences_panel (GtdActivatable *activatable)
 }
 
 static GList*
-gtd_plugin_next_week_panel_get_panels (GtdActivatable *activatable)
-{
-  GtdPluginNextWeekPanel *plugin = GTD_PLUGIN_NEXT_WEEK_PANEL (activatable);
-
-  return plugin->panels;
-}
-
-static GList*
 gtd_plugin_next_week_panel_get_providers (GtdActivatable *activatable)
 {
   return NULL;
@@ -97,18 +88,7 @@ gtd_activatable_iface_init (GtdActivatableInterface *iface)
   iface->deactivate = gtd_plugin_next_week_panel_deactivate;
   iface->get_header_widgets = gtd_plugin_next_week_panel_get_header_widgets;
   iface->get_preferences_panel = gtd_plugin_next_week_panel_get_preferences_panel;
-  iface->get_panels = gtd_plugin_next_week_panel_get_panels;
   iface->get_providers = gtd_plugin_next_week_panel_get_providers;
-}
-
-static void
-gtd_plugin_next_week_panel_finalize (GObject *object)
-{
-  GtdPluginNextWeekPanel *self = (GtdPluginNextWeekPanel *)object;
-
-  g_list_free (self->panels);
-
-  G_OBJECT_CLASS (gtd_plugin_next_week_panel_parent_class)->finalize (object);
 }
 
 static void
@@ -133,7 +113,6 @@ gtd_plugin_next_week_panel_class_init (GtdPluginNextWeekPanelClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gtd_plugin_next_week_panel_finalize;
   object_class->get_property = gtd_plugin_next_week_panel_get_property;
 
   g_object_class_override_property (object_class,
@@ -164,9 +143,6 @@ gtd_plugin_next_week_panel_init (GtdPluginNextWeekPanel *self)
     gtk_css_provider_load_from_file (self->css_provider, css_file);
   else
     gtk_css_provider_load_from_resource (self->css_provider, "/org/gnome/todo/theme/scheduled-panel/Adwaita.css");
-
-  /* And then the panel */
-  self->panels = g_list_append (NULL, gtd_next_week_panel_new ());
 }
 
 static void
@@ -182,4 +158,8 @@ gtd_plugin_next_week_panel_register_types (PeasObjectModule *module)
   peas_object_module_register_extension_type (module,
                                               GTD_TYPE_ACTIVATABLE,
                                               GTD_TYPE_PLUGIN_NEXT_WEEK_PANEL);
+
+  peas_object_module_register_extension_type (module,
+                                              GTD_TYPE_PANEL,
+                                              GTD_TYPE_NEXT_WEEK_PANEL);
 }

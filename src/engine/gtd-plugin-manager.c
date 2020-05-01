@@ -37,8 +37,6 @@ G_DEFINE_TYPE (GtdPluginManager, gtd_plugin_manager, GTD_TYPE_OBJECT)
 
 enum
 {
-  PANEL_REGISTERED,
-  PANEL_UNREGISTERED,
   PLUGIN_LOADED,
   PLUGIN_UNLOADED,
   PROVIDER_REGISTERED,
@@ -128,22 +126,6 @@ from_property_to_gsetting_func (const GValue       *value,
 }
 
 static void
-on_panel_added_cb (GtdActivatable   *activatable,
-                   GtdPanel         *panel,
-                   GtdPluginManager *self)
-{
-  g_signal_emit_by_name (self, "panel-registered", panel);
-}
-
-static void
-on_panel_removed_cb (GtdActivatable   *activatable,
-                     GtdPanel         *panel,
-                     GtdPluginManager *self)
-{
-  g_signal_emit_by_name (self, "panel-unregistered", panel);
-}
-
-static void
 on_provider_added_cb (GtdActivatable   *activatable,
                       GtdProvider      *provider,
                       GtdPluginManager *self)
@@ -166,19 +148,12 @@ on_plugin_unloaded_cb (PeasEngine       *engine,
 {
   GtdActivatable *activatable;
   GList *extension_providers;
-  GList *extension_panels;
   GList *l;
 
   activatable = g_hash_table_lookup (self->info_to_extension, info);
 
   if (!activatable)
     return;
-
-  /* Remove all panels */
-  extension_panels = gtd_activatable_get_panels (activatable);
-
-  for (l = extension_panels; l != NULL; l = l->next)
-    on_panel_removed_cb (activatable, l->data, self);
 
   /* Remove all registered providers */
   extension_providers = gtd_activatable_get_providers (activatable);
@@ -193,8 +168,6 @@ on_plugin_unloaded_cb (PeasEngine       *engine,
   g_signal_emit (self, signals[PLUGIN_UNLOADED], 0, info, activatable);
 
   /* Disconnect old signals */
-  g_signal_handlers_disconnect_by_func (activatable, on_panel_added_cb, self);
-  g_signal_handlers_disconnect_by_func (activatable, on_panel_removed_cb, self);
   g_signal_handlers_disconnect_by_func (activatable, on_provider_added_cb, self);
   g_signal_handlers_disconnect_by_func (activatable, on_provider_removed_cb, self);
 
@@ -235,14 +208,8 @@ on_plugin_loaded_cb (PeasEngine       *engine,
       for (l = gtd_activatable_get_providers (activatable); l != NULL; l = l->next)
         on_provider_added_cb (activatable, l->data, self);
 
-      /* Load all panels */
-      for (l = gtd_activatable_get_panels (activatable); l != NULL; l = l->next)
-        on_panel_added_cb (activatable, l->data, self);
-
       g_signal_connect (activatable, "provider-added", G_CALLBACK (on_provider_added_cb), self);
       g_signal_connect (activatable, "provider-removed", G_CALLBACK (on_provider_removed_cb), self);
-      g_signal_connect (activatable, "panel-added", G_CALLBACK (on_panel_added_cb), self);
-      g_signal_connect (activatable, "panel-removed", G_CALLBACK (on_panel_removed_cb), self);
 
       /* Activate extension */
       gtd_activatable_activate (activatable);
@@ -310,28 +277,6 @@ gtd_plugin_manager_class_init (GtdPluginManagerClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize = gtd_plugin_manager_finalize;
-
-  signals[PANEL_REGISTERED] = g_signal_new ("panel-registered",
-                                             GTD_TYPE_PLUGIN_MANAGER,
-                                             G_SIGNAL_RUN_FIRST,
-                                             0,
-                                             NULL,
-                                             NULL,
-                                             NULL,
-                                             G_TYPE_NONE,
-                                             1,
-                                             GTD_TYPE_PANEL);
-
-  signals[PANEL_UNREGISTERED] = g_signal_new ("panel-unregistered",
-                                              GTD_TYPE_PLUGIN_MANAGER,
-                                              G_SIGNAL_RUN_FIRST,
-                                              0,
-                                              NULL,
-                                              NULL,
-                                              NULL,
-                                              G_TYPE_NONE,
-                                              1,
-                                              GTD_TYPE_PANEL);
 
   signals[PLUGIN_LOADED] = g_signal_new ("plugin-loaded",
                                          GTD_TYPE_PLUGIN_MANAGER,

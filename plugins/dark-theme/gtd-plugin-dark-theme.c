@@ -1,6 +1,6 @@
 /* gtd-plugin-dark-theme.c
  *
- * Copyright (C) 2016 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2016-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,12 +72,6 @@ gtd_plugin_dark_theme_get_preferences_panel (GtdActivatable *activatable)
 }
 
 static GList*
-gtd_plugin_dark_theme_get_panels (GtdActivatable *activatable)
-{
-  return NULL;
-}
-
-static GList*
 gtd_plugin_dark_theme_get_providers (GtdActivatable *activatable)
 {
   return NULL;
@@ -90,7 +84,6 @@ gtd_activatable_iface_init (GtdActivatableInterface *iface)
   iface->deactivate = gtd_plugin_dark_theme_deactivate;
   iface->get_header_widgets = gtd_plugin_dark_theme_get_header_widgets;
   iface->get_preferences_panel = gtd_plugin_dark_theme_get_preferences_panel;
-  iface->get_panels = gtd_plugin_dark_theme_get_panels;
   iface->get_providers = gtd_plugin_dark_theme_get_providers;
 }
 

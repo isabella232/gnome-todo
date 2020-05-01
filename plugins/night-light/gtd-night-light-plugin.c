@@ -1,6 +1,6 @@
 /* gtd-night-light-plugin.c
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -160,12 +160,6 @@ gtd_night_light_plugin_get_preferences_panel (GtdActivatable *activatable)
 }
 
 static GList*
-gtd_night_light_plugin_get_panels (GtdActivatable *activatable)
-{
-  return NULL;
-}
-
-static GList*
 gtd_night_light_plugin_get_providers (GtdActivatable *activatable)
 {
   return NULL;
@@ -178,7 +172,6 @@ gtd_activatable_iface_init (GtdActivatableInterface *iface)
   iface->deactivate = gtd_night_light_plugin_deactivate;
   iface->get_header_widgets = gtd_night_light_plugin_get_header_widgets;
   iface->get_preferences_panel = gtd_night_light_plugin_get_preferences_panel;
-  iface->get_panels = gtd_night_light_plugin_get_panels;
   iface->get_providers = gtd_night_light_plugin_get_providers;
 }
 

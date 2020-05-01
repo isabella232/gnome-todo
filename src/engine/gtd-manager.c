@@ -63,7 +63,6 @@ struct _GtdManager
 
   GHashTable         *workspaces;
   GList              *providers;
-  GList              *panels;
   GtdProvider        *default_provider;
   GtdClock           *clock;
 
@@ -82,8 +81,6 @@ enum
   LIST_REMOVED,
   SHOW_ERROR_MESSAGE,
   SHOW_NOTIFICATION,
-  PANEL_ADDED,
-  PANEL_REMOVED,
   PROVIDER_ADDED,
   PROVIDER_REMOVED,
   WORKSPACE_ADDED,
@@ -160,34 +157,6 @@ on_task_list_modified_cb (GtdTaskList *list,
 {
   GTD_ENTRY;
   g_signal_emit (self, signals[LIST_CHANGED], 0, list);
-  GTD_EXIT;
-}
-
-static void
-on_panel_added_cb (GtdPluginManager *plugin_manager,
-                   GtdPanel         *panel,
-                   GtdManager       *self)
-{
-  GTD_ENTRY;
-
-  self->panels = g_list_append (self->panels, panel);
-
-  g_signal_emit (self, signals[PANEL_ADDED], 0, panel);
-
-  GTD_EXIT;
-}
-
-static void
-on_panel_removed_cb (GtdPluginManager *plugin_manager,
-                     GtdPanel         *panel,
-                     GtdManager       *self)
-{
-  GTD_ENTRY;
-
-  self->panels = g_list_remove (self->panels, panel);
-
-  g_signal_emit (self, signals[PANEL_REMOVED], 0, panel);
-
   GTD_EXIT;
 }
 
@@ -552,44 +521,6 @@ gtd_manager_class_init (GtdManagerClass *klass)
                                              GTD_TYPE_NOTIFICATION);
 
   /**
-   * GtdManager::panel-added:
-   * @manager: a #GtdManager
-   * @panel: a #GtdPanel
-   *
-   * The ::panel-added signal is emmited after a #GtdPanel
-   * is added.
-   */
-  signals[PANEL_ADDED] = g_signal_new ("panel-added",
-                                        GTD_TYPE_MANAGER,
-                                        G_SIGNAL_RUN_LAST,
-                                        0,
-                                        NULL,
-                                        NULL,
-                                        NULL,
-                                        G_TYPE_NONE,
-                                        1,
-                                        GTD_TYPE_PANEL);
-
-  /**
-   * GtdManager::panel-removed:
-   * @manager: a #GtdManager
-   * @panel: a #GtdPanel
-   *
-   * The ::panel-removed signal is emmited after a #GtdPanel
-   * is removed from the list.
-   */
-  signals[PANEL_REMOVED] = g_signal_new ("panel-removed",
-                                         GTD_TYPE_MANAGER,
-                                         G_SIGNAL_RUN_LAST,
-                                         0,
-                                         NULL,
-                                         NULL,
-                                         NULL,
-                                         G_TYPE_NONE,
-                                         1,
-                                         GTD_TYPE_PANEL);
-
-  /**
    * GtdManager::provider-added:
    * @manager: a #GtdManager
    * @provider: a #GtdProvider
@@ -719,23 +650,6 @@ gtd_manager_get_providers (GtdManager *self)
   g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
   return g_list_copy (self->providers);
-}
-
-/**
- * gtd_manager_get_panels:
- * @manager: a #GtdManager
- *
- * Retrieves the list of currently loaded #GtdPanel
- * instances.
- *
- * Returns: (transfer container) (element-type Gtd.Panel): a #GList of #GtdPanel
- */
-GList*
-gtd_manager_get_panels (GtdManager *self)
-{
-  g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
-
-  return g_list_copy (self->panels);
 }
 
 /**
@@ -1047,16 +961,6 @@ void
 gtd_manager_load_plugins (GtdManager *self)
 {
   GTD_ENTRY;
-
-  g_signal_connect (self->plugin_manager,
-                    "panel-registered",
-                    G_CALLBACK (on_panel_added_cb),
-                    self);
-
-  g_signal_connect (self->plugin_manager,
-                    "panel-unregistered",
-                    G_CALLBACK (on_panel_removed_cb),
-                    self);
 
   g_signal_connect (self->plugin_manager,
                     "provider-registered",

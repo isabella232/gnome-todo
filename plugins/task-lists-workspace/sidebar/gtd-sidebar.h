@@ -1,6 +1,6 @@
 /* gtd-sidebar.h
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,5 +40,8 @@ void                 gtd_sidebar_activate                        (GtdSidebar    
 
 void                 gtd_sidebar_set_archive_visible             (GtdSidebar         *self,
                                                                   gboolean            show_archive);
+
+void                 gtd_sidebar_connect                         (GtdSidebar         *self,
+                                                                  GtkWidget          *workspace);
 
 G_END_DECLS

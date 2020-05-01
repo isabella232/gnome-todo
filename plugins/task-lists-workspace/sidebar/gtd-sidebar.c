@@ -761,7 +761,6 @@ static void
 gtd_sidebar_constructed (GObject *object)
 {
   g_autoptr (GList) providers = NULL;
-  g_autoptr (GList) panels = NULL;
   GListModel *lists;
   GtdManager *manager;
   GtdSidebar *self;
@@ -772,15 +771,6 @@ gtd_sidebar_constructed (GObject *object)
   manager = gtd_manager_get_default ();
 
   G_OBJECT_CLASS (gtd_sidebar_parent_class)->constructed (object);
-
-  /* Add loaded panels */
-  panels = gtd_manager_get_panels (manager);
-
-  for (l = panels; l; l = l->next)
-    add_panel (self, l->data);
-
-  g_signal_connect (manager, "panel-added", G_CALLBACK (on_panel_added_cb), self);
-  g_signal_connect (manager, "panel-removed", G_CALLBACK (on_panel_removed_cb), self);
 
   /* Add providers */
   providers = gtd_manager_get_providers (manager);
@@ -910,4 +900,12 @@ gtd_sidebar_set_archive_visible (GtdSidebar *self,
     gtk_stack_set_visible_child (self->stack, GTK_WIDGET (self->archive_listbox));
   else
     gtk_stack_set_visible_child (self->stack, GTK_WIDGET (self->listbox));
+}
+
+void
+gtd_sidebar_connect (GtdSidebar *self,
+                     GtkWidget  *workspace)
+{
+  g_signal_connect (workspace, "panel-added", G_CALLBACK (on_panel_added_cb), self);
+  g_signal_connect (workspace, "panel-removed", G_CALLBACK (on_panel_removed_cb), self);
 }
