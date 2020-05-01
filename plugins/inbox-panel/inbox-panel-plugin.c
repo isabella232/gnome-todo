@@ -1,4 +1,4 @@
-/* gtd-plugin-inbox-panel.h
+/* gtd-plugin-inbox-panel.c
  *
  * Copyright 2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
@@ -18,19 +18,15 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-
-#pragma once
+#define G_LOG_DOMAIN "GtdPluginInboxPanel"
 
 #include "gnome-todo.h"
+#include "gtd-inbox-panel.h"
 
-#include <glib.h>
-
-G_BEGIN_DECLS
-
-#define GTD_TYPE_PLUGIN_INBOX_PANEL (gtd_plugin_inbox_panel_get_type())
-
-G_DECLARE_FINAL_TYPE (GtdPluginInboxPanel, gtd_plugin_inbox_panel, GTD, PLUGIN_INBOX_PANEL, PeasExtensionBase)
-
-G_MODULE_EXPORT void gtd_plugin_inbox_panel_register_types   (PeasObjectModule   *module);
-
-G_END_DECLS
+G_MODULE_EXPORT void
+inbox_panel_plugin_register_types (PeasObjectModule *module)
+{
+  peas_object_module_register_extension_type (module,
+                                              GTD_TYPE_PANEL,
+                                              GTD_TYPE_INBOX_PANEL);
+}

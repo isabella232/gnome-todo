@@ -10,5 +10,5 @@ Hidden = true
 Builtin = true
 License = GPL
 Loader = C
-Embedded = gtd_plugin_inbox_panel_register_types
+Embedded = inbox_panel_plugin_register_types
 Depends =
