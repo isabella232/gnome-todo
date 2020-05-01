@@ -1,6 +1,6 @@
-/* gtd-plugin-all-tasks-panel.h
+/* gtd-plugin-all-tasks-panel.c
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,18 +18,17 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-#pragma once
+
+#define G_LOG_DOMAIN "GtdPluginAllTasksPanel"
 
 #include "gnome-todo.h"
 
-#include <glib.h>
+#include "gtd-all-tasks-panel.h"
 
-G_BEGIN_DECLS
-
-#define GTD_TYPE_PLUGIN_ALL_TASKS_PANEL (gtd_plugin_all_tasks_panel_get_type())
-
-G_DECLARE_FINAL_TYPE (GtdPluginAllTasksPanel, gtd_plugin_all_tasks_panel, GTD, PLUGIN_ALL_TASKS_PANEL, PeasExtensionBase)
-
-G_MODULE_EXPORT void gtd_plugin_all_tasks_panel_register_types   (PeasObjectModule   *module);
-
-G_END_DECLS
+G_MODULE_EXPORT void
+all_tasks_panel_plugin_register_types (PeasObjectModule *module)
+{
+  peas_object_module_register_extension_type (module,
+                                              GTD_TYPE_PANEL,
+                                              GTD_TYPE_ALL_TASKS_PANEL);
+}
