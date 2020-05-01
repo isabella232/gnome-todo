@@ -1,8 +1,8 @@
-plugins_ldflags += ['-Wl,--undefined=gtd_plugin_next_week_panel_register_types']
+plugins_ldflags += ['-Wl,--undefined=next_week_panel_plugin_register_types']
 
 sources = files(
   'gtd-next-week-panel.c',
-  'gtd-plugin-next-week-panel.c'
+  'next-week-panel-plugin.c'
 )
 
 plugins_libs += static_library(
@@ -10,10 +10,4 @@ plugins_libs += static_library(
               sources: sources,
   include_directories: plugins_incs,
          dependencies: gnome_todo_deps
-)
-
-plugins_confs += configure_file(
-          input: 'next-week-panel.plugin.in',
-         output: 'next-week-panel.plugin',
-  configuration: plugins_conf
 )

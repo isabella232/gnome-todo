@@ -1,6 +1,6 @@
 /* gtd-next-week-panel.c
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,8 @@ struct _GtdNextWeekPanel
   GtkFilterListModel *filter_model;
   GtkFilterListModel *incomplete_model;
   GtkSortListModel   *sort_model;
+
+  GtkCssProvider     *css_provider;
 };
 
 static void          gtd_panel_iface_init                        (GtdPanelInterface  *iface);
@@ -67,6 +69,31 @@ enum
 /*
  * Auxiliary methods
  */
+
+static void
+load_css_provider (GtdNextWeekPanel *self)
+{
+  g_autoptr (GSettings) settings = NULL;
+  g_autoptr (GFile) css_file = NULL;
+  g_autofree gchar *theme_name = NULL;
+  g_autofree gchar *theme_uri = NULL;
+
+  /* Load CSS provider */
+  settings = g_settings_new ("org.gnome.desktop.interface");
+  theme_name = g_settings_get_string (settings, "gtk-theme");
+  theme_uri = g_build_filename ("resource:///org/gnome/todo/theme/next-week-panel", theme_name, ".css", NULL);
+  css_file = g_file_new_for_uri (theme_uri);
+
+  self->css_provider = gtk_css_provider_new ();
+  gtk_style_context_add_provider_for_display (gdk_display_get_default (),
+                                              GTK_STYLE_PROVIDER (self->css_provider),
+                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+  if (g_file_query_exists (css_file, NULL))
+    gtk_css_provider_load_from_file (self->css_provider, css_file);
+  else
+    gtk_css_provider_load_from_resource (self->css_provider, "/org/gnome/todo/theme/scheduled-panel/Adwaita.css");
+}
 
 static gboolean
 get_date_offset (GDateTime *dt,
@@ -413,6 +440,7 @@ gtd_next_week_panel_finalize (GObject *object)
 {
   GtdNextWeekPanel *self = (GtdNextWeekPanel *)object;
 
+  g_clear_object (&self->css_provider);
   g_clear_object (&self->icon);
   g_clear_object (&self->filter_model);
   g_clear_object (&self->incomplete_model);
@@ -525,6 +553,7 @@ gtd_next_week_panel_init (GtdNextWeekPanel *self)
                            G_CALLBACK (on_clock_day_changed_cb),
                            self,
                            0);
+  load_css_provider (self);
 }
 
 GtkWidget*

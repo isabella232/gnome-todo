@@ -9,5 +9,5 @@ Website = https://wiki.gnome.org/Apps/Todo
 Builtin = true
 License = GPL
 Loader = C
-Embedded = gtd_plugin_next_week_panel_register_types
+Embedded = next_week_panel_plugin_register_types
 Depends =
