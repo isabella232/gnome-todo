@@ -1,4 +1,4 @@
-/* gtd-plugin-task-lists-workspace.h
+/* gtd-plugin-task-lists-workspace.c
  *
  * Copyright 2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
@@ -18,17 +18,14 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-#pragma once
-
 #include "gnome-todo.h"
 
-#include <glib.h>
+#include "gtd-task-lists-workspace.h"
 
-G_BEGIN_DECLS
-
-#define GTD_TYPE_PLUGIN_TASK_LISTS_WORKSPACE (gtd_plugin_task_lists_workspace_get_type())
-G_DECLARE_FINAL_TYPE (GtdPluginTaskListsWorkspace, gtd_plugin_task_lists_workspace, GTD, PLUGIN_TASK_LISTS_WORKSPACE, PeasExtensionBase)
-
-G_MODULE_EXPORT void gtd_plugin_task_lists_workspace_register_types   (PeasObjectModule   *module);
-
-G_END_DECLS
+G_MODULE_EXPORT void
+task_lists_workspace_plugin_register_types (PeasObjectModule *module)
+{
+  peas_object_module_register_extension_type (module,
+                                              GTD_TYPE_WORKSPACE,
+                                              GTD_TYPE_TASK_LISTS_WORKSPACE);
+}

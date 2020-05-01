@@ -22,6 +22,7 @@
 
 #include "gtd-task-lists-workspace.h"
 
+#include "task-lists-workspace.h"
 #include "sidebar/gtd-sidebar.h"
 #include "gtd-task-list-panel.h"
 
@@ -428,6 +429,8 @@ gtd_task_lists_workspace_class_init (GtdTaskListsWorkspaceClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  g_resources_register (task_lists_workspace_get_resource ());
 
   object_class->constructed = gtd_task_lists_workspace_constructed;
   object_class->get_property = gtd_task_lists_workspace_get_property;
