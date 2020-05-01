@@ -19,10 +19,6 @@ subdir('peace')
 subdir('task-lists-workspace')
 subdir('today-panel')
 
-if get_option('score_plugin')
-  subdir('score')
-endif
-
 if get_option('unscheduled_panel_plugin')
   subdir('unscheduled-panel')
 endif

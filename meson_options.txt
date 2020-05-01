@@ -5,7 +5,6 @@ option('profile', type: 'combo', choices: ['default', 'development'], value: 'de
 
 
 # Plugins
-option('score_plugin', type: 'boolean', value: true, description: 'Enable Score plugin')
 option('todo_txt_plugin', type: 'boolean', value: false, description: 'Enable Todo.Txt plugin')
 option('todoist_plugin', type: 'boolean', value: false, description: 'Enable Todoist plugin')
 option('unscheduled_panel_plugin', type: 'boolean', value: true, description: 'Enable Unscheduled Tasks Panel plugin')
