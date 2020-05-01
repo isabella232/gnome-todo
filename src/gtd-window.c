@@ -41,6 +41,7 @@
 #include "gtd-window-private.h"
 
 #include <glib/gi18n.h>
+#include <libpeas/peas.h>
 
 /**
  * SECTION:gtd-window
@@ -76,6 +77,8 @@ struct _GtdWindow
 
   GtdWorkspace       *current_workspace;
   GListStore         *workspaces;
+
+  PeasExtensionSet   *workspaces_set;
 
   guint               toggle_headerbar_revealer_id;
 };
@@ -367,9 +370,11 @@ on_stack_visible_child_cb (GtkStack   *stack,
     gtd_workspace_deactivate (self->current_workspace);
 
   new_workspace = GTD_WORKSPACE (gtk_stack_get_visible_child (stack));
-  g_assert (new_workspace != NULL);
-
   self->current_workspace = new_workspace;
+
+  if (!new_workspace)
+    GTD_RETURN ();
+
   gtd_workspace_activate (new_workspace);
 
   workspace_icon = gtd_workspace_get_icon (new_workspace);
@@ -425,9 +430,10 @@ on_show_notification_cb (GtdManager      *manager,
 }
 
 static void
-on_manager_workspace_added_cb (GtdManager   *manager,
-                               GtdWorkspace *workspace,
-                               GtdWindow    *self)
+on_workspace_added_cb (PeasExtensionSet *extension_set,
+                       PeasPluginInfo   *plugin_info,
+                       GtdWorkspace     *workspace,
+                       GtdWindow        *self)
 {
   GTD_ENTRY;
 
@@ -437,9 +443,10 @@ on_manager_workspace_added_cb (GtdManager   *manager,
 }
 
 static void
-on_manager_workspace_removed_cb (GtdManager   *manager,
-                                 GtdWorkspace *workspace,
-                                 GtdWindow    *self)
+on_workspace_removed_cb (PeasExtensionSet *extension_set,
+                         PeasPluginInfo   *plugin_info,
+                         GtdWorkspace     *workspace,
+                         GtdWindow        *self)
 {
   GTD_ENTRY;
 
@@ -497,6 +504,16 @@ create_workspace_row_func (gpointer item,
  */
 
 static void
+gtd_window_destroy (GtkWidget *widget)
+{
+  GtdWindow *self = GTD_WINDOW (widget);
+
+  g_clear_object (&self->workspaces_set);
+
+  GTK_WIDGET_CLASS (gtd_window_parent_class)->destroy (widget);
+}
+
+static void
 gtd_window_unmap (GtkWidget *widget)
 {
   GSettings *settings;
@@ -526,23 +543,21 @@ gtd_window_unmap (GtkWidget *widget)
  */
 
 static void
-gtd_window_dispose (GObject *object)
+gtd_window_finalize (GObject *object)
 {
   GtdWindow *self = GTD_WINDOW (object);
 
   g_clear_handle_id (&self->toggle_headerbar_revealer_id, g_source_remove);
   g_clear_object (&self->workspaces);
 
-  G_OBJECT_CLASS (gtd_window_parent_class)->dispose (object);
+  G_OBJECT_CLASS (gtd_window_parent_class)->finalize (object);
 }
 
 static void
 gtd_window_constructed (GObject *object)
 {
-  g_autoptr (GPtrArray) workspaces = NULL;
   GtdManager *manager;
   GtdWindow *self;
-  guint i;
 
   self = GTD_WINDOW (object);
 
@@ -556,13 +571,18 @@ gtd_window_constructed (GObject *object)
   g_signal_connect (manager, "show-notification", G_CALLBACK (on_show_notification_cb), self);
 
   /* Workspaces */
-  workspaces = gtd_manager_get_workspaces (manager);
+  self->workspaces_set = peas_extension_set_new (peas_engine_get_default (),
+                                                 GTD_TYPE_WORKSPACE,
+                                                 NULL);
 
-  for (i = 0; i < workspaces->len; i++)
-    add_workspace (self, g_ptr_array_index (workspaces, i));
+  peas_extension_set_foreach (self->workspaces_set,
+                              (PeasExtensionSetForeachFunc) on_workspace_added_cb,
+                              self);
 
-  g_signal_connect (manager, "workspace-added", G_CALLBACK (on_manager_workspace_added_cb), self);
-  g_signal_connect (manager, "workspace-removed", G_CALLBACK (on_manager_workspace_removed_cb), self);
+  g_object_connect (self->workspaces_set,
+                    "signal::extension-added", G_CALLBACK (on_workspace_added_cb), self,
+                    "signal::extension-removed", G_CALLBACK (on_workspace_removed_cb), self,
+                    NULL);
 }
 
 static void
@@ -571,9 +591,10 @@ gtd_window_class_init (GtdWindowClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose = gtd_window_dispose;
+  object_class->finalize = gtd_window_finalize;
   object_class->constructed = gtd_window_constructed;
 
+  widget_class->destroy = gtd_window_destroy;
   widget_class->unmap = gtd_window_unmap;
 
   g_type_ensure (GTD_TYPE_MENU_BUTTON);

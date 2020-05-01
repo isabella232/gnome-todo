@@ -61,7 +61,6 @@ struct _GtdManager
   GListModel         *tasks_model;
   GListModel         *unarchived_tasks_model;
 
-  GHashTable         *workspaces;
   GList              *providers;
   GtdProvider        *default_provider;
   GtdClock           *clock;
@@ -83,8 +82,6 @@ enum
   SHOW_NOTIFICATION,
   PROVIDER_ADDED,
   PROVIDER_REMOVED,
-  WORKSPACE_ADDED,
-  WORKSPACE_REMOVED,
   NUM_SIGNALS
 };
 
@@ -316,8 +313,6 @@ gtd_manager_finalize (GObject *object)
   g_clear_object (&self->clock);
   g_clear_object (&self->unarchived_tasks_model);
   g_clear_object (&self->lists_model);
-
-  g_clear_pointer (&self->workspaces, g_hash_table_destroy);
 
   G_OBJECT_CLASS (gtd_manager_parent_class)->finalize (object);
 }
@@ -557,49 +552,12 @@ gtd_manager_class_init (GtdManagerClass *klass)
                                             G_TYPE_NONE,
                                             1,
                                             GTD_TYPE_PROVIDER);
-
-  /**
-   * GtdManager::workspace-added:
-   * @manager: a #GtdManager
-   * @workspace: a #GtdWorkspace
-   *
-   * Emitted after @workspace is ADDED.
-   */
-  signals[WORKSPACE_ADDED] = g_signal_new ("workspace-added",
-                                            GTD_TYPE_MANAGER,
-                                            G_SIGNAL_RUN_LAST,
-                                            0,
-                                            NULL,
-                                            NULL,
-                                            NULL,
-                                            G_TYPE_NONE,
-                                            1,
-                                            GTD_TYPE_WORKSPACE);
-
-  /**
-   * GtdManager::workspace-removed:
-   * @manager: a #GtdManager
-   * @workspace: a #GtdWorkspace
-   *
-   * Emitted after @workspace is removed.
-   */
-  signals[WORKSPACE_REMOVED] = g_signal_new ("workspace-removed",
-                                             GTD_TYPE_MANAGER,
-                                             G_SIGNAL_RUN_LAST,
-                                             0,
-                                             NULL,
-                                             NULL,
-                                             NULL,
-                                             G_TYPE_NONE,
-                                             1,
-                                             GTD_TYPE_WORKSPACE);
 }
 
 
 static void
 gtd_manager_init (GtdManager *self)
 {
-  self->workspaces = g_hash_table_new_full (NULL, NULL, g_object_unref, NULL);
   self->settings = g_settings_new ("org.gnome.todo");
   self->plugin_manager = gtd_plugin_manager_new ();
   self->clock = gtd_clock_new ();
@@ -887,74 +845,6 @@ gtd_manager_get_tasks_model (GtdManager *self)
   g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
   return self->unarchived_tasks_model;
-}
-
-/**
- * gtd_manager_get_workspaces:
- * @self: a #GtdManager
- *
- * Retrieves the current list of workspaces.
- *
- * Returns: (transfer full): a #GPtrArray
- */
-GPtrArray*
-gtd_manager_get_workspaces (GtdManager *self)
-{
-  g_autoptr (GPtrArray) workspaces = NULL;
-  g_autoptr (GList) keys = NULL;
-  GList *l;
-
-  g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
-
-  workspaces = g_ptr_array_new_with_free_func (g_object_unref);
-  keys = g_hash_table_get_keys (self->workspaces);
-
-  for (l = keys; l; l = l->next)
-    g_ptr_array_add (workspaces, g_object_ref (l->data));
-
-  return g_steal_pointer (&workspaces);
-}
-
-/**
- * gtd_manager_add_workspace:
- * @self: a #GtdManager
- * @workspace: a #GtdWorkspace
- *
- * Adds @workspace to the list of workspace. If @workspace
- * is already added, does nothing.
- */
-void
-gtd_manager_add_workspace (GtdManager   *self,
-                           GtdWorkspace *workspace)
-{
-  g_return_if_fail (GTD_IS_MANAGER (self));
-  g_return_if_fail (GTD_IS_WORKSPACE (workspace));
-
-  if (g_hash_table_add (self->workspaces, g_object_ref (workspace)))
-    g_signal_emit (self, signals[WORKSPACE_ADDED], 0, workspace);
-}
-
-/**
- * gtd_manager_remove_workspace:
- * @self: a #GtdManager
- * @workspace: a #GtdWorkspace
- *
- * Removes @workspace from the list of workspace. If @workspace
- * is not added, does nothing.
- */
-void
-gtd_manager_remove_workspace (GtdManager   *self,
-                              GtdWorkspace *workspace)
-{
-  g_return_if_fail (GTD_IS_MANAGER (self));
-  g_return_if_fail (GTD_IS_WORKSPACE (workspace));
-
-  g_object_ref (workspace);
-
-  if (g_hash_table_remove (self->workspaces, workspace))
-    g_signal_emit (self, signals[WORKSPACE_REMOVED], 0, workspace);
-
-  g_object_unref (workspace);
 }
 
 void

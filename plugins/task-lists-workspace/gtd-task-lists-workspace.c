@@ -347,9 +347,11 @@ gtd_task_lists_workspace_destroy (GtkWidget *widget)
 {
   GtdTaskListsWorkspace *self = (GtdTaskListsWorkspace *)widget;
 
-  g_clear_object (&self->panels_set);
-
   GTK_WIDGET_CLASS (gtd_task_lists_workspace_parent_class)->destroy (widget);
+
+  g_signal_handlers_disconnect_by_func (self->panels_set, on_panel_added_cb, self);
+  g_signal_handlers_disconnect_by_func (self->panels_set, on_panel_removed_cb, self);
+  g_clear_object (&self->panels_set);
 }
 
 

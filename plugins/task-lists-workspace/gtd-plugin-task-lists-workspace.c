@@ -31,8 +31,6 @@
 struct _GtdPluginTaskListsWorkspace
 {
   PeasExtensionBase   parent;
-
-  GtdWorkspace       *task_list_workspaces;
 };
 
 static void          gtd_activatable_iface_init                  (GtdActivatableInterface  *iface);
@@ -59,17 +57,11 @@ enum
 static void
 gtd_plugin_task_lists_workspace_activate (GtdActivatable *activatable)
 {
-  GtdPluginTaskListsWorkspace *self = GTD_PLUGIN_TASK_LISTS_WORKSPACE (activatable);
-
-  gtd_manager_add_workspace (gtd_manager_get_default (), self->task_list_workspaces);
 }
 
 static void
 gtd_plugin_task_lists_workspace_deactivate (GtdActivatable *activatable)
 {
-  GtdPluginTaskListsWorkspace *self = GTD_PLUGIN_TASK_LISTS_WORKSPACE (activatable);
-
-  gtd_manager_remove_workspace (gtd_manager_get_default (), self->task_list_workspaces);
 }
 
 static GList*
@@ -101,16 +93,6 @@ gtd_activatable_iface_init (GtdActivatableInterface *iface)
 }
 
 static void
-gtd_plugin_task_lists_workspace_finalize (GObject *object)
-{
-  GtdPluginTaskListsWorkspace *self = (GtdPluginTaskListsWorkspace *)object;
-
-  g_clear_object (&self->task_list_workspaces);
-
-  G_OBJECT_CLASS (gtd_plugin_task_lists_workspace_parent_class)->finalize (object);
-}
-
-static void
 gtd_plugin_task_lists_workspace_get_property (GObject    *object,
                                               guint       prop_id,
                                               GValue     *value,
@@ -132,7 +114,6 @@ gtd_plugin_task_lists_workspace_class_init (GtdPluginTaskListsWorkspaceClass *kl
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gtd_plugin_task_lists_workspace_finalize;
   object_class->get_property = gtd_plugin_task_lists_workspace_get_property;
 
   g_object_class_override_property (object_class, PROP_PREFERENCES_PANEL, "preferences-panel");
@@ -142,8 +123,6 @@ static void
 gtd_plugin_task_lists_workspace_init (GtdPluginTaskListsWorkspace *self)
 {
   g_resources_register (task_lists_workspace_get_resource ());
-
-  self->task_list_workspaces = gtd_task_lists_workspace_new ();
 }
 
 static void
@@ -160,4 +139,8 @@ gtd_plugin_task_lists_workspace_register_types (PeasObjectModule *module)
   peas_object_module_register_extension_type (module,
                                               GTD_TYPE_ACTIVATABLE,
                                               GTD_TYPE_PLUGIN_TASK_LISTS_WORKSPACE);
+
+  peas_object_module_register_extension_type (module,
+                                              GTD_TYPE_WORKSPACE,
+                                              GTD_TYPE_TASK_LISTS_WORKSPACE);
 }
