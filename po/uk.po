@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-04-27 03:37+0000\n"
-"PO-Revision-Date: 2020-04-27 09:12+0300\n"
+"POT-Creation-Date: 2020-05-01 09:48+0000\n"
+"PO-Revision-Date: 2020-05-01 18:52+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -24,9 +24,9 @@ msgstr ""
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
 #: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
-#: src/gtd-window.c:784 src/gtd-window.c:815 src/main.c:35
+#: src/gtd-omni-area.ui:32 src/gtd-window.c:694 src/main.c:35
 msgid "To Do"
-msgstr "Треба зробити "
+msgstr "Треба зробити"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:8
 msgid "Task manager for GNOME"
@@ -120,18 +120,10 @@ msgid "The list of active extensions"
 msgstr "Список увімкнутих розширень"
 
 #: data/org.gnome.todo.gschema.xml:31
-msgid "The current list selector"
-msgstr "Поточний вибір переліку"
-
-#: data/org.gnome.todo.gschema.xml:32
-msgid "The current list selector. Can be “grid” or “list”."
-msgstr "Поточний вибір переліку. Може бути «ґратка» або «список»."
-
-#: data/org.gnome.todo.gschema.xml:36
 msgid "Sidebar revealed"
 msgstr "Показано бічну панель"
 
-#: data/org.gnome.todo.gschema.xml:37
+#: data/org.gnome.todo.gschema.xml:32
 msgid "Whether the sidebar is revealed or not"
 msgstr "Чи буде показано бічну панель"
 
@@ -276,6 +268,7 @@ msgid "Error fetching tasks from list"
 msgstr "Помилка одержання завдань зі списку"
 
 #: plugins/eds/gtd-task-list-eds.c:932
+#: plugins/inbox-panel/gtd-inbox-panel.c:111
 msgid "Inbox"
 msgstr "Вхідні"
 
@@ -288,6 +281,83 @@ msgstr "Протермінований"
 msgid "Next 7 Days"
 msgstr "Наступні 7 днів"
 
+#: plugins/peace/gtd-peace-omni-area-addin.c:56
+msgid "Did you drink some water today?"
+msgstr "Чи пили ви сьогодні воду?"
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:57
+#| msgid "You have %d task for today"
+#| msgid_plural "You have %d tasks for today"
+msgid "What are your goals for today?"
+msgstr "Якими є ваші завдання на сьогодні?"
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:58
+msgid "Can you let your creativity flow?"
+msgstr "Можете дати волю своїй творчій натурі?"
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:59
+msgid "How are you feeling right now?"
+msgstr "Тепер почуваєте себе добре?"
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:60
+msgid "At what point is it good enough?"
+msgstr "Коли ж уже буде досить?"
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:65
+msgid "Remember to breath. Good. Don't stop."
+msgstr "Дихайте. Чудово. Не зупиняйтеся."
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:66
+msgid "Don't forget to drink some water"
+msgstr "Не забудьте випити води"
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:67
+msgid "Remember to take some time off"
+msgstr "Не забувайте трохи перепочити"
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:68
+msgid "Eat fruits if you can 🍐️"
+msgstr "З'їжте фруктів, якщо можете 🍐️"
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:69
+msgid "Take care of yourself"
+msgstr "Бережіть себе"
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:70
+msgid "Remember to have some fun"
+msgstr "Не забувайте — не слід нудьгувати"
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:71
+msgid "You're doing great"
+msgstr "Чудовий результат"
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:76
+msgid "Smile, breathe and go slowly"
+msgstr "Посміхніться, вдихніть на повні груди і потроху рушайте"
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:77
+msgid "Wherever you go, there you are"
+msgstr "Куди б ви не подалися, ви завжди з собою"
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:78
+#: src/widgets/gtd-empty-list-widget.c:63
+msgid "Working hard is always rewarded"
+msgstr "Важка праця завжди винагороджується"
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:79
+msgid "Keep calm"
+msgstr "Зберігайте спокій"
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:80
+#| msgid "You made it!"
+msgid "You can do it"
+msgstr "Ви можете це зробити"
+
+#: plugins/peace/gtd-peace-omni-area-addin.c:81
+#| msgid "Meanwhile, spread the love"
+msgid "Meanwhile, spread the love ♥️"
+msgstr "І не забувайте дарувати любов ♥️"
+
 #: plugins/scheduled-panel/gtd-panel-scheduled.c:343
 msgid "Scheduled"
 msgstr "Заплановано"
@@ -295,6 +365,97 @@ msgstr "Заплановано"
 #: plugins/score/score/__init__.py:90
 msgid "No task completed today"
 msgstr "Не виконано жодного завдання за сьогодні"
+
+#: plugins/task-lists-workspace/gtd-task-list-panel.c:200
+msgid "Unarchive"
+msgstr "Розархівувати"
+
+#: plugins/task-lists-workspace/gtd-task-list-panel.c:200
+#: plugins/task-lists-workspace/gtd-task-list-panel.ui:48
+msgid "Archive"
+msgstr "Архівувати"
+
+#: plugins/task-lists-workspace/gtd-task-list-panel.ui:33
+#: plugins/task-lists-workspace/gtd-task-list-panel.ui:77
+#: plugins/task-lists-workspace/gtd-task-list-panel.ui:92
+msgid "Rename"
+msgstr "Пере_йменувати"
+
+#: plugins/task-lists-workspace/gtd-task-list-panel.ui:39
+#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
+msgid "Clear completed tasks…"
+msgstr "Очистити завершені завдання…"
+
+#: plugins/task-lists-workspace/gtd-task-list-panel.ui:54
+msgid "Delete"
+msgstr "Вилучити"
+
+#: plugins/task-lists-workspace/gtd-task-lists-workspace.c:277
+msgid "Task Lists"
+msgstr "Списки завдань"
+
+#: plugins/task-lists-workspace/gtd-task-lists-workspace.ui:43
+msgid "New List"
+msgstr "Новий список"
+
+#: plugins/task-lists-workspace/sidebar/gtd-sidebar.c:407
+#, c-format
+msgid "Task list <b>%s</b> removed"
+msgstr "Завдання <b>%s</b> вилучено"
+
+#: plugins/task-lists-workspace/sidebar/gtd-sidebar.c:410
+#: src/task-list-view/gtd-task-list-view.c:462
+msgid "Undo"
+msgstr "Повернути"
+
+#: plugins/task-lists-workspace/sidebar/gtd-sidebar-provider-row.ui:69
+msgid "Loading…"
+msgstr "Завантаження…"
+
+#. Translators: 'archived' as in 'archived task lists'
+#: plugins/task-lists-workspace/sidebar/gtd-sidebar.ui:88
+msgid "Archived"
+msgstr "Заархівоване"
+
+#: plugins/task-lists-workspace/sidebar/gtd-sidebar.ui:140
+msgid "No archived lists"
+msgstr "Немає архівів"
+
+#: plugins/today-panel/gtd-today-omni-area-addin.c:53
+#: src/widgets/gtd-empty-list-widget.c:51
+msgid "No more tasks left"
+msgstr "Більше не залишилось завдань"
+
+#: plugins/today-panel/gtd-today-omni-area-addin.c:54
+#: src/widgets/gtd-empty-list-widget.c:52
+msgid "Nothing else to do here"
+msgstr "Тут більше нічого шукати"
+
+#: plugins/today-panel/gtd-today-omni-area-addin.c:55
+#: src/widgets/gtd-empty-list-widget.c:53
+msgid "You made it!"
+msgstr "Ви зробили це!"
+
+#: plugins/today-panel/gtd-today-omni-area-addin.c:56
+#: src/widgets/gtd-empty-list-widget.c:54
+msgid "Looks like there’s nothing else left here"
+msgstr "Схоже, що тут більше нічого шукати"
+
+#: plugins/today-panel/gtd-today-omni-area-addin.c:69
+#, c-format
+#| msgid "You have %d task for today"
+#| msgid_plural "You have %d tasks for today"
+msgid "%d task for today"
+msgid_plural "%d tasks for today"
+msgstr[0] "Маєте %d завдання на сьогодні"
+msgstr[1] "Маєте %d завдання на сьогодні"
+msgstr[2] "Маєте %d завдань на сьогодні"
+msgstr[3] "Маєте одне завдання на сьогодні"
+
+#: plugins/today-panel/gtd-today-omni-area-addin.c:84
+#| msgid "No task completed today"
+msgid "No tasks scheduled for today"
+msgstr "На сьогодні нічого не заплановано"
 
 #: plugins/todoist/gtd-plugin-todoist.c:109
 msgid "GNOME To Do cannot connect to Todoist due to network issue"
@@ -410,11 +571,6 @@ msgstr "Джерело файла Todo.txt"
 msgid "Unscheduled"
 msgstr "Не заплановано"
 
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
-#: src/gtd-task-list-panel.ui:39
-msgid "Clear completed tasks…"
-msgstr "Очистити завершені завдання…"
-
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
 #, python-format
@@ -449,8 +605,7 @@ msgstr "Увійдіть до мережевого облікового запи
 msgid "To Do Setup"
 msgstr "Параметри To Do"
 
-#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:97
-#: src/provider/gtd-provider-popover.ui:43
+#: src/gtd-initial-setup-window.ui:56 src/provider/gtd-provider-popover.ui:43
 msgid "_Cancel"
 msgstr "_Скасувати"
 
@@ -466,7 +621,7 @@ msgstr "Помилка завантаження додатка"
 msgid "Error unloading extension"
 msgstr "Помилка під час розвантаження розширення"
 
-#: src/gtd-plugin-dialog.ui:55 src/gtd-window.ui:145
+#: src/gtd-plugin-dialog.ui:55 src/gtd-window.ui:147
 msgid "Extensions"
 msgstr "Розширення"
 
@@ -474,24 +629,7 @@ msgstr "Розширення"
 msgid "No extensions found"
 msgstr "Не знайдено жодного розширення"
 
-#: src/gtd-task-list-panel.c:200
-msgid "Unarchive"
-msgstr "Розархівувати"
-
-#: src/gtd-task-list-panel.c:200 src/gtd-task-list-panel.ui:48
-msgid "Archive"
-msgstr "Архівувати"
-
-#: src/gtd-task-list-panel.ui:33 src/gtd-task-list-panel.ui:77
-#: src/gtd-task-list-panel.ui:92
-msgid "Rename"
-msgstr "Пере_йменувати"
-
-#: src/gtd-task-list-panel.ui:54
-msgid "Delete"
-msgstr "Вилучити"
-
-#: src/gtd-window.c:111
+#: src/gtd-window.c:102
 msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
@@ -499,19 +637,11 @@ msgstr ""
 "Це розробницька збірка To Do. Можливі помилки, неочікувана поведінка і "
 "втрати даних."
 
-#: src/gtd-window.c:464
+#: src/gtd-window.c:406
 msgid "Details"
 msgstr "Подробиці"
 
-#: src/gtd-window.c:779
-msgid "Click a task list to select"
-msgstr "Натисніть на список завдань, щоб вибрати"
-
-#: src/gtd-window.ui:63
-msgid "New List"
-msgstr "Новий список"
-
-#: src/gtd-window.ui:151
+#: src/gtd-window.ui:153
 msgid "_About To Do"
 msgstr "_Про програму"
 
@@ -559,28 +689,6 @@ msgstr "Microsoft Exchange"
 msgid "Or you can just store your tasks on this computer"
 msgstr "Або можете просто зберігати завдання на цьому комп'ютері"
 
-#: src/sidebar/gtd-sidebar.c:404
-#, c-format
-msgid "Task list <b>%s</b> removed"
-msgstr "Завдання <b>%s</b> вилучено"
-
-#: src/sidebar/gtd-sidebar.c:407 src/task-list-view/gtd-task-list-view.c:461
-msgid "Undo"
-msgstr "Повернути"
-
-#: src/sidebar/gtd-sidebar-provider-row.ui:69
-msgid "Loading…"
-msgstr "Завантаження…"
-
-#. Translators: 'archived' as in 'archived task lists'
-#: src/sidebar/gtd-sidebar.ui:88
-msgid "Archived"
-msgstr "Заархівоване"
-
-#: src/sidebar/gtd-sidebar.ui:140
-msgid "No archived lists"
-msgstr "Немає архівів"
-
 #: src/task-list-view/gtd-edit-pane.ui:16
 msgid "D_ue Date"
 msgstr "Дата _завершення"
@@ -616,26 +724,10 @@ msgstr "%1$s \t <small>%2$s</small>"
 msgid "New task…"
 msgstr "Створити завдання…"
 
-#: src/task-list-view/gtd-task-list-view.c:442
+#: src/task-list-view/gtd-task-list-view.c:443
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Завдання <b>%s</b> вилучено"
-
-#: src/widgets/gtd-empty-list-widget.c:51
-msgid "No more tasks left"
-msgstr "Більше не залишилось завдань"
-
-#: src/widgets/gtd-empty-list-widget.c:52
-msgid "Nothing else to do here"
-msgstr "Тут більше нічого шукати"
-
-#: src/widgets/gtd-empty-list-widget.c:53
-msgid "You made it!"
-msgstr "Ви зробили це!"
-
-#: src/widgets/gtd-empty-list-widget.c:54
-msgid "Looks like there’s nothing else left here"
-msgstr "Схоже, що тут більше нічого шукати"
 
 #: src/widgets/gtd-empty-list-widget.c:59
 msgid "Get some rest now"
@@ -653,10 +745,6 @@ msgstr "Хороша роботу!"
 msgid "Meanwhile, spread the love"
 msgstr "І не забувайте дарувати любов"
 
-#: src/widgets/gtd-empty-list-widget.c:63
-msgid "Working hard is always rewarded"
-msgstr "Важка праця завжди винагороджується"
-
 #: src/widgets/gtd-empty-list-widget.c:74
 msgid "No tasks found"
 msgstr "Не знайдено жодного завдання"
@@ -664,3 +752,12 @@ msgstr "Не знайдено жодного завдання"
 #: src/widgets/gtd-empty-list-widget.c:75
 msgid "You can add tasks using the <b>+</b> above"
 msgstr "Можете додавати завдання за допомогою <b>+</b> зверху"
+
+#~ msgid "The current list selector"
+#~ msgstr "Поточний вибір переліку"
+
+#~ msgid "The current list selector. Can be “grid” or “list”."
+#~ msgstr "Поточний вибір переліку. Може бути «ґратка» або «список»."
+
+#~ msgid "Click a task list to select"
+#~ msgstr "Натисніть на список завдань, щоб вибрати"
