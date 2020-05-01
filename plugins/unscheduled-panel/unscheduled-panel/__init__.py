@@ -130,9 +130,6 @@ class UnscheduledPanelPlugin(GObject.Object, Gtd.Activatable):
     def do_deactivate(self):
         pass
 
-    def do_get_header_widgets(self):
-        return None
-
     def do_get_preferences_panel(self):
         return None
 

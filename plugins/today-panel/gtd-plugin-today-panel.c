@@ -61,12 +61,6 @@ gtd_plugin_today_panel_deactivate (GtdActivatable *activatable)
   ;
 }
 
-static GList*
-gtd_plugin_today_panel_get_header_widgets (GtdActivatable *activatable)
-{
-  return NULL;
-}
-
 static GtkWidget*
 gtd_plugin_today_panel_get_preferences_panel (GtdActivatable *activatable)
 {
@@ -84,7 +78,6 @@ gtd_activatable_iface_init (GtdActivatableInterface *iface)
 {
   iface->activate = gtd_plugin_today_panel_activate;
   iface->deactivate = gtd_plugin_today_panel_deactivate;
-  iface->get_header_widgets = gtd_plugin_today_panel_get_header_widgets;
   iface->get_preferences_panel = gtd_plugin_today_panel_get_preferences_panel;
   iface->get_providers = gtd_plugin_today_panel_get_providers;
 }

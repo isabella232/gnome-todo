@@ -490,12 +490,6 @@ gtd_plugin_background_deactivate (GtdActivatable *activatable)
   start_update (self);
 }
 
-static GList*
-gtd_plugin_background_get_header_widgets (GtdActivatable *activatable)
-{
-  return NULL;
-}
-
 static GtkWidget*
 gtd_plugin_background_get_preferences_panel (GtdActivatable *activatable)
 {
@@ -515,7 +509,6 @@ gtd_activatable_iface_init (GtdActivatableInterface *iface)
 {
   iface->activate = gtd_plugin_background_activate;
   iface->deactivate = gtd_plugin_background_deactivate;
-  iface->get_header_widgets = gtd_plugin_background_get_header_widgets;
   iface->get_preferences_panel = gtd_plugin_background_get_preferences_panel;
   iface->get_providers = gtd_plugin_background_get_providers;
 }

@@ -147,12 +147,6 @@ gtd_night_light_plugin_deactivate (GtdActivatable *activatable)
   GTD_EXIT;
 }
 
-static GList*
-gtd_night_light_plugin_get_header_widgets (GtdActivatable *activatable)
-{
-  return NULL;
-}
-
 static GtkWidget*
 gtd_night_light_plugin_get_preferences_panel (GtdActivatable *activatable)
 {
@@ -170,7 +164,6 @@ gtd_activatable_iface_init (GtdActivatableInterface *iface)
 {
   iface->activate = gtd_night_light_plugin_activate;
   iface->deactivate = gtd_night_light_plugin_deactivate;
-  iface->get_header_widgets = gtd_night_light_plugin_get_header_widgets;
   iface->get_preferences_panel = gtd_night_light_plugin_get_preferences_panel;
   iface->get_providers = gtd_night_light_plugin_get_providers;
 }
