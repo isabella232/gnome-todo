@@ -130,9 +130,9 @@ void
 gtd_activatable_activate (GtdActivatable *activatable)
 {
   g_return_if_fail (GTD_IS_ACTIVATABLE (activatable));
-  g_return_if_fail (GTD_ACTIVATABLE_GET_IFACE (activatable)->activate);
 
-  GTD_ACTIVATABLE_GET_IFACE (activatable)->activate (activatable);
+  if (GTD_ACTIVATABLE_GET_IFACE (activatable)->activate)
+    GTD_ACTIVATABLE_GET_IFACE (activatable)->activate (activatable);
 }
 
 /**
@@ -151,9 +151,9 @@ void
 gtd_activatable_deactivate (GtdActivatable *activatable)
 {
   g_return_if_fail (GTD_IS_ACTIVATABLE (activatable));
-  g_return_if_fail (GTD_ACTIVATABLE_GET_IFACE (activatable)->activate);
 
-  GTD_ACTIVATABLE_GET_IFACE (activatable)->deactivate (activatable);
+  if (GTD_ACTIVATABLE_GET_IFACE (activatable)->deactivate)
+    GTD_ACTIVATABLE_GET_IFACE (activatable)->deactivate (activatable);
 }
 
 /**
@@ -162,15 +162,17 @@ gtd_activatable_deactivate (GtdActivatable *activatable)
  *
  * Retrieve the preferences panel of @activatable if any.
  *
- * Returns: (transfer none): a #GtkWidget, or %NULL
+ * Returns: (transfer none)(nullable): a #GtkWidget, or %NULL
  */
 GtkWidget*
 gtd_activatable_get_preferences_panel (GtdActivatable *activatable)
 {
   g_return_val_if_fail (GTD_IS_ACTIVATABLE (activatable), NULL);
-  g_return_val_if_fail (GTD_ACTIVATABLE_GET_IFACE (activatable)->get_preferences_panel, NULL);
 
-  return GTD_ACTIVATABLE_GET_IFACE (activatable)->get_preferences_panel (activatable);
+  if (GTD_ACTIVATABLE_GET_IFACE (activatable)->get_preferences_panel)
+    return GTD_ACTIVATABLE_GET_IFACE (activatable)->get_preferences_panel (activatable);
+
+  return NULL;
 }
 
 /**
@@ -179,13 +181,15 @@ gtd_activatable_get_preferences_panel (GtdActivatable *activatable)
  *
  * Retrieve the providers of @activatable if any.
  *
- * Returns: (transfer none) (element-type Gtd.Provider): a #GList
+ * Returns: (transfer none) (element-type Gtd.Provider)(nullable): a #GList
  */
 GList*
 gtd_activatable_get_providers (GtdActivatable *activatable)
 {
   g_return_val_if_fail (GTD_IS_ACTIVATABLE (activatable), NULL);
-  g_return_val_if_fail (GTD_ACTIVATABLE_GET_IFACE (activatable)->get_providers, NULL);
 
-  return GTD_ACTIVATABLE_GET_IFACE (activatable)->get_providers (activatable);
+  if (GTD_ACTIVATABLE_GET_IFACE (activatable)->get_providers)
+    return GTD_ACTIVATABLE_GET_IFACE (activatable)->get_providers (activatable);
+
+  return NULL;
 }
