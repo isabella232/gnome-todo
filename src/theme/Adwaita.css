@@ -1,3 +1,7 @@
+@import url("resource:///org/gnome/todo/theme/Adwaita-omniarea.css");
+@import url("resource:///org/gnome/todo/theme/Adwaita-tasklistview.css");
+@import url("resource:///org/gnome/todo/theme/Adwaita-taskrow.css");
+
 .transparent {
     background-color: transparent;
 }
@@ -51,114 +55,4 @@ arrow-frame:dir(rtl) {
 
 label.main-title {
     font-size: 28px;
-}
-
-
-/*
- * GtdTaskRow
- */
-
-taskrow { border-radius: 3px;}
-
-taskrow:dir(ltr) { padding-left: 6px;  }
-taskrow:dir(rtl) { padding-right: 6px; }
-
-taskrow.active {
-  background-color: @theme_bg_color;
-  border: solid 1px @borders;
-}
-
-/* task title entry */
-taskrow text {
-  border: solid 1px transparent;
-  background: none;
-  border-radius: 3px;
-}
-
-taskrow text:hover:not(:focus) {
-  border: solid 1px @borders;
-}
-
-/* line-through complete tasks */
-taskrow.complete > * { opacity: 0.5; }
-taskrow.complete entry.title { text-decoration-line: line-through; }
-
-/* dnd row */
-taskrow box.dnd {
-    background: alpha(@theme_fg_color, 0.1);
-}
-
-tasklistview { background-color: @theme_base_color; }
-
-/* new task row */
-newtaskrow entry { padding: 0 16px 0 14px; }
-
-/* extension list */
-list.extension-list row {
-    border-bottom: solid 1px @borders;
-}
-
-/* circle button */
-button.circle {
-    border-radius: 20px;
-}
-
-/*
- * Tasklist view
- */
-tasklistview.dark stack spinner,
-tasklistview.dark emptylistwidget label,
-tasklistview.dark emptylistwidget image {
-    color: white;
-}
-
-tasklistview.light stack spinner,
-tasklistview.light emptylistwidget label,
-tasklistview.light emptylistwidget image {
-    color: black;
-}
-
-tasklistview list:drop(active) {
-    box-shadow: none;
-    border: none;
-}
-
-/* Add a subtle shadow to color circles */
-image.color-circle-icon {
-    -gtk-icon-shadow: 0 1px alpha(black, 0.18);
-}
-
-/* Color button */
-colorbutton {
-    border-radius: 6px;
-    transition: 100ms;
-}
-
-colorbutton:hover {
-    filter: brightness(80%);
-    transition: 100ms;
-}
-
-colorbutton.dark image {
-    color: white;
-}
-
-colorbutton.light image {
-    color: black;
-}
-
-/* Omni Area */
-
-omniarea entry {
-  background-color: mix(@theme_bg_color, @content_view_bg, 0.25);
-  color: @theme_fg_color;
-}
-omniarea:hover entry,
-omniarea:active entry {
-  background-color: @content_view_bg;
-  color: @theme_fg_color;
-}
-
-omniarea:backdrop entry {
-  background-color: @theme_bg_color;
 }
