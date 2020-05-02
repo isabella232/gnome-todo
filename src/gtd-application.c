@@ -1,6 +1,6 @@
 /* gtd-application.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
 #include "gtd-manager.h"
 #include "gtd-manager-protected.h"
 #include "gtd-plugin-dialog.h"
+#include "gtd-vcs.h"
 #include "gtd-window.h"
 #include "gtd-window-private.h"
 
@@ -139,7 +140,7 @@ gtd_application_show_about (GSimpleAction *simple,
   g_autofree gchar *program_name = g_strconcat (_("To Do"), NAME_SUFFIX, NULL);
   gtk_show_about_dialog (GTK_WINDOW (self->window),
                          "program-name", program_name,
-                         "version", VERSION,
+                         "version", GTD_VCS_TAG,
                          "copyright", _("Copyright \xC2\xA9 2015–2018 The To Do authors"),
                          "license-type", GTK_LICENSE_GPL_3_0,
                          "authors", authors,
