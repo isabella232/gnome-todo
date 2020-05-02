@@ -24,6 +24,7 @@
 #include "gtd-markdown-renderer.h"
 #include "gtd-provider.h"
 #include "gtd-rows-common-private.h"
+#include "gtd-star-widget.h"
 #include "gtd-task-row.h"
 #include "gtd-task.h"
 #include "gtd-task-list.h"
@@ -45,6 +46,7 @@ struct _GtdTaskRow
   GtkWidget          *done_check;
   GtkWidget          *edit_panel_revealer;
   GtkWidget          *header_event_box;
+  GtdStarWidget      *star_widget;
   GtkWidget          *title_entry;
 
   /* task widgets */
@@ -72,6 +74,10 @@ struct _GtdTaskRow
 };
 
 #define PRIORITY_ICON_SIZE 8
+
+static void          on_star_widget_activated_cb                 (GtdStarWidget      *star_widget,
+                                                                  GParamSpec         *pspec,
+                                                                  GtdTaskRow         *self);
 
 G_DEFINE_TYPE (GtdTaskRow, gtd_task_row, GTK_TYPE_BIN)
 
@@ -352,6 +358,31 @@ on_depth_changed_cb (GtdTaskRow *self,
   gtk_widget_set_margin_start (self->content_box, margin);
 }
 
+static void
+on_task_important_changed_cb (GtdTask    *task,
+                              GParamSpec *pspec,
+                              GtdTaskRow *self)
+{
+  g_signal_handlers_block_by_func (self->star_widget, on_star_widget_activated_cb, self);
+
+  gtd_star_widget_set_active (self->star_widget, gtd_task_get_important (task));
+
+  g_signal_handlers_unblock_by_func (self->star_widget, on_star_widget_activated_cb, self);
+}
+
+static void
+on_star_widget_activated_cb (GtdStarWidget *star_widget,
+                             GParamSpec    *pspec,
+                             GtdTaskRow    *self)
+{
+  g_signal_handlers_block_by_func (self->task, on_task_important_changed_cb, self);
+
+  gtd_task_set_important (self->task, gtd_star_widget_get_active (star_widget));
+  gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
+
+  g_signal_handlers_unblock_by_func (self->task, on_task_important_changed_cb, self);
+}
+
 static gboolean
 on_key_pressed_cb (GtkEventControllerKey *controller,
                    guint                  keyval,
@@ -511,6 +542,19 @@ gtd_task_row_set_property (GObject      *object,
                                self,
                                G_CONNECT_SWAPPED);
 
+      on_task_important_changed_cb (self->task, NULL, self);
+      g_signal_connect_object (self->task,
+                               "notify::important",
+                               G_CALLBACK (on_task_important_changed_cb),
+                               self,
+                               0);
+
+      g_signal_connect_object (self->star_widget,
+                               "notify::active",
+                               G_CALLBACK (on_star_widget_activated_cb),
+                               self,
+                               0);
+
       g_signal_handlers_unblock_by_func (self->done_check, on_complete_check_toggled_cb, self);
       g_signal_handlers_unblock_by_func (self->title_entry, on_task_changed_cb, self);
 
@@ -631,6 +675,7 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, edit_panel_revealer);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, header_event_box);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, main_box);
+  gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, star_widget);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, task_date_label);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, task_list_label);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, title_entry);
