@@ -30,6 +30,7 @@
 #include "gtd-sidebar-provider-row.h"
 #include "gtd-task-list.h"
 #include "gtd-task-list-panel.h"
+#include "gtd-text-width-layout.h"
 #include "gtd-utils.h"
 #include "notification/gtd-notification.h"
 
@@ -37,7 +38,7 @@
 
 struct _GtdSidebar
 {
-  GtkBox              parent;
+  GtkBin              parent;
 
   GtkListBox         *archive_listbox;
   GtkListBoxRow      *archive_row;
@@ -50,7 +51,7 @@ struct _GtdSidebar
   GSimpleActionGroup *action_group;
 };
 
-G_DEFINE_TYPE (GtdSidebar, gtd_sidebar, GTK_TYPE_BOX)
+G_DEFINE_TYPE (GtdSidebar, gtd_sidebar, GTK_TYPE_BIN)
 
 
 /*
@@ -803,6 +804,8 @@ gtd_sidebar_class_init (GtdSidebarClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->constructed = gtd_sidebar_constructed;
+
+  g_type_ensure (GTD_TYPE_TEXT_WIDTH_LAYOUT);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/plugins/task-lists-workspace/gtd-sidebar.ui");
 

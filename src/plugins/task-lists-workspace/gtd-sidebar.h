@@ -28,7 +28,7 @@ G_BEGIN_DECLS
 
 #define GTD_TYPE_SIDEBAR (gtd_sidebar_get_type())
 
-G_DECLARE_FINAL_TYPE (GtdSidebar, gtd_sidebar, GTD, SIDEBAR, GtkBox)
+G_DECLARE_FINAL_TYPE (GtdSidebar, gtd_sidebar, GTD, SIDEBAR, GtkBin)
 
 void                 gtd_sidebar_set_panel_stack                 (GtdSidebar         *self,
                                                                   GtkStack           *stack);

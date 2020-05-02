@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="GtdSidebar" parent="GtkBox">
+  <template class="GtdSidebar" parent="GtkBin">
     <property name="hexpand">0</property>
+    <property name="layout-manager">
+      <object class="GtdTextWidthLayout">
+        <property name="width-chars">35</property>
+        <property name="max-width-chars">35</property>
+      </object>
+    </property>
     <style>
       <class name="sidebar"/>
     </style>
