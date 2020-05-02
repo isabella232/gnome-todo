@@ -1,6 +1,6 @@
 /* gtd-manager-protected.h
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,8 +25,5 @@ G_BEGIN_DECLS
 void                 gtd_manager_load_plugins                    (GtdManager         *manager);
 
 GtdPluginManager*    gtd_manager_get_plugin_manager              (GtdManager         *manager);
-
-void                 _gtd_manager_inject_provider                (GtdManager         *self,
-                                                                  GtdProvider        *provider);
 
 G_END_DECLS

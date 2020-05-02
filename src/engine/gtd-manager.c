@@ -228,74 +228,6 @@ on_list_removed_cb (GtdProvider *provider,
   GTD_EXIT;
 }
 
-static void
-on_provider_added_cb (GtdPluginManager *plugin_manager,
-                      GtdProvider      *provider,
-                      GtdManager       *self)
-{
-  g_autoptr (GList) lists = NULL;
-  GList *l;
-
-  GTD_ENTRY;
-
-  self->providers = g_list_append (self->providers, provider);
-
-  /* Add lists */
-  lists = gtd_provider_get_task_lists (provider);
-
-  for (l = lists; l != NULL; l = l->next)
-    on_list_added_cb (provider, l->data, self);
-
-  g_signal_connect (provider,
-                    "list-added",
-                    G_CALLBACK (on_list_added_cb),
-                    self);
-
-  g_signal_connect (provider,
-                    "list-changed",
-                    G_CALLBACK (on_list_changed_cb),
-                    self);
-
-  g_signal_connect (provider,
-                    "list-removed",
-                    G_CALLBACK (on_list_removed_cb),
-                    self);
-
-  /* If we just added the default provider, update the property */
-  check_provider_is_default (self, provider);
-
-  g_signal_emit (self, signals[PROVIDER_ADDED], 0, provider);
-
-  GTD_EXIT;
-}
-
-static void
-on_provider_removed_cb (GtdPluginManager *plugin_manager,
-                        GtdProvider      *provider,
-                        GtdManager       *self)
-{
-  g_autoptr (GList) lists = NULL;
-  GList *l;
-
-  GTD_ENTRY;
-
-  self->providers = g_list_remove (self->providers, provider);
-
-  /* Remove lists */
-  lists = gtd_provider_get_task_lists (provider);
-
-  for (l = lists; l != NULL; l = l->next)
-    on_list_removed_cb (provider, l->data, self);
-
-  g_signal_handlers_disconnect_by_func (provider, on_list_added_cb, self);
-  g_signal_handlers_disconnect_by_func (provider, on_list_changed_cb, self);
-  g_signal_handlers_disconnect_by_func (provider, on_list_removed_cb, self);
-
-  g_signal_emit (self, signals[PROVIDER_REMOVED], 0, provider);
-
-  GTD_EXIT;
-}
-
 
 /*
  * GObject overrides
@@ -611,6 +543,84 @@ gtd_manager_get_providers (GtdManager *self)
 }
 
 /**
+ * gtd_manager_add_provider:
+ * @self: a #GtdManager
+ * @provider: a #GtdProvider
+ *
+ * Adds @provider to the list of providers.
+ */
+void
+gtd_manager_add_provider (GtdManager  *self,
+                          GtdProvider *provider)
+{
+  g_autoptr (GList) lists = NULL;
+  GList *l;
+
+  g_return_if_fail (GTD_IS_MANAGER (self));
+  g_return_if_fail (GTD_IS_PROVIDER (provider));
+
+  GTD_ENTRY;
+
+  self->providers = g_list_prepend (self->providers, provider);
+
+  /* Add lists */
+  lists = gtd_provider_get_task_lists (provider);
+
+  for (l = lists; l != NULL; l = l->next)
+    on_list_added_cb (provider, l->data, self);
+
+  g_object_connect (provider,
+                    "signal::list-added", G_CALLBACK (on_list_added_cb), self,
+                    "signal::list-changed", G_CALLBACK (on_list_changed_cb), self,
+                    "signal::list-removed", G_CALLBACK (on_list_removed_cb), self,
+                    NULL);
+
+  /* If we just added the default provider, update the property */
+  check_provider_is_default (self, provider);
+
+  g_signal_emit (self, signals[PROVIDER_ADDED], 0, provider);
+
+  GTD_EXIT;
+}
+
+/**
+ * gtd_manager_remove_provider:
+ * @self: a #GtdManager
+ * @provider: a #GtdProvider
+ *
+ * Removes @provider from the list of providers.
+ */
+void
+gtd_manager_remove_provider (GtdManager  *self,
+                             GtdProvider *provider)
+{
+  g_autoptr (GList) lists = NULL;
+  GList *l;
+
+  g_return_if_fail (GTD_IS_MANAGER (self));
+  g_return_if_fail (GTD_IS_PROVIDER (provider));
+
+  GTD_ENTRY;
+
+  self->providers = g_list_remove (self->providers, provider);
+
+  /* Remove lists */
+  lists = gtd_provider_get_task_lists (provider);
+
+  for (l = lists; l != NULL; l = l->next)
+    on_list_removed_cb (provider, l->data, self);
+
+  g_signal_handlers_disconnect_by_func (provider, on_list_added_cb, self);
+  g_signal_handlers_disconnect_by_func (provider, on_list_changed_cb, self);
+  g_signal_handlers_disconnect_by_func (provider, on_list_removed_cb, self);
+
+  g_signal_emit (self, signals[PROVIDER_REMOVED], 0, provider);
+
+  GTD_EXIT;
+}
+
+
+/**
  * gtd_manager_get_default_provider:
  * @manager: a #GtdManager
  *
@@ -852,16 +862,6 @@ gtd_manager_load_plugins (GtdManager *self)
 {
   GTD_ENTRY;
 
-  g_signal_connect (self->plugin_manager,
-                    "provider-registered",
-                    G_CALLBACK (on_provider_added_cb),
-                    self);
-
-  g_signal_connect (self->plugin_manager,
-                    "provider-unregistered",
-                    G_CALLBACK (on_provider_removed_cb),
-                    self);
-
   gtd_plugin_manager_load_plugins (self->plugin_manager);
 
   GTD_EXIT;
@@ -873,15 +873,4 @@ gtd_manager_get_plugin_manager (GtdManager *self)
   g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
   return self->plugin_manager;
-}
-
-void
-_gtd_manager_inject_provider (GtdManager  *self,
-                              GtdProvider *provider)
-{
-  g_return_if_fail (GTD_IS_MANAGER (self));
-
-  g_debug ("Injecting provider '%s'", gtd_provider_get_name (provider));
-
-  on_provider_added_cb (NULL, provider, self);
 }

@@ -1,6 +1,6 @@
 /* test-filter-sort.c
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -225,7 +225,7 @@ main (gint   argc,
   dummy_provider = dummy_provider_new ();
   dummy_provider_generate_task_lists (dummy_provider);
   dummy_provider_generate_task_lists (dummy_provider);
-  _gtd_manager_inject_provider (gtd_manager_get_default (), GTD_PROVIDER (dummy_provider));
+  gtd_manager_add_provider (gtd_manager_get_default (), GTD_PROVIDER (dummy_provider));
 
   /* Models */
   model = _gtd_task_model_new (gtd_manager_get_default ());

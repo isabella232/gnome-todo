@@ -90,21 +90,12 @@ gtd_plugin_eds_get_preferences_panel (GtdActivatable *activatable)
   return NULL;
 }
 
-static GList*
-gtd_plugin_eds_get_providers (GtdActivatable *activatable)
-{
-  GtdPluginEds *plugin = GTD_PLUGIN_EDS (activatable);
-
-  return plugin->providers;
-}
-
 static void
 gtd_activatable_iface_init (GtdActivatableInterface *iface)
 {
   iface->activate = gtd_plugin_eds_activate;
   iface->deactivate = gtd_plugin_eds_deactivate;
   iface->get_preferences_panel = gtd_plugin_eds_get_preferences_panel;
-  iface->get_providers = gtd_plugin_eds_get_providers;
 }
 
 
@@ -117,10 +108,12 @@ gtd_plugin_eds_goa_account_removed_cb (GoaClient    *client,
                                        GoaObject    *object,
                                        GtdPluginEds *self)
 {
+  GtdManager *manager;
   GoaAccount *account;
   GList *l;
 
   account = goa_object_peek_account (object);
+  manager = gtd_manager_get_default ();
 
   if (!g_strv_contains (supported_accounts, goa_account_get_provider_type (account)))
     return;
@@ -133,9 +126,9 @@ gtd_plugin_eds_goa_account_removed_cb (GoaClient    *client,
       if (account == gtd_provider_goa_get_account (l->data))
         {
           GtdProviderGoa *provider = GTD_PROVIDER_GOA (l->data);
-          self->providers = g_list_remove (self->providers, l->data);
 
-          g_signal_emit_by_name (self, "provider-removed", provider);
+          self->providers = g_list_remove (self->providers, l->data);
+          gtd_manager_add_provider (manager, GTD_PROVIDER (provider));
           break;
         }
     }
@@ -146,9 +139,11 @@ gtd_plugin_eds_goa_account_added_cb (GoaClient    *client,
                                      GoaObject    *object,
                                      GtdPluginEds *self)
 {
+  GtdManager *manager;
   GoaAccount *account;
 
   account = goa_object_get_account (object);
+  manager = gtd_manager_get_default ();
 
   if (g_strv_contains (supported_accounts, goa_account_get_provider_type (account)))
     {
@@ -157,8 +152,7 @@ gtd_plugin_eds_goa_account_added_cb (GoaClient    *client,
       provider = gtd_provider_goa_new (self->registry, account);
 
       self->providers = g_list_append (self->providers, provider);
-
-      g_signal_emit_by_name (self, "provider-added", provider);
+      gtd_manager_add_provider (manager, GTD_PROVIDER (provider));
     }
 }
 
@@ -169,12 +163,14 @@ gtd_plugin_eds_goa_client_finish_cb (GObject      *client,
 {
   g_autoptr (GError) error = NULL;
   GtdPluginEds *self;
+  GtdManager *manager;
   GoaClient *goa_client;
   GList *accounts;
   GList *l;
 
   self = GTD_PLUGIN_EDS (user_data);
   goa_client = goa_client_new_finish (result, &error);
+  manager = gtd_manager_get_default ();
 
   if (error)
     {
@@ -215,8 +211,7 @@ gtd_plugin_eds_goa_client_finish_cb (GObject      *client,
       provider = gtd_provider_goa_new (self->registry, account);
 
       self->providers = g_list_append (self->providers, provider);
-
-      g_signal_emit_by_name (self, "provider-added", provider);
+      gtd_manager_add_provider (manager, GTD_PROVIDER (provider));
 
       g_object_unref (account);
     }
@@ -245,8 +240,10 @@ gtd_plugin_eds_source_registry_finish_cb (GObject      *source_object,
   GtdPluginEds *self = GTD_PLUGIN_EDS (user_data);
   GtdProviderLocal *provider;
   ESourceRegistry *registry;
+  GtdManager *manager;
   GError *error = NULL;
 
+  manager = gtd_manager_get_default ();
   registry = e_source_registry_new_finish (result, &error);
   self->registry = registry;
 
@@ -265,8 +262,7 @@ gtd_plugin_eds_source_registry_finish_cb (GObject      *source_object,
   provider = gtd_provider_local_new (registry);
 
   self->providers = g_list_append (self->providers, provider);
-
-  g_signal_emit_by_name (self, "provider-added", provider);
+  gtd_manager_add_provider (manager, GTD_PROVIDER (provider));
 
   /* We only start loading Goa accounts after
    * ESourceRegistry is get, since it'd be way

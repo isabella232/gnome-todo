@@ -1,6 +1,6 @@
 /* test-task-model.c
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ test_move (void)
   n_tasks = dummy_provider_generate_task_list (dummy_provider);
   g_assert_cmpuint (n_tasks, ==, 10);
 
-  _gtd_manager_inject_provider (gtd_manager_get_default (), GTD_PROVIDER (dummy_provider));
+  gtd_manager_add_provider (gtd_manager_get_default (), GTD_PROVIDER (dummy_provider));
 
   lists = gtd_provider_get_task_lists (GTD_PROVIDER (dummy_provider));
   g_assert_nonnull (lists);

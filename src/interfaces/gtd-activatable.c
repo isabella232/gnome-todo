@@ -51,15 +51,6 @@
 
 G_DEFINE_INTERFACE (GtdActivatable, gtd_activatable, G_TYPE_OBJECT)
 
-enum
-{
-  PROVIDER_ADDED,
-  PROVIDER_REMOVED,
-  NUM_SIGNALS
-};
-
-static guint signals[NUM_SIGNALS] = { 0, };
-
 static void
 gtd_activatable_default_init (GtdActivatableInterface *iface)
 {
@@ -74,44 +65,6 @@ gtd_activatable_default_init (GtdActivatableInterface *iface)
                                                             "The preferences panel of the plugins",
                                                             GTK_TYPE_WIDGET,
                                                             G_PARAM_READABLE));
-
-  /**
-   * GtdActivatable::provider-added:
-   * @activatable: a #GtdActivatable
-   * @provider: a #GtdProvider
-   *
-   * The ::provider-added signal is emmited after a #GtdProvider
-   * is connected.
-   */
-  signals[PROVIDER_ADDED] = g_signal_new ("provider-added",
-                                          GTD_TYPE_ACTIVATABLE,
-                                          G_SIGNAL_RUN_LAST,
-                                          0,
-                                          NULL,
-                                          NULL,
-                                          NULL,
-                                          G_TYPE_NONE,
-                                          1,
-                                          GTD_TYPE_PROVIDER);
-
-  /**
-   * GtdActivatable::provider-removed:
-   * @activatable: a #GtdActivatable
-   * @provider: a #GtdProvider
-   *
-   * The ::provider-removed signal is emmited after a #GtdProvider
-   * is disconnected.
-   */
-  signals[PROVIDER_REMOVED] = g_signal_new ("provider-removed",
-                                            GTD_TYPE_ACTIVATABLE,
-                                            G_SIGNAL_RUN_LAST,
-                                            0,
-                                            NULL,
-                                            NULL,
-                                            NULL,
-                                            G_TYPE_NONE,
-                                            1,
-                                            GTD_TYPE_PROVIDER);
 }
 
 /**
@@ -171,25 +124,6 @@ gtd_activatable_get_preferences_panel (GtdActivatable *activatable)
 
   if (GTD_ACTIVATABLE_GET_IFACE (activatable)->get_preferences_panel)
     return GTD_ACTIVATABLE_GET_IFACE (activatable)->get_preferences_panel (activatable);
-
-  return NULL;
-}
-
-/**
- * gtd_activatable_get_providers:
- * @activatable: a #GtdActivatable
- *
- * Retrieve the providers of @activatable if any.
- *
- * Returns: (transfer none) (element-type Gtd.Provider)(nullable): a #GList
- */
-GList*
-gtd_activatable_get_providers (GtdActivatable *activatable)
-{
-  g_return_val_if_fail (GTD_IS_ACTIVATABLE (activatable), NULL);
-
-  if (GTD_ACTIVATABLE_GET_IFACE (activatable)->get_providers)
-    return GTD_ACTIVATABLE_GET_IFACE (activatable)->get_providers (activatable);
 
   return NULL;
 }

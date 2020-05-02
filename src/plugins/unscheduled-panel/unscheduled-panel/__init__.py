@@ -132,6 +132,3 @@ class UnscheduledPanelPlugin(GObject.Object, Gtd.Activatable):
 
     def do_get_preferences_panel(self):
         return None
-
-    def do_get_providers(self):
-        return None

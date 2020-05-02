@@ -65,19 +65,12 @@ gtd_plugin_dark_theme_get_preferences_panel (GtdActivatable *activatable)
   return NULL;
 }
 
-static GList*
-gtd_plugin_dark_theme_get_providers (GtdActivatable *activatable)
-{
-  return NULL;
-}
-
 static void
 gtd_activatable_iface_init (GtdActivatableInterface *iface)
 {
   iface->activate = gtd_plugin_dark_theme_activate;
   iface->deactivate = gtd_plugin_dark_theme_deactivate;
   iface->get_preferences_panel = gtd_plugin_dark_theme_get_preferences_panel;
-  iface->get_providers = gtd_plugin_dark_theme_get_providers;
 }
 
 static void

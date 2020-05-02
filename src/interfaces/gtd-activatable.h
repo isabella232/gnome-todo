@@ -39,8 +39,6 @@ struct _GtdActivatableInterface
   void             (*deactivate)                           (GtdActivatable     *activatable);
 
   GtkWidget*       (*get_preferences_panel)                (GtdActivatable     *activatable);
-
-  GList*           (*get_providers)                        (GtdActivatable     *activatable);
 };
 
 void                 gtd_activatable_activate                    (GtdActivatable     *activatable);
@@ -48,8 +46,6 @@ void                 gtd_activatable_activate                    (GtdActivatable
 void                 gtd_activatable_deactivate                  (GtdActivatable     *activatable);
 
 GtkWidget*           gtd_activatable_get_preferences_panel       (GtdActivatable     *activatable);
-
-GList*               gtd_activatable_get_providers               (GtdActivatable     *activatable);
 
 G_END_DECLS
 

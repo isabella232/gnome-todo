@@ -153,19 +153,12 @@ gtd_night_light_plugin_get_preferences_panel (GtdActivatable *activatable)
   return NULL;
 }
 
-static GList*
-gtd_night_light_plugin_get_providers (GtdActivatable *activatable)
-{
-  return NULL;
-}
-
 static void
 gtd_activatable_iface_init (GtdActivatableInterface *iface)
 {
   iface->activate = gtd_night_light_plugin_activate;
   iface->deactivate = gtd_night_light_plugin_deactivate;
   iface->get_preferences_panel = gtd_night_light_plugin_get_preferences_panel;
-  iface->get_providers = gtd_night_light_plugin_get_providers;
 }
 
 

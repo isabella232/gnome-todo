@@ -42,6 +42,12 @@ GtdManager*          gtd_manager_get_default                     (void);
 
 GList*               gtd_manager_get_providers                   (GtdManager         *manager);
 
+void                 gtd_manager_add_provider                    (GtdManager         *self,
+                                                                  GtdProvider        *provider);
+
+void                 gtd_manager_remove_provider                 (GtdManager         *self,
+                                                                  GtdProvider        *provider);
+
 GtdProvider*         gtd_manager_get_default_provider            (GtdManager         *manager);
 
 void                 gtd_manager_set_default_provider            (GtdManager         *manager,
