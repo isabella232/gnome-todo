@@ -67,6 +67,7 @@ headers = enum_headers + files(
   'gtd-omni-area-addin.h',
   'gtd-task.h',
   'gtd-task-list.h',
+  'gtd-text-width-layout.h',
   'gtd-types.h',
   'gtd-utils.h',
   'gtd-window.h',
@@ -119,6 +120,7 @@ sources += files(
   'gtd-rows-common.c',
   'gtd-task.c',
   'gtd-task-list.c',
+  'gtd-text-width-layout.c',
   'gtd-utils.c',
   'gtd-window.c',
   'main.c'
@@ -275,6 +277,8 @@ if get_option('introspection')
     'gtd-task.h',
     'gtd-task-list.c',
     'gtd-task-list.h',
+    'gtd-text-width-layout.c',
+    'gtd-text-width-layout.h',
     'gtd-types.h',
     'gtd-window.c',
     'gtd-window.h'

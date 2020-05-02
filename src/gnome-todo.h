@@ -38,6 +38,7 @@
 #include "gtd-task.h"
 #include "gtd-task-list.h"
 #include "gtd-task-list-view.h"
+#include "gtd-text-width-layout.h"
 #include "gtd-types.h"
 #include "gtd-utils.h"
 #include "gtd-window.h"
