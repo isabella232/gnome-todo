@@ -161,8 +161,6 @@ gnome_todo_deps = [
   cc.find_library('m', required: true)
 ]
 
-configure_file(output: 'config.h', configuration: config_h)
-
 gnome = import('gnome')
 i18n = import('i18n')
 pkg = import('pkgconfig')

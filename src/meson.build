@@ -5,6 +5,8 @@ sources = []
 # VCS #
 #######
 
+configure_file(output: 'config.h', configuration: config_h)
+
 vcs_tag = vcs_tag(
   fallback: get_option('profile') != 'default'? 'devel' : 'stable',
      input: 'gtd-vcs.h.in',
