@@ -12,50 +12,61 @@
         </child>
 
         <child type="center">
-          <object class="GtkBox">
-            <property name="css-name">entry</property>
-
+          <object class="GtkFrame">
+            <property name="css-name"></property>
+            <property name="layout-manager">
+              <object class="GtdTextWidthLayout">
+                <property name="width-chars">25</property>
+                <property name="max-width-chars">40</property>
+              </object>
+            </property>
 
             <child>
-              <object class="GtkStack" id="main_stack">
-                <property name="margin-start">6</property>
-                <property name="margin-end">6</property>
-                <property name="hhomogeneous">true</property>
-                <property name="transition-type">slide-up-down</property>
-                <property name="transition-duration">500</property>
+              <object class="GtkBox">
+                <property name="hexpand">true</property>
+                <property name="css-name">entry</property>
 
                 <child>
-                  <object class="GtkStackPage">
-                    <property name="name">placeholder</property>
-                    <property name="child">
-                      <object class="GtkLabel">
-                        <property name="label" translatable="yes">To Do</property>
-                        <property name="xalign">0.0</property>
-                        <property name="width-chars">35</property>
-                        <property name="max-width-chars">35</property>
+                  <object class="GtkStack" id="main_stack">
+                    <property name="margin-start">6</property>
+                    <property name="margin-end">6</property>
+                    <property name="hhomogeneous">true</property>
+                    <property name="transition-type">slide-up-down</property>
+                    <property name="transition-duration">500</property>
+
+                    <child>
+                      <object class="GtkStackPage">
+                        <property name="name">placeholder</property>
+                        <property name="child">
+                          <object class="GtkLabel">
+                            <property name="label" translatable="yes">To Do</property>
+                            <property name="xalign">0.0</property>
+                          </object>
+                        </property>
                       </object>
-                    </property>
+                    </child>
+
+                    <child>
+                      <object class="GtkStackPage">
+                        <property name="name">messages</property>
+                        <property name="child">
+                          <object class="GtkStack" id="status_stack">
+                            <property name="margin-start">6</property>
+                            <property name="margin-end">6</property>
+                            <property name="hhomogeneous">true</property>
+                            <property name="transition-type">slide-up-down</property>
+                            <property name="transition-duration">500</property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+
                   </object>
                 </child>
 
-                <child>
-                  <object class="GtkStackPage">
-                    <property name="name">messages</property>
-                    <property name="child">
-                      <object class="GtkStack" id="status_stack">
-                        <property name="margin-start">6</property>
-                        <property name="margin-end">6</property>
-                        <property name="hhomogeneous">true</property>
-                        <property name="transition-type">slide-up-down</property>
-                        <property name="transition-duration">500</property>
-                      </object>
-                    </property>
-                  </object>
-                </child>
 
               </object>
             </child>
-
 
           </object>
         </child>

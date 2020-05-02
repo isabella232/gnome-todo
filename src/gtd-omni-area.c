@@ -24,6 +24,7 @@
 
 #include "gtd-debug.h"
 #include "gtd-omni-area-addin.h"
+#include "gtd-text-width-layout.h"
 
 #include <libpeas/peas.h>
 
@@ -142,6 +143,8 @@ gtd_omni_area_class_init (GtdOmniAreaClass *klass)
 
   widget_class->destroy = gtd_omni_area_destroy;
 
+  g_type_ensure (GTD_TYPE_TEXT_WIDTH_LAYOUT);
+
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-omni-area.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdOmniArea, main_stack);
@@ -196,8 +199,6 @@ gtd_omni_area_push_message (GtdOmniArea *self,
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 18);
 
   label = gtk_label_new (text);
-  gtk_label_set_width_chars (GTK_LABEL (label), 35);
-  gtk_label_set_max_width_chars (GTK_LABEL (label), 35);
   gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_container_add (GTK_CONTAINER (box), label);
