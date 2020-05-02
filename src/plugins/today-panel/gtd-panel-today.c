@@ -91,7 +91,7 @@ load_css_provider (GtdPanelToday *self)
   if (g_file_query_exists (css_file, NULL))
     gtk_css_provider_load_from_file (self->css_provider, css_file);
   else
-    gtk_css_provider_load_from_resource (self->css_provider, "/org/gnome/todo/theme/today-panel/Adwaita.css");
+    gtk_css_provider_load_from_resource (self->css_provider, "/org/gnome/todo/plugins/today-panel/theme/Adwaita.css");
 }
 
 static gboolean

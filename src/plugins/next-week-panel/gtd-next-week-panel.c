@@ -81,7 +81,7 @@ load_css_provider (GtdNextWeekPanel *self)
   /* Load CSS provider */
   settings = g_settings_new ("org.gnome.desktop.interface");
   theme_name = g_settings_get_string (settings, "gtk-theme");
-  theme_uri = g_build_filename ("resource:///org/gnome/todo/theme/next-week-panel", theme_name, ".css", NULL);
+  theme_uri = g_build_filename ("resource:///org/gnome/todo/plugins/next-week-panel/theme", theme_name, ".css", NULL);
   css_file = g_file_new_for_uri (theme_uri);
 
   self->css_provider = gtk_css_provider_new ();

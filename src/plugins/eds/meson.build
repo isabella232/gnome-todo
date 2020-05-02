@@ -18,3 +18,9 @@ plugins_sources += files(
   'gtd-task-eds.c',
   'gtd-task-list-eds.c',
 )
+
+plugins_sources += gnome.compile_resources(
+  'eds-resources',
+  'eds.gresource.xml',
+  c_name: 'eds_plugin',
+)

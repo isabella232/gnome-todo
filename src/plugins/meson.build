@@ -36,14 +36,6 @@ subdir('today-panel')
   #subdir('todoist')
 #endif
 
-plugins_sources += gnome.compile_resources(
-  'gtd-plugin-resources',
-  'plugins.gresource.xml',
-        c_name: 'todo_plugins',
-  dependencies: plugins_confs,
-        export: true,
-)
-
 plugins_lib = static_library(
             'plugins',
       plugins_sources,

@@ -7,5 +7,6 @@
     <file>sidebar/gtd-sidebar-provider-row.ui</file>
     <file>gtd-task-list-panel.ui</file>
     <file>gtd-task-lists-workspace.ui</file>
+    <file>task-lists-workspace.plugin</file>
   </gresource>
 </gresources>

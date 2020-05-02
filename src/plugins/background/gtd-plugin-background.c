@@ -575,7 +575,7 @@ gtd_plugin_background_init (GtdPluginBackground *self)
   self->settings = g_settings_new ("org.gnome.todo.plugins.background");
 
   /* And the preferences panel */
-  builder = gtk_builder_new_from_resource ("/org/gnome/todo/ui/background/preferences.ui");
+  builder = gtk_builder_new_from_resource ("/org/gnome/todo/plugins/background/ui/preferences.ui");
 
   self->preferences_panel = GTK_WIDGET (gtk_builder_get_object (builder, "main_box"));
   self->portal = xdp_portal_new ();

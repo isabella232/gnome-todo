@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/gnome/todo/plugins/background">
+    <file>background.plugin</file>
+    <file>ui/preferences.ui</file>
+  </gresource>
+</gresources>
