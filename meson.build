@@ -200,7 +200,6 @@ output += '        Documentation............ ' + enable_documentation.to_string(
 output += '\n'
 output += '    Plugins:\n'
 output += '\n'
-output += '        Score ................... ' + get_option('score_plugin').to_string() + '\n'
 output += '        Unscheduled panel ....... ' + get_option('unscheduled_panel_plugin').to_string() + '\n'
 output += '        Todo.txt ................ ' + get_option('todo_txt_plugin').to_string() + '\n'
 output += '        Todoist ................. ' + get_option('todoist_plugin').to_string() + '\n'
