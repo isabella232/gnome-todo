@@ -262,7 +262,7 @@ gtd_sidebar_provider_row_class_init (GtdSidebarProviderRowClass *klass)
 
   g_object_class_install_properties (object_class, N_PROPS, properties);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/plugins/task-lists-workspace/sidebar/gtd-sidebar-provider-row.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/plugins/task-lists-workspace/gtd-sidebar-provider-row.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdSidebarProviderRow, loading_label);
   gtk_widget_class_bind_template_child (widget_class, GtdSidebarProviderRow, provider_label);

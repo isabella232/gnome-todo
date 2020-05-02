@@ -20,7 +20,6 @@
 
 #define G_LOG_DOMAIN "GtdSidebar"
 
-#include "../gtd-task-list-panel.h"
 #include "gtd-debug.h"
 #include "gtd-manager.h"
 #include "gtd-panel.h"
@@ -30,6 +29,7 @@
 #include "gtd-sidebar-panel-row.h"
 #include "gtd-sidebar-provider-row.h"
 #include "gtd-task-list.h"
+#include "gtd-task-list-panel.h"
 #include "gtd-utils.h"
 #include "notification/gtd-notification.h"
 
@@ -804,7 +804,7 @@ gtd_sidebar_class_init (GtdSidebarClass *klass)
 
   object_class->constructed = gtd_sidebar_constructed;
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/plugins/task-lists-workspace/sidebar/gtd-sidebar.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/plugins/task-lists-workspace/gtd-sidebar.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdSidebar, archive_listbox);
   gtk_widget_class_bind_template_child (widget_class, GtdSidebar, archive_row);

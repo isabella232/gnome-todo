@@ -23,7 +23,7 @@
 #include "gtd-task-lists-workspace.h"
 
 #include "task-lists-workspace.h"
-#include "sidebar/gtd-sidebar.h"
+#include "gtd-sidebar.h"
 #include "gtd-task-list-panel.h"
 
 #include <libpeas/peas.h>

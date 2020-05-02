@@ -1,10 +1,10 @@
 plugins_ldflags += ['-Wl,--undefined=task_lists_workspace_plugin_register_types']
 
 task_lists_panel_sources = files(
-  'sidebar/gtd-sidebar.c',
-  'sidebar/gtd-sidebar-list-row.c',
-  'sidebar/gtd-sidebar-panel-row.c',
-  'sidebar/gtd-sidebar-provider-row.c',
+  'gtd-sidebar.c',
+  'gtd-sidebar-list-row.c',
+  'gtd-sidebar-panel-row.c',
+  'gtd-sidebar-provider-row.c',
   'gtd-task-list-panel.c',
   'gtd-task-lists-workspace.c',
   'task-lists-workspace-plugin.c',

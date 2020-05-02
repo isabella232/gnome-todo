@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/org/gnome/todo/plugins/task-lists-workspace">
-    <file>sidebar/gtd-sidebar.ui</file>
-    <file>sidebar/gtd-sidebar-list-row.ui</file>
-    <file>sidebar/gtd-sidebar-panel-row.ui</file>
-    <file>sidebar/gtd-sidebar-provider-row.ui</file>
+    <file>gtd-sidebar.ui</file>
+    <file>gtd-sidebar-list-row.ui</file>
+    <file>gtd-sidebar-panel-row.ui</file>
+    <file>gtd-sidebar-provider-row.ui</file>
     <file>gtd-task-list-panel.ui</file>
     <file>gtd-task-lists-workspace.ui</file>
     <file>task-lists-workspace.plugin</file>
