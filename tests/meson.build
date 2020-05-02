@@ -95,6 +95,4 @@ foreach interactive_test : interactive_tests
                 c_args: cflags,
              link_with: tests_libs,
   )
-
-  test(interactive_test, interactive_test_program, env: static_test_env)
 endforeach
