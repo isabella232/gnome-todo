@@ -35,6 +35,7 @@
 #include "gtd-panel.h"
 #include "gtd-provider.h"
 #include "gtd-provider-popover.h"
+#include "gtd-star-widget.h"
 #include "gtd-task.h"
 #include "gtd-task-list.h"
 #include "gtd-task-list-view.h"

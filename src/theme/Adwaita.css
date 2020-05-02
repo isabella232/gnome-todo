@@ -1,6 +1,7 @@
 @import url("resource:///org/gnome/todo/theme/Adwaita-omniarea.css");
 @import url("resource:///org/gnome/todo/theme/Adwaita-tasklistview.css");
 @import url("resource:///org/gnome/todo/theme/Adwaita-taskrow.css");
+@import url("resource:///org/gnome/todo/theme/Adwaita-widgets.css");
 
 .transparent {
     background-color: transparent;

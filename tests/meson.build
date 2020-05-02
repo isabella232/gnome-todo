@@ -77,6 +77,7 @@ endforeach
 interactive_tests = [
   'test-colorbutton',
   'test-filter-sort',
+  'test-star-widget',
   'test-task-model',
 ]
 
@@ -86,12 +87,14 @@ foreach interactive_test : interactive_tests
 
   source = ['interactive/@0@.c'.format(interactive_test)]
 
-  executable(
+  interactive_test_program = executable(
   interactive_test_name,
                  source,
    include_directories: tests_incs,
           dependencies: gnome_todo_deps,
                 c_args: cflags,
              link_with: tests_libs,
-)
+  )
+
+  test(interactive_test, interactive_test_program, env: static_test_env)
 endforeach

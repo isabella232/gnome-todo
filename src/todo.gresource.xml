@@ -24,5 +24,6 @@
     <file compressed="true">theme/Adwaita-omniarea.css</file>
     <file compressed="true">theme/Adwaita-tasklistview.css</file>
     <file compressed="true">theme/Adwaita-taskrow.css</file>
+    <file compressed="true">theme/Adwaita-widgets.css</file>
   </gresource>
 </gresources>

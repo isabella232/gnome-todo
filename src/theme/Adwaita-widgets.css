@@ -1,0 +1,27 @@
+/* Star Widget */
+
+@keyframes wiggle {
+  12.5% { transform: rotate(15deg) }
+  37.5% { transform: rotate(-15deg) }
+  62.5% { transform: rotate(15deg) }
+  87.5% { transform: rotate(-15deg) }
+}
+
+star {
+  color: alpha(@theme_fg_color, 0.1);
+  transition: color 400ms;
+}
+
+star:hover {
+  color: alpha(@theme_fg_color, 0.4);
+  transition: color 250ms;
+}
+
+star:checked {
+  color: @theme_selected_bg_color;
+  transition: color 250ms;
+
+  animation-name: wiggle;
+  animation-duration: 400ms;
+  animation-timing-function: linear;
+}
