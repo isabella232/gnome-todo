@@ -1,6 +1,6 @@
 /* gtd-task-row.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,20 +72,6 @@ struct _GtdTaskRow
 };
 
 #define PRIORITY_ICON_SIZE 8
-
-static void          on_complete_changed_cb                      (GtdTaskRow         *self,
-                                                                  GParamSpec         *pspec,
-                                                                  GtdTask            *task);
-
-static void          on_complete_check_toggled_cb                (GtkToggleButton    *button,
-                                                                  GtdTaskRow         *self);
-
-static void          on_depth_changed_cb                         (GtdTaskRow         *self,
-                                                                  GParamSpec         *pspec,
-                                                                  GtdTask            *task);
-
-static void          on_task_changed_cb                          (GtdTaskRow         *self);
-
 
 G_DEFINE_TYPE (GtdTaskRow, gtd_task_row, GTK_TYPE_BIN)
 
@@ -190,64 +176,6 @@ create_transient_row (GtdTaskRow *self)
   return GTK_WIDGET (new_row);
 }
 #endif
-
-static void
-setup_task (GtdTaskRow *row,
-            GtdTask    *task)
-{
-  g_return_if_fail (GTD_IS_TASK_ROW (row));
-
-  g_assert (row->task == NULL);
-  g_assert (task != NULL);
-
-  row->task = g_object_ref (task);
-
-  gtk_label_set_label (row->task_list_label, gtd_task_list_get_name (gtd_task_get_list (task)));
-
-  g_signal_handlers_block_by_func (row->title_entry, on_task_changed_cb, row);
-  g_signal_handlers_block_by_func (row->done_check, on_complete_check_toggled_cb, row);
-
-  g_object_bind_property (task,
-                          "loading",
-                          row,
-                          "sensitive",
-                          G_BINDING_DEFAULT | G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE);
-
-  g_object_bind_property (task,
-                          "title",
-                          row->title_entry,
-                          "text",
-                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
-
-  g_object_bind_property_full (task,
-                               "due-date",
-                               row->task_date_label,
-                               "label",
-                               G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE,
-                               date_to_label_binding_cb,
-                               NULL,
-                               row,
-                               NULL);
-
-  on_complete_changed_cb (row, NULL, task);
-  g_signal_connect_object (task,
-                           "notify::complete",
-                           G_CALLBACK (on_complete_changed_cb),
-                           row,
-                           G_CONNECT_SWAPPED);
-
-  on_depth_changed_cb (row, NULL, task);
-  g_signal_connect_object (task,
-                           "notify::depth",
-                           G_CALLBACK (on_depth_changed_cb),
-                           row,
-                           G_CONNECT_SWAPPED);
-
-  g_signal_handlers_unblock_by_func (row->done_check, on_complete_check_toggled_cb, row);
-  g_signal_handlers_unblock_by_func (row->title_entry, on_task_changed_cb, row);
-
-  g_object_notify (G_OBJECT (row), "task");
-}
 
 
 /*
@@ -376,6 +304,20 @@ on_drag_cancelled_cb (GtkDragSource       *source,
 }
 
 static void
+on_complete_check_toggled_cb (GtkToggleButton *button,
+                              GtdTaskRow      *self)
+{
+  GTD_ENTRY;
+
+  g_assert (GTD_IS_TASK (self->task));
+
+  gtd_task_set_complete (self->task, gtk_toggle_button_get_active (button));
+  gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
+
+  GTD_EXIT;
+}
+
+static void
 on_complete_changed_cb (GtdTaskRow *self,
                         GParamSpec *pspec,
                         GtdTask    *task)
@@ -395,20 +337,6 @@ on_complete_changed_cb (GtdTaskRow *self,
   g_signal_handlers_block_by_func (self->done_check, on_complete_check_toggled_cb, self);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->done_check), complete);
   g_signal_handlers_unblock_by_func (self->done_check, on_complete_check_toggled_cb, self);
-}
-
-static void
-on_complete_check_toggled_cb (GtkToggleButton *button,
-                              GtdTaskRow      *self)
-{
-  GTD_ENTRY;
-
-  g_assert (GTD_IS_TASK (self->task));
-
-  gtd_task_set_complete (self->task, gtk_toggle_button_get_active (button));
-  gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
-
-  GTD_EXIT;
 }
 
 static void
@@ -537,7 +465,55 @@ gtd_task_row_set_property (GObject      *object,
       break;
 
     case PROP_TASK:
-      setup_task (self, g_value_get_object (value));
+      g_assert (self->task == NULL);
+
+      self->task = g_value_dup_object (value);
+      g_assert (self->task != NULL);
+
+      gtk_label_set_label (self->task_list_label, gtd_task_list_get_name (gtd_task_get_list (self->task)));
+
+      g_signal_handlers_block_by_func (self->title_entry, on_task_changed_cb, self);
+      g_signal_handlers_block_by_func (self->done_check, on_complete_check_toggled_cb, self);
+
+      g_object_bind_property (self->task,
+                              "loading",
+                              self,
+                              "sensitive",
+                              G_BINDING_DEFAULT | G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE);
+
+      g_object_bind_property (self->task,
+                              "title",
+                              self->title_entry,
+                              "text",
+                              G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+
+      g_object_bind_property_full (self->task,
+                                   "due-date",
+                                   self->task_date_label,
+                                   "label",
+                                   G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE,
+                                   date_to_label_binding_cb,
+                                   NULL,
+                                   self,
+                                   NULL);
+
+      on_complete_changed_cb (self, NULL, self->task);
+      g_signal_connect_object (self->task,
+                               "notify::complete",
+                               G_CALLBACK (on_complete_changed_cb),
+                               self,
+                               G_CONNECT_SWAPPED);
+
+      on_depth_changed_cb (self, NULL, self->task);
+      g_signal_connect_object (self->task,
+                               "notify::depth",
+                               G_CALLBACK (on_depth_changed_cb),
+                               self,
+                               G_CONNECT_SWAPPED);
+
+      g_signal_handlers_unblock_by_func (self->done_check, on_complete_check_toggled_cb, self);
+      g_signal_handlers_unblock_by_func (self->title_entry, on_task_changed_cb, self);
+
       break;
 
     default:

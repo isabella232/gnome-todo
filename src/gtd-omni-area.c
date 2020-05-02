@@ -204,7 +204,12 @@ gtd_omni_area_push_message (GtdOmniArea *self,
   gtk_container_add (GTK_CONTAINER (box), label);
 
   if (icon)
-    gtk_container_add (GTK_CONTAINER (box), gtk_image_new_from_gicon (icon));
+    {
+      GtkWidget *image = gtk_image_new_from_gicon (icon);
+
+      gtk_widget_add_css_class (image, "dim-label");
+      gtk_container_add (GTK_CONTAINER (box), image);
+    }
 
   gtk_stack_add_named (self->status_stack, box, id);
 
