@@ -26,7 +26,7 @@
 
 #define MESSAGE_ID "peace-message-id"
 
-#define SWITCH_MESSAGE_TIMEOUT 60 * 60
+#define SWITCH_MESSAGE_TIMEOUT 20 * 60
 #define REMOVE_MESSAGE_TIMEOUT 1 * 60
 
 struct _GtdPeaceOmniAreaAddin
@@ -90,10 +90,11 @@ static gboolean
 remove_message_cb (gpointer user_data)
 {
   GtdPeaceOmniAreaAddin *self = GTD_PEACE_OMNI_AREA_ADDIN (user_data);
+  gint factor = g_random_int_range (2, 6);
 
   gtd_omni_area_withdraw_message (self->omni_area, MESSAGE_ID);
 
-  self->timeout_id = g_timeout_add_seconds (SWITCH_MESSAGE_TIMEOUT, switch_message_cb, self);
+  self->timeout_id = g_timeout_add_seconds (SWITCH_MESSAGE_TIMEOUT * factor, switch_message_cb, self);
 
   return G_SOURCE_REMOVE;
 }
