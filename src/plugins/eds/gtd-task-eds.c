@@ -1,6 +1,6 @@
 /* gtd-task-eds.c
  *
- * Copyright (C) 2017 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2017-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -400,6 +400,23 @@ gtd_task_eds_set_due_date (GtdTask   *task,
   g_clear_pointer (&current_dt, g_date_time_unref);
 }
 
+static gboolean
+gtd_task_eds_get_important (GtdTask *task)
+{
+  GtdTaskEds *self = GTD_TASK_EDS (task);
+
+  return e_cal_component_get_priority (self->new_component) > 0;
+}
+
+static void
+gtd_task_eds_set_important (GtdTask  *task,
+                            gboolean  important)
+{
+  GtdTaskEds *self = GTD_TASK_EDS (task);
+
+  e_cal_component_set_priority (self->new_component, important ? 3 : -1);
+}
+
 static gint64
 gtd_task_eds_get_position (GtdTask *task)
 {
@@ -596,6 +613,8 @@ gtd_task_eds_class_init (GtdTaskEdsClass *klass)
   task_class->set_description = gtd_task_eds_set_description;
   task_class->get_due_date = gtd_task_eds_get_due_date;
   task_class->set_due_date = gtd_task_eds_set_due_date;
+  task_class->get_important = gtd_task_eds_get_important;
+  task_class->set_important = gtd_task_eds_set_important;
   task_class->get_position = gtd_task_eds_get_position;
   task_class->set_position = gtd_task_eds_set_position;
   task_class->get_title = gtd_task_eds_get_title;
@@ -659,6 +678,7 @@ gtd_task_eds_set_component (GtdTaskEds    *self,
   g_object_notify (object, "creation-date");
   g_object_notify (object, "description");
   g_object_notify (object, "due-date");
+  g_object_notify (object, "important");
   g_object_notify (object, "position");
   g_object_notify (object, "title");
   g_object_notify_by_pspec (object, properties[PROP_COMPONENT]);

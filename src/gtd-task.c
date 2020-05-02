@@ -1,6 +1,6 @@
 /* gtd-task.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,6 +59,7 @@ typedef struct
   gint32           priority;
   gint64           position;
   gboolean         complete;
+  gboolean         important;
 } GtdTaskPrivate;
 
 G_DEFINE_TYPE_WITH_PRIVATE (GtdTask, gtd_task, GTD_TYPE_OBJECT)
@@ -71,6 +72,7 @@ enum
   PROP_DESCRIPTION,
   PROP_CREATION_DATE,
   PROP_DUE_DATE,
+  PROP_IMPORTANT,
   PROP_LIST,
   PROP_PARENT,
   PROP_POSITION,
@@ -489,6 +491,26 @@ gtd_task_real_set_due_date (GtdTask   *self,
     priv->due_date = g_date_time_ref (due_date);
 }
 
+static gboolean
+gtd_task_real_get_important (GtdTask *self)
+{
+  GtdTaskPrivate *priv = gtd_task_get_instance_private (self);
+
+  return priv->important;
+}
+
+static void
+gtd_task_real_set_important (GtdTask  *self,
+                             gboolean  important)
+{
+  GtdTaskPrivate *priv = gtd_task_get_instance_private (self);
+
+  if (priv->important == important)
+    return;
+
+  priv->important = important;
+}
+
 static gint64
 gtd_task_real_get_position (GtdTask *self)
 {
@@ -578,6 +600,10 @@ gtd_task_get_property (GObject    *object,
       g_clear_pointer (&date, g_date_time_unref);
       break;
 
+    case PROP_IMPORTANT:
+      g_value_set_boolean (value, gtd_task_get_important (self));
+      break;
+
     case PROP_LIST:
       g_value_set_object (value, priv->list);
       break;
@@ -625,6 +651,10 @@ gtd_task_set_property (GObject      *object,
       gtd_task_set_due_date (self, g_value_get_boxed (value));
       break;
 
+    case PROP_IMPORTANT:
+      gtd_task_set_important (self, g_value_get_boolean (value));
+      break;
+
     case PROP_LIST:
       gtd_task_set_list (self, g_value_get_object (value));
       break;
@@ -657,6 +687,8 @@ gtd_task_class_init (GtdTaskClass *klass)
   klass->set_description = gtd_task_real_set_description;
   klass->get_due_date = gtd_task_real_get_due_date;
   klass->set_due_date = gtd_task_real_set_due_date;
+  klass->get_important = gtd_task_real_get_important;
+  klass->set_important = gtd_task_real_set_important;
   klass->get_position = gtd_task_real_get_position;
   klass->set_position = gtd_task_real_set_position;
   klass->get_title = gtd_task_real_get_title;
@@ -741,6 +773,20 @@ gtd_task_class_init (GtdTaskClass *klass)
                             "The day the task is supposed to be completed",
                             G_TYPE_DATE_TIME,
                             G_PARAM_READWRITE));
+
+  /**
+   * GtdTask::important:
+   *
+   * @TRUE if the task is important, @FALSE otherwise.
+   */
+  g_object_class_install_property (
+        object_class,
+        PROP_IMPORTANT,
+        g_param_spec_boolean ("important",
+                              "Whether the task is important or not",
+                              "Whether the task is important or not",
+                              FALSE,
+                              G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS));
 
   /**
    * GtdTask::list:
@@ -1035,6 +1081,41 @@ gtd_task_set_due_date (GtdTask   *task,
   GTD_TASK_CLASS (G_OBJECT_GET_CLASS (task))->set_due_date (task, dt);
 
   g_object_notify (G_OBJECT (task), "due-date");
+}
+
+/**
+ * gtd_task_get_important:
+ * @self: a #GtdTask
+ *
+ * Retrieves whether @self is @important or not.
+ *
+ * Returns: %TRUE if @self is important, %FALSE otherwise
+ */
+gboolean
+gtd_task_get_important (GtdTask *self)
+{
+  g_return_val_if_fail (GTD_IS_TASK (self), FALSE);
+
+  return GTD_TASK_GET_CLASS (self)->get_important (self);
+}
+
+/**
+ * gtd_task_set_important:
+ * @self: a #GtdTask
+ * @important: whether @self is important or not
+ *
+ * Sets whether @self is @important or not.
+ */
+void
+gtd_task_set_important (GtdTask  *self,
+                        gboolean  important)
+{
+  g_return_if_fail (GTD_IS_TASK (self));
+
+  important = !!important;
+
+  GTD_TASK_GET_CLASS (self)->set_important (self, important);
+  g_object_notify (G_OBJECT (self), "important");
 }
 
 /**

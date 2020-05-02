@@ -1,6 +1,6 @@
 /* gtd-task.h
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,6 +53,10 @@ struct _GtdTaskClass
   void          (*set_due_date)                       (GtdTask              *self,
                                                        GDateTime            *due_date);
 
+  gboolean      (*get_important)                      (GtdTask              *self);
+  void          (*set_important)                      (GtdTask              *self,
+                                                       gboolean              important);
+
   gint64        (*get_position)                       (GtdTask              *task);
   void          (*set_position)                       (GtdTask              *task,
                                                        gint64                position);
@@ -95,6 +99,11 @@ GDateTime*          gtd_task_get_due_date             (GtdTask              *tas
 
 void                gtd_task_set_due_date             (GtdTask              *task,
                                                        GDateTime            *dt);
+
+gboolean            gtd_task_get_important            (GtdTask              *self);
+
+void                gtd_task_set_important            (GtdTask              *self,
+                                                       gboolean              important);
 
 GtdTaskList*        gtd_task_get_list                 (GtdTask              *task);
 
