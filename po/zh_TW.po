@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-05-01 09:48+0000\n"
-"PO-Revision-Date: 2020-05-02 00:51+0800\n"
+"POT-Creation-Date: 2020-05-01 16:54+0000\n"
+"PO-Revision-Date: 2020-05-02 15:37+0800\n"
 "Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: Chinese <kde-i18n-doc@kde.org>\n"
 "Language: zh_TW\n"
@@ -115,11 +115,11 @@ msgstr "使用中擴充套件的列表"
 
 #: data/org.gnome.todo.gschema.xml:31
 msgid "Sidebar revealed"
-msgstr ""
+msgstr "揭開側邊欄"
 
 #: data/org.gnome.todo.gschema.xml:32
 msgid "Whether the sidebar is revealed or not"
-msgstr ""
+msgstr "是否要揭開側邊欄"
 
 #: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
 #: plugins/next-week-panel/gtd-next-week-panel.c:113
