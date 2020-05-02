@@ -52,8 +52,18 @@
     </child>
     <child type="titlebar">
       <object class="GtkHeaderBar" id="headerbar">
-        <property name="title" translatable="yes">Extensions</property>
         <property name="show-title-buttons">1</property>
+        <property name="title-widget">
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Extensions</property>
+            <property name="single-line-mode">True</property>
+            <property name="ellipsize">end</property>
+            <property name="width-chars">5</property>
+            <style>
+              <class name="title" />
+            </style>
+          </object>
+        </property>
         <child>
           <object class="GtkButton" id="back_button">
             <property name="visible">0</property>
