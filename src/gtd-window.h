@@ -40,10 +40,6 @@ void                      gtd_window_notify               (GtdWindow            
 void                      gtd_window_cancel_notification  (GtdWindow             *window,
                                                            GtdNotification      *notification);
 
-void                      gtd_window_set_custom_title     (GtdWindow             *window,
-                                                           const gchar           *title,
-                                                           const gchar           *subtitle);
-
 void                      gtd_window_embed_widget_in_header (GtdWindow           *self,
                                                              GtkWidget           *widget,
                                                              GtkPositionType      position);

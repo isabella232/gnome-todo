@@ -689,34 +689,6 @@ gtd_window_cancel_notification (GtdWindow       *self,
 }
 
 /**
- * gtd_window_set_custom_title:
- * @window: a #GtdWindow
- * @title: (nullable): the #GtkHeaderBar title
- * @subtitle: (nullable): the #GtkHeaderBar subtitle
- *
- * Sets the #GtdWindow's headerbar title and subtitle. If @title is %NULL,
- * the header will be set to the stack switcher.
- */
-void
-gtd_window_set_custom_title (GtdWindow   *self,
-                             const gchar *title,
-                             const gchar *subtitle)
-{
-  g_return_if_fail (GTD_IS_WINDOW (self));
-
-  if (title)
-    {
-      gtk_header_bar_set_custom_title (self->headerbar, NULL);
-      gtk_header_bar_set_title (self->headerbar, title);
-      gtk_header_bar_set_subtitle (self->headerbar, subtitle);
-    }
-  else
-    {
-      gtk_header_bar_set_title (self->headerbar, _("To Do"));
-    }
-}
-
-/**
  * gtd_window_embed_widget_in_header:
  * @self: a #GtdWindow
  * @widget: a #GtkWidget
