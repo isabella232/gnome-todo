@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="GtdTaskListCard" parent="GtkFlowBoxChild">
+    <property name="layout-manager">
+      <object class="GtdTextWidthLayout">
+        <property name="width-chars">10</property>
+        <property name="max-width-chars">20</property>
+      </object>
+    </property>
+
+    <child>
+      <object class="GtkGrid">
+        <property name="hexpand">true</property>
+        <property name="vexpand">true</property>
+        <property name="row-spacing">3</property>
+        <property name="column-spacing">6</property>
+
+        <!-- Color Dot -->
+        <child>
+          <object class="GtkImage" id="color_icon">
+            <property name="halign">end</property>
+            <property name="pixel-size">12</property>
+            <layout>
+              <property name="left-attach">1</property>
+              <property name="top-attach">0</property>
+            </layout>
+          </object>
+        </child>
+
+        <!-- Title -->
+        <child>
+          <object class="GtkLabel" id="title_label">
+            <property name="hexpand">true</property>
+            <property name="xalign">0.0</property>
+            <property name="ellipsize">end</property>
+            <property name="max-width-chars">20</property>
+            <layout>
+              <property name="left-attach">0</property>
+              <property name="top-attach">0</property>
+            </layout>
+          </object>
+        </child>
+
+        <!-- Title -->
+        <child>
+          <object class="GtkLabel" id="tasks_counter_label">
+            <property name="hexpand">true</property>
+            <property name="xalign">0.0</property>
+            <property name="ellipsize">end</property>
+            <layout>
+              <property name="left-attach">0</property>
+              <property name="top-attach">1</property>
+              <property name="column-span">2</property>
+            </layout>
+          </object>
+        </child>
+
+      </object>
+    </child>
+
+  </template>
+
+</interface>

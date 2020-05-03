@@ -1,4 +1,4 @@
-/* planning-workspace-plugin.c
+/* gtd-task-card.h
  *
  * Copyright 2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
@@ -18,19 +18,17 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+#pragma once
+
 #include "gnome-todo.h"
 
-#include "gtd-inbox-planner.h"
-#include "gtd-planning-workspace.h"
+G_BEGIN_DECLS
 
-G_MODULE_EXPORT void
-planning_workspace_plugin_register_types (PeasObjectModule *module)
-{
-  peas_object_module_register_extension_type (module,
-                                              GTD_TYPE_WORKSPACE,
-                                              GTD_TYPE_PLANNING_WORKSPACE);
+#define GTD_TYPE_TASK_CARD (gtd_task_card_get_type())
+G_DECLARE_FINAL_TYPE (GtdTaskCard, gtd_task_card, GTD, TASK_CARD, GtkFlowBoxChild)
 
-  peas_object_module_register_extension_type (module,
-                                              GTD_TYPE_PLANNER,
-                                              GTD_TYPE_INBOX_PLANNER);
-}
+GtkWidget*           gtd_task_card_new                           (GtdTask            *task);
+
+GtdTask*             gtd_task_card_get_task                      (GtdTaskCard        *self);
+
+G_END_DECLS

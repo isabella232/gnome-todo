@@ -1,4 +1,4 @@
-/* planning-workspace-plugin.c
+/* gtd-inbox-planner.h
  *
  * Copyright 2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
@@ -18,19 +18,13 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-#include "gnome-todo.h"
+#pragma once
 
-#include "gtd-inbox-planner.h"
-#include "gtd-planning-workspace.h"
+#include <gtk/gtk.h>
 
-G_MODULE_EXPORT void
-planning_workspace_plugin_register_types (PeasObjectModule *module)
-{
-  peas_object_module_register_extension_type (module,
-                                              GTD_TYPE_WORKSPACE,
-                                              GTD_TYPE_PLANNING_WORKSPACE);
+G_BEGIN_DECLS
 
-  peas_object_module_register_extension_type (module,
-                                              GTD_TYPE_PLANNER,
-                                              GTD_TYPE_INBOX_PLANNER);
-}
+#define GTD_TYPE_INBOX_PLANNER (gtd_inbox_planner_get_type())
+G_DECLARE_FINAL_TYPE (GtdInboxPlanner, gtd_inbox_planner, GTD, INBOX_PLANNER, GtkBin)
+
+G_END_DECLS

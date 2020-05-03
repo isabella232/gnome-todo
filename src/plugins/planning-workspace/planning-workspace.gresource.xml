@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/org/gnome/todo/plugins/planning-workspace">
+    <file>themes/shared.css</file>
+    <file>gtd-inbox-planner.ui</file>
     <file>gtd-planning-workspace.ui</file>
+    <file>gtd-provider-section.ui</file>
+    <file>gtd-task-card.ui</file>
+    <file>gtd-task-list-card.ui</file>
     <file>planning-workspace.plugin</file>
   </gresource>
 </gresources>

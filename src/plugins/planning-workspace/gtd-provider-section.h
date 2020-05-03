@@ -1,4 +1,4 @@
-/* planning-workspace-plugin.c
+/* gtd-provider-section.h
  *
  * Copyright 2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
@@ -18,19 +18,18 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+#pragma once
+
 #include "gnome-todo.h"
 
-#include "gtd-inbox-planner.h"
-#include "gtd-planning-workspace.h"
+G_BEGIN_DECLS
 
-G_MODULE_EXPORT void
-planning_workspace_plugin_register_types (PeasObjectModule *module)
-{
-  peas_object_module_register_extension_type (module,
-                                              GTD_TYPE_WORKSPACE,
-                                              GTD_TYPE_PLANNING_WORKSPACE);
+#define GTD_TYPE_PROVIDER_SECTION (gtd_provider_section_get_type())
 
-  peas_object_module_register_extension_type (module,
-                                              GTD_TYPE_PLANNER,
-                                              GTD_TYPE_INBOX_PLANNER);
-}
+G_DECLARE_FINAL_TYPE (GtdProviderSection, gtd_provider_section, GTD, PROVIDER_SECTION, GtkFlowBoxChild)
+
+GtkWidget*           gtd_provider_section_new                    (GtdProvider        *provider);
+
+GtdProvider*         gtd_provider_section_get_provider           (GtdProviderSection *self);
+
+G_END_DECLS
