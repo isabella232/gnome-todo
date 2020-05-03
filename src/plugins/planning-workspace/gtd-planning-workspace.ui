@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="GtdPlanningWorkspace" parent="GtkBin">
+
+    <!-- Planners Stack -->
+    <child>
+      <object class="GtkStack" id="stack">
+        <property name="hexpand">true</property>
+        <property name="vexpand">true</property>
+        <property name="transition_duration">250</property>
+        <property name="transition_type">crossfade</property>
+        <signal name="notify::visible-child" handler="on_stack_visible_child_cb" object="GtdPlanningWorkspace" swapped="no"/>
+        <style>
+          <class name="background"/>
+        </style>
+      </object>
+    </child>
+
+  </template>
+
+  <!-- Planners Popover -->
+  <object class="GtdMenuButton" id="planners_menu_button">
+    <property name="can_focus">1</property>
+    <property name="receives_default">1</property>
+    <property name="popover">
+      <object class="GtkPopover">
+        <property name="can_focus">False</property>
+        <property name="position">bottom</property>
+        <style>
+          <class name="custom-menu" />
+        </style>
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Switch Planner</property>
+                <style>
+                  <class name="title" />
+                </style>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkListBox" id="planners_listbox">
+                <property name="selection-mode">none</property>
+                <signal name="row-activated" handler="on_planners_listbox_row_activated_cb" object="GtdPlanningWorkspace" swapped="no" />
+                <style>
+                  <class name="transparent" />
+                </style>
+              </object>
+            </child>
+
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+
+</interface>

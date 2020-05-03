@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/gnome/todo/plugins/planning-workspace">
+    <file>gtd-planning-workspace.ui</file>
+    <file>planning-workspace.plugin</file>
+  </gresource>
+</gresources>

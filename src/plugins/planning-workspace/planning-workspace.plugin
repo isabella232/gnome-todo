@@ -1,0 +1,14 @@
+[Plugin]
+Name = Planning Workspace
+Module = planning-workspace
+Description = Plugin implementing the planning workspace
+Version = @VERSION@
+Authors = Georges Basile Stavracas Neto <gbsneto@gnome.org>
+Copyright = Copyleft © The To Do maintainers
+Website = https://wiki.gnome.org/Apps/Todo
+Builtin = true
+Hidden = true
+License = GPL
+Loader = C
+Embedded = planning_workspace_plugin_register_types
+Depends =
