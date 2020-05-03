@@ -54,7 +54,8 @@ gtd_workspace_default_init (GtdWorkspaceInterface *iface)
  * gtd_workspace_get_id:
  * @self: a #GtdWorkspace
  *
- * Retrieves the id of @self.
+ * Retrieves the id of @self. It is mandatory to implement
+ * this.
  *
  * Returns: the id of @self
  */
@@ -71,7 +72,8 @@ gtd_workspace_get_id (GtdWorkspace *self)
  * gtd_workspace_get_title:
  * @self: a #GtdWorkspace
  *
- * Retrieves the title of @self.
+ * Retrieves the title of @self. It is mandatory to implement
+ * this.
  *
  * Returns: the title of @self
  */
@@ -88,7 +90,8 @@ gtd_workspace_get_title (GtdWorkspace *self)
  * gtd_workspace_get_priority:
  * @self: a #GtdWorkspace
  *
- * Retrieves the priority of @self.
+ * Retrieves the priority of @self. It is mandatory to implement
+ * this.
  *
  * Returns: the priority of @self
  */
@@ -105,7 +108,8 @@ gtd_workspace_get_priority (GtdWorkspace *self)
  * gtd_workspace_get_priority:
  * @self: a #GtdWorkspace
  *
- * Retrieves the icon of @self.
+ * Retrieves the icon of @self. It is mandatory to implement
+ * this.
  *
  * Returns: (transfer full): a #GIcon
  */
@@ -129,9 +133,9 @@ void
 gtd_workspace_activate (GtdWorkspace *self)
 {
   g_return_if_fail (GTD_IS_WORKSPACE (self));
-  g_return_if_fail (GTD_WORKSPACE_GET_IFACE (self)->activate);
 
-  GTD_WORKSPACE_GET_IFACE (self)->activate (self);
+  if (GTD_WORKSPACE_GET_IFACE (self)->activate)
+    GTD_WORKSPACE_GET_IFACE (self)->activate (self);
 }
 
 /**
@@ -145,8 +149,8 @@ void
 gtd_workspace_deactivate (GtdWorkspace *self)
 {
   g_return_if_fail (GTD_IS_WORKSPACE (self));
-  g_return_if_fail (GTD_WORKSPACE_GET_IFACE (self)->deactivate);
 
-  GTD_WORKSPACE_GET_IFACE (self)->deactivate (self);
+  if (GTD_WORKSPACE_GET_IFACE (self)->deactivate)
+    GTD_WORKSPACE_GET_IFACE (self)->deactivate (self);
 }
 

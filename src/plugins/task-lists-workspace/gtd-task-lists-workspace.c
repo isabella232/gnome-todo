@@ -323,11 +323,6 @@ gtd_task_lists_workspace_activate (GtdWorkspace *workspace)
 }
 
 static void
-gtd_task_lists_workspace_deactivate (GtdWorkspace *workspace)
-{
-}
-
-static void
 gtd_workspace_iface_init (GtdWorkspaceInterface  *iface)
 {
   iface->get_id = gtd_task_lists_workspace_get_id;
@@ -335,7 +330,6 @@ gtd_workspace_iface_init (GtdWorkspaceInterface  *iface)
   iface->get_priority = gtd_task_lists_workspace_get_priority;
   iface->get_icon = gtd_task_lists_workspace_get_icon;
   iface->activate = gtd_task_lists_workspace_activate;
-  iface->deactivate = gtd_task_lists_workspace_deactivate;
 }
 
 
