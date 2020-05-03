@@ -316,104 +316,302 @@ gtd_provider_get_icon (GtdProvider *provider)
  * gtd_provider_create_task:
  * @provider: a #GtdProvider
  * @task: a #GtdTask
+ * @due_date: (nullable): a #GDateTime
+ * @cancellable: (nullable): a #GCancellable
+ * @callback: (scope async): a callback
+ * @user_data: (closure): user data for @callback
  *
  * Creates the given task in @provider.
  */
 void
-gtd_provider_create_task (GtdProvider *provider,
-                          GtdTaskList *list,
-                          const gchar *title,
-                          GDateTime   *due_date)
+gtd_provider_create_task (GtdProvider         *provider,
+                          GtdTaskList         *list,
+                          const gchar         *title,
+                          GDateTime           *due_date,
+                          GCancellable        *cancellable,
+                          GAsyncReadyCallback  callback,
+                          gpointer             user_data)
 {
   g_return_if_fail (GTD_IS_PROVIDER (provider));
   g_return_if_fail (GTD_PROVIDER_GET_IFACE (provider)->create_task);
 
-  GTD_PROVIDER_GET_IFACE (provider)->create_task (provider, list, title, due_date);
+  GTD_PROVIDER_GET_IFACE (provider)->create_task (provider,
+                                                  list,
+                                                  title,
+                                                  due_date,
+                                                  cancellable,
+                                                  callback,
+                                                  user_data);
+}
+
+/**
+ * gtd_provider_create_task_finish:
+ * @self: a #GtdProvider
+ * @result: a #GAsyncResult
+ * @error: (direction out)(nullable): return location for a #GError
+ *
+ * Finishes creating the task.
+ *
+ * Returns: (transfer none)(nullable): a #GtdTask
+ */
+GtdTask*
+gtd_provider_create_task_finish (GtdProvider   *self,
+                                 GAsyncResult  *result,
+                                 GError       **error)
+{
+  g_return_val_if_fail (GTD_IS_PROVIDER (self), FALSE);
+  g_return_val_if_fail (!error || !*error, FALSE);
+  g_return_val_if_fail (GTD_PROVIDER_GET_IFACE (self)->create_task_finish, FALSE);
+
+  return GTD_PROVIDER_GET_IFACE (self)->create_task_finish (self, result, error);
 }
 
 /**
  * gtd_provider_update_task:
  * @provider: a #GtdProvider
  * @task: a #GtdTask
+ * @cancellable: (nullable): a #GCancellable
+ * @callback: (scope async): a callback
+ * @user_data: (closure): user data for @callback
  *
  * Updates the given task in @provider.
  */
 void
-gtd_provider_update_task (GtdProvider *provider,
-                          GtdTask     *task)
+gtd_provider_update_task (GtdProvider         *provider,
+                          GtdTask             *task,
+                          GCancellable        *cancellable,
+                          GAsyncReadyCallback  callback,
+                          gpointer             user_data)
 {
   g_return_if_fail (GTD_IS_PROVIDER (provider));
   g_return_if_fail (GTD_PROVIDER_GET_IFACE (provider)->update_task);
 
-  GTD_PROVIDER_GET_IFACE (provider)->update_task (provider, task);
+  GTD_PROVIDER_GET_IFACE (provider)->update_task (provider,
+                                                  task,
+                                                  cancellable,
+                                                  callback,
+                                                  user_data);
+}
+
+/**
+ * gtd_provider_update_task_finish:
+ * @self: a #GtdProvider
+ * @result: a #GAsyncResult
+ * @error: (direction out)(nullable): return location for a #GError
+ *
+ * Finishes updating the task list.
+ *
+ * Returns: %TRUE if task list was successfully updated, %FALSE otherwise
+ */
+gboolean
+gtd_provider_update_task_finish (GtdProvider   *self,
+                                 GAsyncResult  *result,
+                                 GError       **error)
+{
+  g_return_val_if_fail (GTD_IS_PROVIDER (self), FALSE);
+  g_return_val_if_fail (!error || !*error, FALSE);
+  g_return_val_if_fail (GTD_PROVIDER_GET_IFACE (self)->update_task_finish, FALSE);
+
+  return GTD_PROVIDER_GET_IFACE (self)->update_task_finish (self, result, error);
 }
 
 /**
  * gtd_provider_remove_task:
  * @provider: a #GtdProvider
  * @task: a #GtdTask
+ * @cancellable: (nullable): a #GCancellable
+ * @callback: (scope async): a callback
+ * @user_data: (closure): user data for @callback
  *
  * Removes the given task from @provider.
  */
 void
-gtd_provider_remove_task (GtdProvider *provider,
-                          GtdTask     *task)
+gtd_provider_remove_task (GtdProvider         *provider,
+                          GtdTask             *task,
+                          GCancellable        *cancellable,
+                          GAsyncReadyCallback  callback,
+                          gpointer             user_data)
 {
   g_return_if_fail (GTD_IS_PROVIDER (provider));
   g_return_if_fail (GTD_PROVIDER_GET_IFACE (provider)->remove_task);
 
-  GTD_PROVIDER_GET_IFACE (provider)->remove_task (provider, task);
+  GTD_PROVIDER_GET_IFACE (provider)->remove_task (provider,
+                                                  task,
+                                                  cancellable,
+                                                  callback,
+                                                  user_data);
+}
+
+/**
+ * gtd_provider_remove_task_finish:
+ * @self: a #GtdProvider
+ * @result: a #GAsyncResult
+ * @error: (direction out)(nullable): return location for a #GError
+ *
+ * Finishes removing the task.
+ *
+ * Returns: %TRUE if task was successfully removed, %FALSE otherwise
+ */
+gboolean
+gtd_provider_remove_task_finish (GtdProvider   *self,
+                                 GAsyncResult  *result,
+                                 GError       **error)
+{
+  g_return_val_if_fail (GTD_IS_PROVIDER (self), FALSE);
+  g_return_val_if_fail (!error || !*error, FALSE);
+  g_return_val_if_fail (GTD_PROVIDER_GET_IFACE (self)->remove_task_finish, FALSE);
+
+  return GTD_PROVIDER_GET_IFACE (self)->remove_task_finish (self, result, error);
 }
 
 /**
  * gtd_provider_create_task_list:
  * @provider: a #GtdProvider
  * @name: (nullable): the name of the new task list
+ * @cancellable: (nullable): a #GCancellable
+ * @callback: (scope async): a callback
+ * @user_data: (closure): user data for @callback
  *
  * Creates the given list in @provider.
  */
 void
-gtd_provider_create_task_list (GtdProvider *provider,
-                               const gchar *name)
+gtd_provider_create_task_list (GtdProvider         *provider,
+                               const gchar         *name,
+                               GCancellable        *cancellable,
+                               GAsyncReadyCallback  callback,
+                               gpointer             user_data)
 {
   g_return_if_fail (GTD_IS_PROVIDER (provider));
   g_return_if_fail (GTD_PROVIDER_GET_IFACE (provider)->create_task_list);
 
-  GTD_PROVIDER_GET_IFACE (provider)->create_task_list (provider, name);
+  GTD_PROVIDER_GET_IFACE (provider)->create_task_list (provider,
+                                                       name,
+                                                       cancellable,
+                                                       callback,
+                                                       user_data);
+}
+
+/**
+ * gtd_provider_create_task_list_finish:
+ * @self: a #GtdProvider
+ * @result: a #GAsyncResult
+ * @error: (direction out)(nullable): return location for a #GError
+ *
+ * Finishes creating the task list. The provider will emit the
+ * GtdProvider:list-added signal after creating the task list.
+ *
+ * Returns: %TRUE if task list was successfully created, %FALSE otherwise
+ */
+gboolean
+gtd_provider_create_task_list_finish (GtdProvider   *self,
+                                      GAsyncResult  *result,
+                                      GError       **error)
+{
+  g_return_val_if_fail (GTD_IS_PROVIDER (self), FALSE);
+  g_return_val_if_fail (!error || !*error, FALSE);
+  g_return_val_if_fail (GTD_PROVIDER_GET_IFACE (self)->create_task_list_finish, FALSE);
+
+  return GTD_PROVIDER_GET_IFACE (self)->create_task_list_finish (self, result, error);
 }
 
 /**
  * gtd_provider_update_task_list:
  * @provider: a #GtdProvider
  * @list: a #GtdTaskList
+ * @cancellable: (nullable): a #GCancellable
+ * @callback: (scope async): a callback
+ * @user_data: (closure): user data for @callback
  *
  * Updates the given list in @provider.
  */
 void
-gtd_provider_update_task_list (GtdProvider *provider,
-                               GtdTaskList *list)
+gtd_provider_update_task_list (GtdProvider         *provider,
+                               GtdTaskList         *list,
+                               GCancellable        *cancellable,
+                               GAsyncReadyCallback  callback,
+                               gpointer             user_data)
 {
   g_return_if_fail (GTD_IS_PROVIDER (provider));
   g_return_if_fail (GTD_PROVIDER_GET_IFACE (provider)->update_task_list);
 
-  GTD_PROVIDER_GET_IFACE (provider)->update_task_list (provider, list);
+  GTD_PROVIDER_GET_IFACE (provider)->update_task_list (provider,
+                                                       list,
+                                                       cancellable,
+                                                       callback,
+                                                       user_data);
+}
+
+/**
+ * gtd_provider_create_task_list_finish:
+ * @self: a #GtdProvider
+ * @result: a #GAsyncResult
+ * @error: (direction out)(nullable): return location for a #GError
+ *
+ * Finishes updating the task list. The provider will emit the
+ * GtdProvider:list-updated signal after updating the task list.
+ *
+ * Returns: %TRUE if task list was successfully created, %FALSE otherwise
+ */
+gboolean
+gtd_provider_update_task_list_finish (GtdProvider   *self,
+                                      GAsyncResult  *result,
+                                      GError       **error)
+{
+  g_return_val_if_fail (GTD_IS_PROVIDER (self), FALSE);
+  g_return_val_if_fail (!error || !*error, FALSE);
+  g_return_val_if_fail (GTD_PROVIDER_GET_IFACE (self)->update_task_list_finish, FALSE);
+
+  return GTD_PROVIDER_GET_IFACE (self)->update_task_list_finish (self, result, error);
 }
 
 /**
  * gtd_provider_remove_task_list:
  * @provider: a #GtdProvider
  * @list: a #GtdTaskList
+ * @cancellable: (nullable): a #GCancellable
+ * @callback: (scope async): a callback
+ * @user_data: (closure): user data for @callback
  *
  * Removes the given list from @provider.
  */
 void
-gtd_provider_remove_task_list (GtdProvider *provider,
-                               GtdTaskList *list)
+gtd_provider_remove_task_list (GtdProvider         *provider,
+                               GtdTaskList         *list,
+                               GCancellable        *cancellable,
+                               GAsyncReadyCallback  callback,
+                               gpointer             user_data)
 {
   g_return_if_fail (GTD_IS_PROVIDER (provider));
   g_return_if_fail (GTD_PROVIDER_GET_IFACE (provider)->remove_task_list);
 
-  GTD_PROVIDER_GET_IFACE (provider)->remove_task_list (provider, list);
+  GTD_PROVIDER_GET_IFACE (provider)->remove_task_list (provider,
+                                                       list,
+                                                       cancellable,
+                                                       callback,
+                                                       user_data);
+}
+
+/**
+ * gtd_provider_remove_task_list_finish:
+ * @self: a #GtdProvider
+ * @result: a #GAsyncResult
+ * @error: (direction out)(nullable): return location for a #GError
+ *
+ * Finishes removing the task list. The provider will emit the
+ * GtdProvider:list-removed signal after removing the task list.
+ *
+ * Returns: %TRUE if task list was successfully removed, %FALSE otherwise
+ */
+gboolean
+gtd_provider_remove_task_list_finish (GtdProvider   *self,
+                                      GAsyncResult  *result,
+                                      GError       **error)
+{
+  g_return_val_if_fail (GTD_IS_PROVIDER (self), FALSE);
+  g_return_val_if_fail (!error || !*error, FALSE);
+  g_return_val_if_fail (GTD_PROVIDER_GET_IFACE (self)->remove_task_list_finish, FALSE);
+
+  return GTD_PROVIDER_GET_IFACE (self)->remove_task_list_finish (self, result, error);
 }
 
 /**

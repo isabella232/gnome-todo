@@ -52,6 +52,10 @@ static void          on_colors_flowbox_child_activated_cb        (GtkFlowBox    
                                                                   GtkFlowBoxChild    *child,
                                                                   GtdTaskListPanel   *self);
 
+static void          on_task_list_updated_cb                     (GObject           *source,
+                                                                  GAsyncResult      *result,
+                                                                  gpointer           user_data);
+
 static void          gtd_panel_iface_init                        (GtdPanelInterface  *iface);
 
 
@@ -177,7 +181,11 @@ rename_list (GtdTaskListPanel *self)
   if (g_strcmp0 (new_name, gtd_task_list_get_name (list)) != 0)
     {
       gtd_task_list_set_name (list, new_name);
-      gtd_provider_update_task_list (gtd_task_list_get_provider (list), list);
+      gtd_provider_update_task_list (gtd_task_list_get_provider (list),
+                                     list,
+                                     NULL,
+                                     on_task_list_updated_cb,
+                                     self);
     }
 
   gtk_popover_popdown (self->popover);
@@ -209,6 +217,27 @@ update_archive_button (GtdTaskListPanel *self)
  */
 
 static void
+on_task_list_updated_cb (GObject      *source,
+                         GAsyncResult *result,
+                         gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+
+  gtd_provider_update_task_list_finish (GTD_PROVIDER (source), result, &error);
+
+  if (error)
+    {
+      g_warning ("Error creating task: %s", error->message);
+
+      gtd_manager_emit_error_message (gtd_manager_get_default (),
+                                      _("An error occurred while updating a task"),
+                                      error->message,
+                                      NULL,
+                                      NULL);
+    }
+}
+
+static void
 on_archive_button_clicked_cb (GtkButton        *button,
                               GtdTaskListPanel *self)
 {
@@ -227,7 +256,11 @@ on_archive_button_clicked_cb (GtkButton        *button,
   update_archive_button (self);
 
   provider = gtd_task_list_get_provider (list);
-  gtd_provider_update_task_list (provider, list);
+  gtd_provider_update_task_list (provider,
+                                 list,
+                                 NULL,
+                                 on_task_list_updated_cb,
+                                 self);
 
   GTD_EXIT;
 }
@@ -260,7 +293,11 @@ on_colors_flowbox_child_activated_cb (GtkFlowBox       *colors_flowbox,
   color = gtd_color_button_get_color (GTD_COLOR_BUTTON (color_button));
   gtd_task_list_set_color (list, color);
 
-  gtd_provider_update_task_list (gtd_task_list_get_provider (list), list);
+  gtd_provider_update_task_list (gtd_task_list_get_provider (list),
+                                 list,
+                                 NULL,
+                                 on_task_list_updated_cb,
+                                 self);
 
   self->previous_color_button = color_button;
 }

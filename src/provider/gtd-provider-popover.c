@@ -1,6 +1,6 @@
 /* gtd-provider-popover.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,6 +81,27 @@ gtd_provider_popover__closed (GtdProviderPopover *popover)
 }
 
 static void
+on_task_list_created_cb (GObject      *source,
+                         GAsyncResult *result,
+                         gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+
+  gtd_provider_create_task_list_finish (GTD_PROVIDER (source), result, &error);
+
+  if (error)
+    {
+      g_warning ("Error creating task list: %s", error->message);
+
+      gtd_manager_emit_error_message (gtd_manager_get_default (),
+                                      _("An error occurred while creating a task list"),
+                                      error->message,
+                                      NULL,
+                                      NULL);
+    }
+}
+
+static void
 create_task_list (GtdProviderPopover *popover)
 {
   GtdProvider *provider;
@@ -89,7 +110,11 @@ create_task_list (GtdProviderPopover *popover)
   provider = gtd_provider_selector_get_selected_provider (GTD_PROVIDER_SELECTOR (popover->provider_selector));
   name = gtk_editable_get_text (popover->new_list_name_entry);
 
-  gtd_provider_create_task_list (provider, name);
+  gtd_provider_create_task_list (provider,
+                                 name,
+                                 NULL,
+                                 on_task_list_created_cb,
+                                 popover);
 }
 
 static void

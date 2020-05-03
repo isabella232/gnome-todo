@@ -189,6 +189,22 @@ create_transient_row (GtdTaskRow *self)
  */
 
 static void
+on_task_updated_cb (GObject      *object,
+                    GAsyncResult *result,
+                    gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+
+  gtd_provider_update_task_finish (GTD_PROVIDER (object), result, &error);
+
+  if (error)
+    {
+      g_warning ("Error updating task: %s", error->message);
+      return;
+    }
+}
+
+static void
 on_remove_task_cb (GtdEditPane *edit_panel,
                    GtdTask     *task,
                    GtdTaskRow  *self)
@@ -318,7 +334,11 @@ on_complete_check_toggled_cb (GtkToggleButton *button,
   g_assert (GTD_IS_TASK (self->task));
 
   gtd_task_set_complete (self->task, gtk_toggle_button_get_active (button));
-  gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
+  gtd_provider_update_task (gtd_task_get_provider (self->task),
+                            self->task,
+                            NULL,
+                            on_task_updated_cb,
+                            self);
 
   GTD_EXIT;
 }
@@ -378,7 +398,11 @@ on_star_widget_activated_cb (GtdStarWidget *star_widget,
   g_signal_handlers_block_by_func (self->task, on_task_important_changed_cb, self);
 
   gtd_task_set_important (self->task, gtd_star_widget_get_active (star_widget));
-  gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
+  gtd_provider_update_task (gtd_task_get_provider (self->task),
+                            self->task,
+                            NULL,
+                            on_task_updated_cb,
+                            self);
 
   g_signal_handlers_unblock_by_func (self->task, on_task_important_changed_cb, self);
 }
@@ -423,7 +447,13 @@ gtd_task_row_finalize (GObject *object)
   if (self->changed)
     {
       if (self->task)
-        gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
+        {
+          gtd_provider_update_task (gtd_task_get_provider (self->task),
+                                    self->task,
+                                    NULL,
+                                    on_task_updated_cb,
+                                    self);
+        }
       self->changed = FALSE;
     }
 
@@ -862,7 +892,11 @@ gtd_task_row_set_active (GtdTaskRow *self,
     {
       g_debug ("Saving task…");
 
-      gtd_provider_update_task (gtd_task_get_provider (self->task), self->task);
+      gtd_provider_update_task (gtd_task_get_provider (self->task),
+                                self->task,
+                                NULL,
+                                on_task_updated_cb,
+                                self);
       self->changed = FALSE;
     }
 

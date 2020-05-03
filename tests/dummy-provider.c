@@ -129,10 +129,13 @@ dummy_provider_get_icon (GtdProvider *provider)
   return g_themed_icon_new ("face-monkey-symbolic");
 }
 static void
-dummy_provider_create_task (GtdProvider *provider,
-                           GtdTaskList *list,
-                           const gchar *title,
-                           GDateTime   *due_date)
+dummy_provider_create_task (GtdProvider         *provider,
+                            GtdTaskList         *list,
+                            const gchar         *title,
+                            GDateTime           *due_date,
+                            GCancellable        *cancellable,
+                            GAsyncReadyCallback  callback,
+                            gpointer             user_data)
 {
 }
 
@@ -150,8 +153,11 @@ dummy_provider_remove_task (GtdProvider *provider,
 }
 
 static void
-dummy_provider_create_task_list (GtdProvider *provider,
-                                const gchar *name)
+dummy_provider_create_task_list (GtdProvider         *provider,
+                                 const gchar         *name,
+                                 GCancellable        *cancellable,
+                                 GAsyncReadyCallback  callback,
+                                 gpointer             user_data)
 {
   GSequenceIter *iter;
   DummyProvider *self;
@@ -328,7 +334,7 @@ dummy_provider_generate_task_list (DummyProvider *self)
    *    - Task
    */
 
-  gtd_provider_create_task_list (GTD_PROVIDER (self), "List");
+  gtd_provider_create_task_list (GTD_PROVIDER (self), "List", NULL, NULL, NULL);
   iter = g_sequence_iter_prev (g_sequence_get_end_iter (self->lists));
   list = g_sequence_get (iter);
 
@@ -397,7 +403,7 @@ dummy_provider_generate_task_lists (DummyProvider *self)
       guint32 n_tasks;
 
       list_name = g_strdup_printf ("List %u", task_id++ + 1);
-      gtd_provider_create_task_list (GTD_PROVIDER (self), list_name);
+      gtd_provider_create_task_list (GTD_PROVIDER (self), list_name, NULL, NULL, NULL);
 
       /* The new list is the last one */
       iter = g_sequence_iter_prev (g_sequence_get_end_iter (self->lists));

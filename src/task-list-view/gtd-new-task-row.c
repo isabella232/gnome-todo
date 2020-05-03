@@ -109,6 +109,33 @@ show_task_list_selector_popover (GtdNewTaskRow *self)
  */
 
 static void
+on_task_created_cb (GObject      *object,
+                    GAsyncResult *result,
+                    gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+  GtdNewTaskRow *self;
+  GtdTask *new_task;
+
+  self = GTD_NEW_TASK_ROW (user_data);
+  new_task = gtd_provider_create_task_finish (GTD_PROVIDER (object), result, &error);
+
+  if (!new_task)
+    {
+      g_warning ("Error creating task: %s", error->message);
+
+      gtd_manager_emit_error_message (gtd_manager_get_default (),
+                                      _("An error occurred while creating a task"),
+                                      error->message,
+                                      NULL,
+                                      NULL);
+    }
+
+  gtk_editable_set_text (GTK_EDITABLE (self->entry), "");
+  gtk_widget_set_sensitive (GTK_WIDGET (self->entry), TRUE);
+}
+
+static void
 entry_activated_cb (GtdNewTaskRow *self)
 {
   GtdTaskListView *view;
@@ -137,12 +164,15 @@ entry_activated_cb (GtdNewTaskRow *self)
 
   g_return_if_fail (GTD_IS_TASK_LIST (list));
 
+  gtk_widget_set_sensitive (GTK_WIDGET (self->entry), FALSE);
+
   gtd_provider_create_task (gtd_task_list_get_provider (list),
                             list,
                             gtk_editable_get_text (GTK_EDITABLE (self->entry)),
-                            gtd_task_list_view_get_default_date (view));
-
-  gtk_editable_set_text (GTK_EDITABLE (self->entry), "");
+                            gtd_task_list_view_get_default_date (view),
+                            NULL,
+                            on_task_created_cb,
+                            self);
 }
 
 static void

@@ -39,6 +39,18 @@
 
 typedef struct
 {
+  GtdTaskList        *list;
+  GDateTime          *due_date;
+  gchar              *title;
+  ESource            *source;
+
+  /* Update Task */
+  ECalComponent      *component;
+  GtdTask            *task;
+} AsyncData;
+
+typedef struct
+{
   GHashTable           *task_lists;
 
   ESourceRegistry      *source_registry;
@@ -74,6 +86,20 @@ enum
 /*
  * Auxiliary methods
  */
+
+static void
+async_data_free (gpointer data)
+{
+  AsyncData *async_data = data;
+
+  g_clear_pointer (&async_data->due_date, g_date_time_unref);
+  g_clear_pointer (&async_data->title, g_free);
+  g_clear_object (&async_data->source);
+  g_clear_object (&async_data->list);
+  g_clear_object (&async_data->task);
+  g_clear_object (&async_data->component);
+  g_free (async_data);
+}
 
 static void
 set_default_list (GtdProviderEds *self,
@@ -256,172 +282,224 @@ on_source_refreshed_cb (GObject      *source_object,
   GTD_EXIT;
 }
 
-#define REPORT_ERROR(title,error) \
-G_STMT_START \
-  if (error) \
-    { \
-      g_warning ("%s: %s", title, error->message); \
-      gtd_manager_emit_error_message (gtd_manager_get_default (), title, error->message, NULL, NULL); \
-      GTD_RETURN (); \
-    } \
-G_STMT_END
-
 static void
-on_task_created_cb (ECalClient   *client,
-                    GAsyncResult *result,
-                    GtdTask      *task)
+create_task_in_thread_cb (GTask        *task,
+                          gpointer      source_object,
+                          gpointer      task_data,
+                          GCancellable *cancellable)
 {
+  g_autoptr (ECalComponent) component = NULL;
   g_autoptr (GError) error = NULL;
   g_autofree gchar *new_uid = NULL;
-  GtdProviderEds *self;
-  GtdTaskList *list;
+  ECalComponentText *new_summary;
+  GtdTaskListEds *tasklist;
+  ECalClient *client;
+  AsyncData *data;
+  GtdTask *new_task;
 
   GTD_ENTRY;
 
-  self = GTD_PROVIDER_EDS (gtd_task_get_provider (task));
-  list = gtd_task_get_list (task);
+  data = task_data;
+  tasklist = GTD_TASK_LIST_EDS (data->list);
+  client = gtd_task_list_eds_get_client (tasklist);
 
-  gtd_object_pop_loading (GTD_OBJECT (self));
-  gtd_object_pop_loading (GTD_OBJECT (task));
+  /* Create the new task */
+  component = e_cal_component_new ();
+  e_cal_component_set_new_vtype (component, E_CAL_COMPONENT_TODO);
 
-  e_cal_client_create_object_finish (client, result, &new_uid, &error);
+  new_summary = e_cal_component_text_new (data->title, NULL);
+  e_cal_component_set_summary (component, new_summary);
 
-  REPORT_ERROR (_("An error occurred while creating a task"), error);
+  if (data->due_date)
+    {
+      ECalComponentDateTime *comp_dt;
+      ICalTime *idt;
 
-  /* Update the default tasklist */
-  set_default_list (self, list);
+      idt = i_cal_time_new_null_time ();
+      i_cal_time_set_date (idt,
+                           g_date_time_get_year (data->due_date),
+                           g_date_time_get_month (data->due_date),
+                           g_date_time_get_day_of_month (data->due_date));
+      i_cal_time_set_time (idt,
+                           g_date_time_get_hour (data->due_date),
+                           g_date_time_get_minute (data->due_date),
+                           g_date_time_get_seconds (data->due_date));
+      i_cal_time_set_is_date (idt,
+                              i_cal_time_get_hour (idt) == 0 &&
+                              i_cal_time_get_minute (idt) == 0 &&
+                              i_cal_time_get_second (idt) == 0);
+
+      comp_dt = e_cal_component_datetime_new_take (idt, g_strdup ("UTC"));
+      e_cal_component_set_due (component, comp_dt);
+      e_cal_component_commit_sequence (component);
+
+      e_cal_component_datetime_free (comp_dt);
+    }
+
+  e_cal_client_create_object_sync (client,
+                                   e_cal_component_get_icalcomponent (component),
+                                   E_CAL_OPERATION_FLAG_NONE,
+                                   &new_uid,
+                                   cancellable,
+                                   &error);
+
+  e_cal_component_text_free (new_summary);
+
+  if (error)
+    {
+      g_task_return_error (task, g_steal_pointer (&error));
+      return;
+    }
+
+  new_task = gtd_task_eds_new (component);
+  gtd_task_set_position (new_task, g_list_model_get_n_items (G_LIST_MODEL (tasklist)));
 
   /*
    * In the case the task UID changes because of creation proccess,
    * reapply it to the task.
    */
   if (new_uid)
-    gtd_object_set_uid (GTD_OBJECT (task), new_uid);
+    gtd_object_set_uid (GTD_OBJECT (new_task), new_uid);
 
   /* Effectively apply the updated component */
-  gtd_task_eds_apply (GTD_TASK_EDS (task));
+  gtd_task_eds_apply (GTD_TASK_EDS (new_task));
+
+  g_task_return_pointer (task, g_object_ref (new_task), g_object_unref);
 
   GTD_EXIT;
 }
 
 static void
-on_task_modified_cb (ECalClient   *client,
-                     GAsyncResult *result,
-                     GtdTask      *task)
+update_task_in_thread_cb (GTask        *task,
+                          gpointer      source_object,
+                          gpointer      task_data,
+                          GCancellable *cancellable)
 {
   g_autoptr (GError) error = NULL;
-  GtdProviderEds *self;
+  GtdTaskListEds *tasklist;
+  ECalClient *client;
+  AsyncData *data;
 
   GTD_ENTRY;
 
-  self = GTD_PROVIDER_EDS (gtd_task_get_provider (task));
+  data = task_data;
+  tasklist = GTD_TASK_LIST_EDS (gtd_task_get_list (data->task));
+  client = gtd_task_list_eds_get_client (tasklist);
 
-  gtd_object_pop_loading (GTD_OBJECT (task));
-  gtd_object_pop_loading (GTD_OBJECT (self));
+  e_cal_client_modify_object_sync (client,
+                                   e_cal_component_get_icalcomponent (data->component),
+                                   E_CAL_OBJ_MOD_THIS,
+                                   E_CAL_OPERATION_FLAG_NONE,
+                                   cancellable,
+                                   &error);
 
-  e_cal_client_modify_object_finish (client, result, &error);
 
-  if (!error)
+  if (error)
     {
-      gtd_task_eds_apply (GTD_TASK_EDS (task));
-      gtd_task_list_update_task (gtd_task_get_list (task), task);
+      g_task_return_error (task, g_steal_pointer (&error));
+      GTD_RETURN ();
     }
-  else
+
+  g_task_return_boolean (task, TRUE);
+
+  GTD_EXIT;
+}
+
+static void
+remove_task_in_thread_cb (GTask        *task,
+                          gpointer      source_object,
+                          gpointer      task_data,
+                          GCancellable *cancellable)
+{
+  g_autoptr (ECalComponentId) id = NULL;
+  g_autoptr (GError) error = NULL;
+  GtdTaskListEds *tasklist;
+  ECalClient *client;
+  AsyncData *data;
+
+  GTD_ENTRY;
+
+  data = task_data;
+  tasklist = GTD_TASK_LIST_EDS (gtd_task_get_list (data->task));
+  client = gtd_task_list_eds_get_client (tasklist);
+  id = e_cal_component_get_id (data->component);
+
+  e_cal_client_remove_object_sync (client,
+                                   e_cal_component_id_get_uid (id),
+                                   e_cal_component_id_get_rid (id),
+                                   E_CAL_OBJ_MOD_THIS,
+                                   E_CAL_OPERATION_FLAG_NONE,
+                                   cancellable,
+                                   &error);
+
+
+  if (error)
     {
-      gtd_task_eds_revert (GTD_TASK_EDS (task));
+      g_task_return_error (task, g_steal_pointer (&error));
+      GTD_RETURN ();
     }
 
-  REPORT_ERROR (_("An error occurred while modifying a task"), error);
+  g_task_return_boolean (task, TRUE);
 
   GTD_EXIT;
 }
 
 static void
-on_task_removed_cb (GObject      *object,
-                    GAsyncResult *result,
-                    gpointer      user_data)
+create_or_update_task_list_in_thread_cb (GTask        *task,
+                                         gpointer      source_object,
+                                         gpointer      task_data,
+                                         GCancellable *cancellable)
 {
+  GtdProviderEdsPrivate *priv;
   g_autoptr (GError) error = NULL;
   GtdProviderEds *self;
+  AsyncData *data;
 
   GTD_ENTRY;
 
-  self = GTD_PROVIDER_EDS (user_data);
+  data = task_data;
+  self = GTD_PROVIDER_EDS (source_object);
+  priv = gtd_provider_eds_get_instance_private (self);
 
-  gtd_object_pop_loading (GTD_OBJECT (self));
+  e_source_registry_commit_source_sync (priv->source_registry,
+                                        data->source,
+                                        cancellable,
+                                        &error);
 
-  e_cal_client_remove_object_finish (E_CAL_CLIENT (object), result, &error);
+  if (error)
+    {
+      g_task_return_error (task, g_steal_pointer (&error));
+      GTD_RETURN ();
+    }
 
-  REPORT_ERROR (_("An error occurred while removing a task"), error);
+  g_task_return_boolean (task, TRUE);
 
   GTD_EXIT;
 }
 
+
 static void
-on_task_list_created_cb (ESourceRegistry *registry,
-                         GAsyncResult    *result,
-                         GtdProviderEds  *self)
+remove_task_list_in_thread_cb (GTask        *task,
+                               gpointer      source_object,
+                               gpointer      task_data,
+                               GCancellable *cancellable)
 {
   g_autoptr (GError) error = NULL;
+  AsyncData *data;
 
   GTD_ENTRY;
 
-  gtd_object_pop_loading (GTD_OBJECT (self));
+  data = task_data;
 
-  e_source_registry_commit_source_finish (registry, result, &error);
+  e_source_remove_sync (data->source, cancellable, &error);
 
-  REPORT_ERROR (_("An error occurred while creating a task list"), error);
+  if (error)
+    {
+      g_task_return_error (task, g_steal_pointer (&error));
+      GTD_RETURN ();
+    }
 
-  GTD_EXIT;
-}
-
-static void
-on_task_list_modified_cb (ESourceRegistry *registry,
-                          GAsyncResult    *result,
-                          GtdTaskList     *list)
-{
-  g_autoptr (GError) error = NULL;
-  GtdProviderEds *self;
-
-  GTD_ENTRY;
-
-  self = GTD_PROVIDER_EDS (gtd_task_list_get_provider (list));
-
-  gtd_object_pop_loading (GTD_OBJECT (self));
-  gtd_object_pop_loading (GTD_OBJECT (list));
-
-  e_source_registry_commit_source_finish (registry, result, &error);
-
-  REPORT_ERROR (_("An error occurred while modifying a task list"), error);
-
-  g_signal_emit_by_name (self, "list-changed", list);
-
-  GTD_EXIT;
-}
-
-static void
-on_task_list_removed_cb (ESource      *source,
-                         GAsyncResult *result,
-                         GtdTaskList  *list)
-{
-  g_autoptr (GError) error = NULL;
-  GtdProviderEds *self;
-
-  GTD_ENTRY;
-
-  self = GTD_PROVIDER_EDS (gtd_task_list_get_provider (list));
-
-  gtd_object_pop_loading (GTD_OBJECT (self));
-
-  e_source_remove_finish (source, result, &error);
-
-  REPORT_ERROR (_("An error occurred while modifying a task list"), error);
-
-  /*
-   * Note: we don't need to emit the "list-removed" signal here
-   * because EDS will emit the "source-removed" signal, and we
-   * emit "list-removed" there.
-   */
+  g_task_return_boolean (task, TRUE);
 
   GTD_EXIT;
 }
@@ -526,70 +604,85 @@ gtd_provider_eds_get_icon (GtdProvider *provider)
 }
 
 static void
-gtd_provider_eds_create_task (GtdProvider *provider,
-                              GtdTaskList *list,
-                              const gchar *title,
-                              GDateTime   *due_date)
+gtd_provider_eds_create_task (GtdProvider         *provider,
+                              GtdTaskList         *list,
+                              const gchar         *title,
+                              GDateTime           *due_date,
+                              GCancellable        *cancellable,
+                              GAsyncReadyCallback  callback,
+                              gpointer             user_data)
 {
-  g_autoptr (ECalComponent) component = NULL;
-  ECalComponent *updated_component;
-  GtdTaskListEds *tasklist;
+  g_autoptr (GTask) task = NULL;
   GtdProviderEds *self;
-  ECalClient *client;
-  GtdTask *new_task;
+  AsyncData *data;
 
   g_return_if_fail (GTD_IS_TASK_LIST_EDS (list));
 
   GTD_ENTRY;
 
   self = GTD_PROVIDER_EDS (provider);
-  tasklist = GTD_TASK_LIST_EDS (list);
-  client = gtd_task_list_eds_get_client (tasklist);
 
-  /* Create the new task */
-  component = e_cal_component_new ();
-  e_cal_component_set_new_vtype (component, E_CAL_COMPONENT_TODO);
+  data = g_new0 (AsyncData, 1);
+  data->list = g_object_ref (list);
+  data->title = g_strdup (title);
+  data->due_date = due_date ? g_date_time_ref (due_date) : NULL;
 
-  new_task = gtd_task_eds_new (component);
-  gtd_task_set_title (new_task, title);
-  gtd_task_set_due_date (new_task, due_date);
-  gtd_task_set_list (new_task, list);
-  gtd_task_set_position (new_task, g_list_model_get_n_items (G_LIST_MODEL (list)));
-
-  /* Use the component with the changes we've just done */
-  updated_component = gtd_task_eds_get_component (GTD_TASK_EDS (new_task));
-
-  gtd_task_list_add_task (list, new_task);
-
-  /* The task is not ready until we finish the operation */
   gtd_object_push_loading (GTD_OBJECT (self));
-  gtd_object_push_loading (GTD_OBJECT (new_task));
 
-  e_cal_client_create_object (client,
-                              e_cal_component_get_icalcomponent (updated_component),
-                              E_CAL_OPERATION_FLAG_NONE,
-                              NULL,
-                              (GAsyncReadyCallback) on_task_created_cb,
-                              new_task);
+  task = g_task_new (self, cancellable, callback, user_data);
+  g_task_set_source_tag (task, gtd_provider_eds_create_task);
+  g_task_set_task_data (task, data, async_data_free);
+  g_task_run_in_thread (task, create_task_in_thread_cb);
 
   GTD_EXIT;
 }
 
-static void
-gtd_provider_eds_update_task (GtdProvider *provider,
-                              GtdTask     *task)
+static GtdTask*
+gtd_provider_eds_create_task_finish (GtdProvider   *provider,
+                                     GAsyncResult  *result,
+                                     GError       **error)
 {
-  GtdTaskListEds *tasklist;
+  g_autoptr (GtdTask) new_task = NULL;
+  GtdProviderEds *self;
+  GtdTaskList *list;
+  AsyncData *data;
+
+  GTD_ENTRY;
+
+  self = GTD_PROVIDER_EDS (provider);
+  data = g_task_get_task_data (G_TASK (result));
+  list = data->list;
+
+  gtd_object_pop_loading (GTD_OBJECT (self));
+
+  new_task = g_task_propagate_pointer (G_TASK (result), error);
+
+  if (new_task)
+    {
+      gtd_task_set_list (new_task, list);
+      gtd_task_list_add_task (list, new_task);
+      set_default_list (self, list);
+    }
+
+  GTD_RETURN (new_task);
+}
+
+static void
+gtd_provider_eds_update_task (GtdProvider         *provider,
+                              GtdTask             *task,
+                              GCancellable        *cancellable,
+                              GAsyncReadyCallback  callback,
+                              gpointer             user_data)
+{
+  g_autoptr (GTask) gtask = NULL;
   ECalComponent *component;
-  ECalClient *client;
+  AsyncData *data;
 
   GTD_ENTRY;
 
   g_return_if_fail (GTD_IS_TASK (task));
   g_return_if_fail (GTD_IS_TASK_LIST_EDS (gtd_task_get_list (task)));
 
-  tasklist = GTD_TASK_LIST_EDS (gtd_task_get_list (task));
-  client = gtd_task_list_eds_get_client (tasklist);
   component = gtd_task_eds_get_component (GTD_TASK_EDS (task));
 
   e_cal_component_commit_sequence (component);
@@ -598,62 +691,107 @@ gtd_provider_eds_update_task (GtdProvider *provider,
   gtd_object_push_loading (GTD_OBJECT (task));
   gtd_object_push_loading (GTD_OBJECT (provider));
 
-  e_cal_client_modify_object (client,
-                              e_cal_component_get_icalcomponent (component),
-                              E_CAL_OBJ_MOD_THIS,
-                              E_CAL_OPERATION_FLAG_NONE,
-                              NULL,
-                              (GAsyncReadyCallback) on_task_modified_cb,
-                              task);
+  data = g_new0 (AsyncData, 1);
+  data->task = g_object_ref (task);
+  data->component = e_cal_component_clone (component);
+
+  gtask = g_task_new (provider, cancellable, callback, user_data);
+  g_task_set_source_tag (gtask, gtd_provider_eds_update_task);
+  g_task_set_task_data (gtask, data, async_data_free);
+  g_task_run_in_thread (gtask, update_task_in_thread_cb);
 
   GTD_EXIT;
 }
 
-static void
-gtd_provider_eds_remove_task (GtdProvider *provider,
-                              GtdTask     *task)
+static gboolean
+gtd_provider_eds_update_task_finish (GtdProvider   *provider,
+                                     GAsyncResult  *result,
+                                     GError       **error)
 {
-  g_autoptr (ECalComponentId) id = NULL;
-  GtdTaskListEds *tasklist;
+  GtdProviderEds *self;
+  AsyncData *data;
+  GtdTask *task;
+
+  GTD_ENTRY;
+
+  self = GTD_PROVIDER_EDS (provider);
+  data = g_task_get_task_data (G_TASK (result));
+  task = data->task;
+
+  gtd_object_pop_loading (GTD_OBJECT (self));
+  gtd_object_pop_loading (GTD_OBJECT (task));
+
+  if (!g_task_propagate_boolean (G_TASK (result), error))
+    {
+      gtd_task_eds_revert (GTD_TASK_EDS (task));
+      GTD_RETURN (FALSE);
+    }
+
+  gtd_task_eds_apply (GTD_TASK_EDS (task));
+  gtd_task_list_update_task (gtd_task_get_list (task), task);
+
+  GTD_RETURN (TRUE);
+}
+
+static void
+gtd_provider_eds_remove_task (GtdProvider         *provider,
+                              GtdTask             *task,
+                              GCancellable        *cancellable,
+                              GAsyncReadyCallback  callback,
+                              gpointer             user_data)
+{
+  g_autoptr (GTask) gtask = NULL;
   ECalComponent *component;
-  ECalClient *client;
+  AsyncData *data;
 
   GTD_ENTRY;
 
   g_return_if_fail (GTD_IS_TASK (task));
   g_return_if_fail (GTD_IS_TASK_LIST_EDS (gtd_task_get_list (task)));
 
-  tasklist = GTD_TASK_LIST_EDS (gtd_task_get_list (task));
-  client = gtd_task_list_eds_get_client (tasklist);
   component = gtd_task_eds_get_component (GTD_TASK_EDS (task));
-  id = e_cal_component_get_id (component);
 
   gtd_object_push_loading (GTD_OBJECT (provider));
 
-  e_cal_client_remove_object (client,
-                              e_cal_component_id_get_uid (id),
-                              e_cal_component_id_get_rid (id),
-                              E_CAL_OBJ_MOD_THIS,
-                              E_CAL_OPERATION_FLAG_NONE,
-                              NULL,
-                              (GAsyncReadyCallback) on_task_removed_cb,
-                              provider);
+  data = g_new0 (AsyncData, 1);
+  data->task = g_object_ref (task);
+  data->component = e_cal_component_clone (component);
+
+  gtask = g_task_new (provider, cancellable, callback, user_data);
+  g_task_set_source_tag (gtask, gtd_provider_eds_remove_task);
+  g_task_set_task_data (gtask, data, async_data_free);
+  g_task_run_in_thread (gtask, remove_task_in_thread_cb);
 
   GTD_EXIT;
 }
 
-static void
-gtd_provider_eds_create_task_list (GtdProvider *provider,
-                                   const gchar *name)
+static gboolean
+gtd_provider_eds_remove_task_finish (GtdProvider   *provider,
+                                     GAsyncResult  *result,
+                                     GError       **error)
 {
-  GtdProviderEdsPrivate *priv;
+  GTD_ENTRY;
+
+  gtd_object_pop_loading (GTD_OBJECT (provider));
+
+  GTD_RETURN (g_task_propagate_boolean (G_TASK (result), error));
+}
+
+static void
+gtd_provider_eds_create_task_list (GtdProvider         *provider,
+                                   const gchar         *name,
+                                   GCancellable        *cancellable,
+                                   GAsyncReadyCallback  callback,
+                                   gpointer             user_data)
+{
+  g_autoptr (GTask) task = NULL;
   GtdProviderEds *self;
+  AsyncData *data;
   ESource *source;
 
   GTD_ENTRY;
 
   self = GTD_PROVIDER_EDS (provider);
-  priv = gtd_provider_eds_get_instance_private (self);
   source = NULL;
 
   /* Create an ESource */
@@ -663,25 +801,47 @@ gtd_provider_eds_create_task_list (GtdProvider *provider,
   if (!source)
     return;
 
-  gtd_object_push_loading (GTD_OBJECT (provider));
-
   /* EDS properties */
   e_source_set_display_name (source, name);
 
-  e_source_registry_commit_source (priv->source_registry,
-                                   source,
-                                   NULL,
-                                   (GAsyncReadyCallback) on_task_list_created_cb,
-                                   provider);
+  data = g_new0 (AsyncData, 1);
+  data->title = g_strdup (name);
+  data->source = g_object_ref (source);
+
+  gtd_object_push_loading (GTD_OBJECT (provider));
+
+  task = g_task_new (self, cancellable, callback, user_data);
+  g_task_set_source_tag (task, gtd_provider_eds_create_task_list);
+  g_task_set_task_data (task, data, async_data_free);
+  g_task_run_in_thread (task, create_or_update_task_list_in_thread_cb);
 
   GTD_EXIT;
 }
 
-static void
-gtd_provider_eds_update_task_list (GtdProvider *provider,
-                                   GtdTaskList *list)
+static gboolean
+gtd_provider_eds_create_task_list_finish (GtdProvider   *provider,
+                                          GAsyncResult  *result,
+                                          GError       **error)
 {
-  GtdProviderEdsPrivate *priv;
+  GtdProviderEds *self;
+
+  GTD_ENTRY;
+
+  self = GTD_PROVIDER_EDS (provider);
+  gtd_object_pop_loading (GTD_OBJECT (self));
+
+  GTD_RETURN (g_task_propagate_boolean (G_TASK (result), error));
+}
+
+static void
+gtd_provider_eds_update_task_list (GtdProvider         *provider,
+                                   GtdTaskList         *list,
+                                   GCancellable        *cancellable,
+                                   GAsyncReadyCallback  callback,
+                                   gpointer             user_data)
+{
+  g_autoptr (GTask) task = NULL;
+  AsyncData *data;
   ESource *source;
 
   GTD_ENTRY;
@@ -689,25 +849,53 @@ gtd_provider_eds_update_task_list (GtdProvider *provider,
   g_assert (GTD_IS_TASK_LIST_EDS (list));
   g_assert (gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list)) != NULL);
 
-  priv = gtd_provider_eds_get_instance_private (GTD_PROVIDER_EDS (provider));
   source = gtd_task_list_eds_get_source (GTD_TASK_LIST_EDS (list));
 
   gtd_object_push_loading (GTD_OBJECT (provider));
   gtd_object_push_loading (GTD_OBJECT (list));
 
-  e_source_registry_commit_source (priv->source_registry,
-                                   source,
-                                   NULL,
-                                   (GAsyncReadyCallback) on_task_list_modified_cb,
-                                   list);
+  data = g_new0 (AsyncData, 1);
+  data->list = g_object_ref (list);
+  data->source = g_object_ref (source);
+
+  task = g_task_new (provider, cancellable, callback, user_data);
+  g_task_set_source_tag (task, gtd_provider_eds_update_task_list);
+  g_task_set_task_data (task, data, async_data_free);
+  g_task_run_in_thread (task, create_or_update_task_list_in_thread_cb);
 
   GTD_EXIT;
 }
 
-static void
-gtd_provider_eds_remove_task_list (GtdProvider *provider,
-                                   GtdTaskList *list)
+static gboolean
+gtd_provider_eds_update_task_list_finish (GtdProvider   *provider,
+                                          GAsyncResult  *result,
+                                          GError       **error)
 {
+  GtdProviderEds *self;
+  AsyncData *data;
+
+  GTD_ENTRY;
+
+  self = GTD_PROVIDER_EDS (provider);
+  data = g_task_get_task_data (G_TASK (result));
+
+  gtd_object_pop_loading (GTD_OBJECT (data->list));
+  gtd_object_pop_loading (GTD_OBJECT (self));
+
+  g_signal_emit_by_name (self, "list-changed", data->list);
+
+  GTD_RETURN (g_task_propagate_boolean (G_TASK (result), error));
+}
+
+static void
+gtd_provider_eds_remove_task_list (GtdProvider         *provider,
+                                   GtdTaskList         *list,
+                                   GCancellable        *cancellable,
+                                   GAsyncReadyCallback  callback,
+                                   gpointer             user_data)
+{
+  g_autoptr (GTask) gtask = NULL;
+  AsyncData *data;
   ESource *source;
 
   GTD_ENTRY;
@@ -719,12 +907,27 @@ gtd_provider_eds_remove_task_list (GtdProvider *provider,
 
   gtd_object_push_loading (GTD_OBJECT (provider));
 
-  e_source_remove (source,
-                   NULL,
-                   (GAsyncReadyCallback) on_task_list_removed_cb,
-                   list);
+  data = g_new0 (AsyncData, 1);
+  data->source = g_object_ref (source);
+
+  gtask = g_task_new (provider, cancellable, callback, user_data);
+  g_task_set_source_tag (gtask, gtd_provider_eds_remove_task_list);
+  g_task_set_task_data (gtask, data, async_data_free);
+  g_task_run_in_thread (gtask, remove_task_list_in_thread_cb);
 
   GTD_EXIT;
+}
+
+static gboolean
+gtd_provider_eds_remove_task_list_finish (GtdProvider   *provider,
+                                          GAsyncResult  *result,
+                                          GError       **error)
+{
+  GTD_ENTRY;
+
+  gtd_object_pop_loading (GTD_OBJECT (provider));
+
+  GTD_RETURN (g_task_propagate_boolean (G_TASK (result), error));
 }
 
 static GList*
@@ -754,11 +957,17 @@ gtd_provider_iface_init (GtdProviderInterface *iface)
   iface->refresh = gtd_provider_eds_refresh;
   iface->get_icon = gtd_provider_eds_get_icon;
   iface->create_task = gtd_provider_eds_create_task;
+  iface->create_task_finish = gtd_provider_eds_create_task_finish;
   iface->update_task = gtd_provider_eds_update_task;
+  iface->update_task_finish = gtd_provider_eds_update_task_finish;
   iface->remove_task = gtd_provider_eds_remove_task;
+  iface->remove_task_finish = gtd_provider_eds_remove_task_finish;
   iface->create_task_list = gtd_provider_eds_create_task_list;
+  iface->create_task_list_finish = gtd_provider_eds_create_task_list_finish;
   iface->update_task_list = gtd_provider_eds_update_task_list;
+  iface->update_task_list_finish = gtd_provider_eds_update_task_list_finish;
   iface->remove_task_list = gtd_provider_eds_remove_task_list;
+  iface->remove_task_list_finish = gtd_provider_eds_remove_task_list_finish;
   iface->get_task_lists = gtd_provider_eds_get_task_lists;
   iface->get_inbox = gtd_provider_eds_get_inbox;
 }

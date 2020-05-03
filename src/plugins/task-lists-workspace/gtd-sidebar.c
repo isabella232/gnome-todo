@@ -363,6 +363,16 @@ on_panel_removed_cb (GtdManager *manager,
 }
 
 static void
+on_provider_task_list_removed_cb (GObject      *source,
+                                  GAsyncResult *result,
+                                  gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+
+  gtd_provider_remove_task_list_finish (GTD_PROVIDER (source), result, &error);
+}
+
+static void
 delete_list_cb (GtdNotification *notification,
                 gpointer         user_data)
 {
@@ -375,7 +385,11 @@ delete_list_cb (GtdNotification *notification,
   g_assert (provider != NULL);
   g_assert (gtd_task_list_is_removable (list));
 
-  gtd_provider_remove_task_list (provider, list);
+  gtd_provider_remove_task_list (provider,
+                                 list,
+                                 NULL,
+                                 on_provider_task_list_removed_cb,
+                                 NULL);
 }
 
 static void

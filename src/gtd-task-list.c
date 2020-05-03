@@ -221,6 +221,22 @@ recursively_remove_subtasks (GtdTaskList *self,
  * Callbacks
  */
 
+static void
+on_task_updated_cb (GObject      *object,
+                    GAsyncResult *result,
+                    gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+
+  gtd_provider_update_task_finish (GTD_PROVIDER (object), result, &error);
+
+  if (error)
+    {
+      g_warning ("Error updating task: %s", error->message);
+      return;
+    }
+}
+
 static gint
 compare_tasks_cb (gconstpointer a,
                   gconstpointer b,
@@ -1022,7 +1038,11 @@ gtd_task_list_move_task_to_position (GtdTaskList *self,
       gtd_task_set_position (task_at_i, block1_new_start + i);
       g_signal_handlers_unblock_by_func (task_at_i, task_changed_cb, self);
 
-      gtd_provider_update_task (priv->provider, task_at_i);
+      gtd_provider_update_task (priv->provider,
+                                task_at_i,
+                                NULL,
+                                on_task_updated_cb,
+                                self);
     }
 
   /* Update Block 2 */
@@ -1036,7 +1056,11 @@ gtd_task_list_move_task_to_position (GtdTaskList *self,
       gtd_task_set_position (task_at_i, block2_new_start + i);
       g_signal_handlers_unblock_by_func (task_at_i, task_changed_cb, self);
 
-      gtd_provider_update_task (priv->provider, task_at_i);
+      gtd_provider_update_task (priv->provider,
+                                task_at_i,
+                                NULL,
+                                on_task_updated_cb,
+                                self);
     }
 
   /*

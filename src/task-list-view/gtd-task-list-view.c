@@ -354,11 +354,28 @@ scroll_to_bottom_cb (gpointer data)
   return G_SOURCE_REMOVE;
 }
 
+static void
+on_task_removed_cb (GObject      *source,
+                    GAsyncResult *result,
+                    gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+
+  gtd_provider_remove_task_finish (GTD_PROVIDER (source), result, &error);
+
+  if (error)
+    g_warning ("Error removing task list: %s", error->message);
+}
+
 static inline gboolean
 remove_task_cb (GtdTaskListView *self,
                 GtdTask         *task)
 {
-  gtd_provider_remove_task (gtd_task_get_provider (task), task);
+  gtd_provider_remove_task (gtd_task_get_provider (task),
+                            task,
+                            NULL,
+                            on_task_removed_cb,
+                            self);
   return TRUE;
 }
 
@@ -907,7 +924,7 @@ on_drop_target_drag_drop_cb (GtkDropTarget   *drop_target,
 
   /* Finally, save the task */
   provider = gtd_task_list_get_provider (gtd_task_get_list (source_task));
-  gtd_provider_update_task (provider, source_task);
+  gtd_provider_update_task (provider, source_task, NULL, NULL, NULL);
 
   check_dnd_scroll (self, TRUE, -1);
   gdk_drop_finish (drop, GDK_ACTION_MOVE);

@@ -1,6 +1,6 @@
 /* gtd-dnd-row.c
  *
- * Copyright (C) 2016 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2016-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,6 +70,27 @@ static void
 update_row_padding (GtdDndRow *self)
 {
   gtk_widget_set_margin_start (self->box, self->depth * 32);
+}
+
+static void
+on_task_updated_cb (GObject      *object,
+                    GAsyncResult *result,
+                    gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+  GtdDndRow *self;
+
+  self = GTD_DND_ROW (user_data);
+
+  gtd_provider_update_task_finish (GTD_PROVIDER (object), result, &error);
+
+  if (error)
+    {
+      g_warning ("Error updating task: %s", error->message);
+      return;
+    }
+
+  gtk_list_box_invalidate_sort (GTK_LIST_BOX (gtk_widget_get_parent (GTK_WIDGET (self))));
 }
 
 static void
@@ -269,9 +290,11 @@ gtd_dnd_row_drag_drop (GtkWidget  *widget,
   gtd_task_set_position (row_task, -1);
 
   /* Save the task */
-  gtd_provider_update_task (gtd_task_get_provider (row_task), row_task);
-
-  gtk_list_box_invalidate_sort (GTK_LIST_BOX (gtk_widget_get_parent (widget)));
+  gtd_provider_update_task (gtd_task_get_provider (row_task),
+                            row_task,
+                            NULL,
+                            on_task_updated_cb,
+                            widget);
 
   return FALSE;
 }
