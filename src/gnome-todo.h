@@ -33,6 +33,7 @@
 #include "gtd-omni-area.h"
 #include "gtd-omni-area-addin.h"
 #include "gtd-panel.h"
+#include "gtd-planner.h"
 #include "gtd-provider.h"
 #include "gtd-provider-popover.h"
 #include "gtd-star-widget.h"
