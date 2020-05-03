@@ -108,6 +108,7 @@
             </child>
             <child>
               <object class="GtkEventControllerMotion">
+                <property name="propagation-phase">capture</property>
                 <signal name="motion" handler="on_hyperlink_hover_cb" object="GtdEditPane" swapped="no"/>
               </object>
             </child>

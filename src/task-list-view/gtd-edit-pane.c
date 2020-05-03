@@ -284,6 +284,9 @@ on_hyperlink_clicked_cb (GtkGestureClick *gesture,
   text_view = GTK_TEXT_VIEW (gtk_event_controller_get_widget (GTK_EVENT_CONTROLLER (gesture)));
   buffer = gtk_text_view_get_buffer (text_view);
 
+  /* Ensure focus */
+  gtk_widget_grab_focus (GTK_WIDGET (text_view));
+
   /* We shouldn't follow a link if the user has selected something */
   if (gtk_text_buffer_get_has_selection (buffer))
     return;
