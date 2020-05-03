@@ -39,6 +39,7 @@ src/plugins/todo-txt/gtd-provider-todo-txt.c
 src/plugins/todo-txt/gtd-todo-txt-parser.c
 src/plugins/todo-txt/org.gnome.todo.txt.gschema.xml
 src/plugins/unscheduled-panel/unscheduled-panel/__init__.py
+src/provider/gtd-provider-popover.c
 src/provider/gtd-provider-popover.ui
 src/provider/gtd-provider-row.ui
 src/provider/gtd-provider-selector.ui
