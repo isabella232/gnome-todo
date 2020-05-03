@@ -23,6 +23,7 @@
 #include "interfaces/gtd-provider.h"
 #include "gtd-manager.h"
 #include "gtd-plugin-manager.h"
+#include "gtd-theme-manager.h"
 
 #include <libpeas/peas.h>
 
@@ -31,6 +32,7 @@ struct _GtdPluginManager
   GtdObject           parent;
 
   GHashTable         *info_to_extension;
+  GtdThemeManager    *theme_manager;
 };
 
 G_DEFINE_TYPE (GtdPluginManager, gtd_plugin_manager, GTD_TYPE_OBJECT)
@@ -129,6 +131,12 @@ on_plugin_unloaded_cb (PeasEngine       *engine,
                        GtdPluginManager *self)
 {
   GtdActivatable *activatable;
+  const gchar *data_dir;
+
+  data_dir = peas_plugin_info_get_data_dir (info);
+
+  if (g_str_has_prefix (data_dir, "resource://"))
+    gtd_theme_manager_remove_resources (self->theme_manager, data_dir);
 
   activatable = g_hash_table_lookup (self->info_to_extension, info);
 
@@ -152,6 +160,13 @@ on_plugin_loaded_cb (PeasEngine       *engine,
                      PeasPluginInfo   *info,
                      GtdPluginManager *self)
 {
+  const gchar *data_dir;
+
+  data_dir = peas_plugin_info_get_data_dir (info);
+
+  if (g_str_has_prefix (data_dir, "resource://"))
+    gtd_theme_manager_add_resources (self->theme_manager, data_dir);
+
   if (peas_engine_provides_extension (engine, info, GTD_TYPE_ACTIVATABLE))
     {
       GtdActivatable *activatable;
@@ -269,6 +284,7 @@ static void
 gtd_plugin_manager_init (GtdPluginManager *self)
 {
   self->info_to_extension = g_hash_table_new (g_direct_hash, g_direct_equal);
+  self->theme_manager = gtd_theme_manager_new ();
 
   gtd_object_push_loading (GTD_OBJECT (self));
 

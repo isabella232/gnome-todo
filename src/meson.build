@@ -114,6 +114,7 @@ sources += files(
   'gtd-application.c',
   'gtd-initial-setup-window.c',
   'gtd-clock.c',
+  'gtd-css-provider.c',
   'gtd-object.c',
   'gtd-omni-area.c',
   'gtd-omni-area-addin.c',
@@ -123,6 +124,7 @@ sources += files(
   'gtd-task.c',
   'gtd-task-list.c',
   'gtd-text-width-layout.c',
+  'gtd-theme-manager.c',
   'gtd-utils.c',
   'gtd-window.c',
   'main.c'

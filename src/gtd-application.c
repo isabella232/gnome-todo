@@ -27,6 +27,7 @@
 #include "gtd-manager.h"
 #include "gtd-manager-protected.h"
 #include "gtd-plugin-dialog.h"
+#include "gtd-theme-manager.h"
 #include "gtd-vcs.h"
 #include "gtd-window.h"
 #include "gtd-window-private.h"
@@ -41,6 +42,8 @@
 struct _GtdApplication
 {
   GtkApplication         application;
+
+  GtdThemeManager       *theme_manager;
 
   GtkWidget             *window;
   GtkWidget             *plugin_dialog;
@@ -218,6 +221,16 @@ run_initial_setup (GtdApplication *application)
 */
 
 static void
+gtd_application_finalize (GObject *object)
+{
+  GtdApplication *self = (GtdApplication *)object;
+
+  g_clear_object (&self->theme_manager);
+
+  G_OBJECT_CLASS (gtd_application_parent_class)->finalize (object);
+}
+
+static void
 gtd_application_activate (GApplication *application)
 {
   GTD_ENTRY;
@@ -234,9 +247,6 @@ static void
 gtd_application_startup (GApplication *application)
 {
   GtdApplication *self;
-  g_autoptr (GtkCssProvider) css_provider;
-  g_autoptr (GFile) css_file;
-  g_autofree gchar *theme_name, *theme_uri;
 
   GTD_ENTRY;
 
@@ -250,24 +260,12 @@ gtd_application_startup (GApplication *application)
 
   G_APPLICATION_CLASS (gtd_application_parent_class)->startup (application);
 
+  /* CSS provider */
+  gtd_theme_manager_add_resources (self->theme_manager, "resource:///org/gnome/todo");
+
   /* window */
   gtk_window_set_default_icon_name (APPLICATION_ID);
   self->window = gtd_window_new (self);
-
-  /* CSS provider */
-  css_provider = gtk_css_provider_new ();
-  gtk_style_context_add_provider_for_display (gdk_display_get_default (),
-                                              GTK_STYLE_PROVIDER (css_provider),
-                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION + 1);
-
-  g_object_get (gtk_settings_get_default (), "gtk-theme-name", &theme_name, NULL);
-  theme_uri = g_strconcat ("resource:///org/gnome/todo/theme/", theme_name, ".css", NULL);
-  css_file = g_file_new_for_uri (theme_uri);
-
-  if (g_file_query_exists (css_file, NULL))
-    gtk_css_provider_load_from_file (css_provider, css_file);
-  else
-    gtk_css_provider_load_from_resource (css_provider, "/org/gnome/todo/theme/Adwaita.css");
 
   /* plugin dialog */
   self->plugin_dialog = gtd_plugin_dialog_new ();
@@ -331,7 +329,10 @@ gtd_application_handle_local_options (GApplication *application,
 static void
 gtd_application_class_init (GtdApplicationClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GApplicationClass *application_class = G_APPLICATION_CLASS (klass);
+
+  object_class->finalize = gtd_application_finalize;
 
   application_class->activate = gtd_application_activate;
   application_class->startup = gtd_application_startup;
@@ -343,5 +344,7 @@ gtd_application_class_init (GtdApplicationClass *klass)
 static void
 gtd_application_init (GtdApplication *self)
 {
+  self->theme_manager = gtd_theme_manager_new ();
+
   g_application_add_main_option_entries (G_APPLICATION (self), cmd_options);
 }

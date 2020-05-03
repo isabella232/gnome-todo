@@ -20,10 +20,10 @@
   </gresource>
 
   <gresource prefix="/org/gnome/todo">
-    <file compressed="true">theme/Adwaita.css</file>
-    <file compressed="true">theme/Adwaita-omniarea.css</file>
-    <file compressed="true">theme/Adwaita-tasklistview.css</file>
-    <file compressed="true">theme/Adwaita-taskrow.css</file>
-    <file compressed="true">theme/Adwaita-widgets.css</file>
+    <file compressed="true">themes/Adwaita.css</file>
+    <file compressed="true">themes/Adwaita-omniarea.css</file>
+    <file compressed="true">themes/Adwaita-tasklistview.css</file>
+    <file compressed="true">themes/Adwaita-taskrow.css</file>
+    <file compressed="true">themes/Adwaita-widgets.css</file>
   </gresource>
 </gresources>
