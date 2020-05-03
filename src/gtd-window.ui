@@ -119,12 +119,11 @@
 
   <!-- Workspaces Popover -->
   <object class="GtkPopover" id="workspaces_popover">
+    <style>
+      <class name="custom-menu" />
+    </style>
     <child>
       <object class="GtkBox">
-        <property name="margin-start">6</property>
-        <property name="margin-end">6</property>
-        <property name="margin-top">6</property>
-        <property name="margin-bottom">6</property>
         <property name="width-request">150</property>
 
         <child>

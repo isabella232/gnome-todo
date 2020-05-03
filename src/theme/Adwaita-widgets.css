@@ -25,3 +25,19 @@ star:checked {
   animation-duration: 400ms;
   animation-timing-function: linear;
 }
+
+/* Popovers with Menus */
+popover.custom-menu > contents {
+  padding: 12px 8px 8px 8px;
+}
+
+popover.custom-menu contents label.title {
+  font-weight: bold;
+  font-size: 0.8333em;
+  opacity: 0.5;
+  margin-bottom: 6px;
+}
+
+popover.custom-menu list > row {
+  border-radius: 5px;
+}
