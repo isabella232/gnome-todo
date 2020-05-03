@@ -20,7 +20,7 @@
 
 #include "gtd-workspace.h"
 
-G_DEFINE_INTERFACE (GtdWorkspace, gtd_workspace, G_TYPE_OBJECT)
+G_DEFINE_INTERFACE (GtdWorkspace, gtd_workspace, GTK_TYPE_WIDGET)
 
 static void
 gtd_workspace_default_init (GtdWorkspaceInterface *iface)
