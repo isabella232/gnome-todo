@@ -133,6 +133,7 @@ on_task_created_cb (GObject      *object,
 
   gtk_editable_set_text (GTK_EDITABLE (self->entry), "");
   gtk_widget_set_sensitive (GTK_WIDGET (self->entry), TRUE);
+  gtk_widget_grab_focus (GTK_WIDGET (self->entry));
 }
 
 static void
