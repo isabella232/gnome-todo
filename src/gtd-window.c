@@ -437,7 +437,7 @@ on_workspace_added_cb (PeasExtensionSet *extension_set,
 {
   GTD_ENTRY;
 
-  add_workspace (self, workspace);
+  add_workspace (self, g_object_ref_sink (workspace));
 
   GTD_EXIT;
 }

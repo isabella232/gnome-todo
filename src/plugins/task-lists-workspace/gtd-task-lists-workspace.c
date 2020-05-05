@@ -208,7 +208,7 @@ on_panel_added_cb (PeasExtensionSet      *extension_set,
                    GtdTaskListsWorkspace *self)
 {
   gtk_stack_add_titled (self->stack,
-                        GTK_WIDGET (panel),
+                        GTK_WIDGET (g_object_ref_sink (panel)),
                         gtd_panel_get_panel_name (panel),
                         gtd_panel_get_panel_title (panel));
 
