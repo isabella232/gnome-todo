@@ -1,6 +1,6 @@
 /* test-colorbutton.c
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,6 @@ main (gint   argc,
       gchar *argv[])
 {
   GtkWindow *window = NULL;
-  GtkWidget *group = NULL;
   GtkWidget *grid = NULL;
   guint columns;
   guint i;
@@ -64,7 +63,6 @@ main (gint   argc,
 
       color_button = g_object_new (GTD_TYPE_COLOR_BUTTON,
                                    "color", &color,
-                                   "group", group,
                                    NULL);
 
       gtk_grid_attach (GTK_GRID (grid),
@@ -73,9 +71,6 @@ main (gint   argc,
                        i / columns,
                        1,
                        1);
-
-      if (!group)
-        group = color_button;
     }
 
   window = GTK_WINDOW (gtk_window_new ());
