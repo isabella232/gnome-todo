@@ -59,6 +59,7 @@ struct _GtdManager
 
   GListModel         *inbox_model;
   GListModel         *lists_model;
+  GListModel         *providers_model;
   GListModel         *tasks_model;
   GListModel         *unarchived_tasks_model;
 
@@ -512,6 +513,7 @@ gtd_manager_init (GtdManager *self)
                                                                           filter_achived_lists_func,
                                                                           self,
                                                                           NULL);
+  self->providers_model = (GListModel*) gtd_list_store_new (GTD_TYPE_PROVIDER);
 }
 
 /**
@@ -574,6 +576,7 @@ gtd_manager_add_provider (GtdManager  *self,
   GTD_ENTRY;
 
   self->providers = g_list_prepend (self->providers, provider);
+  gtd_list_store_append (GTD_LIST_STORE (self->providers_model), provider);
 
   /* Add lists */
   lists = gtd_provider_get_task_lists (provider);
@@ -615,6 +618,7 @@ gtd_manager_remove_provider (GtdManager  *self,
   GTD_ENTRY;
 
   self->providers = g_list_remove (self->providers, provider);
+  gtd_list_store_remove (GTD_LIST_STORE (self->providers_model), provider);
 
   /* Remove lists */
   lists = gtd_provider_get_task_lists (provider);
@@ -884,6 +888,22 @@ gtd_manager_get_inbox_model (GtdManager *self)
   g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
   return self->inbox_model;
+}
+
+/**
+ * gtd_manager_get_providers_model:
+ * @self: a #GtdManager
+ *
+ * Retrieves the #GListModel containing #GtdProviders.
+ *
+ * Returns: (transfer none): a #GListModel
+ */
+GListModel*
+gtd_manager_get_providers_model (GtdManager *self)
+{
+  g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
+
+  return self->providers_model;
 }
 
 void
