@@ -57,6 +57,7 @@ struct _GtdManager
   GSettings          *settings;
   GtdPluginManager   *plugin_manager;
 
+  GListModel         *inbox_model;
   GListModel         *lists_model;
   GListModel         *tasks_model;
   GListModel         *unarchived_tasks_model;
@@ -129,6 +130,15 @@ filter_achived_lists_func (gpointer item,
   list = gtd_task_get_list (task);
 
   return !gtd_task_list_get_archived (list);
+}
+
+static gboolean
+filter_inbox_cb (gpointer item,
+                 gpointer user_data)
+{
+  GtdProvider *provider = gtd_task_list_get_provider (item);
+
+  return gtd_provider_get_inbox (provider) == item;
 }
 
 static gint
@@ -245,6 +255,7 @@ gtd_manager_finalize (GObject *object)
   g_clear_object (&self->clock);
   g_clear_object (&self->unarchived_tasks_model);
   g_clear_object (&self->lists_model);
+  g_clear_object (&self->inbox_model);
 
   G_OBJECT_CLASS (gtd_manager_parent_class)->finalize (object);
 }
@@ -495,6 +506,7 @@ gtd_manager_init (GtdManager *self)
   self->clock = gtd_clock_new ();
   self->cancellable = g_cancellable_new ();
   self->lists_model = (GListModel*) gtd_list_store_new (GTD_TYPE_TASK_LIST);
+  self->inbox_model = (GListModel*) gtk_filter_list_model_new (self->lists_model, filter_inbox_cb, self, NULL);
   self->tasks_model = (GListModel*) _gtd_task_model_new (self);
   self->unarchived_tasks_model = (GListModel*) gtk_filter_list_model_new (self->tasks_model,
                                                                           filter_achived_lists_func,
@@ -855,6 +867,23 @@ gtd_manager_get_tasks_model (GtdManager *self)
   g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
 
   return self->unarchived_tasks_model;
+}
+
+/**
+ * gtd_manager_get_inbox_model:
+ * @self: a #GtdManager
+ *
+ * Retrieves the #GListModel containing #GtdTaskLists that are
+ * inbox.
+ *
+ * Returns: (transfer none): a #GListModel
+ */
+GListModel*
+gtd_manager_get_inbox_model (GtdManager *self)
+{
+  g_return_val_if_fail (GTD_IS_MANAGER (self), NULL);
+
+  return self->inbox_model;
 }
 
 void
