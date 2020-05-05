@@ -229,6 +229,24 @@ on_tasklist_popover_closed_cb (GtdTaskListPopover *popover,
 }
 
 
+/*
+ * GObject overrides
+ */
+
+static void
+gtd_new_task_row_dispose (GObject *object)
+{
+  GtdNewTaskRow *self = (GtdNewTaskRow *) object;
+
+  if (self->tasklist_popover)
+    {
+      gtk_widget_unparent (GTK_WIDGET (self->tasklist_popover));
+      self->tasklist_popover = NULL;
+    }
+
+  G_OBJECT_CLASS (gtd_new_task_row_parent_class)->dispose (object);
+}
+
 static void
 gtd_new_task_row_get_property (GObject    *object,
                                guint       prop_id,
@@ -253,6 +271,7 @@ gtd_new_task_row_class_init (GtdNewTaskRowClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->dispose = gtd_new_task_row_dispose;
   object_class->get_property = gtd_new_task_row_get_property;
   object_class->set_property = gtd_new_task_row_set_property;
 
