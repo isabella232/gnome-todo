@@ -47,9 +47,9 @@ enum
 static guint signals[NUM_SIGNALS] = { 0, };
 
 static const gchar * const default_plugins[] = {
+  "eds",
   "task-lists-workspace",
   "inbox-panel",
-  "eds",
   "night-light",
   "peace",
 };
