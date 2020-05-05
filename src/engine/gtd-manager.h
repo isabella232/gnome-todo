@@ -81,4 +81,6 @@ GListModel*          gtd_manager_get_tasks_model                 (GtdManager    
 
 GListModel*          gtd_manager_get_inbox_model                 (GtdManager         *self);
 
+GListModel*          gtd_manager_get_providers_model             (GtdManager         *self);
+
 G_END_DECLS
