@@ -32,7 +32,6 @@ struct _GtdOmniArea
 {
   GtdWidget           parent;
 
-  GtkWidget          *main_box;
   GtkStack           *main_stack;
   GtkStack           *status_stack;
 
@@ -142,7 +141,6 @@ gtd_omni_area_class_init (GtdOmniAreaClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-omni-area.ui");
 
-  gtk_widget_class_bind_template_child (widget_class, GtdOmniArea, main_box);
   gtk_widget_class_bind_template_child (widget_class, GtdOmniArea, main_stack);
   gtk_widget_class_bind_template_child (widget_class, GtdOmniArea, status_stack);
 
