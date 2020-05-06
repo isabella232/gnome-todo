@@ -1,6 +1,6 @@
 /* gtd-row-header.c
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,10 +23,10 @@
 
 struct _GtdRowHeader
 {
-  GtkBin parent_instance;
+  GtkWidget parent_instance;
 };
 
-G_DEFINE_TYPE (GtdRowHeader, gtd_row_header, GTK_TYPE_BIN)
+G_DEFINE_TYPE (GtdRowHeader, gtd_row_header, GTK_TYPE_WIDGET)
 
 static void
 gtd_row_header_class_init (GtdRowHeaderClass *klass)

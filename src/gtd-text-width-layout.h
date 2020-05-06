@@ -25,7 +25,7 @@
 G_BEGIN_DECLS
 
 #define GTD_TYPE_TEXT_WIDTH_LAYOUT (gtd_text_width_layout_get_type())
-G_DECLARE_FINAL_TYPE (GtdTextWidthLayout, gtd_text_width_layout, GTD, TEXT_WIDTH_LAYOUT, GtkBinLayout)
+G_DECLARE_FINAL_TYPE (GtdTextWidthLayout, gtd_text_width_layout, GTD, TEXT_WIDTH_LAYOUT, GtkLayoutManager)
 
 GtkLayoutManager*    gtd_text_width_layout_new                   (void);
 

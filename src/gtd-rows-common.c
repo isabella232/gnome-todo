@@ -1,6 +1,6 @@
 /* gtd-rows-common.c
  *
- * Copyright (C) 2017 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2017-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ gtd_row_measure_with_max (GtkWidget      *widget,
 {
   if (orientation == GTK_ORIENTATION_VERTICAL)
     {
-      gtk_widget_measure (gtk_bin_get_child (GTK_BIN (widget)),
+      gtk_widget_measure (gtk_widget_get_first_child (widget),
                           orientation,
                           for_size,
                           minimum,
@@ -46,7 +46,7 @@ gtd_row_measure_with_max (GtkWidget      *widget,
       gint scale_factor;
       gint margins;
 
-      gtk_widget_measure (gtk_bin_get_child (GTK_BIN (widget)),
+      gtk_widget_measure (gtk_widget_get_first_child (widget),
                           orientation,
                           for_size,
                           &local_minimum_width,

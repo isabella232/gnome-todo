@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="GtdSidebar" parent="GtkBin">
+  <template class="GtdSidebar" parent="GtkWidget">
     <property name="hexpand">0</property>
     <property name="layout-manager">
       <object class="GtdTextWidthLayout">

@@ -191,7 +191,7 @@ typedef gboolean     (*IterateSubtaskFunc)                       (GtdTaskListVie
 static inline GtdTaskRow*
 task_row_from_row (GtkListBoxRow *row)
 {
-  return GTD_TASK_ROW (gtk_bin_get_child (GTK_BIN (row)));
+  return GTD_TASK_ROW (gtk_list_box_row_get_child (row));
 }
 
 static void

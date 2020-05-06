@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="GtdOmniArea" parent="GtkBin">
+  <template class="GtdOmniArea" parent="GtkWidget">
 
     <child>
       <object class="GtkCenterBox">

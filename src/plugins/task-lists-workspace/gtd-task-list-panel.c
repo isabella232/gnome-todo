@@ -278,7 +278,7 @@ on_colors_flowbox_child_activated_cb (GtkFlowBox       *colors_flowbox,
 
   g_assert (list != NULL);
 
-  color_button = gtk_bin_get_child (GTK_BIN (child));
+  color_button = gtk_flow_box_child_get_child (child);
 
   if (self->previous_color_button == color_button)
     return;

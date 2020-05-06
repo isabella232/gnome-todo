@@ -1,6 +1,6 @@
 /* gtd-notification-widget.h
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,8 +26,7 @@
 G_BEGIN_DECLS
 
 #define GTD_TYPE_NOTIFICATION_WIDGET (gtd_notification_widget_get_type())
-
-G_DECLARE_FINAL_TYPE (GtdNotificationWidget, gtd_notification_widget, GTD, NOTIFICATION_WIDGET, GtkBin)
+G_DECLARE_FINAL_TYPE (GtdNotificationWidget, gtd_notification_widget, GTD, NOTIFICATION_WIDGET, GtkWidget)
 
 GtkWidget*           gtd_notification_widget_new                 (void);
 

@@ -28,7 +28,7 @@ struct _GtdTextWidthLayout
   gint                width_chars;
 };
 
-G_DEFINE_TYPE (GtdTextWidthLayout, gtd_text_width_layout, GTK_TYPE_BIN_LAYOUT)
+G_DEFINE_TYPE (GtdTextWidthLayout, gtd_text_width_layout, GTK_TYPE_LAYOUT_MANAGER)
 
 enum
 {

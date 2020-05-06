@@ -684,7 +684,7 @@ gtd_menu_button_set_direction (GtdMenuButton *self,
   g_object_notify_by_pspec (G_OBJECT (self), menu_button_props[PROP_DIRECTION]);
 
   /* Is it custom content? We don't change that */
-  child = gtk_bin_get_child (GTK_BIN (priv->button));
+  child = gtk_button_get_child (GTK_BUTTON (priv->button));
   if (priv->arrow_widget != child)
     return;
 
@@ -801,7 +801,7 @@ gtd_menu_button_set_gicon (GtdMenuButton *self,
 
   g_return_if_fail (GTD_IS_MENU_BUTTON (self));
 
-  child = gtk_bin_get_child (GTK_BIN (priv->button));
+  child = gtk_button_get_child (GTK_BUTTON (priv->button));
   if (child)
     gtk_container_remove (GTK_CONTAINER (priv->button), child);
 
@@ -858,7 +858,7 @@ gtd_menu_button_set_label (GtdMenuButton *self,
 
   g_return_if_fail (GTD_IS_MENU_BUTTON (self));
 
-  child = gtk_bin_get_child (GTK_BIN (priv->button));
+  child = gtk_button_get_child (GTK_BUTTON (priv->button));
   if (child)
     gtk_container_remove (GTK_CONTAINER (priv->button), child);
 
@@ -896,7 +896,7 @@ gtd_menu_button_get_label (GtdMenuButton *self)
 
   g_return_val_if_fail (GTD_IS_MENU_BUTTON (self), NULL);
 
-  child = gtk_bin_get_child (GTK_BIN (priv->button));
+  child = gtk_button_get_child (GTK_BUTTON (priv->button));
   if (GTK_IS_BOX (child))
     {
       child = gtk_widget_get_first_child (child);

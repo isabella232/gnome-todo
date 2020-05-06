@@ -1,6 +1,6 @@
 /* gtd-new-task-row.h
  *
- * Copyright (C) 2017 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2017-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ G_BEGIN_DECLS
 
 #define GTD_TYPE_NEW_TASK_ROW (gtd_new_task_row_get_type())
 
-G_DECLARE_FINAL_TYPE (GtdNewTaskRow, gtd_new_task_row, GTD, NEW_TASK_ROW, GtkBin)
+G_DECLARE_FINAL_TYPE (GtdNewTaskRow, gtd_new_task_row, GTD, NEW_TASK_ROW, GtkWidget)
 
 GtkWidget*           gtd_new_task_row_new                        (void);
 

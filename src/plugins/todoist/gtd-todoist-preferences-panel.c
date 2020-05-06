@@ -25,7 +25,7 @@
 
 struct _GtdTodoistPreferencesPanel
 {
-  GtkBin              parent;
+  GtkWidget              parent;
 
   GtkStack           *stack;
   GoaClient          *client;
@@ -35,7 +35,7 @@ struct _GtdTodoistPreferencesPanel
   GtkWidget          *empty_page;
 };
 
-G_DEFINE_TYPE (GtdTodoistPreferencesPanel, gtd_todoist_preferences_panel, GTK_TYPE_BIN)
+G_DEFINE_TYPE (GtdTodoistPreferencesPanel, gtd_todoist_preferences_panel, GTK_TYPE_WIDGET)
 
 GtdTodoistPreferencesPanel*
 gtd_todoist_preferences_panel_new (void)

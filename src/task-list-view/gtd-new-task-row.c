@@ -34,7 +34,7 @@
 
 struct _GtdNewTaskRow
 {
-  GtkBin              parent;
+  GtkWidget           parent;
 
   GtkEntry           *entry;
   GtdTaskListPopover *tasklist_popover;
@@ -42,7 +42,7 @@ struct _GtdNewTaskRow
   gboolean            show_list_selector;
 };
 
-G_DEFINE_TYPE (GtdNewTaskRow, gtd_new_task_row, GTK_TYPE_BIN)
+G_DEFINE_TYPE (GtdNewTaskRow, gtd_new_task_row, GTK_TYPE_WIDGET)
 
 enum
 {

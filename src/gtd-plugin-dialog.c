@@ -1,6 +1,6 @@
 /* gtd-plugin-dialog.c
  *
- * Copyright (C) 2016 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2016-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ show_preferences_cb (GtdPluginDialogRow *row,
   GtkWidget *panel;
 
   /* First, remove the old panel */
-  old_panel = gtk_bin_get_child (GTK_BIN (self->frame));
+  old_panel = gtk_widget_get_first_child (self->frame);
 
   if (old_panel)
     {

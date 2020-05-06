@@ -1,6 +1,6 @@
 /* gtd-notification-widget.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ typedef enum
 
 struct _GtdNotificationWidget
 {
-  GtkBin              parent;
+  GtkWidget           parent;
 
   /* widgets */
   GtkButton          *secondary_button;
@@ -56,7 +56,7 @@ static void          execute_notification                        (GtdNotificatio
 static void          on_notification_executed_cb                 (GtdNotification       *notification,
                                                                   GtdNotificationWidget *self);
 
-G_DEFINE_TYPE (GtdNotificationWidget, gtd_notification_widget, GTK_TYPE_BIN)
+G_DEFINE_TYPE (GtdNotificationWidget, gtd_notification_widget, GTK_TYPE_WIDGET)
 
 static void
 clear_bindings (GtdNotificationWidget *self)

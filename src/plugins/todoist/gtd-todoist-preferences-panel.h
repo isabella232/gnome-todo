@@ -30,7 +30,7 @@ G_BEGIN_DECLS
 
 #define GTD_TYPE_TODOIST_PREFERENCES_PANEL (gtd_todoist_preferences_panel_get_type())
 
-G_DECLARE_FINAL_TYPE (GtdTodoistPreferencesPanel, gtd_todoist_preferences_panel, GTD, TODOIST_PREFERENCES_PANEL, GtkBin)
+G_DECLARE_FINAL_TYPE (GtdTodoistPreferencesPanel, gtd_todoist_preferences_panel, GTD, TODOIST_PREFERENCES_PANEL, GtkWidget)
 
 GtdTodoistPreferencesPanel*   gtd_todoist_preferences_panel_new           (void);
 

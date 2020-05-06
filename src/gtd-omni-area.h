@@ -26,7 +26,7 @@
 G_BEGIN_DECLS
 
 #define GTD_TYPE_OMNI_AREA (gtd_omni_area_get_type())
-G_DECLARE_FINAL_TYPE (GtdOmniArea, gtd_omni_area, GTD, OMNI_AREA, GtkBin)
+G_DECLARE_FINAL_TYPE (GtdOmniArea, gtd_omni_area, GTD, OMNI_AREA, GtkWidget)
 
 void                 gtd_omni_area_push_message                  (GtdOmniArea        *self,
                                                                   const gchar        *id,

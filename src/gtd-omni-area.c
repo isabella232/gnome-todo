@@ -30,7 +30,7 @@
 
 struct _GtdOmniArea
 {
-  GtkBin              parent;
+  GtkWidget           parent;
 
   GtkStack           *main_stack;
   GtkStack           *status_stack;
@@ -43,7 +43,7 @@ struct _GtdOmniArea
   guint               switch_messages_timeout_id;
 };
 
-G_DEFINE_TYPE (GtdOmniArea, gtd_omni_area, GTK_TYPE_BIN)
+G_DEFINE_TYPE (GtdOmniArea, gtd_omni_area, GTK_TYPE_WIDGET)
 
 
 /*

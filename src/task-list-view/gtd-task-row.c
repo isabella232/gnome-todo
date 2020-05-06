@@ -37,7 +37,7 @@
 
 struct _GtdTaskRow
 {
-  GtkBin              parent;
+  GtkWidget           parent;
 
   /*<private>*/
   GtkWidget          *content_box;
@@ -79,7 +79,7 @@ static void          on_star_widget_activated_cb                 (GtdStarWidget 
                                                                   GParamSpec         *pspec,
                                                                   GtdTaskRow         *self);
 
-G_DEFINE_TYPE (GtdTaskRow, gtd_task_row, GTK_TYPE_BIN)
+G_DEFINE_TYPE (GtdTaskRow, gtd_task_row, GTK_TYPE_WIDGET)
 
 enum
 {
