@@ -48,6 +48,7 @@ typedef struct _GtdTask                 GtdTask;
 typedef struct _GtdTaskList             GtdTaskList;
 typedef struct _GtdTaskListItem         GtdTaskListItem;
 typedef struct _GtdTaskRow              GtdTaskRow;
+typedef struct _GtdWidget               GtdWidget;
 typedef struct _GtdWindow               GtdWindow;
 typedef struct _GtdWorkspace            GtdWorkspace;
 

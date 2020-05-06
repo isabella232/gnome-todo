@@ -20,12 +20,12 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include "gnome-todo.h"
 
 G_BEGIN_DECLS
 
 #define GTD_TYPE_STAR_WIDGET (gtd_star_widget_get_type())
-G_DECLARE_FINAL_TYPE (GtdStarWidget, gtd_star_widget, GTD, STAR_WIDGET, GtkWidget)
+G_DECLARE_FINAL_TYPE (GtdStarWidget, gtd_star_widget, GTD, STAR_WIDGET, GtdWidget)
 
 GtkWidget*           gtd_star_widget_new                         (void);
 

@@ -19,10 +19,7 @@
 #ifndef GTD_TASK_ROW_H
 #define GTD_TASK_ROW_H
 
-#include "gtd-types.h"
-
-#include <glib-object.h>
-#include <gtk/gtk.h>
+#include "gnome-todo.h"
 
 G_BEGIN_DECLS
 

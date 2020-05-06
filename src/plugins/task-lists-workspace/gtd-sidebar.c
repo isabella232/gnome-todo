@@ -38,7 +38,7 @@
 
 struct _GtdSidebar
 {
-  GtkWidget           parent;
+  GtdWidget           parent;
 
   GtkListBox         *archive_listbox;
   GtkListBoxRow      *archive_row;
@@ -51,7 +51,7 @@ struct _GtdSidebar
   GSimpleActionGroup *action_group;
 };
 
-G_DEFINE_TYPE (GtdSidebar, gtd_sidebar, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE (GtdSidebar, gtd_sidebar, GTD_TYPE_WIDGET)
 
 
 /*

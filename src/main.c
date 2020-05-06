@@ -1,6 +1,6 @@
 /*
  * main.c
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * gnome-todo is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -17,6 +17,7 @@
  */
 
 #include "gtd-application.h"
+#include "gtd-utils-private.h"
 
 #include <config.h>
 #include <glib/gi18n.h>
@@ -27,6 +28,8 @@ main (gint    argc,
 {
   g_autoptr (GtdApplication) app = NULL;
   g_autofree gchar *program_name = NULL;
+
+  gtd_ensure_types ();
 
   bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");

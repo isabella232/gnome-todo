@@ -1,4 +1,4 @@
-/* gtd-row-header.h
+/* gtd-'gtd-widget.c',.h
  *
  * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
@@ -24,10 +24,14 @@
 
 G_BEGIN_DECLS
 
-#define GTD_TYPE_ROW_HEADER (gtd_row_header_get_type())
+#define GTD_TYPE_WIDGET (gtd_widget_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GtdWidget, gtd_widget, GTD, WIDGET, GtkWidget)
 
-G_DECLARE_FINAL_TYPE (GtdRowHeader, gtd_row_header, GTD, ROW_HEADER, GtkWidget)
+struct _GtdWidgetClass
+{
+  GtkWidgetClass      parent;
+};
 
-GtkWidget*           gtd_row_header_new                          (void);
+GtkWidget*           gtd_widget_new                              (void);
 
 G_END_DECLS

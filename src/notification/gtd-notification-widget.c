@@ -29,7 +29,7 @@ typedef enum
 
 struct _GtdNotificationWidget
 {
-  GtkWidget           parent;
+  GtdWidget           parent;
 
   /* widgets */
   GtkButton          *secondary_button;
@@ -56,7 +56,7 @@ static void          execute_notification                        (GtdNotificatio
 static void          on_notification_executed_cb                 (GtdNotification       *notification,
                                                                   GtdNotificationWidget *self);
 
-G_DEFINE_TYPE (GtdNotificationWidget, gtd_notification_widget, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE (GtdNotificationWidget, gtd_notification_widget, GTD_TYPE_WIDGET)
 
 static void
 clear_bindings (GtdNotificationWidget *self)

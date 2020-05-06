@@ -1,6 +1,6 @@
 /* gtd-utils-private.h
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,5 +25,7 @@
 G_BEGIN_DECLS
 
 GdkContentFormats*   _gtd_get_content_formats                    (void);
+
+void                 gtd_ensure_types                            (void);
 
 G_END_DECLS

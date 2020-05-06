@@ -42,6 +42,7 @@
 #include "gtd-text-width-layout.h"
 #include "gtd-types.h"
 #include "gtd-utils.h"
+#include "gtd-widget.h"
 #include "gtd-window.h"
 #include "gtd-workspace.h"
 

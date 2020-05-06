@@ -149,7 +149,7 @@ create_list_row_cb (gpointer item,
 
   /* The row itself */
   row = gtk_list_box_row_new ();
-  gtk_container_add (GTK_CONTAINER (row), box);
+  gtk_list_box_row_set_child (GTK_LIST_BOX_ROW (row), box);
 
   g_object_set_data (G_OBJECT (row), "tasklist", item);
 

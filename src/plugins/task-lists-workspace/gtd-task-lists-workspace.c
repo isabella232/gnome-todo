@@ -334,25 +334,20 @@ gtd_workspace_iface_init (GtdWorkspaceInterface  *iface)
 
 
 /*
- * GtkWidget overrides
+ * GObject overrides
  */
 
 static void
-gtd_task_lists_workspace_destroy (GtkWidget *widget)
+gtd_task_lists_workspace_dispose (GObject *object)
 {
-  GtdTaskListsWorkspace *self = (GtdTaskListsWorkspace *)widget;
+  GtdTaskListsWorkspace *self = (GtdTaskListsWorkspace *)object;
 
-  GTK_WIDGET_CLASS (gtd_task_lists_workspace_parent_class)->destroy (widget);
+  G_OBJECT_CLASS (gtd_task_lists_workspace_parent_class)->dispose (object);
 
   g_signal_handlers_disconnect_by_func (self->panels_set, on_panel_added_cb, self);
   g_signal_handlers_disconnect_by_func (self->panels_set, on_panel_removed_cb, self);
   g_clear_object (&self->panels_set);
 }
-
-
-/*
- * GObject overrides
- */
 
 static void
 gtd_task_lists_workspace_constructed (GObject *object)
@@ -426,11 +421,11 @@ gtd_task_lists_workspace_class_init (GtdTaskListsWorkspaceClass *klass)
 
   g_resources_register (task_lists_workspace_get_resource ());
 
+  object_class->dispose = gtd_task_lists_workspace_dispose;
   object_class->constructed = gtd_task_lists_workspace_constructed;
   object_class->get_property = gtd_task_lists_workspace_get_property;
   object_class->set_property = gtd_task_lists_workspace_set_property;
 
-  widget_class->destroy = gtd_task_lists_workspace_destroy;
 
   /**
    * GtdTaskListsWorkspace::panel-added:

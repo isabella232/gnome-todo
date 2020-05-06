@@ -22,7 +22,7 @@
 
 struct _GtdStarWidget
 {
-  GtkWidget           parent;
+  GtdWidget           parent;
 
   GtkWidget          *filled_star;
   GtkWidget          *empty_star;
@@ -30,7 +30,7 @@ struct _GtdStarWidget
   gboolean            active;
 };
 
-G_DEFINE_TYPE (GtdStarWidget, gtd_star_widget, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE (GtdStarWidget, gtd_star_widget, GTD_TYPE_WIDGET)
 
 enum
 {
@@ -61,17 +61,6 @@ on_star_widget_clicked_cb (GtkGestureClick *gesture,
 /*
  * GObject overrides
  */
-
-static void
-gtd_star_widget_dispose (GObject *object)
-{
-  GtdStarWidget *self = GTD_STAR_WIDGET (object);
-
-  g_clear_pointer (&self->empty_star, gtk_widget_unparent);
-  g_clear_pointer (&self->filled_star, gtk_widget_unparent);
-
-  G_OBJECT_CLASS (gtd_star_widget_parent_class)->dispose (object);
-}
 
 static void
 gtd_star_widget_get_property (GObject    *object,
@@ -117,7 +106,6 @@ gtd_star_widget_class_init (GtdStarWidgetClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose = gtd_star_widget_dispose;
   object_class->get_property = gtd_star_widget_get_property;
   object_class->set_property = gtd_star_widget_set_property;
 

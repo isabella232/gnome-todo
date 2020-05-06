@@ -28,11 +28,11 @@
 #include "gtd-new-task-row.h"
 #include "gtd-notification.h"
 #include "gtd-provider.h"
-#include "gtd-row-header.h"
 #include "gtd-task.h"
 #include "gtd-task-list.h"
 #include "gtd-task-row.h"
 #include "gtd-utils-private.h"
+#include "gtd-widget.h"
 #include "gtd-window.h"
 
 #include <glib.h>
@@ -310,8 +310,7 @@ create_row_for_task_cb (gpointer item,
   g_signal_connect (row, "remove-task", G_CALLBACK (on_remove_task_row_cb), self);
 
   listbox_row = gtk_list_box_row_new ();
-  gtk_widget_set_halign (listbox_row, GTK_ALIGN_CENTER);
-  gtk_container_add (GTK_CONTAINER (listbox_row), row);
+  gtk_list_box_row_set_child (GTK_LIST_BOX_ROW (listbox_row), row);
 
   g_object_bind_property (row, "visible", listbox_row, "visible", G_BINDING_BIDIRECTIONAL);
 
@@ -597,8 +596,8 @@ internal_header_func (GtkListBoxRow   *row,
 
   if (header)
     {
-      GtkWidget *real_header = gtd_row_header_new ();
-      gtk_container_add (GTK_CONTAINER (real_header), header);
+      GtkWidget *real_header = gtd_widget_new ();
+      gtk_widget_insert_before (header, real_header, NULL);
 
       header = real_header;
     }

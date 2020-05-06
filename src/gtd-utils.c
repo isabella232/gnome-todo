@@ -1,6 +1,6 @@
 /* gtd-utils.c
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #include "gtd-task.h"
 #include "gtd-utils.h"
 #include "gtd-utils-private.h"
+#include "gtd-widget.h"
 
 #include <gtk/gtk.h>
 
@@ -228,4 +229,10 @@ gtd_collate_compare_strings (const gchar *string_a,
   collated_b = g_utf8_collate_key (string_b, -1);
 
   return g_strcmp0 (collated_a, collated_b);
+}
+
+void
+gtd_ensure_types (void)
+{
+  g_type_ensure (GTD_TYPE_WIDGET);
 }

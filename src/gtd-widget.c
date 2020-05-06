@@ -1,4 +1,4 @@
-/* gtd-row-header.c
+/* gtd-widget.c
  *
  * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
@@ -18,33 +18,42 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-#include "gtd-row-header.h"
+#include "gtd-widget.h"
 #include "gtd-rows-common-private.h"
 
-struct _GtdRowHeader
-{
-  GtkWidget parent_instance;
-};
-
-G_DEFINE_TYPE (GtdRowHeader, gtd_row_header, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE (GtdWidget, gtd_widget, GTK_TYPE_WIDGET)
 
 static void
-gtd_row_header_class_init (GtdRowHeaderClass *klass)
+gtd_widget_dispose (GObject *object)
 {
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GtkWidget *child = gtk_widget_get_first_child (GTK_WIDGET (object));
 
-  widget_class->measure = gtd_row_measure_with_max;
+  while (child)
+    {
+      GtkWidget *next = gtk_widget_get_next_sibling (child);
+
+      gtk_widget_unparent (child);
+      child = next;
+    }
+
+  G_OBJECT_CLASS (gtd_widget_parent_class)->dispose (object);
 }
 
 static void
-gtd_row_header_init (GtdRowHeader *self)
+gtd_widget_class_init (GtdWidgetClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->dispose = gtd_widget_dispose;
+}
+
+static void
+gtd_widget_init (GtdWidget *self)
 {
 }
 
 GtkWidget*
-gtd_row_header_new (void)
+gtd_widget_new (void)
 {
-  return g_object_new (GTD_TYPE_ROW_HEADER,
-                       "halign", GTK_ALIGN_CENTER,
-                       NULL);
+  return g_object_new (GTD_TYPE_WIDGET, NULL);
 }

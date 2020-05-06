@@ -30,8 +30,9 @@
 
 struct _GtdOmniArea
 {
-  GtkWidget           parent;
+  GtdWidget           parent;
 
+  GtkWidget          *main_box;
   GtkStack           *main_stack;
   GtkStack           *status_stack;
 
@@ -43,7 +44,7 @@ struct _GtdOmniArea
   guint               switch_messages_timeout_id;
 };
 
-G_DEFINE_TYPE (GtdOmniArea, gtd_omni_area, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE (GtdOmniArea, gtd_omni_area, GTD_TYPE_WIDGET)
 
 
 /*
@@ -104,23 +105,18 @@ on_omni_area_addin_removed_cb (PeasExtensionSet *extension_set,
 
 
 /*
- * GtkWidget overrides
+ * GObject overrides
  */
 
 static void
-gtd_omni_area_destroy (GtkWidget *widget)
+gtd_omni_area_dispose (GObject *object)
 {
-  GtdOmniArea *self = GTD_OMNI_AREA (widget);
+  GtdOmniArea *self = GTD_OMNI_AREA (object);
 
   g_clear_object (&self->addins);
 
-  GTK_WIDGET_CLASS (gtd_omni_area_parent_class)->destroy (widget);
+  G_OBJECT_CLASS (gtd_omni_area_parent_class)->dispose (object);
 }
-
-
-/*
- * GObject overrides
- */
 
 static void
 gtd_omni_area_finalize (GObject *object)
@@ -139,14 +135,14 @@ gtd_omni_area_class_init (GtdOmniAreaClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->dispose = gtd_omni_area_dispose;
   object_class->finalize = gtd_omni_area_finalize;
-
-  widget_class->destroy = gtd_omni_area_destroy;
 
   g_type_ensure (GTD_TYPE_TEXT_WIDTH_LAYOUT);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-omni-area.ui");
 
+  gtk_widget_class_bind_template_child (widget_class, GtdOmniArea, main_box);
   gtk_widget_class_bind_template_child (widget_class, GtdOmniArea, main_stack);
   gtk_widget_class_bind_template_child (widget_class, GtdOmniArea, status_stack);
 

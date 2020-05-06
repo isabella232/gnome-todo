@@ -30,6 +30,7 @@
 #include "gtd-task-list.h"
 #include "gtd-task-list-view.h"
 #include "gtd-utils-private.h"
+#include "gtd-widget.h"
 
 #include <glib/gi18n.h>
 #include <gdk/gdk.h>
@@ -37,7 +38,7 @@
 
 struct _GtdTaskRow
 {
-  GtkWidget           parent;
+  GtdWidget           parent;
 
   /*<private>*/
   GtkWidget          *content_box;
@@ -79,7 +80,7 @@ static void          on_star_widget_activated_cb                 (GtdStarWidget 
                                                                   GParamSpec         *pspec,
                                                                   GtdTaskRow         *self);
 
-G_DEFINE_TYPE (GtdTaskRow, gtd_task_row, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE (GtdTaskRow, gtd_task_row, GTD_TYPE_WIDGET)
 
 enum
 {
@@ -606,8 +607,6 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   object_class->get_property = gtd_task_row_get_property;
   object_class->set_property = gtd_task_row_set_property;
 
-  widget_class->measure = gtd_row_measure_with_max;
-
   /**
    * GtdTaskRow::handle-subtasks:
    *
@@ -716,6 +715,7 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, on_remove_task_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_task_changed_cb);
 
+  gtk_widget_class_set_layout_manager_type (widget_class, GTK_TYPE_BIN_LAYOUT);
   gtk_widget_class_set_css_name (widget_class, "taskrow");
 }
 
@@ -870,7 +870,7 @@ gtd_task_row_set_active (GtdTaskRow *self,
       gtd_edit_pane_set_markdown_renderer (self->edit_pane, self->renderer);
       gtd_edit_pane_set_task (self->edit_pane, self->task);
 
-      gtk_container_add (GTK_CONTAINER (self->edit_panel_revealer), GTK_WIDGET (self->edit_pane));
+      gtk_revealer_set_child (GTK_REVEALER (self->edit_panel_revealer), GTK_WIDGET (self->edit_pane));
       gtk_widget_show (GTK_WIDGET (self->edit_pane));
 
       g_signal_connect_swapped (self->edit_pane, "changed", G_CALLBACK (on_task_changed_cb), self);
@@ -880,7 +880,7 @@ gtd_task_row_set_active (GtdTaskRow *self,
     {
       GTD_TRACE_MSG ("Destroying edit pane");
 
-      gtk_container_remove (GTK_CONTAINER (self->edit_panel_revealer), GTK_WIDGET (self->edit_pane));
+      gtk_revealer_set_child (GTK_REVEALER (self->edit_panel_revealer), NULL);
       self->edit_pane = NULL;
     }
 

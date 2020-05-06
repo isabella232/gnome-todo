@@ -272,25 +272,23 @@ on_action_toggle_fullscreen_state_changed_cb (GSimpleAction *simple,
                                               GVariant      *state,
                                               gpointer       user_data)
 {
-  GtkContainer *parent;
   GtdWindow *self;
   gboolean fullscreen;
 
   self = GTD_WINDOW (user_data);
   fullscreen = g_variant_get_boolean (state);
-  parent = GTK_CONTAINER (gtk_widget_get_parent (GTK_WIDGET (self->headerbar)));
 
   g_clear_handle_id (&self->toggle_headerbar_revealer_id, g_source_remove);
 
   gtk_header_bar_set_show_title_buttons (self->headerbar, !fullscreen);
 
   g_object_ref (self->headerbar);
-  gtk_container_remove (parent, GTK_WIDGET (self->headerbar));
+  gtk_widget_unparent (GTK_WIDGET (self->headerbar));
 
   if (fullscreen)
     {
       gtk_event_controller_set_propagation_phase (self->overlay_motion_controller, GTK_PHASE_BUBBLE);
-      gtk_container_add (GTK_CONTAINER (self->headerbar_overlay_revealer), GTK_WIDGET (self->headerbar));
+      gtk_revealer_set_child (self->headerbar_overlay_revealer, GTK_WIDGET (self->headerbar));
       gtk_revealer_set_reveal_child (self->headerbar_overlay_revealer, TRUE);
       gtk_window_fullscreen (GTK_WINDOW (self));
 
@@ -299,7 +297,7 @@ on_action_toggle_fullscreen_state_changed_cb (GSimpleAction *simple,
   else
     {
       gtk_event_controller_set_propagation_phase (self->overlay_motion_controller, GTK_PHASE_NONE);
-      gtk_revealer_set_reveal_child (self->headerbar_overlay_revealer, FALSE);
+      //gtk_revealer_set_reveal_child (self->headerbar_overlay_revealer, FALSE);
       gtk_container_add (GTK_CONTAINER (self->headerbar_box), GTK_WIDGET (self->headerbar));
       gtk_window_unfullscreen (GTK_WINDOW (self));
     }
@@ -504,16 +502,6 @@ create_workspace_row_func (gpointer item,
  */
 
 static void
-gtd_window_destroy (GtkWidget *widget)
-{
-  GtdWindow *self = GTD_WINDOW (widget);
-
-  g_clear_object (&self->workspaces_set);
-
-  GTK_WIDGET_CLASS (gtd_window_parent_class)->destroy (widget);
-}
-
-static void
 gtd_window_unmap (GtkWidget *widget)
 {
   GSettings *settings;
@@ -541,6 +529,16 @@ gtd_window_unmap (GtkWidget *widget)
 /*
  * GObject overrides
  */
+
+static void
+gtd_window_dispose (GObject *object)
+{
+  GtdWindow *self = GTD_WINDOW (object);
+
+  g_clear_object (&self->workspaces_set);
+
+  G_OBJECT_CLASS (gtd_window_parent_class)->dispose (object);
+}
 
 static void
 gtd_window_finalize (GObject *object)
@@ -591,10 +589,10 @@ gtd_window_class_init (GtdWindowClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->dispose = gtd_window_dispose;
   object_class->finalize = gtd_window_finalize;
   object_class->constructed = gtd_window_constructed;
 
-  widget_class->destroy = gtd_window_destroy;
   widget_class->unmap = gtd_window_unmap;
 
   g_type_ensure (GTD_TYPE_MENU_BUTTON);

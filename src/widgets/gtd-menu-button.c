@@ -130,7 +130,7 @@ add_arrow (GtdMenuButton *self)
 
   arrow = gtk_image_new ();
   set_arrow_type (GTK_IMAGE (arrow), priv->arrow_type);
-  gtk_container_add (GTK_CONTAINER (priv->button), arrow);
+  gtk_button_set_child (GTK_BUTTON (priv->button), arrow);
   priv->arrow_widget = arrow;
 }
 
@@ -794,16 +794,11 @@ gtd_menu_button_set_gicon (GtdMenuButton *self,
                            GIcon         *icon)
 {
   GtdMenuButtonPrivate *priv = gtd_menu_button_get_instance_private (self);
-  GtkWidget *child;
   GtkWidget *box;
   GtkWidget *icon_image;
   GtkWidget *image;
 
   g_return_if_fail (GTD_IS_MENU_BUTTON (self));
-
-  child = gtk_button_get_child (GTK_BUTTON (priv->button));
-  if (child)
-    gtk_container_remove (GTK_CONTAINER (priv->button), child);
 
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_widget_set_margin_start (box, 6);
@@ -816,7 +811,7 @@ gtd_menu_button_set_gicon (GtdMenuButton *self,
 
   gtk_container_add (GTK_CONTAINER (box), icon_image);
   gtk_container_add (GTK_CONTAINER (box), image);
-  gtk_container_add (GTK_CONTAINER (priv->button), box);
+  gtk_button_set_child (GTK_BUTTON (priv->button), box);
 
   g_object_notify_by_pspec (G_OBJECT (self), menu_button_props[PROP_GICON]);
 }
@@ -851,16 +846,11 @@ gtd_menu_button_set_label (GtdMenuButton *self,
                            const gchar   *label)
 {
   GtdMenuButtonPrivate *priv = gtd_menu_button_get_instance_private (self);
-  GtkWidget *child;
   GtkWidget *box;
   GtkWidget *label_widget;
   GtkWidget *image;
 
   g_return_if_fail (GTD_IS_MENU_BUTTON (self));
-
-  child = gtk_button_get_child (GTK_BUTTON (priv->button));
-  if (child)
-    gtk_container_remove (GTK_CONTAINER (priv->button), child);
 
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_widget_set_margin_start (box, 6);
@@ -874,7 +864,7 @@ gtd_menu_button_set_label (GtdMenuButton *self,
   image = gtk_image_new_from_icon_name ("pan-down-symbolic");
   gtk_container_add (GTK_CONTAINER (box), label_widget);
   gtk_container_add (GTK_CONTAINER (box), image);
-  gtk_container_add (GTK_CONTAINER (priv->button), box);
+  gtk_button_set_child (GTK_BUTTON (priv->button), box);
   priv->label_widget = label_widget;
 
   g_object_notify_by_pspec (G_OBJECT (self), menu_button_props[PROP_LABEL]);

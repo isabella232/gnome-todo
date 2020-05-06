@@ -23,10 +23,12 @@
 #include <gtk/gtk.h>
 #include <glib-object.h>
 
+#include "gtd-widget.h"
+
 G_BEGIN_DECLS
 
 #define GTD_TYPE_OMNI_AREA (gtd_omni_area_get_type())
-G_DECLARE_FINAL_TYPE (GtdOmniArea, gtd_omni_area, GTD, OMNI_AREA, GtkWidget)
+G_DECLARE_FINAL_TYPE (GtdOmniArea, gtd_omni_area, GTD, OMNI_AREA, GtdWidget)
 
 void                 gtd_omni_area_push_message                  (GtdOmniArea        *self,
                                                                   const gchar        *id,

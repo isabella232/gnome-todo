@@ -244,6 +244,8 @@ gtd_new_task_row_dispose (GObject *object)
       self->tasklist_popover = NULL;
     }
 
+  g_clear_pointer (&self->entry, gtk_widget_unparent);
+
   G_OBJECT_CLASS (gtd_new_task_row_parent_class)->dispose (object);
 }
 
@@ -274,8 +276,6 @@ gtd_new_task_row_class_init (GtdNewTaskRowClass *klass)
   object_class->dispose = gtd_new_task_row_dispose;
   object_class->get_property = gtd_new_task_row_get_property;
   object_class->set_property = gtd_new_task_row_set_property;
-
-  widget_class->measure = gtd_row_measure_with_max;
 
   /**
    * GtdNewTaskRow::enter:
@@ -318,6 +318,7 @@ gtd_new_task_row_class_init (GtdNewTaskRowClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, on_tasklist_popover_changed_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_tasklist_popover_closed_cb);
 
+  gtk_widget_class_set_layout_manager_type (widget_class, GTK_TYPE_BIN_LAYOUT);
   gtk_widget_class_set_css_name (widget_class, "newtaskrow");
 
   g_type_ensure (GTD_TYPE_TASK_LIST_POPOVER);

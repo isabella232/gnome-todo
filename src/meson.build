@@ -71,6 +71,7 @@ headers = enum_headers + files(
   'gtd-text-width-layout.h',
   'gtd-types.h',
   'gtd-utils.h',
+  'gtd-widget.h',
   'gtd-window.h',
   'gnome-todo.h'
 )
@@ -109,7 +110,6 @@ sources += files(
   'widgets/gtd-color-button.c',
   'widgets/gtd-empty-list-widget.c',
   'widgets/gtd-menu-button.c',
-  'widgets/gtd-row-header.c',
   'widgets/gtd-star-widget.c',
   'gtd-application.c',
   'gtd-initial-setup-window.c',
@@ -126,6 +126,7 @@ sources += files(
   'gtd-text-width-layout.c',
   'gtd-theme-manager.c',
   'gtd-utils.c',
+  'gtd-widget.c',
   'gtd-window.c',
   'main.c'
 )
@@ -286,6 +287,8 @@ if get_option('introspection')
     'gtd-text-width-layout.c',
     'gtd-text-width-layout.h',
     'gtd-types.h',
+    'gtd-widget.c',
+    'gtd-widget.h',
     'gtd-window.c',
     'gtd-window.h'
   )
