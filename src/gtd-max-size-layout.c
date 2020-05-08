@@ -1,4 +1,4 @@
-/* gtd-text-width-layout.c
+/* gtd-max-size-layout.c
  *
  * Copyright 2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
@@ -18,9 +18,9 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-#include "gtd-text-width-layout.h"
+#include "gtd-max-size-layout.h"
 
-struct _GtdTextWidthLayout
+struct _GtdMaxSizeLayout
 {
   GtkLayoutManager    parent;
 
@@ -28,7 +28,7 @@ struct _GtdTextWidthLayout
   gint                width_chars;
 };
 
-G_DEFINE_TYPE (GtdTextWidthLayout, gtd_text_width_layout, GTK_TYPE_LAYOUT_MANAGER)
+G_DEFINE_TYPE (GtdMaxSizeLayout, gtd_max_size_layout, GTK_TYPE_LAYOUT_MANAGER)
 
 enum
 {
@@ -46,16 +46,16 @@ static GParamSpec *properties [N_PROPS];
  */
 
 static void
-gtd_text_width_layout_measure (GtkLayoutManager *layout_manager,
-                               GtkWidget        *widget,
-                               GtkOrientation    orientation,
-                               gint              for_size,
-                               gint             *minimum,
-                               gint             *natural,
-                               gint             *minimum_baseline,
-                               gint             *natural_baseline)
+gtd_max_size_layout_measure (GtkLayoutManager *layout_manager,
+                             GtkWidget        *widget,
+                             GtkOrientation    orientation,
+                             gint              for_size,
+                             gint             *minimum,
+                             gint             *natural,
+                             gint             *minimum_baseline,
+                             gint             *natural_baseline)
 {
-  GtdTextWidthLayout *self = (GtdTextWidthLayout *)layout_manager;
+  GtdMaxSizeLayout *self = (GtdMaxSizeLayout *)layout_manager;
   GtkWidget *child;
 
   for (child = gtk_widget_get_first_child (widget);
@@ -114,11 +114,11 @@ gtd_text_width_layout_measure (GtkLayoutManager *layout_manager,
 }
 
 static void
-gtd_text_width_layout_allocate (GtkLayoutManager *layout_manager,
-                                GtkWidget        *widget,
-                                gint              width,
-                                gint              height,
-                                gint              baseline)
+gtd_max_size_layout_allocate (GtkLayoutManager *layout_manager,
+                              GtkWidget        *widget,
+                              gint              width,
+                              gint              height,
+                              gint              baseline)
 {
   GtkWidget *child;
 
@@ -137,12 +137,12 @@ gtd_text_width_layout_allocate (GtkLayoutManager *layout_manager,
  */
 
 static void
-gtd_text_width_layout_get_property (GObject    *object,
-                                    guint       prop_id,
-                                    GValue     *value,
-                                    GParamSpec *pspec)
+gtd_max_size_layout_get_property (GObject    *object,
+                                  guint       prop_id,
+                                  GValue     *value,
+                                  GParamSpec *pspec)
 {
-  GtdTextWidthLayout *self = GTD_TEXT_WIDTH_LAYOUT (object);
+  GtdMaxSizeLayout *self = GTD_MAX_SIZE_LAYOUT (object);
 
   switch (prop_id)
     {
@@ -160,21 +160,21 @@ gtd_text_width_layout_get_property (GObject    *object,
 }
 
 static void
-gtd_text_width_layout_set_property (GObject      *object,
-                                    guint         prop_id,
-                                    const GValue *value,
-                                    GParamSpec   *pspec)
+gtd_max_size_layout_set_property (GObject      *object,
+                                  guint         prop_id,
+                                  const GValue *value,
+                                  GParamSpec   *pspec)
 {
-  GtdTextWidthLayout *self = GTD_TEXT_WIDTH_LAYOUT (object);
+  GtdMaxSizeLayout *self = GTD_MAX_SIZE_LAYOUT (object);
 
   switch (prop_id)
     {
     case PROP_MAX_WIDTH_CHARS:
-      gtd_text_width_layout_set_max_width_chars (self, g_value_get_int (value));
+      gtd_max_size_layout_set_max_width_chars (self, g_value_get_int (value));
       break;
 
     case PROP_WIDTH_CHARS:
-      gtd_text_width_layout_set_width_chars (self, g_value_get_int (value));
+      gtd_max_size_layout_set_width_chars (self, g_value_get_int (value));
       break;
 
     default:
@@ -183,19 +183,19 @@ gtd_text_width_layout_set_property (GObject      *object,
 }
 
 static void
-gtd_text_width_layout_class_init (GtdTextWidthLayoutClass *klass)
+gtd_max_size_layout_class_init (GtdMaxSizeLayoutClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkLayoutManagerClass *layout_manager_class = GTK_LAYOUT_MANAGER_CLASS (klass);
 
-  layout_manager_class->measure = gtd_text_width_layout_measure;
-  layout_manager_class->allocate = gtd_text_width_layout_allocate;
+  layout_manager_class->measure = gtd_max_size_layout_measure;
+  layout_manager_class->allocate = gtd_max_size_layout_allocate;
 
-  object_class->get_property = gtd_text_width_layout_get_property;
-  object_class->set_property = gtd_text_width_layout_set_property;
+  object_class->get_property = gtd_max_size_layout_get_property;
+  object_class->set_property = gtd_max_size_layout_set_property;
 
   /**
-   * GtdTextWidthLayout:max-width-chars:
+   * GtdMaxSizeLayout:max-width-chars:
    *
    * Sets the maximum size of the #GtkWidget in characters.
    */
@@ -208,7 +208,7 @@ gtd_text_width_layout_class_init (GtdTextWidthLayoutClass *klass)
                                                        G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
 
   /**
-   * GtdTextWidthLayout:width-chars:
+   * GtdMaxSizeLayout:width-chars:
    *
    * Sets the size of the #GtkWidget in characters.
    */
@@ -224,53 +224,53 @@ gtd_text_width_layout_class_init (GtdTextWidthLayoutClass *klass)
 }
 
 static void
-gtd_text_width_layout_init (GtdTextWidthLayout *self)
+gtd_max_size_layout_init (GtdMaxSizeLayout *self)
 {
   self->max_width_chars = -1;
   self->width_chars = -1;
 }
 
 /**
- * gtd_text_width_layout_new:
+ * gtd_max_size_layout_new:
  *
- * Creates a new #GtdTextWidthLayout.
+ * Creates a new #GtdMaxSizeLayout.
  *
- * Returns: (transfer full): a #GtdTextWidthLayout
+ * Returns: (transfer full): a #GtdMaxSizeLayout
  */
 GtkLayoutManager*
-gtd_text_width_layout_new (void)
+gtd_max_size_layout_new (void)
 {
-  return g_object_new (GTD_TYPE_TEXT_WIDTH_LAYOUT, NULL);
+  return g_object_new (GTD_TYPE_MAX_SIZE_LAYOUT, NULL);
 }
 
 /**
- * gtd_text_width_layout_get_max_width_chars:
+ * gtd_max_size_layout_get_max_width_chars:
  *
  * Retrieves the maximum width in characters of @self.
  *
  * Returns: maximum width in characters
  */
 gint
-gtd_text_width_layout_get_max_width_chars (GtdTextWidthLayout *self)
+gtd_max_size_layout_get_max_width_chars (GtdMaxSizeLayout *self)
 {
-  g_return_val_if_fail (GTD_IS_TEXT_WIDTH_LAYOUT (self), -1);
+  g_return_val_if_fail (GTD_IS_MAX_SIZE_LAYOUT (self), -1);
 
   return self->max_width_chars;
 }
 
 /**
- * gtd_text_width_layout_set_max_width_chars:
- * @self: a #GtdTextWidthLayout
+ * gtd_max_size_layout_set_max_width_chars:
+ * @self: a #GtdMaxSizeLayout
  * @with_chars: maximum width of the widget @self is attached to, in character length
  *
  * Sets the maximum width @self has, in characters length. It is a programming
- * error to set a value smaller than #GtdTextWidthLayout:width-layout.
+ * error to set a value smaller than #GtdMaxSizeLayout:width-layout.
  */
 void
-gtd_text_width_layout_set_max_width_chars (GtdTextWidthLayout *self,
-                                           gint                max_width_chars)
+gtd_max_size_layout_set_max_width_chars (GtdMaxSizeLayout *self,
+                                         gint              max_width_chars)
 {
-  g_return_if_fail (GTD_IS_TEXT_WIDTH_LAYOUT (self));
+  g_return_if_fail (GTD_IS_MAX_SIZE_LAYOUT (self));
   g_return_if_fail (max_width_chars >= -1);
   g_return_if_fail (self->width_chars == -1 || max_width_chars >= self->width_chars);
 
@@ -284,33 +284,33 @@ gtd_text_width_layout_set_max_width_chars (GtdTextWidthLayout *self,
 }
 
 /**
- * gtd_text_width_layout_get_width_chars:
+ * gtd_max_size_layout_get_width_chars:
  *
  * Retrieves the minimum width in characters of @self.
  *
  * Returns: minimum width in characters
  */
 gint
-gtd_text_width_layout_get_width_chars (GtdTextWidthLayout *self)
+gtd_max_size_layout_get_width_chars (GtdMaxSizeLayout *self)
 {
-  g_return_val_if_fail (GTD_IS_TEXT_WIDTH_LAYOUT (self), -1);
+  g_return_val_if_fail (GTD_IS_MAX_SIZE_LAYOUT (self), -1);
 
   return self->width_chars;
 }
 
 /**
- * gtd_text_width_layout_set_width_chars:
- * @self: a #GtdTextWidthLayout
+ * gtd_max_size_layout_set_width_chars:
+ * @self: a #GtdMaxSizeLayout
  * @with_chars: minimum width of the widget @self is attached to, in character length
  *
  * Sets the minimum width @self has, in characters length. It is a programming
- * error to set a value bigger than #GtdTextWidthLayout:max-width-layout.
+ * error to set a value bigger than #GtdMaxSizeLayout:max-width-layout.
  */
 void
-gtd_text_width_layout_set_width_chars (GtdTextWidthLayout *self,
-                                       gint                width_chars)
+gtd_max_size_layout_set_width_chars (GtdMaxSizeLayout *self,
+                                     gint              width_chars)
 {
-  g_return_if_fail (GTD_IS_TEXT_WIDTH_LAYOUT (self));
+  g_return_if_fail (GTD_IS_MAX_SIZE_LAYOUT (self));
   g_return_if_fail (width_chars >= -1);
   g_return_if_fail (self->max_width_chars == -1 || width_chars <= self->max_width_chars);
 

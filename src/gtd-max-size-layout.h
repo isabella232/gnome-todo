@@ -1,4 +1,4 @@
-/* gtd-text-width-layout.h
+/* gtd-max-size-layout.h
  *
  * Copyright 2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
@@ -24,19 +24,19 @@
 
 G_BEGIN_DECLS
 
-#define GTD_TYPE_TEXT_WIDTH_LAYOUT (gtd_text_width_layout_get_type())
-G_DECLARE_FINAL_TYPE (GtdTextWidthLayout, gtd_text_width_layout, GTD, TEXT_WIDTH_LAYOUT, GtkLayoutManager)
+#define GTD_TYPE_MAX_SIZE_LAYOUT (gtd_max_size_layout_get_type())
+G_DECLARE_FINAL_TYPE (GtdMaxSizeLayout, gtd_max_size_layout, GTD, MAX_SIZE_LAYOUT, GtkLayoutManager)
 
-GtkLayoutManager*    gtd_text_width_layout_new                   (void);
+GtkLayoutManager*    gtd_max_size_layout_new                     (void);
 
-gint                 gtd_text_width_layout_get_max_width_chars   (GtdTextWidthLayout *self);
+gint                 gtd_max_size_layout_get_max_width_chars     (GtdMaxSizeLayout   *self);
 
-void                 gtd_text_width_layout_set_max_width_chars   (GtdTextWidthLayout *self,
+void                 gtd_max_size_layout_set_max_width_chars     (GtdMaxSizeLayout   *self,
                                                                   gint                max_width_chars);
 
-gint                 gtd_text_width_layout_get_width_chars       (GtdTextWidthLayout *self);
+gint                 gtd_max_size_layout_get_width_chars         (GtdMaxSizeLayout   *self);
 
-void                 gtd_text_width_layout_set_width_chars       (GtdTextWidthLayout *self,
+void                 gtd_max_size_layout_set_width_chars         (GtdMaxSizeLayout   *self,
                                                                   gint                width_chars);
 
 G_END_DECLS

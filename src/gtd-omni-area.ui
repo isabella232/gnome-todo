@@ -17,7 +17,7 @@
           <object class="GtkFrame">
             <property name="css-name"></property>
             <property name="layout-manager">
-              <object class="GtdTextWidthLayout">
+              <object class="GtdMaxSizeLayout">
                 <property name="width-chars">25</property>
                 <property name="max-width-chars">40</property>
               </object>

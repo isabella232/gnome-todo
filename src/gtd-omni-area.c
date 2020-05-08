@@ -23,8 +23,8 @@
 #include "gtd-omni-area.h"
 
 #include "gtd-debug.h"
+#include "gtd-max-size-layout.h"
 #include "gtd-omni-area-addin.h"
-#include "gtd-text-width-layout.h"
 
 #include <libpeas/peas.h>
 
@@ -137,7 +137,7 @@ gtd_omni_area_class_init (GtdOmniAreaClass *klass)
   object_class->dispose = gtd_omni_area_dispose;
   object_class->finalize = gtd_omni_area_finalize;
 
-  g_type_ensure (GTD_TYPE_TEXT_WIDTH_LAYOUT);
+  g_type_ensure (GTD_TYPE_MAX_SIZE_LAYOUT);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-omni-area.ui");
 

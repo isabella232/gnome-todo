@@ -22,6 +22,7 @@
 
 #include "gtd-debug.h"
 #include "gtd-manager.h"
+#include "gtd-max-size-layout.h"
 #include "gtd-panel.h"
 #include "gtd-provider.h"
 #include "gtd-sidebar.h"
@@ -30,7 +31,6 @@
 #include "gtd-sidebar-provider-row.h"
 #include "gtd-task-list.h"
 #include "gtd-task-list-panel.h"
-#include "gtd-text-width-layout.h"
 #include "gtd-utils.h"
 #include "notification/gtd-notification.h"
 
@@ -819,7 +819,7 @@ gtd_sidebar_class_init (GtdSidebarClass *klass)
 
   object_class->constructed = gtd_sidebar_constructed;
 
-  g_type_ensure (GTD_TYPE_TEXT_WIDTH_LAYOUT);
+  g_type_ensure (GTD_TYPE_MAX_SIZE_LAYOUT);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/plugins/task-lists-workspace/gtd-sidebar.ui");
 
