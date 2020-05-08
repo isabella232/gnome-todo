@@ -19,7 +19,6 @@
  */
 
 #include "gtd-widget.h"
-#include "gtd-rows-common-private.h"
 
 G_DEFINE_TYPE (GtdWidget, gtd_widget, GTK_TYPE_WIDGET)
 

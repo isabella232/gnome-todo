@@ -22,7 +22,6 @@
 #include "gtd-manager.h"
 #include "gtd-new-task-row.h"
 #include "gtd-provider.h"
-#include "gtd-rows-common-private.h"
 #include "gtd-task.h"
 #include "gtd-task-list.h"
 #include "gtd-task-list-popover.h"

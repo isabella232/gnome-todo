@@ -121,7 +121,6 @@ sources += files(
   'gtd-omni-area-addin.c',
   'gtd-plugin-dialog.c',
   'gtd-plugin-dialog-row.c',
-  'gtd-rows-common.c',
   'gtd-task.c',
   'gtd-task-list.c',
   'gtd-theme-manager.c',

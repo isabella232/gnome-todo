@@ -22,7 +22,6 @@
 #include "gtd-manager.h"
 #include "gtd-new-task-row.h"
 #include "gtd-provider.h"
-#include "gtd-rows-common-private.h"
 #include "gtd-task.h"
 #include "gtd-task-list.h"
 #include "gtd-task-row.h"
@@ -150,8 +149,6 @@ gtd_dnd_row_class_init (GtdDndRowClass *klass)
   object_class->finalize = gtd_dnd_row_finalize;
   object_class->get_property = gtd_dnd_row_get_property;
   object_class->set_property = gtd_dnd_row_set_property;
-
-  widget_class->measure = gtd_row_measure_with_max;
 
   properties[PROP_ROW_ABOVE] = g_param_spec_object ("row-above",
                                                     "Row above",

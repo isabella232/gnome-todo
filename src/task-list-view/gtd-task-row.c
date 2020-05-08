@@ -23,7 +23,6 @@
 #include "gtd-manager.h"
 #include "gtd-markdown-renderer.h"
 #include "gtd-provider.h"
-#include "gtd-rows-common-private.h"
 #include "gtd-star-widget.h"
 #include "gtd-task-row.h"
 #include "gtd-task.h"
