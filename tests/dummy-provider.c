@@ -140,15 +140,21 @@ dummy_provider_create_task (GtdProvider         *provider,
 }
 
 static void
-dummy_provider_update_task (GtdProvider *provider,
-                           GtdTask     *task)
+dummy_provider_update_task (GtdProvider         *provider,
+                            GtdTask             *task,
+                            GCancellable        *cancellable,
+                            GAsyncReadyCallback  callback,
+                            gpointer             user_data)
 {
   g_debug ("Updating task '%s'", gtd_task_get_title (task));
 }
 
 static void
-dummy_provider_remove_task (GtdProvider *provider,
-                           GtdTask     *task)
+dummy_provider_remove_task (GtdProvider         *provider,
+                            GtdTask             *task,
+                            GCancellable        *cancellable,
+                            GAsyncReadyCallback  callback,
+                            gpointer             user_data)
 {
 }
 
@@ -175,15 +181,21 @@ dummy_provider_create_task_list (GtdProvider         *provider,
 }
 
 static void
-dummy_provider_update_task_list (GtdProvider *provider,
-                                GtdTaskList *list)
+dummy_provider_update_task_list (GtdProvider         *provider,
+                                 GtdTaskList         *list,
+                                 GCancellable        *cancellable,
+                                 GAsyncReadyCallback  callback,
+                                 gpointer             user_data)
 {
   g_signal_emit_by_name (provider, "list-changed", list);
 }
 
 static void
-dummy_provider_remove_task_list (GtdProvider *provider,
-                                GtdTaskList *list)
+dummy_provider_remove_task_list (GtdProvider         *provider,
+                                 GtdTaskList         *list,
+                                 GCancellable        *cancellable,
+                                 GAsyncReadyCallback  callback,
+                                 gpointer             user_data)
 {
 
   GSequenceIter *iter;
@@ -199,6 +211,12 @@ dummy_provider_get_task_lists (GtdProvider *provider)
 {
   DummyProvider *self = DUMMY_PROVIDER (provider);
   return sequence_to_list (self->lists);
+}
+
+static GtdTaskList*
+dummy_provider_get_inbox (GtdProvider *provider)
+{
+  return NULL;
 }
 
 static void
@@ -217,6 +235,7 @@ gtd_provider_iface_init (GtdProviderInterface *iface)
   iface->update_task_list = dummy_provider_update_task_list;
   iface->remove_task_list = dummy_provider_remove_task_list;
   iface->get_task_lists = dummy_provider_get_task_lists;
+  iface->get_inbox = dummy_provider_get_inbox;
 }
 
 
