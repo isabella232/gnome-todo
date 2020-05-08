@@ -29,6 +29,16 @@ G_DECLARE_FINAL_TYPE (GtdMaxSizeLayout, gtd_max_size_layout, GTD, MAX_SIZE_LAYOU
 
 GtkLayoutManager*    gtd_max_size_layout_new                     (void);
 
+gint                 gtd_max_size_layout_get_max_height          (GtdMaxSizeLayout   *self);
+
+void                 gtd_max_size_layout_set_max_height          (GtdMaxSizeLayout   *self,
+                                                                  gint                max_height);
+
+gint                 gtd_max_size_layout_get_max_width           (GtdMaxSizeLayout   *self);
+
+void                 gtd_max_size_layout_set_max_width           (GtdMaxSizeLayout   *self,
+                                                                  gint                max_width);
+
 gint                 gtd_max_size_layout_get_max_width_chars     (GtdMaxSizeLayout   *self);
 
 void                 gtd_max_size_layout_set_max_width_chars     (GtdMaxSizeLayout   *self,

@@ -24,6 +24,8 @@ struct _GtdMaxSizeLayout
 {
   GtkLayoutManager    parent;
 
+  gint                max_height;
+  gint                max_width;
   gint                max_width_chars;
   gint                width_chars;
 };
@@ -33,7 +35,9 @@ G_DEFINE_TYPE (GtdMaxSizeLayout, gtd_max_size_layout, GTK_TYPE_LAYOUT_MANAGER)
 enum
 {
   PROP_0,
+  PROP_MAX_HEIGHT,
   PROP_MAX_WIDTH_CHARS,
+  PROP_MAX_WIDTH,
   PROP_WIDTH_CHARS,
   N_PROPS
 };
@@ -87,29 +91,46 @@ gtd_max_size_layout_measure (GtkLayoutManager *layout_manager,
     {
       PangoFontMetrics *metrics;
       PangoContext *context;
-      gint max_width_chars = G_MAXINT;
-      gint width_chars = 0;
       gint char_width;
-      gint digit_width;
 
       context = gtk_widget_get_pango_context (widget);
       metrics = pango_context_get_metrics (context,
                                            pango_context_get_font_description (context),
                                            pango_context_get_language (context));
 
-      char_width = pango_font_metrics_get_approximate_char_width (metrics);
-      digit_width = pango_font_metrics_get_approximate_digit_width (metrics);
+      char_width = MAX (pango_font_metrics_get_approximate_char_width (metrics),
+                        pango_font_metrics_get_approximate_digit_width (metrics));
 
-      if (self->width_chars >= 0)
-        width_chars = MAX (char_width, digit_width) * self->width_chars / PANGO_SCALE;
+      if (self->width_chars > 0)
+        {
+          gint width_chars;
 
-      if (self->max_width_chars >= 0)
-        max_width_chars = MAX (char_width, digit_width) * self->max_width_chars / PANGO_SCALE;
+          width_chars = char_width * self->width_chars / PANGO_SCALE;
+          *minimum = MAX (*minimum, width_chars);
+          *natural = MAX (*natural, width_chars);
+        }
 
-      *minimum = MAX (*minimum, width_chars);
-      *natural = MAX (*natural, max_width_chars);
+      if (self->max_width_chars > 0)
+        {
+          gint max_width_chars;
+
+          max_width_chars = char_width * self->max_width_chars / PANGO_SCALE;
+          *minimum = MIN (*minimum, max_width_chars);
+          *natural = MAX (*natural, max_width_chars);
+        }
+
+      if (self->max_width > 0)
+        {
+          *minimum = MIN (*minimum, self->max_width);
+          *natural = MAX (*natural, self->max_width);
+        }
 
       pango_font_metrics_unref (metrics);
+    }
+  else if (self->max_height > 0)
+    {
+      *minimum = MIN (*minimum, self->max_height);
+      *natural = MAX (*natural, self->max_height);
     }
 }
 
@@ -146,6 +167,14 @@ gtd_max_size_layout_get_property (GObject    *object,
 
   switch (prop_id)
     {
+    case PROP_MAX_HEIGHT:
+      g_value_set_int (value, self->max_height);
+      break;
+
+    case PROP_MAX_WIDTH:
+      g_value_set_int (value, self->max_width);
+      break;
+
     case PROP_MAX_WIDTH_CHARS:
       g_value_set_int (value, self->max_width_chars);
       break;
@@ -169,6 +198,14 @@ gtd_max_size_layout_set_property (GObject      *object,
 
   switch (prop_id)
     {
+    case PROP_MAX_HEIGHT:
+      gtd_max_size_layout_set_max_height (self, g_value_get_int (value));
+      break;
+
+    case PROP_MAX_WIDTH:
+      gtd_max_size_layout_set_max_width (self, g_value_get_int (value));
+      break;
+
     case PROP_MAX_WIDTH_CHARS:
       gtd_max_size_layout_set_max_width_chars (self, g_value_get_int (value));
       break;
@@ -193,6 +230,32 @@ gtd_max_size_layout_class_init (GtdMaxSizeLayoutClass *klass)
 
   object_class->get_property = gtd_max_size_layout_get_property;
   object_class->set_property = gtd_max_size_layout_set_property;
+
+  /**
+   * GtdMaxSizeLayout:max-height:
+   *
+   * Sets the maximum height of the #GtkWidget.
+   */
+  properties[PROP_MAX_HEIGHT] = g_param_spec_int ("max-height",
+                                                  "Max Height",
+                                                  "Max Height",
+                                                  -1,
+                                                  G_MAXINT,
+                                                  -1,
+                                                  G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+  /**
+   * GtdMaxSizeLayout:max-width:
+   *
+   * Sets the maximum width of the #GtkWidget.
+   */
+  properties[PROP_MAX_WIDTH] = g_param_spec_int ("max-width",
+                                                 "Max Width",
+                                                 "Max Width",
+                                                 -1,
+                                                 G_MAXINT,
+                                                 -1,
+                                                 G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
 
   /**
    * GtdMaxSizeLayout:max-width-chars:
@@ -226,6 +289,8 @@ gtd_max_size_layout_class_init (GtdMaxSizeLayoutClass *klass)
 static void
 gtd_max_size_layout_init (GtdMaxSizeLayout *self)
 {
+  self->max_height = -1;
+  self->max_width = -1;
   self->max_width_chars = -1;
   self->width_chars = -1;
 }
@@ -241,6 +306,83 @@ GtkLayoutManager*
 gtd_max_size_layout_new (void)
 {
   return g_object_new (GTD_TYPE_MAX_SIZE_LAYOUT, NULL);
+}
+
+/**
+ * gtd_max_size_layout_get_max_height:
+ *
+ * Retrieves the maximum height of @self.
+ *
+ * Returns: maximum height
+ */
+gint
+gtd_max_size_layout_get_max_height (GtdMaxSizeLayout *self)
+{
+  g_return_val_if_fail (GTD_IS_MAX_SIZE_LAYOUT (self), -1);
+
+  return self->max_height;
+}
+
+/**
+ * gtd_max_size_layout_set_max_height:
+ * @self: a #GtdMaxSizeLayout
+ * @with_chars: maximum height of the widget @self is attached to
+ *
+ * Sets the maximum height @self has.
+ */
+void
+gtd_max_size_layout_set_max_height (GtdMaxSizeLayout *self,
+                                    gint              max_height)
+{
+  g_return_if_fail (GTD_IS_MAX_SIZE_LAYOUT (self));
+  g_return_if_fail (max_height >= -1);
+
+  if (self->max_height == max_height)
+    return;
+
+  self->max_height = max_height;
+  gtk_layout_manager_layout_changed (GTK_LAYOUT_MANAGER (self));
+
+  g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_MAX_HEIGHT]);
+}
+
+/**
+ * gtd_max_size_layout_get_max_width:
+ *
+ * Retrieves the maximum width of @self.
+ *
+ * Returns: maximum width
+ */
+gint
+gtd_max_size_layout_get_max_width (GtdMaxSizeLayout *self)
+{
+
+  g_return_val_if_fail (GTD_IS_MAX_SIZE_LAYOUT (self), -1);
+
+  return self->max_width;
+}
+
+/**
+ * gtd_max_size_layout_set_max_width:
+ * @self: a #GtdMaxSizeLayout
+ * @with_chars: maximum width of the widget @self is attached to
+ *
+ * Sets the maximum width @self has.
+ */
+void
+gtd_max_size_layout_set_max_width (GtdMaxSizeLayout *self,
+                                   gint              max_width)
+{
+  g_return_if_fail (GTD_IS_MAX_SIZE_LAYOUT (self));
+  g_return_if_fail (max_width >= -1);
+
+  if (self->max_width == max_width)
+    return;
+
+  self->max_width = max_width;
+  gtk_layout_manager_layout_changed (GTK_LAYOUT_MANAGER (self));
+
+  g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_MAX_WIDTH]);
 }
 
 /**
