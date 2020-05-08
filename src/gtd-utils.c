@@ -18,6 +18,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+#include "gtd-max-size-layout.h"
 #include "gtd-task.h"
 #include "gtd-utils.h"
 #include "gtd-utils-private.h"
@@ -234,5 +235,6 @@ gtd_collate_compare_strings (const gchar *string_a,
 void
 gtd_ensure_types (void)
 {
+  g_type_ensure (GTD_TYPE_MAX_SIZE_LAYOUT);
   g_type_ensure (GTD_TYPE_WIDGET);
 }
