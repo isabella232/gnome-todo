@@ -1,92 +1,79 @@
 # Esperanto translation for gnome-todo.
 # Copyright (C) 2015 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-todo package.
-# Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2015.
 # Daniel PUENTES <blatberk@openmailbox.org>, 2015.
-# Carmen Bianca BAKKER <carmen@carmenbianca.eu>, 2018-2019.
+# Carmen Bianca BAKKER <carmen@carmenbianca.eu>, 2018-2020.
+# Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2015-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-10-28 14:31+0000\n"
-"PO-Revision-Date: 2019-03-29 18:40+0100\n"
-"Last-Translator: Carmen Bianca Bakker <carmen@carmenbianca.eu>\n"
+"POT-Creation-Date: 2020-05-08 02:07+0000\n"
+"PO-Revision-Date: 2020-05-09 11:18+0200\n"
+"Last-Translator: Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>\n"
 "Language-Team: Esperanto <gnome-eo-list@gnome.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Generator: Gtranslator 3.36.0\n"
 "X-DamnedLies-Scope: partial\n"
-"X-Generator: Poedit 2.2.1\n"
 "X-Project-Style: gnome\n"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
-#: src/gtd-window.c:799 src/gtd-window.c:830 src/main.c:35
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
+#: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:143
+#: src/gtd-omni-area.ui:44 src/main.c:38
 msgid "To Do"
 msgstr "Taskoj"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:8
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:8
 msgid "Task manager for GNOME"
 msgstr "Taskmastrumilo por GNOME"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:11
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:11
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
-"GNOME. It is extensible through plugins and supports custom task providers."
+"GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
+"todos on your computer or sync them with cloud providers. Customize your "
+"experience with plugins."
 msgstr ""
-"GNOME Taskoj estas taskmastrumilo kiu integras en GNOME. Ĝi estas etendebla "
-"tra kromprogramoj kaj subtenas proprajn provizantojn de taskoj."
+"GNOME Taskoj estas taskmastrumilo kiu integras en GNOME. Konservu kaj ordigu "
+"viajn taskojn. Tenu plurajn taskolistojn. Tenu viajn taskojn sur via "
+"komputilo aŭ sinkronigu ilin per nubaj servoj. Tajloru vian sperton per "
+"kromprogramoj."
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:24
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:25
 msgid "GNOME To Do with the dark theme variant"
 msgstr "GNOME Taskoj kun malhela etoso"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:28
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:29
 msgid "Editing a tasklist with GNOME To Do"
 msgstr "Redaktado de taskolisto kun GNOME Taskoj"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:32
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:33
 msgid "Task lists displayed on grid mode"
 msgstr "Taskolistoj montritaj per krada reĝimo"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:36
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:37
 msgid "Task lists displayed on list mode"
 msgstr "Taskolistoj montritaj per lista reĝimo"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:40
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:41
 msgid "Available plugins for GNOME To Do"
 msgstr "Disponeblaj kromprogramoj por GNOME Taskoj"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:44
+#: data/appdata/org.gnome.Todo.appdata.xml.in.in:45
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
 msgstr "Bildigado de hodiaŭaj taskoj en la Hodiaŭ panelo de GNOME Taskoj"
 
-#: data/gtk/menus.ui:15 data/ui/plugin-dialog.ui:75
-msgid "Extensions"
-msgstr "Etendaĵoj"
-
-#: data/gtk/menus.ui:22
-msgid "_About"
-msgstr "_Pri"
-
-#: data/gtk/menus.ui:26
-msgid "_Quit"
-msgstr "Ĉ_esi"
-
-#: data/org.gnome.Todo.desktop.in:4
+#: data/org.gnome.Todo.desktop.in.in:4
 msgid "Manage your personal tasks"
 msgstr "Mastrumi viajn konservitajn serĉojn"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Todo.desktop.in:7
-msgid "org.gnome.Todo"
-msgstr "org.gnome.Todo"
-
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Todo.desktop.in:13
+#: data/org.gnome.Todo.desktop.in.in:13
 msgid "Task;Productivity;Todo;"
 msgstr "Tasko;Produktiveco;Endaĵo;"
 
@@ -107,511 +94,70 @@ msgid "Window size (width and height)."
 msgstr "Fenestra grando (larĝo kaj alto)."
 
 #: data/org.gnome.todo.gschema.xml:16
-msgid "Window position"
-msgstr "Fenestra pozicio"
-
-#: data/org.gnome.todo.gschema.xml:17
-msgid "Window position (x and y)."
-msgstr "Fenestra pozicio (x kaj y)."
-
-#: data/org.gnome.todo.gschema.xml:21
 msgid "First run of GNOME To Do"
 msgstr "Unua starto de GNOME Taskoj"
 
-#: data/org.gnome.todo.gschema.xml:22
+#: data/org.gnome.todo.gschema.xml:17
 msgid ""
 "Whether it’s the first run of GNOME To Do (to run the initial setup) or not"
 msgstr ""
 "Ĉu estas la unua lanĉo de GNOME Taskoj (por fari la komencan agordon) aŭ ne"
 
-#: data/org.gnome.todo.gschema.xml:26
+#: data/org.gnome.todo.gschema.xml:21
 msgid "Default provider to add new lists to"
 msgstr "Implicita provizanto al kiu oni aldonas novajn listojn"
 
-#: data/org.gnome.todo.gschema.xml:27
+#: data/org.gnome.todo.gschema.xml:22
 msgid "The identifier of the default provider to add new lists to"
 msgstr ""
 "La identigilo de la implicita provizanto al kiu oni aldonas novajn listojn"
 
-#: data/org.gnome.todo.gschema.xml:31
+#: data/org.gnome.todo.gschema.xml:26
 msgid "List of active extensions"
 msgstr "Listo de aktivaj etendaĵoj"
 
-#: data/org.gnome.todo.gschema.xml:32
+#: data/org.gnome.todo.gschema.xml:27
 msgid "The list of active extensions"
 msgstr "La listo de aktivaj etendaĵoj"
 
-#: data/org.gnome.todo.gschema.xml:36
-msgid "The current list selector"
-msgstr "La nuna list-elektanto"
-
-#: data/org.gnome.todo.gschema.xml:37
-msgid "The current list selector. Can be “grid” or “list”."
-msgstr "La nuna list-elektanto. Povas esti “grid” (krado) aŭ “list” (listo)."
-
-#: data/ui/edit-pane.ui:43
-msgid "_Notes"
-msgstr "_Notoj"
-
-#: data/ui/edit-pane.ui:93
-msgid "D_ue Date"
-msgstr "L_imdato"
-
-#: data/ui/edit-pane.ui:111
-msgid "_Today"
-msgstr "_Hodiaŭ"
-
-#: data/ui/edit-pane.ui:121
-msgid "To_morrow"
-msgstr "_Morgaŭ"
-
-#: data/ui/edit-pane.ui:169
-msgid "_Priority"
-msgstr "_Prioritato"
-
-#: data/ui/edit-pane.ui:187
-msgctxt "taskpriority"
-msgid "None"
-msgstr "Neniu"
-
-#: data/ui/edit-pane.ui:188
-msgid "Low"
-msgstr "Malalta"
-
-#: data/ui/edit-pane.ui:189
-msgid "Medium"
-msgstr "Meza"
-
-#: data/ui/edit-pane.ui:190
-msgid "High"
-msgstr "Alta"
-
-#: data/ui/edit-pane.ui:198 data/ui/list-selector-panel.ui:93
-msgid "_Delete"
-msgstr "_Forigi"
-
-#: data/ui/edit-pane.ui:249
-msgctxt "taskdate"
-msgid "None"
-msgstr "Neniu"
-
-#: data/ui/initial-setup.ui:25
-msgid "Welcome"
-msgstr "Bonvenon"
-
-#: data/ui/initial-setup.ui:40
-msgid "Log in to online accounts to access your tasks"
-msgstr "Saluti en retajn kontojn por atingi viajn taskojn"
-
-#: data/ui/initial-setup.ui:67
-msgid "To Do Setup"
-msgstr "Agordado de Taskoj"
-
-#: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
-#: data/ui/window.ui:74
-msgid "_Cancel"
-msgstr "_Nuligi"
-
-#: data/ui/initial-setup.ui:80
-msgid "_Done"
-msgstr "_Farita"
-
-#: data/ui/list-selector-panel.ui:79 data/ui/list-selector-panel.ui:173
-msgid "_Rename"
-msgstr "_Alinomi"
-
-#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:469
-msgid "Lists"
-msgstr "Listoj"
-
-#: data/ui/list-selector-panel.ui:129
-msgid "Tasks"
-msgstr "Taskoj"
-
-#: data/ui/list-selector-panel.ui:147
-msgid "Name of the task list"
-msgstr "Nomo de la taskolisto"
-
-#: data/ui/list-selector-panel.ui:263
-msgid "_New List"
-msgstr "_Nova listo"
-
-#: data/ui/list-view.ui:113
-msgid "Show or hide completed tasks"
-msgstr "Montri aŭ kaŝi plenumitajn taskojn"
-
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
-msgid "Done"
-msgstr "Farita"
-
-#: data/ui/new-task-row.ui:29
-msgid "New task…"
-msgstr "Nova tasko…"
-
-#: data/ui/plugin-dialog.ui:118
-msgid "No extensions found"
-msgstr "Neniu etendaĵo trovita"
-
-#: data/ui/provider-popover.ui:25
-msgid "Create _List"
-msgstr "Krei _liston"
-
-#: data/ui/provider-popover.ui:59
-msgid "List Name"
-msgstr "Listnomo"
-
-#: data/ui/provider-popover.ui:155
-msgid "Select a storage location"
-msgstr "Elekti konservan lokon"
-
-#: data/ui/provider-row.ui:70
-msgid "Off"
-msgstr "Malŝaltita"
-
-#: data/ui/provider-selector.ui:27
-msgid "Click to add a new Google account"
-msgstr "Alklaku por aldoni novan Google-konton"
-
-#: data/ui/provider-selector.ui:51
-msgid "Google"
-msgstr "Google"
-
-#: data/ui/provider-selector.ui:67
-msgid "Click to add a new ownCloud account"
-msgstr "Alklaku por aldoni novan ownCloud-konton"
-
-#: data/ui/provider-selector.ui:91
-msgid "ownCloud"
-msgstr "ownCloud"
-
-#: data/ui/provider-selector.ui:107
-msgid "Click to add a new Microsoft Exchange account"
-msgstr "Klaku por aldoni novan Microsoft-Exchange-konton"
-
-#: data/ui/provider-selector.ui:131
-msgid "Microsoft Exchange"
-msgstr "Microsoft Exchange"
-
-#: data/ui/provider-selector.ui:154
-msgid "Or you can just store your tasks on this computer"
-msgstr "Aŭ vi povas simple konservi viajn taskojn sur ĉi tiu komputilo"
-
-#: plugins/background/gtd-plugin-background.c:150
-#, c-format
-msgid "%1$s and one more task"
-msgid_plural "%1$s and %2$d other tasks"
-msgstr[0] "%1$s kaj unu cetera tasko"
-msgstr[1] "%1$s kaj %2$d ceteraj taskoj"
-
-#: plugins/background/gtd-plugin-background.c:249
-#, c-format
-msgid "You have %d task for today"
-msgid_plural "You have %d tasks for today"
-msgstr[0] "Vi havas %d taskon por hodiaŭ"
-msgstr[1] "Vi havas %d taskojn por hodiaŭ"
-
-#: plugins/background/org.gnome.todo.background.gschema.xml:6
-msgid "Run To Do on startup"
-msgstr "Lanĉi Taskojn dum startigo"
-
-#: plugins/background/org.gnome.todo.background.gschema.xml:7
-msgid "Whether GNOME To Do should run on startup"
-msgstr "Ĉu GNOME Taskoj devus lanĉi dum startigo"
-
-#: plugins/background/org.gnome.todo.background.gschema.xml:11
-msgid "Show notifications on startup"
-msgstr "Montri sciigojn dum startigo"
-
-#: plugins/background/org.gnome.todo.background.gschema.xml:12
-msgid "Whether GNOME To Do should show notifications or not"
-msgstr "Ĉu GNOME Taskoj devus montri sciigojn dum startigo"
-
-#: plugins/background/ui/preferences.ui:53
-msgid "Run on Startup"
-msgstr "Lanĉi dum startigo"
-
-#: plugins/background/ui/preferences.ui:66
-msgid "Run To Do automatically when you log in"
-msgstr "Lanĉi Taskojn aŭtomate kiam vi salutas"
-
-#: plugins/background/ui/preferences.ui:122
-msgid "Show Notifications"
-msgstr "Montri sciigojn"
-
-#: plugins/background/ui/preferences.ui:135
-msgid "When To Do runs, show a startup notification"
-msgstr "Kiam Taskoj rulas, montri startigan sciigon"
-
-#: plugins/eds/gtd-plugin-eds.c:201
-msgid "Error loading GNOME Online Accounts"
-msgstr "Eraro dum ŝargante GNOME Retajn Kontojn"
-
-#: plugins/eds/gtd-provider-eds.c:139
-msgid "Failed to connect to task list"
-msgstr "Malsukcesis konekti al taskolisto"
-
-#: plugins/eds/gtd-provider-eds.c:351
-msgid "An error occurred while creating a task"
-msgstr "Eraro dum kreado de tasko"
-
-#: plugins/eds/gtd-provider-eds.c:383
-msgid "An error occurred while modifying a task"
-msgstr "Eraro dum aliigo de tasko"
-
-#: plugins/eds/gtd-provider-eds.c:404
-msgid "An error occurred while removing a task"
-msgstr "Eraro dum forigo de tasko"
-
-#: plugins/eds/gtd-provider-eds.c:422
-msgid "An error occurred while creating a task list"
-msgstr "Eraro dum kreado de taskolisto"
-
-#: plugins/eds/gtd-provider-eds.c:444 plugins/eds/gtd-provider-eds.c:467
-msgid "An error occurred while modifying a task list"
-msgstr "Eraro dum forigo de taskolisto"
-
-#: plugins/eds/gtd-provider-local.c:50
-msgid "Local"
-msgstr "Loka"
-
-#: plugins/eds/gtd-provider-local.c:56
-msgid "On This Computer"
-msgstr "En ĉi tiu komputilo"
-
-#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:307
-#: plugins/eds/gtd-task-list-eds.c:331
-msgid "Error fetching tasks from list"
-msgstr "Eraro dum prenado de taskoj el listo"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-edit-pane.c:110
-msgid "No date set"
-msgstr "Neniu dato agordita"
-
-#. Translators: This message will never be used with '1 day ago'
-#. * but the singular form is required because some languages do not
-#. * have plurals, some languages reuse the singular form for numbers
-#. * like 21, 31, 41, etc.
-#.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
-#, c-format
-msgid "%d day ago"
-msgid_plural "%d days ago"
-msgstr[0] "Antaŭ %d tago"
-msgstr[1] "Antaŭ %d tagoj"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:147
-msgid "Yesterday"
-msgstr "Hieraŭ"
-
-#. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:118
-#: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:134
-#: plugins/today-panel/gtd-panel-today.c:139
-#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:139
-msgid "Today"
-msgstr "Hodiaŭ"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:122 src/gtd-task-row.c:143
-msgid "Tomorrow"
-msgstr "Morgaŭ"
-
-#. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:356
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:358
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:495
-msgid "Scheduled"
-msgstr "Planitaj"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:500
-#: plugins/today-panel/gtd-panel-today.c:278
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
-msgid "Clear completed tasks…"
-msgstr "Vakigi plenumitajn taskojn…"
-
-#: plugins/score/score/__init__.py:90
-msgid "No task completed today"
-msgstr "Neniu tasko plenumita hodiaŭ"
-
-#: plugins/todoist/gtd-provider-todoist.c:212
-msgid "Error fetching Todoist account key"
-msgstr "Eraro dum prenado de Todoist kontŝlosilo"
-
-#: plugins/todoist/gtd-provider-todoist.c:213
-msgid "Please ensure that Todoist account is correctly configured."
-msgstr "Bonvolu certigi ke Todoist konto estas ĝuste agordita."
-
-#: plugins/todoist/gtd-provider-todoist.c:557
-#, c-format
-msgid ""
-"GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
-msgstr "GNOME Taskoj ne havas la necesajn permesojn por fari ĉi tiun agon: %s"
-
-#: plugins/todoist/gtd-provider-todoist.c:565
-#, c-format
-msgid ""
-"Invalid response received from Todoist servers. Please reload GNOME To Do."
-msgstr ""
-"Ricevis nevalidan respondon de Todoist serviloj. Bonvolu reŝargi GNOME "
-"Taskojn."
-
-#: plugins/todoist/gtd-provider-todoist.c:865
-msgid "An error occurred while updating a Todoist task"
-msgstr "Eraro dum ĝisdatigo de Todoist tasko"
-
-#: plugins/todoist/gtd-provider-todoist.c:982
-msgid "An error occurred while retrieving Todoist data"
-msgstr "Eraro dum ricevado de Todoist tasko"
-
-#: plugins/todoist/gtd-provider-todoist.c:1057
-msgid "An error occurred while updating Todoist"
-msgstr "Eraro dum ĝisdatigo de Todoist"
-
-#: plugins/todoist/gtd-provider-todoist.c:1117
-msgid "Todoist"
-msgstr "Todoist"
-
-#: plugins/todoist/gtd-provider-todoist.c:1426
-#, c-format
-msgid "Todoist: %s"
-msgstr "Todoist: %s"
-
-#: plugins/todoist/ui/preferences.ui:81
-msgid "No Todoist accounts found"
-msgstr "Neniu Todoist konto trovita"
-
-#: plugins/todoist/ui/preferences.ui:90
-msgid "Add a Todoist account"
-msgstr "Aldoni Todoist konton"
-
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:87
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:124
-msgid "Cannot create Todo.txt file"
-msgstr "Ne povas krei Todo.txt-dosieron"
-
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:161
-msgid "Select a Todo.txt-formatted file:"
-msgstr "Elekti Todo.txt-formitan dosieron:"
-
-#. Filechooser
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:165
-msgid "Select a file"
-msgstr "Elekti dosieron"
-
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:191
-msgid "Error opening Todo.txt file"
-msgstr "Eraro dum malfermado de Todo.txt-dosiero"
-
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:201
-msgid ""
-"<b>Warning!</b> Todo.txt support is experimental and unstable. You may "
-"experience instability, errors and eventually data loss. It is not "
-"recommended to use Todo.txt integration on production systems."
-msgstr ""
-"<b>Averto!</b> Todo.txt-subteno estas eksperimenta kaj nestabila. Vi povas "
-"sperti nestabilecon, erarojn, kaj eble perdon de datumoj. Ni ne rekomendas "
-"al vi uzi Todo.txt-integrigon en produkta sistemo."
-
-#: plugins/todo-txt/gtd-provider-todo-txt.c:326
-msgid "Error while opening the file monitor. Todo.txt will not be monitored"
-msgstr "Eraro dum malfermado de dosiermonitoro. Todo.txt ne monitoriĝos"
-
-#: plugins/todo-txt/gtd-provider-todo-txt.c:395
-msgid "Todo.txt"
-msgstr "Todo.txt"
-
-#: plugins/todo-txt/gtd-provider-todo-txt.c:401
-msgid "On the Todo.txt file"
-msgstr "Je la Todo.txt-dosiero"
-
-#: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:6
-msgid "Todo.txt File"
-msgstr "Todo.txt-dosiero"
-
-#: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:7
-msgid "Source of the Todo.txt file"
-msgstr "Fonto de la Todo.txt-dosiero"
-
-#. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:103
-msgid "Unscheduled"
-msgstr "Neplanitaj"
-
-#. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:106
-#, python-format
-msgid "Unscheduled (%d)"
-msgstr "Neplanitaj (%d)"
-
-#: src/gtd-application.c:72
+#: src/gtd-application.c:76
 msgid "Quit GNOME To Do"
 msgstr "Ĉesigi GNOME Taskojn"
 
-#: src/gtd-application.c:73
+#: src/gtd-application.c:77
 msgid "Enable debug messages"
 msgstr "Ŝalti sencimigajn mesaĝojn"
 
-#: src/gtd-application.c:146
-#, c-format
-msgid "Copyright © %1$d The To Do authors"
-msgstr "Kopirajto © %1$d La aŭtoroj de Taskoj"
+#: src/gtd-application.c:147
+msgid "Copyright © 2015–2018 The To Do authors"
+msgstr "Kopirajto © 2015–2018 La aŭtoroj de Taskoj"
 
-#: src/gtd-application.c:151
-#, c-format
-msgid "Copyright © %1$d–%2$d The To Do authors"
-msgstr "Kopirajto © %1$d–%2$d La aŭtoroj de Taskoj"
-
-#: src/gtd-application.c:163
+#: src/gtd-application.c:152
 msgid "translator-credits"
 msgstr ""
 "Kristjan SCHMIDT\n"
 "Daniel PUENTES\n"
 "Carmen Bianca BAKKER <carmen@carmenbianca.eu>"
 
-#: src/gtd-empty-list-widget.c:51
-msgid "No more tasks left"
-msgstr "Neniu cetera tasko"
+#: src/gtd-initial-setup-window.ui:20
+msgid "Welcome"
+msgstr "Bonvenon"
 
-#: src/gtd-empty-list-widget.c:52
-msgid "Nothing else to do here"
-msgstr "Neniu farenda ĉi tie"
+#: src/gtd-initial-setup-window.ui:31
+msgid "Log in to online accounts to access your tasks"
+msgstr "Saluti en retajn kontojn por atingi viajn taskojn"
 
-#: src/gtd-empty-list-widget.c:53
-msgid "You made it!"
-msgstr "Vi faris ĝin!"
+#: src/gtd-initial-setup-window.ui:53
+msgid "To Do Setup"
+msgstr "Agordado de Taskoj"
 
-#: src/gtd-empty-list-widget.c:54
-msgid "Looks like there’s nothing else left here"
-msgstr "Ŝajnas, ke jam neniu farendas ĉi tie"
+#: src/gtd-initial-setup-window.ui:56 src/provider/gtd-provider-popover.ui:43
+msgid "_Cancel"
+msgstr "_Nuligi"
 
-#: src/gtd-empty-list-widget.c:59
-msgid "Get some rest now"
-msgstr "Prenu reston nun"
-
-#: src/gtd-empty-list-widget.c:60
-msgid "Enjoy the rest of your day"
-msgstr "Ĝuu vi la ceteron de via tago"
-
-#: src/gtd-empty-list-widget.c:61
-msgid "Good job!"
-msgstr "Bona laboro!"
-
-#: src/gtd-empty-list-widget.c:62
-msgid "Meanwhile, spread the love"
-msgstr "Dumtempe, kunhavigu la amon"
-
-#: src/gtd-empty-list-widget.c:63
-msgid "Working hard is always rewarded"
-msgstr "Labori diligente ĉiam rekompenciĝas"
-
-#: src/gtd-empty-list-widget.c:74
-msgid "No tasks found"
-msgstr "Neniu tasko trovita"
-
-#: src/gtd-empty-list-widget.c:75
-msgid "You can add tasks using the <b>+</b> above"
-msgstr "Vi povas aldoni taskojn uzante la supra <b>+</b>"
+#: src/gtd-initial-setup-window.ui:65
+msgid "_Done"
+msgstr "_Farita"
 
 #: src/gtd-plugin-dialog-row.c:97
 msgid "Error loading extension"
@@ -621,72 +167,670 @@ msgstr "Eraro dum ŝargado de etendaĵo"
 msgid "Error unloading extension"
 msgstr "Eraro dum malŝargado de etendaĵo"
 
-#: src/gtd-task-list-view.c:292
-msgid "Removing this task will also remove its subtasks. Remove anyway?"
+#: src/gtd-plugin-dialog.ui:58 src/gtd-window.ui:146
+msgid "Extensions"
+msgstr "Etendaĵoj"
+
+#: src/gtd-plugin-dialog.ui:96
+msgid "No extensions found"
+msgstr "Neniu etendaĵo trovita"
+
+#: src/gtd-window.c:105
+msgid ""
+"This is a development build of To Do. You may experience errors, wrong "
+"behaviors, and data loss."
 msgstr ""
-"Forigado de ĉi tiu tasko ankaŭ forigos ĝiajn subtaskojn. Ĉu tamen forigi ĝin?"
+"Ĉi tio estas verka versio de Taskoj. Povas esti, ke vi spertu erarojn, "
+"malbonan konduton, kaj datumperdon."
 
-#: src/gtd-task-list-view.c:295
-msgid "Once removed, the tasks cannot be recovered."
-msgstr "Kiam forigitaj, la taskoj ne restaŭreblas."
+#: src/gtd-window.c:409
+msgid "Details"
+msgstr "Detaloj"
 
-#: src/gtd-task-list-view.c:298 src/views/gtd-list-selector-panel.c:388
-msgid "Cancel"
-msgstr "Nuligi"
+#: src/gtd-window.ui:152
+msgid "_About To Do"
+msgstr "Pri Taskoj"
 
-#: src/gtd-task-list-view.c:300
-msgid "Remove"
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:140
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:103
+#: src/task-list-view/gtd-edit-pane.c:93
+msgid "No date set"
+msgstr "Neniu dato agordita"
+
+#. Translators: This message will never be used with '1 day ago'
+#. * but the singular form is required because some languages do not
+#. * have plurals, some languages reuse the singular form for numbers
+#. * like 21, 31, 41, etc.
+#.
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:125
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:116
+#, c-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "Antaŭ %d tago"
+msgstr[1] "Antaŭ %d tagoj"
+
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:120
+#: src/task-list-view/gtd-task-row.c:138
+msgid "Yesterday"
+msgstr "Hieraŭ"
+
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:152
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:124
+#: src/plugins/today-panel/gtd-panel-today.c:177
+#: src/plugins/today-panel/gtd-panel-today.c:293
+#: src/task-list-view/gtd-task-row.c:130
+msgid "Today"
+msgstr "Hodiaŭ"
+
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:156
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:128
+#: src/task-list-view/gtd-task-row.c:134
+msgid "Tomorrow"
+msgstr "Morgaŭ"
+
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:333
+msgid "All"
+msgstr "Ĉiuj"
+
+#: src/plugins/background/gtd-plugin-background.c:238
+#, c-format
+msgid "%1$s and one more task"
+msgid_plural "%1$s and %2$d other tasks"
+msgstr[0] "%1$s kaj unu cetera tasko"
+msgstr[1] "%1$s kaj %2$d ceteraj taskoj"
+
+#: src/plugins/background/gtd-plugin-background.c:342
+#, c-format
+msgid "You have %d task for today"
+msgid_plural "You have %d tasks for today"
+msgstr[0] "Vi havas %d taskon por hodiaŭ"
+msgstr[1] "Vi havas %d taskojn por hodiaŭ"
+
+#: src/plugins/background/org.gnome.todo.background.gschema.xml:6
+msgid "Run To Do on startup"
+msgstr "Lanĉi Taskojn dum startigo"
+
+#: src/plugins/background/org.gnome.todo.background.gschema.xml:7
+msgid "Whether GNOME To Do should run on startup"
+msgstr "Ĉu GNOME Taskoj devus lanĉi dum startigo"
+
+#: src/plugins/background/org.gnome.todo.background.gschema.xml:11
+msgid "Show notifications on startup"
+msgstr "Montri sciigojn dum startigo"
+
+#: src/plugins/background/org.gnome.todo.background.gschema.xml:12
+msgid "Whether GNOME To Do should show notifications or not"
+msgstr "Ĉu GNOME Taskoj devus montri sciigojn dum startigo"
+
+#: src/plugins/background/ui/preferences.ui:41
+msgid "Run on Startup"
+msgstr "Lanĉi dum startigo"
+
+#: src/plugins/background/ui/preferences.ui:52
+msgid "Run To Do automatically when you log in"
+msgstr "Lanĉi Taskojn aŭtomate kiam vi salutas"
+
+#: src/plugins/background/ui/preferences.ui:101
+msgid "Show Notifications"
+msgstr "Montri sciigojn"
+
+#: src/plugins/background/ui/preferences.ui:112
+msgid "When To Do runs, show a startup notification"
+msgstr "Kiam Taskoj rulas, montri startigan sciigon"
+
+#: src/plugins/eds/gtd-plugin-eds.c:183
+msgid "Error loading GNOME Online Accounts"
+msgstr "Eraro dum ŝargante GNOME Retajn Kontojn"
+
+#: src/plugins/eds/gtd-provider-eds.c:190
+msgid "Failed to connect to task list"
+msgstr "Malsukcesis konekti al taskolisto"
+
+#: src/plugins/eds/gtd-provider-local.c:50
+msgid "On This Computer"
+msgstr "En ĉi tiu komputilo"
+
+#: src/plugins/eds/gtd-provider-local.c:62
+msgid "Local"
+msgstr "Loka"
+
+#: src/plugins/eds/gtd-task-list-eds.c:499
+#: src/plugins/eds/gtd-task-list-eds.c:526
+#: src/plugins/eds/gtd-task-list-eds.c:550
+msgid "Error fetching tasks from list"
+msgstr "Eraro dum prenado de taskoj el listo"
+
+#: src/plugins/eds/gtd-task-list-eds.c:932
+#: src/plugins/inbox-panel/gtd-inbox-panel.c:111
+msgid "Inbox"
+msgstr "Enirkesto"
+
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:148
+#: src/plugins/today-panel/gtd-panel-today.c:168
+msgid "Overdue"
+msgstr "Posttempa"
+
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:386
+msgid "Next 7 Days"
+msgstr "Sekvaj 7 tagoj"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:56
+msgid "Did you drink some water today?"
+msgstr "Ĉu vi trinkis akvon hodiaŭ?"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:57
+#| msgid "You have %d task for today"
+#| msgid_plural "You have %d tasks for today"
+msgid "What are your goals for today?"
+msgstr "Kiuj celoj vi havas por hodiaŭ?"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:58
+#, fuzzy
+msgid "Can you let your creativity flow?"
+msgstr "Ĉu vi povas lasi flui vian kreativecon?"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:59
+msgid "How are you feeling right now?"
+msgstr "Kiel vi fartas nun?"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:60
+msgid "At what point is it good enough?"
+msgstr "Je kiu punkto ĝi estas sufiĉe bone?"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:65
+msgid "Remember to breath. Good. Don't stop."
+msgstr "Memoru spriri. Bone. Ne ĉesu."
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:66
+msgid "Don't forget to drink some water"
+msgstr "N forgesu trinki akvon"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:67
+msgid "Remember to take some time off"
+msgstr "Memoru fari paŭzan tempon"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:68
+msgid "Eat fruits if you can 🍐️"
+msgstr "Manĝu fruktojn se vi povas 🍐️"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:69
+msgid "Take care of yourself"
+msgstr "Zorgu pri vi mem"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:70
+msgid "Remember to have some fun"
+msgstr "Memoru amuziĝi"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:71
+#, fuzzy
+msgid "You're doing great"
+msgstr "Vi faras bonege"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:76
+msgid "Smile, breathe and go slowly"
+msgstr "Redetu, spiru kaj iru malrapide"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:77
+msgid "Wherever you go, there you are"
+msgstr "Kien ajn vi iras, tie vi estas"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:78
+#: src/widgets/gtd-empty-list-widget.c:63
+msgid "Working hard is always rewarded"
+msgstr "Labori diligente ĉiam rekompenciĝas"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:79
+msgid "Keep calm"
+msgstr "Restu trankvila"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:80
+#, fuzzy
+#| msgid "You made it!"
+msgid "You can do it"
+msgstr "Vi povas fari ĝin"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:81
+#| msgid "Meanwhile, spread the love"
+msgid "Meanwhile, spread the love ♥️"
+msgstr "Dumtempe, kunhavigu la amon ♥️"
+
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:343
+msgid "Scheduled"
+msgstr "Planitaj"
+
+#: src/plugins/task-lists-workspace/gtd-sidebar.c:422
+#, c-format
+msgid "Task list <b>%s</b> removed"
+msgstr "Taskolisto <b>%s</b> forigita"
+
+#: src/plugins/task-lists-workspace/gtd-sidebar.c:425
+#: src/task-list-view/gtd-task-list-view.c:478
+msgid "Undo"
+msgstr "Malfari"
+
+#: src/plugins/task-lists-workspace/gtd-sidebar-provider-row.ui:69
+msgid "Loading…"
+msgstr "Ŝargante…"
+
+#. Translators: 'archived' as in 'archived task lists'
+#: src/plugins/task-lists-workspace/gtd-sidebar.ui:94
+msgid "Archived"
+msgstr "Arĥivigita"
+
+#: src/plugins/task-lists-workspace/gtd-sidebar.ui:146
+msgid "No archived lists"
+msgstr "Neniu arĥivigita listo"
+
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.c:208
+msgid "Unarchive"
+msgstr "Malarĥivigi"
+
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.c:208
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:48
+msgid "Archive"
+msgstr "Arĥivigi"
+
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.c:233
+#| msgid "An error occurred while creating a task"
+msgid "An error occurred while updating a task"
+msgstr "Eraro aperis dum ĝidatigo de tasko"
+
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:33
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:77
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:92
+msgid "Rename"
+msgstr "Alinomi"
+
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:39
+#: src/plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
+msgid "Clear completed tasks…"
+msgstr "Vakigi plenumitajn taskojn…"
+
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:54
+msgid "Delete"
 msgstr "Forigi"
 
-#: src/gtd-task-list-view.c:390
-#, c-format
-msgid "Done (%d)"
-msgstr "Farita (%d)"
+#: src/plugins/task-lists-workspace/gtd-task-lists-workspace.c:298
+#| msgid "Lists"
+msgid "Task Lists"
+msgstr "Tasklistoj"
 
-#: src/gtd-task-list-view.c:660
+#: src/plugins/task-lists-workspace/gtd-task-lists-workspace.ui:43
+msgid "New List"
+msgstr "Nova listo"
+
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:53
+#: src/widgets/gtd-empty-list-widget.c:51
+msgid "No more tasks left"
+msgstr "Neniu cetera tasko"
+
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:54
+#: src/widgets/gtd-empty-list-widget.c:52
+msgid "Nothing else to do here"
+msgstr "Neniu farenda ĉi tie"
+
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:55
+#: src/widgets/gtd-empty-list-widget.c:53
+msgid "You made it!"
+msgstr "Vi faris ĝin!"
+
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:56
+#: src/widgets/gtd-empty-list-widget.c:54
+msgid "Looks like there’s nothing else left here"
+msgstr "Ŝajnas, ke jam neniu farendas ĉi tie"
+
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:69
+#, c-format
+#| msgid "You have %d task for today"
+#| msgid_plural "You have %d tasks for today"
+msgid "%d task for today"
+msgid_plural "%d tasks for today"
+msgstr[0] "%d tasko por hodiaŭ"
+msgstr[1] "%d taskoj por hodiaŭ"
+
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:84
+#| msgid "No task completed today"
+msgid "No tasks scheduled for today"
+msgstr "Neniu tasko por hodiaŭ"
+
+#: src/plugins/todoist/gtd-plugin-todoist.c:109
+msgid "GNOME To Do cannot connect to Todoist due to network issue"
+msgstr "GNOME Taskoj ne povas konekti al Todoist pro retproblemo"
+
+#: src/plugins/todoist/gtd-plugin-todoist.c:110
+msgid ""
+"Not able to communicate with Todoist. Please check your internet "
+"connectivity."
+msgstr "Ne eblas komuniki kun Todoist. Bonvolu kontrili vian retkonekton."
+
+#: src/plugins/todoist/gtd-provider-todoist.c:213
+msgid "Error fetching Todoist account key"
+msgstr "Eraro dum prenado de Todoist kontŝlosilo"
+
+#: src/plugins/todoist/gtd-provider-todoist.c:214
+msgid "Please ensure that Todoist account is correctly configured."
+msgstr "Bonvolu certigi ke Todoist konto estas ĝuste agordita."
+
+#: src/plugins/todoist/gtd-provider-todoist.c:555
+#, c-format
+msgid ""
+"GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
+msgstr "GNOME Taskoj ne havas la necesajn permesojn por fari ĉi tiun agon: %s"
+
+#: src/plugins/todoist/gtd-provider-todoist.c:563
+#, c-format
+msgid ""
+"Invalid response received from Todoist servers. Please reload GNOME To Do."
+msgstr ""
+"Ricevis nevalidan respondon de Todoist serviloj. Bonvolu reŝargi GNOME "
+"Taskojn."
+
+#: src/plugins/todoist/gtd-provider-todoist.c:850
+msgid "An error occurred while updating a Todoist task"
+msgstr "Eraro aperis dum ĝisdatigo de Todoist tasko"
+
+#: src/plugins/todoist/gtd-provider-todoist.c:965
+msgid "An error occurred while retrieving Todoist data"
+msgstr "Eraro aperis dum ricevado de Todoist-datumoj"
+
+#: src/plugins/todoist/gtd-provider-todoist.c:1040
+msgid "An error occurred while updating Todoist"
+msgstr "Eraro aperis dum ĝisdatigo de Todoist"
+
+#: src/plugins/todoist/gtd-provider-todoist.c:1100
+msgid "Todoist"
+msgstr "Todoist"
+
+#: src/plugins/todoist/gtd-provider-todoist.c:1411
+#, c-format
+msgid "Todoist: %s"
+msgstr "Todoist: %s"
+
+#: src/plugins/todoist/ui/preferences.ui:65
+msgid "No Todoist accounts found"
+msgstr "Neniu Todoist konto trovita"
+
+#: src/plugins/todoist/ui/preferences.ui:74
+msgid "Add a Todoist account"
+msgstr "Aldoni Todoist konton"
+
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:87
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:124
+msgid "Cannot create Todo.txt file"
+msgstr "Ne povas krei Todo.txt-dosieron"
+
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:161
+msgid "Select a Todo.txt-formatted file:"
+msgstr "Elekti Todo.txt-formitan dosieron:"
+
+#. Filechooser
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:165
+msgid "Select a file"
+msgstr "Elekti dosieron"
+
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:191
+msgid "Error opening Todo.txt file"
+msgstr "Eraro dum malfermado de Todo.txt-dosiero"
+
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:201
+msgid ""
+"<b>Warning!</b> Todo.txt support is experimental and unstable. You may "
+"experience instability, errors and eventually data loss. It is not "
+"recommended to use Todo.txt integration on production systems."
+msgstr ""
+"<b>Averto!</b> Todo.txt-subteno estas eksperimenta kaj nestabila. Vi povas "
+"sperti nestabilecon, erarojn, kaj eble perdon de datumoj. Ni ne rekomendas "
+"al vi uzi Todo.txt-integrigon en produkta sistemo."
+
+#: src/plugins/todo-txt/gtd-provider-todo-txt.c:574
+msgid "Error while opening the file monitor. Todo.txt will not be monitored"
+msgstr "Eraro dum malfermado de dosiermonitoro. Todo.txt ne monitoriĝos"
+
+#: src/plugins/todo-txt/gtd-provider-todo-txt.c:643
+msgid "Todo.txt"
+msgstr "Todo.txt"
+
+#: src/plugins/todo-txt/gtd-provider-todo-txt.c:655
+msgid "On the Todo.txt file"
+msgstr "Je la Todo.txt-dosiero"
+
+#: src/plugins/todo-txt/org.gnome.todo.txt.gschema.xml:6
+msgid "Todo.txt File"
+msgstr "Todo.txt-dosiero"
+
+#: src/plugins/todo-txt/org.gnome.todo.txt.gschema.xml:7
+msgid "Source of the Todo.txt file"
+msgstr "Fonto de la Todo.txt-dosiero"
+
+#. Translators: 'Unscheduled' as in 'Unscheduled tasks'
+#: src/plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
+#: src/plugins/unscheduled-panel/unscheduled-panel/__init__.py:112
+msgid "Unscheduled"
+msgstr "Neplanitaj"
+
+#. Translators: 'Unscheduled' as in 'Unscheduled tasks'
+#: src/plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
+#, python-format
+msgid "Unscheduled (%d)"
+msgstr "Neplanitaj (%d)"
+
+#: src/provider/gtd-provider-popover.c:97
+msgid "An error occurred while creating a task list"
+msgstr "Eraro aperis dum kreado de taskolisto"
+
+#: src/provider/gtd-provider-popover.ui:26
+msgid "Create _List"
+msgstr "Krei _liston"
+
+#: src/provider/gtd-provider-popover.ui:56
+msgid "List Name"
+msgstr "Listnomo"
+
+#: src/provider/gtd-provider-popover.ui:133
+msgid "Select a storage location"
+msgstr "Elekti konservan lokon"
+
+#: src/provider/gtd-provider-row.ui:60
+msgid "Off"
+msgstr "Malŝaltita"
+
+#: src/provider/gtd-provider-selector.ui:19
+msgid "Click to add a new Google account"
+msgstr "Alklaku por aldoni novan Google-konton"
+
+#: src/provider/gtd-provider-selector.ui:35
+msgid "Google"
+msgstr "Google"
+
+#: src/provider/gtd-provider-selector.ui:45
+msgid "Click to add a new ownCloud account"
+msgstr "Alklaku por aldoni novan ownCloud-konton"
+
+#: src/provider/gtd-provider-selector.ui:61
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: src/provider/gtd-provider-selector.ui:71
+msgid "Click to add a new Microsoft Exchange account"
+msgstr "Klaku por aldoni novan Microsoft-Exchange-konton"
+
+#: src/provider/gtd-provider-selector.ui:87
+msgid "Microsoft Exchange"
+msgstr "Microsoft Exchange"
+
+#: src/provider/gtd-provider-selector.ui:100
+msgid "Or you can just store your tasks on this computer"
+msgstr "Aŭ vi povas simple konservi viajn taskojn sur ĉi tiu komputilo"
+
+#: src/task-list-view/gtd-edit-pane.ui:16
+msgid "D_ue Date"
+msgstr "L_imdato"
+
+#: src/task-list-view/gtd-edit-pane.ui:30
+msgid "_Today"
+msgstr "_Hodiaŭ"
+
+#: src/task-list-view/gtd-edit-pane.ui:39
+msgid "To_morrow"
+msgstr "_Morgaŭ"
+
+#: src/task-list-view/gtd-edit-pane.ui:75
+msgid "_Notes"
+msgstr "_Notoj"
+
+#: src/task-list-view/gtd-edit-pane.ui:121
+msgid "_Delete"
+msgstr "_Forigi"
+
+#: src/task-list-view/gtd-edit-pane.ui:158
+msgctxt "taskdate"
+msgid "None"
+msgstr "Neniu"
+
+#. Translators: %1$s is the task list name, %2$s is the provider name
+#: src/task-list-view/gtd-new-task-row.c:90
+#, c-format
+msgid "%1$s \t <small>%2$s</small>"
+msgstr "%1$s \t <small>%2$s</small>"
+
+#: src/task-list-view/gtd-new-task-row.c:127
+msgid "An error occurred while creating a task"
+msgstr "Eraro aperis dum kreado de tasko"
+
+#: src/task-list-view/gtd-new-task-row.ui:13
+msgid "New task…"
+msgstr "Nova tasko…"
+
+#: src/task-list-view/gtd-task-list-view.c:459
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Tasko <b>%s</b> forigita"
 
-#: src/gtd-task-list-view.c:684
-msgid "Undo"
-msgstr "Malfari"
+#: src/widgets/gtd-empty-list-widget.c:59
+msgid "Get some rest now"
+msgstr "Prenu reston nun"
 
-#: src/gtd-window.c:476
-msgid "Details"
-msgstr "Detaloj"
+#: src/widgets/gtd-empty-list-widget.c:60
+msgid "Enjoy the rest of your day"
+msgstr "Ĝuu vi la ceteron de via tago"
 
-#: src/gtd-window.c:689
-msgid "Loading your task lists…"
-msgstr "Ŝarĝante viajn taskolistojn…"
+#: src/widgets/gtd-empty-list-widget.c:61
+msgid "Good job!"
+msgstr "Bona laboro!"
 
-#: src/gtd-window.c:793
-msgid "Click a task list to select"
-msgstr "Alklaku elektotan taskoliston"
+#: src/widgets/gtd-empty-list-widget.c:62
+msgid "Meanwhile, spread the love"
+msgstr "Dumtempe, kunhavigu la amon"
 
-#.
-#. * If there's no task available, draw a "No tasks" string at
-#. * the middle of the list thumbnail.
-#.
-#: src/views/gtd-list-selector-grid-item.c:250
-msgid "No tasks"
-msgstr "Neniu tasko"
+#: src/widgets/gtd-empty-list-widget.c:74
+msgid "No tasks found"
+msgstr "Neniu tasko trovita"
 
-#: src/views/gtd-list-selector-panel.c:381
-msgid "Remove the selected task lists?"
-msgstr "Ĉu forigi la elektatajn taskolistojn?"
+#: src/widgets/gtd-empty-list-widget.c:75
+msgid "You can add tasks using the <b>+</b> above"
+msgstr "Vi povas aldoni taskojn uzante la supra <b>+</b>"
 
-#: src/views/gtd-list-selector-panel.c:384
-msgid "Once removed, the task lists cannot be recovered."
-msgstr "Kiam forigitaj, la taskolistoj ne restaŭreblas."
+#~ msgid "The current list selector"
+#~ msgstr "La nuna list-elektanto"
 
-#: src/views/gtd-list-selector-panel.c:396
-msgid "Remove task lists"
-msgstr "Forigi taskolistojn"
+#~ msgid "The current list selector. Can be “grid” or “list”."
+#~ msgstr ""
+#~ "La nuna list-elektanto. Povas esti “grid” (krado) aŭ “list” (listo)."
 
-#: src/views/gtd-list-selector-panel.c:709
-msgid "Clear completed tasks"
-msgstr "Vakigi plenumitajn taskojn"
+#~ msgid "An error occurred while modifying a task"
+#~ msgstr "Eraro dum aliigo de tasko"
+
+#~ msgid "An error occurred while removing a task"
+#~ msgstr "Eraro dum forigo de tasko"
+
+#~ msgid "An error occurred while modifying a task list"
+#~ msgstr "Eraro dum forigo de taskolisto"
+
+#~ msgid "Click a task list to select"
+#~ msgstr "Alklaku elektotan taskoliston"
+
+#~ msgid "_Quit"
+#~ msgstr "Ĉ_esi"
+
+#~ msgid "org.gnome.Todo"
+#~ msgstr "org.gnome.Todo"
+
+#~ msgid "Window position"
+#~ msgstr "Fenestra pozicio"
+
+#~ msgid "Window position (x and y)."
+#~ msgstr "Fenestra pozicio (x kaj y)."
+
+#~ msgid "_Priority"
+#~ msgstr "_Prioritato"
+
+#~ msgctxt "taskpriority"
+#~ msgid "None"
+#~ msgstr "Neniu"
+
+#~ msgid "Low"
+#~ msgstr "Malalta"
+
+#~ msgid "Medium"
+#~ msgstr "Meza"
+
+#~ msgid "High"
+#~ msgstr "Alta"
+
+#~ msgid "Tasks"
+#~ msgstr "Taskoj"
+
+#~ msgid "Name of the task list"
+#~ msgstr "Nomo de la taskolisto"
+
+#~ msgid "Show or hide completed tasks"
+#~ msgstr "Montri aŭ kaŝi plenumitajn taskojn"
+
+#~ msgid "Done"
+#~ msgstr "Farita"
+
+#~ msgid "Copyright © %1$d The To Do authors"
+#~ msgstr "Kopirajto © %1$d La aŭtoroj de Taskoj"
+
+#~ msgid "Removing this task will also remove its subtasks. Remove anyway?"
+#~ msgstr ""
+#~ "Forigado de ĉi tiu tasko ankaŭ forigos ĝiajn subtaskojn. Ĉu tamen forigi "
+#~ "ĝin?"
+
+#~ msgid "Once removed, the tasks cannot be recovered."
+#~ msgstr "Kiam forigitaj, la taskoj ne restaŭreblas."
+
+#~ msgid "Cancel"
+#~ msgstr "Nuligi"
+
+#~ msgid "Remove"
+#~ msgstr "Forigi"
+
+#~ msgid "Done (%d)"
+#~ msgstr "Farita (%d)"
+
+#~ msgid "Loading your task lists…"
+#~ msgstr "Ŝarĝante viajn taskolistojn…"
+
+#~ msgid "No tasks"
+#~ msgstr "Neniu tasko"
+
+#~ msgid "Remove the selected task lists?"
+#~ msgstr "Ĉu forigi la elektatajn taskolistojn?"
+
+#~ msgid "Once removed, the task lists cannot be recovered."
+#~ msgstr "Kiam forigitaj, la taskolistoj ne restaŭreblas."
+
+#~ msgid "Remove task lists"
+#~ msgstr "Forigi taskolistojn"
+
+#~ msgid "Clear completed tasks"
+#~ msgstr "Vakigi plenumitajn taskojn"
 
 #~ msgid "New List…"
 #~ msgstr "Nova listo…"
