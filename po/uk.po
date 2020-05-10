@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-05-03 02:26+0000\n"
+"POT-Creation-Date: 2020-05-05 00:47+0000\n"
 "PO-Revision-Date: 2020-05-03 09:50+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,7 +23,7 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
-#: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:140
+#: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:143
 #: src/gtd-omni-area.ui:42 src/main.c:35
 msgid "To Do"
 msgstr "Треба зробити"
@@ -127,19 +127,19 @@ msgstr "Показано бічну панель"
 msgid "Whether the sidebar is revealed or not"
 msgstr "Чи буде показано бічну панель"
 
-#: src/gtd-application.c:73
+#: src/gtd-application.c:76
 msgid "Quit GNOME To Do"
 msgstr "Закрити GNOME To Do"
 
-#: src/gtd-application.c:74
+#: src/gtd-application.c:77
 msgid "Enable debug messages"
 msgstr "Увімкнути зневаджувальні повідомлення"
 
-#: src/gtd-application.c:144
+#: src/gtd-application.c:147
 msgid "Copyright © 2015–2018 The To Do authors"
 msgstr "© 2015–2018 автори To Do"
 
-#: src/gtd-application.c:149
+#: src/gtd-application.c:152
 msgid "translator-credits"
 msgstr "Daniel Korostil <ted.korostiled@gmail.com>"
 
@@ -171,7 +171,7 @@ msgstr "Помилка завантаження додатка"
 msgid "Error unloading extension"
 msgstr "Помилка під час розвантаження розширення"
 
-#: src/gtd-plugin-dialog.ui:58 src/gtd-window.ui:147
+#: src/gtd-plugin-dialog.ui:58 src/gtd-window.ui:146
 msgid "Extensions"
 msgstr "Розширення"
 
@@ -191,7 +191,7 @@ msgstr ""
 msgid "Details"
 msgstr "Подробиці"
 
-#: src/gtd-window.ui:153
+#: src/gtd-window.ui:152
 msgid "_About To Do"
 msgstr "_Про програму"
 
@@ -439,7 +439,6 @@ msgid "Archive"
 msgstr "Архівувати"
 
 #: src/plugins/task-lists-workspace/gtd-task-list-panel.c:233
-#| msgid "An error occurred while creating a task"
 msgid "An error occurred while updating a task"
 msgstr "Під час оновлення завдання сталася помилка"
 
@@ -619,6 +618,10 @@ msgstr "Не заплановано"
 msgid "Unscheduled (%d)"
 msgstr "Не заплановано (%d)"
 
+#: src/provider/gtd-provider-popover.c:97
+msgid "An error occurred while creating a task list"
+msgstr "Під час створення списку завдань сталася помилка"
+
 #: src/provider/gtd-provider-popover.ui:26
 msgid "Create _List"
 msgstr "Створити _список"
@@ -679,11 +682,11 @@ msgstr "За_втра"
 msgid "_Notes"
 msgstr "_Примітки"
 
-#: src/task-list-view/gtd-edit-pane.ui:120
+#: src/task-list-view/gtd-edit-pane.ui:121
 msgid "_Delete"
 msgstr "_Вилучити"
 
-#: src/task-list-view/gtd-edit-pane.ui:157
+#: src/task-list-view/gtd-edit-pane.ui:158
 msgctxt "taskdate"
 msgid "None"
 msgstr "Немає"
@@ -730,27 +733,3 @@ msgstr "Не знайдено жодного завдання"
 #: src/widgets/gtd-empty-list-widget.c:75
 msgid "You can add tasks using the <b>+</b> above"
 msgstr "Можете додавати завдання за допомогою <b>+</b> зверху"
-
-#~ msgid "An error occurred while modifying a task"
-#~ msgstr "Під час редагування завдання сталася помилка"
-
-#~ msgid "An error occurred while removing a task"
-#~ msgstr "Під час вилучення завдання сталася помилка"
-
-#~ msgid "An error occurred while creating a task list"
-#~ msgstr "Під час створення списку завдань сталася помилка"
-
-#~ msgid "An error occurred while modifying a task list"
-#~ msgstr "Під час редагування списку завдань сталася помилка"
-
-#~ msgid "No task completed today"
-#~ msgstr "Не виконано жодного завдання за сьогодні"
-
-#~ msgid "The current list selector"
-#~ msgstr "Поточний вибір переліку"
-
-#~ msgid "The current list selector. Can be “grid” or “list”."
-#~ msgstr "Поточний вибір переліку. Може бути «ґратка» або «список»."
-
-#~ msgid "Click a task list to select"
-#~ msgstr "Натисніть на список завдань, щоб вибрати"
