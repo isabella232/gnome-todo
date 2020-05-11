@@ -3,8 +3,6 @@ stamp-h1
 .flatpak-builder/
 **/*.valid
 _build
-.gitlab
-.gitlab-ci.yml
 .gitignore
 .editorconfig
 .buildconfig
