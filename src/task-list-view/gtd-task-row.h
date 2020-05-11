@@ -37,8 +37,6 @@ void                      gtd_task_row_set_list_name_visible    (GtdTaskRow     
 void                      gtd_task_row_set_due_date_visible     (GtdTaskRow          *row,
                                                                  gboolean             show_due_date);
 
-void                      gtd_task_row_destroy                  (GtdTaskRow          *row);
-
 gboolean                  gtd_task_row_get_handle_subtasks      (GtdTaskRow          *self);
 
 void                      gtd_task_row_set_handle_subtasks      (GtdTaskRow          *self,

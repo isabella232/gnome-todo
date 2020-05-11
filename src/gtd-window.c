@@ -156,7 +156,7 @@ error_message_notification_secondary_action (GtdNotification *notification,
 
   g_signal_connect (message_dialog,
                     "response",
-                    G_CALLBACK (gtk_widget_destroy),
+                    G_CALLBACK (gtk_window_destroy),
                     NULL);
 
   gtk_widget_show (message_dialog);

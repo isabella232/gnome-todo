@@ -359,7 +359,7 @@ on_panel_removed_cb (GtdManager *manager,
   g_debug ("Removing panel '%s'", gtd_panel_get_panel_name (panel));
 
   if (row)
-    gtk_widget_destroy (GTK_WIDGET (row));
+    gtk_container_remove (GTK_CONTAINER (self->listbox), GTK_WIDGET (row));
 }
 
 static void
@@ -553,10 +553,10 @@ on_provider_removed_cb (GtdManager  *manager,
   g_debug ("Removing provider '%s'", gtd_provider_get_name (provider));
 
   row = get_row_for_provider (self, self->listbox, provider);
-  gtk_widget_destroy (GTK_WIDGET (row));
+  gtk_container_remove (GTK_CONTAINER (self->listbox), GTK_WIDGET (row));
 
   row = get_row_for_provider (self, self->archive_listbox, provider);
-  gtk_widget_destroy (GTK_WIDGET (row));
+  gtk_container_remove (GTK_CONTAINER (self->archive_listbox), GTK_WIDGET (row));
 }
 
 
@@ -598,7 +598,7 @@ on_task_list_changed_cb (GtdManager  *manager,
         activate_appropriate_row (self, row);
 
       /* Destroy the old row */
-      gtk_widget_destroy (GTK_WIDGET (row));
+      gtk_container_remove (GTK_CONTAINER (listbox), GTK_WIDGET (row));
 
       /* Add a new row */
       add_task_list (self, list);
@@ -629,7 +629,7 @@ on_task_list_removed_cb (GtdManager  *manager,
   if (!row)
     return;
 
-  gtk_widget_destroy (GTK_WIDGET (row));
+  gtk_widget_unparent (GTK_WIDGET (row));
   gtk_list_box_invalidate_filter (listbox);
 }
 

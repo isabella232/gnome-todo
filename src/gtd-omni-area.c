@@ -244,7 +244,7 @@ gtd_omni_area_withdraw_message (GtdOmniArea *self,
 
   g_debug ("Removing message '%s' from Omni Area", id);
 
-  gtk_widget_destroy (widget);
+  gtk_container_remove (GTK_CONTAINER (self->status_stack), widget);
 
   l = g_queue_find_custom (self->messages, id, (GCompareFunc) g_strcmp0);
   g_queue_delete_link (self->messages, l);

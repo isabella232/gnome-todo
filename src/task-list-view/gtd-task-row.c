@@ -801,20 +801,6 @@ gtd_task_row_set_due_date_visible (GtdTaskRow *row,
   gtk_widget_set_visible (GTK_WIDGET (row->task_date_label), show_due_date);
 }
 
-/**
- * gtd_task_row_destroy:
- * @self: a #GtdTaskRow
- *
- * Destroy @self after hiding it.
- */
-void
-gtd_task_row_destroy (GtdTaskRow *self)
-{
-  g_return_if_fail (GTD_IS_TASK_ROW (self));
-
-  gtk_widget_destroy (GTK_WIDGET (self));
-}
-
 gboolean
 gtd_task_row_get_handle_subtasks (GtdTaskRow *self)
 {

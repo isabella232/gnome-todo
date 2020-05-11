@@ -45,7 +45,7 @@ struct _GtdApplication
 
   GtdThemeManager       *theme_manager;
 
-  GtkWidget             *window;
+  GtkWindow             *window;
   GtkWidget             *plugin_dialog;
   GtkWidget             *initial_setup;
 };
@@ -160,7 +160,7 @@ gtd_application_quit (GSimpleAction *simple,
 {
   GtdApplication *self = GTD_APPLICATION (user_data);
 
-  gtk_widget_destroy (self->window);
+  gtk_window_destroy (self->window);
 }
 
 GtdApplication *
@@ -265,7 +265,7 @@ gtd_application_startup (GApplication *application)
 
   /* window */
   gtk_window_set_default_icon_name (APPLICATION_ID);
-  self->window = gtd_window_new (self);
+  self->window = GTK_WINDOW (gtd_window_new (self));
 
   /* plugin dialog */
   self->plugin_dialog = gtd_plugin_dialog_new ();
