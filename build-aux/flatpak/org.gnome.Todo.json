@@ -1,5 +1,5 @@
 {
-    "app-id" : "org.gnome.TodoDevel",
+    "app-id" : "org.gnome.Todo.Devel",
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "master",
     "sdk" : "org.gnome.Sdk",
@@ -7,7 +7,6 @@
     "tags" : [
         "devel"
     ],
-    "desktop-file-name-suffix" : " (Nightly)",
     "finish-args" : [
         "--device=dri",
         "--share=ipc",

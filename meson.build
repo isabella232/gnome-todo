@@ -44,16 +44,16 @@ cc = meson.get_compiler('c')
 if get_option('profile') == 'development'
   profile = 'Devel'
   name_suffix = ' (Development)'
+  application_id = 'org.gnome.Todo.Devel'
 else
   profile = ''
   name_suffix = ''
+  application_id = 'org.gnome.Todo'
 endif
 
 config_h = configuration_data()
 
 config_h.set_quoted('GETTEXT_PACKAGE', meson.project_name())
-
-application_id = 'org.gnome.Todo@0@'.format(profile)
 
 # development build
 config_h.set('DEVELOPMENT_BUILD', gnome_todo_minor_version.is_odd() or profile == 'Devel')
