@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-05-05 00:47+0000\n"
-"PO-Revision-Date: 2020-05-03 09:50+0300\n"
+"POT-Creation-Date: 2020-05-12 00:30+0000\n"
+"PO-Revision-Date: 2020-05-12 09:15+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -24,7 +24,7 @@ msgstr ""
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
 #: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:143
-#: src/gtd-omni-area.ui:42 src/main.c:35
+#: src/gtd-omni-area.ui:44 src/main.c:38
 msgid "To Do"
 msgstr "Треба зробити"
 
@@ -39,14 +39,15 @@ msgid ""
 "todos on your computer or sync them with cloud providers. Customize your "
 "experience with plugins."
 msgstr ""
-"GNOME To Do — проста програма для керування завданнями, яка інтегрована з "
+"«Треба зробити GNOME» — проста програма для керування завданнями, яка"
+" інтегрована з "
 "GNOME. Зберігайте та впорядковуйте завдання. Організовуйте кілька списків. "
 "Зберігайте їх на комп'ютері та синхронізовуйте з хмарними службами. "
 "Розширюйте можливості через додатки."
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:25
 msgid "GNOME To Do with the dark theme variant"
-msgstr "GNOME To Do з темною темою"
+msgstr "«Треба зробити GNOME» з темною темою"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:29
 msgid "Editing a tasklist with GNOME To Do"
@@ -136,8 +137,9 @@ msgid "Enable debug messages"
 msgstr "Увімкнути зневаджувальні повідомлення"
 
 #: src/gtd-application.c:147
-msgid "Copyright © 2015–2018 The To Do authors"
-msgstr "© 2015–2018 автори To Do"
+#| msgid "Copyright © 2015–2018 The To Do authors"
+msgid "Copyright © 2015–2020 The To Do authors"
+msgstr "© Автори «Треба зробити», 2015–2020"
 
 #: src/gtd-application.c:152
 msgid "translator-credits"
@@ -187,7 +189,7 @@ msgstr ""
 "Це розробницька збірка To Do. Можливі помилки, неочікувана поведінка і "
 "втрати даних."
 
-#: src/gtd-window.c:411
+#: src/gtd-window.c:409
 msgid "Details"
 msgstr "Подробиці"
 
@@ -412,7 +414,7 @@ msgid "Task list <b>%s</b> removed"
 msgstr "Завдання <b>%s</b> вилучено"
 
 #: src/plugins/task-lists-workspace/gtd-sidebar.c:425
-#: src/task-list-view/gtd-task-list-view.c:479
+#: src/task-list-view/gtd-task-list-view.c:478
 msgid "Undo"
 msgstr "Повернути"
 
@@ -692,20 +694,20 @@ msgid "None"
 msgstr "Немає"
 
 #. Translators: %1$s is the task list name, %2$s is the provider name
-#: src/task-list-view/gtd-new-task-row.c:91
+#: src/task-list-view/gtd-new-task-row.c:90
 #, c-format
 msgid "%1$s \t <small>%2$s</small>"
 msgstr "%1$s \t <small>%2$s</small>"
 
-#: src/task-list-view/gtd-new-task-row.c:128
+#: src/task-list-view/gtd-new-task-row.c:127
 msgid "An error occurred while creating a task"
 msgstr "Під час створення завдання сталася помилка"
 
-#: src/task-list-view/gtd-new-task-row.ui:14
+#: src/task-list-view/gtd-new-task-row.ui:13
 msgid "New task…"
 msgstr "Створити завдання…"
 
-#: src/task-list-view/gtd-task-list-view.c:460
+#: src/task-list-view/gtd-task-list-view.c:459
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Завдання <b>%s</b> вилучено"
