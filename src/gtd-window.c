@@ -283,11 +283,10 @@ on_action_toggle_fullscreen_state_changed_cb (GSimpleAction *simple,
   gtk_header_bar_set_show_title_buttons (self->headerbar, !fullscreen);
 
   g_object_ref (self->headerbar);
-  gtk_widget_unparent (GTK_WIDGET (self->headerbar));
-
   if (fullscreen)
     {
       gtk_event_controller_set_propagation_phase (self->overlay_motion_controller, GTK_PHASE_BUBBLE);
+      gtk_container_remove (GTK_CONTAINER (self->headerbar_box), GTK_WIDGET (self->headerbar));
       gtk_revealer_set_child (self->headerbar_overlay_revealer, GTK_WIDGET (self->headerbar));
       gtk_revealer_set_reveal_child (self->headerbar_overlay_revealer, TRUE);
       gtk_window_fullscreen (GTK_WINDOW (self));
@@ -297,7 +296,8 @@ on_action_toggle_fullscreen_state_changed_cb (GSimpleAction *simple,
   else
     {
       gtk_event_controller_set_propagation_phase (self->overlay_motion_controller, GTK_PHASE_NONE);
-      //gtk_revealer_set_reveal_child (self->headerbar_overlay_revealer, FALSE);
+      gtk_revealer_set_child (self->headerbar_overlay_revealer, NULL);
+      gtk_revealer_set_reveal_child (self->headerbar_overlay_revealer, FALSE);
       gtk_container_add (GTK_CONTAINER (self->headerbar_box), GTK_WIDGET (self->headerbar));
       gtk_window_unfullscreen (GTK_WINDOW (self));
     }
