@@ -128,6 +128,7 @@
 
         <child>
           <object class="GtkListBox" id="workspaces_listbox">
+            <property name="hexpand">true</property>
             <property name="selection-mode">none</property>
             <signal name="row-activated" handler="on_workspaces_listbox_row_activated_cb" object="GtdWindow" swapped="no" />
             <style>
