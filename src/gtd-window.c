@@ -727,10 +727,3 @@ gtd_window_embed_widget_in_header (GtdWindow       *self,
   GTD_EXIT;
 
 }
-
-/* Private functions */
-void
-_gtd_window_finish_startup (GtdWindow *self)
-{
-  g_return_if_fail (GTD_IS_WINDOW (self));
-}

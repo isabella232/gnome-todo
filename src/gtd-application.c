@@ -275,13 +275,6 @@ gtd_application_startup (GApplication *application)
   /* Load the plugins */
   gtd_manager_load_plugins (gtd_manager_get_default ());
 
-  /*
-   * This will select select the first panel of the sidebar, since
-   * at this point the panels are already loaded and the sidebar has
-   * all the rows set up.
-   */
-  _gtd_window_finish_startup (GTD_WINDOW (self->window));
-
   GTD_EXIT;
 }
 
