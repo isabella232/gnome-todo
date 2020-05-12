@@ -30,7 +30,7 @@ struct _GtdProviderSelector
 {
   GtkBox                     parent;
 
-  GtkWidget                 *listbox;
+  GtkListBox                *listbox;
   GtkWidget                 *local_check;
 
   /* stub rows */
@@ -39,7 +39,6 @@ struct _GtdProviderSelector
   GtkWidget                 *owncloud_stub_row;
   GtkWidget                 *local_row;
 
-  gint                      select_default : 1;
   gint                      show_local_provider : 1;
   gint                      show_stub_rows : 1;
 };
@@ -48,7 +47,6 @@ G_DEFINE_TYPE (GtdProviderSelector, gtd_provider_selector, GTK_TYPE_BOX)
 
 enum {
   PROP_0,
-  PROP_SELECT_DEFAULT,
   PROP_SHOW_LOCAL,
   PROP_SHOW_STUB_ROWS,
   LAST_PROP
@@ -91,33 +89,44 @@ display_header_func (GtkListBoxRow *row,
 }
 
 static void
+unselect_rows (GtdProviderSelector *self)
+{
+  GtkWidget *child;
+
+  for (child = gtk_widget_get_first_child (GTK_WIDGET (self->listbox));
+       child;
+       child = gtk_widget_get_next_sibling (child))
+    {
+      if (GTD_IS_PROVIDER_ROW (child))
+        gtd_provider_row_set_selected (GTD_PROVIDER_ROW (child), FALSE);
+    }
+}
+
+static void
 default_provider_changed_cb (GtdProviderSelector *selector)
 {
   GtdProvider *current;
   GtdManager *manager;
-  GList *children;
-  GList *l;
-
-  if (!selector->select_default)
-    return;
+  GtkWidget *child;
 
   manager = gtd_manager_get_default ();
   current = gtd_manager_get_default_provider (manager);
-  children = gtk_container_get_children (GTK_CONTAINER (selector->listbox));
 
-  for (l = children; l != NULL; l = l->next)
+  for (child = gtk_widget_get_first_child (GTK_WIDGET (selector->listbox));
+       child;
+       child = gtk_widget_get_next_sibling (child))
     {
+      GtdProviderRow *provider_row;
       GtdProvider *provider;
 
-      if (!GTD_IS_PROVIDER_ROW (l->data))
+      if (!GTD_IS_PROVIDER_ROW (child))
         continue;
 
-      provider = gtd_provider_row_get_provider (l->data);
+      provider_row = GTD_PROVIDER_ROW (child);
+      provider = gtd_provider_row_get_provider (provider_row);
 
-      gtd_provider_row_set_selected (l->data, provider == current);
+      gtd_provider_row_set_selected (provider_row, provider == current);
     }
-
-  g_list_free (children);
 
   g_signal_emit (selector, signals[PROVIDER_SELECTED], 0, current);
 }
@@ -144,17 +153,10 @@ gtd_provider_selector__listbox_row_activated (GtdProviderSelector *selector,
   else
     {
       GtdProvider *provider;
-      GList *children;
-      GList *l;
 
-      children = gtk_container_get_children (GTK_CONTAINER (selector->listbox));
       provider = gtd_provider_row_get_provider (GTD_PROVIDER_ROW (row));
 
-      for (l = children; l != NULL; l = l->next)
-        {
-          if (GTD_IS_PROVIDER_ROW (l->data))
-            gtd_provider_row_set_selected (l->data, FALSE);
-        }
+      unselect_rows (selector);
 
       /*
        * If the account has it's calendars disabled, we cannot let it
@@ -170,8 +172,6 @@ gtd_provider_selector__listbox_row_activated (GtdProviderSelector *selector,
         {
           spawn ((gchar*) gtd_provider_get_id (provider), NULL);
         }
-
-      g_list_free (children);
     }
 }
 
@@ -190,19 +190,10 @@ gtd_provider_selector__check_toggled (GtdProviderSelector *selector,
   if (gtk_toggle_button_get_active (check))
     {
       GtdProvider *local_provider;
-      GList *children;
-      GList *l;
 
-      children = gtk_container_get_children (GTK_CONTAINER (selector->listbox));
       local_provider = gtd_provider_row_get_provider (GTD_PROVIDER_ROW (selector->local_row));
 
-      for (l = children; l != NULL; l = l->next)
-        {
-          if (GTD_IS_PROVIDER_ROW (l->data))
-            gtd_provider_row_set_selected (l->data, FALSE);
-        }
-
-      g_list_free (children);
+      unselect_rows (selector);
 
       /*
        * Sets the provider location to "local", and don't unset it if the
@@ -220,8 +211,7 @@ static void
 remove_provider (GtdProviderSelector *selector,
                  GtdProvider         *provider)
 {
-  GList *children;
-  GList *l;
+  GtkWidget *child;
   gint exchange;
   gint google;
   gint owncloud;
@@ -229,23 +219,27 @@ remove_provider (GtdProviderSelector *selector,
   g_return_if_fail (GTD_IS_PROVIDER_SELECTOR (selector));
   g_return_if_fail (GTD_IS_PROVIDER (provider));
 
-  children = gtk_container_get_children (GTK_CONTAINER (selector->listbox));
   exchange = google = owncloud = 0;
 
-  for (l = children; l != NULL; l = l->next)
+  for (child = gtk_widget_get_first_child (GTK_WIDGET (selector->listbox));
+       child;
+       child = gtk_widget_get_next_sibling (child))
     {
+      GtdProviderRow *provider_row;
       GtdProvider *row_provider;
       const gchar *provider_id;
 
-      if (!GTD_IS_PROVIDER_ROW (l->data))
+      if (!GTD_IS_PROVIDER_ROW (child))
         continue;
 
-      row_provider = gtd_provider_row_get_provider (l->data);
+      provider_row = GTD_PROVIDER_ROW (child);
+
+      row_provider = gtd_provider_row_get_provider (provider_row);
       provider_id = gtd_provider_get_id (row_provider);
 
       if (row_provider == provider)
         {
-          gtk_container_remove (GTK_CONTAINER (selector->listbox), l->data);
+          gtk_list_box_remove (selector->listbox, child);
         }
       else
         {
@@ -261,8 +255,6 @@ remove_provider (GtdProviderSelector *selector,
   gtk_widget_set_visible (selector->exchange_stub_row, exchange == 0);
   gtk_widget_set_visible (selector->google_stub_row, google == 0);
   gtk_widget_set_visible (selector->owncloud_stub_row, owncloud == 0);
-
-  g_list_free (children);
 }
 
 static void
@@ -280,7 +272,7 @@ add_provider (GtdProviderSelector *selector,
 
   g_debug ("Adding provider %s", provider_id);
 
-  gtk_container_add (GTK_CONTAINER (selector->listbox), row);
+  gtk_list_box_insert (selector->listbox, row, -1);
 
   /* track the local provider row */
   if (g_str_has_prefix (provider_id, "local") == 0)
@@ -290,11 +282,8 @@ add_provider (GtdProviderSelector *selector,
     }
 
   /* Auto selects the default provider row when needed */
-  if (selector->select_default &&
-      !gtd_provider_selector_get_selected_provider (selector))
-    {
-      gtd_provider_selector_set_selected_provider (selector, provider);
-    }
+  if (!gtd_provider_selector_get_selected_provider (selector))
+    gtd_provider_selector_set_selected_provider (selector, provider);
 
   /* hide the related stub row */
   if (g_str_has_prefix (provider_id, "exchange") == 0)
@@ -377,10 +366,6 @@ gtd_provider_selector_get_property (GObject    *object,
 
   switch (prop_id)
     {
-    case PROP_SELECT_DEFAULT:
-      g_value_set_boolean (value, self->select_default);
-      break;
-
     case PROP_SHOW_LOCAL:
       g_value_set_boolean (value, self->show_local_provider);
       break;
@@ -404,10 +389,6 @@ gtd_provider_selector_set_property (GObject      *object,
 
   switch (prop_id)
     {
-    case PROP_SELECT_DEFAULT:
-      gtd_provider_selector_set_select_default (self, g_value_get_boolean (value));
-      break;
-
     case PROP_SHOW_LOCAL:
       gtd_provider_selector_show_local (self, g_value_get_boolean (value));
       break;
@@ -475,20 +456,6 @@ gtd_provider_selector_class_init (GtdProviderSelectorClass *klass)
                               "Show stub rows",
                               "Whether should show stub rows for non-added accounts",
                               TRUE,
-                              G_PARAM_READWRITE));
-
-  /**
-   * GtdProviderSelector::select-default:
-   *
-   * Whether it should auto selects the default provider location row.
-   */
-  g_object_class_install_property (
-        object_class,
-        PROP_SELECT_DEFAULT,
-        g_param_spec_boolean ("select-default",
-                              "Selects default provider row",
-                              "Whether should select the default provider row",
-                              FALSE,
                               G_PARAM_READWRITE));
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/provider/gtd-provider-selector.ui");
@@ -572,69 +539,6 @@ gtd_provider_selector_show_local (GtdProviderSelector *selector,
 }
 
 /**
- * gtd_provider_selector_get_select_default:
- * @selector: a #GtdProviderSelector
- *
- * Whether the default provider location is selected by default.
- *
- * Returns: %TRUE if the default provider location is selected automatically,
- * %FALSE otherwise.
- */
-gboolean
-gtd_provider_selector_get_select_default (GtdProviderSelector *selector)
-{
-  g_return_val_if_fail (GTD_IS_PROVIDER_SELECTOR (selector), FALSE);
-
-  return selector->select_default;
-}
-
-/**
- * gtd_provider_selector_set_select_default:
- * @selector: a #GtdProviderSelector
- * @select_default: %TRUE to auto select the default provider location.
- *
- * Whether @selector should select the default provider location by default.
- */
-void
-gtd_provider_selector_set_select_default (GtdProviderSelector *selector,
-                                         gboolean            select_default)
-{
-  g_return_if_fail (GTD_IS_PROVIDER_SELECTOR (selector));
-
-  if (selector->select_default != select_default)
-    {
-      selector->select_default = select_default;
-
-      if (select_default)
-        {
-          GList *children;
-          GList *l;
-
-          /* Select the appropriate row */
-          children = gtk_container_get_children (GTK_CONTAINER (selector->listbox));
-
-          for (l = children; l != NULL; l = l->next)
-            {
-              if (GTD_IS_PROVIDER_ROW (l->data))
-                {
-                  GtdProvider *provider = gtd_provider_row_get_provider (l->data);
-
-                  if (FALSE)//gtd_provider_get_is_default (provider))
-                    {
-                      gtd_provider_row_set_selected (l->data, TRUE);
-                      g_signal_emit (selector, signals[PROVIDER_SELECTED], 0, provider);
-                    }
-                }
-            }
-
-          g_list_free (children);
-        }
-
-      g_object_notify (G_OBJECT (selector), "select-default");
-    }
-}
-
-/**
  * gtd_provider_selector_get_selected_provider:
  * @selector: a #GtdProviderSelector
  *
@@ -647,24 +551,28 @@ GtdProvider*
 gtd_provider_selector_get_selected_provider (GtdProviderSelector *selector)
 {
   GtdProvider *provider;
-  GList *children;
-  GList *l;
+  GtkWidget *child;
 
   g_return_val_if_fail (GTD_IS_PROVIDER_SELECTOR (selector), NULL);
 
   provider = NULL;
-  children = gtk_container_get_children (GTK_CONTAINER (selector->listbox));
 
-  for (l = children; l != NULL; l = l->next)
+  for (child = gtk_widget_get_first_child (GTK_WIDGET (selector->listbox));
+       child;
+       child = gtk_widget_get_next_sibling (child))
     {
-      if (GTD_IS_PROVIDER_ROW (l->data) && gtd_provider_row_get_selected (l->data))
+      GtdProviderRow *provider_row;
+
+      if (!GTD_IS_PROVIDER_ROW (child))
+        continue;
+
+      provider_row = GTD_PROVIDER_ROW (child);
+      if (gtd_provider_row_get_selected (provider_row))
         {
-          provider = gtd_provider_row_get_provider (l->data);
+          provider = gtd_provider_row_get_provider (provider_row);
           break;
         }
     }
-
-  g_list_free (children);
 
   return provider;
 }
@@ -680,23 +588,24 @@ void
 gtd_provider_selector_set_selected_provider (GtdProviderSelector *selector,
                                            GtdProvider         *provider)
 {
-  GList *children;
-  GList *l;
+  GtkWidget *child;
 
   g_return_if_fail (GTD_IS_PROVIDER_SELECTOR (selector));
 
-  children = gtk_container_get_children (GTK_CONTAINER (selector->listbox));
-
-  for (l = children; l != NULL; l = l->next)
+  for (child = gtk_widget_get_first_child (GTK_WIDGET (selector->listbox));
+       child;
+       child = gtk_widget_get_next_sibling (child))
     {
-      if (!GTD_IS_PROVIDER_ROW (l->data))
+      GtdProviderRow *provider_row;
+
+      if (!GTD_IS_PROVIDER_ROW (child))
         continue;
 
-      gtd_provider_row_set_selected (l->data, gtd_provider_row_get_provider (l->data) == provider);
+      provider_row = GTD_PROVIDER_ROW (child);
+      gtd_provider_row_set_selected (provider_row,
+                                     gtd_provider_row_get_provider (provider_row) == provider);
       g_signal_emit (selector, signals[PROVIDER_SELECTED], 0, provider);
     }
-
-  g_list_free (children);
 }
 
 /**
@@ -740,22 +649,23 @@ gtd_provider_selector_set_show_stub_rows (GtdProviderSelector *selector,
        */
       if (show_stub_rows)
         {
-          GList *children;
-          GList *l;
+          GtkWidget *child;
           gint google_counter;
           gint exchange_counter;
           gint owncloud_counter;
 
-          children = gtk_container_get_children (GTK_CONTAINER (selector->listbox));
           google_counter = 0;
           exchange_counter = 0;
           owncloud_counter = 0;
 
-          for (l = children; l != NULL; l = l->next)
+
+          for (child = gtk_widget_get_first_child (GTK_WIDGET (selector->listbox));
+               child;
+               child = gtk_widget_get_next_sibling (child))
             {
-              if (GTD_IS_PROVIDER_ROW (l->data))
+              if (GTD_IS_PROVIDER_ROW (child))
                 {
-                  GtdProvider *provider = gtd_provider_row_get_provider (l->data);
+                  GtdProvider *provider = gtd_provider_row_get_provider (GTD_PROVIDER_ROW (child));
                   const gchar *type;
 
                   type = gtd_provider_get_id (provider);
@@ -772,8 +682,6 @@ gtd_provider_selector_set_show_stub_rows (GtdProviderSelector *selector,
           gtk_widget_set_visible (selector->google_stub_row, google_counter == 0);
           gtk_widget_set_visible (selector->exchange_stub_row, exchange_counter == 0);
           gtk_widget_set_visible (selector->owncloud_stub_row, owncloud_counter == 0);
-
-          g_list_free (children);
         }
       else
         {

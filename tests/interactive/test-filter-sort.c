@@ -130,10 +130,10 @@ create_task_cb (gpointer item,
 
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 16);
 
-  gtk_container_add (GTK_CONTAINER (box), create_label_for_string (gtd_task_get_title (task)));
+  gtk_box_append (GTK_BOX (box), create_label_for_string (gtd_task_get_title (task)));
 
   row = gtk_list_box_row_new ();
-  gtk_container_add (GTK_CONTAINER (row), box);
+  gtk_list_box_row_set_child (GTK_LIST_BOX_ROW (row), box);
 
   g_object_set_data (G_OBJECT (row), "task", task);
 
@@ -248,7 +248,7 @@ main (gint   argc,
                                  "max-content-height", 600,
                                  "hscrollbar-policy", GTK_POLICY_NEVER,
                                  NULL);
-  gtk_container_add (GTK_CONTAINER (scrolledwindow), listbox);
+  gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolledwindow), listbox);
 
   /* Search entry */
   search_entry = gtk_search_entry_new ();
@@ -268,19 +268,19 @@ main (gint   argc,
 
   /* Horizontal box */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_container_add (GTK_CONTAINER (hbox), search_entry);
-  gtk_container_add (GTK_CONTAINER (hbox), check);
-  gtk_container_add (GTK_CONTAINER (hbox), button);
+  gtk_box_append (GTK_BOX (hbox), search_entry);
+  gtk_box_append (GTK_BOX (hbox), check);
+  gtk_box_append (GTK_BOX (hbox), button);
 
   /* Box */
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_add (GTK_CONTAINER (vbox), hbox);
-  gtk_container_add (GTK_CONTAINER (vbox), scrolledwindow);
+  gtk_box_append (GTK_BOX (vbox), hbox);
+  gtk_box_append (GTK_BOX (vbox), scrolledwindow);
 
   /* Window */
   window = GTK_WINDOW (gtk_window_new ());
   gtk_window_set_default_size (window, 800, 600);
-  gtk_container_add (GTK_CONTAINER (window), vbox);
+  gtk_window_set_child (GTK_WINDOW (window), vbox);
   gtk_window_present (window);
 
   while (TRUE)

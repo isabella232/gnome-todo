@@ -74,7 +74,7 @@ main (gint   argc,
     }
 
   window = GTK_WINDOW (gtk_window_new ());
-  gtk_container_add (GTK_CONTAINER (window), grid);
+  gtk_window_set_child (window, grid);
   gtk_window_present (window);
 
   while (TRUE)

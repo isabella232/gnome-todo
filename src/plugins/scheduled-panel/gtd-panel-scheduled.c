@@ -1,6 +1,6 @@
 /* gtd-panel-scheduled.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -169,7 +169,7 @@ create_label (const gchar *text,
 
   box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
-  gtk_container_add (GTK_CONTAINER (box), label);
+  gtk_box_append (GTK_BOX (box), label);
 
   return box;
 }
@@ -485,7 +485,7 @@ gtd_panel_scheduled_init (GtdPanelScheduled *self)
 
   gtk_widget_set_hexpand (GTK_WIDGET (self->view), TRUE);
   gtk_widget_set_vexpand (GTK_WIDGET (self->view), TRUE);
-  gtk_container_add (GTK_CONTAINER (self), GTK_WIDGET (self->view));
+  gtk_box_append (GTK_BOX (self), GTK_WIDGET (self->view));
 
   gtd_task_list_view_set_header_func (self->view,
                                       (GtdTaskListViewHeaderFunc) header_func,

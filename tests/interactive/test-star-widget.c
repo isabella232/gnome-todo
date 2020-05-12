@@ -43,7 +43,7 @@ main (gint   argc,
   /* Window */
   window = GTK_WINDOW (gtk_window_new ());
   gtk_window_set_default_size (window, 200, 150);
-  gtk_container_add (GTK_CONTAINER (window), start_widget);
+  gtk_window_set_child (window, start_widget);
   gtk_window_present (window);
 
   while (TRUE)

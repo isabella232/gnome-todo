@@ -444,7 +444,7 @@ gtd_panel_today_init (GtdPanelToday *self)
 
   gtk_widget_set_hexpand (GTK_WIDGET (self->view), TRUE);
   gtk_widget_set_vexpand (GTK_WIDGET (self->view), TRUE);
-  gtk_container_add (GTK_CONTAINER (self), GTK_WIDGET (self->view));
+  gtk_box_append (GTK_BOX (self), GTK_WIDGET (self->view));
 
   gtd_task_list_view_set_header_func (self->view, header_func, self);
 

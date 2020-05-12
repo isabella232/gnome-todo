@@ -255,7 +255,7 @@ gtd_inbox_panel_init (GtdInboxPanel *self)
 
   gtk_widget_set_hexpand (GTK_WIDGET (self->view), TRUE);
   gtk_widget_set_vexpand (GTK_WIDGET (self->view), TRUE);
-  gtk_container_add (GTK_CONTAINER (self), GTK_WIDGET (self->view));
+  gtk_box_append (GTK_BOX (self), GTK_WIDGET (self->view));
 
   g_signal_connect_object (self->filter_model,
                            "items-changed",

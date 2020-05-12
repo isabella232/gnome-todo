@@ -33,8 +33,8 @@ struct _GtdPluginDialog
 
   GtkWidget          *back_button;
   GtkWidget          *extension_list_placeholder;
-  GtkWidget          *frame;
-  GtkWidget          *listbox;
+  GtkFrame           *frame;
+  GtkListBox         *listbox;
   GtkWidget          *stack;
 };
 
@@ -60,12 +60,12 @@ show_preferences_cb (GtdPluginDialogRow *row,
   GtkWidget *panel;
 
   /* First, remove the old panel */
-  old_panel = gtk_widget_get_first_child (self->frame);
+  old_panel = gtk_frame_get_child (self->frame);
 
   if (old_panel)
     {
       g_object_ref (old_panel);
-      gtk_container_remove (GTK_CONTAINER (self->frame), old_panel);
+      gtk_frame_set_child (GTK_FRAME (self->frame), NULL);
     }
 
   /* Second, setup the new panel */
@@ -74,7 +74,7 @@ show_preferences_cb (GtdPluginDialogRow *row,
 
   if (panel)
     {
-      gtk_container_add (GTK_CONTAINER (self->frame), panel);
+      gtk_frame_set_child (self->frame, panel);
       gtk_widget_show (panel);
     }
 
@@ -102,7 +102,7 @@ add_plugin (GtdPluginDialog *dialog,
                     G_CALLBACK (show_preferences_cb),
                     dialog);
 
-  gtk_container_add (GTK_CONTAINER (dialog->listbox), row);
+  gtk_list_box_insert (dialog->listbox, row, -1);
 }
 
 static void
@@ -112,35 +112,30 @@ plugin_loaded (GtdPluginManager *manager,
                GtdPluginDialog  *self)
 {
   gboolean contains_plugin;
-  GList *children;
-  GList *l;
+  GtkWidget *child;
 
   contains_plugin = FALSE;
-  children = gtk_container_get_children (GTK_CONTAINER (self->listbox));
 
-  for (l = children; l != NULL; l = l->next)
+  for (child = gtk_widget_get_first_child (GTK_WIDGET (self->listbox));
+       child;
+       child = gtk_widget_get_next_sibling (child))
     {
-      GtdPluginDialogRow *row = l->data;
+      if (!GTD_IS_PLUGIN_DIALOG_ROW (child) ||
+          gtd_plugin_dialog_row_get_info (GTD_PLUGIN_DIALOG_ROW (child)) != info)
+        {
+          continue;
+        }
 
-      if (!GTD_IS_PLUGIN_DIALOG_ROW (row) || gtd_plugin_dialog_row_get_info (row) != info)
-        continue;
-
-      gtd_plugin_dialog_row_set_plugin (l->data, activatable);
+      gtd_plugin_dialog_row_set_plugin (GTD_PLUGIN_DIALOG_ROW (child), activatable);
       contains_plugin = TRUE;
       break;
     }
-
-  g_list_free (children);
 
   /* If we just loaded a plugin that is not yet added
    * to the plugin list, we shall do it now.
    */
   if (!contains_plugin)
-    {
-      add_plugin (self,
-                  info,
-                  activatable);
-    }
+    add_plugin (self, info, activatable);
 }
 
 static void
@@ -149,23 +144,21 @@ plugin_unloaded (GtdPluginManager *manager,
                  GtdActivatable   *activatable,
                  GtdPluginDialog  *self)
 {
-  GList *children;
-  GList *l;
+  GtkWidget *child;
 
-  children = gtk_container_get_children (GTK_CONTAINER (self->listbox));
 
-  for (l = children; l != NULL; l = l->next)
+  for (child = gtk_widget_get_first_child (GTK_WIDGET (self->listbox));
+       child;
+       child = gtk_widget_get_next_sibling (child))
     {
-      GtdPluginDialogRow *row = l->data;
+      if (!GTD_IS_PLUGIN_DIALOG_ROW (child) ||
+          gtd_plugin_dialog_row_get_info (GTD_PLUGIN_DIALOG_ROW (child)) != info)
+        {
+          continue;
+        }
 
-      if (!GTD_IS_PLUGIN_DIALOG_ROW (row) || gtd_plugin_dialog_row_get_info (row) != info)
-        continue;
-
-      gtd_plugin_dialog_row_set_plugin (l->data, NULL);
-      break;
+      gtd_plugin_dialog_row_set_plugin (GTD_PLUGIN_DIALOG_ROW (child), NULL);
     }
-
-  g_list_free (children);
 }
 
 static gint

@@ -1353,23 +1353,21 @@ gtd_task_list_view_set_show_list_name (GtdTaskListView *view,
 
   if (view->priv->show_list_name != show_list_name)
     {
-      GList *children;
-      GList *l;
+      GtkWidget *child;
 
       view->priv->show_list_name = show_list_name;
 
-      /* update current children */
-      children = gtk_container_get_children (GTK_CONTAINER (view->priv->listbox));
-
-      for (l = children; l != NULL; l = l->next)
+      for (child = gtk_widget_get_first_child (GTK_WIDGET (view->priv->listbox));
+           child;
+           child = gtk_widget_get_next_sibling (child))
         {
-          if (!GTD_IS_TASK_ROW (l->data))
+          GtkWidget *row_child = gtk_list_box_row_get_child (GTK_LIST_BOX_ROW (child));
+
+          if (!GTD_IS_TASK_ROW (row_child))
             continue;
 
-          gtd_task_row_set_list_name_visible (l->data, show_list_name);
+          gtd_task_row_set_list_name_visible (GTD_TASK_ROW (row_child), show_list_name);
         }
-
-      g_list_free (children);
 
       g_object_notify (G_OBJECT (view), "show-list-name");
     }
@@ -1404,8 +1402,7 @@ gtd_task_list_view_set_show_due_date (GtdTaskListView *self,
                                       gboolean         show_due_date)
 {
   GtdTaskListViewPrivate *priv;
-  GList *children;
-  GList *l;
+  GtkWidget *child;
 
   g_return_if_fail (GTD_IS_TASK_LIST_VIEW (self));
 
@@ -1416,17 +1413,17 @@ gtd_task_list_view_set_show_due_date (GtdTaskListView *self,
 
   priv->show_due_date = show_due_date;
 
-  children = gtk_container_get_children (GTK_CONTAINER (priv->listbox));
-
-  for (l = children; l != NULL; l = l->next)
+  for (child = gtk_widget_get_first_child (GTK_WIDGET (priv->listbox));
+       child;
+       child = gtk_widget_get_next_sibling (child))
     {
-      if (!GTD_IS_TASK_ROW (l->data))
+      GtkWidget *row_child = gtk_list_box_row_get_child (GTK_LIST_BOX_ROW (child));
+
+      if (!GTD_IS_TASK_ROW (row_child))
         continue;
 
-      gtd_task_row_set_due_date_visible (l->data, show_due_date);
+      gtd_task_row_set_due_date_visible (GTD_TASK_ROW (row_child), show_due_date);
     }
-
-  g_list_free (children);
 
   g_object_notify (G_OBJECT (self), "show-due-date");
 }

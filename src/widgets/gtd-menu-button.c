@@ -434,7 +434,7 @@ gtd_menu_button_class_init (GtdMenuButtonClass *klass)
       g_param_spec_object ("align-widget",
                            "Align with",
                            "The parent widget which the menu should align with.",
-                           GTK_TYPE_CONTAINER,
+                           GTK_TYPE_WIDGET,
                            G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
   /**
@@ -809,8 +809,8 @@ gtd_menu_button_set_gicon (GtdMenuButton *self,
 
   image = gtk_image_new_from_icon_name ("pan-down-symbolic");
 
-  gtk_container_add (GTK_CONTAINER (box), icon_image);
-  gtk_container_add (GTK_CONTAINER (box), image);
+  gtk_box_append (GTK_BOX (box), icon_image);
+  gtk_box_append (GTK_BOX (box), image);
   gtk_button_set_child (GTK_BUTTON (priv->button), box);
 
   g_object_notify_by_pspec (G_OBJECT (self), menu_button_props[PROP_GICON]);
@@ -862,8 +862,8 @@ gtd_menu_button_set_label (GtdMenuButton *self,
                                gtk_button_get_use_underline (GTK_BUTTON (priv->button)));
   gtk_widget_set_hexpand (label_widget, TRUE);
   image = gtk_image_new_from_icon_name ("pan-down-symbolic");
-  gtk_container_add (GTK_CONTAINER (box), label_widget);
-  gtk_container_add (GTK_CONTAINER (box), image);
+  gtk_box_append (GTK_BOX (box), label_widget);
+  gtk_box_append (GTK_BOX (box), image);
   gtk_button_set_child (GTK_BUTTON (priv->button), box);
   priv->label_widget = label_widget;
 

@@ -30,7 +30,6 @@
 #include "gtd-theme-manager.h"
 #include "gtd-vcs.h"
 #include "gtd-window.h"
-#include "gtd-window-private.h"
 
 #include <glib.h>
 #include <glib-object.h>

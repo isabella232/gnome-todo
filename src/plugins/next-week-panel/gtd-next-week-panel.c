@@ -198,7 +198,7 @@ create_label (const gchar *text,
 
   box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
-  gtk_container_add (GTK_CONTAINER (box), label);
+  gtk_box_append (GTK_BOX (box), label);
 
   return box;
 }
@@ -536,7 +536,7 @@ gtd_next_week_panel_init (GtdNextWeekPanel *self)
 
   gtk_widget_set_hexpand (GTK_WIDGET (self->view), TRUE);
   gtk_widget_set_vexpand (GTK_WIDGET (self->view), TRUE);
-  gtk_container_add (GTK_CONTAINER (self), GTK_WIDGET (self->view));
+  gtk_box_append (GTK_BOX (self), GTK_WIDGET (self->view));
 
   gtd_task_list_view_set_header_func (GTD_TASK_LIST_VIEW (self->view),
                                       (GtdTaskListViewHeaderFunc) header_func,

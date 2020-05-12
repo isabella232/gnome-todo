@@ -1,6 +1,6 @@
 /* gtd-provider-selector.h
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,11 +34,6 @@ GtkWidget*         gtd_provider_selector_new                      (void);
 
 void               gtd_provider_selector_show_local               (GtdProviderSelector *selector,
                                                                   gboolean            show);
-
-gboolean           gtd_provider_selector_get_select_default       (GtdProviderSelector *selector);
-
-void               gtd_provider_selector_set_select_default       (GtdProviderSelector *selector,
-                                                                  gboolean            select_default);
 
 GtdProvider*        gtd_provider_selector_get_selected_provider     (GtdProviderSelector *selector);
 

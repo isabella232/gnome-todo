@@ -37,8 +37,8 @@ struct _GtdTaskListsWorkspace
   GtkWidget          *end_box;
   GtkMenuButton      *gear_menu_button;
   GtkWidget          *new_list_button;
-  GtkWidget          *panel_box_end;
-  GtkWidget          *panel_box_start;
+  GtkBox             *panel_box_end;
+  GtkBox             *panel_box_start;
   GtkStack           *stack;
   GtkWidget          *start_box;
   GtdSidebar         *sidebar;
@@ -89,14 +89,14 @@ add_widgets (GtdTaskListsWorkspace *self,
       switch (gtk_widget_get_halign (l->data))
         {
         case GTK_ALIGN_END:
-          gtk_container_add (GTK_CONTAINER (self->panel_box_end), l->data);
+          gtk_box_append (self->panel_box_end, l->data);
           break;
 
         case GTK_ALIGN_START:
         case GTK_ALIGN_BASELINE:
         case GTK_ALIGN_FILL:
         default:
-          gtk_container_add (GTK_CONTAINER (self->panel_box_start), l->data);
+          gtk_box_append (self->panel_box_start, l->data);
           break;
         }
     }
@@ -110,15 +110,15 @@ remove_widgets (GtdTaskListsWorkspace *self,
 
   for (l = widgets; l; l = l->next)
     {
-      GtkWidget *container;
+      GtkBox *box;
 
       if (gtk_widget_get_halign (l->data) == GTK_ALIGN_END)
-        container = self->panel_box_end;
+        box = self->panel_box_end;
       else
-        container = self->panel_box_start;
+        box = self->panel_box_start;
 
       g_object_ref (l->data);
-      gtk_container_remove (GTK_CONTAINER (container), l->data);
+      gtk_box_remove (box, l->data);
     }
 }
 
@@ -223,7 +223,7 @@ on_panel_removed_cb (PeasExtensionSet      *extension_set,
 {
   g_object_ref (panel);
 
-  gtk_container_remove (GTK_CONTAINER (self->stack), GTK_WIDGET (panel));
+  gtk_stack_remove (self->stack, GTK_WIDGET (panel));
   g_signal_emit (self, signals[PANEL_REMOVED], 0, panel);
 
   g_object_unref (panel);

@@ -98,10 +98,10 @@ create_task_cb (gpointer item,
 
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 16);
 
-  gtk_container_add (GTK_CONTAINER (box), create_label_for_string (gtd_task_get_title (task)));
+  gtk_box_append (GTK_BOX (box), create_label_for_string (gtd_task_get_title (task)));
 
   row = gtk_list_box_row_new ();
-  gtk_container_add (GTK_CONTAINER (row), box);
+  gtk_list_box_row_set_child (GTK_LIST_BOX_ROW (row), box);
 
   g_object_set_data (G_OBJECT (row), "task", task);
 
@@ -150,12 +150,12 @@ main (gint   argc,
                                  "max-content-height", 600,
                                  "hscrollbar-policy", GTK_POLICY_NEVER,
                                  NULL);
-  gtk_container_add (GTK_CONTAINER (scrolledwindow), listbox);
+  gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolledwindow), listbox);
 
   /* Window */
   window = GTK_WINDOW (gtk_window_new ());
   gtk_window_set_default_size (window, 800, 600);
-  gtk_container_add (GTK_CONTAINER (window), scrolledwindow);
+  gtk_window_set_child (GTK_WINDOW (window), scrolledwindow);
   gtk_window_present (window);
 
   /* Now, generate more tasks and lists after injecting to the manager */

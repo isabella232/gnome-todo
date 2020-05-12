@@ -142,7 +142,6 @@
                   <object class="GtdProviderSelector" id="provider_selector">
                     <property name="can_focus">True</property>
                     <property name="show_local">True</property>
-                    <property name="select_default">True</property>
                     <property name="show_stub_rows">False</property>
                     <signal name="provider-selected" handler="gtd_provider_popover__provider_selected" object="GtdProviderPopover" swapped="yes"/>
                     <layout>

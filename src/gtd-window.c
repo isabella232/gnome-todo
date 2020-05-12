@@ -38,7 +38,6 @@
 #include "gtd-task.h"
 #include "gtd-task-list.h"
 #include "gtd-window.h"
-#include "gtd-window-private.h"
 
 #include <glib/gi18n.h>
 #include <libpeas/peas.h>
@@ -61,11 +60,11 @@ struct _GtdWindow
   GtkApplicationWindow application;
 
   GtkHeaderBar       *headerbar;
-  GtkWidget          *headerbar_box;
+  GtkBox             *headerbar_box;
   GtkRevealer        *headerbar_overlay_revealer;
   GtkStack           *stack;
-  GtkWidget          *workspace_box_end;
-  GtkWidget          *workspace_box_start;
+  GtkBox             *workspace_box_end;
+  GtkBox             *workspace_box_start;
   GtkListBox         *workspaces_listbox;
   GtdMenuButton      *workspaces_menu_button;
 
@@ -206,7 +205,7 @@ remove_workspace (GtdWindow    *self,
   if (!g_list_store_find (self->workspaces, workspace, &position))
     return;
 
-  gtk_container_remove (GTK_CONTAINER (self->stack), GTK_WIDGET (workspace));
+  gtk_stack_remove (self->stack, GTK_WIDGET (workspace));
   g_list_store_remove (self->workspaces, position);
 }
 
@@ -227,7 +226,7 @@ remove_all_workspace_header_widgets (GtdWindow *self)
 
       g_assert (parent == GTK_WIDGET (self->workspace_box_start) ||
                 parent == GTK_WIDGET (self->workspace_box_end));
-      gtk_container_remove (GTK_CONTAINER (parent), widget);
+      gtk_box_remove (GTK_BOX (parent), widget);
     }
 
   g_ptr_array_set_size (self->workspace_header_widgets, 0);
@@ -286,7 +285,7 @@ on_action_toggle_fullscreen_state_changed_cb (GSimpleAction *simple,
   if (fullscreen)
     {
       gtk_event_controller_set_propagation_phase (self->overlay_motion_controller, GTK_PHASE_BUBBLE);
-      gtk_container_remove (GTK_CONTAINER (self->headerbar_box), GTK_WIDGET (self->headerbar));
+      gtk_box_remove (self->headerbar_box, GTK_WIDGET (self->headerbar));
       gtk_revealer_set_child (self->headerbar_overlay_revealer, GTK_WIDGET (self->headerbar));
       gtk_revealer_set_reveal_child (self->headerbar_overlay_revealer, TRUE);
       gtk_window_fullscreen (GTK_WINDOW (self));
@@ -298,7 +297,7 @@ on_action_toggle_fullscreen_state_changed_cb (GSimpleAction *simple,
       gtk_event_controller_set_propagation_phase (self->overlay_motion_controller, GTK_PHASE_NONE);
       gtk_revealer_set_child (self->headerbar_overlay_revealer, NULL);
       gtk_revealer_set_reveal_child (self->headerbar_overlay_revealer, FALSE);
-      gtk_container_add (GTK_CONTAINER (self->headerbar_box), GTK_WIDGET (self->headerbar));
+      gtk_box_append (self->headerbar_box, GTK_WIDGET (self->headerbar));
       gtk_window_unfullscreen (GTK_WINDOW (self));
     }
   g_object_unref (self->headerbar);
@@ -490,8 +489,8 @@ create_workspace_row_func (gpointer item,
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   g_object_bind_property (item, "title", label, "label", G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
-  gtk_container_add (GTK_CONTAINER (box), image);
-  gtk_container_add (GTK_CONTAINER (box), label);
+  gtk_box_append (GTK_BOX (box), image);
+  gtk_box_append (GTK_BOX (box), label);
 
   return box;
 }
@@ -708,11 +707,11 @@ gtd_window_embed_widget_in_header (GtdWindow       *self,
   switch (position)
     {
     case GTK_POS_RIGHT:
-      gtk_container_add (GTK_CONTAINER (self->workspace_box_end), widget);
+      gtk_box_append (self->workspace_box_end, widget);
       break;
 
     case GTK_POS_LEFT:
-      gtk_container_add (GTK_CONTAINER (self->workspace_box_start), widget);
+      gtk_box_append (self->workspace_box_start, widget);
       break;
 
     case GTK_POS_TOP:

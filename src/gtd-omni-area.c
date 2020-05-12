@@ -195,14 +195,14 @@ gtd_omni_area_push_message (GtdOmniArea *self,
   label = gtk_label_new (text);
   gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_container_add (GTK_CONTAINER (box), label);
+  gtk_box_append (GTK_BOX (box), label);
 
   if (icon)
     {
       GtkWidget *image = gtk_image_new_from_gicon (icon);
 
       gtk_widget_add_css_class (image, "dim-label");
-      gtk_container_add (GTK_CONTAINER (box), image);
+      gtk_box_append (GTK_BOX (box), image);
     }
 
   gtk_stack_add_named (self->status_stack, box, id);
@@ -244,7 +244,7 @@ gtd_omni_area_withdraw_message (GtdOmniArea *self,
 
   g_debug ("Removing message '%s' from Omni Area", id);
 
-  gtk_container_remove (GTK_CONTAINER (self->status_stack), widget);
+  gtk_stack_remove (self->status_stack, widget);
 
   l = g_queue_find_custom (self->messages, id, (GCompareFunc) g_strcmp0);
   g_queue_delete_link (self->messages, l);

@@ -62,34 +62,32 @@ static gboolean
 activate_row_below (GtdSidebar        *self,
                     GtdSidebarListRow *current_row)
 {
-  g_autoptr (GList) children = NULL;
   GtkWidget *next_row;
   GtkWidget *parent;
-  GList *l;
+  GtkWidget *child;
   gboolean after_deleted;
 
   parent = gtk_widget_get_parent (GTK_WIDGET (current_row));
-  children = gtk_container_get_children (GTK_CONTAINER (parent));
   after_deleted = FALSE;
   next_row = NULL;
 
-  for (l = children; l; l = l->next)
+  for (child = gtk_widget_get_first_child (parent);
+       child;
+       child = gtk_widget_get_next_sibling (child))
     {
-      GtkWidget *row = l->data;
-
-      if (row == (GtkWidget*) current_row)
+      if (child == (GtkWidget*) current_row)
         {
           after_deleted = TRUE;
           continue;
         }
 
-      if (!gtk_widget_get_visible (row) ||
-          !gtk_list_box_row_get_activatable (GTK_LIST_BOX_ROW (row)))
+      if (!gtk_widget_get_visible (child) ||
+          !gtk_list_box_row_get_activatable (GTK_LIST_BOX_ROW (child)))
         {
           continue;
         }
 
-      next_row = row;
+      next_row = child;
 
       if (after_deleted)
         break;
@@ -200,15 +198,14 @@ get_row_internal (GtdSidebar  *self,
                   GetDataFunc  get_data_func,
                   gpointer     data)
 {
-  g_autoptr (GList) rows = NULL;
-  GList *l;
+  GtkWidget *child;
 
-  rows = gtk_container_get_children (GTK_CONTAINER (listbox));
-
-  for (l = rows; l; l = l->next)
+  for (child = gtk_widget_get_first_child (GTK_WIDGET (listbox));
+       child;
+       child = gtk_widget_get_next_sibling (child))
     {
-      if (g_type_is_a (G_OBJECT_TYPE (l->data), type) && get_data_func (l->data) == data)
-          return l->data;
+      if (g_type_is_a (G_OBJECT_TYPE (child), type) && get_data_func (child) == data)
+          return child;
     }
 
   return NULL;
@@ -359,7 +356,7 @@ on_panel_removed_cb (GtdManager *manager,
   g_debug ("Removing panel '%s'", gtd_panel_get_panel_name (panel));
 
   if (row)
-    gtk_container_remove (GTK_CONTAINER (self->listbox), GTK_WIDGET (row));
+    gtk_list_box_remove (self->listbox, GTK_WIDGET (row));
 }
 
 static void
@@ -553,10 +550,10 @@ on_provider_removed_cb (GtdManager  *manager,
   g_debug ("Removing provider '%s'", gtd_provider_get_name (provider));
 
   row = get_row_for_provider (self, self->listbox, provider);
-  gtk_container_remove (GTK_CONTAINER (self->listbox), GTK_WIDGET (row));
+  gtk_list_box_remove (self->listbox, GTK_WIDGET (row));
 
   row = get_row_for_provider (self, self->archive_listbox, provider);
-  gtk_container_remove (GTK_CONTAINER (self->archive_listbox), GTK_WIDGET (row));
+  gtk_list_box_remove (self->archive_listbox, GTK_WIDGET (row));
 }
 
 
@@ -598,7 +595,7 @@ on_task_list_changed_cb (GtdManager  *manager,
         activate_appropriate_row (self, row);
 
       /* Destroy the old row */
-      gtk_container_remove (GTK_CONTAINER (listbox), GTK_WIDGET (row));
+      gtk_list_box_remove (listbox, GTK_WIDGET (row));
 
       /* Add a new row */
       add_task_list (self, list);

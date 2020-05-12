@@ -127,7 +127,7 @@ create_list_row_cb (gpointer item,
   gtk_widget_set_halign (icon, GTK_ALIGN_CENTER);
   gtk_widget_set_valign (icon, GTK_ALIGN_CENTER);
 
-  gtk_container_add (GTK_CONTAINER (box), icon);
+  gtk_box_append (GTK_BOX (box), icon);
 
   /* Tasklist name */
   name = g_object_new (GTK_TYPE_LABEL,
@@ -136,7 +136,7 @@ create_list_row_cb (gpointer item,
                        "hexpand", TRUE,
                        NULL);
 
-  gtk_container_add (GTK_CONTAINER (box), name);
+  gtk_box_append (GTK_BOX (box), name);
 
   /* Provider name */
   provider = g_object_new (GTK_TYPE_LABEL,
@@ -145,7 +145,7 @@ create_list_row_cb (gpointer item,
                            NULL);
   gtk_style_context_add_class (gtk_widget_get_style_context (provider), "dim-label");
   gtk_size_group_add_widget (self->sizegroup, provider);
-  gtk_container_add (GTK_CONTAINER (box), provider);
+  gtk_box_append (GTK_BOX (box), provider);
 
   /* The row itself */
   row = gtk_list_box_row_new ();
