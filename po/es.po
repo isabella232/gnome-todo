@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-05-03 11:44+0000\n"
-"PO-Revision-Date: 2020-05-04 10:52+0200\n"
+"POT-Creation-Date: 2020-05-12 00:30+0000\n"
+"PO-Revision-Date: 2020-05-14 11:59+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -20,8 +20,8 @@ msgstr ""
 "X-Generator: Gtranslator 3.36.0\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
-#: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:140
-#: src/gtd-omni-area.ui:42 src/main.c:35
+#: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:143
+#: src/gtd-omni-area.ui:44 src/main.c:38
 msgid "To Do"
 msgstr "Tareas pendientes"
 
@@ -126,19 +126,20 @@ msgstr "Barra lateral mostrada"
 msgid "Whether the sidebar is revealed or not"
 msgstr "Indica si la barra lateral se muestra o no"
 
-#: src/gtd-application.c:73
+#: src/gtd-application.c:76
 msgid "Quit GNOME To Do"
 msgstr "Salir de Tareas pendientes de GNOME"
 
-#: src/gtd-application.c:74
+#: src/gtd-application.c:77
 msgid "Enable debug messages"
 msgstr "Activar mensajes de depurado"
 
-#: src/gtd-application.c:144
-msgid "Copyright © 2015–2018 The To Do authors"
-msgstr "Copyright © 2015–2018 los autores de Tareas pendientes"
+#: src/gtd-application.c:147
+#| msgid "Copyright © 2015–2018 The To Do authors"
+msgid "Copyright © 2015–2020 The To Do authors"
+msgstr "Copyright © 2015–2020 los autores de Tareas pendientes"
 
-#: src/gtd-application.c:149
+#: src/gtd-application.c:152
 msgid "translator-credits"
 msgstr "Daniel Mustieles <daniel.mustieles@gmail.com>, 2015"
 
@@ -170,7 +171,7 @@ msgstr "Error al cargar la extensión"
 msgid "Error unloading extension"
 msgstr "Error al descargar la extensión"
 
-#: src/gtd-plugin-dialog.ui:58 src/gtd-window.ui:147
+#: src/gtd-plugin-dialog.ui:58 src/gtd-window.ui:146
 msgid "Extensions"
 msgstr "Extensiones"
 
@@ -186,11 +187,11 @@ msgstr ""
 "Esta es una versión de desarrollo de Tareas pendientes. Puede que tenga "
 "errores, comportamientos incorrectos y pérdida de datos."
 
-#: src/gtd-window.c:411
+#: src/gtd-window.c:409
 msgid "Details"
 msgstr "Detalles"
 
-#: src/gtd-window.ui:153
+#: src/gtd-window.ui:152
 msgid "_About To Do"
 msgstr "_Acerca de Tareas pendientes"
 
@@ -329,8 +330,6 @@ msgid "Did you drink some water today?"
 msgstr "¿Ha bebido agua hoy?"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:57
-#| msgid "You have %d task for today"
-#| msgid_plural "You have %d tasks for today"
 msgid "What are your goals for today?"
 msgstr "¿Cuáles son sus objetivos para hoy?"
 
@@ -392,12 +391,10 @@ msgid "Keep calm"
 msgstr "Mantenga la calma"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:80
-#| msgid "You made it!"
 msgid "You can do it"
 msgstr "Puede hacerlo"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:81
-#| msgid "Meanwhile, spread the love"
 msgid "Meanwhile, spread the love ♥️"
 msgstr "Mientras tanto, difunda el amor ♥️"
 
@@ -411,7 +408,7 @@ msgid "Task list <b>%s</b> removed"
 msgstr "Lista de tareas <b>%s</b> eliminada"
 
 #: src/plugins/task-lists-workspace/gtd-sidebar.c:425
-#: src/task-list-view/gtd-task-list-view.c:479
+#: src/task-list-view/gtd-task-list-view.c:478
 msgid "Undo"
 msgstr "Deshacer"
 
@@ -438,7 +435,6 @@ msgid "Archive"
 msgstr "Comprimir"
 
 #: src/plugins/task-lists-workspace/gtd-task-list-panel.c:233
-#| msgid "An error occurred while creating a task"
 msgid "An error occurred while updating a task"
 msgstr "Ha ocurrido un error al actualizar una tarea"
 
@@ -458,7 +454,6 @@ msgid "Delete"
 msgstr "Eliminar"
 
 #: src/plugins/task-lists-workspace/gtd-task-lists-workspace.c:298
-#| msgid "Lists"
 msgid "Task Lists"
 msgstr "Listas de tareas"
 
@@ -488,15 +483,12 @@ msgstr "Parece que no hay nada pendiente por aquí"
 
 #: src/plugins/today-panel/gtd-today-omni-area-addin.c:69
 #, c-format
-#| msgid "You have %d task for today"
-#| msgid_plural "You have %d tasks for today"
 msgid "%d task for today"
 msgid_plural "%d tasks for today"
 msgstr[0] "%d tarea para hoy"
 msgstr[1] "%d tareas para hoy"
 
 #: src/plugins/today-panel/gtd-today-omni-area-addin.c:84
-#| msgid "No task completed today"
 msgid "No tasks scheduled for today"
 msgstr "No hay tareas programadas para hoy"
 
@@ -700,20 +692,20 @@ msgid "None"
 msgstr "Ninguna"
 
 #. Translators: %1$s is the task list name, %2$s is the provider name
-#: src/task-list-view/gtd-new-task-row.c:91
+#: src/task-list-view/gtd-new-task-row.c:90
 #, c-format
 msgid "%1$s \t <small>%2$s</small>"
 msgstr "%1$s \t <small>%2$s</small>"
 
-#: src/task-list-view/gtd-new-task-row.c:128
+#: src/task-list-view/gtd-new-task-row.c:127
 msgid "An error occurred while creating a task"
 msgstr "Ha ocurrido un error al crear una tarea"
 
-#: src/task-list-view/gtd-new-task-row.ui:14
+#: src/task-list-view/gtd-new-task-row.ui:13
 msgid "New task…"
 msgstr "Nueva tarea…"
 
-#: src/task-list-view/gtd-task-list-view.c:460
+#: src/task-list-view/gtd-task-list-view.c:459
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Tarea <b>%s</b> eliminada"
