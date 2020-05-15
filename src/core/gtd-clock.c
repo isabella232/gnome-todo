@@ -1,6 +1,6 @@
 /* gtd-clock.c
  *
- * Copyright (C) 2017 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2017-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ static guint signals[N_SIGNALS] = { 0, };
 static void
 update_current_date (GtdClock *self)
 {
-  g_autoptr (GDateTime) now;
+  g_autoptr (GDateTime) now = NULL;
   gboolean minute_changed;
   gboolean hour_changed;
   gboolean day_changed;
@@ -90,7 +90,7 @@ update_current_date (GtdClock *self)
 static void
 schedule_update (GtdClock *self)
 {
-  g_autoptr (GDateTime) now;
+  g_autoptr (GDateTime) now = NULL;
   guint seconds_between;
 
   /* Remove the previous timeout if we came from resume */
