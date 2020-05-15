@@ -20,18 +20,18 @@
 
 #include "models/gtd-list-store.h"
 #include "models/gtd-task-model-private.h"
-#include "interfaces/gtd-provider.h"
-#include "interfaces/gtd-panel.h"
-#include "interfaces/gtd-workspace.h"
-#include "notification/gtd-notification.h"
 #include "gtd-clock.h"
 #include "gtd-debug.h"
 #include "gtd-manager.h"
 #include "gtd-manager-protected.h"
+#include "gtd-notification.h"
+#include "gtd-panel.h"
 #include "gtd-plugin-manager.h"
+#include "gtd-provider.h"
 #include "gtd-task.h"
 #include "gtd-task-list.h"
 #include "gtd-utils.h"
+#include "gtd-workspace.h"
 
 #include <glib/gi18n.h>
 

@@ -26,19 +26,6 @@ service = configure_file(
   configuration: service_conf
 )
 
-gnome.mkenums(
-  'org.gnome.todo.enums.xml',
-  sources: enum_headers,
-  comments: '<!-- @comment@ -->',
-  fhead: '<schemalist>',
-  vhead: '  <@type@ id="org.gnome.todo.@EnumName@">',
-  vprod: '    <value nick="@valuenick@" value="@valuenum@"/>',
-  vtail: '  </@type@>',
-  ftail: '</schemalist>',
-  install_header: true,
-  install_dir: gnome_todo_schemadir
-)
-
 install_data(
   'org.gnome.todo.gschema.xml',
   install_dir: gnome_todo_schemadir

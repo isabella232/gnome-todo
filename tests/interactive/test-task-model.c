@@ -22,8 +22,8 @@
 
 #include "models/gtd-task-model.h"
 #include "models/gtd-task-model-private.h"
-#include "logging/gtd-log.h"
 #include "dummy-provider.h"
+#include "gtd-log.h"
 #include "gtd-manager.h"
 #include "gtd-manager-protected.h"
 #include "gtd-provider.h"

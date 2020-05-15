@@ -1,6 +1,6 @@
 /* gtd-color-button.c
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 
 #define G_LOG_DOMAIN "GtdColorButton"
 
-#include "widgets/gtd-color-button.h"
+#include "gtd-color-button.h"
 #include "gtd-utils.h"
 
 #define INTENSITY(r, g, b) ((r) * 0.30 + (g) * 0.59 + (b) * 0.11)

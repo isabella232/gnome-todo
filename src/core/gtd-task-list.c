@@ -18,8 +18,8 @@
 
 #define G_LOG_DOMAIN "GtdTaskList"
 
-#include "interfaces/gtd-provider.h"
 #include "gtd-debug.h"
+#include "gtd-provider.h"
 #include "gtd-task.h"
 #include "gtd-task-list.h"
 

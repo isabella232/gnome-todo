@@ -21,11 +21,11 @@
 
 #include <gtk/gtk.h>
 
+#include "core/gtd-log.h"
 #include "models/gtd-list-model-filter.h"
 #include "models/gtd-list-model-sort.h"
 #include "models/gtd-task-model.h"
 #include "models/gtd-task-model-private.h"
-#include "logging/gtd-log.h"
 #include "dummy-provider.h"
 #include "gtd-manager.h"
 #include "gtd-manager-protected.h"

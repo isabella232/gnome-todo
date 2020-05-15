@@ -18,7 +18,7 @@
 
 #define G_LOG_DOMAIN "GtdPluginDialog"
 
-#include "interfaces/gtd-activatable.h"
+#include "gtd-activatable.h"
 #include "gtd-manager.h"
 #include "gtd-manager-protected.h"
 #include "gtd-plugin-manager.h"

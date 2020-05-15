@@ -20,24 +20,24 @@
 
 #include "config.h"
 
-#include "interfaces/gtd-activatable.h"
-#include "interfaces/gtd-provider.h"
-#include "interfaces/gtd-panel.h"
-#include "interfaces/gtd-workspace.h"
-#include "widgets/gtd-menu-button.h"
+#include "gtd-activatable.h"
 #include "gtd-application.h"
 #include "gtd-debug.h"
 #include "gtd-enum-types.h"
 #include "gtd-task-list-view.h"
 #include "gtd-manager.h"
 #include "gtd-manager-protected.h"
+#include "gtd-menu-button.h"
 #include "gtd-notification.h"
 #include "gtd-notification-widget.h"
 #include "gtd-omni-area.h"
 #include "gtd-plugin-manager.h"
+#include "gtd-provider.h"
+#include "gtd-panel.h"
 #include "gtd-task.h"
 #include "gtd-task-list.h"
 #include "gtd-window.h"
+#include "gtd-workspace.h"
 
 #include <glib/gi18n.h>
 #include <libpeas/peas.h>

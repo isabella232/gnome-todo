@@ -693,7 +693,7 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
                                        G_TYPE_NONE,
                                        0);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/task-list-view/gtd-task-row.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-task-row.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, content_box);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, dnd_box);

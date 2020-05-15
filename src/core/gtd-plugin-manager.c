@@ -18,10 +18,10 @@
 
 #define G_LOG_DOMAIN "GtdPluginManager"
 
-#include "interfaces/gtd-activatable.h"
-#include "interfaces/gtd-panel.h"
-#include "interfaces/gtd-provider.h"
+#include "gtd-activatable.h"
 #include "gtd-manager.h"
+#include "gtd-panel.h"
+#include "gtd-provider.h"
 #include "gtd-plugin-manager.h"
 #include "gtd-theme-manager.h"
 

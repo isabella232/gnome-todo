@@ -22,16 +22,16 @@ gnome_todo_deps += vcs_identifier_h
 ###########
 
 incs = include_directories(
-  'engine',
-  'interfaces',
-  'logging',
+  'core',
+  'gui',
   'models',
-  'notification',
-  'provider',
-  'task-list-view',
-  'widgets',
 )
 
+###########
+# Subdirs #
+###########
+
+subdir('gui')
 subdir('plugins')
 
 ################
@@ -47,32 +47,30 @@ gtd_deps = gnome_todo_deps + [
 # Header files #
 ################
 
-enum_headers = files('gtd-enums.h')
-
-headers = enum_headers + files(
-  'engine/gtd-manager.h',
-  'interfaces/gtd-activatable.h',
-  'interfaces/gtd-panel.h',
-  'interfaces/gtd-provider.h',
-  'interfaces/gtd-workspace.h',
+headers = files(
+  'core/gtd-activatable.h',
+  'core/gtd-clock.h',
+  'core/gtd-manager.h',
+  'core/gtd-notification.h',
+  'core/gtd-object.h',
+  'core/gtd-provider.h',
+  'core/gtd-task.h',
+  'core/gtd-task-list.h',
+  'gui/gtd-max-size-layout.h',
+  'gui/gtd-menu-button.h',
+  'gui/gtd-omni-area.h',
+  'gui/gtd-omni-area-addin.h',
+  'gui/gtd-panel.h',
+  'gui/gtd-provider-popover.h',
+  'gui/gtd-star-widget.h',
+  'gui/gtd-task-list-view.h',
+  'gui/gtd-widget.h',
+  'gui/gtd-window.h',
+  'gui/gtd-workspace.h',
   'models/gtd-list-model-filter.h',
   'models/gtd-list-store.h',
-  'notification/gtd-notification.h',
-  'provider/gtd-provider-popover.h',
-  'task-list-view/gtd-task-list-view.h',
-  'widgets/gtd-menu-button.h',
-  'widgets/gtd-star-widget.h',
-  'gtd-clock.h',
-  'gtd-max-size-layout.h',
-  'gtd-object.h',
-  'gtd-omni-area.h',
-  'gtd-omni-area-addin.h',
-  'gtd-task.h',
-  'gtd-task-list.h',
   'gtd-types.h',
   'gtd-utils.h',
-  'gtd-widget.h',
-  'gtd-window.h',
   'gnome-todo.h'
 )
 
@@ -84,49 +82,49 @@ install_headers(headers, subdir: meson.project_name())
 ################
 
 sources += files(
-  'engine/gtd-manager.c',
-  'engine/gtd-plugin-manager.c',
-  'interfaces/gtd-activatable.c',
-  'interfaces/gtd-panel.c',
-  'interfaces/gtd-provider.c',
-  'interfaces/gtd-workspace.c',
-  'logging/gtd-log.c',
+  'core/gtd-activatable.c',
+  'core/gtd-clock.c',
+  'core/gtd-log.c',
+  'core/gtd-manager.c',
+  'core/gtd-notification.c',
+  'core/gtd-object.c',
+  'core/gtd-plugin-manager.c',
+  'core/gtd-provider.c',
+  'core/gtd-task.c',
+  'core/gtd-task-list.c',
+  'gui/gtd-panel.c',
+  'gui/gtd-workspace.c',
+  'gui/gtd-notification-widget.c',
+  'gui/gtd-provider-popover.c',
+  'gui/gtd-provider-row.c',
+  'gui/gtd-provider-selector.c',
+  'gui/gtd-edit-pane.c',
+  'gui/gtd-dnd-row.c',
+  'gui/gtd-markdown-renderer.c',
+  'gui/gtd-new-task-row.c',
+  'gui/gtd-task-list-popover.c',
+  'gui/gtd-task-list-view.c',
+  'gui/gtd-task-row.c',
+  'gui/gtd-color-button.c',
+  'gui/gtd-empty-list-widget.c',
+  'gui/gtd-menu-button.c',
+  'gui/gtd-star-widget.c',
+  'gui/gtd-application.c',
+  'gui/gtd-initial-setup-window.c',
+  'gui/gtd-css-provider.c',
+  'gui/gtd-max-size-layout.c',
+  'gui/gtd-omni-area.c',
+  'gui/gtd-omni-area-addin.c',
+  'gui/gtd-plugin-dialog.c',
+  'gui/gtd-plugin-dialog-row.c',
+  'gui/gtd-theme-manager.c',
+  'gui/gtd-widget.c',
+  'gui/gtd-window.c',
   'models/gtd-list-model-filter.c',
   'models/gtd-list-model-sort.c',
   'models/gtd-list-store.c',
   'models/gtd-task-model.c',
-  'notification/gtd-notification.c',
-  'notification/gtd-notification-widget.c',
-  'provider/gtd-provider-popover.c',
-  'provider/gtd-provider-row.c',
-  'provider/gtd-provider-selector.c',
-  'task-list-view/gtd-edit-pane.c',
-  'task-list-view/gtd-dnd-row.c',
-  'task-list-view/gtd-markdown-renderer.c',
-  'task-list-view/gtd-new-task-row.c',
-  'task-list-view/gtd-task-list-popover.c',
-  'task-list-view/gtd-task-list-view.c',
-  'task-list-view/gtd-task-row.c',
-  'widgets/gtd-color-button.c',
-  'widgets/gtd-empty-list-widget.c',
-  'widgets/gtd-menu-button.c',
-  'widgets/gtd-star-widget.c',
-  'gtd-application.c',
-  'gtd-initial-setup-window.c',
-  'gtd-clock.c',
-  'gtd-css-provider.c',
-  'gtd-max-size-layout.c',
-  'gtd-object.c',
-  'gtd-omni-area.c',
-  'gtd-omni-area-addin.c',
-  'gtd-plugin-dialog.c',
-  'gtd-plugin-dialog-row.c',
-  'gtd-task.c',
-  'gtd-task-list.c',
-  'gtd-theme-manager.c',
   'gtd-utils.c',
-  'gtd-widget.c',
-  'gtd-window.c',
   'main.c'
 )
 
@@ -150,15 +148,6 @@ sources += gnome.compile_resources(
         export: true,
 )
 
-enum = 'gtd-enum-types'
-
-sources += gnome.mkenums(
-        enum,
-     sources: enum_headers,
-  c_template: enum + '.c.template',
-  h_template: enum + '.h.template'
-)
-
 cflags = [
   '-DPACKAGE_DATA_DIR="@0@"'.format(gnome_todo_pkgdatadir),
   '-DPACKAGE_LIB_DIR="@0@"'.format(gnome_todo_pkglibdir),
@@ -179,11 +168,9 @@ debug_conf.set('BUGREPORT_URL', 'https://gitlab.gnome.org/GNOME/gnome-todo/issue
 debug_conf.set10('ENABLE_TRACING', gnome_todo_tracing)
 
 
-debug = 'gtd-debug.h'
-
 sources += configure_file(
-          input: debug + '.in',
-         output: debug,
+          input: 'gtd-debug.h.in',
+         output: 'gtd-debug.h',
   configuration: debug_conf,
 )
 
@@ -246,50 +233,49 @@ pkg.generate(
 
 if get_option('introspection')
   gir_sources = files(
-    'engine/gtd-manager.c',
-    'engine/gtd-manager.h',
-    'interfaces/gtd-activatable.c',
-    'interfaces/gtd-activatable.h',
-    'interfaces/gtd-panel.c',
-    'interfaces/gtd-panel.h',
-    'interfaces/gtd-provider.c',
-    'interfaces/gtd-provider.h',
-    'interfaces/gtd-workspace.c',
-    'interfaces/gtd-workspace.h',
+    'core/gtd-activatable.c',
+    'core/gtd-activatable.h',
+    'core/gtd-clock.c',
+    'core/gtd-clock.h',
+    'core/gtd-manager.c',
+    'core/gtd-manager.h',
+    'core/gtd-notification.c',
+    'core/gtd-notification.h',
+    'core/gtd-object.c',
+    'core/gtd-object.h',
+    'core/gtd-provider.c',
+    'core/gtd-provider.h',
+    'core/gtd-task.c',
+    'core/gtd-task.h',
+    'core/gtd-task-list.c',
+    'core/gtd-task-list.h',
+    'gui/gtd-max-size-layout.c',
+    'gui/gtd-max-size-layout.h',
+    'gui/gtd-menu-button.c',
+    'gui/gtd-menu-button.h',
+    'gui/gtd-omni-area.c',
+    'gui/gtd-omni-area.h',
+    'gui/gtd-omni-area-addin.c',
+    'gui/gtd-omni-area-addin.h',
+    'gui/gtd-panel.c',
+    'gui/gtd-panel.h',
+    'gui/gtd-provider-popover.c',
+    'gui/gtd-provider-popover.h',
+    'gui/gtd-star-widget.c',
+    'gui/gtd-star-widget.h',
+    'gui/gtd-task-list-view.c',
+    'gui/gtd-task-list-view.h',
+    'gui/gtd-widget.c',
+    'gui/gtd-widget.h',
+    'gui/gtd-window.c',
+    'gui/gtd-window.h',
+    'gui/gtd-workspace.c',
+    'gui/gtd-workspace.h',
     'models/gtd-list-model-filter.c',
     'models/gtd-list-model-filter.h',
     'models/gtd-list-store.c',
     'models/gtd-list-store.h',
-    'notification/gtd-notification.c',
-    'notification/gtd-notification.h',
-    'provider/gtd-provider-popover.c',
-    'provider/gtd-provider-popover.h',
-    'task-list-view/gtd-task-list-view.c',
-    'task-list-view/gtd-task-list-view.h',
-    'widgets/gtd-menu-button.c',
-    'widgets/gtd-menu-button.h',
-    'widgets/gtd-star-widget.c',
-    'widgets/gtd-star-widget.h',
-    'gtd-enums.h',
-    'gtd-clock.c',
-    'gtd-clock.h',
-    'gtd-max-size-layout.c',
-    'gtd-max-size-layout.h',
-    'gtd-object.c',
-    'gtd-object.h',
-    'gtd-omni-area.c',
-    'gtd-omni-area.h',
-    'gtd-omni-area-addin.c',
-    'gtd-omni-area-addin.h',
-    'gtd-task.c',
-    'gtd-task.h',
-    'gtd-task-list.c',
-    'gtd-task-list.h',
     'gtd-types.h',
-    'gtd-widget.c',
-    'gtd-widget.h',
-    'gtd-window.c',
-    'gtd-window.h'
   )
 
   gir_incs = [

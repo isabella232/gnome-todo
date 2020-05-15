@@ -20,9 +20,9 @@
 
 #include "gnome-todo.h"
 
+#include "core/gtd-log.h"
 #include "models/gtd-task-model.h"
 #include "models/gtd-task-model-private.h"
-#include "logging/gtd-log.h"
 #include "gtd-manager-protected.h"
 #include "dummy-provider.h"
 

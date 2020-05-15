@@ -21,8 +21,8 @@
 
 #include <gtk/gtk.h>
 
-#include "logging/gtd-log.h"
-#include "widgets/gtd-star-widget.h"
+#include "gtd-log.h"
+#include "gtd-star-widget.h"
 
 gint
 main (gint   argc,

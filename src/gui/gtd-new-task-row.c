@@ -306,7 +306,7 @@ gtd_new_task_row_class_init (GtdNewTaskRowClass *klass)
                                 G_TYPE_NONE,
                                 0);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/task-list-view/gtd-new-task-row.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-new-task-row.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdNewTaskRow, entry);
   gtk_widget_class_bind_template_child (widget_class, GtdNewTaskRow, tasklist_popover);

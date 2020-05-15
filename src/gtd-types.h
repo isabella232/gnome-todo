@@ -21,8 +21,6 @@
 
 #include <glib-object.h>
 
-#include "gtd-enums.h"
-
 G_BEGIN_DECLS
 
 typedef struct _GtdActivatable          GtdActivatable;

@@ -1,6 +1,6 @@
 /* gtd-provider-row.c
  *
- * Copyright (C) 2015 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 #define G_LOG_DOMAIN "GtdProviderRow"
 
-#include "interfaces/gtd-provider.h"
+#include "gtd-provider.h"
 #include "gtd-provider-row.h"
 
 #include <glib/gi18n.h>
@@ -153,7 +153,7 @@ gtd_provider_row_class_init (GtdProviderRowClass *klass)
                              G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/provider/gtd-provider-row.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-provider-row.ui");
 
   gtk_widget_class_bind_template_child_private (widget_class, GtdProviderRow, icon);
   gtk_widget_class_bind_template_child_private (widget_class, GtdProviderRow, name);

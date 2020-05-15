@@ -19,7 +19,7 @@
 #define G_LOG_DOMAIN "GtdProviderPopover"
 
 #include "gtd-manager.h"
-#include "interfaces/gtd-provider.h"
+#include "gtd-provider.h"
 #include "gtd-provider-popover.h"
 #include "gtd-provider-selector.h"
 #include "gtd-task-list.h"
@@ -215,7 +215,7 @@ gtd_provider_popover_class_init (GtdProviderPopoverClass *klass)
 
   g_type_ensure (GTD_TYPE_PROVIDER_SELECTOR);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/provider/gtd-provider-popover.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-provider-popover.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdProviderPopover, change_location_button);
   gtk_widget_class_bind_template_child (widget_class, GtdProviderPopover, location_provider_image);

@@ -22,7 +22,6 @@
 #include <libpeas/peas.h>
 
 #include "gtd-activatable.h"
-#include "gtd-enums.h"
 #include "gtd-list-model-filter.h"
 #include "gtd-list-model-sort.h"
 #include "gtd-list-store.h"

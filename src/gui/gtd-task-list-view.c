@@ -1156,7 +1156,7 @@ gtd_task_list_view_class_init (GtdTaskListViewClass *klass)
                               TRUE,
                               G_PARAM_READWRITE));
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/task-list-view/gtd-task-list-view.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-task-list-view.ui");
 
   gtk_widget_class_bind_template_child_private (widget_class, GtdTaskListView, due_date_sizegroup);
   gtk_widget_class_bind_template_child_private (widget_class, GtdTaskListView, listbox);

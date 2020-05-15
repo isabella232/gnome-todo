@@ -23,6 +23,7 @@
 #include "gtd-debug.h"
 #include "gtd-manager.h"
 #include "gtd-max-size-layout.h"
+#include "gtd-notification.h"
 #include "gtd-panel.h"
 #include "gtd-provider.h"
 #include "gtd-sidebar.h"
@@ -32,7 +33,6 @@
 #include "gtd-task-list.h"
 #include "gtd-task-list-panel.h"
 #include "gtd-utils.h"
-#include "notification/gtd-notification.h"
 
 #include <glib/gi18n.h>
 

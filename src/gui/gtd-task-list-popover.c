@@ -222,7 +222,7 @@ gtd_task_list_popover_class_init (GtdTaskListPopoverClass *klass)
                                                     GTD_TYPE_TASK_LIST,
                                                     G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/task-list-view/gtd-task-list-popover.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-task-list-popover.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPopover, listbox);
   gtk_widget_class_bind_template_child (widget_class, GtdTaskListPopover, search_entry);

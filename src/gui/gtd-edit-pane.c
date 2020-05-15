@@ -456,7 +456,7 @@ gtd_edit_pane_class_init (GtdEditPaneClass *klass)
                                        GTD_TYPE_TASK);
 
   /* template class */
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/task-list-view/gtd-edit-pane.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-edit-pane.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdEditPane, calendar);
   gtk_widget_class_bind_template_child (widget_class, GtdEditPane, date_label);

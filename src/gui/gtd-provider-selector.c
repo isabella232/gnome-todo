@@ -20,7 +20,7 @@
 
 #include "gtd-application.h"
 #include "gtd-manager.h"
-#include "interfaces/gtd-provider.h"
+#include "gtd-provider.h"
 #include "gtd-provider-row.h"
 #include "gtd-provider-selector.h"
 
@@ -458,7 +458,7 @@ gtd_provider_selector_class_init (GtdProviderSelectorClass *klass)
                               TRUE,
                               G_PARAM_READWRITE));
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/provider/gtd-provider-selector.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/todo/ui/gtd-provider-selector.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GtdProviderSelector, exchange_stub_row);
   gtk_widget_class_bind_template_child (widget_class, GtdProviderSelector, google_stub_row);
