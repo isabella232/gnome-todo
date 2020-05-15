@@ -6,7 +6,6 @@ private_headers = [
   'gtd-dnd-row.h',
   'gtd-edit-pane.h',
   'gtd-empty-list-widget.h',
-  'gtd-enum-types.h',
   'gtd-initial-setup-window.h',
   'gtd-list-selector.h',
   'gtd-list-selector-grid.h',

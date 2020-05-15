@@ -23,7 +23,6 @@
 #include "gtd-activatable.h"
 #include "gtd-application.h"
 #include "gtd-debug.h"
-#include "gtd-enum-types.h"
 #include "gtd-task-list-view.h"
 #include "gtd-manager.h"
 #include "gtd-manager-protected.h"
