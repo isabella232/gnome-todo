@@ -497,6 +497,8 @@ on_panel_stack_visible_child_changed_cb (GtkStack   *panel_stack,
   GtkListBox *listbox;
   GtdPanel *visible_panel;
 
+  GTD_ENTRY;
+
   g_assert (GTD_IS_PANEL (gtk_stack_get_visible_child (panel_stack)));
 
   visible_panel = GTD_PANEL (gtk_stack_get_visible_child (panel_stack));
@@ -530,6 +532,8 @@ on_panel_stack_visible_child_changed_cb (GtkStack   *panel_stack,
   /* Select the row if it's not already selected*/
   if (gtk_list_box_row_is_selected (panel_row))
     gtk_list_box_select_row (listbox, panel_row);
+
+  GTD_EXIT;
 }
 
 static void

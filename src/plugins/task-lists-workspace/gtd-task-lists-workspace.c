@@ -22,6 +22,7 @@
 
 #include "gtd-task-lists-workspace.h"
 
+#include "gtd-debug.h"
 #include "task-lists-workspace.h"
 #include "gtd-sidebar.h"
 #include "gtd-task-list-panel.h"
@@ -248,6 +249,8 @@ on_stack_visible_child_cb (GtdTaskListsWorkspace *self,
   GtdPanel *panel;
   GList *header_widgets;
 
+  GTD_ENTRY;
+
   visible_child = gtk_stack_get_visible_child (stack);
   panel = GTD_PANEL (visible_child);
 
@@ -279,6 +282,8 @@ on_stack_visible_child_cb (GtdTaskListsWorkspace *self,
 
   /* Setup the panel's menu */
   update_panel_menu (self);
+
+  GTD_EXIT;
 }
 
 
