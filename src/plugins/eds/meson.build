@@ -17,6 +17,7 @@ plugins_sources += files(
   'gtd-provider-local.c',
   'gtd-task-eds.c',
   'gtd-task-list-eds.c',
+  'eds-plugin.c',
 )
 
 plugins_sources += gnome.compile_resources(

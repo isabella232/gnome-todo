@@ -64,10 +64,8 @@ const gchar *supported_accounts[] = {
 
 static void          gtd_activatable_iface_init                  (GtdActivatableInterface  *iface);
 
-G_DEFINE_DYNAMIC_TYPE_EXTENDED (GtdPluginEds, gtd_plugin_eds, G_TYPE_OBJECT,
-                                0,
-                                G_IMPLEMENT_INTERFACE_DYNAMIC (GTD_TYPE_ACTIVATABLE,
-                                                               gtd_activatable_iface_init))
+G_DEFINE_TYPE_WITH_CODE (GtdPluginEds, gtd_plugin_eds, G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GTD_TYPE_ACTIVATABLE, gtd_activatable_iface_init))
 
 /*
  * GtdActivatable interface implementation
@@ -322,20 +320,4 @@ gtd_plugin_eds_init (GtdPluginEds *self)
   e_source_registry_new (NULL,
                          (GAsyncReadyCallback) gtd_plugin_eds_source_registry_finish_cb,
                          self);
-}
-
-/* Empty class_finalize method */
-static void
-gtd_plugin_eds_class_finalize (GtdPluginEdsClass *klass)
-{
-}
-
-G_MODULE_EXPORT void
-gtd_plugin_eds_register_types (PeasObjectModule *module)
-{
-  gtd_plugin_eds_register_type (G_TYPE_MODULE (module));
-
-  peas_object_module_register_extension_type (module,
-                                              GTD_TYPE_ACTIVATABLE,
-                                              GTD_TYPE_PLUGIN_EDS);
 }
