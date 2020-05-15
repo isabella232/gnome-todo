@@ -530,7 +530,7 @@ on_panel_stack_visible_child_changed_cb (GtkStack   *panel_stack,
     }
 
   /* Select the row if it's not already selected*/
-  if (gtk_list_box_row_is_selected (panel_row))
+  if (!gtk_list_box_row_is_selected (panel_row))
     gtk_list_box_select_row (listbox, panel_row);
 
   GTD_EXIT;
