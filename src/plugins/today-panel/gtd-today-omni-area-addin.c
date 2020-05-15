@@ -56,12 +56,37 @@ const gchar *end_messages[] =
   N_("Looks like there’s nothing else left here")
 };
 
+static gboolean
+can_show_omni_area_message (GtdTodayOmniAreaAddin *self)
+{
+  GtdWorkspace *current_workspace;
+  GtdWindow *window;
+
+  window = GTD_WINDOW (gtk_widget_get_root (GTK_WIDGET (self->omni_area)));
+  current_workspace = gtd_window_get_current_workspace (window);
+
+  if (current_workspace &&
+      g_str_equal (gtd_workspace_get_id (current_workspace), "task-lists"))
+    {
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
 static void
 update_omni_area_message (GtdTodayOmniAreaAddin *self)
 {
+
   g_autofree gchar *message = NULL;
 
   g_assert (self->omni_area != NULL);
+
+  if (!can_show_omni_area_message (self))
+    {
+      gtd_omni_area_withdraw_message (self->omni_area, MESSAGE_ID);
+      return;
+    }
 
   if (self->number_of_tasks > 0)
     {
@@ -174,6 +199,14 @@ on_model_items_changed_cb (GListModel            *model,
   self->idle_update_message_timeout_id = g_timeout_add_seconds (2, idle_update_omni_area_message_cb, self);
 }
 
+static void
+on_window_current_workspace_changed_cb (GtdWindow             *window,
+                                        GParamSpec            *pspec,
+                                        GtdTodayOmniAreaAddin *self)
+{
+  update_omni_area_message (self);
+}
+
 
 /*
  * GtdOmniAreaAddin iface
@@ -183,7 +216,17 @@ static void
 gtd_today_omni_area_addin_omni_area_addin_load (GtdOmniAreaAddin *addin,
                                                 GtdOmniArea      *omni_area)
 {
-  GtdTodayOmniAreaAddin *self = GTD_TODAY_OMNI_AREA_ADDIN (addin);
+  GtdTodayOmniAreaAddin *self;
+  GtdWindow *window;
+
+  self = GTD_TODAY_OMNI_AREA_ADDIN (addin);
+  window = GTD_WINDOW (gtk_widget_get_root (GTK_WIDGET (omni_area)));
+
+  g_signal_connect_object (window,
+                           "notify::current-workspace",
+                           G_CALLBACK (on_window_current_workspace_changed_cb),
+                           self,
+                           0);
 
   self->omni_area = omni_area;
   update_omni_area_message (self);
