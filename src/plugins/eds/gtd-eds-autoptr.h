@@ -1,6 +1,6 @@
 /* gtd-eds-autoptr.h
  *
- * Copyright 2018 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2018-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <libecal/libecal.h>
+#include "gtd-eds.h"
 
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (ECalComponent, g_object_unref);
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (ECalComponentId, e_cal_component_id_free);

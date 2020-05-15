@@ -1,6 +1,6 @@
 /* gtd-task-eds.h
  *
- * Copyright (C) 2017 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright (C) 2017-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 
 #include "gnome-todo.h"
 
-#include <libecal/libecal.h>
+#include "gtd-eds.h"
 
 G_BEGIN_DECLS
 

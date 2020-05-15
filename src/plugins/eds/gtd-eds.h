@@ -1,6 +1,6 @@
-/* gtd-task-list-eds.h
+/* gtd-eds.h
  *
- * Copyright (C) 2015-2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ * Copyright 2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,22 +14,19 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
 #pragma once
 
-#include "gtd-eds.h"
+#include <glib.h>
 
-G_BEGIN_DECLS
+#define HANDLE_LIBICAL_MEMORY
+#define EDS_DISABLE_DEPRECATED
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 
-#define E_SOURCE_EXTENSION_GNOME_TODO "GNOME To Do"
+#include <libecal/libecal.h>
+#include <libedataserver/libedataserver.h>
 
-#define E_TYPE_SOURCE_GNOME_TODO (e_source_gnome_todo_get_type())
-G_DECLARE_FINAL_TYPE (ESourceGnomeTodo, e_source_gnome_todo, E, SOURCE_GNOME_TODO, ESourceExtension)
-
-guint                e_source_gnome_todo_get_api_version         (ESourceGnomeTodo   *self);
-
-void                 e_source_gnome_todo_set_api_version         (ESourceGnomeTodo   *self,
-                                                                  guint               api_version);
-
-G_END_DECLS
+G_GNUC_END_IGNORE_DEPRECATIONS

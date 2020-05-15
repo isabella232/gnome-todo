@@ -20,8 +20,9 @@
 
 #include "gnome-todo.h"
 
+#include "gtd-eds.h"
+
 #include <glib.h>
-#include <libecal/libecal.h>
 
 G_BEGIN_DECLS
 
