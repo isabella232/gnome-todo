@@ -125,17 +125,19 @@ gtd_workspace_get_icon (GtdWorkspace *self)
 /**
  * gtd_workspace_activate:
  * @self: a #GtdWorkspace
+ * @parameters: (nullable): workspace-specific parameters
  *
  * Activates @self. This happens when the workspace
  * becomes the active workspace in the main window.
  */
 void
-gtd_workspace_activate (GtdWorkspace *self)
+gtd_workspace_activate (GtdWorkspace *self,
+                        GVariant     *parameters)
 {
   g_return_if_fail (GTD_IS_WORKSPACE (self));
 
   if (GTD_WORKSPACE_GET_IFACE (self)->activate)
-    GTD_WORKSPACE_GET_IFACE (self)->activate (self);
+    GTD_WORKSPACE_GET_IFACE (self)->activate (self, parameters);
 }
 
 /**

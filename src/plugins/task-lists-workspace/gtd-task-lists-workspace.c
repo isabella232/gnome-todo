@@ -316,7 +316,8 @@ gtd_task_lists_workspace_get_icon (GtdWorkspace *workspace)
 }
 
 static void
-gtd_task_lists_workspace_activate (GtdWorkspace *workspace)
+gtd_task_lists_workspace_activate (GtdWorkspace *workspace,
+                                   GVariant     *parameters)
 {
   GtdTaskListsWorkspace *self = GTD_TASK_LISTS_WORKSPACE (workspace);
   GtdWindow *window = GTD_WINDOW (gtk_widget_get_root (GTK_WIDGET (self)));
@@ -324,7 +325,17 @@ gtd_task_lists_workspace_activate (GtdWorkspace *workspace)
   gtd_window_embed_widget_in_header (window, self->start_box, GTK_POS_LEFT);
   gtd_window_embed_widget_in_header (window, self->end_box, GTK_POS_RIGHT);
 
-  gtd_sidebar_activate (self->sidebar);
+  if (parameters)
+    {
+      const gchar *panel_id = g_variant_get_string (parameters, NULL);
+
+      g_debug ("Activating panel '%s'", panel_id);
+      gtk_stack_set_visible_child_name (self->stack, panel_id);
+    }
+  else
+    {
+      gtd_sidebar_activate (self->sidebar);
+    }
 }
 
 static void

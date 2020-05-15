@@ -39,7 +39,8 @@ struct _GtdWorkspaceInterface
 
   GIcon*             (*get_icon)                                 (GtdWorkspace       *self);
 
-  void               (*activate)                                 (GtdWorkspace       *self);
+  void               (*activate)                                 (GtdWorkspace       *self,
+                                                                  GVariant           *parameters);
 
   void               (*deactivate)                               (GtdWorkspace       *self);
 };
@@ -52,7 +53,8 @@ gint                 gtd_workspace_get_priority                  (GtdWorkspace  
 
 GIcon*               gtd_workspace_get_icon                      (GtdWorkspace       *self);
 
-void                 gtd_workspace_activate                      (GtdWorkspace       *self);
+void                 gtd_workspace_activate                      (GtdWorkspace       *self,
+                                                                  GVariant           *parameters);
 
 void                 gtd_workspace_deactivate                    (GtdWorkspace       *self);
 

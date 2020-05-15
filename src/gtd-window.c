@@ -76,6 +76,7 @@ struct _GtdWindow
 
   GtdWorkspace       *current_workspace;
   GListStore         *workspaces;
+  GVariant           *parameters;
 
   PeasExtensionSet   *workspaces_set;
 
@@ -257,11 +258,15 @@ on_action_activate_workspace_activated_cb (GSimpleAction *simple,
                                            GVariant      *state,
                                            gpointer       user_data)
 {
+  g_autofree gchar *workspace_id = NULL;
   GtdWindow *self;
-  const gchar *workspace_id;
 
   self = GTD_WINDOW (user_data);
-  workspace_id = g_variant_get_string (state, NULL);
+  g_variant_get (state,
+                 "(sv)",
+                 &workspace_id,
+                 &self->parameters,
+                 NULL);
 
   gtk_stack_set_visible_child_name (self->stack, workspace_id);
 }
@@ -356,6 +361,7 @@ on_stack_visible_child_cb (GtkStack   *stack,
                            GParamSpec *pspec,
                            GtdWindow  *self)
 {
+  g_autoptr (GVariant) parameters = NULL;
   g_autoptr (GIcon) workspace_icon = NULL;
   GtdWorkspace *new_workspace;
 
@@ -372,7 +378,8 @@ on_stack_visible_child_cb (GtkStack   *stack,
   if (!new_workspace)
     GTD_RETURN ();
 
-  gtd_workspace_activate (new_workspace);
+  parameters = g_steal_pointer (&self->parameters);
+  gtd_workspace_activate (new_workspace, parameters);
 
   workspace_icon = gtd_workspace_get_icon (new_workspace);
   gtd_menu_button_set_gicon (self->workspaces_menu_button, workspace_icon);
@@ -620,7 +627,7 @@ static void
 gtd_window_init (GtdWindow *self)
 {
   static const GActionEntry entries[] = {
-    { "activate-workspace", on_action_activate_workspace_activated_cb, "s" },
+    { "activate-workspace", on_action_activate_workspace_activated_cb, "(sv)" },
     { "toggle-fullscreen", NULL, NULL, "false", on_action_toggle_fullscreen_state_changed_cb },
   };
 
