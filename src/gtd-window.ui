@@ -73,6 +73,7 @@
             <!-- Workspace Button -->
             <child>
               <object class="GtdMenuButton" id="workspaces_menu_button">
+                <property name="visible">false</property>
                 <property name="can_focus">1</property>
                 <property name="popover">workspaces_popover</property>
               </object>
