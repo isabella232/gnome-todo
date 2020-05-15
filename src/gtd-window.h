@@ -44,6 +44,8 @@ void                      gtd_window_embed_widget_in_header (GtdWindow          
                                                              GtkWidget           *widget,
                                                              GtkPositionType      position);
 
+GtdWorkspace*             gtd_window_get_current_workspace (GtdWindow           *self);
+
 G_END_DECLS
 
 #endif /* GTD_WINDOW_H */

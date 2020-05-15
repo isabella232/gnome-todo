@@ -90,6 +90,14 @@ typedef struct
   gchar              *secondary_text;
 } ErrorData;
 
+enum
+{
+  PROP_0,
+  PROP_CURRENT_WORKSPACE,
+  N_PROPS,
+};
+
+static GParamSpec *properties[N_PROPS] = { NULL, };
 
 G_DEFINE_TYPE (GtdWindow, gtd_window, GTK_TYPE_APPLICATION_WINDOW)
 
@@ -376,7 +384,7 @@ on_stack_visible_child_cb (GtkStack   *stack,
   self->current_workspace = new_workspace;
 
   if (!new_workspace)
-    GTD_RETURN ();
+    GTD_GOTO (out);
 
   parameters = g_steal_pointer (&self->parameters);
   gtd_workspace_activate (new_workspace, parameters);
@@ -384,6 +392,8 @@ on_stack_visible_child_cb (GtkStack   *stack,
   workspace_icon = gtd_workspace_get_icon (new_workspace);
   gtd_menu_button_set_gicon (self->workspaces_menu_button, workspace_icon);
 
+out:
+  g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_CURRENT_WORKSPACE]);
   GTD_EXIT;
 }
 
@@ -590,6 +600,25 @@ gtd_window_constructed (GObject *object)
 }
 
 static void
+gtd_window_get_property (GObject    *object,
+                         guint       prop_id,
+                         GValue     *value,
+                         GParamSpec *pspec)
+{
+  GtdWindow *self = (GtdWindow *) object;
+
+  switch (prop_id)
+    {
+    case PROP_CURRENT_WORKSPACE:
+      g_value_set_object (value, self->current_workspace);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+    }
+}
+
+static void
 gtd_window_class_init (GtdWindowClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
@@ -598,8 +627,17 @@ gtd_window_class_init (GtdWindowClass *klass)
   object_class->dispose = gtd_window_dispose;
   object_class->finalize = gtd_window_finalize;
   object_class->constructed = gtd_window_constructed;
+  object_class->get_property = gtd_window_get_property;
 
   widget_class->unmap = gtd_window_unmap;
+
+  properties[PROP_CURRENT_WORKSPACE] = g_param_spec_object ("current-workspace",
+                                                            "Current workspace",
+                                                            "Current workspace",
+                                                            GTD_TYPE_WORKSPACE,
+                                                            G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_properties (object_class, N_PROPS, properties);
 
   g_type_ensure (GTD_TYPE_MENU_BUTTON);
   g_type_ensure (GTD_TYPE_NOTIFICATION_WIDGET);
@@ -732,4 +770,12 @@ gtd_window_embed_widget_in_header (GtdWindow       *self,
 
   GTD_EXIT;
 
+}
+
+GtdWorkspace*
+gtd_window_get_current_workspace (GtdWindow *self)
+{
+  g_return_val_if_fail (GTD_IS_WINDOW (self), NULL);
+
+  return self->current_workspace;
 }
