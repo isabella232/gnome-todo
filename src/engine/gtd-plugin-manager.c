@@ -48,6 +48,7 @@ static guint signals[NUM_SIGNALS] = { 0, };
 
 static const gchar * const default_plugins[] = {
   "eds",
+  "welcome",
   "task-lists-workspace",
   "inbox-panel",
   "night-light",

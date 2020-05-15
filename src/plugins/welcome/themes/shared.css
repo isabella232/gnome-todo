@@ -1,0 +1,46 @@
+
+/* Workspace */
+
+welcome-workspace > box {
+  padding: 32px;
+}
+welcome-workspace label.welcome-title {
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+/* Card */
+
+welcome-action-card {
+  background-color: @theme_base_color;
+  border-radius: 5px;
+  padding: 18px 24px;
+  border: solid 1px @borders;
+  min-width: 142px;
+  min-height: 142px;
+
+  opacity: 1;
+  transition: all 150ms linear;
+}
+
+welcome-action-card:hover {
+  background-color: alpha(@theme_fg_color, 0.05);
+}
+
+welcome-action-card:active {
+  background-color: @theme_bg_color;
+}
+
+welcome-action-card.empty {
+  opacity: 0.4;
+  transition: opacity 500ms linear;
+}
+
+welcome-action-card label.title {
+  font-size: 1.4rem;
+}
+
+welcome-action-card label.counter {
+  font-size: 48px;
+  font-weight: 300;
+}

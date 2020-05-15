@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="GtdWelcomeWorkspace" parent="GtdWidget">
+    <property name="layout-manager">
+      <object class="GtkBinLayout" />
+    </property>
+
+    <!-- Background Image -->
+    <child>
+      <object class="GtkImage" id="background_image">
+        <property name="hexpand">true</property>
+        <property name="vexpand">true</property>
+      </object>
+    </child>
+
+    <!-- Center Box -->
+    <child>
+      <object class="GtkCenterBox">
+        <property name="hexpand">true</property>
+        <property name="vexpand">true</property>
+        <property name="halign">center</property>
+        <property name="orientation">vertical</property>
+
+        <child type="start">
+          <object class="GtkLabel" id="welcome_label">
+            <property name="vexpand">true</property>
+            <property name="wrap">true</property>
+            <property name="justify">center</property>
+            <style>
+              <class name="welcome-title" />
+            </style>
+          </object>
+        </child>
+
+        <child type="center">
+          <object class="GtkBox">
+            <property name="hexpand">true</property>
+            <property name="halign">center</property>
+
+            <child>
+              <object class="GtkBox">
+                <property name="spacing">18</property>
+                <property name="homogeneous">true</property>
+
+                <!-- Inbox -->
+                <child>
+                  <object class="GtdWelcomeActionCard" id="inbox_card">
+                    <property name="title" translatable="yes">Inbox</property>
+                    <property name="icon-name">mail-inbox-symbolic</property>
+                    <property name="action-name">win.activate-workspace</property>
+                  </object>
+                </child>
+
+                <!-- Today -->
+                <child>
+                  <object class="GtdWelcomeActionCard" id="today_card">
+                    <property name="title" translatable="yes">Today</property>
+                    <property name="icon-name">view-tasks-today-symbolic</property>
+                    <property name="action-name">win.activate-workspace</property>
+                  </object>
+                </child>
+
+              </object>
+            </child>
+
+          </object>
+        </child>
+
+      </object>
+    </child>
+
+  </template>
+</interface>

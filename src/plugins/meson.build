@@ -23,6 +23,7 @@ subdir('peace')
 subdir('scheduled-panel')
 subdir('task-lists-workspace')
 subdir('today-panel')
+subdir('welcome')
 
 #if get_option('unscheduled_panel_plugin')
   #subdir('unscheduled-panel')
