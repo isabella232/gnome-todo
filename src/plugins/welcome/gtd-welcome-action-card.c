@@ -20,12 +20,15 @@
 
 #include "gtd-welcome-action-card.h"
 
+#include "config.h"
+
 struct _GtdWelcomeActionCard
 {
   GtkButton           parent_instance;
 
   GtkLabel           *counter_label;
   GtkImage           *image;
+  GtkLabel           *tasks_label;
   GtkLabel           *title_label;
 
   guint               counter;
@@ -61,6 +64,10 @@ update_counter_label (GtdWelcomeActionCard *self)
     gtk_widget_add_css_class (GTK_WIDGET (self), "empty");
   else
     gtk_widget_remove_css_class (GTK_WIDGET (self), "empty");
+
+  gtk_label_set_text (self->tasks_label,
+                      /* Translators: 'tasks' as in '4 tasks' or '1 task' */
+                      g_dngettext (GETTEXT_PACKAGE, "task", "tasks", self->counter));
 }
 
 
@@ -157,6 +164,7 @@ gtd_welcome_action_card_class_init (GtdWelcomeActionCardClass *klass)
 
   gtk_widget_class_bind_template_child (widget_class, GtdWelcomeActionCard, counter_label);
   gtk_widget_class_bind_template_child (widget_class, GtdWelcomeActionCard, image);
+  gtk_widget_class_bind_template_child (widget_class, GtdWelcomeActionCard, tasks_label);
   gtk_widget_class_bind_template_child (widget_class, GtdWelcomeActionCard, title_label);
 
   gtk_widget_class_set_css_name (widget_class, "welcome-action-card");
