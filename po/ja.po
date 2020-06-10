@@ -1,5 +1,5 @@
 # Japanese translation for gnome-todo.
-# Copyright (C) 2016-2020 gnome-todo's COPYRIGHT HOLDER
+# Copyright (C) 2016, 2018-2020 gnome-todo's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-todo package.
 # sujiniku <sujinikusityuu@gmail.com>, 2016.
 # Shinichirou Yamada <yamada_strong_yamada_nice_64bit@yahoo.co.jp>, 2018.
@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
 "POT-Creation-Date: 2020-05-30 11:25+0000\n"
-"PO-Revision-Date: 2020-01-19 00:00+0200\n"
+"PO-Revision-Date: 2020-06-10 18:45+0200\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -132,10 +132,8 @@ msgid "Enable debug messages"
 msgstr "デバッグメッセージを有効にする"
 
 #: src/gui/gtd-application.c:146
-#, fuzzy
-#| msgid "Copyright © 2015–2018 The To Do authors"
 msgid "Copyright © 2015–2020 The To Do authors"
-msgstr "Copyright © 2015–2018 The To Do authors"
+msgstr "Copyright © 2015–2020 The To Do authors"
 
 #: src/gui/gtd-application.c:151
 msgid "translator-credits"
@@ -475,11 +473,8 @@ msgid "Did you drink some water today?"
 msgstr ""
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:57
-#, fuzzy
-#| msgid "You have %d task for today"
-#| msgid_plural "You have %d tasks for today"
 msgid "What are your goals for today?"
-msgstr "今日は %d 件のタスクがあります"
+msgstr ""
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:58
 msgid "Can you let your creativity flow?"
@@ -534,16 +529,12 @@ msgid "Keep calm"
 msgstr ""
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:80
-#, fuzzy
-#| msgid "You made it!"
 msgid "You can do it"
-msgstr "やり遂げましたね!"
+msgstr ""
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:81
-#, fuzzy
-#| msgid "Meanwhile, spread the love"
 msgid "Meanwhile, spread the love ♥️"
-msgstr "では愛を広めましょう"
+msgstr ""
 
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:343
 msgid "Scheduled"
@@ -577,10 +568,8 @@ msgid "Archive"
 msgstr "アーカイブ化"
 
 #: src/plugins/task-lists-workspace/gtd-task-list-panel.c:233
-#, fuzzy
-#| msgid "An error occurred while creating a task"
 msgid "An error occurred while updating a task"
-msgstr "タスクの作成中にエラーが発生しました"
+msgstr "タスクの更新中にエラーが発生しました"
 
 #: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:33
 #: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:77
@@ -598,28 +587,22 @@ msgid "Delete"
 msgstr "削除"
 
 #: src/plugins/task-lists-workspace/gtd-task-lists-workspace.c:303
-#, fuzzy
-#| msgid "Lists"
 msgid "Task Lists"
-msgstr "リスト"
+msgstr "タスクリスト"
 
 #: src/plugins/task-lists-workspace/gtd-task-lists-workspace.ui:43
 msgid "New List"
 msgstr "新しいリスト"
 
 #: src/plugins/today-panel/gtd-today-omni-area-addin.c:94
-#, fuzzy, c-format
-#| msgid "You have %d task for today"
-#| msgid_plural "You have %d tasks for today"
+#, c-format
 msgid "%d task for today"
 msgid_plural "%d tasks for today"
 msgstr[0] "今日は %d 件のタスクがあります"
 
 #: src/plugins/today-panel/gtd-today-omni-area-addin.c:109
-#, fuzzy
-#| msgid "No task completed today"
 msgid "No tasks scheduled for today"
-msgstr "今日完了したタスクはありません"
+msgstr "今日予定されていたタスクはありません"
 
 #: src/plugins/todoist/gtd-plugin-todoist.c:109
 msgid "GNOME To Do cannot connect to Todoist due to network issue"
