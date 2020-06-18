@@ -170,10 +170,13 @@ static void
 on_clock_day_changed_cb (GtdClock              *clock,
                          GtdTodayOmniAreaAddin *self)
 {
+  GtkFilter *filter;
+
   self->had_tasks = FALSE;
   self->finished_tasks = FALSE;
 
-  gtk_filter_list_model_refilter (self->filter_model);
+  filter = gtk_filter_list_model_get_filter (self->filter_model);
+  gtk_filter_changed (filter, GTK_FILTER_CHANGE_DIFFERENT);
 }
 
 static void
@@ -276,12 +279,15 @@ gtd_today_omni_area_addin_class_init (GtdTodayOmniAreaAddinClass *klass)
 static void
 gtd_today_omni_area_addin_init (GtdTodayOmniAreaAddin *self)
 {
+  g_autoptr (GtkFilter) filter = NULL;
   GtdManager *manager;
 
   manager = gtd_manager_get_default ();
 
   self->icon = g_themed_icon_new ("view-tasks-today-symbolic");
-  self->filter_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager), filter_func, self, NULL);
+
+  filter = gtk_custom_filter_new (filter_func, self, NULL);
+  self->filter_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager), filter);
 
   g_signal_connect_object (self->filter_model,
                            "items-changed",

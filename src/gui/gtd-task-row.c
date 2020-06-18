@@ -162,7 +162,6 @@ date_to_label_binding_cb (GBinding     *binding,
   return TRUE;
 }
 
-#if 0
 static GtkWidget*
 create_transient_row (GtdTaskRow *self)
 {
@@ -181,7 +180,6 @@ create_transient_row (GtdTaskRow *self)
 
   return GTK_WIDGET (new_row);
 }
-#endif
 
 
 /*
@@ -263,7 +261,10 @@ on_drag_begin_cb (GtkDragSource *source,
                   GdkDrag       *drag,
                   GtdTaskRow    *self)
 {
+  GtkWidget *drag_icon;
+  GtkWidget *new_row;
   GtkWidget *widget;
+  gint x_offset;
 
   GTD_ENTRY;
 
@@ -271,22 +272,12 @@ on_drag_begin_cb (GtkDragSource *source,
 
   gtk_widget_set_cursor_from_name (widget, "grabbing");
 
-#if 0
-  g_autoptr (GtkWidget) drag_icon = NULL;
-  GtkWidget * *new_row;
-  gint x_offset;
-
-  /*
-   * gtk_drag_set_icon_widget() inserts the row in a different GtkWindow, so
-   * we have to create a new, transient row.
-   */
   new_row = create_transient_row (self);
-  drag_icon = gtk_drag_icon_new_for_drag (drag);
-  gtk_container_add (GTK_CONTAINER (drag_icon), new_row);
+  drag_icon = gtk_drag_icon_get_for_drag (drag);
+  gtk_drag_icon_set_child (GTK_DRAG_ICON (drag_icon), new_row);
 
   x_offset = gtk_widget_get_margin_start (self->content_box);
   gdk_drag_set_hotspot (drag, self->clicked_x + x_offset, self->clicked_y);
-#endif
 
   gtk_widget_hide (widget);
 
