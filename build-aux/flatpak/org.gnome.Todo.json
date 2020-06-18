@@ -199,7 +199,8 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/gtk.git"
+                    "url": "https://gitlab.gnome.org/GNOME/gtk.git",
+                    "tag": "3.98.5"
                 }
             ]
         },
