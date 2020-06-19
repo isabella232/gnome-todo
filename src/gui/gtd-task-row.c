@@ -218,8 +218,8 @@ on_button_press_event_cb (GtkGestureClick *gesture,
                           GtdTaskRow      *self)
 {
   GtkWidget *widget;
-  gint real_x;
-  gint real_y;
+  gdouble real_x;
+  gdouble real_y;
 
   widget = gtk_event_controller_get_widget (GTK_EVENT_CONTROLLER (gesture));
 
@@ -233,7 +233,7 @@ on_button_press_event_cb (GtkGestureClick *gesture,
   self->clicked_x = real_x;
   self->clicked_y = real_y;
 
-  GTD_TRACE_MSG ("GtkGestureClick:pressed received from a %s at %.1f,%.1f (%d,%d)",
+  GTD_TRACE_MSG ("GtkGestureClick:pressed received from a %s at %.1lf,%.1lf (%.1lf,%.1lf)",
                  G_OBJECT_TYPE_NAME (widget),
                  x,
                  y,
