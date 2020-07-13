@@ -9,21 +9,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2019-09-18 22:22+0000\n"
-"PO-Revision-Date: 2019-11-29 00:06+0200\n"
-"Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
+"POT-Creation-Date: 2020-05-30 11:25+0000\n"
+"PO-Revision-Date: 2020-07-14 00:21+0300\n"
+"Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
 "Language-Team: Greek, Modern (1453-) <gnome-el-list@gnome.org>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 3.32.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
-#: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
-#: src/gtd-window.c:773 src/gtd-window.c:804 src/main.c:35
+#: data/org.gnome.Todo.desktop.in.in:3 src/gui/gtd-application.c:142
+#: src/gui/gtd-omni-area.ui:44 src/main.c:38
 msgid "To Do"
 msgstr "Εργασίες"
 
@@ -121,311 +121,26 @@ msgid "The list of active extensions"
 msgstr "Η λίστα των ενεργών επεκτάσεων"
 
 #: data/org.gnome.todo.gschema.xml:31
-msgid "The current list selector"
-msgstr "Ο τρέχων επιλογέας λίστας"
+msgid "Sidebar revealed"
+msgstr "Αποκαλύφθηκε η μπάρα εργασίας"
 
 #: data/org.gnome.todo.gschema.xml:32
-msgid "The current list selector. Can be “grid” or “list”."
-msgstr "Ο τρέχων επιλογέας λίστας. Μπορεί να είναι «grid» ή «list»."
+msgid "Whether the sidebar is revealed or not"
+msgstr "Αν η μπάρα εργασίας θα αποκαλύπτεται ή όχι"
 
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
-#: plugins/next-week-panel/gtd-next-week-panel.c:112
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:103
-#: src/task-list-view/gtd-edit-pane.c:110
-msgid "No date set"
-msgstr "Δεν ορίστηκε ημερομηνία"
-
-#. Translators: This message will never be used with '1 day ago'
-#. * but the singular form is required because some languages do not
-#. * have plurals, some languages reuse the singular form for numbers
-#. * like 21, 31, 41, etc.
-#.
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:125
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:116
-#, c-format
-msgid "%d day ago"
-msgid_plural "%d days ago"
-msgstr[0] "%d μέρες πριν"
-msgstr[1] "%d μέρες πριν"
-
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:120
-#: src/task-list-view/gtd-task-row.c:146
-msgid "Yesterday"
-msgstr "Χθες"
-
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
-#: plugins/next-week-panel/gtd-next-week-panel.c:124
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:124
-#: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:154
-#: plugins/today-panel/gtd-panel-today.c:258
-#: src/task-list-view/gtd-task-row.c:138
-msgid "Today"
-msgstr "Σήμερα"
-
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
-#: plugins/next-week-panel/gtd-next-week-panel.c:128
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:128
-#: src/task-list-view/gtd-task-row.c:142
-msgid "Tomorrow"
-msgstr "Αύριο"
-
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:297
-msgid "All"
-msgstr "Όλες"
-
-#: plugins/background/gtd-plugin-background.c:150
-#, c-format
-msgid "%1$s and one more task"
-msgid_plural "%1$s and %2$d other tasks"
-msgstr[0] "%1$s και μια ακόμα εργασία"
-msgstr[1] "%1$s και %2$d ακόμη εργασίες"
-
-#: plugins/background/gtd-plugin-background.c:254
-#, c-format
-msgid "You have %d task for today"
-msgid_plural "You have %d tasks for today"
-msgstr[0] "Έχετε %d εργασία για σήμερα"
-msgstr[1] "Έχετε %d εργασίες για σήμερα"
-
-#: plugins/background/org.gnome.todo.background.gschema.xml:6
-msgid "Run To Do on startup"
-msgstr "Να εκτελείται η εφαρμογή Εργασίες κατά την εκκίνηση"
-
-#: plugins/background/org.gnome.todo.background.gschema.xml:7
-msgid "Whether GNOME To Do should run on startup"
-msgstr "Εάν η εφαρμογή Εργασίες του GNOME θα εκτελείται κατά την εκκίνηση"
-
-#: plugins/background/org.gnome.todo.background.gschema.xml:11
-msgid "Show notifications on startup"
-msgstr "Να εμφανίζονται ειδοποιήσεις κατά την εκκίνηση"
-
-#: plugins/background/org.gnome.todo.background.gschema.xml:12
-msgid "Whether GNOME To Do should show notifications or not"
-msgstr "Εάν η εφαρμογή Εργασίες του GNOME θα εμφανίζει ειδοποιήσεις ή όχι"
-
-#: plugins/background/ui/preferences.ui:39
-msgid "Run on Startup"
-msgstr "Εκτέλεση κατά την εκκίνηση"
-
-#: plugins/background/ui/preferences.ui:50
-msgid "Run To Do automatically when you log in"
-msgstr "Να εκτελείται η εφαρμογή Εργασίες αυτόματα κατά την είσοδό σας"
-
-#: plugins/background/ui/preferences.ui:96
-msgid "Show Notifications"
-msgstr "Εμφάνιση ειδοποιήσεων"
-
-#: plugins/background/ui/preferences.ui:107
-msgid "When To Do runs, show a startup notification"
-msgstr ""
-"Όταν η εφαρμογή Εργασίες εκτελείται, να εμφανίζεται ειδοποίηση κατά την "
-"εκκίνηση"
-
-#: plugins/eds/gtd-plugin-eds.c:201
-msgid "Error loading GNOME Online Accounts"
-msgstr "Σφάλμα κατά τη φόρτωση των διαδικτυακών λογαριασμών του GNOME"
-
-#: plugins/eds/gtd-provider-eds.c:172
-msgid "Failed to connect to task list"
-msgstr "Αποτυχία σύνδεσης με την λίστα εργασιών"
-
-#: plugins/eds/gtd-provider-eds.c:320
-msgid "An error occurred while creating a task"
-msgstr "Παρουσιάστηκε σφάλμα κατά τη δημιουργία εργασίας"
-
-#: plugins/eds/gtd-provider-eds.c:365
-msgid "An error occurred while modifying a task"
-msgstr "Παρουσιάστηκε σφάλμα κατά την τροποποίηση μιας εργασίας"
-
-#: plugins/eds/gtd-provider-eds.c:386
-msgid "An error occurred while removing a task"
-msgstr "Παρουσιάστηκε σφάλμα κατά την αφαίρεση εργασίας"
-
-#: plugins/eds/gtd-provider-eds.c:404
-msgid "An error occurred while creating a task list"
-msgstr "Παρουσιάστηκε σφάλμα κατά τη δημιουργία λίστας εργασιών"
-
-#: plugins/eds/gtd-provider-eds.c:426 plugins/eds/gtd-provider-eds.c:449
-msgid "An error occurred while modifying a task list"
-msgstr "Παρουσιάστηκε σφάλμα κατά την τροποποίηση της λίστας εργασιών"
-
-#: plugins/eds/gtd-provider-local.c:50
-msgid "On This Computer"
-msgstr "Σε αυτό τον υπολογιστή"
-
-#: plugins/eds/gtd-provider-local.c:62
-msgid "Local"
-msgstr "Τοπικά"
-
-#: plugins/eds/gtd-task-list-eds.c:499 plugins/eds/gtd-task-list-eds.c:526
-#: plugins/eds/gtd-task-list-eds.c:550
-msgid "Error fetching tasks from list"
-msgstr "Σφάλμα κατά την προσκόμιση εργασιών από την λίστα"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:120
-#: plugins/today-panel/gtd-panel-today.c:145
-msgid "Overdue"
-msgstr "Καθυστερημένες"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:345
-msgid "Next 7 Days"
-msgstr "Τις επόμενες 7 ημέρες"
-
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:343
-msgid "Scheduled"
-msgstr "Προγραμματισμένο"
-
-#: plugins/score/score/__init__.py:90
-msgid "No task completed today"
-msgstr "Δεν ολοκληρώθηκε καμία εργασία σήμερα"
-
-#: plugins/todoist/gtd-plugin-todoist.c:109
-msgid "GNOME To Do cannot connect to Todoist due to network issue"
-msgstr ""
-"Η εφαρμογή Εργασίες του GNOME δεν μπορεί να συνδεθεί με το Todoist λόγω "
-"προβλήματος δικτύου"
-
-#: plugins/todoist/gtd-plugin-todoist.c:110
-msgid ""
-"Not able to communicate with Todoist. Please check your internet "
-"connectivity."
-msgstr "Αδυναμία επικοινωνίας με το Todoist. Ελέγξτε τη σύνδεση στο διαδίκτυο."
-
-#: plugins/todoist/gtd-provider-todoist.c:213
-msgid "Error fetching Todoist account key"
-msgstr "Σφάλμα ανάκτησης του κλειδιού του λογαριασμού Todoist"
-
-#: plugins/todoist/gtd-provider-todoist.c:214
-msgid "Please ensure that Todoist account is correctly configured."
-msgstr "Βεβαιωθείτε ότι ο λογαριασμός Todoist έχει ρυθμιστεί σωστά."
-
-#: plugins/todoist/gtd-provider-todoist.c:555
-#, c-format
-msgid ""
-"GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
-msgstr ""
-"Η εφαρμογή Εργασίες του GNOME δεν διαθέτει τα απαραίτητα δικαιώματα για την "
-"εκτέλεση αυτής της ενέργειας: %s"
-
-#: plugins/todoist/gtd-provider-todoist.c:563
-#, c-format
-msgid ""
-"Invalid response received from Todoist servers. Please reload GNOME To Do."
-msgstr ""
-"Λήφθηκε μη έγκυρη απόκριση από τους διακομιστές Todoist. Παρακαλούμε "
-"επαναφορτώστε τις Εργασίες του GNOME."
-
-#: plugins/todoist/gtd-provider-todoist.c:850
-msgid "An error occurred while updating a Todoist task"
-msgstr "Παρουσιάστηκε σφάλμα κατά την ενημέρωση μιας εργασίας του Todoist"
-
-#: plugins/todoist/gtd-provider-todoist.c:965
-msgid "An error occurred while retrieving Todoist data"
-msgstr "Παρουσιάστηκε σφάλμα κατά την ανάκτηση δεδομένων του Todoist"
-
-#: plugins/todoist/gtd-provider-todoist.c:1040
-msgid "An error occurred while updating Todoist"
-msgstr "Παρουσιάστηκε σφάλμα κατά την ενημέρωση του Todoist"
-
-#: plugins/todoist/gtd-provider-todoist.c:1100
-msgid "Todoist"
-msgstr "Todoist"
-
-#: plugins/todoist/gtd-provider-todoist.c:1411
-#, c-format
-msgid "Todoist: %s"
-msgstr "Todoist: %s"
-
-#: plugins/todoist/ui/preferences.ui:65
-msgid "No Todoist accounts found"
-msgstr "Δεν βρέθηκαν λογαριασμοί Todoist"
-
-#: plugins/todoist/ui/preferences.ui:74
-msgid "Add a Todoist account"
-msgstr "Προσθήκη λογαριασμού Todoist"
-
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:87
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:124
-msgid "Cannot create Todo.txt file"
-msgstr "Αδυναμία δημιουργίας αρχείου Todo.txt"
-
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:161
-msgid "Select a Todo.txt-formatted file:"
-msgstr "Επιλογή διαμορφωμένου αρχείου Todo.txt:"
-
-#. Filechooser
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:165
-msgid "Select a file"
-msgstr "Επιλογή αρχείου"
-
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:191
-msgid "Error opening Todo.txt file"
-msgstr "Σφάλμα ανοίγματος αρχείου Todo.txt"
-
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:201
-msgid ""
-"<b>Warning!</b> Todo.txt support is experimental and unstable. You may "
-"experience instability, errors and eventually data loss. It is not "
-"recommended to use Todo.txt integration on production systems."
-msgstr ""
-"<b>Προειδοποίηση!</b> Η υποστήριξη Todo.txt είναι πειραματική και ασταθής. "
-"Μπορεί να αντιμετωπίσετε αστάθεια, σφάλματα και ενδεχομένως απώλεια "
-"δεδομένων. Δεν συνιστάται η ενσωμάτωση του Todo.txt στα παραγωγικά συστήματα."
-
-#: plugins/todo-txt/gtd-provider-todo-txt.c:574
-msgid "Error while opening the file monitor. Todo.txt will not be monitored"
-msgstr ""
-"Σφάλμα κατά το άνοιγμα της παρακολούθησης αρχείων. Το αρχείο Todo.txt δεν θα "
-"παρακολουθείται"
-
-#: plugins/todo-txt/gtd-provider-todo-txt.c:643
-msgid "Todo.txt"
-msgstr "Todo.txt"
-
-#: plugins/todo-txt/gtd-provider-todo-txt.c:655
-msgid "On the Todo.txt file"
-msgstr "Στο αρχείο Todo.txt"
-
-#: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:6
-msgid "Todo.txt File"
-msgstr "Αρχείο Todo.txt"
-
-#: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:7
-msgid "Source of the Todo.txt file"
-msgstr "Η προέλευση του αρχείου Todo.txt"
-
-#. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:112
-msgid "Unscheduled"
-msgstr "Μη προγραμματισμένο"
-
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
-#: src/gtd-task-list-panel.ui:32
-msgid "Clear completed tasks…"
-msgstr "Εκκαθάριση ολοκληρωμένων εργασιών…"
-
-#. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
-#, python-format
-msgid "Unscheduled (%d)"
-msgstr "Μη προγραμματισμένο (%d)"
-
-#: src/gtd-application.c:72
+#: src/gui/gtd-application.c:75
 msgid "Quit GNOME To Do"
 msgstr "Έξοδος από το Εργασίες του GNOME"
 
-#: src/gtd-application.c:73
+#: src/gui/gtd-application.c:76
 msgid "Enable debug messages"
 msgstr "Ενεργοποίηση μηνυμάτων αποσφαλμάτωσης"
 
-#: src/gtd-application.c:143
-msgid "Copyright © 2015–2018 The To Do authors"
-msgstr "Πνευματικά δικαιώματα © 2015–2018 Οι συγγραφείς του Εργασίες"
+#: src/gui/gtd-application.c:146
+msgid "Copyright © 2015–2020 The To Do authors"
+msgstr "Πνευματικά δικαιώματα © 2015–2020 Οι συγγραφείς του Εργασίες"
 
-#: src/gtd-application.c:148
+#: src/gui/gtd-application.c:151
 msgid "translator-credits"
 msgstr ""
 "Ελληνική μεταφραστική ομάδα του GNOME\n"
@@ -437,63 +152,222 @@ msgstr ""
 "Για περισσότερες πληροφορίες, επισκεφθείτε τη σελίδα\n"
 "http://gnome.gr/"
 
-#: src/gtd-initial-setup-window.ui:20
+#: src/gui/gtd-edit-pane.c:93
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:140
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:103
+msgid "No date set"
+msgstr "Δεν ορίστηκε ημερομηνία"
+
+#: src/gui/gtd-edit-pane.ui:16
+msgid "D_ue Date"
+msgstr "Η_μερομηνία λήξης"
+
+#: src/gui/gtd-edit-pane.ui:30
+msgid "_Today"
+msgstr "_Σήμερα"
+
+#: src/gui/gtd-edit-pane.ui:39
+msgid "To_morrow"
+msgstr "_Αύριο"
+
+#: src/gui/gtd-edit-pane.ui:75
+msgid "_Notes"
+msgstr "_Σημειώσεις"
+
+#: src/gui/gtd-edit-pane.ui:121
+msgid "_Delete"
+msgstr "_Διαγραφή"
+
+#: src/gui/gtd-edit-pane.ui:158
+msgctxt "taskdate"
+msgid "None"
+msgstr "Kαμία"
+
+#: src/gui/gtd-empty-list-widget.c:51
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:53
+msgid "No more tasks left"
+msgstr "Δεν βρέθηκαν άλλες εργασίες"
+
+#: src/gui/gtd-empty-list-widget.c:52
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:54
+msgid "Nothing else to do here"
+msgstr "Τίποτα άλλο να κάνετε εδώ"
+
+#: src/gui/gtd-empty-list-widget.c:53
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:55
+msgid "You made it!"
+msgstr "Τα καταφέρατε!"
+
+#: src/gui/gtd-empty-list-widget.c:54
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:56
+msgid "Looks like there’s nothing else left here"
+msgstr "Φαίνεται ότι δεν υπάρχει τίποτα άλλο εδώ"
+
+#: src/gui/gtd-empty-list-widget.c:59
+msgid "Get some rest now"
+msgstr "Κάντε ένα διάλειμμα"
+
+#: src/gui/gtd-empty-list-widget.c:60
+msgid "Enjoy the rest of your day"
+msgstr "Απολαύστε το υπόλοιπο της ημέρας σας"
+
+#: src/gui/gtd-empty-list-widget.c:61
+msgid "Good job!"
+msgstr "Καλή δουλειά!"
+
+#: src/gui/gtd-empty-list-widget.c:62
+msgid "Meanwhile, spread the love"
+msgstr "Εν τω μεταξύ, διαδώστε την αγάπη"
+
+#: src/gui/gtd-empty-list-widget.c:63
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:78
+msgid "Working hard is always rewarded"
+msgstr "Η σκληρή δουλειά  πάντα ανταμείβεται"
+
+#: src/gui/gtd-empty-list-widget.c:74
+msgid "No tasks found"
+msgstr "Δεν βρέθηκαν εργασίες"
+
+#: src/gui/gtd-empty-list-widget.c:75
+msgid "You can add tasks using the <b>+</b> above"
+msgstr "Μπορείτε να προσθέσετε εργασίες χρησιμοποιώντας το <b>+</b>"
+
+#: src/gui/gtd-initial-setup-window.ui:20
 msgid "Welcome"
 msgstr "Καλώς ήλθατε"
 
-#: src/gtd-initial-setup-window.ui:31
+#: src/gui/gtd-initial-setup-window.ui:31
 msgid "Log in to online accounts to access your tasks"
 msgstr ""
 "Συνδεθείτε με διαδικτυακούς λογαριασμούς για να έχετε πρόσβαση στις εργασίες "
 "σας"
 
-#: src/gtd-initial-setup-window.ui:53
+#: src/gui/gtd-initial-setup-window.ui:53
 msgid "To Do Setup"
 msgstr "Ρύθμιση εφαρμογής Εργασίες"
 
-#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:95
-#: src/provider/gtd-provider-popover.ui:40
+#: src/gui/gtd-initial-setup-window.ui:56 src/gui/gtd-provider-popover.ui:43
 msgid "_Cancel"
 msgstr "_Ακύρωση"
 
-#: src/gtd-initial-setup-window.ui:65
+#: src/gui/gtd-initial-setup-window.ui:65
 msgid "_Done"
 msgstr "_Ολοκληρώθηκε"
 
-#: src/gtd-plugin-dialog-row.c:97
+#. Translators: %1$s is the task list name, %2$s is the provider name
+#: src/gui/gtd-new-task-row.c:90
+#, c-format
+msgid "%1$s \t <small>%2$s</small>"
+msgstr "%1$s \t <small>%2$s</small>"
+
+#: src/gui/gtd-new-task-row.c:127
+msgid "An error occurred while creating a task"
+msgstr "Παρουσιάστηκε σφάλμα κατά τη δημιουργία εργασίας"
+
+#: src/gui/gtd-new-task-row.ui:13
+msgid "New task…"
+msgstr "Νέα εργασία…"
+
+#: src/gui/gtd-plugin-dialog-row.c:97
 msgid "Error loading extension"
 msgstr "Σφάλμα κατά τη φόρτωση της επέκτασης"
 
-#: src/gtd-plugin-dialog-row.c:97
+#: src/gui/gtd-plugin-dialog-row.c:97
 msgid "Error unloading extension"
 msgstr "Σφάλμα κατά την εκφόρτωση της επέκτασης"
 
-#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:137
+#: src/gui/gtd-plugin-dialog.ui:58
 msgid "Extensions"
 msgstr "Επεκτάσεις"
 
-#: src/gtd-plugin-dialog.ui:90
+#: src/gui/gtd-plugin-dialog.ui:96
 msgid "No extensions found"
 msgstr "Δεν βρέθηκαν επεκτάσεις"
 
-#: src/gtd-task-list-panel.c:199
-msgid "Unarchive"
-msgstr "Αναίρεση μεταφοράς στην αρχειοθήκη"
+#: src/gui/gtd-provider-popover.c:97
+msgid "An error occurred while creating a task list"
+msgstr "Παρουσιάστηκε σφάλμα κατά τη δημιουργία λίστας εργασιών"
 
-#: src/gtd-task-list-panel.c:199 src/gtd-task-list-panel.ui:41
-msgid "Archive"
-msgstr "Μεταφορά στην αρχειοθήκη"
+#: src/gui/gtd-provider-popover.ui:26
+msgid "Create _List"
+msgstr "Δημιουργία _λίστας"
 
-#: src/gtd-task-list-panel.ui:26 src/gtd-task-list-panel.ui:61
-#: src/gtd-task-list-panel.ui:77
-msgid "Rename"
-msgstr "Μετονομασία"
+#: src/gui/gtd-provider-popover.ui:56
+msgid "List Name"
+msgstr "Όνομα καταλόγου"
 
-#: src/gtd-task-list-panel.ui:47
-msgid "Delete"
-msgstr "Διαγραφή"
+#: src/gui/gtd-provider-popover.ui:133
+msgid "Select a storage location"
+msgstr "Επιλογή θέσης αποθήκευσης"
 
-#: src/gtd-window.c:110
+#: src/gui/gtd-provider-row.ui:60
+msgid "Off"
+msgstr "Ανενεργό"
+
+#: src/gui/gtd-provider-selector.ui:19
+msgid "Click to add a new Google account"
+msgstr "Κάντε κλικ για προσθήκη ενός νέου λογαριασμού Google"
+
+#: src/gui/gtd-provider-selector.ui:35
+msgid "Google"
+msgstr "Google"
+
+#: src/gui/gtd-provider-selector.ui:45
+msgid "Click to add a new ownCloud account"
+msgstr "Κάντε κλικ για προσθήκη ενός νέου λογαριασμού ownCloud"
+
+#: src/gui/gtd-provider-selector.ui:61
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: src/gui/gtd-provider-selector.ui:71
+msgid "Click to add a new Microsoft Exchange account"
+msgstr "Κάντε κλικ για προσθήκη ενός νέου λογαριασμού Microsoft Exchange"
+
+#: src/gui/gtd-provider-selector.ui:87
+msgid "Microsoft Exchange"
+msgstr "Microsoft Exchange"
+
+#: src/gui/gtd-provider-selector.ui:100
+msgid "Or you can just store your tasks on this computer"
+msgstr ""
+"Ή μπορείτε απλώς να αποθηκεύσετε τις εργασίες σας σε αυτόν τον υπολογιστή"
+
+#: src/gui/gtd-task-list-view.c:459
+#, c-format
+msgid "Task <b>%s</b> removed"
+msgstr "Η εργασία <b>%s</b> αφαιρέθηκε"
+
+#: src/gui/gtd-task-list-view.c:478
+#: src/plugins/task-lists-workspace/gtd-sidebar.c:422
+msgid "Undo"
+msgstr "Αναίρεση"
+
+#: src/gui/gtd-task-row.c:130
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:152
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:124
+#: src/plugins/today-panel/gtd-panel-today.c:177
+#: src/plugins/today-panel/gtd-panel-today.c:293
+#: src/plugins/welcome/gtd-welcome-workspace.ui:57
+msgid "Today"
+msgstr "Σήμερα"
+
+#: src/gui/gtd-task-row.c:134
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:156
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:128
+msgid "Tomorrow"
+msgstr "Αύριο"
+
+#: src/gui/gtd-task-row.c:138
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:120
+msgid "Yesterday"
+msgstr "Χθες"
+
+#: src/gui/gtd-window.c:112
 msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
@@ -501,173 +375,416 @@ msgstr ""
 "Αυτή είναι μια έκδοση προς ανάπτυξη της εφαρμογής Εργασίες. Μπορεί να "
 "αντιμετωπίσετε σφάλματα, εσφαλμένες συμπεριφορές και απώλεια δεδομένων."
 
-#: src/gtd-window.c:463
+#: src/gui/gtd-window.c:424
 msgid "Details"
 msgstr "Λεπτομέρειες"
 
-#: src/gtd-window.c:768
-msgid "Click a task list to select"
-msgstr "Κάντε κλικ σε μια λίστα εργασιών για να την επιλέξετε"
-
-#: src/gtd-window.ui:50
-msgid "New List"
-msgstr "Νέα λίστα"
-
-#: src/gtd-window.ui:143
+#: src/gui/gtd-window.ui:158
 msgid "_About To Do"
 msgstr "Περί του Εργασίες"
 
-#: src/provider/gtd-provider-popover.ui:23
-msgid "Create _List"
-msgstr "Δημιουργία _λίστας"
+#. Translators: This message will never be used with '1 day ago'
+#. * but the singular form is required because some languages do not
+#. * have plurals, some languages reuse the singular form for numbers
+#. * like 21, 31, 41, etc.
+#.
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:125
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:116
+#, c-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] "%d μέρες πριν"
+msgstr[1] "%d μέρες πριν"
 
-#: src/provider/gtd-provider-popover.ui:53
-msgid "List Name"
-msgstr "Όνομα καταλόγου"
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:333
+msgid "All"
+msgstr "Όλες"
 
-#: src/provider/gtd-provider-popover.ui:130
-msgid "Select a storage location"
-msgstr "Επιλογή θέσης αποθήκευσης"
+#: src/plugins/background/gtd-plugin-background.c:238
+#, c-format
+msgid "%1$s and one more task"
+msgid_plural "%1$s and %2$d other tasks"
+msgstr[0] "%1$s και μια ακόμα εργασία"
+msgstr[1] "%1$s και %2$d ακόμη εργασίες"
 
-#: src/provider/gtd-provider-row.ui:57
-msgid "Off"
-msgstr "Ανενεργό"
+#: src/plugins/background/gtd-plugin-background.c:342
+#, c-format
+msgid "You have %d task for today"
+msgid_plural "You have %d tasks for today"
+msgstr[0] "Έχετε %d εργασία για σήμερα"
+msgstr[1] "Έχετε %d εργασίες για σήμερα"
 
-#: src/provider/gtd-provider-selector.ui:19
-msgid "Click to add a new Google account"
-msgstr "Κάντε κλικ για προσθήκη ενός νέου λογαριασμού Google"
+#: src/plugins/background/org.gnome.todo.background.gschema.xml:6
+msgid "Run To Do on startup"
+msgstr "Να εκτελείται η εφαρμογή Εργασίες κατά την εκκίνηση"
 
-#: src/provider/gtd-provider-selector.ui:32
-msgid "Google"
-msgstr "Google"
+#: src/plugins/background/org.gnome.todo.background.gschema.xml:7
+msgid "Whether GNOME To Do should run on startup"
+msgstr "Εάν η εφαρμογή Εργασίες του GNOME θα εκτελείται κατά την εκκίνηση"
 
-#: src/provider/gtd-provider-selector.ui:42
-msgid "Click to add a new ownCloud account"
-msgstr "Κάντε κλικ για προσθήκη ενός νέου λογαριασμού ownCloud"
+#: src/plugins/background/org.gnome.todo.background.gschema.xml:11
+msgid "Show notifications on startup"
+msgstr "Να εμφανίζονται ειδοποιήσεις κατά την εκκίνηση"
 
-#: src/provider/gtd-provider-selector.ui:55
-msgid "ownCloud"
-msgstr "ownCloud"
+#: src/plugins/background/org.gnome.todo.background.gschema.xml:12
+msgid "Whether GNOME To Do should show notifications or not"
+msgstr "Εάν η εφαρμογή Εργασίες του GNOME θα εμφανίζει ειδοποιήσεις ή όχι"
 
-#: src/provider/gtd-provider-selector.ui:65
-msgid "Click to add a new Microsoft Exchange account"
-msgstr "Κάντε κλικ για προσθήκη ενός νέου λογαριασμού Microsoft Exchange"
+#: src/plugins/background/ui/preferences.ui:41
+msgid "Run on Startup"
+msgstr "Εκτέλεση κατά την εκκίνηση"
 
-#: src/provider/gtd-provider-selector.ui:78
-msgid "Microsoft Exchange"
-msgstr "Microsoft Exchange"
+#: src/plugins/background/ui/preferences.ui:52
+msgid "Run To Do automatically when you log in"
+msgstr "Να εκτελείται η εφαρμογή Εργασίες αυτόματα κατά την είσοδό σας"
 
-#: src/provider/gtd-provider-selector.ui:91
-msgid "Or you can just store your tasks on this computer"
+#: src/plugins/background/ui/preferences.ui:101
+msgid "Show Notifications"
+msgstr "Εμφάνιση ειδοποιήσεων"
+
+#: src/plugins/background/ui/preferences.ui:112
+msgid "When To Do runs, show a startup notification"
 msgstr ""
-"Ή μπορείτε απλώς να αποθηκεύσετε τις εργασίες σας σε αυτόν τον υπολογιστή"
+"Όταν η εφαρμογή Εργασίες εκτελείται, να εμφανίζεται ειδοποίηση κατά την "
+"εκκίνηση"
 
-#: src/sidebar/gtd-sidebar.c:329
+#: src/plugins/eds/gtd-plugin-eds.c:181
+msgid "Error loading GNOME Online Accounts"
+msgstr "Σφάλμα κατά τη φόρτωση των διαδικτυακών λογαριασμών του GNOME"
+
+#: src/plugins/eds/gtd-provider-eds.c:190
+msgid "Failed to connect to task list"
+msgstr "Αποτυχία σύνδεσης με την λίστα εργασιών"
+
+#: src/plugins/eds/gtd-provider-local.c:50
+msgid "On This Computer"
+msgstr "Σε αυτό τον υπολογιστή"
+
+#: src/plugins/eds/gtd-provider-local.c:62
+msgid "Local"
+msgstr "Τοπικά"
+
+#: src/plugins/eds/gtd-task-list-eds.c:499
+#: src/plugins/eds/gtd-task-list-eds.c:526
+#: src/plugins/eds/gtd-task-list-eds.c:550
+msgid "Error fetching tasks from list"
+msgstr "Σφάλμα κατά την προσκόμιση εργασιών από την λίστα"
+
+#: src/plugins/eds/gtd-task-list-eds.c:932
+#: src/plugins/inbox-panel/gtd-inbox-panel.c:111
+#: src/plugins/welcome/gtd-welcome-workspace.ui:48
+msgid "Inbox"
+msgstr "Εισερχόμενα"
+
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:148
+#: src/plugins/today-panel/gtd-panel-today.c:168
+msgid "Overdue"
+msgstr "Καθυστερημένες"
+
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:386
+msgid "Next 7 Days"
+msgstr "Τις επόμενες 7 ημέρες"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:56
+msgid "Did you drink some water today?"
+msgstr "Ήπιατε αρκετό νερό σήμερα;"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:57
+msgid "What are your goals for today?"
+msgstr "Τι στόχους έχετε σήμερα;"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:58
+msgid "Can you let your creativity flow?"
+msgstr "Μπορείτε να αφήσετε τη δημιουργικότητά σας να ρέει;"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:59
+msgid "How are you feeling right now?"
+msgstr "Πώς αισθάνεστε αυτή τη στιγμή;"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:60
+msgid "At what point is it good enough?"
+msgstr "Σε ποιο σημείο είναι αρκετά καλό;"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:65
+msgid "Remember to breath. Good. Don't stop."
+msgstr "Να θυμάστε να αναπνέετε. Ωραία. Μην σταματάτε."
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:66
+msgid "Don't forget to drink some water"
+msgstr "Να μην ξεχνάτε να πίνετε νερό"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:67
+msgid "Remember to take some time off"
+msgstr "Να θυμάστε να κάνετε διαλείμματα"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:68
+msgid "Eat fruits if you can 🍐️"
+msgstr "Τρώτε φρούτα εάν μπορείτε 🍐️"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:69
+msgid "Take care of yourself"
+msgstr "Να προσέχεις τον εαυτό σου"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:70
+msgid "Remember to have some fun"
+msgstr "Να θυμάστε να το διασκεδάζετε"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:71
+msgid "You're doing great"
+msgstr "Τα πάτε περίφημα"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:76
+msgid "Smile, breathe and go slowly"
+msgstr "Χαμογελάστε, πάρτε μια ανάσα και ξεκινήστε σιγά σιγά"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:77
+msgid "Wherever you go, there you are"
+msgstr "Όπου κι αν πάτε, είστε εκεί"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:79
+msgid "Keep calm"
+msgstr "Χαλαρά"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:80
+msgid "You can do it"
+msgstr "Μπορείτε να τα καταφέρετε"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:81
+msgid "Meanwhile, spread the love ♥️"
+msgstr "Εν τω μεταξύ, διαδώστε την αγάπη ♥️"
+
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:343
+msgid "Scheduled"
+msgstr "Προγραμματισμένο"
+
+#: src/plugins/task-lists-workspace/gtd-sidebar.c:419
 #, c-format
 msgid "Task list <b>%s</b> removed"
 msgstr "Η λίστα εργασιών <b>%s</b> αφαιρέθηκε"
 
-#: src/sidebar/gtd-sidebar.c:332 src/task-list-view/gtd-task-list-view.c:460
-msgid "Undo"
-msgstr "Αναίρεση"
-
-#: src/sidebar/gtd-sidebar-provider-row.ui:69
+#: src/plugins/task-lists-workspace/gtd-sidebar-provider-row.ui:69
 msgid "Loading…"
 msgstr "Γίνεται φόρτωση…"
 
 #. Translators: 'archived' as in 'archived task lists'
-#: src/sidebar/gtd-sidebar.ui:51
-#| msgid "Archive"
+#: src/plugins/task-lists-workspace/gtd-sidebar.ui:94
 msgid "Archived"
 msgstr "Αρχειοθετήθηκε"
 
-#: src/sidebar/gtd-sidebar.ui:102
+#: src/plugins/task-lists-workspace/gtd-sidebar.ui:146
 msgid "No archived lists"
 msgstr "Μη αρχειοθετημένες λίστες"
 
-#: src/task-list-view/gtd-edit-pane.ui:16
-msgid "D_ue Date"
-msgstr "Η_μερομηνία λήξης"
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.c:208
+msgid "Unarchive"
+msgstr "Αναίρεση μεταφοράς στην αρχειοθήκη"
 
-#: src/task-list-view/gtd-edit-pane.ui:30
-msgid "_Today"
-msgstr "_Σήμερα"
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.c:208
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:48
+msgid "Archive"
+msgstr "Μεταφορά στην αρχειοθήκη"
 
-#: src/task-list-view/gtd-edit-pane.ui:39
-msgid "To_morrow"
-msgstr "_Αύριο"
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.c:233
+msgid "An error occurred while updating a task"
+msgstr "Παρουσιάστηκε σφάλμα κατά την ενημέρωση της εργασίας"
 
-#: src/task-list-view/gtd-edit-pane.ui:75
-msgid "_Notes"
-msgstr "_Σημειώσεις"
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:33
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:77
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:92
+msgid "Rename"
+msgstr "Μετονομασία"
 
-#: src/task-list-view/gtd-edit-pane.ui:117
-msgid "_Delete"
-msgstr "_Διαγραφή"
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:39
+#: src/plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
+msgid "Clear completed tasks…"
+msgstr "Εκκαθάριση ολοκληρωμένων εργασιών…"
 
-#: src/task-list-view/gtd-edit-pane.ui:151
-msgctxt "taskdate"
-msgid "None"
-msgstr "Kαμία"
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:54
+msgid "Delete"
+msgstr "Διαγραφή"
 
-#. Translators: %1$s is the task list name, %2$s is the provider name
-#: src/task-list-view/gtd-new-task-row.c:91
+#: src/plugins/task-lists-workspace/gtd-task-lists-workspace.c:303
+msgid "Task Lists"
+msgstr "Λίστα εργασιών"
+
+#: src/plugins/task-lists-workspace/gtd-task-lists-workspace.ui:43
+msgid "New List"
+msgstr "Νέα λίστα"
+
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:94
 #, c-format
-msgid "%1$s \t <small>%2$s</small>"
-msgstr "%1$s \t <small>%2$s</small>"
+msgid "%d task for today"
+msgid_plural "%d tasks for today"
+msgstr[0] "Έχετε %d εργασία για σήμερα"
+msgstr[1] "Έχετε %d εργασίες για σήμερα"
 
-#: src/task-list-view/gtd-new-task-row.ui:14
-msgid "New task…"
-msgstr "Νέα εργασία…"
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:109
+msgid "No tasks scheduled for today"
+msgstr "Δεν υπάρχει καμία εργασία σήμερα"
 
-#: src/task-list-view/gtd-task-list-view.c:441
+#: src/plugins/todoist/gtd-plugin-todoist.c:109
+msgid "GNOME To Do cannot connect to Todoist due to network issue"
+msgstr ""
+"Η εφαρμογή Εργασίες του GNOME δεν μπορεί να συνδεθεί με το Todoist λόγω "
+"προβλήματος δικτύου"
+
+#: src/plugins/todoist/gtd-plugin-todoist.c:110
+msgid ""
+"Not able to communicate with Todoist. Please check your internet "
+"connectivity."
+msgstr "Αδυναμία επικοινωνίας με το Todoist. Ελέγξτε τη σύνδεση στο διαδίκτυο."
+
+#: src/plugins/todoist/gtd-provider-todoist.c:213
+msgid "Error fetching Todoist account key"
+msgstr "Σφάλμα ανάκτησης του κλειδιού του λογαριασμού Todoist"
+
+#: src/plugins/todoist/gtd-provider-todoist.c:214
+msgid "Please ensure that Todoist account is correctly configured."
+msgstr "Βεβαιωθείτε ότι ο λογαριασμός Todoist έχει ρυθμιστεί σωστά."
+
+#: src/plugins/todoist/gtd-provider-todoist.c:555
 #, c-format
-msgid "Task <b>%s</b> removed"
-msgstr "Η εργασία <b>%s</b> αφαιρέθηκε"
+msgid ""
+"GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
+msgstr ""
+"Η εφαρμογή Εργασίες του GNOME δεν διαθέτει τα απαραίτητα δικαιώματα για την "
+"εκτέλεση αυτής της ενέργειας: %s"
 
-#: src/widgets/gtd-empty-list-widget.c:51
-msgid "No more tasks left"
-msgstr "Δεν βρέθηκαν άλλες εργασίες"
+#: src/plugins/todoist/gtd-provider-todoist.c:563
+#, c-format
+msgid ""
+"Invalid response received from Todoist servers. Please reload GNOME To Do."
+msgstr ""
+"Λήφθηκε μη έγκυρη απόκριση από τους διακομιστές Todoist. Παρακαλούμε "
+"επαναφορτώστε τις Εργασίες του GNOME."
 
-#: src/widgets/gtd-empty-list-widget.c:52
-msgid "Nothing else to do here"
-msgstr "Τίποτα άλλο να κάνετε εδώ"
+#: src/plugins/todoist/gtd-provider-todoist.c:850
+msgid "An error occurred while updating a Todoist task"
+msgstr "Παρουσιάστηκε σφάλμα κατά την ενημέρωση μιας εργασίας του Todoist"
 
-#: src/widgets/gtd-empty-list-widget.c:53
-msgid "You made it!"
-msgstr "Τα καταφέρατε!"
+#: src/plugins/todoist/gtd-provider-todoist.c:965
+msgid "An error occurred while retrieving Todoist data"
+msgstr "Παρουσιάστηκε σφάλμα κατά την ανάκτηση δεδομένων του Todoist"
 
-#: src/widgets/gtd-empty-list-widget.c:54
-msgid "Looks like there’s nothing else left here"
-msgstr "Φαίνεται ότι δεν υπάρχει τίποτα άλλο εδώ"
+#: src/plugins/todoist/gtd-provider-todoist.c:1040
+msgid "An error occurred while updating Todoist"
+msgstr "Παρουσιάστηκε σφάλμα κατά την ενημέρωση του Todoist"
 
-#: src/widgets/gtd-empty-list-widget.c:59
-msgid "Get some rest now"
-msgstr "Κάντε ένα διάλειμμα"
+#: src/plugins/todoist/gtd-provider-todoist.c:1100
+msgid "Todoist"
+msgstr "Todoist"
 
-#: src/widgets/gtd-empty-list-widget.c:60
-msgid "Enjoy the rest of your day"
-msgstr "Απολαύστε το υπόλοιπο της ημέρας σας"
+#: src/plugins/todoist/gtd-provider-todoist.c:1411
+#, c-format
+msgid "Todoist: %s"
+msgstr "Todoist: %s"
 
-#: src/widgets/gtd-empty-list-widget.c:61
-msgid "Good job!"
-msgstr "Καλή δουλειά!"
+#: src/plugins/todoist/ui/preferences.ui:65
+msgid "No Todoist accounts found"
+msgstr "Δεν βρέθηκαν λογαριασμοί Todoist"
 
-#: src/widgets/gtd-empty-list-widget.c:62
-msgid "Meanwhile, spread the love"
-msgstr "Εν τω μεταξύ, διαδώστε την αγάπη"
+#: src/plugins/todoist/ui/preferences.ui:74
+msgid "Add a Todoist account"
+msgstr "Προσθήκη λογαριασμού Todoist"
 
-#: src/widgets/gtd-empty-list-widget.c:63
-msgid "Working hard is always rewarded"
-msgstr "Η σκληρή δουλειά  πάντα ανταμείβεται"
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:87
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:124
+msgid "Cannot create Todo.txt file"
+msgstr "Αδυναμία δημιουργίας αρχείου Todo.txt"
 
-#: src/widgets/gtd-empty-list-widget.c:74
-msgid "No tasks found"
-msgstr "Δεν βρέθηκαν εργασίες"
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:161
+msgid "Select a Todo.txt-formatted file:"
+msgstr "Επιλογή διαμορφωμένου αρχείου Todo.txt:"
 
-#: src/widgets/gtd-empty-list-widget.c:75
-msgid "You can add tasks using the <b>+</b> above"
-msgstr "Μπορείτε να προσθέσετε εργασίες χρησιμοποιώντας το <b>+</b>"
+#. Filechooser
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:165
+msgid "Select a file"
+msgstr "Επιλογή αρχείου"
+
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:191
+msgid "Error opening Todo.txt file"
+msgstr "Σφάλμα ανοίγματος αρχείου Todo.txt"
+
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:201
+msgid ""
+"<b>Warning!</b> Todo.txt support is experimental and unstable. You may "
+"experience instability, errors and eventually data loss. It is not "
+"recommended to use Todo.txt integration on production systems."
+msgstr ""
+"<b>Προειδοποίηση!</b> Η υποστήριξη Todo.txt είναι πειραματική και ασταθής. "
+"Μπορεί να αντιμετωπίσετε αστάθεια, σφάλματα και ενδεχομένως απώλεια "
+"δεδομένων. Δεν συνιστάται η ενσωμάτωση του Todo.txt στα παραγωγικά συστήματα."
+
+#: src/plugins/todo-txt/gtd-provider-todo-txt.c:574
+msgid "Error while opening the file monitor. Todo.txt will not be monitored"
+msgstr ""
+"Σφάλμα κατά το άνοιγμα της παρακολούθησης αρχείων. Το αρχείο Todo.txt δεν θα "
+"παρακολουθείται"
+
+#: src/plugins/todo-txt/gtd-provider-todo-txt.c:643
+msgid "Todo.txt"
+msgstr "Todo.txt"
+
+#: src/plugins/todo-txt/gtd-provider-todo-txt.c:655
+msgid "On the Todo.txt file"
+msgstr "Στο αρχείο Todo.txt"
+
+#: src/plugins/todo-txt/org.gnome.todo.txt.gschema.xml:6
+msgid "Todo.txt File"
+msgstr "Αρχείο Todo.txt"
+
+#: src/plugins/todo-txt/org.gnome.todo.txt.gschema.xml:7
+msgid "Source of the Todo.txt file"
+msgstr "Η προέλευση του αρχείου Todo.txt"
+
+#. Translators: 'Unscheduled' as in 'Unscheduled tasks'
+#: src/plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
+#: src/plugins/unscheduled-panel/unscheduled-panel/__init__.py:112
+msgid "Unscheduled"
+msgstr "Μη προγραμματισμένο"
+
+#. Translators: 'Unscheduled' as in 'Unscheduled tasks'
+#: src/plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
+#, python-format
+msgid "Unscheduled (%d)"
+msgstr "Μη προγραμματισμένο (%d)"
+
+#: src/plugins/welcome/gtd-welcome-workspace.c:68
+#, c-format
+msgid "Good Morning, %s"
+msgstr "Καλημέρα, %s"
+
+#: src/plugins/welcome/gtd-welcome-workspace.c:70
+#, c-format
+msgid "Good Afternoon, %s"
+msgstr "Καλό μεσημέρι, %s"
+
+#: src/plugins/welcome/gtd-welcome-workspace.c:72
+#, c-format
+msgid "Good Evening, %s"
+msgstr "Καλό απόγευμα, %s"
+
+#: src/plugins/welcome/gtd-welcome-workspace.c:195
+msgid "Home"
+msgstr "Αρχή"
+
+#~ msgid "The current list selector"
+#~ msgstr "Ο τρέχων επιλογέας λίστας"
+
+#~ msgid "The current list selector. Can be “grid” or “list”."
+#~ msgstr "Ο τρέχων επιλογέας λίστας. Μπορεί να είναι «grid» ή «list»."
+
+#~ msgid "An error occurred while modifying a task"
+#~ msgstr "Παρουσιάστηκε σφάλμα κατά την τροποποίηση μιας εργασίας"
+
+#~ msgid "An error occurred while removing a task"
+#~ msgstr "Παρουσιάστηκε σφάλμα κατά την αφαίρεση εργασίας"
+
+#~ msgid "An error occurred while modifying a task list"
+#~ msgstr "Παρουσιάστηκε σφάλμα κατά την τροποποίηση της λίστας εργασιών"
+
+#~ msgid "Click a task list to select"
+#~ msgstr "Κάντε κλικ σε μια λίστα εργασιών για να την επιλέξετε"
 
 #~ msgid "org.gnome.Todo"
 #~ msgstr "org.gnome.Todo"
@@ -716,9 +833,6 @@ msgstr "Μπορείτε να προσθέσετε εργασίες χρησιμ
 
 #~ msgid "Rename %s"
 #~ msgstr "Μετονομασία %s"
-
-#~ msgid "Lists"
-#~ msgstr "Λίστες"
 
 #~ msgid "Tasks"
 #~ msgstr "Εργασίες"
@@ -866,9 +980,6 @@ msgstr "Μπορείτε να προσθέσετε εργασίες χρησιμ
 
 #~ msgid "Whether the object is marked as ready or not"
 #~ msgstr "Αν το αντικείμενο είναι σημειωμένο ως έτοιμο ή όχι"
-
-#~ msgid "Whether the task is completed or not"
-#~ msgstr "Αν η εργασία είναι ολοκληρωμένη ή όχι"
 
 #~ msgid "Whether the task is marked as completed by the user"
 #~ msgstr "Αν η εργασία είναι σημειωμένη ως ολοκληρωμένη από τον χρήστη"
