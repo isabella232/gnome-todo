@@ -321,7 +321,7 @@ gtd_welcome_workspace_init (GtdWelcomeWorkspace *self)
 
   /* Inbox */
   inbox_model = gtd_manager_get_inbox_model (manager);
-  self->inbox_tasks_model = G_LIST_MODEL (gtk_flatten_list_model_new (GTD_TYPE_TASK, inbox_model));
+  self->inbox_tasks_model = G_LIST_MODEL (gtk_flatten_list_model_new (inbox_model));
   g_signal_connect_object (self->inbox_tasks_model,
                            "items-changed",
                            G_CALLBACK (on_inbox_model_items_changed_cb),

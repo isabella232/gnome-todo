@@ -204,7 +204,7 @@ gtd_task_model_class_init (GtdTaskModelClass *klass)
 static void
 gtd_task_model_init (GtdTaskModel *self)
 {
-  self->model = gtk_flatten_list_model_new (GTD_TYPE_OBJECT, NULL);
+  self->model = gtk_flatten_list_model_new (NULL);
 }
 
 GtdTaskModel*
