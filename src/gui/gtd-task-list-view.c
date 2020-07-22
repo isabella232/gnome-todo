@@ -1287,7 +1287,6 @@ gtd_task_list_view_set_model (GtdTaskListView *view,
 
   g_return_if_fail (GTD_IS_TASK_LIST_VIEW (view));
   g_return_if_fail (G_IS_LIST_MODEL (model));
-  g_return_if_fail (g_list_model_get_item_type (model) == GTD_TYPE_TASK);
 
   priv = gtd_task_list_view_get_instance_private (view);
 
