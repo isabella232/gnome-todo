@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-05-30 11:25+0000\n"
-"PO-Revision-Date: 2020-05-30 18:21+0300\n"
+"POT-Creation-Date: 2020-07-24 17:29+0000\n"
+"PO-Revision-Date: 2020-07-24 21:58+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -337,7 +337,7 @@ msgstr "Повернути"
 #: src/plugins/next-week-panel/gtd-next-week-panel.c:152
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:124
 #: src/plugins/today-panel/gtd-panel-today.c:177
-#: src/plugins/today-panel/gtd-panel-today.c:293
+#: src/plugins/today-panel/gtd-panel-today.c:295
 #: src/plugins/welcome/gtd-welcome-workspace.ui:57
 msgid "Today"
 msgstr "Сьогодні"
@@ -386,7 +386,7 @@ msgstr[1] "%d днів тому"
 msgstr[2] "%d днів тому"
 msgstr[3] "%d день тому"
 
-#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:333
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:335
 msgid "All"
 msgstr "Всі"
 
@@ -473,7 +473,7 @@ msgstr "Вхідні"
 msgid "Overdue"
 msgstr "Протермінований"
 
-#: src/plugins/next-week-panel/gtd-next-week-panel.c:386
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:388
 msgid "Next 7 Days"
 msgstr "Наступні 7 днів"
 
@@ -498,7 +498,8 @@ msgid "At what point is it good enough?"
 msgstr "Коли ж уже буде досить?"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:65
-msgid "Remember to breath. Good. Don't stop."
+#| msgid "Remember to breath. Good. Don't stop."
+msgid "Remember to breathe. Good. Don't stop."
 msgstr "Дихайте. Чудово. Не зупиняйтеся."
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:66
@@ -545,7 +546,7 @@ msgstr "Ви можете це зробити"
 msgid "Meanwhile, spread the love ♥️"
 msgstr "І не забувайте дарувати любов ♥️"
 
-#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:343
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:345
 msgid "Scheduled"
 msgstr "Заплановано"
 
@@ -751,6 +752,6 @@ msgstr "Доброго вечора, %s"
 msgid "Good Evening, %s"
 msgstr "Доброї ночі, %s"
 
-#: src/plugins/welcome/gtd-welcome-workspace.c:195
+#: src/plugins/welcome/gtd-welcome-workspace.c:198
 msgid "Home"
 msgstr "Домівка"
