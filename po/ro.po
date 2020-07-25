@@ -9,10 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo gnome-3-18\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-06-04 07:16+0000\n"
-"PO-Revision-Date: 2020-06-17 18:51+0300\n"
-"Last-Translator: Florentina Mușat <florentina [dot] musat [dot] 28 [at] "
-"gmail [dot] com>\n"
+"POT-Creation-Date: 2020-07-24 17:29+0000\n"
+"PO-Revision-Date: 2020-07-25 13:14+0300\n"
+"Last-Translator: Florentina Mușat <florentina.musat.28@gmail.com>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);\n"
 "20)) ? 1: 2);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4\n"
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
@@ -344,7 +343,7 @@ msgstr "Anulează"
 #: src/plugins/next-week-panel/gtd-next-week-panel.c:152
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:124
 #: src/plugins/today-panel/gtd-panel-today.c:177
-#: src/plugins/today-panel/gtd-panel-today.c:293
+#: src/plugins/today-panel/gtd-panel-today.c:295
 #: src/plugins/welcome/gtd-welcome-workspace.ui:57
 msgid "Today"
 msgstr "Astăzi"
@@ -392,7 +391,7 @@ msgstr[0] "Acum %d zi"
 msgstr[1] "Acum %d zile"
 msgstr[2] "Acum %d de zile"
 
-#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:333
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:335
 msgid "All"
 msgstr "Toate"
 
@@ -477,7 +476,7 @@ msgstr "Mesaje primite"
 msgid "Overdue"
 msgstr "Întârziat"
 
-#: src/plugins/next-week-panel/gtd-next-week-panel.c:386
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:388
 msgid "Next 7 Days"
 msgstr "Următoarele 7 zile"
 
@@ -502,7 +501,7 @@ msgid "At what point is it good enough?"
 msgstr "În ce moment este suficient de bun?"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:65
-msgid "Remember to breath. Good. Don't stop."
+msgid "Remember to breathe. Good. Don't stop."
 msgstr "Amintiți-vă să respirați. Bine. Nu vă opriți."
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:66
@@ -549,7 +548,7 @@ msgstr "O puteți face"
 msgid "Meanwhile, spread the love ♥️"
 msgstr "Între timp, răspândiți dragostea ♥️"
 
-#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:343
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:345
 msgid "Scheduled"
 msgstr "Programate"
 
@@ -758,7 +757,7 @@ msgstr "Bună ziua, %s"
 msgid "Good Evening, %s"
 msgstr "Bună seara, %s"
 
-#: src/plugins/welcome/gtd-welcome-workspace.c:195
+#: src/plugins/welcome/gtd-welcome-workspace.c:198
 msgid "Home"
 msgstr "Acasă"
 
