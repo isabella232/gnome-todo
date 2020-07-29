@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-05-30 11:25+0000\n"
-"PO-Revision-Date: 2020-06-03 11:48+0200\n"
+"POT-Creation-Date: 2020-07-24 17:29+0000\n"
+"PO-Revision-Date: 2020-07-29 09:47+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -336,7 +336,7 @@ msgstr "Deshacer"
 #: src/plugins/next-week-panel/gtd-next-week-panel.c:152
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:124
 #: src/plugins/today-panel/gtd-panel-today.c:177
-#: src/plugins/today-panel/gtd-panel-today.c:293
+#: src/plugins/today-panel/gtd-panel-today.c:295
 #: src/plugins/welcome/gtd-welcome-workspace.ui:57
 msgid "Today"
 msgstr "Hoy"
@@ -383,7 +383,7 @@ msgid_plural "%d days ago"
 msgstr[0] "Hace %d día"
 msgstr[1] "Hace %d días"
 
-#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:333
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:335
 msgid "All"
 msgstr "Todas"
 
@@ -468,7 +468,7 @@ msgstr "Bandeja de entrada"
 msgid "Overdue"
 msgstr "Atrasado"
 
-#: src/plugins/next-week-panel/gtd-next-week-panel.c:386
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:388
 msgid "Next 7 Days"
 msgstr "Próximos 7 días"
 
@@ -493,7 +493,8 @@ msgid "At what point is it good enough?"
 msgstr "¿En que punto es suficientemente bueno?"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:65
-msgid "Remember to breath. Good. Don't stop."
+#| msgid "Remember to breath. Good. Don't stop."
+msgid "Remember to breathe. Good. Don't stop."
 msgstr "Recuerde respirar. Bien, no pare."
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:66
@@ -540,7 +541,7 @@ msgstr "Puede hacerlo"
 msgid "Meanwhile, spread the love ♥️"
 msgstr "Mientras tanto, difunda el amor ♥️"
 
-#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:343
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:345
 msgid "Scheduled"
 msgstr "Programadas"
 
@@ -750,7 +751,7 @@ msgstr "Buenas tardes, %s"
 msgid "Good Evening, %s"
 msgstr "Buenas noches, %s"
 
-#: src/plugins/welcome/gtd-welcome-workspace.c:195
+#: src/plugins/welcome/gtd-welcome-workspace.c:198
 msgid "Home"
 msgstr "Inicio"
 
