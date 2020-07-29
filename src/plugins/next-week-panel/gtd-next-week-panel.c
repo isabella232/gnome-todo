@@ -363,11 +363,13 @@ on_clock_day_changed_cb (GtdClock         *clock,
                          GtdNextWeekPanel *self)
 {
   g_autoptr (GDateTime) now = NULL;
+  GtkFilter *filter;
 
   now = g_date_time_new_now_local ();
   gtd_task_list_view_set_default_date (self->view, now);
 
-  gtk_filter_list_model_refilter (self->filter_model);
+  filter = gtk_filter_list_model_get_filter (self->filter_model);
+  gtk_filter_changed (filter, GTK_FILTER_CHANGE_DIFFERENT);
 }
 
 /*
@@ -517,14 +519,22 @@ gtd_next_week_panel_class_init (GtdNextWeekPanelClass *klass)
 static void
 gtd_next_week_panel_init (GtdNextWeekPanel *self)
 {
+  g_autoptr (GtkFilter) incomplete_filter = NULL;
+  g_autoptr (GtkFilter) filter = NULL;
+  g_autoptr (GtkSorter) sorter = NULL;
   g_autoptr (GDateTime) now = g_date_time_new_now_local ();
   GtdManager *manager = gtd_manager_get_default ();
 
   self->icon = g_themed_icon_new ("view-tasks-week-symbolic");
 
-  self->filter_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager), filter_func, self, NULL);
-  self->sort_model = gtk_sort_list_model_new (G_LIST_MODEL (self->filter_model), sort_func, self, NULL);
-  self->incomplete_model = gtk_filter_list_model_new (G_LIST_MODEL (self->sort_model), filter_complete_func, self, NULL);
+  filter = gtk_custom_filter_new (filter_func, self, NULL);
+  self->filter_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager), filter);
+
+  sorter = gtk_custom_sorter_new (sort_func, self, NULL);
+  self->sort_model = gtk_sort_list_model_new (G_LIST_MODEL (self->filter_model), sorter);
+
+  incomplete_filter = gtk_custom_filter_new (filter_complete_func, self, NULL);
+  self->incomplete_model = gtk_filter_list_model_new (G_LIST_MODEL (self->sort_model), incomplete_filter);
 
   /* The main view */
   self->view = GTD_TASK_LIST_VIEW (gtd_task_list_view_new ());

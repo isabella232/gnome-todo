@@ -121,8 +121,8 @@ check_provider_is_default (GtdManager  *self,
  */
 
 static gboolean
-filter_achived_lists_func (gpointer item,
-                           gpointer user_data)
+filter_archived_lists_func (gpointer item,
+                            gpointer user_data)
 {
   GtdTaskList *list;
   GtdTask *task;
@@ -205,13 +205,16 @@ on_list_changed_cb (GtdProvider *provider,
                     GtdTaskList *list,
                     GtdManager  *self)
 {
+  GtkFilter *filter;
+
   GTD_ENTRY;
 
   gtd_list_store_sort (GTD_LIST_STORE (self->lists_model),
                        (GCompareDataFunc) compare_lists_cb,
                        self);
 
-  gtk_filter_list_model_refilter (GTK_FILTER_LIST_MODEL (self->unarchived_tasks_model));
+  filter = gtk_filter_list_model_get_filter (GTK_FILTER_LIST_MODEL (self->unarchived_tasks_model));
+  gtk_filter_changed (filter, GTK_FILTER_CHANGE_DIFFERENT);
 
   g_signal_emit (self, signals[LIST_CHANGED], 0, list);
 
@@ -502,17 +505,21 @@ gtd_manager_class_init (GtdManagerClass *klass)
 static void
 gtd_manager_init (GtdManager *self)
 {
+  g_autoptr (GtkFilter) archived_lists_filter = NULL;
+  g_autoptr (GtkFilter) inbox_filter = NULL;
+
+  inbox_filter = gtk_custom_filter_new (filter_inbox_cb, self, NULL);
+  archived_lists_filter = gtk_custom_filter_new (filter_archived_lists_func, self, NULL);
+
   self->settings = g_settings_new ("org.gnome.todo");
   self->plugin_manager = gtd_plugin_manager_new ();
   self->clock = gtd_clock_new ();
   self->cancellable = g_cancellable_new ();
   self->lists_model = (GListModel*) gtd_list_store_new (GTD_TYPE_TASK_LIST);
-  self->inbox_model = (GListModel*) gtk_filter_list_model_new (self->lists_model, filter_inbox_cb, self, NULL);
+  self->inbox_model = (GListModel*) gtk_filter_list_model_new (self->lists_model, inbox_filter);
   self->tasks_model = (GListModel*) _gtd_task_model_new (self);
   self->unarchived_tasks_model = (GListModel*) gtk_filter_list_model_new (self->tasks_model,
-                                                                          filter_achived_lists_func,
-                                                                          self,
-                                                                          NULL);
+                                                                          archived_lists_filter);
   self->providers_model = (GListModel*) gtd_list_store_new (GTD_TYPE_PROVIDER);
 }
 

@@ -239,10 +239,13 @@ gtd_inbox_panel_class_init (GtdInboxPanelClass *klass)
 static void
 gtd_inbox_panel_init (GtdInboxPanel *self)
 {
+  g_autoptr (GtkFilter) filter = NULL;
   GtdManager *manager = gtd_manager_get_default ();
 
   self->icon = g_themed_icon_new ("mail-inbox-symbolic");
-  self->filter_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager), filter_func, self, NULL);
+
+  filter = gtk_custom_filter_new (filter_func, self, NULL);
+  self->filter_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager), filter);
 
   /* The main view */
   self->view = GTD_TASK_LIST_VIEW (gtd_task_list_view_new ());

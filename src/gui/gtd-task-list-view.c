@@ -625,13 +625,13 @@ row_is_subtask_of (GtdTaskRow *row_a,
 
 static GtkListBoxRow*
 get_drop_row_at_y (GtdTaskListView *self,
-                   gint             y)
+                   gdouble          y)
 {
   GtdTaskListViewPrivate *priv;
   GtkListBoxRow *hovered_row;
   GtkListBoxRow *task_row;
   GtkListBoxRow *drop_row;
-  gint row_y, row_height;
+  gdouble row_y, row_height;
 
   priv = gtd_task_list_view_get_instance_private (self);
 
@@ -715,10 +715,10 @@ scroll_to_dnd (gpointer user_data)
 static void
 check_dnd_scroll (GtdTaskListView *self,
                   gboolean         should_cancel,
-                  gint             y)
+                  gdouble          y)
 {
   GtdTaskListViewPrivate *priv = gtd_task_list_view_get_instance_private (self);
-  gint current_y, height;
+  gdouble current_y, height;
 
   if (should_cancel)
     {
@@ -781,7 +781,7 @@ on_drop_target_drag_motion_cb (GtkDropTarget   *drop_target,
   GdkDrop *drop;
   GtdTask *task;
   GdkDrag *drag;
-  gint x_offset;
+  gdouble x_offset;
 
   GTD_ENTRY;
 
@@ -1287,7 +1287,6 @@ gtd_task_list_view_set_model (GtdTaskListView *view,
 
   g_return_if_fail (GTD_IS_TASK_LIST_VIEW (view));
   g_return_if_fail (G_IS_LIST_MODEL (model));
-  g_return_if_fail (g_list_model_get_item_type (model) == GTD_TYPE_TASK);
 
   priv = gtd_task_list_view_get_instance_private (view);
 

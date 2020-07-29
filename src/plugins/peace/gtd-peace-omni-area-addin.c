@@ -62,7 +62,7 @@ const str_pair mindful_questions[] =
 
 const str_pair reminders[] =
 {
-  { N_("Remember to breath. Good. Don't stop."), NULL },
+  { N_("Remember to breathe. Good. Don't stop."), NULL },
   { N_("Don't forget to drink some water"), NULL },
   { N_("Remember to take some time off"), NULL },
   { N_("Eat fruits if you can 🍐️"), NULL },

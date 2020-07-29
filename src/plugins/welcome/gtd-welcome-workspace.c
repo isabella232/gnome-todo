@@ -136,7 +136,10 @@ static void
 on_clock_day_changed_cb (GtdClock            *clock,
                          GtdWelcomeWorkspace *self)
 {
-  gtk_filter_list_model_refilter (self->today_model);
+  GtkFilter *filter;
+
+  filter = gtk_filter_list_model_get_filter (self->today_model);
+  gtk_filter_changed (filter, GTK_FILTER_CHANGE_DIFFERENT);
 }
 
 static void
@@ -302,6 +305,7 @@ gtd_welcome_workspace_class_init (GtdWelcomeWorkspaceClass *klass)
 static void
 gtd_welcome_workspace_init (GtdWelcomeWorkspace *self)
 {
+  g_autoptr (GtkFilter) filter = NULL;
   GtdManager *manager;
   GListModel *inbox_model;
 
@@ -317,7 +321,7 @@ gtd_welcome_workspace_init (GtdWelcomeWorkspace *self)
 
   /* Inbox */
   inbox_model = gtd_manager_get_inbox_model (manager);
-  self->inbox_tasks_model = G_LIST_MODEL (gtk_flatten_list_model_new (GTD_TYPE_TASK, inbox_model));
+  self->inbox_tasks_model = G_LIST_MODEL (gtk_flatten_list_model_new (inbox_model));
   g_signal_connect_object (self->inbox_tasks_model,
                            "items-changed",
                            G_CALLBACK (on_inbox_model_items_changed_cb),
@@ -331,7 +335,8 @@ gtd_welcome_workspace_init (GtdWelcomeWorkspace *self)
                                     g_variant_new ("s", "inbox-panel"));
 
   /* Today */
-  self->today_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager), filter_func, self, NULL);
+  filter = gtk_custom_filter_new (filter_func, self, NULL);
+  self->today_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager), filter);
 
   g_signal_connect_object (self->today_model,
                            "items-changed",

@@ -190,7 +190,10 @@ static void
 on_search_entry_search_changed_cb (GtkEntry           *search_entry,
                                    GtdTaskListPopover *self)
 {
-  gtk_filter_list_model_refilter (self->filter_model);
+  GtkFilter *filter;
+
+  filter = gtk_filter_list_model_get_filter (self->filter_model);
+  gtk_filter_changed (filter, GTK_FILTER_CHANGE_DIFFERENT);
 }
 
 
@@ -237,12 +240,12 @@ gtd_task_list_popover_class_init (GtdTaskListPopoverClass *klass)
 static void
 gtd_task_list_popover_init (GtdTaskListPopover *self)
 {
+  g_autoptr (GtkFilter) filter = NULL;
   GtdManager *manager = gtd_manager_get_default ();
 
+  filter = gtk_custom_filter_new (filter_listbox_cb, self, NULL);
   self->filter_model = gtk_filter_list_model_new (gtd_manager_get_task_lists_model (manager),
-                                                  filter_listbox_cb,
-                                                  self,
-                                                  NULL);
+                                                  filter);
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
