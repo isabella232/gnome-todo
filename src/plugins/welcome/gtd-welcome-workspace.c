@@ -305,9 +305,9 @@ gtd_welcome_workspace_class_init (GtdWelcomeWorkspaceClass *klass)
 static void
 gtd_welcome_workspace_init (GtdWelcomeWorkspace *self)
 {
-  g_autoptr (GtkFilter) filter = NULL;
   GtdManager *manager;
   GListModel *inbox_model;
+  GtkFilter *filter;
 
   gtk_widget_init_template (GTK_WIDGET (self));
 

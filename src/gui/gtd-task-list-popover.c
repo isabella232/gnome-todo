@@ -240,8 +240,8 @@ gtd_task_list_popover_class_init (GtdTaskListPopoverClass *klass)
 static void
 gtd_task_list_popover_init (GtdTaskListPopover *self)
 {
-  g_autoptr (GtkFilter) filter = NULL;
   GtdManager *manager = gtd_manager_get_default ();
+  GtkFilter *filter;
 
   filter = gtk_custom_filter_new (filter_listbox_cb, self, NULL);
   self->filter_model = gtk_filter_list_model_new (gtd_manager_get_task_lists_model (manager),

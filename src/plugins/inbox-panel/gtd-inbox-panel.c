@@ -239,8 +239,8 @@ gtd_inbox_panel_class_init (GtdInboxPanelClass *klass)
 static void
 gtd_inbox_panel_init (GtdInboxPanel *self)
 {
-  g_autoptr (GtkFilter) filter = NULL;
   GtdManager *manager = gtd_manager_get_default ();
+  GtkFilter *filter;
 
   self->icon = g_themed_icon_new ("mail-inbox-symbolic");
 

@@ -421,11 +421,11 @@ gtd_panel_today_class_init (GtdPanelTodayClass *klass)
 static void
 gtd_panel_today_init (GtdPanelToday *self)
 {
-  g_autoptr (GtkFilter) incomplete_filter = NULL;
-  g_autoptr (GtkFilter) filter = NULL;
-  g_autoptr (GtkSorter) sorter = NULL;
   g_autoptr (GDateTime) now = NULL;
   GtdManager *manager;
+  GtkFilter *incomplete_filter;
+  GtkFilter *filter;
+  GtkSorter *sorter;
 
   manager = gtd_manager_get_default ();
 

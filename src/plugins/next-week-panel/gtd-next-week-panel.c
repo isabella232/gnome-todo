@@ -519,11 +519,11 @@ gtd_next_week_panel_class_init (GtdNextWeekPanelClass *klass)
 static void
 gtd_next_week_panel_init (GtdNextWeekPanel *self)
 {
-  g_autoptr (GtkFilter) incomplete_filter = NULL;
-  g_autoptr (GtkFilter) filter = NULL;
-  g_autoptr (GtkSorter) sorter = NULL;
   g_autoptr (GDateTime) now = g_date_time_new_now_local ();
   GtdManager *manager = gtd_manager_get_default ();
+  GtkFilter *incomplete_filter;
+  GtkFilter *filter;
+  GtkSorter *sorter;
 
   self->icon = g_themed_icon_new ("view-tasks-week-symbolic");
 

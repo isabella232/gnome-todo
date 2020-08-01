@@ -279,8 +279,8 @@ gtd_today_omni_area_addin_class_init (GtdTodayOmniAreaAddinClass *klass)
 static void
 gtd_today_omni_area_addin_init (GtdTodayOmniAreaAddin *self)
 {
-  g_autoptr (GtkFilter) filter = NULL;
   GtdManager *manager;
+  GtkFilter *filter;
 
   manager = gtd_manager_get_default ();
 

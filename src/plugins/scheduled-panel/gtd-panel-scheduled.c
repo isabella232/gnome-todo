@@ -469,10 +469,10 @@ gtd_panel_scheduled_class_init (GtdPanelScheduledClass *klass)
 static void
 gtd_panel_scheduled_init (GtdPanelScheduled *self)
 {
-  g_autoptr (GtkFilter) filter = NULL;
-  g_autoptr (GtkSorter) sorter = NULL;
   g_autoptr (GDateTime) now = g_date_time_new_now_local ();
   GtdManager *manager = gtd_manager_get_default ();
+  GtkFilter *filter;
+  GtkSorter *sorter;
 
   self->icon = g_themed_icon_new ("alarm-symbolic");
 

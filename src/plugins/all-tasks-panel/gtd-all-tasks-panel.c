@@ -464,9 +464,9 @@ gtd_all_tasks_panel_class_init (GtdAllTasksPanelClass *klass)
 static void
 gtd_all_tasks_panel_init (GtdAllTasksPanel *self)
 {
-  g_autoptr (GtkFilter) filter = NULL;
-  g_autoptr (GtkSorter) sorter = NULL;
   GtdManager *manager = gtd_manager_get_default ();
+  GtkFilter *filter;
+  GtkSorter *sorter;
 
   self->icon = g_themed_icon_new ("view-tasks-all-symbolic");
 

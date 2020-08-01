@@ -505,8 +505,8 @@ gtd_manager_class_init (GtdManagerClass *klass)
 static void
 gtd_manager_init (GtdManager *self)
 {
-  g_autoptr (GtkFilter) archived_lists_filter = NULL;
-  g_autoptr (GtkFilter) inbox_filter = NULL;
+  GtkFilter *archived_lists_filter;
+  GtkFilter *inbox_filter;
 
   inbox_filter = gtk_custom_filter_new (filter_inbox_cb, self, NULL);
   archived_lists_filter = gtk_custom_filter_new (filter_archived_lists_func, self, NULL);
