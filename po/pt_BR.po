@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-05-30 11:25+0000\n"
-"PO-Revision-Date: 2020-07-24 12:53-0300\n"
+"POT-Creation-Date: 2020-07-24 17:29+0000\n"
+"PO-Revision-Date: 2020-08-04 17:02-0300\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -128,7 +128,6 @@ msgid "Sidebar revealed"
 msgstr "Barra lateral revelada"
 
 #: data/org.gnome.todo.gschema.xml:32
-#| msgid "Whether the task is completed or not"
 msgid "Whether the sidebar is revealed or not"
 msgstr "Se a barra lateral está revelada ou não"
 
@@ -141,7 +140,6 @@ msgid "Enable debug messages"
 msgstr "Habilitar mensagens de depuração"
 
 #: src/gui/gtd-application.c:146
-#| msgid "Copyright © 2015–2018 The To Do authors"
 msgid "Copyright © 2015–2020 The To Do authors"
 msgstr "Copyright © 2015–2020 Os autores do Tarefas"
 
@@ -348,7 +346,7 @@ msgstr "Desfazer"
 #: src/plugins/next-week-panel/gtd-next-week-panel.c:152
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:124
 #: src/plugins/today-panel/gtd-panel-today.c:177
-#: src/plugins/today-panel/gtd-panel-today.c:293
+#: src/plugins/today-panel/gtd-panel-today.c:295
 #: src/plugins/welcome/gtd-welcome-workspace.ui:57
 msgid "Today"
 msgstr "Hoje"
@@ -395,7 +393,7 @@ msgid_plural "%d days ago"
 msgstr[0] "%d dia atrás"
 msgstr[1] "%d dias atrás"
 
-#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:333
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:335
 msgid "All"
 msgstr "Todas"
 
@@ -478,7 +476,7 @@ msgstr "Caixa de entrada"
 msgid "Overdue"
 msgstr "Atrasado"
 
-#: src/plugins/next-week-panel/gtd-next-week-panel.c:386
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:388
 msgid "Next 7 Days"
 msgstr "Próximos 7 dias"
 
@@ -487,8 +485,6 @@ msgid "Did you drink some water today?"
 msgstr "Você bebeu um pouco de água hoje?"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:57
-#| msgid "You have %d task for today"
-#| msgid_plural "You have %d tasks for today"
 msgid "What are your goals for today?"
 msgstr "Quais são seus objetivos para hoje?"
 
@@ -505,7 +501,8 @@ msgid "At what point is it good enough?"
 msgstr "Em que momento é bom o suficiente?"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:65
-msgid "Remember to breath. Good. Don't stop."
+#| msgid "Remember to breath. Good. Don't stop."
+msgid "Remember to breathe. Good. Don't stop."
 msgstr "Lembre-se de respirar. Boa. Não pare."
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:66
@@ -545,16 +542,14 @@ msgid "Keep calm"
 msgstr "Mantenha a calma"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:80
-#| msgid "You made it!"
 msgid "You can do it"
 msgstr "Você consegue"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:81
-#| msgid "Meanwhile, spread the love"
 msgid "Meanwhile, spread the love ♥️"
 msgstr "Enquanto isto, espalhe o amor ♥️"
 
-#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:343
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:345
 msgid "Scheduled"
 msgstr "Agendada"
 
@@ -586,7 +581,6 @@ msgid "Archive"
 msgstr "Arquivar"
 
 #: src/plugins/task-lists-workspace/gtd-task-list-panel.c:233
-#| msgid "An error occurred while creating a task"
 msgid "An error occurred while updating a task"
 msgstr "Ocorreu um erro ao atualizar uma tarefa"
 
@@ -606,7 +600,6 @@ msgid "Delete"
 msgstr "Excluir"
 
 #: src/plugins/task-lists-workspace/gtd-task-lists-workspace.c:303
-#| msgid "Lists"
 msgid "Task Lists"
 msgstr "Listas de tarefas"
 
@@ -616,15 +609,12 @@ msgstr "Nova lista"
 
 #: src/plugins/today-panel/gtd-today-omni-area-addin.c:94
 #, c-format
-#| msgid "You have %d task for today"
-#| msgid_plural "You have %d tasks for today"
 msgid "%d task for today"
 msgid_plural "%d tasks for today"
 msgstr[0] "%d tarefa para hoje"
 msgstr[1] "%d tarefas para hoje"
 
 #: src/plugins/today-panel/gtd-today-omni-area-addin.c:109
-#| msgid "No task completed today"
 msgid "No tasks scheduled for today"
 msgstr "Nenhuma tarefa agendada para hoje"
 
@@ -769,7 +759,7 @@ msgstr "Boa tarde, %s"
 msgid "Good Evening, %s"
 msgstr "Boa noite, %s"
 
-#: src/plugins/welcome/gtd-welcome-workspace.c:195
+#: src/plugins/welcome/gtd-welcome-workspace.c:198
 msgid "Home"
 msgstr "Início"
 
