@@ -34,4 +34,43 @@ struct _GtdWidgetClass
 
 GtkWidget*           gtd_widget_new                              (void);
 
+void                 gtd_widget_get_pivot_point                  (GtdWidget          *self,
+                                                                  graphene_point3d_t *out_pivot_point);
+
+void                 gtd_widget_set_pivot_point                  (GtdWidget                *self,
+                                                                  const graphene_point3d_t *pivot_point);
+
+void                 gtd_widget_get_rotation                     (GtdWidget          *self,
+                                                                  gfloat             *rotation_x,
+                                                                  gfloat             *rotation_y,
+                                                                  gfloat             *rotation_z);
+
+void                 gtd_widget_set_rotation                     (GtdWidget          *self,
+                                                                  gfloat              rotation_x,
+                                                                  gfloat              rotation_y,
+                                                                  gfloat              rotation_z);
+
+void                 gtd_widget_get_scale                        (GtdWidget          *self,
+                                                                  gfloat             *scale_x,
+                                                                  gfloat             *scale_y,
+                                                                  gfloat             *scale_z);
+
+void                 gtd_widget_set_scale                        (GtdWidget          *self,
+                                                                  gfloat              scale_x,
+                                                                  gfloat              scale_y,
+                                                                  gfloat              scale_z);
+
+void                 gtd_widget_get_translation                  (GtdWidget          *self,
+                                                                  gfloat             *translation_x,
+                                                                  gfloat             *translation_y,
+                                                                  gfloat             *translation_z);
+
+void                 gtd_widget_set_translation                  (GtdWidget          *self,
+                                                                  gfloat              translation_x,
+                                                                  gfloat              translation_y,
+                                                                  gfloat              translation_z);
+
+GskTransform*        gtd_widget_apply_transform                  (GtdWidget          *self,
+                                                                  GskTransform       *transform);
+
 G_END_DECLS
