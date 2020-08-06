@@ -18,6 +18,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+#include "gtd-bin-layout.h"
 #include "gtd-debug.h"
 #include "gtd-widget-private.h"
 
@@ -385,7 +386,7 @@ gtd_widget_class_init (GtdWidgetClass *klass)
 
   g_object_class_install_properties (object_class, N_PROPS, properties);
 
-  gtk_widget_class_set_layout_manager_type (widget_class, GTK_TYPE_BIN_LAYOUT);
+  gtk_widget_class_set_layout_manager_type (widget_class, GTD_TYPE_BIN_LAYOUT);
 }
 
 static void
