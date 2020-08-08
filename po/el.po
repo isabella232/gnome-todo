@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-05-30 11:25+0000\n"
-"PO-Revision-Date: 2020-07-14 00:21+0300\n"
+"POT-Creation-Date: 2020-07-24 17:29+0000\n"
+"PO-Revision-Date: 2020-08-08 17:32+0300\n"
 "Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
 "Language-Team: Greek, Modern (1453-) <gnome-el-list@gnome.org>\n"
 "Language: el\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.3\n"
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
@@ -349,7 +349,7 @@ msgstr "Αναίρεση"
 #: src/plugins/next-week-panel/gtd-next-week-panel.c:152
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:124
 #: src/plugins/today-panel/gtd-panel-today.c:177
-#: src/plugins/today-panel/gtd-panel-today.c:293
+#: src/plugins/today-panel/gtd-panel-today.c:295
 #: src/plugins/welcome/gtd-welcome-workspace.ui:57
 msgid "Today"
 msgstr "Σήμερα"
@@ -396,7 +396,7 @@ msgid_plural "%d days ago"
 msgstr[0] "%d μέρες πριν"
 msgstr[1] "%d μέρες πριν"
 
-#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:333
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:335
 msgid "All"
 msgstr "Όλες"
 
@@ -481,7 +481,7 @@ msgstr "Εισερχόμενα"
 msgid "Overdue"
 msgstr "Καθυστερημένες"
 
-#: src/plugins/next-week-panel/gtd-next-week-panel.c:386
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:388
 msgid "Next 7 Days"
 msgstr "Τις επόμενες 7 ημέρες"
 
@@ -506,7 +506,7 @@ msgid "At what point is it good enough?"
 msgstr "Σε ποιο σημείο είναι αρκετά καλό;"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:65
-msgid "Remember to breath. Good. Don't stop."
+msgid "Remember to breathe. Good. Don't stop."
 msgstr "Να θυμάστε να αναπνέετε. Ωραία. Μην σταματάτε."
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:66
@@ -553,7 +553,7 @@ msgstr "Μπορείτε να τα καταφέρετε"
 msgid "Meanwhile, spread the love ♥️"
 msgstr "Εν τω μεταξύ, διαδώστε την αγάπη ♥️"
 
-#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:343
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:345
 msgid "Scheduled"
 msgstr "Προγραμματισμένο"
 
@@ -764,7 +764,7 @@ msgstr "Καλό μεσημέρι, %s"
 msgid "Good Evening, %s"
 msgstr "Καλό απόγευμα, %s"
 
-#: src/plugins/welcome/gtd-welcome-workspace.c:195
+#: src/plugins/welcome/gtd-welcome-workspace.c:198
 msgid "Home"
 msgstr "Αρχή"
 
