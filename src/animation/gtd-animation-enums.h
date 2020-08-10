@@ -1,0 +1,220 @@
+/* gtd-animation-enums.h
+ *
+ * Copyright 2020 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+#pragma once
+
+#include <glib.h>
+
+G_BEGIN_DECLS
+
+
+/**
+ * GtdEaseMode:
+ * @GTD_CUSTOM_MODE: custom progress function
+ * @GTD_EASE_LINEAR: linear tweening
+ * @GTD_EASE_IN_QUAD: quadratic tweening
+ * @GTD_EASE_OUT_QUAD: quadratic tweening, inverse of
+ *    %GTD_EASE_IN_QUAD
+ * @GTD_EASE_IN_OUT_QUAD: quadratic tweening, combininig
+ *    %GTD_EASE_IN_QUAD and %GTD_EASE_OUT_QUAD
+ * @GTD_EASE_IN_CUBIC: cubic tweening
+ * @GTD_EASE_OUT_CUBIC: cubic tweening, invers of
+ *    %GTD_EASE_IN_CUBIC
+ * @GTD_EASE_IN_OUT_CUBIC: cubic tweening, combining
+ *    %GTD_EASE_IN_CUBIC and %GTD_EASE_OUT_CUBIC
+ * @GTD_EASE_IN_QUART: quartic tweening
+ * @GTD_EASE_OUT_QUART: quartic tweening, inverse of
+ *    %GTD_EASE_IN_QUART
+ * @GTD_EASE_IN_OUT_QUART: quartic tweening, combining
+ *    %GTD_EASE_IN_QUART and %GTD_EASE_OUT_QUART
+ * @GTD_EASE_IN_QUINT: quintic tweening
+ * @GTD_EASE_OUT_QUINT: quintic tweening, inverse of
+ *    %GTD_EASE_IN_QUINT
+ * @GTD_EASE_IN_OUT_QUINT: fifth power tweening, combining
+ *    %GTD_EASE_IN_QUINT and %GTD_EASE_OUT_QUINT
+ * @GTD_EASE_IN_SINE: sinusoidal tweening
+ * @GTD_EASE_OUT_SINE: sinusoidal tweening, inverse of
+ *    %GTD_EASE_IN_SINE
+ * @GTD_EASE_IN_OUT_SINE: sine wave tweening, combining
+ *    %GTD_EASE_IN_SINE and %GTD_EASE_OUT_SINE
+ * @GTD_EASE_IN_EXPO: exponential tweening
+ * @GTD_EASE_OUT_EXPO: exponential tweening, inverse of
+ *    %GTD_EASE_IN_EXPO
+ * @GTD_EASE_IN_OUT_EXPO: exponential tweening, combining
+ *    %GTD_EASE_IN_EXPO and %GTD_EASE_OUT_EXPO
+ * @GTD_EASE_IN_CIRC: circular tweening
+ * @GTD_EASE_OUT_CIRC: circular tweening, inverse of
+ *    %GTD_EASE_IN_CIRC
+ * @GTD_EASE_IN_OUT_CIRC: circular tweening, combining
+ *    %GTD_EASE_IN_CIRC and %GTD_EASE_OUT_CIRC
+ * @GTD_EASE_IN_ELASTIC: elastic tweening, with offshoot on start
+ * @GTD_EASE_OUT_ELASTIC: elastic tweening, with offshoot on end
+ * @GTD_EASE_IN_OUT_ELASTIC: elastic tweening with offshoot on both ends
+ * @GTD_EASE_IN_BACK: overshooting cubic tweening, with
+ *   backtracking on start
+ * @GTD_EASE_OUT_BACK: overshooting cubic tweening, with
+ *   backtracking on end
+ * @GTD_EASE_IN_OUT_BACK: overshooting cubic tweening, with
+ *   backtracking on both ends
+ * @GTD_EASE_IN_BOUNCE: exponentially decaying parabolic (bounce)
+ *   tweening, with bounce on start
+ * @GTD_EASE_OUT_BOUNCE: exponentially decaying parabolic (bounce)
+ *   tweening, with bounce on end
+ * @GTD_EASE_IN_OUT_BOUNCE: exponentially decaying parabolic (bounce)
+ *   tweening, with bounce on both ends
+ * @GTD_STEPS: parametrized step function; see clutter_timeline_set_step_progress()
+ *   for further details. (Since 1.12)
+ * @GTD_STEP_START: equivalent to %GTD_STEPS with a number of steps
+ *   equal to 1, and a step mode of %GTD_STEP_MODE_START. (Since 1.12)
+ * @GTD_STEP_END: equivalent to %GTD_STEPS with a number of steps
+ *   equal to 1, and a step mode of %GTD_STEP_MODE_END. (Since 1.12)
+ * @GTD_CUBIC_BEZIER: cubic bezier between (0, 0) and (1, 1) with two
+ *   control points; see clutter_timeline_set_cubic_bezier_progress(). (Since 1.12)
+ * @GTD_EASE: equivalent to %GTD_CUBIC_BEZIER with control points
+ *   in (0.25, 0.1) and (0.25, 1.0). (Since 1.12)
+ * @GTD_EASE_IN: equivalent to %GTD_CUBIC_BEZIER with control points
+ *   in (0.42, 0) and (1.0, 1.0). (Since 1.12)
+ * @GTD_EASE_OUT: equivalent to %GTD_CUBIC_BEZIER with control points
+ *   in (0, 0) and (0.58, 1.0). (Since 1.12)
+ * @GTD_EASE_IN_OUT: equivalent to %GTD_CUBIC_BEZIER with control points
+ *   in (0.42, 0) and (0.58, 1.0). (Since 1.12)
+ * @GTD_ANIMATION_LAST: last animation mode, used as a guard for
+ *   registered global alpha functions
+ *
+ * The animation modes used by #ClutterAnimatable. This
+ * enumeration can be expanded in later versions of Clutter.
+ *
+ * <figure id="easing-modes">
+ *   <title>Easing modes provided by Clutter</title>
+ *   <graphic fileref="easing-modes.png" format="PNG"/>
+ * </figure>
+ *
+ * Every global alpha function registered using clutter_alpha_register_func()
+ * or clutter_alpha_register_closure() will have a logical id greater than
+ * %GTD_ANIMATION_LAST.
+ *
+ * Since: 1.0
+ */
+typedef enum
+{
+  GTD_CUSTOM_MODE = 0,
+
+  /* linear */
+  GTD_EASE_LINEAR,
+
+  /* quadratic */
+  GTD_EASE_IN_QUAD,
+  GTD_EASE_OUT_QUAD,
+  GTD_EASE_IN_OUT_QUAD,
+
+  /* cubic */
+  GTD_EASE_IN_CUBIC,
+  GTD_EASE_OUT_CUBIC,
+  GTD_EASE_IN_OUT_CUBIC,
+
+  /* quartic */
+  GTD_EASE_IN_QUART,
+  GTD_EASE_OUT_QUART,
+  GTD_EASE_IN_OUT_QUART,
+
+  /* quintic */
+  GTD_EASE_IN_QUINT,
+  GTD_EASE_OUT_QUINT,
+  GTD_EASE_IN_OUT_QUINT,
+
+  /* sinusoidal */
+  GTD_EASE_IN_SINE,
+  GTD_EASE_OUT_SINE,
+  GTD_EASE_IN_OUT_SINE,
+
+  /* exponential */
+  GTD_EASE_IN_EXPO,
+  GTD_EASE_OUT_EXPO,
+  GTD_EASE_IN_OUT_EXPO,
+
+  /* circular */
+  GTD_EASE_IN_CIRC,
+  GTD_EASE_OUT_CIRC,
+  GTD_EASE_IN_OUT_CIRC,
+
+  /* elastic */
+  GTD_EASE_IN_ELASTIC,
+  GTD_EASE_OUT_ELASTIC,
+  GTD_EASE_IN_OUT_ELASTIC,
+
+  /* overshooting cubic */
+  GTD_EASE_IN_BACK,
+  GTD_EASE_OUT_BACK,
+  GTD_EASE_IN_OUT_BACK,
+
+  /* exponentially decaying parabolic */
+  GTD_EASE_IN_BOUNCE,
+  GTD_EASE_OUT_BOUNCE,
+  GTD_EASE_IN_OUT_BOUNCE,
+
+  /* step functions (see css3-transitions) */
+  GTD_STEPS,
+  GTD_STEP_START, /* steps(1, start) */
+  GTD_STEP_END, /* steps(1, end) */
+
+  /* cubic bezier (see css3-transitions) */
+  GTD_EASE_CUBIC_BEZIER,
+  GTD_EASE,
+  GTD_EASE_IN,
+  GTD_EASE_OUT,
+  GTD_EASE_IN_OUT,
+
+  /* guard, before registered alpha functions */
+  GTD_EASE_LAST
+} GtdEaseMode;
+
+/**
+ * GtdTimelineDirection:
+ * @GTD_TIMELINE_FORWARD: forward direction for a timeline
+ * @GTD_TIMELINE_BACKWARD: backward direction for a timeline
+ *
+ * The direction of a #GtdTimeline
+ */
+typedef enum
+{
+  GTD_TIMELINE_FORWARD,
+  GTD_TIMELINE_BACKWARD
+} GtdTimelineDirection;
+
+/**
+ * GtdStepMode:
+ * @GTD_STEP_MODE_START: The change in the value of a
+ *   %GTD_STEP progress mode should occur at the start of
+ *   the transition
+ * @GTD_STEP_MODE_END: The change in the value of a
+ *   %GTD_STEP progress mode should occur at the end of
+ *   the transition
+ *
+ * Change the value transition of a step function.
+ *
+ * See gtd_timeline_set_step_progress().
+ */
+typedef enum
+{
+  GTD_STEP_MODE_START,
+  GTD_STEP_MODE_END
+} GtdStepMode;
+
+G_END_DECLS

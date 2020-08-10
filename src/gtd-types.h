@@ -24,9 +24,11 @@
 G_BEGIN_DECLS
 
 typedef struct _GtdActivatable          GtdActivatable;
+typedef struct _GtdAnimatable           GtdAnimatable;
 typedef struct _GtdApplication          GtdApplication;
 typedef struct _GtdClock                GtdClock;
 typedef struct _GtdDoneButton           GtdDoneButton;
+typedef struct _GtdInterval             GtdInterval;
 typedef struct _GtdInitialSetupWindow   GtdInitialSetupWindow;
 typedef struct _GtdListView             GtdListView;
 typedef struct _GtdManager              GtdManager;
@@ -46,6 +48,7 @@ typedef struct _GtdTask                 GtdTask;
 typedef struct _GtdTaskList             GtdTaskList;
 typedef struct _GtdTaskListItem         GtdTaskListItem;
 typedef struct _GtdTaskRow              GtdTaskRow;
+typedef struct _GtdTransition           GtdTransition;
 typedef struct _GtdWidget               GtdWidget;
 typedef struct _GtdWindow               GtdWindow;
 typedef struct _GtdWorkspace            GtdWorkspace;

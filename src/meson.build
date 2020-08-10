@@ -22,6 +22,7 @@ gnome_todo_deps += vcs_identifier_h
 ###########
 
 incs = include_directories(
+  'animation',
   'core',
   'gui',
   'models',
@@ -43,11 +44,37 @@ gtd_deps = gnome_todo_deps + [
 ]
 
 
+#########
+# Enums #
+#########
+
+enum_headers = files(
+  join_paths('animation', 'gtd-animation-enums.h'),
+)
+
+enum_types = 'gtd-enum-types'
+
+sources += gnome.mkenums(
+  enum_types,
+     sources: enum_headers,
+  c_template: enum_types + '.c.template',
+  h_template: enum_types + '.h.template'
+)
+
+
 ################
 # Header files #
 ################
 
 headers = files(
+  'animation/gtd-animatable.h',
+  'animation/gtd-animation-utils.h',
+  'animation/gtd-easing.h',
+  'animation/gtd-interval.h',
+  'animation/gtd-keyframe-transition.h',
+  'animation/gtd-property-transition.h',
+  'animation/gtd-timeline.h',
+  'animation/gtd-transition.h',
   'core/gtd-activatable.h',
   'core/gtd-clock.h',
   'core/gtd-manager.h',
@@ -83,6 +110,14 @@ install_headers(headers, subdir: meson.project_name())
 ################
 
 sources += files(
+  'animation/gtd-animatable.c',
+  'animation/gtd-animation-utils.c',
+  'animation/gtd-easing.c',
+  'animation/gtd-interval.c',
+  'animation/gtd-keyframe-transition.c',
+  'animation/gtd-property-transition.c',
+  'animation/gtd-timeline.c',
+  'animation/gtd-transition.c',
   'core/gtd-activatable.c',
   'core/gtd-clock.c',
   'core/gtd-log.c',

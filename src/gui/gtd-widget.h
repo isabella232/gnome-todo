@@ -22,6 +22,9 @@
 
 #include <gtk/gtk.h>
 
+#include "gtd-animation-enums.h"
+#include "gtd-types.h"
+
 G_BEGIN_DECLS
 
 #define GTD_TYPE_WIDGET (gtd_widget_get_type ())
@@ -72,5 +75,36 @@ void                 gtd_widget_set_translation                  (GtdWidget     
 
 GskTransform*        gtd_widget_apply_transform                  (GtdWidget          *self,
                                                                   GskTransform       *transform);
+
+void                 gtd_widget_save_easing_state                 (GtdWidget         *self);
+
+void                 gtd_widget_restore_easing_state              (GtdWidget         *self);
+
+void                 gtd_widget_set_easing_mode                   (GtdWidget         *self,
+                                                                   GtdEaseMode        mode);
+
+GtdEaseMode          gtd_widget_get_easing_mode                   (GtdWidget         *self);
+
+void                 gtd_widget_set_easing_duration               (GtdWidget         *self,
+                                                                   guint              msecs);
+
+guint                gtd_widget_get_easing_duration               (GtdWidget         *self);
+
+void                 gtd_widget_set_easing_delay                  (GtdWidget         *self,
+                                                                   guint              msecs);
+
+guint                gtd_widget_get_easing_delay                  (GtdWidget         *self);
+
+GtdTransition*       gtd_widget_get_transition                    (GtdWidget         *self,
+                                                                   const gchar       *name);
+
+void                 gtd_widget_add_transition                    (GtdWidget         *self,
+                                                                   const gchar       *name,
+                                                                   GtdTransition     *transition);
+
+void                 gtd_widget_remove_transition                 (GtdWidget         *self,
+                                                                   const gchar       *name);
+
+void                 gtd_widget_remove_all_transitions            (GtdWidget         *self);
 
 G_END_DECLS

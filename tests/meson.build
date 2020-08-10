@@ -75,6 +75,7 @@ endforeach
 #####################
 
 interactive_tests = [
+  'test-animation',
   'test-colorbutton',
   'test-filter-sort',
   'test-star-widget',

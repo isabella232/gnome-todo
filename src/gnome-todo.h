@@ -21,8 +21,11 @@
 
 #include <libpeas/peas.h>
 
+#include "gtd-enum-types.h"
+
 #include "gtd-activatable.h"
 #include "gtd-bin-layout.h"
+#include "gtd-easing.h"
 #include "gtd-list-model-filter.h"
 #include "gtd-list-model-sort.h"
 #include "gtd-list-store.h"
@@ -40,6 +43,7 @@
 #include "gtd-task.h"
 #include "gtd-task-list.h"
 #include "gtd-task-list-view.h"
+#include "gtd-transition.h"
 #include "gtd-types.h"
 #include "gtd-utils.h"
 #include "gtd-widget.h"
