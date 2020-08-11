@@ -79,6 +79,7 @@ interactive_tests = [
   'test-filter-sort',
   'test-star-widget',
   'test-task-model',
+  'test-widget',
 ]
 
 foreach interactive_test : interactive_tests
