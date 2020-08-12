@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-toto 3.18\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-07-24 17:29+0000\n"
-"PO-Revision-Date: 2020-08-13 00:12+0200\n"
+"POT-Creation-Date: 2020-08-12 22:13+0000\n"
+"PO-Revision-Date: 2020-08-13 00:49+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -120,11 +120,11 @@ msgstr "A lista de extensións activas"
 
 #: data/org.gnome.todo.gschema.xml:31
 msgid "Sidebar revealed"
-msgstr ""
+msgstr "Barra lateral mostrada"
 
 #: data/org.gnome.todo.gschema.xml:32
 msgid "Whether the sidebar is revealed or not"
-msgstr ""
+msgstr "Indica se a barra lateral se mostra ou non"
 
 #: src/gui/gtd-application.c:75
 msgid "Quit GNOME To Do"
@@ -135,7 +135,6 @@ msgid "Enable debug messages"
 msgstr "Activar mensaxes de depuración"
 
 #: src/gui/gtd-application.c:146
-#| msgid "Copyright © 2015–2018 The To Do authors"
 msgid "Copyright © 2015–2020 The To Do authors"
 msgstr "Copyright © 2015–2020 Os autores da Lista de Tarefas"
 
@@ -476,8 +475,6 @@ msgid "Did you drink some water today?"
 msgstr "Bebeu algo de auga hoxe?"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:57
-#| msgid "You have %d task for today"
-#| msgid_plural "You have %d tasks for today"
 msgid "What are your goals for today?"
 msgstr "Cales son os seus obxectivos para hoxe?"
 
@@ -534,12 +531,10 @@ msgid "Keep calm"
 msgstr "Manteña a calma"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:80
-#| msgid "You made it!"
 msgid "You can do it"
 msgstr "Pode facelo"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:81
-#| msgid "Meanwhile, spread the love"
 msgid "Meanwhile, spread the love ♥️"
 msgstr "Namentres, difunda o amor ♥️"
 
@@ -575,7 +570,6 @@ msgid "Archive"
 msgstr "Arquivar"
 
 #: src/plugins/task-lists-workspace/gtd-task-list-panel.c:233
-#| msgid "An error occurred while creating a task"
 msgid "An error occurred while updating a task"
 msgstr "Produciuse un erro ao actualizar unha tarefa"
 
@@ -604,15 +598,12 @@ msgstr "Nova lista"
 
 #: src/plugins/today-panel/gtd-today-omni-area-addin.c:94
 #, c-format
-#| msgid "You have %d task for today"
-#| msgid_plural "You have %d tasks for today"
 msgid "%d task for today"
 msgid_plural "%d tasks for today"
 msgstr[0] "%d tarefa para hoxe"
 msgstr[1] "%d tarefas para hoxe"
 
 #: src/plugins/today-panel/gtd-today-omni-area-addin.c:109
-#| msgid "No task completed today"
 msgid "No tasks scheduled for today"
 msgstr "Non hai ningunha tarefa programada para hoxe"
 
