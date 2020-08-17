@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
 "POT-Creation-Date: 2020-07-24 17:29+0000\n"
-"PO-Revision-Date: 2020-06-10 18:45+0200\n"
+"PO-Revision-Date: 2020-08-17 06:40+0200\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -696,7 +696,7 @@ msgstr ""
 #: src/plugins/todo-txt/gtd-provider-todo-txt.c:574
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr ""
-"ファイルモニターを開くときにエラーが発生したため Todo.txt を監視しません"
+"ファイルモニターを開いているときにエラーが発生したため Todo.txt を監視しません"
 
 #: src/plugins/todo-txt/gtd-provider-todo-txt.c:643
 msgid "Todo.txt"
@@ -704,7 +704,7 @@ msgstr "Todo.txt"
 
 #: src/plugins/todo-txt/gtd-provider-todo-txt.c:655
 msgid "On the Todo.txt file"
-msgstr ""
+msgstr "Todo.txt ファイル上"
 
 #: src/plugins/todo-txt/org.gnome.todo.txt.gschema.xml:6
 msgid "Todo.txt File"
@@ -712,7 +712,7 @@ msgstr "Todo.txt ファイル"
 
 #: src/plugins/todo-txt/org.gnome.todo.txt.gschema.xml:7
 msgid "Source of the Todo.txt file"
-msgstr ""
+msgstr "Todo.txt ファイルのソース"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
 #: src/plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
@@ -729,21 +729,21 @@ msgstr "予定外 (%d)"
 #: src/plugins/welcome/gtd-welcome-workspace.c:68
 #, c-format
 msgid "Good Morning, %s"
-msgstr ""
+msgstr "%s さん、おはようございます"
 
 #: src/plugins/welcome/gtd-welcome-workspace.c:70
 #, c-format
 msgid "Good Afternoon, %s"
-msgstr ""
+msgstr "%s さん、こんにちは"
 
 #: src/plugins/welcome/gtd-welcome-workspace.c:72
 #, c-format
 msgid "Good Evening, %s"
-msgstr ""
+msgstr "%s さん、こんばんは"
 
 #: src/plugins/welcome/gtd-welcome-workspace.c:198
 msgid "Home"
-msgstr ""
+msgstr "ホーム"
 
 #~ msgid "An error occurred while modifying a task"
 #~ msgstr "タスクの修正中にエラーが発生しました"
