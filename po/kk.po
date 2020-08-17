@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-05-30 11:25+0000\n"
-"PO-Revision-Date: 2020-06-28 22:52+0500\n"
+"POT-Creation-Date: 2020-07-24 17:29+0000\n"
+"PO-Revision-Date: 2020-08-17 15:27+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
 "Language: kk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
@@ -134,7 +134,6 @@ msgid "Enable debug messages"
 msgstr "Жөндеу хабарламаларын іске қосу"
 
 #: src/gui/gtd-application.c:146
-#| msgid "Copyright © %1$d–%2$d The To Do authors"
 msgid "Copyright © 2015–2020 The To Do authors"
 msgstr "Copyright © 2015–2020 The To Do авторлары"
 
@@ -336,7 +335,7 @@ msgstr "Болдырмау"
 #: src/plugins/next-week-panel/gtd-next-week-panel.c:152
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:124
 #: src/plugins/today-panel/gtd-panel-today.c:177
-#: src/plugins/today-panel/gtd-panel-today.c:293
+#: src/plugins/today-panel/gtd-panel-today.c:295
 #: src/plugins/welcome/gtd-welcome-workspace.ui:57
 msgid "Today"
 msgstr "Бүгін"
@@ -367,7 +366,6 @@ msgid "Details"
 msgstr "Ақпараты"
 
 #: src/gui/gtd-window.ui:158
-#| msgid "_About"
 msgid "_About To Do"
 msgstr "To Do тур_алы"
 
@@ -383,7 +381,7 @@ msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] "%d күн бұрын"
 
-#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:333
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:335
 msgid "All"
 msgstr "Барлығы"
 
@@ -464,7 +462,7 @@ msgstr "Кіріс бумасы"
 msgid "Overdue"
 msgstr "Мерзімі өткен"
 
-#: src/plugins/next-week-panel/gtd-next-week-panel.c:386
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:388
 msgid "Next 7 Days"
 msgstr "Келесі 7 күн"
 
@@ -473,8 +471,6 @@ msgid "Did you drink some water today?"
 msgstr "Бүгін біраз су іштіңіз бе?"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:57
-#| msgid "You have %d task for today"
-#| msgid_plural "You have %d tasks for today"
 msgid "What are your goals for today?"
 msgstr "Бүгінгі мақсаттарыңыз қандай?"
 
@@ -491,7 +487,7 @@ msgid "At what point is it good enough?"
 msgstr "Бұл қандай жағдайда жеткілікті?"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:65
-msgid "Remember to breath. Good. Don't stop."
+msgid "Remember to breathe. Good. Don't stop."
 msgstr "Тыныс алуды есте сақтаңыз. Жақсы. Тоқтамаңыз."
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:66
@@ -531,16 +527,14 @@ msgid "Keep calm"
 msgstr "Сабыр етіңіз"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:80
-#| msgid "You made it!"
 msgid "You can do it"
 msgstr "Сіздің қолыңыздан келеді"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:81
-#| msgid "Meanwhile, spread the love"
 msgid "Meanwhile, spread the love ♥️"
 msgstr "Сонымен қатар, махаббатты таратыңыз ♥️"
 
-#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:343
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:345
 msgid "Scheduled"
 msgstr "Жоспарланған"
 
@@ -572,7 +566,6 @@ msgid "Archive"
 msgstr "Архивтеу"
 
 #: src/plugins/task-lists-workspace/gtd-task-list-panel.c:233
-#| msgid "An error occurred while creating a task"
 msgid "An error occurred while updating a task"
 msgstr "Тапсырманы жаңарту кезінде қате орын алды"
 
@@ -596,20 +589,16 @@ msgid "Task Lists"
 msgstr "Тапсырмалар тізімдері"
 
 #: src/plugins/task-lists-workspace/gtd-task-lists-workspace.ui:43
-#| msgid "_New List"
 msgid "New List"
 msgstr "Жаңа тізім"
 
 #: src/plugins/today-panel/gtd-today-omni-area-addin.c:94
 #, c-format
-#| msgid "You have %d task for today"
-#| msgid_plural "You have %d tasks for today"
 msgid "%d task for today"
 msgid_plural "%d tasks for today"
 msgstr[0] "Бүгінге %d тапсырма"
 
 #: src/plugins/today-panel/gtd-today-omni-area-addin.c:109
-#| msgid "No task completed today"
 msgid "No tasks scheduled for today"
 msgstr "Бүгінге жоспарланған тапсырмалар жоқ"
 
@@ -752,7 +741,7 @@ msgstr "Қайырлы күн, %s"
 msgid "Good Evening, %s"
 msgstr "Кеш жарық, %s"
 
-#: src/plugins/welcome/gtd-welcome-workspace.c:195
+#: src/plugins/welcome/gtd-welcome-workspace.c:198
 msgid "Home"
 msgstr "Үй"
 
