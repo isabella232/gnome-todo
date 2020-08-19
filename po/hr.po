@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
 "POT-Creation-Date: 2020-08-18 22:15+0000\n"
-"PO-Revision-Date: 2020-08-19 20:14+0200\n"
+"PO-Revision-Date: 2020-08-19 20:17+0200\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
@@ -756,7 +756,7 @@ msgstr "Dobra večer, %s"
 
 #: src/plugins/welcome/gtd-welcome-workspace.c:198
 msgid "Home"
-msgstr ""
+msgstr "Naslovnica"
 
 #~ msgid "The current list selector"
 #~ msgstr "Trenutni prikaz popisa"
