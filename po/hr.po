@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-07-24 17:29+0000\n"
-"PO-Revision-Date: 2020-08-19 00:14+0200\n"
+"POT-Creation-Date: 2020-08-18 22:15+0000\n"
+"PO-Revision-Date: 2020-08-19 20:14+0200\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
 #: data/org.gnome.Todo.desktop.in.in:3 src/gui/gtd-application.c:142
@@ -464,7 +464,7 @@ msgstr "Greška preuzimanja zadataka s popisa"
 #: src/plugins/inbox-panel/gtd-inbox-panel.c:111
 #: src/plugins/welcome/gtd-welcome-workspace.ui:48
 msgid "Inbox"
-msgstr ""
+msgstr "Pristigla pošta"
 
 #: src/plugins/next-week-panel/gtd-next-week-panel.c:148
 #: src/plugins/today-panel/gtd-panel-today.c:168
