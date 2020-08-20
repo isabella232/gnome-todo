@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-06-10 12:34+0000\n"
-"PO-Revision-Date: 2020-06-16 19:17+0200\n"
+"POT-Creation-Date: 2020-08-18 22:15+0000\n"
+"PO-Revision-Date: 2020-08-19 18:30+0200\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -337,7 +337,7 @@ msgstr "Razveljavi"
 #: src/plugins/next-week-panel/gtd-next-week-panel.c:152
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:124
 #: src/plugins/today-panel/gtd-panel-today.c:177
-#: src/plugins/today-panel/gtd-panel-today.c:293
+#: src/plugins/today-panel/gtd-panel-today.c:295
 #: src/plugins/welcome/gtd-welcome-workspace.ui:57
 msgid "Today"
 msgstr "Danes"
@@ -386,7 +386,7 @@ msgstr[1] "pred %d dnem"
 msgstr[2] "pred %d dnevoma"
 msgstr[3] "pred %d dnevi"
 
-#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:333
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:335
 msgid "All"
 msgstr "Vse"
 
@@ -473,7 +473,7 @@ msgstr "Prejeto"
 msgid "Overdue"
 msgstr "Prekoračeno"
 
-#: src/plugins/next-week-panel/gtd-next-week-panel.c:386
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:388
 msgid "Next 7 Days"
 msgstr "Naslednjih 7 dni"
 
@@ -498,7 +498,7 @@ msgid "At what point is it good enough?"
 msgstr "Na kateri točki je dovolj dobro?"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:65
-msgid "Remember to breath. Good. Don't stop."
+msgid "Remember to breathe. Good. Don't stop."
 msgstr "Mislite na dihanje. Počasi. Ne prenehajte."
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:66
@@ -545,7 +545,7 @@ msgstr "Lahko vam uspe"
 msgid "Meanwhile, spread the love ♥️"
 msgstr "Medtem pa razširite dobro besedo ♥️"
 
-#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:343
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:345
 msgid "Scheduled"
 msgstr "Na urniku"
 
@@ -753,7 +753,7 @@ msgstr "Dober dan, %s"
 msgid "Good Evening, %s"
 msgstr "Dober večer, %s"
 
-#: src/plugins/welcome/gtd-welcome-workspace.c:195
+#: src/plugins/welcome/gtd-welcome-workspace.c:198
 msgid "Home"
 msgstr "Domov"
 
