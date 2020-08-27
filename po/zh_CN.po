@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-06-18 22:27+0000\n"
-"PO-Revision-Date: 2020-06-23 15:39-0400\n"
+"POT-Creation-Date: 2020-07-24 17:29+0000\n"
+"PO-Revision-Date: 2020-08-11 20:48+0800\n"
 "Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-DamnedLies-Scope: partial\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
@@ -115,6 +115,14 @@ msgstr "已激活扩展列表"
 #: data/org.gnome.todo.gschema.xml:27
 msgid "The list of active extensions"
 msgstr "已激活扩展列表"
+
+#: data/org.gnome.todo.gschema.xml:31
+msgid "Sidebar revealed"
+msgstr "已显示侧边栏"
+
+#: data/org.gnome.todo.gschema.xml:32
+msgid "Whether the sidebar is revealed or not"
+msgstr "是否显示侧边栏"
 
 #: src/gui/gtd-application.c:75
 msgid "Quit GNOME To Do"
@@ -484,7 +492,7 @@ msgid "At what point is it good enough?"
 msgstr "到什么点才算好呢？"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:65
-msgid "Remember to breath. Good. Don't stop."
+msgid "Remember to breathe. Good. Don't stop."
 msgstr "记住要呼吸，好，不要停。"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:66
