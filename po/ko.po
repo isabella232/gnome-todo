@@ -8,61 +8,59 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-07-22 16:54+0000\n"
-"PO-Revision-Date: 2018-08-25 21:36+0900\n"
-"Last-Translator: YunChang Kang <codenewb@gmail.com>\n"
+"POT-Creation-Date: 2020-08-31 10:47+0000\n"
+"PO-Revision-Date: 2020-08-31 00:12+0900\n"
+"Last-Translator: Seong-ho Cho <shcho@gnome.org>\n"
 "Language-Team: 한국어 <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.3.1\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
-#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:157
-#: src/gtd-window.c:788 src/gtd-window.c:819 src/main.c:35
+#: data/org.gnome.Todo.desktop.in:3 src/gtd-application.c:156
+#: src/gtd-window.c:799 src/gtd-window.c:830 src/main.c:35
 msgid "To Do"
 msgstr "일정 관리"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:8
 msgid "Task manager for GNOME"
-msgstr "그놈용 일정 관리 프로그램"
+msgstr "그놈 일정 관리 프로그램"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:11
 msgid ""
 "GNOME To Do is a task management application designed to integrate with "
-"GNOME. Save and order your todos. Manage multiple todo lists. Keep your "
-"todos on your computer or sync them with cloud providers. Customize your "
-"experience with plugins."
+"GNOME. It is extensible through plugins and supports custom task providers."
 msgstr ""
 "그놈 일정 관리는 그놈에 어우러지도록 설계한 간단한 일정 관리 프로그램입니다. "
 "플러그인 기능과 개별 일정 서비스 제공자 지원을 통해 프로그램의 기능을 확장할 "
 "수 있습니다."
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:25
+#: data/appdata/org.gnome.Todo.appdata.xml.in:24
 msgid "GNOME To Do with the dark theme variant"
 msgstr "다크 테마 버전의 그놈 일정"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:29
+#: data/appdata/org.gnome.Todo.appdata.xml.in:28
 msgid "Editing a tasklist with GNOME To Do"
 msgstr "그놈 일정으로 일정 목록을 편집합니다"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:33
+#: data/appdata/org.gnome.Todo.appdata.xml.in:32
 msgid "Task lists displayed on grid mode"
 msgstr "일정 목록을 바둑판 형식으로 표시"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:37
+#: data/appdata/org.gnome.Todo.appdata.xml.in:36
 msgid "Task lists displayed on list mode"
 msgstr "일정 목록을 목록 형식으로 표시"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:41
+#: data/appdata/org.gnome.Todo.appdata.xml.in:40
 msgid "Available plugins for GNOME To Do"
 msgstr "그놈 일정 관리용 플러그인"
 
-#: data/appdata/org.gnome.Todo.appdata.xml.in:45
+#: data/appdata/org.gnome.Todo.appdata.xml.in:44
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
-msgstr "그놈 일정의 오늘 패널에 오늘의 일정을 멋스럽게 보여드립니다"
+msgstr "그놈 일정 관리의 오늘 패널에 오늘의 일정을 멋스럽게 보여드립니다"
 
 #: data/gtk/menus.ui:15 data/ui/plugin-dialog.ui:75
 msgid "Extensions"
@@ -79,11 +77,6 @@ msgstr "끝내기(_Q)"
 #: data/org.gnome.Todo.desktop.in:4
 msgid "Manage your personal tasks"
 msgstr "개인 일정을 관리합니다"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Todo.desktop.in:7
-msgid "org.gnome.Todo"
-msgstr "org.gnome.Todo"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Todo.desktop.in:13
@@ -121,7 +114,7 @@ msgstr "그놈 일정 관리 첫 실행"
 #: data/org.gnome.todo.gschema.xml:22
 msgid ""
 "Whether it’s the first run of GNOME To Do (to run the initial setup) or not"
-msgstr "(초기 설정을 진행하려) 그놈 일정 관리를 처음 실행했는지 여부"
+msgstr "그놈 일정 관리를 처음 실행(초기 설정 실행)했는지 여부"
 
 #: data/org.gnome.todo.gschema.xml:26
 msgid "Default provider to add new lists to"
@@ -151,44 +144,44 @@ msgstr "현재 목록 표시 선택 항목입니다. “바둑판” 또는 “�
 msgid "_Notes"
 msgstr "참고(_N)"
 
-#: data/ui/edit-pane.ui:95
+#: data/ui/edit-pane.ui:93
 msgid "D_ue Date"
 msgstr "기한 날짜(_U)"
 
-#: data/ui/edit-pane.ui:113
+#: data/ui/edit-pane.ui:111
 msgid "_Today"
 msgstr "오늘(_T)"
 
-#: data/ui/edit-pane.ui:123
+#: data/ui/edit-pane.ui:121
 msgid "To_morrow"
 msgstr "내일(_M)"
 
-#: data/ui/edit-pane.ui:171
+#: data/ui/edit-pane.ui:169
 msgid "_Priority"
 msgstr "우선순위(_P)"
 
-#: data/ui/edit-pane.ui:189
+#: data/ui/edit-pane.ui:187
 msgctxt "taskpriority"
 msgid "None"
 msgstr "없음"
 
-#: data/ui/edit-pane.ui:190
+#: data/ui/edit-pane.ui:188
 msgid "Low"
 msgstr "낮음"
 
-#: data/ui/edit-pane.ui:191
+#: data/ui/edit-pane.ui:189
 msgid "Medium"
 msgstr "보통"
 
-#: data/ui/edit-pane.ui:192
+#: data/ui/edit-pane.ui:190
 msgid "High"
 msgstr "높음"
 
-#: data/ui/edit-pane.ui:200
+#: data/ui/edit-pane.ui:198 data/ui/list-selector-panel.ui:93
 msgid "_Delete"
 msgstr "삭제(_D)"
 
-#: data/ui/edit-pane.ui:251
+#: data/ui/edit-pane.ui:249
 msgctxt "taskdate"
 msgid "None"
 msgstr "없음"
@@ -206,7 +199,7 @@ msgid "To Do Setup"
 msgstr "일정 관리 설정"
 
 #: data/ui/initial-setup.ui:70 data/ui/provider-popover.ui:43
-#: data/ui/window.ui:123
+#: data/ui/window.ui:74
 msgid "_Cancel"
 msgstr "취소(_C)"
 
@@ -214,7 +207,35 @@ msgstr "취소(_C)"
 msgid "_Done"
 msgstr "완료(_D)"
 
-#: data/ui/new-task-row.ui:31
+#: data/ui/list-selector-panel.ui:79 data/ui/list-selector-panel.ui:173
+msgid "_Rename"
+msgstr "이름 바꾸기(_R)"
+
+#: data/ui/list-selector-panel.ui:119 src/views/gtd-list-selector-panel.c:469
+msgid "Lists"
+msgstr "목록"
+
+#: data/ui/list-selector-panel.ui:129
+msgid "Tasks"
+msgstr "일정"
+
+#: data/ui/list-selector-panel.ui:147
+msgid "Name of the task list"
+msgstr "일정 목록의 이름"
+
+#: data/ui/list-selector-panel.ui:263
+msgid "_New List"
+msgstr "새 목록(_N)"
+
+#: data/ui/list-view.ui:113
+msgid "Show or hide completed tasks"
+msgstr "완료 일정 표시하거나 숨기기"
+
+#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
+msgid "Done"
+msgstr "완료"
+
+#: data/ui/new-task-row.ui:29
 msgid "New task…"
 msgstr "새 일정…"
 
@@ -248,11 +269,11 @@ msgstr "구글"
 
 #: data/ui/provider-selector.ui:67
 msgid "Click to add a new ownCloud account"
-msgstr "새 ownCloud 계정을 추가하려면 누르십시오"
+msgstr "새 오운클라우드 계정을 추가하려면 누르십시오"
 
 #: data/ui/provider-selector.ui:91
 msgid "ownCloud"
-msgstr "ownCloud"
+msgstr "오운클라우드"
 
 #: data/ui/provider-selector.ui:107
 msgid "Click to add a new Microsoft Exchange account"
@@ -264,29 +285,13 @@ msgstr "마이크로소프트 익스체인지"
 
 #: data/ui/provider-selector.ui:154
 msgid "Or you can just store your tasks on this computer"
-msgstr "또는 이 컴퓨터에 일정을 저장할 수 있습니다."
-
-#: data/ui/sidebar-list-row.ui:96 data/ui/sidebar-list-row.ui:115
-msgid "Rename"
-msgstr "이름 바꾸기"
-
-#: data/ui/sidebar-list-row.ui:119
-msgid "Delete"
-msgstr "삭제"
-
-#: data/ui/sidebar-provider-row.ui:96
-msgid "Loading…"
-msgstr "불러오는 중…"
-
-#: data/ui/window.ui:78
-msgid "_New List"
-msgstr "새 목록(_N)"
+msgstr "또는 이 컴퓨터에 일정을 저장할 수 있습니다"
 
 #: plugins/background/gtd-plugin-background.c:150
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
-msgstr[0] "%1$s와(과) %2$d개 이상의 일정"
+msgstr[0] "%1$s일정 그리고 다른 일정 %2$d개"
 
 #: plugins/background/gtd-plugin-background.c:249
 #, c-format
@@ -300,7 +305,7 @@ msgstr "시작시 일정 실행"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:7
 msgid "Whether GNOME To Do should run on startup"
-msgstr "시작시 그놈 일정을 시작할 지 여부"
+msgstr "시작시 그놈 일정을 시작할지 여부"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:11
 msgid "Show notifications on startup"
@@ -308,7 +313,7 @@ msgstr "시작시 알림 표시"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:12
 msgid "Whether GNOME To Do should show notifications or not"
-msgstr "그놈 일정에서 알림을 표시할 지 여부"
+msgstr "그놈 일정에서 알림을 표시할지 여부"
 
 #: plugins/background/ui/preferences.ui:53
 msgid "Run on Startup"
@@ -330,91 +335,84 @@ msgstr "일정을 실행할 때 시작 알림 표시"
 msgid "Error loading GNOME Online Accounts"
 msgstr "그놈 온라인 계정을 불러오는 중 오류 발생"
 
-#: plugins/eds/gtd-provider-eds.c:140
+#: plugins/eds/gtd-provider-eds.c:139
 msgid "Failed to connect to task list"
 msgstr "일정 목록 연결에 실패했습니다"
 
-#: plugins/eds/gtd-provider-eds.c:361
+#: plugins/eds/gtd-provider-eds.c:351
 msgid "An error occurred while creating a task"
 msgstr "Todo.txt 목록을 만드는 도중 오류 발생"
 
-#: plugins/eds/gtd-provider-eds.c:393
+#: plugins/eds/gtd-provider-eds.c:383
 msgid "An error occurred while modifying a task"
 msgstr "일정 수정 중 오류 발생"
 
-#: plugins/eds/gtd-provider-eds.c:414
+#: plugins/eds/gtd-provider-eds.c:404
 msgid "An error occurred while removing a task"
 msgstr "일정 제거 중 오류 발생"
 
-#: plugins/eds/gtd-provider-eds.c:432
+#: plugins/eds/gtd-provider-eds.c:422
 msgid "An error occurred while creating a task list"
 msgstr "Todo.txt 목록을 만드는 도중 오류 발생"
 
-#: plugins/eds/gtd-provider-eds.c:454 plugins/eds/gtd-provider-eds.c:477
+#: plugins/eds/gtd-provider-eds.c:444 plugins/eds/gtd-provider-eds.c:467
 msgid "An error occurred while modifying a task list"
 msgstr "일정 목록 제거 중 오류 발생"
 
 #: plugins/eds/gtd-provider-local.c:50
-msgid "On This Computer"
-msgstr "이 컴퓨터"
-
-#: plugins/eds/gtd-provider-local.c:62
 msgid "Local"
 msgstr "로컬"
 
-#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:310
-#: plugins/eds/gtd-task-list-eds.c:334
+#: plugins/eds/gtd-provider-local.c:56
+msgid "On This Computer"
+msgstr "이 컴퓨터"
+
+#: plugins/eds/gtd-task-list-eds.c:277 plugins/eds/gtd-task-list-eds.c:307
+#: plugins/eds/gtd-task-list-eds.c:331
 msgid "Error fetching tasks from list"
 msgstr "목록에서 일정을 가져오는 중 오류 발생"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:107
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:102 src/gtd-edit-pane.c:112
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-edit-pane.c:110
 msgid "No date set"
 msgstr "날짜를 설정하지 않았습니다"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:115
-#: plugins/today-panel/gtd-panel-today.c:201
-msgid "Overdue"
-msgstr "일정 초과"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:119
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:123
-#: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:210
-#: plugins/today-panel/gtd-panel-today.c:276 src/gtd-task-row.c:144
-msgid "Today"
-msgstr "오늘"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:123
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:127 src/gtd-task-row.c:148
-msgid "Tomorrow"
-msgstr "내일"
-
-#: plugins/next-week-panel/gtd-next-week-panel.c:372
-msgid "Next 7 Days"
-msgstr "7일 후"
 
 #. Translators: This message will never be used with '1 day ago'
 #. * but the singular form is required because some languages do not
 #. * have plurals, some languages reuse the singular form for numbers
 #. * like 21, 31, 41, etc.
 #.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:115
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
 #, c-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] "%d 일 전"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:119 src/gtd-task-row.c:152
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:147
 msgid "Yesterday"
 msgstr "어제"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:378
+#. Setup a title
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:118
+#: plugins/score/score/__init__.py:101
+#: plugins/today-panel/gtd-panel-today.c:134
+#: plugins/today-panel/gtd-panel-today.c:139
+#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:139
+msgid "Today"
+msgstr "오늘"
+
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:122 src/gtd-task-row.c:143
+msgid "Tomorrow"
+msgstr "내일"
+
+#. Setup a title
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:356
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:358
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:495
 msgid "Scheduled"
 msgstr "일정"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:535
-#: plugins/today-panel/gtd-panel-today.c:432
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:500
+#: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
 msgid "Clear completed tasks…"
 msgstr "끝낸 일정 지우기…"
@@ -423,56 +421,44 @@ msgstr "끝낸 일정 지우기…"
 msgid "No task completed today"
 msgstr "오늘 끝낸 일정 없음"
 
-#: plugins/todoist/gtd-plugin-todoist.c:109
-msgid "GNOME To Do cannot connect to Todoist due to network issue"
-msgstr ""
-"그놈의 일정 관리 프로그램에서 네트워크 문제로 인해 Todoist에 연결할 수 없습니"
-"다."
-
-#: plugins/todoist/gtd-plugin-todoist.c:110
-msgid ""
-"Not able to communicate with Todoist. Please check your internet "
-"connectivity."
-msgstr "Todoist와 통신할 수 없습니다. 인터넷 연결을 확인 하십시오."
-
-#: plugins/todoist/gtd-provider-todoist.c:213
+#: plugins/todoist/gtd-provider-todoist.c:212
 msgid "Error fetching Todoist account key"
 msgstr "Todoist 계정 키 가져오는 중 오류"
 
-#: plugins/todoist/gtd-provider-todoist.c:214
+#: plugins/todoist/gtd-provider-todoist.c:213
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Todoist 계정을 올바르게 설정했는지 확인하십시오."
 
-#: plugins/todoist/gtd-provider-todoist.c:558
+#: plugins/todoist/gtd-provider-todoist.c:557
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr ""
 "그놈 일정 관리 프로그램에서 작업을 수행 하는 데 필요한 권한이 없습니다: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:566
+#: plugins/todoist/gtd-provider-todoist.c:565
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
 msgstr "잘못된 응답이 왔습니다. 일정 관리 프로그램을 다시 실행하십시오."
 
-#: plugins/todoist/gtd-provider-todoist.c:866
+#: plugins/todoist/gtd-provider-todoist.c:865
 msgid "An error occurred while updating a Todoist task"
 msgstr "Todo.txt 목록을 만드는 도중 오류 발생"
 
-#: plugins/todoist/gtd-provider-todoist.c:983
+#: plugins/todoist/gtd-provider-todoist.c:982
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Todo.txt 목록을 만드는 도중 오류 발생"
 
-#: plugins/todoist/gtd-provider-todoist.c:1058
+#: plugins/todoist/gtd-provider-todoist.c:1057
 msgid "An error occurred while updating Todoist"
 msgstr "Todo.txt 목록을 만드는 도중 오류 발생"
 
-#: plugins/todoist/gtd-provider-todoist.c:1118
+#: plugins/todoist/gtd-provider-todoist.c:1117
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1433
+#: plugins/todoist/gtd-provider-todoist.c:1426
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
@@ -512,16 +498,16 @@ msgstr ""
 "<b>경고!</b>불안정함과 오류를 경험할 수 있으며 심지어는 데이터를 잃을 수 있습"
 "니다."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:591
+#: plugins/todo-txt/gtd-provider-todo-txt.c:326
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr ""
 "파일 감시자를 여는 중 오류가 발생했습니다. Todo.txt 파일을 관리하지 않습니다"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:660
+#: plugins/todo-txt/gtd-provider-todo-txt.c:395
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:672
+#: plugins/todo-txt/gtd-provider-todo-txt.c:401
 msgid "On the Todo.txt file"
 msgstr "Todo.txt 파일에서"
 
@@ -545,29 +531,30 @@ msgstr "일정 없음"
 msgid "Unscheduled (%d)"
 msgstr "일정 없음(%d)"
 
-#: src/gtd-application.c:73
+#: src/gtd-application.c:72
 msgid "Quit GNOME To Do"
 msgstr "그놈 일정 관리 끝내기"
 
-#: src/gtd-application.c:74
+#: src/gtd-application.c:73
 msgid "Enable debug messages"
 msgstr "디버깅 메시지 사용"
 
-#: src/gtd-application.c:147
+#: src/gtd-application.c:146
 #, c-format
 msgid "Copyright © %1$d The To Do authors"
-msgstr "Copyright © %1$d 일정 관리 개발자"
+msgstr "Copyright © %1$d The To Do authors"
 
-#: src/gtd-application.c:152
+#: src/gtd-application.c:151
 #, c-format
 msgid "Copyright © %1$d–%2$d The To Do authors"
-msgstr "Copyright © %1$d–%2$d 일정 관리 개발자"
+msgstr "Copyright © %1$d–%2$d The To Do authors"
 
-#: src/gtd-application.c:164
+#: src/gtd-application.c:163
 msgid "translator-credits"
 msgstr ""
-"조성호 <shcho@gnome.org>\n"
-"강윤창 <codenewb@gmail.com>"
+"강영선 <ctyvx784@gmail.com>\n"
+"강윤창 <codenewb@gmail.com>\n"
+"조성호 <shcho@gnome.org>"
 
 #: src/gtd-empty-list-widget.c:51
 msgid "No more tasks left"
@@ -621,92 +608,115 @@ msgstr "플러그인 불러오는 중 오류"
 msgid "Error unloading extension"
 msgstr "불러온 플러그인 없애는 중 오류"
 
-#: src/gtd-task-list-view.c:352
+#: src/gtd-task-list-view.c:292
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr "이 일정을 제거하면 하위 일정도 날라갑니다. 그래도 제거하시겠습니까?"
 
-#: src/gtd-task-list-view.c:355
+#: src/gtd-task-list-view.c:295
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "한 번 제거하면 일정을 되살릴 수 없습니다."
 
-#: src/gtd-task-list-view.c:358
+#: src/gtd-task-list-view.c:298 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "취소"
 
-#: src/gtd-task-list-view.c:360
+#: src/gtd-task-list-view.c:300
 msgid "Remove"
 msgstr "제거"
 
-#: src/gtd-task-list-view.c:802
+#: src/gtd-task-list-view.c:390
+#, c-format
+msgid "Done (%d)"
+msgstr "완료 (%d)"
+
+#: src/gtd-task-list-view.c:660
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "<b>%s</b> 일정을 제거했습니다"
 
-#: src/gtd-task-list-view.c:826 src/sidebar/gtd-sidebar-list-row.c:281
+#: src/gtd-task-list-view.c:684
 msgid "Undo"
 msgstr "실행 취소"
 
-#: src/gtd-window.c:110
-msgid ""
-"This is a development build of To Do. You may experience errors, wrong "
-"behaviors, and data loss."
-msgstr ""
-"일정 관리 프로그램의 개발 빌드 입니다. 오류, 잘못된 동작 및 데이터 손실이 발"
-"생할 수 있습니다."
-
-#: src/gtd-window.c:471
+#: src/gtd-window.c:476
 msgid "Details"
 msgstr "세부 내용"
 
-#: src/gtd-window.c:783
+#: src/gtd-window.c:689
+msgid "Loading your task lists…"
+msgstr "일정 목록 불러오는 중…"
+
+#: src/gtd-window.c:793
 msgid "Click a task list to select"
 msgstr "일정 목록을 선택하려면 누르십시오"
 
-#: src/sidebar/gtd-sidebar-list-row.c:278
-#, c-format
-msgid "Task list <b>%s</b> removed"
-msgstr "<b>%s</b> 일정을 제거했습니다"
+#.
+#. * If there's no task available, draw a "No tasks" string at
+#. * the middle of the list thumbnail.
+#.
+#: src/views/gtd-list-selector-grid-item.c:250
+msgid "No tasks"
+msgstr "일정 없음"
 
-#: src/sidebar/gtd-sidebar-list-row.c:307
-#, c-format
-msgid "Rename %s"
-msgstr "%s 이름 바꾸기"
+#: src/views/gtd-list-selector-panel.c:381
+msgid "Remove the selected task lists?"
+msgstr "선택한 일정 목록을 제거하시겠습니까?"
 
-#~ msgid "_Rename"
-#~ msgstr "이름 바꾸기(_R)"
+#: src/views/gtd-list-selector-panel.c:384
+msgid "Once removed, the task lists cannot be recovered."
+msgstr "한 번 제거하면 일정 목록을 되살릴 수 없습니다."
 
-#~ msgid "Lists"
-#~ msgstr "목록"
+#: src/views/gtd-list-selector-panel.c:396
+msgid "Remove task lists"
+msgstr "일정 목록 제거"
 
-#~ msgid "Tasks"
-#~ msgstr "일정"
+#: src/views/gtd-list-selector-panel.c:709
+msgid "Clear completed tasks"
+msgstr "끝낸 일정 지우기"
 
-#~ msgid "Name of the task list"
-#~ msgstr "일정 목록의 이름"
+#~ msgid "org.gnome.Todo"
+#~ msgstr "org.gnome.Todo"
 
-#~ msgid "Show or hide completed tasks"
-#~ msgstr "완료 일정 표시하거나 숨기기"
+#~ msgid "Rename"
+#~ msgstr "이름 바꾸기"
 
-#~ msgid "Done"
-#~ msgstr "완료"
+#~ msgid "Delete"
+#~ msgstr "삭제"
+
+#~ msgid "Loading…"
+#~ msgstr "불러오는 중…"
+
+#~ msgid "Overdue"
+#~ msgstr "일정 초과"
+
+#~ msgid "Next 7 Days"
+#~ msgstr "7일 후"
+
+#~ msgid "GNOME To Do cannot connect to Todoist due to network issue"
+#~ msgstr ""
+#~ "그놈의 일정 관리 프로그램에서 네트워크 문제로 인해 Todoist에 연결할 수 없"
+#~ "습니다."
+
+#~ msgid ""
+#~ "Not able to communicate with Todoist. Please check your internet "
+#~ "connectivity."
+#~ msgstr "Todoist와 통신할 수 없습니다. 인터넷 연결을 확인 하십시오."
+
+#~ msgid ""
+#~ "This is a development build of To Do. You may experience errors, wrong "
+#~ "behaviors, and data loss."
+#~ msgstr ""
+#~ "일정 관리 프로그램의 개발 빌드 입니다. 오류, 잘못된 동작 및 데이터 손실이 "
+#~ "발생할 수 있습니다."
+
+#~ msgid "Task list <b>%s</b> removed"
+#~ msgstr "<b>%s</b> 일정을 제거했습니다"
+
+#~ msgid "Rename %s"
+#~ msgstr "%s 이름 바꾸기"
 
 #~ msgid "Error creating new task list"
 #~ msgstr "새 일정 목록을 만드는 중 오류 발생"
-
-#~ msgid "Loading your task lists…"
-#~ msgstr "일정 목록 불러오는 중…"
-
-#~ msgid "No tasks"
-#~ msgstr "일정 없음"
-
-#~ msgid "Remove the selected task lists?"
-#~ msgstr "선택한 일정 목록을 제거하시겠습니까?"
-
-#~ msgid "Once removed, the task lists cannot be recovered."
-#~ msgstr "한 번 제거하면 일정 목록을 되살릴 수 없습니다."
-
-#~ msgid "Remove task lists"
-#~ msgstr "일정 목록 제거"
 
 #~ msgid "New List…"
 #~ msgstr "새 목록…"
