@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2018-03-09 02:49+0000\n"
+"POT-Creation-Date: 2020-08-31 10:47+0000\n"
 "PO-Revision-Date: 2018-03-12 13:07+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
@@ -77,11 +77,6 @@ msgstr "_Salir"
 #: data/org.gnome.Todo.desktop.in:4
 msgid "Manage your personal tasks"
 msgstr "Gestionar sus tareas personales"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Todo.desktop.in:7
-msgid "org.gnome.Todo"
-msgstr "org.gnome.Todo"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Todo.desktop.in:13
@@ -239,7 +234,7 @@ msgstr "_Nueva lista"
 msgid "Show or hide completed tasks"
 msgstr "Mostrar u ocultar las tareas completadas"
 
-#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:379
+#: data/ui/list-view.ui:140 src/gtd-task-list-view.c:388
 msgid "Done"
 msgstr "Hecho"
 
@@ -384,7 +379,7 @@ msgstr "En este equipo"
 msgid "Error fetching tasks from list"
 msgstr "Error al obtener las tareas de la lista"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:89 src/gtd-edit-pane.c:110
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:97 src/gtd-edit-pane.c:110
 msgid "No date set"
 msgstr "No hay fecha establecida"
 
@@ -393,41 +388,38 @@ msgstr "No hay fecha establecida"
 #. * have plurals, some languages reuse the singular form for numbers
 #. * like 21, 31, 41, etc.
 #.
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:102
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
 #, c-format
-#| msgid "%d days ago"
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] "Hace %d día"
 msgstr[1] "Hace %d días"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:106 src/gtd-task-row.c:148
-#| msgid "Yesterday"
-#| msgid_plural "%d days ago"
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:147
 msgid "Yesterday"
 msgstr "Ayer"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:110
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:118
 #: plugins/score/score/__init__.py:101
 #: plugins/today-panel/gtd-panel-today.c:134
 #: plugins/today-panel/gtd-panel-today.c:139
-#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:140
+#: plugins/today-panel/gtd-panel-today.c:273 src/gtd-task-row.c:139
 msgid "Today"
 msgstr "Hoy"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:114 src/gtd-task-row.c:144
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:122 src/gtd-task-row.c:143
 msgid "Tomorrow"
 msgstr "Mañana"
 
 #. Setup a title
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:365
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:370
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:507
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:356
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:358
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:495
 msgid "Scheduled"
 msgstr "Programadas"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:512
+#: plugins/scheduled-panel/gtd-panel-scheduled.c:500
 #: plugins/today-panel/gtd-panel-today.c:278
 #: plugins/unscheduled-panel/unscheduled-panel/__init__.py:58
 msgid "Clear completed tasks…"
@@ -447,9 +439,6 @@ msgstr "Asegúrese de que la cuenta de Todoist está correctamente configurada."
 
 #: plugins/todoist/gtd-provider-todoist.c:557
 #, c-format
-#| msgid ""
-#| "GNOME To Do doesn't have the necessary permissions to perform this "
-#| "action: %s"
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr ""
@@ -465,7 +454,6 @@ msgstr ""
 "pendientes de GNOME."
 
 #: plugins/todoist/gtd-provider-todoist.c:865
-#| msgid "An error occurred while updating Todoist"
 msgid "An error occurred while updating a Todoist task"
 msgstr "Ha ocurrido un error al actualizar una tarea de Todoist"
 
@@ -509,7 +497,6 @@ msgid "Select a file"
 msgstr "Seleccionar un archivo"
 
 #: plugins/todo-txt/gtd-plugin-todo-txt.c:191
-#| msgid "Error opening todo.txt file"
 msgid "Error opening Todo.txt file"
 msgstr "Error al abrir archivo Todo.txt"
 
@@ -623,43 +610,41 @@ msgid "You can add tasks using the <b>+</b> above"
 msgstr "Puede añadir tareas usando el <b>+</b> anterior"
 
 #: src/gtd-plugin-dialog-row.c:97
-#| msgid "Error loading plugin"
 msgid "Error loading extension"
 msgstr "Error al cargar la extensión"
 
 #: src/gtd-plugin-dialog-row.c:97
-#| msgid "Error unloading plugin"
 msgid "Error unloading extension"
 msgstr "Error al descargar la extensión"
 
-#: src/gtd-task-list-view.c:293
+#: src/gtd-task-list-view.c:292
 msgid "Removing this task will also remove its subtasks. Remove anyway?"
 msgstr ""
 "Al quitar esta tarea también se quitarán sus subtareas. ¿Quiere continuar?"
 
-#: src/gtd-task-list-view.c:296
+#: src/gtd-task-list-view.c:295
 msgid "Once removed, the tasks cannot be recovered."
 msgstr "Una vez eliminada, las tareas no se pueden recuperar."
 
-#: src/gtd-task-list-view.c:299 src/views/gtd-list-selector-panel.c:388
+#: src/gtd-task-list-view.c:298 src/views/gtd-list-selector-panel.c:388
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/gtd-task-list-view.c:301
+#: src/gtd-task-list-view.c:300
 msgid "Remove"
 msgstr "Quitar"
 
-#: src/gtd-task-list-view.c:381
+#: src/gtd-task-list-view.c:390
 #, c-format
 msgid "Done (%d)"
 msgstr "Hecho (%d)"
 
-#: src/gtd-task-list-view.c:661
+#: src/gtd-task-list-view.c:660
 #, c-format
 msgid "Task <b>%s</b> removed"
 msgstr "Tarea <b>%s</b> eliminada"
 
-#: src/gtd-task-list-view.c:685
+#: src/gtd-task-list-view.c:684
 msgid "Undo"
 msgstr "Deshacer"
 
@@ -696,9 +681,11 @@ msgid "Remove task lists"
 msgstr "Eliminar lista de tareas"
 
 #: src/views/gtd-list-selector-panel.c:709
-#| msgid "Clear completed tasks…"
 msgid "Clear completed tasks"
 msgstr "Limpiar las tareas completadas"
+
+#~ msgid "org.gnome.Todo"
+#~ msgstr "org.gnome.Todo"
 
 #~ msgid "Notes"
 #~ msgstr "Notas"
