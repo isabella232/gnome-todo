@@ -2,15 +2,15 @@
 # Copyright (C) 2015, 2016, 2017, 2018, 2019, 2020 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-todo package.
 #
-# Balázs Meskó <mesko.balazs at fsf dot hu>, 2015.
+# Balázs Meskó <mesko.balazs at fsf dot hu>, 2015, 2020.
 # Gabor Kelemen <kelemeng at ubuntu dot com>, 2015, 2016, 2017.
 # Balázs Úr <ur.balazs at fsf dot hu>, 2016, 2018, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-01-05 02:06+0000\n"
-"PO-Revision-Date: 2020-01-26 16:21+0100\n"
+"POT-Creation-Date: 2020-08-31 16:53+0000\n"
+"PO-Revision-Date: 2020-09-08 01:01+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 19.04.3\n"
+"X-Generator: Lokalize 19.12.3\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
-#: data/org.gnome.Todo.desktop.in.in:3 src/gtd-application.c:139
-#: src/gtd-window.c:774 src/gtd-window.c:805 src/main.c:35
+#: data/org.gnome.Todo.desktop.in.in:3 src/gui/gtd-application.c:142
+#: src/gui/gtd-omni-area.ui:44 src/main.c:38
 msgid "To Do"
 msgstr "Tennivalók"
 
@@ -119,187 +119,524 @@ msgid "The list of active extensions"
 msgstr "Az aktív bővítmények listája"
 
 #: data/org.gnome.todo.gschema.xml:31
-msgid "The current list selector"
-msgstr "Az aktuális listaválasztó"
+msgid "Sidebar revealed"
+msgstr "Oldalsáv felfedve"
 
 #: data/org.gnome.todo.gschema.xml:32
-msgid "The current list selector. Can be “grid” or “list”."
-msgstr ""
-"Az aktuális listaválasztó. Lehetséges értékek: „grid” (rács) vagy "
-"„list” (lista)."
+msgid "Whether the sidebar is revealed or not"
+msgstr "Az oldalsáv fel van-e fedve vagy sem"
 
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
-#: plugins/next-week-panel/gtd-next-week-panel.c:113
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:103
-#: src/task-list-view/gtd-edit-pane.c:110
+#: src/gui/gtd-application.c:75
+msgid "Quit GNOME To Do"
+msgstr "Kilépés a GNOME Tennivalókból"
+
+#: src/gui/gtd-application.c:76
+msgid "Enable debug messages"
+msgstr "Hibakeresési üzenetek engedélyezése"
+
+#: src/gui/gtd-application.c:146
+#| msgid "Copyright © 2015–2018 The To Do authors"
+msgid "Copyright © 2015–2020 The To Do authors"
+msgstr "Copyright © 2015–2020 A Tennivalók szerzői"
+
+#: src/gui/gtd-application.c:151
+msgid "translator-credits"
+msgstr "Meskó Balázs <mesko.balazs at fsf dot hu>"
+
+#: src/gui/gtd-edit-pane.c:93
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:140
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:103
 msgid "No date set"
 msgstr "Nincs dátum beállítva"
+
+#: src/gui/gtd-edit-pane.ui:16
+msgid "D_ue Date"
+msgstr "_Esedékesség"
+
+#: src/gui/gtd-edit-pane.ui:30
+msgid "_Today"
+msgstr "_Ma"
+
+#: src/gui/gtd-edit-pane.ui:39
+msgid "To_morrow"
+msgstr "_Holnap"
+
+#: src/gui/gtd-edit-pane.ui:75
+msgid "_Notes"
+msgstr "_Jegyzetek"
+
+#: src/gui/gtd-edit-pane.ui:121
+msgid "_Delete"
+msgstr "_Törlés"
+
+#: src/gui/gtd-edit-pane.ui:158
+msgctxt "taskdate"
+msgid "None"
+msgstr "Nincs"
+
+#: src/gui/gtd-empty-list-widget.c:51
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:53
+msgid "No more tasks left"
+msgstr "Nincs több feladat"
+
+#: src/gui/gtd-empty-list-widget.c:52
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:54
+msgid "Nothing else to do here"
+msgstr "Nincs semmi teendő"
+
+#: src/gui/gtd-empty-list-widget.c:53
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:55
+msgid "You made it!"
+msgstr "Megcsinálta!"
+
+#: src/gui/gtd-empty-list-widget.c:54
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:56
+msgid "Looks like there’s nothing else left here"
+msgstr "Úgy néz ki, nem maradt hátra semmi sem"
+
+#: src/gui/gtd-empty-list-widget.c:59
+msgid "Get some rest now"
+msgstr "Most pihenjen egyet"
+
+#: src/gui/gtd-empty-list-widget.c:60
+msgid "Enjoy the rest of your day"
+msgstr "Élvezze a nap hátralévő részét"
+
+#: src/gui/gtd-empty-list-widget.c:61
+msgid "Good job!"
+msgstr "Szép munka!"
+
+#: src/gui/gtd-empty-list-widget.c:62
+msgid "Meanwhile, spread the love"
+msgstr "Addig is, hirdesse az igét"
+
+#: src/gui/gtd-empty-list-widget.c:63
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:78
+msgid "Working hard is always rewarded"
+msgstr "A nehéz munka mindig megtérül"
+
+#: src/gui/gtd-empty-list-widget.c:74
+msgid "No tasks found"
+msgstr "Nincsenek feladatok"
+
+#: src/gui/gtd-empty-list-widget.c:75
+msgid "You can add tasks using the <b>+</b> above"
+msgstr "Feladatokat a fenti <b>+</b>-szal adhat hozzá"
+
+#: src/gui/gtd-initial-setup-window.ui:20
+msgid "Welcome"
+msgstr "Üdvözöljük"
+
+#: src/gui/gtd-initial-setup-window.ui:31
+msgid "Log in to online accounts to access your tasks"
+msgstr "Jelentkezzen be online fiókokba a feladatai eléréséhez"
+
+#: src/gui/gtd-initial-setup-window.ui:53
+msgid "To Do Setup"
+msgstr "A Tennivalók beállítása"
+
+#: src/gui/gtd-initial-setup-window.ui:56 src/gui/gtd-provider-popover.ui:43
+msgid "_Cancel"
+msgstr "_Mégse"
+
+#: src/gui/gtd-initial-setup-window.ui:65
+msgid "_Done"
+msgstr "_Kész"
+
+#. Translators: %1$s is the task list name, %2$s is the provider name
+#: src/gui/gtd-new-task-row.c:90
+#, c-format
+msgid "%1$s \t <small>%2$s</small>"
+msgstr "%1$s \t <small>%2$s</small>"
+
+#: src/gui/gtd-new-task-row.c:127
+msgid "An error occurred while creating a task"
+msgstr "Hiba történt egy feladat létrehozásakor"
+
+#: src/gui/gtd-new-task-row.ui:13
+msgid "New task…"
+msgstr "Új feladat…"
+
+#: src/gui/gtd-plugin-dialog-row.c:97
+msgid "Error loading extension"
+msgstr "Hiba a bővítmény betöltésekor"
+
+#: src/gui/gtd-plugin-dialog-row.c:97
+msgid "Error unloading extension"
+msgstr "Hiba a bővítmény eltávolításakor"
+
+#: src/gui/gtd-plugin-dialog.ui:58
+msgid "Extensions"
+msgstr "Bővítmények"
+
+#: src/gui/gtd-plugin-dialog.ui:96
+msgid "No extensions found"
+msgstr "Nem találhatók bővítmények"
+
+#: src/gui/gtd-provider-popover.c:97
+msgid "An error occurred while creating a task list"
+msgstr "Hiba történt egy feladatlista létrehozásakor"
+
+#: src/gui/gtd-provider-popover.ui:26
+msgid "Create _List"
+msgstr "_Lista létrehozása"
+
+#: src/gui/gtd-provider-popover.ui:56
+msgid "List Name"
+msgstr "Listanév"
+
+#: src/gui/gtd-provider-popover.ui:133
+msgid "Select a storage location"
+msgstr "Válassza ki a tárolási helyet"
+
+#: src/gui/gtd-provider-row.ui:60
+msgid "Off"
+msgstr "Ki"
+
+#: src/gui/gtd-provider-selector.ui:19
+msgid "Click to add a new Google account"
+msgstr "Kattintson egy új Google fiók hozzáadásához"
+
+#: src/gui/gtd-provider-selector.ui:35
+msgid "Google"
+msgstr "Google"
+
+#: src/gui/gtd-provider-selector.ui:45
+msgid "Click to add a new ownCloud account"
+msgstr "Kattintson egy új ownCloud fiók hozzáadásához"
+
+#: src/gui/gtd-provider-selector.ui:61
+msgid "ownCloud"
+msgstr "ownCloud"
+
+#: src/gui/gtd-provider-selector.ui:71
+msgid "Click to add a new Microsoft Exchange account"
+msgstr "Kattintson egy új Microsoft Exchange fiók hozzáadásához"
+
+#: src/gui/gtd-provider-selector.ui:87
+msgid "Microsoft Exchange"
+msgstr "Microsoft Exchange"
+
+#: src/gui/gtd-provider-selector.ui:100
+msgid "Or you can just store your tasks on this computer"
+msgstr "Vagy tárolhatja a feladatait ezen a számítógépen"
+
+#: src/gui/gtd-task-list-view.c:459
+#, c-format
+msgid "Task <b>%s</b> removed"
+msgstr "A feladat (<b>%s</b>) törölve"
+
+#: src/gui/gtd-task-list-view.c:478
+#: src/plugins/task-lists-workspace/gtd-sidebar.c:422
+msgid "Undo"
+msgstr "Visszavonás"
+
+#: src/gui/gtd-task-row.c:130
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:152
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:124
+#: src/plugins/today-panel/gtd-panel-today.c:177
+#: src/plugins/today-panel/gtd-panel-today.c:295
+#: src/plugins/welcome/gtd-welcome-workspace.ui:57
+msgid "Today"
+msgstr "Ma"
+
+#: src/gui/gtd-task-row.c:134
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:156
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:128
+msgid "Tomorrow"
+msgstr "Holnap"
+
+#: src/gui/gtd-task-row.c:138
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:120
+msgid "Yesterday"
+msgstr "Tegnap"
+
+#: src/gui/gtd-window.c:112
+msgid ""
+"This is a development build of To Do. You may experience errors, wrong "
+"behaviors, and data loss."
+msgstr ""
+"Ez a Tennivalók fejlesztői verziója. Hibákat, hibás viselkedéseket és "
+"adatvesztést tapasztalhat."
+
+#: src/gui/gtd-window.c:424
+msgid "Details"
+msgstr "Részletek"
+
+#: src/gui/gtd-window.ui:158
+msgid "_About To Do"
+msgstr "A Tennivalók _névjegye"
 
 #. Translators: This message will never be used with '1 day ago'
 #. * but the singular form is required because some languages do not
 #. * have plurals, some languages reuse the singular form for numbers
 #. * like 21, 31, 41, etc.
 #.
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:125
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:116
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:125
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:116
 #, c-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
 msgstr[0] "%d napja"
 msgstr[1] "%d napja"
 
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:120
-#: src/task-list-view/gtd-task-row.c:146
-msgid "Yesterday"
-msgstr "Tegnap"
-
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
-#: plugins/next-week-panel/gtd-next-week-panel.c:125
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:124
-#: plugins/score/score/__init__.py:101
-#: plugins/today-panel/gtd-panel-today.c:148
-#: plugins/today-panel/gtd-panel-today.c:264
-#: src/task-list-view/gtd-task-row.c:138
-msgid "Today"
-msgstr "Ma"
-
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
-#: plugins/next-week-panel/gtd-next-week-panel.c:129
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:128
-#: src/task-list-view/gtd-task-row.c:142
-msgid "Tomorrow"
-msgstr "Holnap"
-
-#: plugins/all-tasks-panel/gtd-all-tasks-panel.c:331
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:335
 msgid "All"
 msgstr "Összes"
 
-#: plugins/background/gtd-plugin-background.c:360
+#: src/plugins/background/gtd-plugin-background.c:238
 #, c-format
 msgid "%1$s and one more task"
 msgid_plural "%1$s and %2$d other tasks"
 msgstr[0] "%1$s és még egy feladat"
 msgstr[1] "%1$s és még %2$d feladat"
 
-#: plugins/background/gtd-plugin-background.c:464
+#: src/plugins/background/gtd-plugin-background.c:342
 #, c-format
 msgid "You have %d task for today"
 msgid_plural "You have %d tasks for today"
 msgstr[0] "%d feladata van mára"
 msgstr[1] "%d feladata van mára"
 
-#: plugins/background/org.gnome.todo.background.gschema.xml:6
+#: src/plugins/background/org.gnome.todo.background.gschema.xml:6
 msgid "Run To Do on startup"
 msgstr "A Tennivalók futtatása indításkor"
 
-#: plugins/background/org.gnome.todo.background.gschema.xml:7
+#: src/plugins/background/org.gnome.todo.background.gschema.xml:7
 msgid "Whether GNOME To Do should run on startup"
 msgstr "Fusson-e a GNOME Tennivalók a rendszer indításakor"
 
-#: plugins/background/org.gnome.todo.background.gschema.xml:11
+#: src/plugins/background/org.gnome.todo.background.gschema.xml:11
 msgid "Show notifications on startup"
 msgstr "Értesítések megjelenítése indításkor"
 
-#: plugins/background/org.gnome.todo.background.gschema.xml:12
+#: src/plugins/background/org.gnome.todo.background.gschema.xml:12
 msgid "Whether GNOME To Do should show notifications or not"
 msgstr "A GNOME Tennivalók jelenítsen-e meg értesítéseket"
 
-#: plugins/background/ui/preferences.ui:39
+#: src/plugins/background/ui/preferences.ui:41
 msgid "Run on Startup"
 msgstr "Futtatás indításkor"
 
-#: plugins/background/ui/preferences.ui:50
+#: src/plugins/background/ui/preferences.ui:52
 msgid "Run To Do automatically when you log in"
 msgstr "A Tennivalók automatikus indítása bejelentkezéskor"
 
-#: plugins/background/ui/preferences.ui:96
+#: src/plugins/background/ui/preferences.ui:101
 msgid "Show Notifications"
 msgstr "Értesítések megjelenítése"
 
-#: plugins/background/ui/preferences.ui:107
+#: src/plugins/background/ui/preferences.ui:112
 msgid "When To Do runs, show a startup notification"
 msgstr "Amikor elindul a Tennivalók, akkor indítási értesítést jelenít meg"
 
-#: plugins/eds/gtd-plugin-eds.c:201
+#: src/plugins/eds/gtd-plugin-eds.c:181
 msgid "Error loading GNOME Online Accounts"
 msgstr "Hiba a GNOME Online fiókok betöltése során"
 
-#: plugins/eds/gtd-provider-eds.c:172
+#: src/plugins/eds/gtd-provider-eds.c:190
 msgid "Failed to connect to task list"
 msgstr "Nem sikerült a kapcsolódás a feladatlistához"
 
-#: plugins/eds/gtd-provider-eds.c:320
-msgid "An error occurred while creating a task"
-msgstr "Hiba történt egy feladat létrehozásakor"
-
-#: plugins/eds/gtd-provider-eds.c:365
-msgid "An error occurred while modifying a task"
-msgstr "Hiba történt egy feladat módosításakor"
-
-#: plugins/eds/gtd-provider-eds.c:386
-msgid "An error occurred while removing a task"
-msgstr "Hiba történt egy feladat eltávolításakor"
-
-#: plugins/eds/gtd-provider-eds.c:404
-msgid "An error occurred while creating a task list"
-msgstr "Hiba történt egy feladatlista létrehozásakor"
-
-#: plugins/eds/gtd-provider-eds.c:426 plugins/eds/gtd-provider-eds.c:449
-msgid "An error occurred while modifying a task list"
-msgstr "Hiba történt egy feladatlista módosításakor"
-
-#: plugins/eds/gtd-provider-local.c:50
+#: src/plugins/eds/gtd-provider-local.c:50
 msgid "On This Computer"
 msgstr "Ezen a számítógépen"
 
-#: plugins/eds/gtd-provider-local.c:62
+#: src/plugins/eds/gtd-provider-local.c:62
 msgid "Local"
 msgstr "Helyi"
 
-#: plugins/eds/gtd-task-list-eds.c:499 plugins/eds/gtd-task-list-eds.c:526
-#: plugins/eds/gtd-task-list-eds.c:550
+#: src/plugins/eds/gtd-task-list-eds.c:499
+#: src/plugins/eds/gtd-task-list-eds.c:526
+#: src/plugins/eds/gtd-task-list-eds.c:550
 msgid "Error fetching tasks from list"
 msgstr "Nem sikerült a feladatok lekérése a listából"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:121
-#: plugins/today-panel/gtd-panel-today.c:139
+#: src/plugins/eds/gtd-task-list-eds.c:932
+#: src/plugins/inbox-panel/gtd-inbox-panel.c:111
+#: src/plugins/welcome/gtd-welcome-workspace.ui:48
+msgid "Inbox"
+msgstr "Beérkezett üzenetek"
+
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:148
+#: src/plugins/today-panel/gtd-panel-today.c:168
 msgid "Overdue"
 msgstr "Megkésett"
 
-#: plugins/next-week-panel/gtd-next-week-panel.c:357
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:388
 msgid "Next 7 Days"
 msgstr "Következő 7 nap"
 
-#: plugins/scheduled-panel/gtd-panel-scheduled.c:343
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:56
+msgid "Did you drink some water today?"
+msgstr "Ivott-e ma vizet?"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:57
+#| msgid "You have %d task for today"
+#| msgid_plural "You have %d tasks for today"
+msgid "What are your goals for today?"
+msgstr "Mik a mai céljai?"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:58
+msgid "Can you let your creativity flow?"
+msgstr "Szabadjára tudja engedni a kreativitását?"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:59
+msgid "How are you feeling right now?"
+msgstr "Hogyan érzi most magát?"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:60
+msgid "At what point is it good enough?"
+msgstr "Mikor lesz elég jó?"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:65
+msgid "Remember to breathe. Good. Don't stop."
+msgstr "Ne felejtsen el lélegezni. Jó. Ne hagyja abba."
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:66
+msgid "Don't forget to drink some water"
+msgstr "Ne felejtsen el vizet inni"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:67
+msgid "Remember to take some time off"
+msgstr "Pihenjen egy kicsit"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:68
+msgid "Eat fruits if you can 🍐️"
+msgstr "Egyen gyümölcsöt, ha tud 🍐️"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:69
+msgid "Take care of yourself"
+msgstr "Vigyázzon magára"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:70
+msgid "Remember to have some fun"
+msgstr "Szórakozzon egy kicsit"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:71
+msgid "You're doing great"
+msgstr "Nagyszerűen csinálja"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:76
+msgid "Smile, breathe and go slowly"
+msgstr "Mosolyogjon, lélegezzen és lassítson"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:77
+msgid "Wherever you go, there you are"
+msgstr "Ahová megy, pont ott van"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:79
+msgid "Keep calm"
+msgstr "Maradjon nyugodt"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:80
+#| msgid "You made it!"
+msgid "You can do it"
+msgstr "Meg tudja csinálni"
+
+#: src/plugins/peace/gtd-peace-omni-area-addin.c:81
+#| msgid "Meanwhile, spread the love"
+msgid "Meanwhile, spread the love ♥️"
+msgstr "Addig is, hirdesse az igét ♥️"
+
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:345
 msgid "Scheduled"
 msgstr "Ütemezett"
 
-#: plugins/score/score/__init__.py:90
-msgid "No task completed today"
-msgstr "Nincs ma befejezett feladat"
+#: src/plugins/task-lists-workspace/gtd-sidebar.c:419
+#, c-format
+msgid "Task list <b>%s</b> removed"
+msgstr "A feladatlista (<b>%s</b>) törölve"
 
-#: plugins/todoist/gtd-plugin-todoist.c:109
+#: src/plugins/task-lists-workspace/gtd-sidebar-provider-row.ui:69
+msgid "Loading…"
+msgstr "Betöltés…"
+
+#. Translators: 'archived' as in 'archived task lists'
+#: src/plugins/task-lists-workspace/gtd-sidebar.ui:94
+msgid "Archived"
+msgstr "Archiválva"
+
+#: src/plugins/task-lists-workspace/gtd-sidebar.ui:146
+msgid "No archived lists"
+msgstr "Nincsenek archivált listák"
+
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.c:208
+msgid "Unarchive"
+msgstr "Archiválás megszüntetése"
+
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.c:208
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:48
+msgid "Archive"
+msgstr "Archiválás"
+
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.c:233
+#| msgid "An error occurred while creating a task"
+msgid "An error occurred while updating a task"
+msgstr "Hiba történt egy feladat frissítésekor"
+
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:33
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:77
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:92
+msgid "Rename"
+msgstr "Átnevezés"
+
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:39
+#: src/plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
+msgid "Clear completed tasks…"
+msgstr "Befejezett feladatok törlése…"
+
+#: src/plugins/task-lists-workspace/gtd-task-list-panel.ui:54
+msgid "Delete"
+msgstr "Törlés"
+
+#: src/plugins/task-lists-workspace/gtd-task-lists-workspace.c:303
+msgid "Task Lists"
+msgstr "Feladatlisták"
+
+#: src/plugins/task-lists-workspace/gtd-task-lists-workspace.ui:43
+msgid "New List"
+msgstr "Új lista"
+
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:94
+#, c-format
+#| msgid "You have %d task for today"
+#| msgid_plural "You have %d tasks for today"
+msgid "%d task for today"
+msgid_plural "%d tasks for today"
+msgstr[0] "%d feladat van mára"
+msgstr[1] "%d feladat van mára"
+
+#: src/plugins/today-panel/gtd-today-omni-area-addin.c:109
+#| msgid "No task completed today"
+msgid "No tasks scheduled for today"
+msgstr "Nincsenek mára ütemezett feladatok"
+
+#: src/plugins/todoist/gtd-plugin-todoist.c:109
 msgid "GNOME To Do cannot connect to Todoist due to network issue"
 msgstr ""
 "A GNOME Tennivalók nem tud kapcsolódni a Todoisthez hálózati probléma miatt"
 
-#: plugins/todoist/gtd-plugin-todoist.c:110
+#: src/plugins/todoist/gtd-plugin-todoist.c:110
 msgid ""
 "Not able to communicate with Todoist. Please check your internet "
 "connectivity."
 msgstr ""
 "Nem lehet kommunikálni a Todoisttel. Ellenőrizze az internetkapcsolatot."
 
-#: plugins/todoist/gtd-provider-todoist.c:213
+#: src/plugins/todoist/gtd-provider-todoist.c:213
 msgid "Error fetching Todoist account key"
 msgstr "Hiba a Todoist fiók kulcsának lekérésekor"
 
-#: plugins/todoist/gtd-provider-todoist.c:214
+#: src/plugins/todoist/gtd-provider-todoist.c:214
 msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Ellenőrizze, hogy a Todoist fiók helyesen van beállítva."
 
-#: plugins/todoist/gtd-provider-todoist.c:555
+#: src/plugins/todoist/gtd-provider-todoist.c:555
 #, c-format
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
@@ -307,7 +644,7 @@ msgstr ""
 "A GNOME Tennivalók nem rendelkezik a szükséges jogosultságokkal ezen művelet "
 "végrehajtásához: %s"
 
-#: plugins/todoist/gtd-provider-todoist.c:563
+#: src/plugins/todoist/gtd-provider-todoist.c:563
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
@@ -315,54 +652,54 @@ msgstr ""
 "Érvénytelen válasz fogadva a Todoist kiszolgálóktól. Töltse újra a GNOME "
 "Tennivalókat."
 
-#: plugins/todoist/gtd-provider-todoist.c:850
+#: src/plugins/todoist/gtd-provider-todoist.c:850
 msgid "An error occurred while updating a Todoist task"
 msgstr "Hiba történt egy Todoist feladat frissítésekor"
 
-#: plugins/todoist/gtd-provider-todoist.c:965
+#: src/plugins/todoist/gtd-provider-todoist.c:965
 msgid "An error occurred while retrieving Todoist data"
 msgstr "Hiba történt a Todoist adatok lekérésekor"
 
-#: plugins/todoist/gtd-provider-todoist.c:1040
+#: src/plugins/todoist/gtd-provider-todoist.c:1040
 msgid "An error occurred while updating Todoist"
 msgstr "Hiba történt a Todoist frissítésekor"
 
-#: plugins/todoist/gtd-provider-todoist.c:1100
+#: src/plugins/todoist/gtd-provider-todoist.c:1100
 msgid "Todoist"
 msgstr "Todoist"
 
-#: plugins/todoist/gtd-provider-todoist.c:1411
+#: src/plugins/todoist/gtd-provider-todoist.c:1411
 #, c-format
 msgid "Todoist: %s"
 msgstr "Todoist: %s"
 
-#: plugins/todoist/ui/preferences.ui:65
+#: src/plugins/todoist/ui/preferences.ui:65
 msgid "No Todoist accounts found"
 msgstr "Nincs Todoist fiók"
 
-#: plugins/todoist/ui/preferences.ui:74
+#: src/plugins/todoist/ui/preferences.ui:74
 msgid "Add a Todoist account"
 msgstr "Todoist fiók hozzáadása"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:87
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:124
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:87
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:124
 msgid "Cannot create Todo.txt file"
 msgstr "Nem hozható létre a Todo.txt fájl"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:161
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:161
 msgid "Select a Todo.txt-formatted file:"
 msgstr "Válasszon egy Todo.txt formátumú fájlt:"
 
 #. Filechooser
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:165
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:165
 msgid "Select a file"
 msgstr "Válasszon egy fájlt"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:191
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:191
 msgid "Error opening Todo.txt file"
 msgstr "Hiba a Todo.txt fájl megnyitásakor"
 
-#: plugins/todo-txt/gtd-plugin-todo-txt.c:201
+#: src/plugins/todo-txt/gtd-plugin-todo-txt.c:201
 msgid ""
 "<b>Warning!</b> Todo.txt support is experimental and unstable. You may "
 "experience instability, errors and eventually data loss. It is not "
@@ -372,284 +709,73 @@ msgstr ""
 "Instabilitást, hibát és adatvesztést tapasztalhat. A Todo.txt integráció "
 "használata éles rendszereken nem ajánlott."
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:574
+#: src/plugins/todo-txt/gtd-provider-todo-txt.c:574
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
 msgstr "Hiba a fájlfigyelő megnyitásakor. A Todo.txt nem lesz figyelve"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:643
+#: src/plugins/todo-txt/gtd-provider-todo-txt.c:643
 msgid "Todo.txt"
 msgstr "Todo.txt"
 
-#: plugins/todo-txt/gtd-provider-todo-txt.c:655
+#: src/plugins/todo-txt/gtd-provider-todo-txt.c:655
 msgid "On the Todo.txt file"
 msgstr "A Todo.txt fájlról"
 
-#: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:6
+#: src/plugins/todo-txt/org.gnome.todo.txt.gschema.xml:6
 msgid "Todo.txt File"
 msgstr "Todo.txt fájl"
 
-#: plugins/todo-txt/org.gnome.todo.txt.gschema.xml:7
+#: src/plugins/todo-txt/org.gnome.todo.txt.gschema.xml:7
 msgid "Source of the Todo.txt file"
 msgstr "A Todo.txt fájl forrása"
 
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:112
+#: src/plugins/unscheduled-panel/unscheduled-panel/__init__.py:41
+#: src/plugins/unscheduled-panel/unscheduled-panel/__init__.py:112
 msgid "Unscheduled"
 msgstr "Nem ütemezett"
 
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:62
-#: src/gtd-task-list-panel.ui:32
-msgid "Clear completed tasks…"
-msgstr "Befejezett feladatok törlése…"
-
 #. Translators: 'Unscheduled' as in 'Unscheduled tasks'
-#: plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
+#: src/plugins/unscheduled-panel/unscheduled-panel/__init__.py:115
 #, python-format
 msgid "Unscheduled (%d)"
 msgstr "Nem ütemezett (%d)"
 
-#: src/gtd-application.c:72
-msgid "Quit GNOME To Do"
-msgstr "Kilépés a GNOME Tennivalókból"
-
-#: src/gtd-application.c:73
-msgid "Enable debug messages"
-msgstr "Hibakeresési üzenetek engedélyezése"
-
-#: src/gtd-application.c:143
-msgid "Copyright © 2015–2018 The To Do authors"
-msgstr "Copyright © 2015–2018 A Tennivalók szerzői"
-
-#: src/gtd-application.c:148
-msgid "translator-credits"
-msgstr "Meskó Balázs <mesko.balazs at fsf dot hu>"
-
-#: src/gtd-initial-setup-window.ui:20
-msgid "Welcome"
-msgstr "Üdvözöljük"
-
-#: src/gtd-initial-setup-window.ui:31
-msgid "Log in to online accounts to access your tasks"
-msgstr "Jelentkezzen be online fiókokba a feladatai eléréséhez"
-
-#: src/gtd-initial-setup-window.ui:53
-msgid "To Do Setup"
-msgstr "A Tennivalók beállítása"
-
-#: src/gtd-initial-setup-window.ui:56 src/gtd-window.ui:95
-#: src/provider/gtd-provider-popover.ui:40
-msgid "_Cancel"
-msgstr "_Mégse"
-
-#: src/gtd-initial-setup-window.ui:65
-msgid "_Done"
-msgstr "_Kész"
-
-#: src/gtd-plugin-dialog-row.c:97
-msgid "Error loading extension"
-msgstr "Hiba a bővítmény betöltésekor"
-
-#: src/gtd-plugin-dialog-row.c:97
-msgid "Error unloading extension"
-msgstr "Hiba a bővítmény eltávolításakor"
-
-#: src/gtd-plugin-dialog.ui:59 src/gtd-window.ui:143
-msgid "Extensions"
-msgstr "Bővítmények"
-
-#: src/gtd-plugin-dialog.ui:90
-msgid "No extensions found"
-msgstr "Nem találhatók bővítmények"
-
-#: src/gtd-task-list-panel.c:199
-msgid "Unarchive"
-msgstr "Archiválás megszüntetése"
-
-#: src/gtd-task-list-panel.c:199 src/gtd-task-list-panel.ui:41
-msgid "Archive"
-msgstr "Archiválás"
-
-#: src/gtd-task-list-panel.ui:26 src/gtd-task-list-panel.ui:61
-#: src/gtd-task-list-panel.ui:77
-msgid "Rename"
-msgstr "Átnevezés"
-
-#: src/gtd-task-list-panel.ui:47
-msgid "Delete"
-msgstr "Törlés"
-
-#: src/gtd-window.c:110
-msgid ""
-"This is a development build of To Do. You may experience errors, wrong "
-"behaviors, and data loss."
-msgstr ""
-"Ez a Tennivalók fejlesztői verziója. Hibákat, hibás viselkedéseket és "
-"adatvesztést tapasztalhat."
-
-#: src/gtd-window.c:463
-msgid "Details"
-msgstr "Részletek"
-
-#: src/gtd-window.c:769
-msgid "Click a task list to select"
-msgstr "Válasszon egy feladatlistát"
-
-#: src/gtd-window.ui:50
-msgid "New List"
-msgstr "Új lista"
-
-#: src/gtd-window.ui:149
-msgid "_About To Do"
-msgstr "A Tennivalók _névjegye"
-
-#: src/provider/gtd-provider-popover.ui:23
-msgid "Create _List"
-msgstr "_Lista létrehozása"
-
-#: src/provider/gtd-provider-popover.ui:53
-msgid "List Name"
-msgstr "Listanév"
-
-#: src/provider/gtd-provider-popover.ui:130
-msgid "Select a storage location"
-msgstr "Válassza ki a tárolási helyet"
-
-#: src/provider/gtd-provider-row.ui:57
-msgid "Off"
-msgstr "Ki"
-
-#: src/provider/gtd-provider-selector.ui:19
-msgid "Click to add a new Google account"
-msgstr "Kattintson egy új Google fiók hozzáadásához"
-
-#: src/provider/gtd-provider-selector.ui:32
-msgid "Google"
-msgstr "Google"
-
-#: src/provider/gtd-provider-selector.ui:42
-msgid "Click to add a new ownCloud account"
-msgstr "Kattintson egy új ownCloud fiók hozzáadásához"
-
-#: src/provider/gtd-provider-selector.ui:55
-msgid "ownCloud"
-msgstr "ownCloud"
-
-#: src/provider/gtd-provider-selector.ui:65
-msgid "Click to add a new Microsoft Exchange account"
-msgstr "Kattintson egy új Microsoft Exchange fiók hozzáadásához"
-
-#: src/provider/gtd-provider-selector.ui:78
-msgid "Microsoft Exchange"
-msgstr "Microsoft Exchange"
-
-#: src/provider/gtd-provider-selector.ui:91
-msgid "Or you can just store your tasks on this computer"
-msgstr "Vagy tárolhatja a feladatait ezen a számítógépen"
-
-#: src/sidebar/gtd-sidebar.c:329
+#: src/plugins/welcome/gtd-welcome-workspace.c:68
 #, c-format
-msgid "Task list <b>%s</b> removed"
-msgstr "A feladatlista (<b>%s</b>) törölve"
+msgid "Good Morning, %s"
+msgstr "Jó reggelt, %s!"
 
-#: src/sidebar/gtd-sidebar.c:332 src/task-list-view/gtd-task-list-view.c:460
-msgid "Undo"
-msgstr "Visszavonás"
-
-#: src/sidebar/gtd-sidebar-provider-row.ui:69
-msgid "Loading…"
-msgstr "Betöltés…"
-
-#. Translators: 'archived' as in 'archived task lists'
-#: src/sidebar/gtd-sidebar.ui:52
-#| msgid "Archive"
-msgid "Archived"
-msgstr "Archiválva"
-
-#: src/sidebar/gtd-sidebar.ui:103
-msgid "No archived lists"
-msgstr "Nincsenek archivált listák"
-
-#: src/task-list-view/gtd-edit-pane.ui:16
-msgid "D_ue Date"
-msgstr "_Esedékesség"
-
-#: src/task-list-view/gtd-edit-pane.ui:30
-msgid "_Today"
-msgstr "_Ma"
-
-#: src/task-list-view/gtd-edit-pane.ui:39
-msgid "To_morrow"
-msgstr "_Holnap"
-
-#: src/task-list-view/gtd-edit-pane.ui:75
-msgid "_Notes"
-msgstr "_Jegyzetek"
-
-#: src/task-list-view/gtd-edit-pane.ui:117
-msgid "_Delete"
-msgstr "_Törlés"
-
-#: src/task-list-view/gtd-edit-pane.ui:151
-msgctxt "taskdate"
-msgid "None"
-msgstr "Nincs"
-
-#. Translators: %1$s is the task list name, %2$s is the provider name
-#: src/task-list-view/gtd-new-task-row.c:91
+#: src/plugins/welcome/gtd-welcome-workspace.c:70
 #, c-format
-msgid "%1$s \t <small>%2$s</small>"
-msgstr "%1$s \t <small>%2$s</small>"
+msgid "Good Afternoon, %s"
+msgstr "Jó napot, %s!"
 
-#: src/task-list-view/gtd-new-task-row.ui:14
-msgid "New task…"
-msgstr "Új feladat…"
-
-#: src/task-list-view/gtd-task-list-view.c:441
+#: src/plugins/welcome/gtd-welcome-workspace.c:72
 #, c-format
-msgid "Task <b>%s</b> removed"
-msgstr "A feladat (<b>%s</b>) törölve"
+msgid "Good Evening, %s"
+msgstr "Jó estét, %s!"
 
-#: src/widgets/gtd-empty-list-widget.c:51
-msgid "No more tasks left"
-msgstr "Nincs több feladat"
+#: src/plugins/welcome/gtd-welcome-workspace.c:198
+msgid "Home"
+msgstr "Kezdőlap"
 
-#: src/widgets/gtd-empty-list-widget.c:52
-msgid "Nothing else to do here"
-msgstr "Nincs semmi teendő"
+#~ msgid "The current list selector"
+#~ msgstr "Az aktuális listaválasztó"
 
-#: src/widgets/gtd-empty-list-widget.c:53
-msgid "You made it!"
-msgstr "Megcsinálta!"
+#~ msgid "The current list selector. Can be “grid” or “list”."
+#~ msgstr ""
+#~ "Az aktuális listaválasztó. Lehetséges értékek: „grid” (rács) vagy "
+#~ "„list” (lista)."
 
-#: src/widgets/gtd-empty-list-widget.c:54
-msgid "Looks like there’s nothing else left here"
-msgstr "Úgy néz ki, nem maradt hátra semmi sem"
+#~ msgid "An error occurred while modifying a task"
+#~ msgstr "Hiba történt egy feladat módosításakor"
 
-#: src/widgets/gtd-empty-list-widget.c:59
-msgid "Get some rest now"
-msgstr "Most pihenjen egyet"
+#~ msgid "An error occurred while removing a task"
+#~ msgstr "Hiba történt egy feladat eltávolításakor"
 
-#: src/widgets/gtd-empty-list-widget.c:60
-msgid "Enjoy the rest of your day"
-msgstr "Élvezze a nap hátralévő részét"
+#~ msgid "An error occurred while modifying a task list"
+#~ msgstr "Hiba történt egy feladatlista módosításakor"
 
-#: src/widgets/gtd-empty-list-widget.c:61
-msgid "Good job!"
-msgstr "Szép munka!"
-
-#: src/widgets/gtd-empty-list-widget.c:62
-msgid "Meanwhile, spread the love"
-msgstr "Addig is, hirdesse az igét"
-
-#: src/widgets/gtd-empty-list-widget.c:63
-msgid "Working hard is always rewarded"
-msgstr "A nehéz munka mindig megtérül"
-
-#: src/widgets/gtd-empty-list-widget.c:74
-msgid "No tasks found"
-msgstr "Nincsenek feladatok"
-
-#: src/widgets/gtd-empty-list-widget.c:75
-msgid "You can add tasks using the <b>+</b> above"
-msgstr "Feladatokat a fenti <b>+</b>-szal adhat hozzá"
+#~ msgid "Click a task list to select"
+#~ msgstr "Válasszon egy feladatlistát"
