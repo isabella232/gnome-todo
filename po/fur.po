@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2019-02-22 08:34+0000\n"
-"PO-Revision-Date: 2019-02-26 21:25+0100\n"
+"POT-Creation-Date: 2020-09-12 12:53+0000\n"
+"PO-Revision-Date: 2020-09-22 09:47+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.4.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in:7
@@ -77,11 +77,6 @@ msgstr "_Jes"
 #: data/org.gnome.Todo.desktop.in:4
 msgid "Manage your personal tasks"
 msgstr "Gjestion des propriis ativitâts"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Todo.desktop.in:7
-msgid "org.gnome.Todo"
-msgstr "org.gnome.Todo"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Todo.desktop.in:13
@@ -580,7 +575,7 @@ msgstr "Completade!"
 
 #: src/gtd-empty-list-widget.c:54
 msgid "Looks like there’s nothing else left here"
-msgstr "Al semee che nol sedi restât nie altri achì"
+msgstr "Al somee che nol sedi restât nie altri achì"
 
 #: src/gtd-empty-list-widget.c:59
 msgid "Get some rest now"
@@ -688,6 +683,9 @@ msgstr "Gjave listis di ativitâts"
 #: src/views/gtd-list-selector-panel.c:709
 msgid "Clear completed tasks"
 msgstr "Plate ativitâts completadis"
+
+#~ msgid "org.gnome.Todo"
+#~ msgstr "org.gnome.Todo"
 
 #~ msgid "Error creating new task list"
 #~ msgstr "Erôr tal creâ une gnove liste di ativitâts"
