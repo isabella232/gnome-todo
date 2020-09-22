@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
 "POT-Creation-Date: 2020-09-12 12:53+0000\n"
-"PO-Revision-Date: 2020-09-22 09:49+0200\n"
+"PO-Revision-Date: 2020-09-22 10:13+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
@@ -491,8 +491,6 @@ msgid "At what point is it good enough?"
 msgstr "A ce pont isal vonde ben?"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:65
-#, fuzzy
-#| msgid "Remember to breath. Good. Don't stop."
 msgid "Remember to breathe. Good. Don't stop."
 msgstr "Visiti di respirâ. Ben. No sta fermâti."
 
