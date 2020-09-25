@@ -60,7 +60,7 @@ gtd_animatable_default_init (GtdAnimatableInterface *iface)
  */
 GParamSpec *
 gtd_animatable_find_property (GtdAnimatable *animatable,
-                                  const gchar       *property_name)
+                              const gchar   *property_name)
 {
   GtdAnimatableInterface *iface;
 
@@ -89,8 +89,8 @@ gtd_animatable_find_property (GtdAnimatable *animatable,
  */
 void
 gtd_animatable_get_initial_state (GtdAnimatable *animatable,
-                                      const gchar       *property_name,
-                                      GValue            *value)
+                                  const gchar   *property_name,
+                                  GValue        *value)
 {
   GtdAnimatableInterface *iface;
 
