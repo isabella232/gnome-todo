@@ -55,7 +55,6 @@ typedef gdouble (* GtdTimelineProgressFunc)     (GtdTimeline *timeline,
  * @completed: class handler for the #GtdTimeline::completed signal
  * @paused: class handler for the #GtdTimeline::paused signal
  * @new_frame: class handler for the #GtdTimeline::new-frame signal
- * @marker_reached: class handler for the #GtdTimeline::marker-reached signal
  * @stopped: class handler for the #GtdTimeline::stopped signal
  *
  * The #GtdTimelineClass structure contains only private data
@@ -71,10 +70,6 @@ struct _GtdTimelineClass
   void               (*paused)         (GtdTimeline *timeline);
 
   void               (*new_frame)      (GtdTimeline *timeline,
-                                        gint             msecs);
-
-  void               (*marker_reached) (GtdTimeline *timeline,
-                                        const gchar     *marker_name,
                                         gint             msecs);
 
   void               (*stopped)        (GtdTimeline *timeline,
@@ -138,27 +133,6 @@ void                 gtd_timeline_set_delay                      (GtdTimeline   
 guint                gtd_timeline_get_delay                      (GtdTimeline          *timeline);
 
 guint                gtd_timeline_get_delta                      (GtdTimeline          *timeline);
-
-void                 gtd_timeline_add_marker                     (GtdTimeline          *timeline,
-                                                                  const gchar           *marker_name,
-                                                                  gdouble                progress);
-
-void                 gtd_timeline_add_marker_at_time             (GtdTimeline          *timeline,
-                                                                  const gchar          *marker_name,
-                                                                  guint                 msecs);
-
-void                 gtd_timeline_remove_marker                  (GtdTimeline          *timeline,
-                                                                  const gchar          *marker_name);
-
-gchar **             gtd_timeline_list_markers                   (GtdTimeline          *timeline,
-                                                                  gint                  msecs,
-                                                                  gsize                *n_markers);
-
-gboolean             gtd_timeline_has_marker                     (GtdTimeline          *timeline,
-                                                                  const gchar          *marker_name);
-
-void                 gtd_timeline_advance_to_marker              (GtdTimeline          *timeline,
-                                                                  const gchar          *marker_name);
 
 void                 gtd_timeline_set_progress_func              (GtdTimeline          *timeline,
                                                                   GtdTimelineProgressFunc func,

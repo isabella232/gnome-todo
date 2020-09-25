@@ -105,8 +105,6 @@ typedef struct
   /* The elapsed time since the last frame was fired */
   gint64 msecs_delta;
 
-  GHashTable *markers_by_name;
-
   /* Time we last advanced the elapsed time and showed a frame */
   gint64 last_frame_time;
 
@@ -175,7 +173,6 @@ enum
   STARTED,
   PAUSED,
   COMPLETED,
-  MARKER_REACHED,
   STOPPED,
 
   LAST_SIGNAL
@@ -189,91 +186,6 @@ static void maybe_remove_timeline (GtdTimeline *self);
 
 G_DEFINE_TYPE_WITH_PRIVATE (GtdTimeline, gtd_timeline, G_TYPE_OBJECT)
 
-
-static TimelineMarker *
-timeline_marker_new_time (const gchar *name,
-                          guint        msecs)
-{
-  TimelineMarker *marker = g_slice_new (TimelineMarker);
-
-  marker->name = g_strdup (name);
-  marker->quark = g_quark_from_string (marker->name);
-  marker->is_relative = FALSE;
-  marker->data.msecs = msecs;
-
-  return marker;
-}
-
-static TimelineMarker *
-timeline_marker_new_progress (const gchar *name,
-                              gdouble      progress)
-{
-  TimelineMarker *marker = g_slice_new (TimelineMarker);
-
-  marker->name = g_strdup (name);
-  marker->quark = g_quark_from_string (marker->name);
-  marker->is_relative = TRUE;
-  marker->data.progress = CLAMP (progress, 0.0, 1.0);
-
-  return marker;
-}
-
-static void
-timeline_marker_free (gpointer data)
-{
-  if (G_LIKELY (data))
-    {
-      TimelineMarker *marker = data;
-
-      g_free (marker->name);
-      g_slice_free (TimelineMarker, marker);
-    }
-}
-
-/*< private >
- * gtd_timeline_add_marker_internal:
- * @timeline: a #GtdTimeline
- * @marker: a TimelineMarker
- *
- * Adds @marker into the hash table of markers for @timeline.
- *
- * The TimelineMarker will either be added or, in case of collisions
- * with another existing marker, freed. In any case, this function
- * assumes the ownership of the passed @marker.
- */
-static inline void
-gtd_timeline_add_marker_internal (GtdTimeline    *self,
-                                  TimelineMarker *marker)
-{
-  GtdTimelinePrivate *priv = gtd_timeline_get_instance_private (self);
-  TimelineMarker *old_marker;
-
-  /* create the hash table that will hold the markers */
-  if (G_UNLIKELY (priv->markers_by_name == NULL))
-    priv->markers_by_name = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                                   NULL,
-                                                   timeline_marker_free);
-
-  old_marker = g_hash_table_lookup (priv->markers_by_name, marker->name);
-  if (old_marker != NULL)
-    {
-      guint msecs;
-
-      if (old_marker->is_relative)
-        msecs = old_marker->data.progress * priv->duration;
-      else
-        msecs = old_marker->data.msecs;
-
-      g_warning ("A marker named '%s' already exists at time %d",
-                 old_marker->name,
-                 msecs);
-      timeline_marker_free (marker);
-      return;
-    }
-
-  g_hash_table_insert (priv->markers_by_name, marker->name, marker);
-}
-
 static void
 on_widget_destroyed (GtdWidget    *widget,
                     GtdTimeline *self)
@@ -281,100 +193,6 @@ on_widget_destroyed (GtdWidget    *widget,
   GtdTimelinePrivate *priv = gtd_timeline_get_instance_private (self);
 
   priv->widget = NULL;
-}
-
-struct CheckIfMarkerHitClosure
-{
-  GtdTimeline *timeline;
-  GtdTimelineDirection direction;
-  gint new_time;
-  gint duration;
-  gint delta;
-};
-
-static gboolean
-have_passed_time (const struct CheckIfMarkerHitClosure *data,
-                  gint                                  msecs)
-{
-  /* Ignore markers that are outside the duration of the timeline */
-  if (msecs < 0 || msecs > data->duration)
-    return FALSE;
-
-  if (data->direction == GTD_TIMELINE_FORWARD)
-    {
-      /* We need to special case when a marker is added at the
-         beginning of the timeline */
-      if (msecs == 0 &&
-          data->delta > 0 &&
-          data->new_time - data->delta <= 0)
-        return TRUE;
-
-      /* Otherwise it's just a simple test if the time is in range of
-         the previous time and the new time */
-      return (msecs > data->new_time - data->delta &&
-              msecs <= data->new_time);
-    }
-  else
-    {
-      /* We need to special case when a marker is added at the
-         end of the timeline */
-      if (msecs == data->duration &&
-          data->delta > 0 &&
-          data->new_time + data->delta >= data->duration)
-        return TRUE;
-
-      /* Otherwise it's just a simple test if the time is in range of
-         the previous time and the new time */
-      return (msecs >= data->new_time &&
-              msecs < data->new_time + data->delta);
-    }
-}
-
-static void
-check_if_marker_hit (const gchar *name,
-                     TimelineMarker *marker,
-                     struct CheckIfMarkerHitClosure *data)
-{
-  gint msecs;
-
-  if (marker->is_relative)
-    msecs = (gdouble) data->duration * marker->data.progress;
-  else
-    msecs = marker->data.msecs;
-
-  if (have_passed_time (data, msecs))
-    {
-      GTD_TRACE_MSG ("Marker '%s' reached", name);
-
-      g_signal_emit (data->timeline, timeline_signals[MARKER_REACHED],
-                     marker->quark,
-                     name,
-                     msecs);
-    }
-}
-
-static void
-check_markers (GtdTimeline *self,
-               gint         delta)
-{
-  GtdTimelinePrivate *priv = gtd_timeline_get_instance_private (self);
-  struct CheckIfMarkerHitClosure data;
-
-  /* shortcircuit here if we don't have any marker installed */
-  if (priv->markers_by_name == NULL)
-    return;
-
-  /* store the details of the timeline so that changing them in a
-     marker signal handler won't affect which markers are hit */
-  data.timeline = self;
-  data.direction = priv->direction;
-  data.new_time = priv->elapsed_time;
-  data.duration = priv->duration;
-  data.delta = delta;
-
-  g_hash_table_foreach (priv->markers_by_name,
-                        (GHFunc) check_if_marker_hit,
-                        &data);
 }
 
 static void
@@ -448,8 +266,6 @@ gtd_timeline_do_frame (GtdTimeline *self)
     {
       /* Emit the signal */
       emit_frame_signal (self);
-      check_markers (self, priv->msecs_delta);
-
       g_object_unref (self);
 
       return priv->is_playing;
@@ -481,7 +297,6 @@ gtd_timeline_do_frame (GtdTimeline *self)
 
       /* Emit the signal */
       emit_frame_signal (self);
-      check_markers (self, elapsed_time_delta);
 
       /* Did the signal handler modify the elapsed time? */
       if (priv->elapsed_time != end_msecs)
@@ -557,14 +372,6 @@ gtd_timeline_do_frame (GtdTimeline *self)
           if (priv->direction != saved_direction)
             priv->elapsed_time = priv->duration - priv->elapsed_time;
 
-          /* If we have overflowed then we are changing the elapsed
-             time without emitting the new frame signal so we need to
-             check for markers again */
-          check_markers (self,
-                         priv->direction == GTD_TIMELINE_FORWARD
-                           ? priv->elapsed_time
-                           : priv->duration - priv->elapsed_time);
-
           g_object_unref (self);
           return TRUE;
         }
@@ -635,32 +442,6 @@ tick_timeline (GtdTimeline *self,
         }
     }
 }
-
-#if 0
-static void
-advance_timeline (GtdTimeline *self,
-                  gint64       tick_time)
-{
-  GtdTimelinePrivate *priv = gtd_timeline_get_instance_private (self);
-
-  g_object_ref (self);
-
-  GTD_TRACE_MSG ("Timeline [%p] advancing (cur: %ld, tot: %ld, tick_time: %lu)",
-                 self,
-                 (long) priv->elapsed_time,
-                 (long) priv->msecs_delta,
-                 (long) tick_time);
-
-  priv->msecs_delta = tick_time;
-  priv->is_playing = TRUE;
-
-  gtd_timeline_do_frame (self);
-
-  priv->is_playing = FALSE;
-
-  g_object_unref (self);
-}
-#endif
 
 static void
 on_frame_clock_after_paint_cb (GdkFrameClock *frame_clock,
@@ -899,9 +680,6 @@ gtd_timeline_finalize (GObject *object)
   GtdTimeline *self = GTD_TIMELINE (object);
   GtdTimelinePrivate *priv = gtd_timeline_get_instance_private (self);
 
-  if (priv->markers_by_name)
-    g_hash_table_destroy (priv->markers_by_name);
-
   if (priv->is_playing)
     maybe_remove_timeline (self);
 
@@ -1138,48 +916,7 @@ gtd_timeline_class_init (GtdTimelineClass *klass)
                   G_STRUCT_OFFSET (GtdTimelineClass, paused),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
-  /**
-   * GtdTimeline::marker-reached:
-   * @timeline: the #GtdTimeline which received the signal
-   * @marker_name: the name of the marker reached
-   * @msecs: the elapsed time
-   *
-   * The ::marker-reached signal is emitted each time a timeline
-   * reaches a marker set with
-   * gtd_timeline_add_marker_at_time(). This signal is detailed
-   * with the name of the marker as well, so it is possible to connect
-   * a callback to the ::marker-reached signal for a specific marker
-   * with:
-   *
-   * <informalexample><programlisting>
-   *   gtd_timeline_add_marker_at_time (self, "foo", 500);
-   *   gtd_timeline_add_marker_at_time (self, "bar", 750);
-   *
-   *   g_signal_connect (self, "marker-reached",
-   *                     G_CALLBACK (each_marker_reached), NULL);
-   *   g_signal_connect (self, "marker-reached::foo",
-   *                     G_CALLBACK (foo_marker_reached), NULL);
-   *   g_signal_connect (self, "marker-reached::bar",
-   *                     G_CALLBACK (bar_marker_reached), NULL);
-   * </programlisting></informalexample>
-   *
-   * In the example, the first callback will be invoked for both
-   * the "foo" and "bar" marker, while the second and third callbacks
-   * will be invoked for the "foo" or "bar" markers, respectively.
-   *
-   * Since: 0.8
-   */
-  timeline_signals[MARKER_REACHED] =
-    g_signal_new ("marker-reached",
-                  G_TYPE_FROM_CLASS (object_class),
-                  G_SIGNAL_RUN_LAST | G_SIGNAL_NO_RECURSE |
-                  G_SIGNAL_DETAILED | G_SIGNAL_NO_HOOKS,
-                  G_STRUCT_OFFSET (GtdTimelineClass, marker_reached),
-                  NULL, NULL, NULL,
-                  G_TYPE_NONE,
-                  2,
-                  G_TYPE_STRING,
-                  G_TYPE_INT);
+
   /**
    * GtdTimeline::stopped:
    * @timeline: the #GtdTimeline that emitted the signal
@@ -1727,289 +1464,6 @@ gtd_timeline_get_delta (GtdTimeline *self)
 
   priv = gtd_timeline_get_instance_private (self);
   return priv->msecs_delta;
-}
-
-/**
- * gtd_timeline_add_marker:
- * @timeline: a #GtdTimeline
- * @marker_name: the unique name for this marker
- * @progress: the normalized value of the position of the martke
- *
- * Adds a named marker that will be hit when the timeline has reached
- * the specified @progress.
- *
- * Markers are unique string identifiers for a given position on the
- * timeline. Once @timeline reaches the given @progress of its duration,
- * if will emit a ::marker-reached signal for each marker attached to
- * that particular point.
- *
- * A marker can be removed with gtd_timeline_remove_marker(). The
- * timeline can be advanced to a marker using
- * gtd_timeline_advance_to_marker().
- *
- * See also: gtd_timeline_add_marker_at_time()
- *
- * Since: 1.14
- */
-void
-gtd_timeline_add_marker (GtdTimeline *self,
-                         const gchar *marker_name,
-                         gdouble      progress)
-{
-  TimelineMarker *marker;
-
-  g_return_if_fail (GTD_IS_TIMELINE (self));
-  g_return_if_fail (marker_name != NULL);
-
-  marker = timeline_marker_new_progress (marker_name, progress);
-  gtd_timeline_add_marker_internal (self, marker);
-}
-
-/**
- * gtd_timeline_add_marker_at_time:
- * @timeline: a #GtdTimeline
- * @marker_name: the unique name for this marker
- * @msecs: position of the marker in milliseconds
- *
- * Adds a named marker that will be hit when the timeline has been
- * running for @msecs milliseconds.
- *
- * Markers are unique string identifiers for a given position on the
- * timeline. Once @timeline reaches the given @msecs, it will emit
- * a ::marker-reached signal for each marker attached to that position.
- *
- * A marker can be removed with gtd_timeline_remove_marker(). The
- * timeline can be advanced to a marker using
- * gtd_timeline_advance_to_marker().
- *
- * See also: gtd_timeline_add_marker()
- *
- * Since: 0.8
- */
-void
-gtd_timeline_add_marker_at_time (GtdTimeline *self,
-                                 const gchar *marker_name,
-                                 guint        msecs)
-{
-  TimelineMarker *marker;
-
-  g_return_if_fail (GTD_IS_TIMELINE (self));
-  g_return_if_fail (marker_name != NULL);
-  g_return_if_fail (msecs <= gtd_timeline_get_duration (self));
-
-  marker = timeline_marker_new_time (marker_name, msecs);
-  gtd_timeline_add_marker_internal (self, marker);
-}
-
-struct CollectMarkersClosure
-{
-  guint duration;
-  guint msecs;
-  GArray *markers;
-};
-
-static void
-collect_markers (const gchar                  *key,
-                 TimelineMarker               *marker,
-                 struct CollectMarkersClosure *data)
-{
-  guint msecs;
-
-  if (marker->is_relative)
-    msecs = marker->data.progress * data->duration;
-  else
-    msecs = marker->data.msecs;
-
-  if (msecs == data->msecs)
-    {
-      gchar *name_copy = g_strdup (key);
-      g_array_append_val (data->markers, name_copy);
-    }
-}
-
-/**
- * gtd_timeline_list_markers:
- * @timeline: a #GtdTimeline
- * @msecs: the time to check, or -1
- * @n_markers: the number of markers returned
- *
- * Retrieves the list of markers at time @msecs. If @msecs is a
- * negative integer, all the markers attached to @timeline will be
- * returned.
- *
- * Return value: (transfer full) (array zero-terminated=1 length=n_markers):
- *   a newly allocated, %NULL terminated string array containing the names
- *   of the markers. Use g_strfreev() when done.
- *
- * Since: 0.8
- */
-gchar **
-gtd_timeline_list_markers (GtdTimeline *self,
-                           gint         msecs,
-                           gsize       *n_markers)
-{
-  GtdTimelinePrivate *priv;
-  gchar **retval = NULL;
-  gsize i;
-
-  g_return_val_if_fail (GTD_IS_TIMELINE (self), NULL);
-
-  priv = gtd_timeline_get_instance_private (self);
-
-  if (G_UNLIKELY (priv->markers_by_name == NULL))
-    {
-      if (n_markers)
-        *n_markers = 0;
-
-      return NULL;
-    }
-
-  if (msecs < 0)
-    {
-      GList *markers, *l;
-
-      markers = g_hash_table_get_keys (priv->markers_by_name);
-      retval = g_new0 (gchar*, g_list_length (markers) + 1);
-
-      for (i = 0, l = markers; l != NULL; i++, l = l->next)
-        retval[i] = g_strdup (l->data);
-
-      g_list_free (markers);
-    }
-  else
-    {
-      struct CollectMarkersClosure data;
-
-      data.duration = priv->duration;
-      data.msecs = msecs;
-      data.markers = g_array_new (TRUE, FALSE, sizeof (gchar *));
-
-      g_hash_table_foreach (priv->markers_by_name,
-                            (GHFunc) collect_markers,
-                            &data);
-
-      i = data.markers->len;
-      retval = (gchar **) (void *) g_array_free (data.markers, FALSE);
-    }
-
-  if (n_markers)
-    *n_markers = i;
-
-  return retval;
-}
-
-/**
- * gtd_timeline_advance_to_marker:
- * @timeline: a #GtdTimeline
- * @marker_name: the name of the marker
- *
- * Advances @timeline to the time of the given @marker_name.
- *
- * Like gtd_timeline_advance(), this function will not
- * emit the #GtdTimeline::new-frame for the time where @marker_name
- * is set, nor it will emit #GtdTimeline::marker-reached for
- * @marker_name.
- *
- * Since: 0.8
- */
-void
-gtd_timeline_advance_to_marker (GtdTimeline *self,
-                                const gchar *marker_name)
-{
-  GtdTimelinePrivate *priv;
-  TimelineMarker *marker;
-  guint msecs;
-
-  g_return_if_fail (GTD_IS_TIMELINE (self));
-  g_return_if_fail (marker_name != NULL);
-
-  priv = gtd_timeline_get_instance_private (self);
-
-  if (G_UNLIKELY (priv->markers_by_name == NULL))
-    {
-      g_warning ("No marker named '%s' found.", marker_name);
-      return;
-    }
-
-  marker = g_hash_table_lookup (priv->markers_by_name, marker_name);
-  if (marker == NULL)
-    {
-      g_warning ("No marker named '%s' found.", marker_name);
-      return;
-    }
-
-  if (marker->is_relative)
-    msecs = marker->data.progress * priv->duration;
-  else
-    msecs = marker->data.msecs;
-
-  gtd_timeline_advance (self, msecs);
-}
-
-/**
- * gtd_timeline_remove_marker:
- * @timeline: a #GtdTimeline
- * @marker_name: the name of the marker to remove
- *
- * Removes @marker_name, if found, from @timeline.
- *
- * Since: 0.8
- */
-void
-gtd_timeline_remove_marker (GtdTimeline *self,
-                            const gchar *marker_name)
-{
-  GtdTimelinePrivate *priv;
-  TimelineMarker *marker;
-
-  g_return_if_fail (GTD_IS_TIMELINE (self));
-  g_return_if_fail (marker_name != NULL);
-
-  priv = gtd_timeline_get_instance_private (self);
-
-  if (G_UNLIKELY (priv->markers_by_name == NULL))
-    {
-      g_warning ("No marker named '%s' found.", marker_name);
-      return;
-    }
-
-  marker = g_hash_table_lookup (priv->markers_by_name, marker_name);
-  if (!marker)
-    {
-      g_warning ("No marker named '%s' found.", marker_name);
-      return;
-    }
-
-  /* this will take care of freeing the marker as well */
-  g_hash_table_remove (priv->markers_by_name, marker_name);
-}
-
-/**
- * gtd_timeline_has_marker:
- * @timeline: a #GtdTimeline
- * @marker_name: the name of the marker
- *
- * Checks whether @timeline has a marker set with the given name.
- *
- * Return value: %TRUE if the marker was found
- *
- * Since: 0.8
- */
-gboolean
-gtd_timeline_has_marker (GtdTimeline *self,
-                         const gchar *marker_name)
-{
-  GtdTimelinePrivate *priv;
-
-  g_return_val_if_fail (GTD_IS_TIMELINE (self), FALSE);
-  g_return_val_if_fail (marker_name != NULL, FALSE);
-
-  priv = gtd_timeline_get_instance_private (self);
-
-  if (G_UNLIKELY (priv->markers_by_name == NULL))
-    return FALSE;
-
-  return g_hash_table_lookup (priv->markers_by_name, marker_name) != NULL;
 }
 
 /**
