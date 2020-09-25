@@ -352,7 +352,7 @@ gtd_timeline_do_frame (GtdTimeline *self)
       if (priv->elapsed_time != end_msecs &&
           !(/* Except allow changing time from 0 -> duration (or vice-versa)
                since these are considered equivalent */
-            (priv->elapsed_time == 0 && end_msecs == priv->duration) ||
+            (priv->elapsed_time == 0 && end_msecs == (gint) priv->duration) ||
             (priv->elapsed_time == priv->duration && end_msecs == 0)
           ))
         {
