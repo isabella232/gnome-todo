@@ -176,8 +176,8 @@ gtd_provider_selector__listbox_row_activated (GtdProviderSelector *selector,
 }
 
 static void
-gtd_provider_selector__check_toggled (GtdProviderSelector *selector,
-                                     GtkToggleButton    *check)
+on_local_check_toggled_cb (GtdProviderSelector *selector,
+                           GtkCheckButton      *check)
 {
 
   g_return_if_fail (GTD_IS_PROVIDER_SELECTOR (selector));
@@ -187,7 +187,7 @@ gtd_provider_selector__check_toggled (GtdProviderSelector *selector,
    * activated. No need to do this when deactivated, since we already did.
    */
 
-  if (gtk_toggle_button_get_active (check))
+  if (gtk_check_button_get_active (check))
     {
       GtdProvider *local_provider;
 
@@ -466,7 +466,7 @@ gtd_provider_selector_class_init (GtdProviderSelectorClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdProviderSelector, local_check);
   gtk_widget_class_bind_template_child (widget_class, GtdProviderSelector, owncloud_stub_row);
 
-  gtk_widget_class_bind_template_callback (widget_class, gtd_provider_selector__check_toggled);
+  gtk_widget_class_bind_template_callback (widget_class, on_local_check_toggled_cb);
   gtk_widget_class_bind_template_callback (widget_class, gtd_provider_selector__listbox_row_activated);
 }
 

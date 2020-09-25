@@ -33,8 +33,8 @@
                       <class name="suggested-action"/>
                     </style>
                     <layout>
-                      <property name="left_attach">1</property>
-                      <property name="top_attach">2</property>
+                      <property name="column">1</property>
+                      <property name="row">2</property>
                     </layout>
                   </object>
                 </child>
@@ -46,8 +46,8 @@
                     <property name="receives_default">1</property>
                     <signal name="clicked" handler="gtd_provider_popover__action_button_clicked" object="GtdProviderPopover" swapped="yes"/>
                     <layout>
-                      <property name="left_attach">0</property>
-                      <property name="top_attach">2</property>
+                      <property name="column">0</property>
+                      <property name="row">2</property>
                     </layout>
                   </object>
                 </child>
@@ -59,8 +59,8 @@
                       <class name="dim-label"/>
                     </style>
                     <layout>
-                      <property name="left_attach">0</property>
-                      <property name="top_attach">0</property>
+                      <property name="column">0</property>
+                      <property name="row">0</property>
                       <property name="column-span">2</property>
                     </layout>
                   </object>
@@ -93,8 +93,8 @@
                       <class name="linked"/>
                     </style>
                     <layout>
-                      <property name="left_attach">0</property>
-                      <property name="top_attach">1</property>
+                      <property name="column">0</property>
+                      <property name="row">1</property>
                       <property name="column-span">2</property>
                     </layout>
                   </object>
@@ -121,8 +121,8 @@
                       </object>
                     </child>
                     <layout>
-                      <property name="left_attach">0</property>
-                      <property name="top_attach">0</property>
+                      <property name="column">0</property>
+                      <property name="row">0</property>
                       <property name="column-span">1</property>
                     </layout>
                   </object>
@@ -132,8 +132,8 @@
                     <property name="hexpand">1</property>
                     <property name="label" translatable="yes">Select a storage location</property>
                     <layout>
-                      <property name="left_attach">0</property>
-                      <property name="top_attach">0</property>
+                      <property name="column">0</property>
+                      <property name="row">0</property>
                       <property name="column-span">1</property>
                     </layout>
                   </object>
@@ -145,8 +145,8 @@
                     <property name="show_stub_rows">False</property>
                     <signal name="provider-selected" handler="gtd_provider_popover__provider_selected" object="GtdProviderPopover" swapped="yes"/>
                     <layout>
-                      <property name="left_attach">0</property>
-                      <property name="top_attach">1</property>
+                      <property name="column">0</property>
+                      <property name="row">1</property>
                       <property name="column-span">2</property>
                     </layout>
                   </object>

@@ -243,7 +243,11 @@ gtd_new_task_row_dispose (GObject *object)
       self->tasklist_popover = NULL;
     }
 
-  g_clear_pointer (&self->entry, gtk_widget_unparent);
+  if (self->entry)
+    {
+      gtk_widget_unparent (GTK_WIDGET (self->entry));
+      self->entry = NULL;
+    }
 
   G_OBJECT_CLASS (gtd_new_task_row_parent_class)->dispose (object);
 }

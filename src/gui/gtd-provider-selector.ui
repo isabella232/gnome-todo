@@ -99,7 +99,7 @@
       <object class="GtkCheckButton" id="local_check">
         <property name="label" translatable="yes">Or you can just store your tasks on this computer</property>
         <property name="can_focus">1</property>
-        <signal name="toggled" handler="gtd_provider_selector__check_toggled" object="GtdProviderSelector" swapped="yes"/>
+        <signal name="toggled" handler="on_local_check_toggled_cb" object="GtdProviderSelector" swapped="yes"/>
       </object>
     </child>
   </template>

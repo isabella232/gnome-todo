@@ -15,8 +15,8 @@
             <property name="pixel_size">32</property>
             <property name="icon_name">application-system-symbolic</property>
             <layout>
-              <property name="left_attach">0</property>
-              <property name="top_attach">0</property>
+              <property name="column">0</property>
+              <property name="row">0</property>
               <property name="row-span">2</property>
             </layout>
           </object>
@@ -26,8 +26,8 @@
             <property name="hexpand">1</property>
             <property name="xalign">0</property>
             <layout>
-              <property name="left_attach">1</property>
-              <property name="top_attach">0</property>
+              <property name="column">1</property>
+              <property name="row">0</property>
             </layout>
           </object>
         </child>
@@ -39,8 +39,8 @@
               <class name="dim-label"/>
             </style>
             <layout>
-              <property name="left_attach">1</property>
-              <property name="top_attach">1</property>
+              <property name="column">1</property>
+              <property name="row">1</property>
             </layout>
           </object>
         </child>
@@ -52,8 +52,8 @@
             <property name="icon_name">dialog-warning-symbolic</property>
             <property name="pixel_size">16</property>
             <layout>
-              <property name="left_attach">2</property>
-              <property name="top_attach">0</property>
+              <property name="column">2</property>
+              <property name="row">0</property>
               <property name="row-span">2</property>
             </layout>
           </object>
@@ -64,8 +64,8 @@
             <property name="valign">center</property>
             <signal name="notify::active" handler="loaded_switch_changed" object="GtdPluginDialogRow" swapped="yes"/>
             <layout>
-              <property name="left_attach">3</property>
-              <property name="top_attach">0</property>
+              <property name="column">3</property>
+              <property name="row">0</property>
               <property name="row-span">2</property>
             </layout>
           </object>
@@ -87,8 +87,8 @@
               </object>
             </child>
             <layout>
-              <property name="left_attach">4</property>
-              <property name="top_attach">0</property>
+              <property name="column">4</property>
+              <property name="row">0</property>
               <property name="row-span">2</property>
             </layout>
           </object>

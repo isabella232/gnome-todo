@@ -317,14 +317,14 @@ on_drag_cancelled_cb (GtkDragSource       *source,
 }
 
 static void
-on_complete_check_toggled_cb (GtkToggleButton *button,
-                              GtdTaskRow      *self)
+on_complete_check_toggled_cb (GtkCheckButton *button,
+                              GtdTaskRow     *self)
 {
   GTD_ENTRY;
 
   g_assert (GTD_IS_TASK (self->task));
 
-  gtd_task_set_complete (self->task, gtk_toggle_button_get_active (button));
+  gtd_task_set_complete (self->task, gtk_check_button_get_active (button));
   gtd_provider_update_task (gtd_task_get_provider (self->task),
                             self->task,
                             NULL,
@@ -352,7 +352,7 @@ on_complete_changed_cb (GtdTaskRow *self,
 
   /* Update the toggle button as well */
   g_signal_handlers_block_by_func (self->done_check, on_complete_check_toggled_cb, self);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->done_check), complete);
+  gtk_check_button_set_active (GTK_CHECK_BUTTON (self->done_check), complete);
   g_signal_handlers_unblock_by_func (self->done_check, on_complete_check_toggled_cb, self);
 }
 

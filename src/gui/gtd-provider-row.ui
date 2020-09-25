@@ -16,8 +16,8 @@
             <property name="visible">0</property>
             <property name="icon_name">emblem-ok-symbolic</property>
             <layout>
-              <property name="left_attach">3</property>
-              <property name="top_attach">0</property>
+              <property name="column">3</property>
+              <property name="row">0</property>
               <property name="row-span">2</property>
             </layout>
           </object>
@@ -30,8 +30,8 @@
               <class name="dim-label"/>
             </style>
             <layout>
-              <property name="left_attach">1</property>
-              <property name="top_attach">1</property>
+              <property name="column">1</property>
+              <property name="row">1</property>
             </layout>
           </object>
         </child>
@@ -40,8 +40,8 @@
             <property name="pixel_size">32</property>
             <property name="icon_name">goa-account</property>
             <layout>
-              <property name="left_attach">0</property>
-              <property name="top_attach">0</property>
+              <property name="column">0</property>
+              <property name="row">0</property>
               <property name="row-span">2</property>
             </layout>
           </object>
@@ -50,8 +50,8 @@
           <object class="GtkLabel" id="description">
             <property name="xalign">0</property>
             <layout>
-              <property name="left_attach">1</property>
-              <property name="top_attach">0</property>
+              <property name="column">1</property>
+              <property name="row">0</property>
             </layout>
           </object>
         </child>
@@ -59,8 +59,8 @@
           <object class="GtkLabel" id="enabled">
             <property name="label" translatable="yes">Off</property>
             <layout>
-              <property name="left_attach">2</property>
-              <property name="top_attach">0</property>
+              <property name="column">2</property>
+              <property name="row">0</property>
               <property name="row-span">2</property>
             </layout>
           </object>

@@ -145,13 +145,13 @@ sort_func (GObject  *a,
            GObject  *b,
            gpointer  user_data)
 {
-  GtkToggleButton *check;
+  GtkCheckButton *check;
   GtdTask *task_a;
   GtdTask *task_b;
 
-  check = (GtkToggleButton*) user_data;
+  check = (GtkCheckButton*) user_data;
 
-  if (gtk_toggle_button_get_active (check))
+  if (gtk_check_button_get_active (check))
     {
       task_a = GTD_TASK (a);
       task_b = GTD_TASK (b);
@@ -176,7 +176,7 @@ sort_func (GObject  *a,
 }
 
 static void
-on_check_active_changed_cb (GtkToggleButton  *check,
+on_check_active_changed_cb (GtkCheckButton   *check,
                             GParamSpec       *pspec,
                             GtdListModelSort *sort)
 {
