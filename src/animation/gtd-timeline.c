@@ -382,12 +382,9 @@ emit_frame_signal (GtdTimeline *self)
 {
   GtdTimelinePrivate *priv = gtd_timeline_get_instance_private (self);
 
-  /* see bug https://bugzilla.gnome.org/show_bug.cgi?id=654066 */
-  gint elapsed = (gint) priv->elapsed_time;
-
   GTD_TRACE_MSG ("Emitting ::new-frame signal on timeline[%p]", self);
 
-  g_signal_emit (self, timeline_signals[NEW_FRAME], 0, elapsed);
+  g_signal_emit (self, timeline_signals[NEW_FRAME], 0, priv->elapsed_time);
 }
 
 static gboolean
