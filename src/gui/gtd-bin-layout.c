@@ -19,7 +19,7 @@
  */
 
 #include "gtd-bin-layout.h"
-#include "gtd-widget-private.h"
+#include "gtd-widget.h"
 
 struct _GtdBinLayout
 {
@@ -84,14 +84,7 @@ gtd_bin_layout_allocate (GtkLayoutManager *layout_manager,
           GskTransform *transform = NULL;
 
           if (GTD_IS_WIDGET (child))
-            {
-              GtkAllocation adjusted;
-
-              gtk_widget_get_adjusted_allocation (child, width, height, &adjusted);
-              gtd_widget_update_pivot_for_geometry (GTD_WIDGET (child), &adjusted);
-
-              transform = gtd_widget_apply_transform (GTD_WIDGET (child), NULL);
-            }
+            transform = gtd_widget_apply_transform (GTD_WIDGET (child), NULL);
 
           gtk_widget_allocate (child, width, height, baseline, transform);
         }

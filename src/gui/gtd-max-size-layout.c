@@ -19,6 +19,7 @@
  */
 
 #include "gtd-max-size-layout.h"
+#include "gtd-widget.h"
 
 struct _GtdMaxSizeLayout
 {
@@ -148,7 +149,14 @@ gtd_max_size_layout_allocate (GtkLayoutManager *layout_manager,
        child = gtk_widget_get_next_sibling (child))
     {
       if (child && gtk_widget_should_layout (child))
-        gtk_widget_allocate (child, width, height, baseline, NULL);
+        {
+          GskTransform *transform = NULL;
+
+          if (GTD_IS_WIDGET (child))
+            transform = gtd_widget_apply_transform (GTD_WIDGET (child), NULL);
+
+          gtk_widget_allocate (child, width, height, baseline, transform);
+        }
     }
 }
 

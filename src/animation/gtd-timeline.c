@@ -1809,8 +1809,8 @@ struct CollectMarkersClosure
 };
 
 static void
-collect_markers (const gchar *key,
-                 TimelineMarker *marker,
+collect_markers (const gchar                  *key,
+                 TimelineMarker               *marker,
                  struct CollectMarkersClosure *data)
 {
   guint msecs;

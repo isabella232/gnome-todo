@@ -200,10 +200,6 @@
                 {
                     "type": "git",
                     "url": "https://gitlab.gnome.org/GNOME/gtk.git"
-                },
-                {
-                    "type": "patch",
-                    "path": "adjusted-allocation.patch"
                 }
             ]
         },

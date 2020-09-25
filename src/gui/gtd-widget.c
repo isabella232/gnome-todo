@@ -25,7 +25,6 @@
 #include "gtd-interval.h"
 #include "gtd-timeline-private.h"
 #include "gtd-property-transition.h"
-#include "gtd-widget-private.h"
 
 #include <graphene-gobject.h>
 #include <gobject/gvaluecollector.h>
@@ -57,7 +56,6 @@ typedef struct
   gfloat              scale[3];
   graphene_point3d_t  translation;
 
-  GtkAllocation       geometry;
   GskTransform       *cached_transform;
 } GtdWidgetPrivate;
 
@@ -342,30 +340,6 @@ create_transition (GtdWidget  *self,
       gtd_timeline_set_duration (timeline, priv->animation.current_state->easing_duration);
       gtd_timeline_set_progress_mode (timeline, priv->animation.current_state->easing_mode);
 
-#ifdef GTD_ENABLE_DEBUG
-      if (GTD_HAS_DEBUG (ANIMATION))
-        {
-          gchar *initial_v, *final_v;
-
-          initial_v = g_strdup_value_contents (&initial);
-          final_v = g_strdup_value_contents (&final);
-
-          GTD_TRACE_MSG ("[animation] "
-                         "Created transition for %p:%s "
-                         "(len:%u, mode:%s, delay:%u) "
-                         "initial:%s, final:%s",
-                         self,
-                         pspec->name,
-                         priv->animation.current_state->easing_duration,
-                         gtd_get_easing_name_for_mode (priv->animation.current_state->easing_mode),
-                         priv->animation.current_state->easing_delay,
-                         initial_v, final_v);
-
-          g_free (initial_v);
-          g_free (final_v);
-        }
-#endif /* GTD_ENABLE_DEBUG */
-
       /* this will start the transition as well */
       add_transition_to_widget (self, pspec->name, res);
 
@@ -421,20 +395,23 @@ calculate_transform (GtdWidget *self)
   graphene_point3d_t pivot;
   GskTransform *transform;
   gboolean pivot_is_zero;
+  gint height;
+  gint width;
 
   transform = NULL;
+  width = gtk_widget_get_width (GTK_WIDGET (self));
+  height = gtk_widget_get_height (GTK_WIDGET (self));
 
   /* Pivot point */
   pivot_is_zero = graphene_point3d_equal (&priv->pivot_point, graphene_point3d_zero ());
-  pivot = GRAPHENE_POINT3D_INIT (priv->geometry.x + priv->geometry.width * priv->pivot_point.x,
-                                 priv->geometry.y + priv->geometry.height * priv->pivot_point.y,
+  pivot = GRAPHENE_POINT3D_INIT (width * priv->pivot_point.x,
+                                 height * priv->pivot_point.y,
                                  priv->pivot_point.z);
   if (!pivot_is_zero)
     transform = gsk_transform_translate_3d (transform, &pivot);
 
   /* Perspective */
-  transform = gsk_transform_perspective (transform,
-                                         2 * MAX (priv->geometry.width, priv->geometry.height));
+  transform = gsk_transform_perspective (transform, 2 * MAX (width, height));
 
   /* Translation */
   if (G_APPROX_VALUE (priv->translation.z, 0.f, FLT_EPSILON))
@@ -1262,22 +1239,6 @@ gtd_widget_apply_transform (GtdWidget    *self,
   return gsk_transform_transform (transform, priv->cached_transform);
 }
 
-void
-gtd_widget_update_pivot_for_geometry (GtdWidget           *self,
-                                      const GtkAllocation *geometry)
-{
-  GtdWidgetPrivate *priv = gtd_widget_get_instance_private (self);
-
-  if (priv->geometry.x != geometry->x ||
-      priv->geometry.y != geometry->y ||
-      priv->geometry.width != geometry->width ||
-      priv->geometry.height != geometry->height)
-    {
-      invalidate_cached_transform (self);
-      priv->geometry = *geometry;
-    }
-}
-
 /**
  * gtd_widget_add_transition:
  * @self: a #GtdWidget
@@ -1707,4 +1668,3 @@ gtd_widget_restore_easing_state (GtdWidget *self)
       priv->animation.current_state = NULL;
     }
 }
-
