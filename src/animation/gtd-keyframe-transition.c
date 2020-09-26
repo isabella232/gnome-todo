@@ -248,7 +248,8 @@ gtd_keyframe_transition_compute_value (GtdTransition *transition,
     {
       if (p > cur_frame->end)
         {
-          priv->current_frame = MIN (priv->current_frame + 1, priv->frames->len - 1);
+          priv->current_frame = MIN (priv->current_frame + 1,
+                                     (gint) priv->frames->len - 1);
           cur_frame = &g_array_index (priv->frames, KeyFrame, priv->current_frame);
        }
     }
@@ -272,7 +273,7 @@ gtd_keyframe_transition_compute_value (GtdTransition *transition,
       value = gtd_interval_peek_initial_value (interval);
       gtd_interval_set_initial_value (cur_frame->interval, value);
     }
-  else if (priv->current_frame == priv->frames->len - 1)
+  else if (priv->current_frame == (gint) priv->frames->len - 1)
     {
       const GValue *value;
 

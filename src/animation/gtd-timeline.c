@@ -1151,7 +1151,7 @@ gtd_timeline_advance (GtdTimeline *self,
 
   priv = gtd_timeline_get_instance_private (self);
 
-  priv->elapsed_time = CLAMP (msecs, 0, priv->duration);
+  priv->elapsed_time = MIN (msecs, priv->duration);
 }
 
 /**
