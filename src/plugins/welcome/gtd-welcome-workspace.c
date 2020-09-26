@@ -307,7 +307,7 @@ gtd_welcome_workspace_init (GtdWelcomeWorkspace *self)
 {
   GtdManager *manager;
   GListModel *inbox_model;
-  GtkFilter *filter;
+  GtkCustomFilter *filter;
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
@@ -336,7 +336,8 @@ gtd_welcome_workspace_init (GtdWelcomeWorkspace *self)
 
   /* Today */
   filter = gtk_custom_filter_new (filter_func, self, NULL);
-  self->today_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager), filter);
+  self->today_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager),
+                                                 GTK_FILTER (filter));
 
   g_signal_connect_object (self->today_model,
                            "items-changed",

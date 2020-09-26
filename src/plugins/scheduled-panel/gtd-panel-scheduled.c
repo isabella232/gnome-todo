@@ -471,16 +471,18 @@ gtd_panel_scheduled_init (GtdPanelScheduled *self)
 {
   g_autoptr (GDateTime) now = g_date_time_new_now_local ();
   GtdManager *manager = gtd_manager_get_default ();
-  GtkFilter *filter;
-  GtkSorter *sorter;
+  GtkCustomFilter *filter;
+  GtkCustomSorter *sorter;
 
   self->icon = g_themed_icon_new ("alarm-symbolic");
 
   filter = gtk_custom_filter_new (filter_func, self, NULL);
-  self->filter_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager), filter);
+  self->filter_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager),
+                                                  GTK_FILTER (filter));
 
   sorter = gtk_custom_sorter_new (sort_func, self, NULL);
-  self->sort_model = gtk_sort_list_model_new (G_LIST_MODEL (self->filter_model), sorter);
+  self->sort_model = gtk_sort_list_model_new (G_LIST_MODEL (self->filter_model),
+                                              GTK_SORTER (sorter));
 
   /* The main view */
   self->view = GTD_TASK_LIST_VIEW (gtd_task_list_view_new ());

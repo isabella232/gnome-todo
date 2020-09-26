@@ -423,22 +423,25 @@ gtd_panel_today_init (GtdPanelToday *self)
 {
   g_autoptr (GDateTime) now = NULL;
   GtdManager *manager;
-  GtkFilter *incomplete_filter;
-  GtkFilter *filter;
-  GtkSorter *sorter;
+  GtkCustomFilter *incomplete_filter;
+  GtkCustomFilter *filter;
+  GtkCustomSorter *sorter;
 
   manager = gtd_manager_get_default ();
 
   self->icon = g_themed_icon_new ("view-tasks-today-symbolic");
 
   filter = gtk_custom_filter_new (filter_func, self, NULL);
-  self->filter_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager), filter);
+  self->filter_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager),
+                                                  GTK_FILTER (filter));
 
   sorter = gtk_custom_sorter_new (sort_func, self, NULL);
-  self->sort_model = gtk_sort_list_model_new (G_LIST_MODEL (self->filter_model), sorter);
+  self->sort_model = gtk_sort_list_model_new (G_LIST_MODEL (self->filter_model),
+                                              GTK_SORTER (sorter));
 
   incomplete_filter = gtk_custom_filter_new (filter_complete_func, self, NULL);
-  self->incomplete_model = gtk_filter_list_model_new (G_LIST_MODEL (self->sort_model), incomplete_filter);
+  self->incomplete_model = gtk_filter_list_model_new (G_LIST_MODEL (self->sort_model),
+                                                      GTK_FILTER (incomplete_filter));
 
   /* Connect to GtdManager::list-* signals to update the title */
   manager = gtd_manager_get_default ();

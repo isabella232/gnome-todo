@@ -240,12 +240,13 @@ static void
 gtd_inbox_panel_init (GtdInboxPanel *self)
 {
   GtdManager *manager = gtd_manager_get_default ();
-  GtkFilter *filter;
+  GtkCustomFilter *filter;
 
   self->icon = g_themed_icon_new ("mail-inbox-symbolic");
 
   filter = gtk_custom_filter_new (filter_func, self, NULL);
-  self->filter_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager), filter);
+  self->filter_model = gtk_filter_list_model_new (gtd_manager_get_tasks_model (manager),
+                                                  GTK_FILTER (filter));
 
   /* The main view */
   self->view = GTD_TASK_LIST_VIEW (gtd_task_list_view_new ());

@@ -505,8 +505,8 @@ gtd_manager_class_init (GtdManagerClass *klass)
 static void
 gtd_manager_init (GtdManager *self)
 {
-  GtkFilter *archived_lists_filter;
-  GtkFilter *inbox_filter;
+  GtkCustomFilter *archived_lists_filter;
+  GtkCustomFilter *inbox_filter;
 
   inbox_filter = gtk_custom_filter_new (filter_inbox_cb, self, NULL);
   archived_lists_filter = gtk_custom_filter_new (filter_archived_lists_func, self, NULL);
@@ -516,10 +516,11 @@ gtd_manager_init (GtdManager *self)
   self->clock = gtd_clock_new ();
   self->cancellable = g_cancellable_new ();
   self->lists_model = (GListModel*) gtd_list_store_new (GTD_TYPE_TASK_LIST);
-  self->inbox_model = (GListModel*) gtk_filter_list_model_new (self->lists_model, inbox_filter);
+  self->inbox_model = (GListModel*) gtk_filter_list_model_new (self->lists_model,
+                                                               GTK_FILTER (inbox_filter));
   self->tasks_model = (GListModel*) _gtd_task_model_new (self);
   self->unarchived_tasks_model = (GListModel*) gtk_filter_list_model_new (self->tasks_model,
-                                                                          archived_lists_filter);
+                                                                          GTK_FILTER (archived_lists_filter));
   self->providers_model = (GListModel*) gtd_list_store_new (GTD_TYPE_PROVIDER);
 }
 
