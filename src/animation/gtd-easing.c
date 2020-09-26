@@ -397,94 +397,6 @@ gtd_ease_in_out_bounce (gdouble t,
     return ease_out_bounce_internal (t * 2 - d, d) * 0.5 + 1.0 * 0.5;
 }
 
-static inline gdouble
-ease_steps_end (gdouble p,
-                int    n_steps)
-{
-  return floor (p * (gdouble) n_steps) / (gdouble) n_steps;
-}
-
-gdouble
-gtd_ease_steps_start (gdouble t,
-                      gdouble d,
-                      int     n_steps)
-{
-  return 1.0 - ease_steps_end (1.0 - (t / d), n_steps);
-}
-
-gdouble
-gtd_ease_steps_end (gdouble t,
-                    gdouble d,
-                    int     n_steps)
-{
-  return ease_steps_end ((t / d), n_steps);
-}
-
-static inline gdouble
-x_for_t (gdouble t,
-         gdouble x_1,
-         gdouble x_2)
-{
-  gdouble omt = 1.0 - t;
-
-  return 3.0 * omt * omt * t * x_1
-       + 3.0 * omt * t * t * x_2
-       + t * t * t;
-}
-
-static inline gdouble
-y_for_t (gdouble t,
-         gdouble y_1,
-         gdouble y_2)
-{
-  gdouble omt = 1.0 - t;
-
-  return 3.0 * omt * omt * t * y_1
-       + 3.0 * omt * t * t * y_2
-       + t * t * t;
-}
-
-static inline gdouble
-t_for_x (gdouble x,
-         gdouble x_1,
-         gdouble x_2)
-{
-  gdouble min_t = 0, max_t = 1;
-  int i;
-
-  for (i = 0; i < 30; ++i)
-    {
-      gdouble guess_t = (min_t + max_t) / 2.0;
-      gdouble guess_x = x_for_t (guess_t, x_1, x_2);
-
-      if (x < guess_x)
-        max_t = guess_t;
-      else
-        min_t = guess_t;
-    }
-
-  return (min_t + max_t) / 2.0;
-}
-
-gdouble
-gtd_ease_cubic_bezier (gdouble t,
-                       gdouble d,
-                       gdouble x_1,
-                       gdouble y_1,
-                       gdouble x_2,
-                       gdouble y_2)
-{
-  gdouble p = t / d;
-
-  if (p == 0.0)
-    return 0.0;
-
-  if (p == 1.0)
-    return 1.0;
-
-  return y_for_t (t_for_x (p, x_1, x_2), y_1, y_2);
-}
-
 /*< private >
  * _gtd_animation_modes:
  *
@@ -528,17 +440,6 @@ static const struct {
   { GTD_EASE_IN_BOUNCE,      gtd_ease_in_bounce, "easeInBounce" },
   { GTD_EASE_OUT_BOUNCE,     gtd_ease_out_bounce, "easeOutBounce" },
   { GTD_EASE_IN_OUT_BOUNCE,  gtd_ease_in_out_bounce, "easeInOutBounce" },
-
-  /* the parametrized functions need a cast */
-  { GTD_STEPS,               (GtdEaseFunc) gtd_ease_steps_end, "steps" },
-  { GTD_STEP_START,          (GtdEaseFunc) gtd_ease_steps_start, "stepStart" },
-  { GTD_STEP_END,            (GtdEaseFunc) gtd_ease_steps_end, "stepEnd" },
-
-  { GTD_EASE_CUBIC_BEZIER,   (GtdEaseFunc) gtd_ease_cubic_bezier, "cubicBezier" },
-  { GTD_EASE,                (GtdEaseFunc) gtd_ease_cubic_bezier, "ease" },
-  { GTD_EASE_IN,             (GtdEaseFunc) gtd_ease_cubic_bezier, "easeIn" },
-  { GTD_EASE_OUT,            (GtdEaseFunc) gtd_ease_cubic_bezier, "easeOut" },
-  { GTD_EASE_IN_OUT,         (GtdEaseFunc) gtd_ease_cubic_bezier, "easeInOut" },
 
   { GTD_EASE_LAST,           NULL, "sentinel" },
 };

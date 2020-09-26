@@ -79,22 +79,6 @@ G_BEGIN_DECLS
  *   tweening, with bounce on end
  * @GTD_EASE_IN_OUT_BOUNCE: exponentially decaying parabolic (bounce)
  *   tweening, with bounce on both ends
- * @GTD_STEPS: parametrized step function; see clutter_timeline_set_step_progress()
- *   for further details. (Since 1.12)
- * @GTD_STEP_START: equivalent to %GTD_STEPS with a number of steps
- *   equal to 1, and a step mode of %GTD_STEP_MODE_START. (Since 1.12)
- * @GTD_STEP_END: equivalent to %GTD_STEPS with a number of steps
- *   equal to 1, and a step mode of %GTD_STEP_MODE_END. (Since 1.12)
- * @GTD_CUBIC_BEZIER: cubic bezier between (0, 0) and (1, 1) with two
- *   control points; see clutter_timeline_set_cubic_bezier_progress(). (Since 1.12)
- * @GTD_EASE: equivalent to %GTD_CUBIC_BEZIER with control points
- *   in (0.25, 0.1) and (0.25, 1.0). (Since 1.12)
- * @GTD_EASE_IN: equivalent to %GTD_CUBIC_BEZIER with control points
- *   in (0.42, 0) and (1.0, 1.0). (Since 1.12)
- * @GTD_EASE_OUT: equivalent to %GTD_CUBIC_BEZIER with control points
- *   in (0, 0) and (0.58, 1.0). (Since 1.12)
- * @GTD_EASE_IN_OUT: equivalent to %GTD_CUBIC_BEZIER with control points
- *   in (0.42, 0) and (0.58, 1.0). (Since 1.12)
  * @GTD_ANIMATION_LAST: last animation mode, used as a guard for
  *   registered global alpha functions
  *
@@ -168,18 +152,6 @@ typedef enum
   GTD_EASE_IN_BOUNCE,
   GTD_EASE_OUT_BOUNCE,
   GTD_EASE_IN_OUT_BOUNCE,
-
-  /* step functions (see css3-transitions) */
-  GTD_STEPS,
-  GTD_STEP_START, /* steps(1, start) */
-  GTD_STEP_END, /* steps(1, end) */
-
-  /* cubic bezier (see css3-transitions) */
-  GTD_EASE_CUBIC_BEZIER,
-  GTD_EASE,
-  GTD_EASE_IN,
-  GTD_EASE_OUT,
-  GTD_EASE_IN_OUT,
 
   /* guard, before registered alpha functions */
   GTD_EASE_LAST

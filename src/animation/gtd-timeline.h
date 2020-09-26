@@ -144,22 +144,6 @@ void                 gtd_timeline_set_progress_mode              (GtdTimeline   
 
 GtdEaseMode          gtd_timeline_get_progress_mode              (GtdTimeline          *timeline);
 
-void                 gtd_timeline_set_step_progress              (GtdTimeline          *timeline,
-                                                                  gint                  n_steps,
-                                                                  GtdStepMode           step_mode);
-
-gboolean             gtd_timeline_get_step_progress              (GtdTimeline          *timeline,
-                                                                  gint                 *n_steps,
-                                                                  GtdStepMode          *step_mode);
-
-void                 gtd_timeline_set_cubic_bezier_progress      (GtdTimeline            *timeline,
-                                                                  const graphene_point_t *c_1,
-                                                                  const graphene_point_t *c_2);
-
-gboolean             gtd_timeline_get_cubic_bezier_progress      (GtdTimeline      *timeline,
-                                                                  graphene_point_t *c_1,
-                                                                  graphene_point_t *c_2);
-
 gint64               gtd_timeline_get_duration_hint              (GtdTimeline          *timeline);
 gint                 gtd_timeline_get_current_repeat             (GtdTimeline          *timeline);
 

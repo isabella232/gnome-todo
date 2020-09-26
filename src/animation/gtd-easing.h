@@ -138,20 +138,4 @@ gdouble              gtd_ease_out_bounce                         (gdouble       
 gdouble              gtd_ease_in_out_bounce                      (gdouble            t,
                                                                   gdouble            d);
 
-gdouble              gtd_ease_steps_start                        (gdouble            t,
-                                                                  gdouble            d,
-                                                                  int                steps);
-
-gdouble              gtd_ease_steps_end                          (gdouble            t,
-                                                                  gdouble            d,
-                                                                  int                steps);
-
-gdouble              gtd_ease_cubic_bezier                       (gdouble            t,
-                                                                  gdouble            d,
-                                                                  gdouble            x_1,
-                                                                  gdouble            y_1,
-                                                                  gdouble            x_2,
-                                                                  gdouble            y_2);
-
-
 G_END_DECLS
