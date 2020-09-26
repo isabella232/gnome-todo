@@ -37,18 +37,6 @@ typedef enum
 } GtdTaskListSelectorBehavior;
 
 /**
- * GtdTaskListViewFilterFunc:
- * @task: a #GtdTask
- * @user_data: (closure): user data
- *
- * The filter function called on every task.
- *
- * Returns: %TRUE if the row is visible, %FALSE otherwise.
- */
-typedef gboolean (*GtdTaskListViewFilterFunc) (GtdTask              *task,
-                                               gpointer              user_data);
-
-/**
  * GtdTaskListViewHeaderFunc:
  * @task: the #GtdTask that @row represents
  * @previous_task: the #GtdTask that @before represents
@@ -61,22 +49,6 @@ typedef gboolean (*GtdTaskListViewFilterFunc) (GtdTask              *task,
 typedef GtkWidget* (*GtdTaskListViewHeaderFunc) (GtdTask              *task,
                                                  GtdTask              *previous_task,
                                                  gpointer              user_data);
-
-/**
- * GtdTaskListViewSortFunc:
- * @row1: the current #GtkListBoxRow
- * @row1_task: the #GtdTask that @row represents
- * @row2: the #GtkListBoxRow before @row
- * @row2_task: the #GtdTask that @before represents
- * @user_data: (closure): user data
- *
- * The sorting function called on every task.
- */
-typedef gint (*GtdTaskListViewSortFunc)   (GtkListBoxRow        *row1,
-                                           GtdTask              *row1_task,
-                                           GtkListBoxRow        *row2,
-                                           GtdTask              *row2_task,
-                                           gpointer              user_data);
 
 GtkWidget*                gtd_task_list_view_new                (void);
 

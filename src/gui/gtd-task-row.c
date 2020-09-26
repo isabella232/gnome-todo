@@ -68,6 +68,7 @@ struct _GtdTaskRow
   GtdEditPane        *edit_pane;
 
   GtdMarkdownRenderer *renderer;
+  GPtrArray           *bindings;
 
   gboolean            active;
   gboolean            changed;
@@ -462,6 +463,8 @@ gtd_task_row_dispose (GObject *object)
   self = GTD_TASK_ROW (object);
   task = self->task;
 
+  g_clear_pointer (&self->bindings, g_ptr_array_unref);
+
   if (task)
     {
       g_signal_handlers_disconnect_by_func (task, on_depth_changed_cb, self);
@@ -517,68 +520,7 @@ gtd_task_row_set_property (GObject      *object,
       break;
 
     case PROP_TASK:
-      g_assert (self->task == NULL);
-
-      self->task = g_value_dup_object (value);
-      g_assert (self->task != NULL);
-
-      gtk_label_set_label (self->task_list_label, gtd_task_list_get_name (gtd_task_get_list (self->task)));
-
-      g_signal_handlers_block_by_func (self->title_entry, on_task_changed_cb, self);
-      g_signal_handlers_block_by_func (self->done_check, on_complete_check_toggled_cb, self);
-
-      g_object_bind_property (self->task,
-                              "loading",
-                              self,
-                              "sensitive",
-                              G_BINDING_DEFAULT | G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE);
-
-      g_object_bind_property (self->task,
-                              "title",
-                              self->title_entry,
-                              "text",
-                              G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
-
-      g_object_bind_property_full (self->task,
-                                   "due-date",
-                                   self->task_date_label,
-                                   "label",
-                                   G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE,
-                                   date_to_label_binding_cb,
-                                   NULL,
-                                   self,
-                                   NULL);
-
-      on_complete_changed_cb (self, NULL, self->task);
-      g_signal_connect_object (self->task,
-                               "notify::complete",
-                               G_CALLBACK (on_complete_changed_cb),
-                               self,
-                               G_CONNECT_SWAPPED);
-
-      on_depth_changed_cb (self, NULL, self->task);
-      g_signal_connect_object (self->task,
-                               "notify::depth",
-                               G_CALLBACK (on_depth_changed_cb),
-                               self,
-                               G_CONNECT_SWAPPED);
-
-      on_task_important_changed_cb (self->task, NULL, self);
-      g_signal_connect_object (self->task,
-                               "notify::important",
-                               G_CALLBACK (on_task_important_changed_cb),
-                               self,
-                               0);
-
-      g_signal_connect_object (self->star_widget,
-                               "notify::active",
-                               G_CALLBACK (on_star_widget_activated_cb),
-                               self,
-                               0);
-
-      g_signal_handlers_unblock_by_func (self->done_check, on_complete_check_toggled_cb, self);
-      g_signal_handlers_unblock_by_func (self->title_entry, on_task_changed_cb, self);
-
+      gtd_task_row_set_task (self, g_value_get_object (value));
       break;
 
     default:
@@ -637,7 +579,7 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
                                "Task of the row",
                                "The task that this row represents",
                                GTD_TYPE_TASK,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
 
   /**
    * GtdTaskRow::enter:
@@ -714,6 +656,7 @@ gtd_task_row_init (GtdTaskRow *self)
 {
   GtkDragSource *drag_source;
 
+  self->bindings = g_ptr_array_new_with_free_func ((GDestroyNotify) g_binding_unbind);
   self->handle_subtasks = TRUE;
   self->active = FALSE;
 
@@ -741,6 +684,95 @@ gtd_task_row_new (GtdTask             *task,
                        "task", task,
                        "renderer", renderer,
                        NULL);
+}
+
+void
+gtd_task_row_set_task (GtdTaskRow *self,
+                       GtdTask    *task)
+{
+  GBinding *binding;
+  GtdTask *old_task;
+
+  g_return_if_fail (GTD_IS_TASK_ROW (self));
+
+  old_task = self->task;
+
+  if (old_task)
+    {
+      g_signal_handlers_disconnect_by_func (old_task, on_complete_changed_cb, self);
+      g_signal_handlers_disconnect_by_func (old_task, on_depth_changed_cb, self);
+      g_signal_handlers_disconnect_by_func (old_task, on_task_important_changed_cb, self);
+      g_signal_handlers_disconnect_by_func (old_task, on_star_widget_activated_cb, self);
+      g_ptr_array_set_size (self->bindings, 0);
+    }
+
+  g_set_object (&self->task, task);
+
+  if (task)
+    {
+      gtk_label_set_label (self->task_list_label,
+                           gtd_task_list_get_name (gtd_task_get_list (task)));
+
+      g_signal_handlers_block_by_func (self->title_entry, on_task_changed_cb, self);
+      g_signal_handlers_block_by_func (self->done_check, on_complete_check_toggled_cb, self);
+
+      binding = g_object_bind_property (task,
+                                        "loading",
+                                        self,
+                                        "sensitive",
+                                        G_BINDING_DEFAULT |
+                                        G_BINDING_INVERT_BOOLEAN |
+                                        G_BINDING_SYNC_CREATE);
+      g_ptr_array_add (self->bindings, binding);
+
+      binding = g_object_bind_property (task,
+                                        "title",
+                                        self->title_entry,
+                                        "text",
+                                        G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+      g_ptr_array_add (self->bindings, binding);
+
+      binding = g_object_bind_property_full (task,
+                                             "due-date",
+                                             self->task_date_label,
+                                             "label",
+                                             G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE,
+                                             date_to_label_binding_cb,
+                                             NULL,
+                                             self,
+                                             NULL);
+      g_ptr_array_add (self->bindings, binding);
+
+      on_complete_changed_cb (self, NULL, task);
+      g_signal_connect_object (task,
+                               "notify::complete",
+                               G_CALLBACK (on_complete_changed_cb),
+                               self,
+                               G_CONNECT_SWAPPED);
+
+      on_depth_changed_cb (self, NULL, task);
+      g_signal_connect_object (task,
+                               "notify::depth",
+                               G_CALLBACK (on_depth_changed_cb),
+                               self,
+                               G_CONNECT_SWAPPED);
+
+      on_task_important_changed_cb (task, NULL, self);
+      g_signal_connect_object (task,
+                               "notify::important",
+                               G_CALLBACK (on_task_important_changed_cb),
+                               self,
+                               0);
+
+      g_signal_connect_object (self->star_widget,
+                               "notify::active",
+                               G_CALLBACK (on_star_widget_activated_cb),
+                               self,
+                               0);
+
+      g_signal_handlers_unblock_by_func (self->done_check, on_complete_check_toggled_cb, self);
+      g_signal_handlers_unblock_by_func (self->title_entry, on_task_changed_cb, self);
+    }
 }
 
 /**

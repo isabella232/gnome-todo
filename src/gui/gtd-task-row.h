@@ -29,6 +29,9 @@ G_DECLARE_FINAL_TYPE (GtdTaskRow, gtd_task_row, GTD, TASK_ROW, GtkWidget)
 GtkWidget*                gtd_task_row_new                      (GtdTask             *task,
                                                                  GtdMarkdownRenderer *renderer);
 
+void                      gtd_task_row_set_task                 (GtdTaskRow          *self,
+                                                                 GtdTask             *task);
+
 GtdTask*                  gtd_task_row_get_task                 (GtdTaskRow          *row);
 
 void                      gtd_task_row_set_list_name_visible    (GtdTaskRow          *row,
