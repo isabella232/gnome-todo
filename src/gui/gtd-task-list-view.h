@@ -29,13 +29,6 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (GtdTaskListView, gtd_task_list_view, GTD, TASK_LIST_VIEW, GtkBox)
 
-typedef enum
-{
-  GTD_TASK_LIST_SELECTOR_BEHAVIOR_AUTOMATIC,
-  GTD_TASK_LIST_SELECTOR_BEHAVIOR_ALWAYS_SHOW,
-  GTD_TASK_LIST_SELECTOR_BEHAVIOR_ALWAYS_HIDE,
-} GtdTaskListSelectorBehavior;
-
 /**
  * GtdTaskListViewHeaderFunc:
  * @task: the #GtdTask that @row represents
@@ -71,30 +64,15 @@ void                      gtd_task_list_view_set_header_func    (GtdTaskListView
                                                                  GtdTaskListViewHeaderFunc  func,
                                                                  gpointer                   user_data);
 
-gboolean                  gtd_task_list_view_get_show_new_task_row (GtdTaskListView        *view);
-
-void                      gtd_task_list_view_set_show_new_task_row (GtdTaskListView        *view,
-                                                                    gboolean                show_new_task_row);
-
 GDateTime*                gtd_task_list_view_get_default_date   (GtdTaskListView        *self);
 
 void                      gtd_task_list_view_set_default_date   (GtdTaskListView        *self,
                                                                  GDateTime              *default_date);
 
-GdkRGBA*                  gtd_task_list_view_get_color          (GtdTaskListView        *self);
-
-void                      gtd_task_list_view_set_color          (GtdTaskListView        *self,
-                                                                 GdkRGBA                *color);
-
 gboolean                  gtd_task_list_view_get_handle_subtasks (GtdTaskListView       *self);
 
 void                      gtd_task_list_view_set_handle_subtasks (GtdTaskListView       *self,
                                                                   gboolean               handle_subtasks);
-
-GtdTaskListSelectorBehavior gtd_task_list_view_get_task_list_selector_behavior (GtdTaskListView             *self);
-
-void                        gtd_task_list_view_set_task_list_selector_behavior (GtdTaskListView             *self,
-                                                                                GtdTaskListSelectorBehavior  behavior);
 
 G_END_DECLS
 

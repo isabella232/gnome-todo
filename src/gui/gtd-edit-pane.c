@@ -74,25 +74,25 @@ static void
 update_date_widgets (GtdEditPane *self)
 {
   g_autoptr (GDateTime) dt = NULL;
-  gchar *text;
+  g_autofree gchar *text = NULL;
 
   g_return_if_fail (GTD_IS_EDIT_PANE (self));
 
-  dt = self->task ? g_date_time_ref (gtd_task_get_due_date (self->task)) : NULL;
-  text = dt ? g_date_time_format (dt, "%x") : NULL;
+  dt = self->task ? gtd_task_get_due_date (self->task) : NULL;
 
   g_signal_handlers_block_by_func (self->calendar, on_date_selected_cb, self);
 
   if (!dt)
     dt = g_date_time_new_now_local ();
+  else
+    g_date_time_ref (dt);
 
   gtk_calendar_select_day (self->calendar, dt);
 
   g_signal_handlers_unblock_by_func (self->calendar, on_date_selected_cb, self);
 
+  text = dt ? g_date_time_format (dt, "%x") : NULL;
   gtk_label_set_label (self->date_label, text ? text : _("No date set"));
-
-  g_free (text);
 }
 
 

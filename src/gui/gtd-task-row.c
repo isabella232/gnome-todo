@@ -72,6 +72,7 @@ struct _GtdTaskRow
 
   gboolean            active;
   gboolean            changed;
+  gboolean            pressed;
 };
 
 #define PRIORITY_ICON_SIZE 8
@@ -293,8 +294,6 @@ on_drag_end_cb (GtkDragSource *source,
 {
   GTD_ENTRY;
 
-  gtd_task_row_unset_drag_offset (self);
-
   gtk_widget_set_cursor_from_name (GTK_WIDGET (self), NULL);
   gtk_widget_show (GTK_WIDGET (self));
 
@@ -308,8 +307,6 @@ on_drag_cancelled_cb (GtkDragSource       *source,
                       GtdTaskRow          *self)
 {
   GTD_ENTRY;
-
-  gtd_task_row_unset_drag_offset (self);
 
   gtk_widget_set_cursor_from_name (GTK_WIDGET (self), NULL);
   gtk_widget_show (GTK_WIDGET (self));
@@ -424,6 +421,54 @@ on_task_changed_cb (GtdTaskRow  *self)
   g_debug ("Task changed");
 
   self->changed = TRUE;
+}
+
+static void
+on_click_gesture_pressed_cb (GtkGestureClick *gesture,
+                             gint             n_press,
+                             gdouble          x,
+                             gdouble          y,
+                             GtdTaskRow      *self)
+{
+  GTD_ENTRY;
+
+  if (self->pressed || n_press != 1)
+    GTD_RETURN ();
+
+  self->pressed = TRUE;
+
+  GTD_EXIT;
+}
+
+
+static void
+on_click_gesture_released_cb (GtkGestureClick *gesture,
+                              gint             n_press,
+                              gdouble          x,
+                              gdouble          y,
+                              GtdTaskRow      *self)
+{
+  GTD_ENTRY;
+
+  if (!self->pressed || n_press != 1)
+    GTD_RETURN ();
+
+  gtd_task_row_set_active (self, !self->active);
+
+  self->pressed = FALSE;
+
+  GTD_EXIT;
+}
+
+static void
+on_click_gesture_stopped_cb (GtkGestureClick *gesture,
+                             GtdTaskRow      *self)
+{
+  GTD_ENTRY;
+
+  self->pressed = FALSE;
+
+  GTD_EXIT;
 }
 
 
@@ -642,6 +687,9 @@ gtd_task_row_class_init (GtdTaskRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtdTaskRow, title_entry);
 
   gtk_widget_class_bind_template_callback (widget_class, on_button_press_event_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_click_gesture_pressed_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_click_gesture_released_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_click_gesture_stopped_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_complete_check_toggled_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_key_pressed_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_remove_task_cb);
@@ -694,6 +742,9 @@ gtd_task_row_set_task (GtdTaskRow *self,
   GtdTask *old_task;
 
   g_return_if_fail (GTD_IS_TASK_ROW (self));
+
+  if (task == self->task)
+    return;
 
   old_task = self->task;
 
@@ -845,7 +896,8 @@ gtd_task_row_set_handle_subtasks (GtdTaskRow *self,
 
   gtk_widget_set_visible (self->dnd_box, handle_subtasks);
   gtk_widget_set_visible (self->dnd_icon, handle_subtasks);
-  on_depth_changed_cb (self, NULL, self->task);
+  if (self->task)
+    on_depth_changed_cb (self, NULL, self->task);
 
   g_object_notify (G_OBJECT (self), "handle-subtasks");
 }
@@ -961,33 +1013,4 @@ gtd_task_row_set_drag_offset (GtdTaskRow *self,
   GTD_TRACE_MSG ("DnD frame height: %d, depth: %d", min_height, depth);
 
   gtk_widget_show (self->dnd_frame);
-}
-
-void
-gtd_task_row_unset_drag_offset (GtdTaskRow *self)
-{
-  g_return_if_fail (GTD_IS_TASK_ROW (self));
-
-  gtk_widget_hide (self->dnd_frame);
-}
-
-GtdTask*
-gtd_task_row_get_dnd_drop_task (GtdTaskRow *self)
-{
-  GtdTask *task;
-  gint task_depth;
-  gint depth;
-  gint i;
-
-  g_return_val_if_fail (GTD_IS_TASK_ROW (self), NULL);
-
-  task = self->task;
-  task_depth = gtd_task_get_depth (task);
-  depth = (gtk_widget_get_margin_start (self->dnd_frame) - 12) / 32;
-
-  /* Find the real parent */
-  for (i = task_depth - depth; i >= 0; i--)
-    task = gtd_task_get_parent (task);
-
-  return task;
 }

@@ -3,10 +3,24 @@
   <requires lib="gtk+" version="3.16"/>
   <template class="GtdTaskRow" parent="GtdWidget">
     <property name="hexpand">true</property>
+    <property name="halign">center</property>
+    <property name="layout-manager">
+      <object class="GtdMaxSizeLayout">
+        <property name="max-width">700</property>
+      </object>
+    </property>
     <child>
       <object class="GtkEventControllerKey">
         <property name="propagation-phase">capture</property>
         <signal name="key-pressed" handler="on_key_pressed_cb" object="GtdTaskRow" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkGestureClick">
+        <property name="propagation-phase">bubble</property>
+        <signal name="pressed" handler="on_click_gesture_pressed_cb" object="GtdTaskRow" swapped="no"/>
+        <signal name="released" handler="on_click_gesture_released_cb" object="GtdTaskRow" swapped="no"/>
+        <signal name="stopped" handler="on_click_gesture_stopped_cb" object="GtdTaskRow" swapped="no"/>
       </object>
     </child>
     <child>

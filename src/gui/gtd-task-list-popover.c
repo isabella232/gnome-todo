@@ -243,11 +243,11 @@ gtd_task_list_popover_init (GtdTaskListPopover *self)
   GtdManager *manager = gtd_manager_get_default ();
   GtkCustomFilter *filter;
 
+  gtk_widget_init_template (GTK_WIDGET (self));
+
   filter = gtk_custom_filter_new (filter_listbox_cb, self, NULL);
   self->filter_model = gtk_filter_list_model_new (gtd_manager_get_task_lists_model (manager),
                                                   GTK_FILTER (filter));
-
-  gtk_widget_init_template (GTK_WIDGET (self));
 
   gtk_list_box_bind_model (self->listbox,
                            G_LIST_MODEL (self->filter_model),
