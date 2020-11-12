@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-09-12 12:53+0000\n"
-"PO-Revision-Date: 2020-09-18 08:55+0200\n"
+"POT-Creation-Date: 2020-09-22 08:10+0000\n"
+"PO-Revision-Date: 2020-11-12 09:57+0100\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: slovenčina <>\n"
 "Language: sk\n"
@@ -126,10 +126,8 @@ msgid "Sidebar revealed"
 msgstr "Postranný panel odhalený"
 
 #: data/org.gnome.todo.gschema.xml:32
-#, fuzzy
-#| msgid "Whether the task is completed or not"
 msgid "Whether the sidebar is revealed or not"
-msgstr "Či je úloha dokončená alebo nie"
+msgstr "Či je postranný panel odhalený alebo nie"
 
 #: src/gui/gtd-application.c:75
 msgid "Quit GNOME To Do"
@@ -472,7 +470,7 @@ msgstr "Chyba pri získavaní úloh zo zoznamu"
 #: src/plugins/inbox-panel/gtd-inbox-panel.c:111
 #: src/plugins/welcome/gtd-welcome-workspace.ui:48
 msgid "Inbox"
-msgstr ""
+msgstr "Doručená pošta"
 
 #: src/plugins/next-week-panel/gtd-next-week-panel.c:148
 #: src/plugins/today-panel/gtd-panel-today.c:168
@@ -485,7 +483,7 @@ msgstr "Nasledovných 7 dní"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:56
 msgid "Did you drink some water today?"
-msgstr ""
+msgstr "Pili ste dnes nejakú vodu?"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:57
 msgid "What are your goals for today?"
@@ -521,15 +519,15 @@ msgstr ""
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:69
 msgid "Take care of yourself"
-msgstr ""
+msgstr "Dávajte pozor na seba"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:70
 msgid "Remember to have some fun"
-msgstr ""
+msgstr "Nezabudnite na zábavu"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:71
 msgid "You're doing great"
-msgstr ""
+msgstr "Ide vám to dobre"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:76
 msgid "Smile, breathe and go slowly"
@@ -548,10 +546,8 @@ msgid "You can do it"
 msgstr "Dokážete to"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:81
-#, fuzzy
-#| msgid "Meanwhile, spread the love"
 msgid "Meanwhile, spread the love ♥️"
-msgstr "Zatiaľ môžete šíriť lásku"
+msgstr "Zatiaľ môžete šíriť lásku ♥️"
 
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:345
 msgid "Scheduled"
@@ -756,21 +752,21 @@ msgstr "Naplánované úlohy (%d)"
 #: src/plugins/welcome/gtd-welcome-workspace.c:68
 #, c-format
 msgid "Good Morning, %s"
-msgstr ""
+msgstr "Dobré ráno, %s"
 
 #: src/plugins/welcome/gtd-welcome-workspace.c:70
 #, c-format
 msgid "Good Afternoon, %s"
-msgstr ""
+msgstr "Dobré popoludnie, %s"
 
 #: src/plugins/welcome/gtd-welcome-workspace.c:72
 #, c-format
 msgid "Good Evening, %s"
-msgstr ""
+msgstr "Dobrý večer, %s"
 
 #: src/plugins/welcome/gtd-welcome-workspace.c:198
 msgid "Home"
-msgstr ""
+msgstr "Domov"
 
 #~ msgid "The current list selector"
 #~ msgstr "Nástroj na výber aktuálneho zoznamu"
