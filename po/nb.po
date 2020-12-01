@@ -6,10 +6,10 @@
 # Alexander Strand <godsetalex@gmail.com>
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-todo 3.36.x\n"
+"Project-Id-Version: gnome-todo 3.38.x\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2019-12-04 03:25+0000\n"
-"PO-Revision-Date: 2020-03-09 15:13+0100\n"
+"POT-Creation-Date: 2020-09-22 07:48+0000\n"
+"PO-Revision-Date: 2020-12-01 13:55+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: Norsk bokmål\n"
@@ -308,7 +308,7 @@ msgstr "Kjør Oppgaver ved oppstart"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:7
 msgid "Whether GNOME To Do should run on startup"
-msgstr ""
+msgstr "Hvorvidt GNOME oppgaver skal kjøres ved oppstart"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:11
 msgid "Show notifications on startup"
@@ -316,7 +316,7 @@ msgstr "Vis varslinger ved oppstart"
 
 #: plugins/background/org.gnome.todo.background.gschema.xml:12
 msgid "Whether GNOME To Do should show notifications or not"
-msgstr ""
+msgstr "Hvorvidt GNOME Oppgaver skal vise varslinger eller ikke"
 
 #: plugins/background/ui/preferences.ui:53
 msgid "Run on Startup"
@@ -678,6 +678,3 @@ msgstr "Fjern oppgavelister"
 #: src/views/gtd-list-selector-panel.c:709
 msgid "Clear completed tasks"
 msgstr "Fjern fullførte oppgaver"
-
-#~ msgid "org.gnome.Todo"
-#~ msgstr "org.gnome.Todo"
