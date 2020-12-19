@@ -13,16 +13,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-05-30 11:25+0000\n"
-"PO-Revision-Date: 2018-01-22 00:15+0100\n"
-"Last-Translator: Gil Forcada Codinachs <gil.gnome@gmail.com>\n"
+"POT-Creation-Date: 2020-12-02 18:42+0000\n"
+"PO-Revision-Date: 2020-12-19 15:36+0100\n"
+"Last-Translator: Miquel-Àngel Burgos i Fradeja <miquel.angel.burgos@gmail."
+"com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
 #: data/org.gnome.Todo.desktop.in.in:3 src/gui/gtd-application.c:142
@@ -43,9 +44,9 @@ msgid ""
 msgstr ""
 "El GNOME Per fer és una aplicació de gestió de tasques dissenyada per a "
 "integrar-se amb el GNOME. Deseu i ordeneu les vostres tasques. Gestioneu "
-"múltiples llistes de tasques pendents. Manteniu les vostres tasques pendents"
-" a l'ordinador o sincronitzeu-les amb els proveïdors al núvols. "
-"Personalitzeu l'experiència amb els connectors."
+"múltiples llistes de tasques pendents. Manteniu les vostres tasques pendents "
+"a l'ordinador o sincronitzeu-les amb els proveïdors al núvols. Personalitzeu "
+"l'experiència amb els connectors."
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:25
 msgid "GNOME To Do with the dark theme variant"
@@ -75,8 +76,7 @@ msgstr "Visualització de tasques per avui al quadre d'avui del GNOME Per fer"
 msgid "Manage your personal tasks"
 msgstr "Gestioneu les tasques personals"
 
-#. Translators: Search terms to find this application. Do NOT translate or
-#. localize the semicolons! The list MUST also end with a semicolon!
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Todo.desktop.in.in:13
 msgid "Task;Productivity;Todo;"
 msgstr "Tasques;Productivitat;Per fer;"
@@ -115,8 +115,7 @@ msgstr "Proveïdor per defecte a afegir a les llistes noves"
 #: data/org.gnome.todo.gschema.xml:22
 msgid "The identifier of the default provider to add new lists to"
 msgstr ""
-"L'identificador del proveïdor per defecte on s'han d'afegir les llistes "
-"noves"
+"L'identificador del proveïdor per defecte on s'han d'afegir les llistes noves"
 
 #: data/org.gnome.todo.gschema.xml:26
 msgid "List of active extensions"
@@ -148,7 +147,9 @@ msgstr "Copyright © 2015–2020 els autors del Per fer"
 
 #: src/gui/gtd-application.c:151
 msgid "translator-credits"
-msgstr "Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2020"
+msgstr ""
+"Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2020\n"
+"Miquel-Àngel Burgos i Fradeja <miquel.angel.burgos@gmail.com>, 2020"
 
 #: src/gui/gtd-edit-pane.c:93
 #: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
@@ -339,24 +340,24 @@ msgstr "S'ha suprimit la tasca <b>%s</b>"
 msgid "Undo"
 msgstr "Desfés"
 
-#: src/gui/gtd-task-row.c:130
+#: src/gui/gtd-task-row.c:131
 #: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
 #: src/plugins/next-week-panel/gtd-next-week-panel.c:152
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:124
 #: src/plugins/today-panel/gtd-panel-today.c:177
-#: src/plugins/today-panel/gtd-panel-today.c:293
+#: src/plugins/today-panel/gtd-panel-today.c:295
 #: src/plugins/welcome/gtd-welcome-workspace.ui:57
 msgid "Today"
 msgstr "Avui"
 
-#: src/gui/gtd-task-row.c:134
+#: src/gui/gtd-task-row.c:135
 #: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
 #: src/plugins/next-week-panel/gtd-next-week-panel.c:156
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:128
 msgid "Tomorrow"
 msgstr "Demà"
 
-#: src/gui/gtd-task-row.c:138
+#: src/gui/gtd-task-row.c:139
 #: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:120
 msgid "Yesterday"
@@ -367,8 +368,8 @@ msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
 msgstr ""
-"Aquesta és una construcció de desenvolupament del Per fer. Podeu experimentar errors, "
-"comportaments incorrectes i pèrdua de dades."
+"Aquesta és una construcció de desenvolupament del Per fer. Podeu "
+"experimentar errors, comportaments incorrectes i pèrdua de dades."
 
 #: src/gui/gtd-window.c:424
 msgid "Details"
@@ -382,6 +383,7 @@ msgstr "_Quant a Per fer"
 #. * but the singular form is required because some languages do not
 #. * have plurals, some languages reuse the singular form for numbers
 #. * like 21, 31, 41, etc.
+#.
 #: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:125
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:116
 #, c-format
@@ -390,7 +392,7 @@ msgid_plural "%d days ago"
 msgstr[0] "Fa %d dia"
 msgstr[1] "Fa %d dies"
 
-#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:333
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:335
 msgid "All"
 msgstr "Tot"
 
@@ -473,7 +475,7 @@ msgstr "Safata d'entrada"
 msgid "Overdue"
 msgstr "Endarrerida"
 
-#: src/plugins/next-week-panel/gtd-next-week-panel.c:386
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:388
 msgid "Next 7 Days"
 msgstr "Els propers 7 dies"
 
@@ -498,12 +500,12 @@ msgid "At what point is it good enough?"
 msgstr "En quin moment és prou bo?"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:65
-msgid "Remember to breath. Good. Don't stop."
+msgid "Remember to breathe. Good. Don't stop."
 msgstr "Recorda respirar. Bé. No t'aturis."
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:66
 msgid "Don't forget to drink some water"
-msgstr "No oblidis de beure una mica d'aigua."
+msgstr "No oblidis beure una mica d'aigua"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:67
 msgid "Remember to take some time off"
@@ -515,7 +517,7 @@ msgstr "Menja fruites si pots 🍐️"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:69
 msgid "Take care of yourself"
-msgstr "Cuida't."
+msgstr "Cuida't"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:70
 msgid "Remember to have some fun"
@@ -545,7 +547,7 @@ msgstr "Pots fer-ho"
 msgid "Meanwhile, spread the love ♥️"
 msgstr "Mentrestant, repartiu amor ♥️"
 
-#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:343
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:345
 msgid "Scheduled"
 msgstr "Planificat"
 
@@ -625,8 +627,7 @@ msgid ""
 "Not able to communicate with Todoist. Please check your internet "
 "connectivity."
 msgstr ""
-"No es pot comunicar amb Todoist. Comproveu la vostra connectivitat "
-"Internet."
+"No es pot comunicar amb Todoist. Comproveu la vostra connectivitat Internet."
 
 #: src/plugins/todoist/gtd-provider-todoist.c:213
 msgid "Error fetching Todoist account key"
@@ -637,21 +638,19 @@ msgid "Please ensure that Todoist account is correctly configured."
 msgstr "Assegureu-vos que el compte de Todoist està configurat correctament."
 
 #: src/plugins/todoist/gtd-provider-todoist.c:555
-#, c-formatuzzy
+#, c-format
 msgid ""
-"GNOME To Do doesn’t have the necessary permissions to perform this action: "
-"%s"
+"GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr ""
-"GNOME Per fer no té els permisos necessaris per dur a terme aquesta acció: "
-"%s"
+"GNOME Per fer no té els permisos necessaris per dur a terme aquesta acció: %s"
 
 #: src/plugins/todoist/gtd-provider-todoist.c:563
 #, c-format
 msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
 msgstr ""
-"S'ha rebut una resposta no vàlida dels servidors Todoist. Torneu a carregar el GNOME "
-"Per fer."
+"S'ha rebut una resposta no vàlida dels servidors Todoist. Torneu a carregar "
+"el GNOME Per fer."
 
 #: src/plugins/todoist/gtd-provider-todoist.c:850
 msgid "An error occurred while updating a Todoist task"
@@ -706,9 +705,10 @@ msgid ""
 "experience instability, errors and eventually data loss. It is not "
 "recommended to use Todo.txt integration on production systems."
 msgstr ""
-"<b>Avís!</b> la compatibilitat de Perfer.txt és experimental i inestable. Podeu "
-"experimentar inestabilitat, errors, i eventualment, pèrdua de dades. No es "
-"recomana utilitzar la integració de Perfer.txt en sistemes en producció."
+"<b>Avís!</b> la compatibilitat de Perfer.txt és experimental i inestable. "
+"Podeu experimentar inestabilitat, errors, i eventualment, pèrdua de dades. "
+"No es recomana utilitzar la integració de Perfer.txt en sistemes en "
+"producció."
 
 #: src/plugins/todo-txt/gtd-provider-todo-txt.c:574
 msgid "Error while opening the file monitor. Todo.txt will not be monitored"
@@ -759,6 +759,6 @@ msgstr "Bona tarda, %s"
 msgid "Good Evening, %s"
 msgstr "Bon vespre, %s"
 
-#: src/plugins/welcome/gtd-welcome-workspace.c:195
+#: src/plugins/welcome/gtd-welcome-workspace.c:198
 msgid "Home"
 msgstr "Inici"
