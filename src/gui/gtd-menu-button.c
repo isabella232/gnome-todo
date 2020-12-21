@@ -244,7 +244,7 @@ gtd_menu_button_size_allocate (GtkWidget *widget,
                             &(GtkAllocation) { 0, 0, width, height },
                             baseline);
   if (priv->popover)
-    gtk_native_check_resize (GTK_NATIVE (priv->popover));
+    gtk_popover_present (GTK_POPOVER (priv->popover));
 }
 
 static gboolean

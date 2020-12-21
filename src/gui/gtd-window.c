@@ -534,7 +534,7 @@ gtd_window_unmap (GtkWidget *widget)
       gint height;
       gint width;
 
-      gtk_window_get_size (window, &width, &height);
+      gtk_window_get_default_size (window, &width, &height);
       g_settings_set (settings, "window-size", "(ii)", width, height);
     }
 
