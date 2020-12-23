@@ -12,16 +12,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-06-28 17:54+0000\n"
-"PO-Revision-Date: 2020-07-09 22:11+0200\n"
-"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
+"POT-Creation-Date: 2020-12-02 18:42+0000\n"
+"PO-Revision-Date: 2020-12-10 13:53+0100\n"
+"Last-Translator: Philipp Kiemle <philipp.kiemle@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:7
@@ -340,7 +340,7 @@ msgstr "Aufgabe <b>%s</b> entfernt"
 msgid "Undo"
 msgstr "Rückgängig"
 
-#: src/gui/gtd-task-row.c:130
+#: src/gui/gtd-task-row.c:131
 #: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
 #: src/plugins/next-week-panel/gtd-next-week-panel.c:152
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:124
@@ -350,14 +350,14 @@ msgstr "Rückgängig"
 msgid "Today"
 msgstr "Heute"
 
-#: src/gui/gtd-task-row.c:134
+#: src/gui/gtd-task-row.c:135
 #: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
 #: src/plugins/next-week-panel/gtd-next-week-panel.c:156
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:128
 msgid "Tomorrow"
 msgstr "Morgen"
 
-#: src/gui/gtd-task-row.c:138
+#: src/gui/gtd-task-row.c:139
 #: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:120
 msgid "Yesterday"
@@ -503,7 +503,7 @@ msgid "At what point is it good enough?"
 msgstr "Ab welchen Punkt ist es gut genug?"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:65
-msgid "Remember to breath. Good. Don't stop."
+msgid "Remember to breathe. Good. Don't stop."
 msgstr "Vergessen Sie nicht zu atmen. Gut. Nicht aufhören."
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:66
