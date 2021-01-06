@@ -29,7 +29,7 @@ msgstr ""
 #: data/org.gnome.Todo.desktop.in.in:3 src/gui/gtd-application.c:142
 #: src/gui/gtd-omni-area.ui:44 src/main.c:38
 msgid "To Do"
-msgstr "Per fer"
+msgstr "Per a fer"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:8
 msgid "Task manager for GNOME"
@@ -42,19 +42,19 @@ msgid ""
 "todos on your computer or sync them with cloud providers. Customize your "
 "experience with plugins."
 msgstr ""
-"El GNOME Per fer és una aplicació de gestió de tasques dissenyada per a "
+"El GNOME Per a fer és una aplicació de gestió de tasques dissenyada per a "
 "integrar-se amb el GNOME. Deseu i ordeneu les vostres tasques. Gestioneu "
 "múltiples llistes de tasques pendents. Manteniu les vostres tasques pendents "
-"a l'ordinador o sincronitzeu-les amb els proveïdors al núvols. Personalitzeu "
+"a l'ordinador o sincronitzeu-les amb els proveïdors al núvol. Personalitzeu "
 "l'experiència amb els connectors."
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:25
 msgid "GNOME To Do with the dark theme variant"
-msgstr "GNOME Per fer amb la variant d'aparença fosca"
+msgstr "GNOME Per a fer amb la variant d'aparença fosca"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:29
 msgid "Editing a tasklist with GNOME To Do"
-msgstr "Edició d'una llista de tasques amb el GNOME Per fer"
+msgstr "Edició d'una llista de tasques amb el GNOME Per a fer"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:33
 msgid "Task lists displayed on grid mode"
@@ -66,20 +66,21 @@ msgstr "La llista de tasques es mostra en mode llista"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:41
 msgid "Available plugins for GNOME To Do"
-msgstr "Connectors disponibles pel GNOME Per fer"
+msgstr "Connectors disponibles pel GNOME Per a fer"
 
 #: data/appdata/org.gnome.Todo.appdata.xml.in.in:45
 msgid "Visualizing tasks for today on GNOME To Do’s Today panel"
-msgstr "Visualització de tasques per avui al quadre d'avui del GNOME Per fer"
+msgstr "Visualització de tasques per avui al quadre d'avui del GNOME Per a fer"
 
 #: data/org.gnome.Todo.desktop.in.in:4
 msgid "Manage your personal tasks"
 msgstr "Gestioneu les tasques personals"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#. Translators: Search terms to find this application. Do NOT translate or
+#. localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Todo.desktop.in.in:13
 msgid "Task;Productivity;Todo;"
-msgstr "Tasques;Productivitat;Per fer;"
+msgstr "Tasques;Productivitat;Per a fer;"
 
 #: data/org.gnome.todo.gschema.xml:6
 msgid "Window maximized"
@@ -99,13 +100,13 @@ msgstr "Mida de la finestra (amplada i alçada)."
 
 #: data/org.gnome.todo.gschema.xml:16
 msgid "First run of GNOME To Do"
-msgstr "Primera execució del GNOME Per fer"
+msgstr "Primera execució del GNOME Per a fer"
 
 #: data/org.gnome.todo.gschema.xml:17
 msgid ""
 "Whether it’s the first run of GNOME To Do (to run the initial setup) or not"
 msgstr ""
-"Si és el primer cop que s'executa el GNOME Per fer (per a executar la "
+"Si és el primer cop que s'executa el GNOME Per a fer (per a executar la "
 "configuració inicial) o no"
 
 #: data/org.gnome.todo.gschema.xml:21
@@ -135,7 +136,7 @@ msgstr "Si es mostra o no la barra lateral"
 
 #: src/gui/gtd-application.c:75
 msgid "Quit GNOME To Do"
-msgstr "Surt del GNOME Per fer"
+msgstr "Surt del GNOME Per a fer"
 
 #: src/gui/gtd-application.c:76
 msgid "Enable debug messages"
@@ -143,7 +144,7 @@ msgstr "Habilita els missatges de depuració"
 
 #: src/gui/gtd-application.c:146
 msgid "Copyright © 2015–2020 The To Do authors"
-msgstr "Copyright © 2015–2020 els autors del Per fer"
+msgstr "Copyright © 2015–2020 els autors del Per a fer"
 
 #: src/gui/gtd-application.c:151
 msgid "translator-credits"
@@ -238,11 +239,11 @@ msgstr "Us donem la benvinguda"
 
 #: src/gui/gtd-initial-setup-window.ui:31
 msgid "Log in to online accounts to access your tasks"
-msgstr "Entreu als comptes en línia per accedir a les tasques"
+msgstr "Entreu als comptes en línia per a accedir a les tasques"
 
 #: src/gui/gtd-initial-setup-window.ui:53
 msgid "To Do Setup"
-msgstr "Configuració del Per fer"
+msgstr "Configuració del Per a fer"
 
 #: src/gui/gtd-initial-setup-window.ui:56 src/gui/gtd-provider-popover.ui:43
 msgid "_Cancel"
@@ -304,7 +305,7 @@ msgstr "Desactiva"
 
 #: src/gui/gtd-provider-selector.ui:19
 msgid "Click to add a new Google account"
-msgstr "Feu clic per afegir un nou compte de Google"
+msgstr "Feu clic per a afegir un nou compte de Google"
 
 #: src/gui/gtd-provider-selector.ui:35
 msgid "Google"
@@ -312,7 +313,7 @@ msgstr "Google"
 
 #: src/gui/gtd-provider-selector.ui:45
 msgid "Click to add a new ownCloud account"
-msgstr "Feu clic per afegir un compte nou de l'ownCloud"
+msgstr "Feu clic per a afegir un compte nou de l'ownCloud"
 
 #: src/gui/gtd-provider-selector.ui:61
 msgid "ownCloud"
@@ -368,7 +369,7 @@ msgid ""
 "This is a development build of To Do. You may experience errors, wrong "
 "behaviors, and data loss."
 msgstr ""
-"Aquesta és una construcció de desenvolupament del Per fer. Podeu "
+"Aquesta és una construcció de desenvolupament del Per a fer. Podeu "
 "experimentar errors, comportaments incorrectes i pèrdua de dades."
 
 #: src/gui/gtd-window.c:424
@@ -377,13 +378,12 @@ msgstr "Detalls"
 
 #: src/gui/gtd-window.ui:158
 msgid "_About To Do"
-msgstr "_Quant a Per fer"
+msgstr "_Quant a Per a fer"
 
 #. Translators: This message will never be used with '1 day ago'
 #. * but the singular form is required because some languages do not
 #. * have plurals, some languages reuse the singular form for numbers
 #. * like 21, 31, 41, etc.
-#.
 #: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:125
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:116
 #, c-format
@@ -412,11 +412,11 @@ msgstr[1] "Teniu %d tasques per avui"
 
 #: src/plugins/background/org.gnome.todo.background.gschema.xml:6
 msgid "Run To Do on startup"
-msgstr "Executa Per fer a l'inici"
+msgstr "Executa Per a fer a l'inici"
 
 #: src/plugins/background/org.gnome.todo.background.gschema.xml:7
 msgid "Whether GNOME To Do should run on startup"
-msgstr "Si GNOME Per fer s'hauria d'executar a l'inici"
+msgstr "Si GNOME Per a fer s'hauria d'executar a l'inici"
 
 #: src/plugins/background/org.gnome.todo.background.gschema.xml:11
 msgid "Show notifications on startup"
@@ -424,7 +424,7 @@ msgstr "Mostra notificacions a l'inici"
 
 #: src/plugins/background/org.gnome.todo.background.gschema.xml:12
 msgid "Whether GNOME To Do should show notifications or not"
-msgstr "Si GNOME Per fer hauria de mostrar notificacions o no"
+msgstr "Si GNOME Per a fer hauria de mostrar notificacions o no"
 
 #: src/plugins/background/ui/preferences.ui:41
 msgid "Run on Startup"
@@ -432,7 +432,7 @@ msgstr "Executa a l'inici"
 
 #: src/plugins/background/ui/preferences.ui:52
 msgid "Run To Do automatically when you log in"
-msgstr "Executa Per fer automàticament a l'inici de la sessió"
+msgstr "Executa Per a fer automàticament a l'inici de la sessió"
 
 #: src/plugins/background/ui/preferences.ui:101
 msgid "Show Notifications"
@@ -440,7 +440,7 @@ msgstr "Mostra les notificacions"
 
 #: src/plugins/background/ui/preferences.ui:112
 msgid "When To Do runs, show a startup notification"
-msgstr "Quan s'executi Per fer, mostra una notificació d'inici"
+msgstr "Quan s'executi Per a fer, mostra una notificació d'inici"
 
 #: src/plugins/eds/gtd-plugin-eds.c:181
 msgid "Error loading GNOME Online Accounts"
@@ -619,7 +619,7 @@ msgstr "No hi ha tasques programades per a avui"
 #: src/plugins/todoist/gtd-plugin-todoist.c:109
 msgid "GNOME To Do cannot connect to Todoist due to network issue"
 msgstr ""
-"El GNOME Per fer no es pot connectar al Todoist a causa d'un problema de "
+"El GNOME Per a fer no es pot connectar al Todoist a causa d'un problema de "
 "xarxa"
 
 #: src/plugins/todoist/gtd-plugin-todoist.c:110
@@ -642,7 +642,8 @@ msgstr "Assegureu-vos que el compte de Todoist està configurat correctament."
 msgid ""
 "GNOME To Do doesn’t have the necessary permissions to perform this action: %s"
 msgstr ""
-"GNOME Per fer no té els permisos necessaris per dur a terme aquesta acció: %s"
+"GNOME Per a fer no té els permisos necessaris per a dur a terme aquesta "
+"acció: %s"
 
 #: src/plugins/todoist/gtd-provider-todoist.c:563
 #, c-format
@@ -650,7 +651,7 @@ msgid ""
 "Invalid response received from Todoist servers. Please reload GNOME To Do."
 msgstr ""
 "S'ha rebut una resposta no vàlida dels servidors Todoist. Torneu a carregar "
-"el GNOME Per fer."
+"el GNOME Per a fer."
 
 #: src/plugins/todoist/gtd-provider-todoist.c:850
 msgid "An error occurred while updating a Todoist task"
