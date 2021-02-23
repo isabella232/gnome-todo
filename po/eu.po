@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2015, 2016, 2017.
-# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2019, 2020.
+# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2019, 2020, 2021.
 #
 msgid ""
 msgstr "Project-Id-Version: gnome-todo master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-todo/issues\n"
-"POT-Creation-Date: 2020-05-30 11:25+0000\n"
-"PO-Revision-Date: 2020-05-30 10:00+0100\n"
+"POT-Creation-Date: 2020-12-02 18:42+0000\n"
+"PO-Revision-Date: 2021-02-23 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -132,7 +132,7 @@ msgstr "Copyright © 2015–2020 Egitekoak aplikazioaren egileak"
 
 #: src/gui/gtd-application.c:151
 msgid "translator-credits"
-msgstr ""
+msgstr "translator-credits"
 
 #: src/gui/gtd-edit-pane.c:93
 #: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:112
@@ -323,24 +323,24 @@ msgstr "<b>%s</b> zeregina kenduta"
 msgid "Undo"
 msgstr "Desegin"
 
-#: src/gui/gtd-task-row.c:130
+#: src/gui/gtd-task-row.c:131
 #: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:133
 #: src/plugins/next-week-panel/gtd-next-week-panel.c:152
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:124
 #: src/plugins/today-panel/gtd-panel-today.c:177
-#: src/plugins/today-panel/gtd-panel-today.c:293
+#: src/plugins/today-panel/gtd-panel-today.c:295
 #: src/plugins/welcome/gtd-welcome-workspace.ui:57
 msgid "Today"
 msgstr "Gaur"
 
-#: src/gui/gtd-task-row.c:134
+#: src/gui/gtd-task-row.c:135
 #: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:137
 #: src/plugins/next-week-panel/gtd-next-week-panel.c:156
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:128
 msgid "Tomorrow"
 msgstr "Bihar"
 
-#: src/gui/gtd-task-row.c:138
+#: src/gui/gtd-task-row.c:139
 #: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:129
 #: src/plugins/scheduled-panel/gtd-panel-scheduled.c:120
 msgid "Yesterday"
@@ -373,7 +373,7 @@ msgid_plural "%d days ago"
 msgstr[0] "duela egun %d"
 msgstr[1] "duela %d egun"
 
-#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:333
+#: src/plugins/all-tasks-panel/gtd-all-tasks-panel.c:335
 msgid "All"
 msgstr "Denak"
 
@@ -456,7 +456,7 @@ msgstr "Sarrerako ontzia"
 msgid "Overdue"
 msgstr "Atzeratua"
 
-#: src/plugins/next-week-panel/gtd-next-week-panel.c:386
+#: src/plugins/next-week-panel/gtd-next-week-panel.c:388
 msgid "Next 7 Days"
 msgstr "Hurrengo 7 egunak"
 
@@ -481,8 +481,8 @@ msgid "At what point is it good enough?"
 msgstr "Zein puntutan da aski ona?"
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:65
-msgid "Remember to breath. Good. Don't stop."
-msgstr "Gogoan izan arnasa hartu behar dela. Ona. Ez gelditu."
+msgid "Remember to breathe. Good. Don't stop."
+msgstr "Gogoan izan arnasa hartu behar dela. Ondo. Ez gelditu."
 
 #: src/plugins/peace/gtd-peace-omni-area-addin.c:66
 msgid "Don't forget to drink some water"
@@ -528,7 +528,7 @@ msgstr "Egin dezakezu."
 msgid "Meanwhile, spread the love ♥️"
 msgstr "Bitartean, hedatu maitasuna ♥️."
 
-#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:343
+#: src/plugins/scheduled-panel/gtd-panel-scheduled.c:345
 msgid "Scheduled"
 msgstr "Planifikatua"
 
@@ -729,7 +729,7 @@ msgstr "Arratsalde onmm %s"
 msgid "Good Evening, %s"
 msgstr "Gabon, %s"
 
-#: src/plugins/welcome/gtd-welcome-workspace.c:195
+#: src/plugins/welcome/gtd-welcome-workspace.c:198
 msgid "Home"
 msgstr "Etxea"
 
